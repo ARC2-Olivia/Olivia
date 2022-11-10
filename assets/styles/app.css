@@ -1,0 +1,17 @@
+body {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: lightgray;
+}
+
+header, footer, .body {
+    flex-basis: 0;
+}
+
+.body {
+    flex-grow: 1;
+}
