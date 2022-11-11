@@ -17,12 +17,22 @@ class DefaultController extends AbstractController
         return $this->render('default/index.html.twig');
     }
 
+    #[Route("/login", name: "login")]
+    public function login(): Response
+    {
+        return $this->render('default/login.html.twig');
+    }
+
     #[Route("/change-locale", name: "change_locale")]
     public function changeLocale(Request $request): Response
     {
-        $locale = $request->getSession()->get('_locale');
-        $defaultLocale = $request->getDefaultLocale();
-        $request->getSession()->set('_locale', $locale === $defaultLocale ? 'hr' : $defaultLocale);
-        return $this->redirectToRoute('homepage');
+        $locale = $request->getLocale() ?? $request->getDefaultLocale();
+        $defaultLocale = $this->getParameter('locale.default');
+        $alternateLocale = $this->getParameter('locale.alternate');
+        $changedLocale = $locale === $defaultLocale ? $alternateLocale : $defaultLocale;
+
+        $request->getSession()->set('_locale', $changedLocale);
+        if ($request->getLocale() === null) $request->setLocale($changedLocale);
+        return $this->redirectToRoute('index');
     }
 }
