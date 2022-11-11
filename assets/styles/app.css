@@ -1,3 +1,16 @@
+@import "ress.min.css";
+@import "~bootstrap/dist/css/bootstrap-grid.css";
+@import "~bootstrap/dist/css/bootstrap-utilities.css";
+
+@import "navigationMain.css";
+@import "button.css";
+@import "card.css";
+
+:root {
+    --app-font-default: 'Roboto', sans-serif;
+    --app-color-blue: #03a9f5;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -6,6 +19,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: lightgray;
+    font-family: var(--app-font-default);
 }
 
 header, footer, .body {
@@ -14,4 +28,10 @@ header, footer, .body {
 
 .body {
     flex-grow: 1;
+}
+
+.h1-login {
+    font-weight: bold;
+    color: var(--app-color-blue);
+    margin: 0;
 }

@@ -1,2 +1,17 @@
 app:
     name: Olivia
+    brand: OLIVIA tool
+
+common:
+    login: Login
+    username: Username
+    password: Password
+
+page:
+    login: Olivia | Login
+
+nav:
+    main:
+        training: Training
+        aboutUs: About us
+        login: Login
