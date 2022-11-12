@@ -17,12 +17,6 @@ class DefaultController extends AbstractController
         return $this->render('default/index.html.twig');
     }
 
-    #[Route("/login", name: "login")]
-    public function login(): Response
-    {
-        return $this->render('default/login.html.twig');
-    }
-
     #[Route("/change-locale", name: "change_locale")]
     public function changeLocale(Request $request): Response
     {

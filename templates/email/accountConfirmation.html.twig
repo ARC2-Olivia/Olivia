@@ -1,0 +1,11 @@
+{% trans_default_domain "mail" %}
+{% set confirmationUrl = url('security_confirmation', {'confirmationToken': user.confirmationToken}) %}
+<p>{{ "mail.accountConfirmation.body.greeting"|trans }}</p>
+<p>
+    {{ "mail.accountConfirmation.body.text"|trans({'%url%': confirmationUrl}) }}
+</p>
+<p>
+    {{ "mail.accountConfirmation.body.goodbye"|trans }}
+    <br>
+    {{ "mail.signature"|trans }}
+</p>

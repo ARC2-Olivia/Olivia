@@ -6,6 +6,7 @@
 parameters:
     locale.default: 'en'
     locale.alternate: 'hr'
+    mail.from: noreply.olivia@foi.hr
 
 services:
     # default configuration for services in *this* file

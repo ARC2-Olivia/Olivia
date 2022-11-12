@@ -1,0 +1,9 @@
+success:
+    accountConfirmation:
+        subject: Confirmation success!
+        text: Your Olivia Tool account has been activated! Login to access either the Training or Practice modules.
+
+warning:
+    accountConfirmation:
+        subject: Invalid token!
+        text: The confirmation token from the supplied URL is invalid. Either the account has been already activated, or the account doesn't exist.

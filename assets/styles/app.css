@@ -5,6 +5,7 @@
 @import "navigationMain.css";
 @import "button.css";
 @import "card.css";
+@import "form.css";
 
 :root {
     --app-font-default: 'Roboto', sans-serif;

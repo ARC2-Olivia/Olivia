@@ -8,7 +8,13 @@
                 <ul class="navigation-main">
                     <li><a href="#" class="btn btn-theme-white">{{ 'nav.main.training'|trans }}</a></li>
                     <li><a href="#" class="btn btn-theme-white">{{ 'nav.main.aboutUs'|trans }}</a></li>
-                    <li><a href="{{ path('login') }}" class="btn btn-theme-white">{{ 'nav.main.login'|trans }}</a></li>
+                    <li>
+                        {% if is_granted('ROLE_USER') %}
+                            <a href="{{ path('security_logout') }}" class="btn btn-theme-white">{{ 'nav.main.logout'|trans }}</a>
+                        {% else %}
+                            <a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'nav.main.login'|trans }}</a>
+                        {% endif %}
+                    </li>
                 </ul>
             </nav>
         </div>

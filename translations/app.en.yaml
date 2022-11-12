@@ -3,15 +3,33 @@ app:
     brand: OLIVIA tool
 
 common:
-    login: Login
-    username: Username
+    username: E-mail
     password: Password
+    homepage: Homepage
+    login: Login
+    registration: Registration
+    submit: Submit
 
 page:
     login: Olivia | Login
+    registration: Olivia | Registration
+    confirmation: Olivia | Account confirmation
 
 nav:
     main:
         training: Training
         aboutUs: About us
         login: Login
+        logout: Logout
+
+form:
+    security:
+        registration:
+            label:
+                email: E-mail
+                password: Password
+                confirmPassword: Confirm password
+        login:
+            label:
+                email: E-mail
+                password: Password
