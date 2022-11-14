@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\Security\LoginType;
 use App\Form\Security\RegistrationType;
+use App\Security\LoginData;
 use App\Security\RegistrationData;
 use App\Service\MailerService;
 use App\Service\SecurityService;
@@ -13,20 +14,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/security", name: "security_")]
 class SecurityController extends AbstractController
 {
     #[Route("/login", name: "login")]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
     {
-        $form = $this->createForm(LoginType::class);
         $error = $authenticationUtils->getLastAuthenticationError();
-        $lastEmail = $authenticationUtils->getLastUsername();
+        if ($error) $this->addFlash('error', $translator->trans('error.login', [], 'message'));
         return $this->render('security/login.html.twig', [
-            'form' => $form->createView(),
-            'lastEmail' => $lastEmail,
-            'error' => $error
+            'form' => $this->createForm(LoginType::class)->createView()
         ]);
     }
 
