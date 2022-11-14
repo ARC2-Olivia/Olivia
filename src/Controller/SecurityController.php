@@ -22,6 +22,7 @@ class SecurityController extends AbstractController
     #[Route("/login", name: "login")]
     public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
     {
+        if ($this->isGranted(User::ROLE_USER)) return $this->redirectToRoute('index');
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) $this->addFlash('error', $translator->trans('error.login', [], 'message'));
         return $this->render('security/login.html.twig', [
@@ -38,6 +39,7 @@ class SecurityController extends AbstractController
     #[Route("/registration", name: "registration")]
     public function registration(Request $request, SecurityService $securityService, MailerService $mailerService, TranslatorInterface $translator): Response
     {
+        if ($this->isGranted(User::ROLE_USER)) return $this->redirectToRoute('index');
         $registration = new RegistrationData();
         $form = $this->createForm(RegistrationType::class, $registration);
         $form->handleRequest($request);
