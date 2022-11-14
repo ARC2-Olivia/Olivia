@@ -1,11 +1,12 @@
-@import "ress.min.css";
+@import "./styles/ress.min";
 @import "~bootstrap/dist/css/bootstrap-grid.css";
 @import "~bootstrap/dist/css/bootstrap-utilities.css";
 
-@import "navigationMain.css";
-@import "button.css";
-@import "card.css";
-@import "form.css";
+@import "./styles/navigationMain";
+@import "./styles/button";
+@import "./styles/card";
+@import "./styles/form";
+@import "./styles/toast.css";
 
 :root {
     --app-font-default: 'Roboto', sans-serif;
@@ -35,4 +36,15 @@ header, footer, .body {
     font-weight: bold;
     color: var(--app-color-blue);
     margin: 0;
+}
+
+.raised {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toasts {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+    margin-bottom: 4px;
 }

@@ -1,0 +1,16 @@
+{% if classAddition is not defined %}
+    {% set classAddition = '' %}
+{% endif %}
+<div class="toasts {{ classAddition }}">
+    {% for label, messages in app.flashes(['success', 'warning', 'error']) %}
+        {% for message in messages %}
+            <div class="toast toast-theme-{{ label }}">
+                <div class="toast-title">
+                    {{ ('type.'~label)|trans({}, 'message') }}
+                    <span class="toast-close">&times;</span>
+                </div>
+                <div class="toast-message">{{ message }}</div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>

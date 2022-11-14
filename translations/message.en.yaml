@@ -1,3 +1,8 @@
+type:
+    success: Success
+    warning: Warning
+    error: Error
+
 success:
     accountConfirmation:
         subject: Confirmation success!
@@ -7,3 +12,6 @@ warning:
     accountConfirmation:
         subject: Invalid token!
         text: The confirmation token from the supplied URL is invalid. Either the account has been already activated, or the account doesn't exist.
+
+error:
+    login: Invalid credentials.
