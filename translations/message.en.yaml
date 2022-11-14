@@ -15,3 +15,10 @@ warning:
 
 error:
     login: Invalid credentials.
+    registration:
+        email:
+            blank: E-mail field must not be empty.
+            format: E-mail is not written in an e-mail format.
+        password:
+            blank: Password fields must not be empty.
+            repeated: Passwords must match!

@@ -36,7 +36,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route("/registration", name: "registration")]
-    public function registration(Request $request, SecurityService $securityService, MailerService $mailerService): Response
+    public function registration(Request $request, SecurityService $securityService, MailerService $mailerService, TranslatorInterface $translator): Response
     {
         $registration = new RegistrationData();
         $form = $this->createForm(RegistrationType::class, $registration);
@@ -45,6 +45,10 @@ class SecurityController extends AbstractController
             if (!$securityService->userExists($registration->getEmail())) {
                 $user = $securityService->createUnactivatedUser($registration);
                 $mailerService->sendConfirmationMail($user);
+            }
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $translator->trans($error->getMessage(), [], 'message'));
             }
         }
         return $this->render('security/registration.html.twig', ['form' => $form->createView()]);

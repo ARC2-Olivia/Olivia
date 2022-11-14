@@ -22,6 +22,7 @@ class RegistrationType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => ['attr' => ['class' => 'form-input mb-3']],
+                'invalid_message' => 'error.registration.password.repeated',
                 'first_options' => ['label' => 'form.security.registration.label.password'],
                 'second_options' => ['label' => 'form.security.registration.label.confirmPassword']
             ])
@@ -32,7 +33,8 @@ class RegistrationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => RegistrationData::class,
-            'translation_domain' => 'app'
+            'translation_domain' => 'app',
+            'attr' => ['novalidate' => 'novalidate']
         ]);
     }
 }

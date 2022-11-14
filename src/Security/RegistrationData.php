@@ -7,13 +7,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class RegistrationData
 {
 
-    #[Assert\NotNull]
-    #[Assert\NotBlank]
-    #[Assert\Email]
+    #[Assert\NotBlank(message: 'error.registration.email.blank')]
+    #[Assert\Email(message: 'error.registration.email.format')]
     private ?string $email = null;
 
-    #[Assert\NotNull]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'error.registration.password.blank')]
     private ?string $plainPassword = null;
 
     public function getEmail(): ?string
