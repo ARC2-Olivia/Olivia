@@ -49,7 +49,8 @@ class LoginType extends AbstractType
             'data_class' => LoginData::class,
             'translation_domain' => 'app',
             'action' => $this->router->generate('security_login'),
-            'method' => 'post'
+            'method' => 'post',
+            'attr' => ['novalidate' => 'novalidate']
         ]);
     }
 }

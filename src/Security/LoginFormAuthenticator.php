@@ -60,12 +60,12 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $form = $this->formFactory->create(LoginType::class, $loginData);
         $form->handleRequest($request);
 
-        $userBadge = new UserBadge($loginData->getEmail(), function ($identifier) {
+        $userBadge = new UserBadge($loginData->getEmail() ?? '', function ($identifier) {
             $user = $this->userRepository->findOneBy(['email' => $identifier]);
             if ($user === null) throw new UserNotFoundException();
             return $user;
         });
-        $credentials = new PasswordCredentials($loginData->getPlainPassword());
+        $credentials = new PasswordCredentials($loginData->getPlainPassword() ?? '');
         $csrfTokenBadge = new CsrfTokenBadge(LoginType::CSRF_TOKEN_ID, $form->get('_csrf_token')->getData());
         return new Passport($userBadge, $credentials, [$csrfTokenBadge]);
     }
