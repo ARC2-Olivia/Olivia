@@ -45,6 +45,9 @@ class SecurityController extends AbstractController
             if (!$securityService->userExists($registration->getEmail())) {
                 $user = $securityService->createUnactivatedUser($registration);
                 $mailerService->sendConfirmationMail($user);
+                $this->addFlash('success', $translator->trans('success.registration', [], 'message'));
+            } else {
+                $this->addFlash('warning', $translator->trans('warning.registration.userExists', [], 'message'));
             }
         } else {
             foreach ($form->getErrors(true) as $error) {

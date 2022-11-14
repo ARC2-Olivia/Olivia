@@ -4,5 +4,5 @@ mail:
         subject: "Olivia | Account confirmation"
         body:
             greeting: "Dear new user,"
-            text: "Click on the following URL, or navigate to it, to activate your new Olivia Tool account: %url%."
+            text: "Click on the following URL, or navigate to it, to activate your new Olivia Tool account: <a href='%url%'>%url%</a>."
             goodbye: "Best regards,"
