@@ -59,6 +59,12 @@ class CourseController extends AbstractController
         return $this->render('course/new.html.twig', ['form' => $form->createView()]);
     }
 
+    #[Route("/overview/{course}", name: "overview")]
+    public function show(Course $course): Response
+    {
+        return $this->render('course/overview.html.twig', ['course' => $course]);
+    }
+
     private function storeFile(UploadedFile $file, string $dir, string $filenamePrefix = null): string
     {
         $filename = uniqid() . '.' . $file->guessClientExtension();

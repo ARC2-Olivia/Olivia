@@ -11,7 +11,10 @@ common:
     submit: Submit
     save: Save
     cancel: Cancel
+
+button:
     details: Details
+    startNow: Start now
 
 page:
     login: Olivia | Login
@@ -20,6 +23,7 @@ page:
     course:
         index: Olivia | Courses
         new: Olivia | New course
+        show: Olivia | Course details
 
 nav:
     main:
@@ -64,3 +68,6 @@ course:
     title:
         index: Courses
         new: New course
+
+extra:
+    free: Free

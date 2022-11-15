@@ -54,3 +54,20 @@
 .btn.btn-link:hover::before {
     opacity: 0.08;
 }
+
+.btn-nav {
+    background-color: #f1f2f8;
+    border: solid 1px #e4e5ea;
+    color: #656665 !important;
+    border-radius: 0;
+}
+
+.btn-nav:hover, .btn-nav.active {
+    background-color: white;
+    border-top-color: var(--app-color-orange);
+    border-left-color: white;
+    border-right-color: white;
+    border-bottom-color: white;
+    color: var(--app-color-orange) !important;
+    border-top-width: 4px;
+}
