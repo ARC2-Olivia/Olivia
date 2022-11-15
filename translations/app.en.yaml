@@ -11,6 +11,7 @@ common:
     submit: Submit
     save: Save
     cancel: Cancel
+    details: Details
 
 page:
     login: Olivia | Login

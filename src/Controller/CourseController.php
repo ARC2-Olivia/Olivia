@@ -19,7 +19,9 @@ class CourseController extends AbstractController
     #[Route("/", name: "index")]
     public function index(CourseRepository $courseRepository): Response
     {
-        return $this->render('course/index.html.twig', ['courses' => $courseRepository->findAll()]);
+        /** @var Course[] $courses */
+        $courses = $courseRepository->findAll();
+        return $this->render('course/index.html.twig', ['courses' => $courses]);
     }
 
     #[Route("/new", name: "new")]
@@ -38,8 +40,8 @@ class CourseController extends AbstractController
                 $image = $form->get('image')->getData();
                 if ($image !== null) {
                     $uploadDir = $this->getParameter('dir.course_image');
-                    $imagePath = $this->storeFile($image, $uploadDir, 'course-');
-                    $course->setImage($imagePath);
+                    $filename = $this->storeFile($image, $uploadDir, 'course-');
+                    $course->setImage($filename);
                     $em->flush();
                 }
             } catch (\Exception $ex) {
@@ -62,6 +64,6 @@ class CourseController extends AbstractController
         $filename = uniqid() . '.' . $file->guessClientExtension();
         if ($filenamePrefix) $filename = $filenamePrefix . $filename;
         $file->move($dir, $filename);
-        return $dir . '/' . $filename;
+        return $filename;
     }
 }
