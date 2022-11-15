@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Course;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
+use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +18,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route("/course", name: "course_")]
 class CourseController extends AbstractController
 {
+    use BasicFileManagementTrait;
+
     #[Route("/", name: "index")]
     public function index(CourseRepository $courseRepository): Response
     {
@@ -34,20 +38,8 @@ class CourseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($course);
             $em->flush();
-
-            try {
-                /** @var UploadedFile $image */
-                $image = $form->get('image')->getData();
-                if ($image !== null) {
-                    $uploadDir = $this->getParameter('dir.course_image');
-                    $filename = $this->storeFile($image, $uploadDir, 'course-');
-                    $course->setImage($filename);
-                    $em->flush();
-                }
-            } catch (\Exception $ex) {
-                $this->addFlash('warning', $translator->trans('warning.course.image.store', [], 'message'));
-            }
-
+            $image = $form->get('image')->getData();
+            $this->storeCourseImage($image, $course, $em, $translator);
             $this->addFlash('success', $translator->trans('success.course.new', ['%courseName%' => $course->getName()], 'message'));
             return $this->redirectToRoute('course_index');
         } else {
@@ -65,11 +57,50 @@ class CourseController extends AbstractController
         return $this->render('course/overview.html.twig', ['course' => $course, 'activeCard' => 'overview']);
     }
 
-    private function storeFile(UploadedFile $file, string $dir, string $filenamePrefix = null): string
+    #[Route("/edit/{course}", name: "edit")]
+    public function edit(Course $course, Request $request, TranslatorInterface $translator, EntityManagerInterface $em): Response
     {
-        $filename = uniqid() . '.' . $file->guessClientExtension();
-        if ($filenamePrefix) $filename = $filenamePrefix . $filename;
-        $file->move($dir, $filename);
-        return $filename;
+        $form = $this->createForm(CourseType::class, $course);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($course);
+            $em->flush();
+            $image = $form->get('image')->getData();
+            if ($image !== null) $this->removeCourseImage($course, $em);
+            $this->storeCourseImage($image, $course, $em, $translator);
+            $this->addFlash('success', $translator->trans('success.course.new', ['%courseName%' => $course->getName()], 'message'));
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('course/edit.html.twig', ['course' => $course, 'activeCard' => 'edit', 'form' => $form->createView()]);
+    }
+
+    private function storeCourseImage(?UploadedFile $image, Course $course, EntityManagerInterface $em, TranslatorInterface $translator): void
+    {
+        try {
+            /** @var UploadedFile $image */
+
+            if ($image !== null) {
+                $uploadDir = $this->getParameter('dir.course_image');
+                $filename = $this->storeFile($image, $uploadDir, 'course-');
+                $course->setImage($filename);
+                $em->flush();
+            }
+        } catch (\Exception $ex) {
+            $this->addFlash('warning', $translator->trans('warning.course.image.store', [], 'message'));
+        }
+    }
+
+    private function removeCourseImage(Course $course, EntityManagerInterface $em): void
+    {
+        if ($course->getImage() !== null) {
+            $uploadDir = $this->getParameter('dir.course_image');
+            $this->removeFile($uploadDir . '/' . $course->getImage());
+            $course->setImage(null);
+            $em->flush();;
+        }
     }
 }

@@ -1,0 +1,11 @@
+{% extends 'course/_base_course.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block courseContent %}
+    <div class="p-0">
+        {% include 'course/_form.html.twig' %}
+        <div class="text-end mt-3">
+            <button type="submit" form="course" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+    </div>
+{% endblock %}

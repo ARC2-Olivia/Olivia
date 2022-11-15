@@ -27,14 +27,17 @@
 {% block body %}
     <div class="container">
         <div class="row gx-2">
-            <div class="col-12 col-md-9 pt-5">
+            <div class="col-12 col-md-9 pt-4">
                 <div class="container-fluid">
+                    <div class="row">
+                        {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
+                    </div>
                     <div class="row">
                         <ul class="course-navigation">
                             <li><a href="{{ path('course_overview', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'overview' %} active{% endif %}">Overview</a></li>
                             <li><a href="#" class="btn btn-nav w-100{% if activeCard == 'instructors' %} active{% endif %}">Instructors</a></li>
                             {% if is_granted('ROLE_MODERATOR') %}
-                                <li><a href="#" class="btn btn-nav w-100{% if activeCard == 'edit' %} active{% endif %}">Edit</a></li>
+                                <li><a href="{{ path('course_edit', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'edit' %} active{% endif %}">Edit</a></li>
                             {% endif %}
                         </ul>
                     </div>

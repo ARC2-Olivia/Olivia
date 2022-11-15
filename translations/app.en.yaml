@@ -46,7 +46,7 @@ form:
     entity:
         course:
             label:
-                name: Name,
+                name: Name
                 description: Description
                 image: Image (max. 5MB)
                 estimatedWorkload: Estimated workload
