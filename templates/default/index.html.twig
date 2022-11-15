@@ -6,7 +6,7 @@
         <div class="row">
             <nav>
                 <ul class="navigation-main">
-                    <li><a href="#" class="btn btn-theme-white">{{ 'nav.main.training'|trans }}</a></li>
+                    <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ 'nav.main.training'|trans }}</a></li>
                     <li><a href="#" class="btn btn-theme-white">{{ 'nav.main.aboutUs'|trans }}</a></li>
                     <li>
                         {% if is_granted('ROLE_USER') %}

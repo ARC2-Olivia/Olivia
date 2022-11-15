@@ -9,11 +9,16 @@ common:
     login: Login
     registration: Registration
     submit: Submit
+    save: Save
+    cancel: Cancel
 
 page:
     login: Olivia | Login
     registration: Olivia | Registration
     confirmation: Olivia | Account confirmation
+    course:
+        index: Olivia | Courses
+        new: Olivia | New course
 
 nav:
     main:
@@ -33,3 +38,28 @@ form:
             label:
                 email: E-mail
                 password: Password
+    entity:
+        course:
+            label:
+                name: Name,
+                description: Description
+                image: Image (max. 5MB)
+                estimatedWorkload: Estimated workload
+                tags: Tags
+            placeholder:
+                name: Course name
+                description: Course description...
+                workloadValue: 12 or 2.5
+                tags: GDPR,IT,Security,...
+            choices:
+                estimatedWorkload:
+                    hours: hour(s)
+                    days: day(s)
+                    weeks: week(s)
+                    months: month(s)
+                    years: year(s)
+
+course:
+    title:
+        index: Courses
+        new: New course

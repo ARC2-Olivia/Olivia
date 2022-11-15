@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.course.index'|trans }}{% endblock %}
+
+{% block header %}
+    <div class="container-fluid">
+        <span class="brand">OLIVIA</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container pt-5">
+        <div class="row mb-5">
+            <h1 class="text-center">{{ 'course.title.index'|trans }}</h1>
+        </div>
+        {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
+        <div class="row g-3">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                {% if is_granted('ROLE_MODERATOR') %}{% include 'course/_index_add.html.twig' %}{% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+
+    </style>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.course.new'|trans }}{% endblock %}
+
+{% block header %}
+    <div class="container-fluid">
+        <span class="brand">OLIVIA</span>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container pt-5">
+        <div class="row mb-5">
+            <h1 class="text-center">{{ 'course.title.new'|trans }}</h1>
+        </div>
+        {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
+        <div class="row">
+            <div class="card">
+                <div class="card-text">
+                    {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+                        {{ form_label(form.name) }}
+                        {{ form_widget(form.name) }}
+                        {{ form_label(form.image) }}
+                        {{ form_widget(form.image) }}
+                        {{ form_label(form.description) }}
+                        {{ form_widget(form.description) }}
+                        {{ form_label(form.estimatedWorkload) }}
+                        <div class="row mb-3">
+                            <label class="col-6">{{ form_widget(form.estimatedWorkload.workloadValue) }}</label>
+                            <label class="col-6">{{ form_widget(form.estimatedWorkload.workloadTime) }}</label>
+                        </div>
+                        {{ form_label(form.tags) }}
+                        {{ form_widget(form.tags) }}
+                    {{ form_end(form) }}
+                </div>
+                <div class="card-actions justify-content-end">
+                    <button type="submit" class="btn btn-theme-white bg-blue" form="course">{{ 'common.save'|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

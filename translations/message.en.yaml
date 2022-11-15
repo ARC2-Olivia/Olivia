@@ -8,6 +8,8 @@ success:
         subject: Confirmation success!
         text: Your Olivia Tool account has been activated! Login to access either the Training or Practice modules.
     registration: Confirmation e-mail has been sent. Click or navigate to the URL in the e-mail to activate your account.
+    course:
+        new: Course <i>%courseName%</i> has been successfully created.
 
 warning:
     accountConfirmation:
@@ -15,6 +17,8 @@ warning:
         text: The confirmation token from the supplied URL is invalid. Either the account has been already activated, or the account doesn't exist.
     registration:
         userExists: User with that e-mail already exists.
+    course:
+        image.store: There was an error storing the course image. You can try to reupload it while editing the basic course information.
 
 error:
     login: Invalid credentials.
@@ -25,3 +29,11 @@ error:
         password:
             blank: Password fields must not be empty.
             repeated: Passwords must match!
+    course:
+        name: Course name must not be empty.
+        description: Course description must not be empty.
+        image:
+            maxSize: File exceeds the allowed maximum size of 5 megabytes.
+            mimeType: File has to be an image.
+        estimatedWorkload:
+            value: 'Estimated workload value needs to be a number: integer or a decimal number with "." as a decimal point.'

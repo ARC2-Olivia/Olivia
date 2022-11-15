@@ -11,6 +11,8 @@
 :root {
     --app-font-default: 'Roboto', sans-serif;
     --app-color-blue: #03a9f5;
+    --app-color-dark-blue: #3a526a;
+    --app-color-orange: #fe5722;
 }
 
 body {
@@ -20,7 +22,7 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    background-color: lightgray;
+    background-color: #ededed;
     font-family: var(--app-font-default);
 }
 
@@ -47,4 +49,42 @@ header, footer, .body {
     flex-direction: column;
     row-gap: 4px;
     margin-bottom: 4px;
+}
+
+header {
+    background-color: var(--app-color-dark-blue);
+    color: white;
+}
+
+header:not(:empty) {
+    padding: 16px 24px;
+}
+
+.brand {
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.bg-blue {
+    background-color: var(--app-color-blue) !important;
+}
+
+/* Course specific */
+.card.course-add {
+    background-color: #3A526A5F;
+    opacity: 0.5;
+    height: 320px;
+}
+.card.course-add:hover {
+    opacity: 1;
+}
+.card.course-add .card-text {
+    height: 100%;
+}
+.card.course-add svg {
+    width: 72px;
+    height: 72px;
+}
+.card.course-add svg path {
+    fill: var(--app-color-dark-blue);
 }
