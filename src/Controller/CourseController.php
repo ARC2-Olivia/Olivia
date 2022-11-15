@@ -62,7 +62,7 @@ class CourseController extends AbstractController
     #[Route("/overview/{course}", name: "overview")]
     public function show(Course $course): Response
     {
-        return $this->render('course/overview.html.twig', ['course' => $course]);
+        return $this->render('course/overview.html.twig', ['course' => $course, 'activeCard' => 'overview']);
     }
 
     private function storeFile(UploadedFile $file, string $dir, string $filenamePrefix = null): string

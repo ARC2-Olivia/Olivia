@@ -75,12 +75,12 @@
     width: 10rem;
 }
 
-.course-description {
+.course-content {
     background-color: white;
     padding: 32px;
     color: rgba(0, 0, 0, 0.7);
 }
 
-.course-description p {
+.course-content p {
     padding: 0;
 }
