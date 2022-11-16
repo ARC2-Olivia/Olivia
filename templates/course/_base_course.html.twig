@@ -6,7 +6,7 @@
 {% block header %}
     <div class="container">
         <div class="row gx-2">
-            <div class="col-12 col-md-9 pt-4">
+            <div class="col-12 col-md-9 pt-5 pb-3">
                 <h1 class="course-header-name">{{ course.name }}</h1>
                 <div class="course-header-details">
                     <div class="course-header-details-item">
@@ -17,8 +17,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-3 d-none d-md-block course-header-image">
-                <img src="{{ path('file_fetch_course_image', {'course': course.id}) }}" alt="Course image"/>
+            <div class="col-12 col-md-3 d-none d-md-block">
+                <div class="course-header-image" style="background-image: url('{{ path('file_fetch_course_image', {'course': course.id}) }}')"></div>
             </div>
         </div>
     </div>
