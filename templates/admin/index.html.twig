@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block header %}
+    <div class="container-fluid py-3 px-5">
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-6">
+                <span class="brand">OLIVIA</span>
+            </div>
+            <nav class="col-12 col-sm-6 text-end">
+                <ul class="navigation-main p-0">
+                    <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ '' }}</a></li>
+                    <li><a href="{{ path('security_logout') }}" class="btn btn-theme-white">{{ 'common.logout'|trans }}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}

@@ -27,11 +27,9 @@ page:
         show: Olivia | Course details
 
 nav:
-    main:
-        training: Training
-        aboutUs: About us
-    training:
-        admin: Admin
+    training: Training
+    aboutUs: About us
+    admin: Admin
 
 form:
     security:
