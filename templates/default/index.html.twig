@@ -10,9 +10,9 @@
                     <li><a href="#" class="btn btn-theme-white">{{ 'nav.main.aboutUs'|trans }}</a></li>
                     <li>
                         {% if is_granted('ROLE_USER') %}
-                            <a href="{{ path('security_logout') }}" class="btn btn-theme-white">{{ 'nav.main.logout'|trans }}</a>
+                            <a href="{{ path('security_logout') }}" class="btn btn-theme-white">{{ 'common.logout'|trans }}</a>
                         {% else %}
-                            <a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'nav.main.login'|trans }}</a>
+                            <a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'common.login'|trans }}</a>
                         {% endif %}
                     </li>
                 </ul>

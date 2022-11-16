@@ -7,6 +7,7 @@ common:
     password: Password
     homepage: Homepage
     login: Login
+    logout: Logout
     registration: Registration
     submit: Submit
     save: Save
@@ -29,8 +30,8 @@ nav:
     main:
         training: Training
         aboutUs: About us
-        login: Login
-        logout: Logout
+    training:
+        admin: Admin
 
 form:
     security:
