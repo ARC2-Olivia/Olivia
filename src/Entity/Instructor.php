@@ -6,6 +6,7 @@ use App\Repository\InstructorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: InstructorRepository::class)]
 class Instructor
@@ -16,9 +17,11 @@ class Instructor
     private ?int $id = null;
 
     #[ORM\Column(length: 64)]
+    #[Assert\NotBlank(message: 'error.instructor.firstName')]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 64)]
+    #[Assert\NotBlank(message: 'error.instructor.lastName')]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 128, nullable: true)]

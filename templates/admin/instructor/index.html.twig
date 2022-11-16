@@ -1,0 +1,46 @@
+{% extends 'admin/_base_admin.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block adminContent %}
+    <div class="container-fluid p-5">
+        {% include '_partials/toasts.html.twig' %}
+        <div class="card">
+            <div class="card-title d-flex justify-content-between align-items-center">
+                <span>{{ 'instructor.title.index'|trans }}</span>
+                <a href="{{ path('admin_instructor_new') }}" class="btn btn-theme-white bg-blue font-size-default">{{ 'common.new'|trans }}</a>
+            </div>
+            <div class="card-text">
+                <table class="table table-cols-6">
+                    <thead>
+                        <tr>
+                            <th>{{ 'common.id'|trans }}</th>
+                            <th>{{ 'form.entity.instructor.label.firstName'|trans }}</th>
+                            <th>{{ 'form.entity.instructor.label.lastName'|trans }}</th>
+                            <th>{{ 'form.entity.instructor.label.email'|trans }}</th>
+                            <th>{{ 'form.entity.instructor.label.institution'|trans }}</th>
+                            <th>{{ 'common.actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for instructor in instructors %}
+                            <tr>
+                                <td>{{ instructor.id }}</td>
+                                <td>{{ instructor.firstName }}</td>
+                                <td>{{ instructor.lastName }}</td>
+                                <td>{{ instructor.email }}</td>
+                                <td>{{ instructor.institution }}</td>
+                                <td>
+                                    <a href="{{ path('admin_instructor_edit', {'instructor': instructor.id}) }}" class="btn btn-theme-white btn-sm bg-blue">{{ 'common.edit'|trans }}</a>
+                                    <form action="{{ path('admin_instructor_delete', {'instructor': instructor.id}) }}" method="post" class="d-inline-block" onsubmit="return confirm('{{ 'instructor.delete'|trans }}')">
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('instructor.delete') }}"/>
+                                        <button type="submit" class="btn btn-theme-white btn-sm bg-red">{{ 'common.delete'|trans }}</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

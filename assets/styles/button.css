@@ -71,3 +71,9 @@
     color: var(--app-color-orange) !important;
     border-top-width: 4px;
 }
+
+.btn.btn-sm {
+    min-width: unset;
+    padding: 0 8px;
+    height: 28px;
+}

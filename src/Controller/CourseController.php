@@ -87,11 +87,10 @@ class CourseController extends AbstractController
     private function storeCourseImage(?UploadedFile $image, Course $course, EntityManagerInterface $em, TranslatorInterface $translator): void
     {
         try {
-            /** @var UploadedFile $image */
-
             if ($image !== null) {
                 $uploadDir = $this->getParameter('dir.course_image');
-                $filename = $this->storeFile($image, $uploadDir, 'course-');
+                $filenamePrefix = sprintf('course-%d-', $course->getId());
+                $filename = $this->storeFile($image, $uploadDir, $filenamePrefix);
                 $course->setImage($filename);
                 $em->flush();
             }

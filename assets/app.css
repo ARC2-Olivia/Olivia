@@ -2,11 +2,12 @@
 @import "~bootstrap/dist/css/bootstrap-grid.css";
 @import "~bootstrap/dist/css/bootstrap-utilities.css";
 
-@import "./styles/navigationMain";
-@import "./styles/button";
-@import "./styles/card";
-@import "./styles/form";
+@import "./styles/navigation.css";
+@import "./styles/button.css";
+@import "./styles/card.css";
+@import "./styles/form.css";
 @import "./styles/toast.css";
+@import "./styles/table.css";
 
 @import "./styles/course.css";
 
@@ -14,7 +15,9 @@
     --app-font-default: 'Roboto', sans-serif;
     --app-color-blue: #03a9f5;
     --app-color-dark-blue: #3a526a;
+    --app-color-blue-alt: #667e98;
     --app-color-orange: #fe5722;
+    --app-color-red: #f51b38
 }
 
 body {
@@ -46,6 +49,10 @@ header, footer, .body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 4px 4px rgba(0, 0, 0, 0.1);
 }
 
+.font-size-default {
+    font-size: 1rem !important;
+}
+
 .sharp {
     border-radius: 0;
 }
@@ -73,4 +80,8 @@ header {
 
 .bg-orange {
     background-color: var(--app-color-orange);
+}
+
+.bg-red {
+    background-color: var(--app-color-red);
 }

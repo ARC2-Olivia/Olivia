@@ -8,6 +8,7 @@ parameters:
     locale.alternate: 'hr'
     mail.from: noreply.olivia@foi.hr
     dir.course_image:  '%kernel.project_dir%/public/uploads/course/image'
+    dir.instructor_image:  '%kernel.project_dir%/public/uploads/instructor/image'
 
 services:
     # default configuration for services in *this* file

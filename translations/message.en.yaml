@@ -10,6 +10,8 @@ success:
     registration: Confirmation e-mail has been sent. Click or navigate to the URL in the e-mail to activate your account.
     course:
         new: Course <i>%courseName%</i> has been successfully created.
+    instructor:
+        new: You have created a new instructor.
 
 warning:
     accountConfirmation:
@@ -19,6 +21,9 @@ warning:
         userExists: User with that e-mail already exists.
     course:
         image.store: There was an error storing the course image. You can try to reupload it while editing the basic course information.
+    instructor:
+        image.store: There was an error storing the instructor's image. You can try to reupload it later.
+        delete: You have deleted an instructor.
 
 error:
     login: Invalid credentials.
@@ -37,3 +42,6 @@ error:
             mimeType: File has to be an image.
         estimatedWorkload:
             value: 'Estimated workload value needs to be a number: integer or a decimal number with "." as a decimal point.'
+    instructor:
+        firstName: First name must not be blank.
+        lastName: Last name must not be blank.

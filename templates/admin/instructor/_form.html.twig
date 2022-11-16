@@ -1,0 +1,10 @@
+{{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+    {{ form_label(form.firstName) }}
+    {{ form_widget(form.firstName) }}
+    {{ form_label(form.lastName) }}
+    {{ form_widget(form.lastName) }}
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    {{ form_label(form.institution) }}
+    {{ form_widget(form.institution) }}
+{{ form_end(form) }}
