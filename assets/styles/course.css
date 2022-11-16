@@ -21,6 +21,13 @@
     fill: var(--app-color-dark-blue);
 }
 
+.course-card-details {
+    font-size: 0.875rem;
+}
+.course-card-name {
+    color: black
+}
+
 .course-header {
     height: 8rem;
     max-height: 8rem;
