@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CourseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -31,6 +33,14 @@ class Course
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private array $tags = [];
+
+    #[ORM\ManyToMany(targetEntity: Instructor::class, inversedBy: 'courses')]
+    private Collection $instructors;
+
+    public function __construct()
+    {
+        $this->instructors = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -93,6 +103,30 @@ class Course
     public function setTags(array $tags): self
     {
         $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Instructor>
+     */
+    public function getInstructors(): Collection
+    {
+        return $this->instructors;
+    }
+
+    public function addInstructor(Instructor $instructor): self
+    {
+        if (!$this->instructors->contains($instructor)) {
+            $this->instructors->add($instructor);
+        }
+
+        return $this;
+    }
+
+    public function removeInstructor(Instructor $instructor): self
+    {
+        $this->instructors->removeElement($instructor);
 
         return $this;
     }

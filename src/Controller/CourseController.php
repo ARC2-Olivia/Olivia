@@ -52,9 +52,15 @@ class CourseController extends AbstractController
     }
 
     #[Route("/overview/{course}", name: "overview")]
-    public function show(Course $course): Response
+    public function overview(Course $course): Response
     {
         return $this->render('course/overview.html.twig', ['course' => $course, 'activeCard' => 'overview']);
+    }
+
+    #[Route("/instructors/{course}", name: "instructors")]
+    public function instructors(Course $course): Response
+    {
+        return $this->render('course/instructors.html.twig', ['course' => $course, 'activeCard' => 'instructors']);
     }
 
     #[Route("/edit/{course}", name: "edit")]
