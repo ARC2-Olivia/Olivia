@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Course;
 use App\Entity\Instructor;
+use App\Entity\User;
 use App\Form\CourseInstructorType;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
 use App\Repository\InstructorRepository;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -75,7 +77,7 @@ class CourseController extends AbstractController
         $form = $this->createForm(CourseInstructorType::class, null, ['instructors' => $selectableInstructors]);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($this->isGranted(User::ROLE_MODERATOR) && $form->isSubmitted() && $form->isValid()) {
             $instructor = $form->get('instructor')->getData();
             $course->addInstructor($instructor);
             $this->em->flush();
@@ -90,6 +92,7 @@ class CourseController extends AbstractController
     }
 
     #[Route("/edit/{course}", name: "edit")]
+    #[IsGranted('ROLE_MODERATOR')]
     public function edit(Course $course, Request $request): Response
     {
         $form = $this->createForm(CourseType::class, $course);
@@ -108,6 +111,23 @@ class CourseController extends AbstractController
         }
 
         return $this->render('course/edit.html.twig', ['course' => $course, 'activeCard' => 'edit', 'form' => $form->createView()]);
+    }
+
+    #[Route("/instructors/{course}/remove/{instructor}", name: "instructor_remove")]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function removeInstructor(Course $course, Instructor $instructor, Request $request): Response
+    {
+        $csrfToken = $request->get('_csrf_token');
+        if ($csrfToken !== null && $this->isCsrfTokenValid('course.instructor.remove', $csrfToken)) {
+            if ($course->getInstructors()->contains($instructor)) {
+                $course->removeInstructor($instructor);
+                $this->em->flush();
+                $this->addFlash('warning', $this->translator->trans('warning.instructor.remove', ['%instructor%' => $instructor, '%course%' => $course->getName()], 'message'));
+            } else {
+                $this->addFlash('warning', $this->translator->trans('error.instructor.remove', ['%instructor%' => $instructor, '%course%' => $course->getName()], 'message'));
+            }
+        }
+        return $this->redirectToRoute('course_instructors', ['course' => $course->getId()]);
     }
 
     private function storeCourseImage(?UploadedFile $image, Course $course): void

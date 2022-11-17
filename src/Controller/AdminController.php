@@ -93,7 +93,7 @@ class AdminController extends AbstractController
     public function deleteInstructor(Instructor $instructor, Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $csrfToken = $request->get('_csrf_token');
-        if ($csrfToken !== null && $this->isCsrfTokenValid('instructor.delete', $csrfToken)) {
+        if ($csrfToken !== null && $this->isCsrfTokenValid('admin.instructor.delete', $csrfToken)) {
             $this->removeInstructorImage($instructor, $em);
             $em->remove($instructor);
             $em->flush();

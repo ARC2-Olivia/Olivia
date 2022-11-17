@@ -32,7 +32,7 @@
                                 <td>
                                     <a href="{{ path('admin_instructor_edit', {'instructor': instructor.id}) }}" class="btn btn-theme-white btn-sm bg-blue">{{ 'common.edit'|trans }}</a>
                                     <form action="{{ path('admin_instructor_delete', {'instructor': instructor.id}) }}" method="post" class="d-inline-block" onsubmit="return confirm('{{ 'instructor.delete'|trans }}')">
-                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('instructor.delete') }}"/>
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin.instructor.delete') }}"/>
                                         <button type="submit" class="btn btn-theme-white btn-sm bg-red">{{ 'common.delete'|trans }}</button>
                                     </form>
                                 </td>

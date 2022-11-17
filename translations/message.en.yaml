@@ -25,6 +25,7 @@ warning:
     instructor:
         image.store: There was an error storing the instructor's image. You can try to reupload it later.
         delete: You have deleted an instructor.
+        remove: You have removed <i>%instructor%</i> from the course <i>%course%</i>.
 
 error:
     login: Invalid credentials.
@@ -47,3 +48,4 @@ error:
         firstName: First name must not be blank.
         lastName: Last name must not be blank.
         notNull: You have to choose an instructor from the dropdown to add to the course.
+        remove: Instructor <i>%instructor%</i> is not assigned to course <i>%course%</i>.

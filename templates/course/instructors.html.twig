@@ -4,7 +4,7 @@
 {% block courseContent %}
     {% if course.instructors is not empty %}
         {% for instructor in course.instructors %}
-            {% include 'course/_instructors_instructor.html.twig' %}
+            {% include 'course/_instructors_instructor.html.twig' with {'instructor': instructor} %}
         {% endfor %}
     {% else %}
         <p>{{ 'course.extra.noInstructors'|trans }}</p>

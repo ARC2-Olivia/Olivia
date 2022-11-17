@@ -92,12 +92,14 @@ user:
         index: Users
         new: New user
         edit: Edit user
+
 instructor:
     title:
         index: Instructors
         new: New instructor
         edit: Edit instructor
     delete: Are you sure you want to delete this instructor?
+    remove: Are you sure you want to remove %instructor% as an instructor from this course?
 
 course:
     title:
