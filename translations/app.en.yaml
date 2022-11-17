@@ -105,6 +105,7 @@ course:
     title:
         index: Courses
         new: New course
+    delete: Are you sure you want to delete the course '%course%'?
     extra:
         noInstructors: There are currently no defined instructors for this course.
 

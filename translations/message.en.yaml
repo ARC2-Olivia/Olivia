@@ -22,6 +22,7 @@ warning:
         userExists: User with that e-mail already exists.
     course:
         image.store: There was an error storing the course image. You can try to reupload it while editing the basic course information.
+        delete: Course <i>%course%</i> has been deleted.
     instructor:
         image.store: There was an error storing the instructor's image. You can try to reupload it later.
         delete: You have deleted an instructor.

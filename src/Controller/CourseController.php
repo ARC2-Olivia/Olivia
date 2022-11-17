@@ -113,6 +113,23 @@ class CourseController extends AbstractController
         return $this->render('course/edit.html.twig', ['course' => $course, 'activeCard' => 'edit', 'form' => $form->createView()]);
     }
 
+    #[Route("/delete/{course}", name: "delete")]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function delete(Course $course, Request $request): Response
+    {
+        $csrfToken = $request->get('_csrf_token');
+        if ($csrfToken !== null && $this->isCsrfTokenValid('course.delete', $csrfToken)) {
+            $courseName = $course->getName();
+            $this->removeCourseImage($course);
+            $this->em->remove($course);
+            $this->em->flush();
+            $this->addFlash('warning', $this->translator->trans('warning.course.delete', ['%course%' => $courseName], 'message'));
+            return $this->redirectToRoute('course_index');
+        }
+
+        return $this->redirectToRoute('course_edit', ['course' => $course->getId()]);
+    }
+
     #[Route("/instructors/{course}/remove/{instructor}", name: "instructor_remove")]
     #[IsGranted('ROLE_MODERATOR')]
     public function removeInstructor(Course $course, Instructor $instructor, Request $request): Response
