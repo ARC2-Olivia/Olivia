@@ -5,6 +5,18 @@
     {{ form_widget(form.lastName) }}
     {{ form_label(form.email) }}
     {{ form_widget(form.email) }}
+    {{ form_label(form.image) }}
+    {{ form_widget(form.image) }}
     {{ form_label(form.institution) }}
     {{ form_widget(form.institution) }}
+    {% if form.institutionAlt is defined %}
+        {{ form_label(form.institutionAlt) }}
+        {{ form_widget(form.institutionAlt) }}
+    {% endif %}
+    {{ form_label(form.biography) }}
+    {{ form_widget(form.biography) }}
+    {% if form.biographyAlt is defined %}
+        {{ form_label(form.biographyAlt) }}
+        {{ form_widget(form.biographyAlt) }}
+    {% endif %}
 {{ form_end(form) }}

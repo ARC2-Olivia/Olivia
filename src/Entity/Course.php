@@ -8,11 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Translatable\Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
-class Course implements Translatable
+class Course extends TranslatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -41,9 +40,6 @@ class Course implements Translatable
 
     #[ORM\ManyToMany(targetEntity: Instructor::class, inversedBy: 'courses')]
     private Collection $instructors;
-
-    #[Gedmo\Locale]
-    private ?String $locale = null;
 
     public function __construct()
     {
@@ -135,13 +131,6 @@ class Course implements Translatable
     public function removeInstructor(Instructor $instructor): self
     {
         $this->instructors->removeElement($instructor);
-
-        return $this;
-    }
-
-    public function setLocale(string $locale): self
-    {
-        $this->locale = $locale;
 
         return $this;
     }

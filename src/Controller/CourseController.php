@@ -69,8 +69,6 @@ class CourseController extends AbstractController
     #[Route("/overview/{course}", name: "overview")]
     public function overview(Course $course, Request $request): Response
     {
-        $course->setLocale($request->getLocale());
-        $this->em->refresh($course);
         return $this->render('course/overview.html.twig', ['course' => $course, 'activeCard' => 'overview']);
     }
 

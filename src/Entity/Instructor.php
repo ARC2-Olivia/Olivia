@@ -5,11 +5,13 @@ namespace App\Entity;
 use App\Repository\InstructorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: InstructorRepository::class)]
-class Instructor
+class Instructor extends TranslatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -28,10 +30,15 @@ class Instructor
     private ?string $email = null;
 
     #[ORM\Column(length: 256, nullable: true)]
+    #[Gedmo\Translatable]
     private ?string $institution = null;
 
     #[ORM\Column(length: 256, nullable: true)]
     private ?string $image = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable]
+    private ?string $biography = null;
 
     #[ORM\ManyToMany(targetEntity: Course::class, mappedBy: 'instructors')]
     private Collection $courses;
@@ -107,6 +114,18 @@ class Instructor
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(?string $biography): self
+    {
+        $this->biography = $biography;
 
         return $this;
     }

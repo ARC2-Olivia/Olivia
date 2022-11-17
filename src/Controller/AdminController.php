@@ -4,12 +4,12 @@ namespace App\Controller;
 
 
 use App\Entity\Instructor;
-use App\Entity\User;
 use App\Form\InstructorType;
 use App\Repository\InstructorRepository;
 use App\Repository\UserRepository;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -23,6 +23,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AdminController extends AbstractController
 {
     use BasicFileManagementTrait;
+
+    private ?EntityManagerInterface $em = null;
+    private ?TranslatorInterface $translator = null;
+
+    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator)
+    {
+        $this->em = $em;
+        $this->translator = $translator;
+    }
 
     #[Route("/", name: "index")]
     public function index()
@@ -45,22 +54,24 @@ class AdminController extends AbstractController
     }
 
     #[Route("/instructor/new", name: "instructor_new")]
-    public function newInstructor(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    public function newInstructor(Request $request): Response
     {
         $instructor = new Instructor();
-        $form = $this->createForm(InstructorType::class, $instructor);
+        $instructor->setLocale($this->getParameter('locale.default'));
+        $form = $this->createForm(InstructorType::class, $instructor, ['include_translatable_fields' => true]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($instructor);
-            $em->flush();
+            $this->em->persist($instructor);
+            $this->em->flush();
             $image = $form->get('image')->getData();
-            $this->storeInstructorImage($image, $instructor, $em, $translator);
-            $this->addFlash('success', $translator->trans('success.instructor.new', [], 'message'));
+            $this->storeInstructorImage($image, $instructor);
+            $this->processInstructorTranslation($instructor, $form);
+            $this->addFlash('success', $this->translator->trans('success.instructor.new', [], 'message'));
             return $this->redirectToRoute('admin_instructor_index');
         } else {
             foreach ($form->getErrors(true) as $error) {
-                $this->addFlash('error', $translator->trans($error->getMessage(), [], 'message'));
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
             }
         }
 
@@ -68,21 +79,21 @@ class AdminController extends AbstractController
     }
 
     #[Route("/instructor/edit/{instructor}", name: "instructor_edit")]
-    public function editInstructor(Instructor $instructor, Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    public function editInstructor(Instructor $instructor, Request $request): Response
     {
         $form = $this->createForm(InstructorType::class, $instructor);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($instructor);
-            $em->flush();
+            $this->em->persist($instructor);
+            $this->em->flush();
             $image = $form->get('image')->getData();
-            if ($image !== null) $this->removeInstructorImage($instructor, $em);
-            $this->storeInstructorImage($image, $instructor, $em, $translator);
-            $this->addFlash('success', $translator->trans('success.instructor.new', [], 'message'));
+            if ($image !== null) $this->removeInstructorImage($instructor);
+            $this->storeInstructorImage($image, $instructor);
+            $this->addFlash('success', $this->translator->trans('success.instructor.new', [], 'message'));
             return $this->redirectToRoute('admin_instructor_index');
         } else {
             foreach ($form->getErrors(true) as $error) {
-                $this->addFlash('error', $translator->trans($error->getMessage(), [], 'message'));
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
             }
         }
 
@@ -90,19 +101,19 @@ class AdminController extends AbstractController
     }
 
     #[Route("/instructor/delete/{instructor}", name: "instructor_delete")]
-    public function deleteInstructor(Instructor $instructor, Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    public function deleteInstructor(Instructor $instructor, Request $request): Response
     {
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('admin.instructor.delete', $csrfToken)) {
-            $this->removeInstructorImage($instructor, $em);
-            $em->remove($instructor);
-            $em->flush();
-            $this->addFlash('warning', $translator->trans('warning.instructor.delete', [], 'message'));
+            $this->removeInstructorImage($instructor);
+            $this->em->remove($instructor);
+            $this->em->flush();
+            $this->addFlash('warning', $this->translator->trans('warning.instructor.delete', [], 'message'));
         }
         return $this->redirectToRoute('admin_instructor_index');
     }
 
-    private function storeInstructorImage(?UploadedFile $image, Instructor $instructor, EntityManagerInterface $em, TranslatorInterface $translator)
+    private function storeInstructorImage(?UploadedFile $image, Instructor $instructor)
     {
         try {
             if ($image !== null) {
@@ -110,20 +121,41 @@ class AdminController extends AbstractController
                 $filenamePrefix = sprintf('instructor-%d-', $instructor->getId());
                 $filename = $this->storeFile($image, $uploadDir, $filenamePrefix);
                 $instructor->setImage($filename);
-                $em->flush();
+                $this->em->flush();
             }
         } catch (\Exception $ex) {
-            $this->addFlash('warning', $translator->trans('warning.instructor.image.store', [], 'message'));
+            $this->addFlash('warning', $this->translator->trans('warning.instructor.image.store', [], 'message'));
         }
     }
 
-    private function removeInstructorImage(Instructor $instructor, EntityManagerInterface $em)
+    private function removeInstructorImage(Instructor $instructor)
     {
         if ($instructor->getImage() !== null) {
             $uploadDir = $this->getParameter('dir.instructor_image');
             $this->removeFile($uploadDir . '/' . $instructor->getImage());
             $instructor->setImage(null);
-            $em->flush();
+            $this->em->flush();
         }
+    }
+
+    private function processInstructorTranslation(Instructor $instructor, \Symfony\Component\Form\FormInterface $form)
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
+
+        $institutionAlt = $form->get('institutionAlt')->getData();
+        if ($institutionAlt !== null && trim($institutionAlt) !== '') {
+            $translationRepository->translate($instructor, 'institution', $localeAlt, $institutionAlt);
+            $translated = true;
+        }
+
+        $biographyAlt = $form->get('biographyAlt')->getData();
+        if ($biographyAlt !== null && trim($biographyAlt) !== '') {
+            $translationRepository->translate($instructor, 'biography', $localeAlt, $biographyAlt);
+            $translated = true;
+        }
+
+        if ($translated) $this->em->flush();
     }
 }

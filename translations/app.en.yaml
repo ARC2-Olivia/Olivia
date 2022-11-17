@@ -65,7 +65,10 @@ form:
                 lastName: Last name
                 email: E-mail
                 institution: Institution
+                institutionAlt: Institution (alternate language)
                 image: Image
+                biography: Biography
+                biographyAlt: Biography (alternate language)
         course:
             label:
                 name: Name
