@@ -36,6 +36,11 @@ class Instructor
     #[ORM\ManyToMany(targetEntity: Course::class, mappedBy: 'instructors')]
     private Collection $courses;
 
+    public function __toString(): string
+    {
+        return $this->firstName . ' ' . $this->getLastName();
+    }
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();

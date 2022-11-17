@@ -1,5 +1,16 @@
 {% extends 'course/_base_course.html.twig' %}
+{% trans_default_domain 'app' %}
 
 {% block courseContent %}
-    testconsol
+    {% if course.instructors is not empty %}
+        {% for instructor in course.instructors %}
+            {% include 'course/_instructors_instructor.html.twig' %}
+        {% endfor %}
+    {% else %}
+        <p>{{ 'course.extra.noInstructors'|trans }}</p>
+    {% endif %}
+    {{ form_start(form) }}
+        <label class="col-9">{{ form_widget(form.instructor) }}</label>
+        <div class="col-3">{{ form_widget(form.submit) }}</div>
+    {{ form_end(form) }}
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Course;
+use App\Entity\Instructor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,6 +15,14 @@ class FileFetchController extends AbstractController
     {
         $dir = $this->getParameter('dir.course_image');
         $filepath = $dir . '/' . $course->getImage();
+        return $this->file($filepath);
+    }
+
+    #[Route("/instructor-image/{instructor}", name: "instructor_image")]
+    public function instructorImage(Instructor $instructor)
+    {
+        $dir = $this->getParameter('dir.instructor_image');
+        $filepath = $dir . '/' . $instructor->getImage();
         return $this->file($filepath);
     }
 }

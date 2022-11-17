@@ -88,3 +88,26 @@
 .course-content p {
     padding: 0;
 }
+
+.course-instructor {
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+    color: rgba(0, 0, 0, 0.9)
+}
+
+.course-instructor-name-and-institution {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.course-instructor-image {
+    height: 40px;
+}
+
+.course-instructor-image img {
+    height: 100%;
+    max-height: 100%;
+    border-radius: 50%;
+}

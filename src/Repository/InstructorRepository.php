@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Instructor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +40,19 @@ class InstructorRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Instructor[] Returns an array of Instructor objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Instructor
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @param Collection $exceptions
+     * @return Instructor[]
+     */
+    public function findAllExcept(Collection $exceptions)
+    {
+        if ($exceptions->isEmpty()) {
+            return $this->findAll();
+        }
+        return $this->createQueryBuilder('i')
+            ->where('i.id NOT IN (:exceptions)')
+            ->setParameter('exceptions', $exceptions)
+            ->getQuery()->getResult()
+        ;
+    }
 }

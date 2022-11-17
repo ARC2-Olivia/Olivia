@@ -12,6 +12,7 @@ success:
         new: Course <i>%courseName%</i> has been successfully created.
     instructor:
         new: You have created a new instructor.
+        add: You have added <i>%instructor%</i> as an instructor for the course <i>%course%</i>.
 
 warning:
     accountConfirmation:
@@ -45,3 +46,4 @@ error:
     instructor:
         firstName: First name must not be blank.
         lastName: Last name must not be blank.
+        notNull: You have to choose an instructor from the dropdown to add to the course.

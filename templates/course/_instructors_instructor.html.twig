@@ -1,0 +1,17 @@
+{% trans_default_domain 'app' %}
+<div class="row">
+    <div class="course-instructor mb-4">
+        <div class="course-instructor-image">
+            <img src="{{ instructor.image is not null ? path('file_fetch_instructor_image', {'instructor': instructor.id}) : asset('build/images/avatar-empty.svg') }}" alt="Instructor image"/>
+        </div>
+        <div class="course-instructor-name-and-institution">
+            <span>{{ instructor }}</span>
+            <span>{{ instructor.institution }}</span>
+        </div>
+        {% if is_granted('ROLE_MODERATOR') %}
+            <div>
+                <button type="button" class="btn btn-theme-white btn-sm bg-red">{{ 'common.remove'|trans }}</button>
+            </div>
+        {% endif %}
+    </div>
+</div>

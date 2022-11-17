@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Course;
+use App\Entity\Instructor;
+use App\Form\CourseInstructorType;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
+use App\Repository\InstructorRepository;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,31 +23,39 @@ class CourseController extends AbstractController
 {
     use BasicFileManagementTrait;
 
+    private ?EntityManagerInterface $em = null;
+    private ?TranslatorInterface $translator = null;
+
+    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator)
+    {
+        $this->em = $em;
+        $this->translator = $translator;
+    }
+
     #[Route("/", name: "index")]
     public function index(CourseRepository $courseRepository): Response
     {
-        /** @var Course[] $courses */
         $courses = $courseRepository->findAll();
         return $this->render('course/index.html.twig', ['courses' => $courses]);
     }
 
     #[Route("/new", name: "new")]
-    public function new(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    public function new(Request $request): Response
     {
         $course = new Course();
         $form = $this->createForm(CourseType::class, $course);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($course);
-            $em->flush();
+            $this->em->persist($course);
+            $this->em->flush();
             $image = $form->get('image')->getData();
-            $this->storeCourseImage($image, $course, $em, $translator);
-            $this->addFlash('success', $translator->trans('success.course.new', ['%courseName%' => $course->getName()], 'message'));
+            $this->storeCourseImage($image, $course);
+            $this->addFlash('success', $this->translator->trans('success.course.new', ['%courseName%' => $course->getName()], 'message'));
             return $this->redirectToRoute('course_index');
         } else {
             foreach ($form->getErrors(true) as $error) {
-                $this->addFlash('error', $translator->trans($error->getMessage(), [], 'message'));
+                $this->addFlash('error', $this->ranslator->trans($error->getMessage(), [], 'message'));
             }
         }
 
@@ -58,33 +69,48 @@ class CourseController extends AbstractController
     }
 
     #[Route("/instructors/{course}", name: "instructors")]
-    public function instructors(Course $course): Response
+    public function instructors(Course $course, Request $request, InstructorRepository $instructorRepository): Response
     {
-        return $this->render('course/instructors.html.twig', ['course' => $course, 'activeCard' => 'instructors']);
+        $selectableInstructors = $instructorRepository->findAllExcept($course->getInstructors());
+        $form = $this->createForm(CourseInstructorType::class, null, ['instructors' => $selectableInstructors]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $instructor = $form->get('instructor')->getData();
+            $course->addInstructor($instructor);
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('success.instructor.add', ['%instructor%' => $instructor, '%course%' => $course->getName()], 'message'));
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('course/instructors.html.twig', ['course' => $course, 'activeCard' => 'instructors', 'form' => $form->createView()]);
     }
 
     #[Route("/edit/{course}", name: "edit")]
-    public function edit(Course $course, Request $request, TranslatorInterface $translator, EntityManagerInterface $em): Response
+    public function edit(Course $course, Request $request): Response
     {
         $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($course);
-            $em->flush();
+            $this->em->persist($course);
+            $this->em->flush();
             $image = $form->get('image')->getData();
-            if ($image !== null) $this->removeCourseImage($course, $em);
-            $this->storeCourseImage($image, $course, $em, $translator);
-            $this->addFlash('success', $translator->trans('success.course.new', ['%courseName%' => $course->getName()], 'message'));
+            if ($image !== null) $this->removeCourseImage($course);
+            $this->storeCourseImage($image, $course);
+            $this->addFlash('success', $this->translator->trans('success.course.new', ['%courseName%' => $course->getName()], 'message'));
         } else {
             foreach ($form->getErrors(true) as $error) {
-                $this->addFlash('error', $translator->trans($error->getMessage(), [], 'message'));
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
             }
         }
 
         return $this->render('course/edit.html.twig', ['course' => $course, 'activeCard' => 'edit', 'form' => $form->createView()]);
     }
 
-    private function storeCourseImage(?UploadedFile $image, Course $course, EntityManagerInterface $em, TranslatorInterface $translator): void
+    private function storeCourseImage(?UploadedFile $image, Course $course): void
     {
         try {
             if ($image !== null) {
@@ -92,20 +118,20 @@ class CourseController extends AbstractController
                 $filenamePrefix = sprintf('course-%d-', $course->getId());
                 $filename = $this->storeFile($image, $uploadDir, $filenamePrefix);
                 $course->setImage($filename);
-                $em->flush();
+                $this->em->flush();
             }
         } catch (\Exception $ex) {
-            $this->addFlash('warning', $translator->trans('warning.course.image.store', [], 'message'));
+            $this->addFlash('warning', $this->translator->trans('warning.course.image.store', [], 'message'));
         }
     }
 
-    private function removeCourseImage(Course $course, EntityManagerInterface $em): void
+    private function removeCourseImage(Course $course): void
     {
         if ($course->getImage() !== null) {
             $uploadDir = $this->getParameter('dir.course_image');
             $this->removeFile($uploadDir . '/' . $course->getImage());
             $course->setImage(null);
-            $em->flush();;
+            $this->em->flush();;
         }
     }
 }

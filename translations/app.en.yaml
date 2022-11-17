@@ -19,6 +19,7 @@ common:
     edit: Edit
     delete: Delete
     new: New
+    remove: Remove
 
 button:
     details: Details
@@ -77,6 +78,7 @@ form:
                 description: Course description...
                 workloadValue: 12 or 2.5
                 tags: GDPR,IT,Security,...
+                instructor: Choose an instructor...
             choices:
                 estimatedWorkload:
                     hours: hour(s)
@@ -101,6 +103,8 @@ course:
     title:
         index: Courses
         new: New course
+    extra:
+        noInstructors: There are currently no defined instructors for this course.
 
 extra:
     free: Free
