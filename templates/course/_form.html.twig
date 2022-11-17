@@ -1,10 +1,18 @@
 {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
     {{ form_label(form.name) }}
     {{ form_widget(form.name) }}
+    {% if form.nameAlt is defined %}
+        {{ form_label(form.nameAlt) }}
+        {{ form_widget(form.nameAlt) }}
+    {% endif %}
     {{ form_label(form.image) }}
     {{ form_widget(form.image) }}
     {{ form_label(form.description) }}
     {{ form_widget(form.description) }}
+    {% if form.descriptionAlt is defined %}
+        {{ form_label(form.descriptionAlt) }}
+        {{ form_widget(form.descriptionAlt) }}
+    {% endif %}
     {{ form_label(form.estimatedWorkload) }}
     <div class="row mb-3">
         <label class="col-6">{{ form_widget(form.estimatedWorkload.workloadValue) }}</label>
@@ -12,4 +20,8 @@
     </div>
     {{ form_label(form.tags) }}
     {{ form_widget(form.tags) }}
+    {% if form.tagsAlt is defined %}
+        {{ form_label(form.tagsAlt) }}
+        {{ form_widget(form.tagsAlt) }}
+    {% endif %}
 {{ form_end(form) }}

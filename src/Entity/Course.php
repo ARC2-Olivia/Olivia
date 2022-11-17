@@ -7,10 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
-class Course
+class Course implements Translatable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,6 +21,7 @@ class Course
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "error.course.name")]
+    #[Gedmo\Translatable]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -26,16 +29,21 @@ class Course
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "error.course.description")]
+    #[Gedmo\Translatable]
     private ?string $description = null;
 
     #[ORM\Column(length: 64, nullable: true)]
     private ?string $estimatedWorkload = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[Gedmo\Translatable]
     private array $tags = [];
 
     #[ORM\ManyToMany(targetEntity: Instructor::class, inversedBy: 'courses')]
     private Collection $instructors;
+
+    #[Gedmo\Locale]
+    private ?String $locale = null;
 
     public function __construct()
     {
@@ -127,6 +135,13 @@ class Course
     public function removeInstructor(Instructor $instructor): self
     {
         $this->instructors->removeElement($instructor);
+
+        return $this;
+    }
+
+    public function setLocale(string $locale): self
+    {
+        $this->locale = $locale;
 
         return $this;
     }

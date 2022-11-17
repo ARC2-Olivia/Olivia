@@ -69,10 +69,13 @@ form:
         course:
             label:
                 name: Name
+                nameAlt: Name (alternate language)
                 description: Description
+                descriptionAlt: Description (alternate language)
                 image: Image (max. 5MB)
                 estimatedWorkload: Estimated workload
-                tags: Tags
+                tags: Comma separated tags
+                tagsAlt: Comma separated tags (alternate language)
             placeholder:
                 name: Course name
                 description: Course description...

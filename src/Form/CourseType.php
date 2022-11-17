@@ -26,11 +26,11 @@ class CourseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $allowedWorkloadTimes = [
-            $this->translator->trans('form.entity.course.choices.estimatedWorkload.hours', [], 'app'),
-            $this->translator->trans('form.entity.course.choices.estimatedWorkload.days', [], 'app'),
-            $this->translator->trans('form.entity.course.choices.estimatedWorkload.weeks', [], 'app'),
-            $this->translator->trans('form.entity.course.choices.estimatedWorkload.months', [], 'app'),
-            $this->translator->trans('form.entity.course.choices.estimatedWorkload.years', [], 'app'),
+            $this->translator->trans('form.entity.course.choices.estimatedWorkload.hours', [], 'app')  => 'H',
+            $this->translator->trans('form.entity.course.choices.estimatedWorkload.days', [], 'app')   => 'D',
+            $this->translator->trans('form.entity.course.choices.estimatedWorkload.weeks', [], 'app')  => 'W',
+            $this->translator->trans('form.entity.course.choices.estimatedWorkload.months', [], 'app') => 'M',
+            $this->translator->trans('form.entity.course.choices.estimatedWorkload.years', [], 'app')  => 'Y',
         ];
         $builder
             ->add('name', TextType::class, [
@@ -65,6 +65,28 @@ class CourseType extends AbstractType
             ])
         ;
         $builder->get('tags')->addModelTransformer(new SimpleArrayToStringTransformer());
+
+        if ($options['include_translatable_fields']) {
+            $builder
+                ->add('nameAlt', TextType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.course.label.nameAlt',
+                    'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.name', [], 'app')]
+                ])
+                ->add('descriptionAlt', TextareaType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.course.label.descriptionAlt',
+                    'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.description', [], 'app')],
+                ])
+
+                ->add('tagsAlt', TextType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.course.label.tagsAlt',
+                    'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.tags', [], 'app')]
+                ])
+            ;
+            $builder->get('tagsAlt')->addModelTransformer(new SimpleArrayToStringTransformer());
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -72,6 +94,7 @@ class CourseType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Course::class,
             'translation_domain' => 'app',
+            'include_translatable_fields' => false,
             'attr' => [
                 'class' => 'd-flex flex-column',
                 'novalidate' => 'novalidate'

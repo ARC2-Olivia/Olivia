@@ -44,9 +44,5 @@ class WorkloadType extends AbstractType
     {
         $resolver->setDefault('allowed_workload_times', []);
         $resolver->setAllowedTypes('allowed_workload_times', 'array');
-        $resolver->setNormalizer('allowed_workload_times', static function(Options $options, mixed $workloadTimes) {
-            if (empty($workloadTimes)) return $workloadTimes;
-            return array_combine($workloadTimes, $workloadTimes);
-        });
     }
 }

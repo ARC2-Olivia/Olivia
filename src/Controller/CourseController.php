@@ -11,9 +11,9 @@ use App\Repository\CourseRepository;
 use App\Repository\InstructorRepository;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +45,8 @@ class CourseController extends AbstractController
     public function new(Request $request): Response
     {
         $course = new Course();
-        $form = $this->createForm(CourseType::class, $course);
+        $course->setLocale($this->getParameter('locale.default'));
+        $form = $this->createForm(CourseType::class, $course, ['include_translatable_fields' => true]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,11 +54,12 @@ class CourseController extends AbstractController
             $this->em->flush();
             $image = $form->get('image')->getData();
             $this->storeCourseImage($image, $course);
+            $this->processCourseTranslation($course, $form);
             $this->addFlash('success', $this->translator->trans('success.course.new', ['%courseName%' => $course->getName()], 'message'));
             return $this->redirectToRoute('course_index');
         } else {
             foreach ($form->getErrors(true) as $error) {
-                $this->addFlash('error', $this->ranslator->trans($error->getMessage(), [], 'message'));
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
             }
         }
 
@@ -65,8 +67,10 @@ class CourseController extends AbstractController
     }
 
     #[Route("/overview/{course}", name: "overview")]
-    public function overview(Course $course): Response
+    public function overview(Course $course, Request $request): Response
     {
+        $course->setLocale($request->getLocale());
+        $this->em->refresh($course);
         return $this->render('course/overview.html.twig', ['course' => $course, 'activeCard' => 'overview']);
     }
 
@@ -170,5 +174,32 @@ class CourseController extends AbstractController
             $course->setImage(null);
             $this->em->flush();;
         }
+    }
+
+    private function processCourseTranslation(Course $course, \Symfony\Component\Form\FormInterface $form): void
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
+
+        $nameAlt = $form->get('nameAlt')->getData();
+        if ($nameAlt !== null && trim($nameAlt) !== '') {
+            $translationRepository->translate($course, 'name', $localeAlt, trim($nameAlt));
+            $translated = true;
+        }
+
+        $descriptionAlt = $form->get('descriptionAlt')->getData();
+        if ($descriptionAlt !== null && trim($descriptionAlt) !== '') {
+            $translationRepository->translate($course, 'description', $localeAlt, trim($descriptionAlt));
+            $translated = true;
+        }
+
+        $tagsAlt = $form->get('tagsAlt')->getData();
+        if ($tagsAlt !== null && count($tagsAlt) > 0) {
+            $translationRepository->translate($course, 'tags', $localeAlt, $tagsAlt);
+            $translated = true;
+        }
+
+        if ($translated) $this->em->flush();
     }
 }
