@@ -90,7 +90,7 @@ class CourseController extends AbstractController
             }
         }
 
-        return $this->render('course/instructors.html.twig', ['course' => $course, 'activeCard' => 'instructors', 'form' => $form->createView()]);
+        return $this->render('course/instructors.html.twig', ['course' => $course, 'activeCard' => 'instructors', 'form' => $form->createView(),]);
     }
 
     #[Route("/edit/{course}", name: "edit")]

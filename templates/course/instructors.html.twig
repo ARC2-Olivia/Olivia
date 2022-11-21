@@ -4,13 +4,19 @@
 {% block courseContent %}
     {% if course.instructors is not empty %}
         {% for instructor in course.instructors %}
-            {% include 'course/_instructors_instructor.html.twig' with {'instructor': instructor} %}
+            {% if loop.last %}
+                {% include 'course/_instructors_instructor.html.twig' with {'instructor': instructor, 'isLast': true} %}
+            {% else %}
+                {% include 'course/_instructors_instructor.html.twig' with {'instructor': instructor} %}
+            {% endif %}
         {% endfor %}
     {% else %}
         <p>{{ 'course.extra.noInstructors'|trans }}</p>
     {% endif %}
-    {{ form_start(form) }}
-        <label class="col-9">{{ form_widget(form.instructor) }}</label>
-        <div class="col-3">{{ form_widget(form.submit) }}</div>
-    {{ form_end(form) }}
+    {% if is_granted('ROLE_MODERATOR') %}
+        {{ form_start(form) }}
+            <label class="col-9">{{ form_widget(form.instructor) }}</label>
+            <div class="col-3">{{ form_widget(form.submit) }}</div>
+        {{ form_end(form) }}
+    {% endif %}
 {% endblock %}
