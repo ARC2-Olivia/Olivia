@@ -1,4 +1,4 @@
-@import "./styles/ress.min";
+@import "./styles/ress.min.css";
 @import "~bootstrap/dist/css/bootstrap-grid.css";
 @import "~bootstrap/dist/css/bootstrap-utilities.css";
 
@@ -12,7 +12,7 @@
 @import "./styles/course.css";
 
 :root {
-    --app-font-default: 'Roboto', sans-serif;
+    --app-font-default: 'Source Sans Pro', sans-serif;
     --app-color-blue: #03a9f5;
     --app-color-dark-blue: #3a526a;
     --app-color-blue-alt: #667e98;
