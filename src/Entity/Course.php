@@ -41,9 +41,13 @@ class Course extends TranslatableEntity
     #[ORM\ManyToMany(targetEntity: Instructor::class, inversedBy: 'courses')]
     private Collection $instructors;
 
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: Lesson::class, orphanRemoval: true)]
+    private Collection $lessons;
+
     public function __construct()
     {
         $this->instructors = new ArrayCollection();
+        $this->lessons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +135,36 @@ class Course extends TranslatableEntity
     public function removeInstructor(Instructor $instructor): self
     {
         $this->instructors->removeElement($instructor);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Lesson>
+     */
+    public function getLessons(): Collection
+    {
+        return $this->lessons;
+    }
+
+    public function addLesson(Lesson $lesson): self
+    {
+        if (!$this->lessons->contains($lesson)) {
+            $this->lessons->add($lesson);
+            $lesson->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesson(Lesson $lesson): self
+    {
+        if ($this->lessons->removeElement($lesson)) {
+            // set the owning side to null (unless already changed)
+            if ($lesson->getCourse() === $this) {
+                $lesson->setCourse(null);
+            }
+        }
 
         return $this;
     }
