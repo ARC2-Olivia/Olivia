@@ -36,10 +36,10 @@
                     </div>
                     <div class="row">
                         <ul class="course-navigation">
-                            <li><a href="{{ path('course_overview', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'overview' %} active{% endif %}">Overview</a></li>
-                            <li><a href="{{ path('course_instructors', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'instructors' %} active{% endif %}">Instructors</a></li>
+                            <li><a href="{{ path('course_overview', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'overview' %} active{% endif %}">{{ 'course.nav.overview'|trans }}</a></li>
+                            <li><a href="{{ path('course_instructors', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'instructors' %} active{% endif %}">{{ 'course.nav.instructors'|trans }}</a></li>
                             {% if is_granted('ROLE_MODERATOR') %}
-                                <li><a href="{{ path('course_edit', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'edit' %} active{% endif %}">Edit</a></li>
+                                <li><a href="{{ path('course_edit', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'edit' %} active{% endif %}">{{ 'course.nav.edit'|trans }}</a></li>
                             {% endif %}
                         </ul>
                     </div>
@@ -50,12 +50,18 @@
             </div>
             <div class="col-12 col-md-3">
                 <div class="card sharp">
-                    <div class="card-text">
-                        <p class="course-free">{{ 'extra.free'|trans }}</p>
-                    </div>
-                    <div class="card-actions">
-                        <a href="#" class="btn btn-theme-white bg-orange w-100 py-4">{{ 'button.startNow'|trans }}</a>
-                    </div>
+                    {% if is_granted('ROLE_MODERATOR') %}
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-theme-white bg-orange w-100 py-4">{{ 'course.nav.lessons'|trans }}</a>
+                        </div>
+                    {% else %}
+                        <div class="card-text">
+                            <p class="course-free">{{ 'extra.free'|trans }}</p>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-theme-white bg-orange w-100 py-4">{{ 'button.startNow'|trans }}</a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
