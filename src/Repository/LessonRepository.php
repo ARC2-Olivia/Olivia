@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Course;
 use App\Entity\Lesson;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,28 +40,25 @@ class LessonRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Lesson[] Returns an array of Lesson objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function nextPositionInCourse(Course $course): int
+    {
+        return $this->createQueryBuilder('l')
+            ->select('COALESCE(MAX(l.position), 1)')
+            ->where('l.course = :course')
+            ->setParameter('course', $course)
+            ->getQuery()->getSingleScalarResult();
+    }
 
-//    public function findOneBySomeField($value): ?Lesson
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @param Course $course
+     * @return Lesson[]
+     */
+    public function findAllForCourseSortedByPosition(Course $course): array
+    {
+        return $this->createQueryBuilder('l')
+            ->where('l.course = :course')
+            ->setParameter('course', $course)
+            ->orderBy('l.position', 'ASC')
+            ->getQuery()->getArrayResult();
+    }
 }

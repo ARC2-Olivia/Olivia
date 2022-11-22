@@ -33,6 +33,8 @@ page:
         index: Olivia | Courses
         new: Olivia | New course
         show: Olivia | Course details
+    lesson:
+        index: Olivia | Lessons
     admin: Olivia | Admin
 
 nav:
@@ -92,6 +94,12 @@ form:
                     weeks: week(s)
                     months: month(s)
                     years: year(s)
+        lesson:
+            label:
+                name: Name
+                description: Description
+                content: Content
+                file: File
 
 user:
     title:
@@ -119,6 +127,13 @@ course:
         edit: Edit
     extra:
         noInstructors: There are currently no defined instructors for this course.
+
+lesson:
+    extra:
+        noLessons: There are currently no defined lessons for this course.
+        text: Text
+        file: File
+        video: Video
 
 extra:
     free: Free

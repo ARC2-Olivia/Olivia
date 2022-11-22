@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.lesson.index'|trans }}{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <div class="row gx-2">
+            <div class="col-12 col-md-9 pt-5 pb-3">
+                <h1 class="course-header-name">{{ course.name }}</h1>
+                <div class="course-header-details">
+                    {% if course.estimatedWorkload is not empty %}
+                        <div class="course-header-details-item">
+                            <svg viewBox="0 0 24 24">
+                                <path style="fill: var(--app-color-orange)" d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z" />
+                            </svg>
+                            <span>{{ course|translate_workload }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12 col-md-3 d-none d-md-block">
+                <div class="course-header-image" style="background-image: url('{{ path('file_fetch_course_image', {'course': course.id}) }}')"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row gx-2 pt-4">
+            <div class="col-12">
+                <div class="container-fluid">
+                    <div class="row">
+                        {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
+                    </div>
+                    <div class="row lesson-content">
+                        {% block lessonContent %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

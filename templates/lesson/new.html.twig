@@ -1,0 +1,57 @@
+{% extends 'lesson/_base_lesson.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block lessonContent %}
+    {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        <div>{{ 'form.entity.lesson.label.content'|trans }}</div>
+        <div class="editor-container mb-3">
+            <div id="editor"></div>
+        </div>
+        <div class="d-flex flex-row-reverse">
+            <button type="submit" class="btn btn-theme-white bg-blue">{{ 'common.submit'|trans }}</button>
+            <a href="{{ path('lesson_course', {'course': course.id}) }}" class="btn btn-link">{{ 'common.cancel'|trans }}</a>
+        </div>
+        {{ form_widget(form.content) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('quill') }}
+    <style>
+        .editor-container {
+            height: 440px;
+            padding-bottom: 42px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('quill') }}
+    <script>
+        window.onload = () => {
+            const quill = new Quill("#editor", {
+                theme: "snow",
+                modules: {
+                    toolbar: [
+                        [{header: []}, {font: []}, {background: []}],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{align: []}, {list: 'ordered'}, {list: 'bullet'}, {indent: '-1'}, {indent: '+1'}],
+                        ['link', 'image']
+                    ]
+                }
+            });
+
+            const form = document.querySelector("form#lesson");
+            form.onsubmit = function(e) {
+                const content = this.querySelector("#lesson_content");
+                content.value = quill.root.innerHTML;
+            };
+        };
+    </script>
+{% endblock %}

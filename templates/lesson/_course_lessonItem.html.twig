@@ -1,0 +1,16 @@
+<div class="lesson-item">
+    {% if lesson.type == constant('TYPE_TEXT', lesson) %}
+        <div class="lesson-item-icon lesson-item-icon--text">
+            <svg viewBox="0 0 24 24">
+                <path fill="currentColor" d="M4,5H20V7H4V5M4,9H20V11H4V9M4,13H20V15H4V13M4,17H14V19H4V17Z" />
+            </svg>
+        </div>
+    {% endif %}
+
+    <div class="lesson-item-name-and-description" href="#">
+        <a class="lesson-item-name" href="#">{{ lesson.name }}</a>
+        {% if lesson.description is not empty %}<p class="lesson-item-description">{{ lesson.description }}</p>{% endif %}
+    </div>
+
+    <div class="lesson-item-actions"></div>
+</div>

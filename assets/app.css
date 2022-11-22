@@ -10,6 +10,7 @@
 @import "./styles/table.css";
 
 @import "./styles/course.css";
+@import "./styles/lesson.css";
 
 :root {
     --app-font-default: 'Source Sans Pro', sans-serif;

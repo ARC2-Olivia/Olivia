@@ -34,6 +34,11 @@ class Lesson
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $position = null;
 
+    public static function getSupportedLessonTypes(): array
+    {
+        return [self::TYPE_TEXT, self::TYPE_FILE, self::TYPE_VIDEO];
+    }
+
     public function getId(): ?int
     {
         return $this->id;

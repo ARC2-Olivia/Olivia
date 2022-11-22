@@ -13,6 +13,8 @@ success:
     instructor:
         new: You have created a new instructor.
         add: You have added <i>%instructor%</i> as an instructor for the course <i>%course%</i>.
+    lesson:
+        new: You have added a new lesson for the course <i>%course%</i>.
 
 warning:
     accountConfirmation:

@@ -1,0 +1,88 @@
+{% extends 'lesson/_base_lesson.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block lessonContent %}
+    <div class="lesson-items">
+        {% for lesson in lessons %}
+            {% include 'lesson/_course_lessonItem.html.twig' with {'lesson': lesson} %}
+        {% else %}
+            <div>{{ 'lesson.extra.noLessons'|trans }}</div>
+        {% endfor %}
+        {% if is_granted('ROLE_MODERATOR') %}
+            <div class="lesson-item--actions">
+                <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'text'}) }}" class="btn btn-link btn-sm">
+                    <svg viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                    </svg>
+                    {{ 'lesson.extra.text'|trans }}
+                </a>
+                <a href="#" class="btn btn-link btn-sm">
+                    <svg viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                    </svg>
+                    {{ 'lesson.extra.file'|trans }}
+                </a>
+                <a href="#" class="btn btn-link btn-sm">
+                    <svg viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                    </svg>
+                    {{ 'lesson.extra.video'|trans }}
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .lesson-items {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1rem;
+        }
+
+        .lesson-item--actions {
+            display: flex;
+            column-gap: 1rem;
+            justify-content: end;
+        }
+
+        .lesson-item--actions svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .lesson-item {
+            display: flex;
+            column-gap: 1rem;
+            align-items: start;
+        }
+
+        .lesson-item-icon svg {
+            --lesson-item-icon-size: 2rem;
+            width: var(--lesson-item-icon-size);
+            height: var(--lesson-item-icon-size);
+        }
+
+        .lesson-item-icon.lesson-item-icon--text {
+            color: var(--app-color-blue);
+        }
+
+        .lesson-item-name-and-description {
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+
+        .lesson-item-name {
+            text-decoration: none;
+            color: unset;
+            font-size: 1.25rem;
+        }
+
+        .lesson-item-description {
+            font-size: 0.875rem;
+        }
+    </style>
+{% endblock %}
