@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Course;
 use App\Entity\Instructor;
+use App\Entity\Lesson;
+use App\Entity\LessonItemFile;
+use App\Entity\LessonItemText;
 use App\Entity\User;
 use App\Form\CourseInstructorType;
 use App\Form\CourseType;
@@ -123,6 +126,20 @@ class CourseController extends AbstractController
         if ($csrfToken !== null && $this->isCsrfTokenValid('course.delete', $csrfToken)) {
             $courseName = $course->getName();
             $this->removeCourseImage($course);
+
+            $lessonRepository = $this->em->getRepository(Lesson::class);
+            $lessonItemTextRepository = $this->em->getRepository(LessonItemText::class);
+            $lessonItemFileRepository = $this->em->getRepository(LessonItemFile::class);
+
+            foreach ($lessonRepository->findBy(['course' => $course]) as $lesson) {
+                if ($lesson->getType() === Lesson::TYPE_TEXT) {
+                    $this->em->remove($lessonItemTextRepository->findOneBy(['lesson' => $lesson]));
+                } elseif ($lesson->getType() === Lesson::TYPE_FILE || $lesson->getType() === Lesson::TYPE_VIDEO) {
+                    $this->em->remove($lessonItemFileRepository->findOneBy(['lesson' => $lesson]));
+                }
+                $this->em->remove($lesson);
+            }
+
             $this->em->remove($course);
             $this->em->flush();
             $this->addFlash('warning', $this->translator->trans('warning.course.delete', ['%course%' => $courseName], 'message'));
