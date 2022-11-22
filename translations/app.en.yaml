@@ -127,6 +127,7 @@ course:
         edit: Edit
     extra:
         noInstructors: There are currently no defined instructors for this course.
+        lessons: lessons
 
 lesson:
     extra:

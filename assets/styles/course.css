@@ -42,6 +42,7 @@
 .course-header-details {
     display: flex;
     font-size: 1.25rem;
+    column-gap: 2rem;
 }
 
 .course-header-details-item {
@@ -53,6 +54,7 @@
 .course-header-details-item svg {
     height: 1.75rem;
     width: 1.75rem;
+    color: var(--app-color-orange)
 }
 
 .course-header-image {

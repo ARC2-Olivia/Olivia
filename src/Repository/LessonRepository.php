@@ -59,6 +59,6 @@ class LessonRepository extends ServiceEntityRepository
             ->where('l.course = :course')
             ->setParameter('course', $course)
             ->orderBy('l.position', 'ASC')
-            ->getQuery()->getArrayResult();
+            ->getQuery()->getResult();
     }
 }
