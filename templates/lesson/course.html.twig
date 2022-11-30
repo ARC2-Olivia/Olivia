@@ -16,13 +16,13 @@
                     </svg>
                     {{ 'lesson.extra.text'|trans }}
                 </a>
-                <a href="#" class="btn btn-link btn-sm">
+                <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'file'}) }}" class="btn btn-link btn-sm">
                     <svg viewBox="0 0 24 24">
                         <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
                     </svg>
                     {{ 'lesson.extra.file'|trans }}
                 </a>
-                <a href="#" class="btn btn-link btn-sm">
+                <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'video'}) }}" class="btn btn-link btn-sm">
                     <svg viewBox="0 0 24 24">
                         <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
                     </svg>
@@ -66,6 +66,14 @@
         }
 
         .lesson-item-icon.lesson-item-icon--text {
+            color: var(--app-color-dark-blue);
+        }
+
+        .lesson-item-icon.lesson-item-icon--file {
+            color: var(--app-color-orange);
+        }
+
+        .lesson-item-icon.lesson-item-icon--video {
             color: var(--app-color-blue);
         }
 

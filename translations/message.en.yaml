@@ -52,3 +52,12 @@ error:
         lastName: Last name must not be blank.
         notNull: You have to choose an instructor from the dropdown to add to the course.
         remove: Instructor <i>%instructor%</i> is not assigned to course <i>%course%</i>.
+    lesson:
+        name: Lesson name must not be empty.
+        file:
+            size: File exceeds the allowed maximum size of 20 megabytes.
+            noFile: A file has to be uploaded.
+            store: There was an error storing the uploaded file for the lesson.
+        video:
+            blank: Video URL is required.
+            store: There was an error storing the uploaded video for the lesson.

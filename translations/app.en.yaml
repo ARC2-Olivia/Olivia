@@ -100,6 +100,7 @@ form:
                 description: Description
                 content: Content
                 file: File
+                video: Video file
 
 user:
     title:

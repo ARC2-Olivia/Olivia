@@ -9,6 +9,7 @@ parameters:
     mail.from: noreply.olivia@foi.hr
     dir.course_image:  '%kernel.project_dir%/public/uploads/course/image'
     dir.instructor_image:  '%kernel.project_dir%/public/uploads/instructor/image'
+    dir.lesson_file: '%kernel.project_dir%/public/uploads/lesson/file'
 
 services:
     # default configuration for services in *this* file
