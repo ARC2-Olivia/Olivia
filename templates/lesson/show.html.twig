@@ -1,0 +1,125 @@
+{% extends 'lesson/_base_lesson.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block lessonContent %}
+    <div class="lesson-sections">
+        <div class="lesson-section-side lesson-section-navigation lesson-content">
+            <h1 class="lesson-section-navigation-caption">{{ lesson.course.name }}</h1>
+            {% for l in lesson.course.lessons %}
+                <a class="lesson-section-navigation-item{% if l.id == lesson.id %} active{% endif %}" href="{{ path('lesson_show', {'lesson': l.id}) }}">
+                    <div class="lesson-section-navigation-item-name-and-type">
+                        <div class="lesson-section-navigation-item-name">{{ l.name }}</div>
+                        <div class="lesson-section-navigation-item-type">{% include 'lesson/_show_lessonType.html.twig' with {'lesson': l} %}</div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+
+        <div class="lesson-section-main lesson-content">
+            <h2 class="lesson-section-main-caption">{{ lesson.name }}</h2>
+            <div class="lesson-section-main-content">
+                {% if lesson.type == constant('TYPE_TEXT', lesson) %}
+                    <div class="ql-editor">{{ lessonItem.text|raw }}</div>
+                {% elseif lesson.type == constant('TYPE_FILE', lesson) %}
+                {% elseif lesson.type == constant('TYPE_VIDEO', lesson) %}
+                    <iframe class="lesson-video" src="{{ lessonItem.videoUrl }}"></iframe>
+                {% endif %}
+            </div>
+            <div class="lesson-section-main-navigation">
+                {% if previousLesson is not null %}
+                    <a href="{{ path('lesson_show', {'lesson': previousLesson.id}) }}" class="lesson-section-main-navigation-previous">Previous</a>
+                {% endif %}
+                {% if nextLesson is not null %}
+                    <a href="{{ path('lesson_show', {'lesson': nextLesson.id}) }}" class="lesson-section-main-navigation-next">Next</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="lesson-section-side lesson-content"></div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('quill') }}
+    <style>
+        .lesson-sections {
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 16px;
+        }
+
+        .lesson-section-side {
+            flex-basis: 0;
+            flex-grow: 1;
+        }
+
+        .lesson-section-main {
+            flex-basis: 0;
+            flex-grow: 4;
+            display: flex;
+            flex-direction: column;
+            row-gap: 16px;
+        }
+
+        .lesson-section-navigation {
+            display: flex;
+            flex-direction: column;
+            row-gap: 24px;
+        }
+
+        .lesson-section-navigation-item {
+            cursor: pointer;
+            padding-left: 24px;
+            border-left: solid 4px #ffffff;
+            text-decoration: none;
+        }
+
+        .lesson-section-navigation-item:hover, .lesson-section-navigation-item.active {
+            border-left-color: var(--app-color-green);
+        }
+
+        .lesson-section-main-caption, .lesson-section-navigation-caption {
+            font-weight: bold;
+            font-size: 20px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lesson-section-navigation-item-name-and-type {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lesson-section-navigation-item-name {
+            color: #000000
+        }
+
+        .lesson-section-navigation-item-type {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .lesson-section-main-content {
+            flex-grow: 1;
+        }
+
+        .lesson-section-main-navigation {
+            clear: both;
+        }
+
+        .lesson-section-main-navigation-previous {
+            float: left;
+            color: var(--app-color-red);
+        }
+
+        .lesson-section-main-navigation-next {
+            float: right;
+            color: var(--app-color-red);
+        }
+
+        .lesson-video {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+{% endblock %}

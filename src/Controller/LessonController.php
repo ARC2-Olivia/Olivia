@@ -97,6 +97,26 @@ class LessonController extends AbstractController
         return $this->render('lesson/new.html.twig', ['course' => $course, 'form' => $form->createView(), 'lessonType' => $lessonType]);
     }
 
+    #[Route("/show/{lesson}", name: "show")]
+    public function show(Lesson $lesson, LessonRepository $lessonRepository, EntityManagerInterface $em): Response
+    {
+        switch ($lesson->getType()) {
+            case Lesson::TYPE_TEXT: $lessonItem = $em->getRepository(LessonItemText::class)->findOneBy(['lesson' => $lesson]); break;
+            case Lesson::TYPE_FILE: $lessonItem = $em->getRepository(LessonItemFile::class)->findOneBy(['lesson' => $lesson]); break;
+            case Lesson::TYPE_VIDEO: $lessonItem = $em->getRepository(LessonItemEmbeddedVideo::class)->findOneBy(['lesson' => $lesson]); break;
+            default: $lessonItem = null;
+        }
+
+        $previousLesson = $lessonRepository->findPreviousLesson($lesson);
+        $nextLesson = $lessonRepository->findNextLesson($lesson);
+        return $this->render('lesson/show.html.twig', [
+            'lesson' => $lesson,
+            'lessonItem' => $lessonItem,
+            'previousLesson' => $previousLesson,
+            'nextLesson' => $nextLesson
+        ]);
+    }
+
     private function handleTextLessonType(\Symfony\Component\Form\FormInterface $form, Lesson $lesson): void
     {
         $lessonItemText = new LessonItemText();

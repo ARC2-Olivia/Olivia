@@ -20,7 +20,7 @@
     {% endif %}
 
     <div class="lesson-item-name-and-description" href="#">
-        <a class="lesson-item-name" href="#">{{ lesson.name }}</a>
+        <a class="lesson-item-name" href="{{ path('lesson_show', {'lesson': lesson.id}) }}">{{ lesson.name }}</a>
         {% if lesson.description is not empty %}<p class="lesson-item-description">{{ lesson.description }}</p>{% endif %}
     </div>
 

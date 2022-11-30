@@ -42,11 +42,12 @@ class LessonRepository extends ServiceEntityRepository
 
     public function nextPositionInCourse(Course $course): int
     {
-        return $this->createQueryBuilder('l')
+        $max = $this->createQueryBuilder('l')
             ->select('COALESCE(MAX(l.position), 1)')
             ->where('l.course = :course')
             ->setParameter('course', $course)
             ->getQuery()->getSingleScalarResult();
+        return $max + 1;
     }
 
     /**
@@ -60,5 +61,25 @@ class LessonRepository extends ServiceEntityRepository
             ->setParameter('course', $course)
             ->orderBy('l.position', 'ASC')
             ->getQuery()->getResult();
+    }
+
+    public function findPreviousLesson(Lesson $lesson): ?Lesson
+    {
+        $previousPosition = $lesson->getPosition() !== null ? $lesson->getPosition() - 1 : 0;
+        return $this->createQueryBuilder('l')
+            ->where('l.course = :course')->andWhere('l.position = :previousPosition')
+            ->setParameters(['course' => $lesson->getCourse(), 'previousPosition' => $previousPosition])
+            ->setMaxResults(1)
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    public function findNextLesson(Lesson $lesson): ?Lesson
+    {
+        $nextPosition = $lesson->getPosition() !== null ? $lesson->getPosition() + 1 : 0;
+        return $this->createQueryBuilder('l')
+            ->where('l.course = :course')->andWhere('l.position = :nextPosition')
+            ->setParameters(['course' => $lesson->getCourse(), 'nextPosition' => $nextPosition])
+            ->setMaxResults(1)
+            ->getQuery()->getOneOrNullResult();
     }
 }

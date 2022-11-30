@@ -35,6 +35,7 @@ page:
         show: Olivia | Course details
     lesson:
         index: Olivia | Lessons
+        show: Olivia | Lesson content
     admin: Olivia | Admin
 
 nav:
@@ -131,6 +132,10 @@ course:
         lessons: lessons
 
 lesson:
+    type:
+        text: Reading
+        file: File
+        video: Video
     extra:
         noLessons: There are currently no defined lessons for this course.
         text: Text
