@@ -1,0 +1,11 @@
+<div class="lesson-section-side lesson-section-navigation lesson-content">
+    <h1 class="lesson-section-navigation-caption">{{ lesson.course.name }}</h1>
+    {% for l in lesson.course.lessons %}
+        <a class="lesson-section-navigation-item{% if l.id == lesson.id %} active{% endif %}" href="{{ path('lesson_show', {'lesson': l.id}) }}">
+            <div class="lesson-section-navigation-item-name-and-type">
+                <div class="lesson-section-navigation-item-name">{{ l.name }}</div>
+                <div class="lesson-section-navigation-item-type">{% include 'lesson/_show_lessonType.html.twig' with {'lesson': l} %}</div>
+            </div>
+        </a>
+    {% endfor %}
+</div>

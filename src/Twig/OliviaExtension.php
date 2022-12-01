@@ -3,12 +3,15 @@
 namespace App\Twig;
 
 use App\Entity\Course;
+use App\Entity\LessonItemEmbeddedVideo;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class OliviaExtension extends AbstractExtension
 {
+    const TEMPLATE_YOUTUBE_EMBED_URL = 'https://www.youtube.com/embed/%s';
+
     private ?TranslatorInterface $translator = null;
 
     public function __construct(TranslatorInterface $translator)
@@ -19,7 +22,8 @@ class OliviaExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('translate_workload', [$this, 'translateWorkload'])
+            new TwigFilter('translate_workload', [$this, 'translateWorkload']),
+            new TwigFilter('youtube_embed_link', [$this, 'getYoutubeEmbedLink']),
         ];
     }
 
@@ -37,5 +41,49 @@ class OliviaExtension extends AbstractExtension
             }
         }
         return '';
+    }
+
+    public function getYoutubeEmbedLink(LessonItemEmbeddedVideo $lessonItem): ?string
+    {
+        $videoUrl = $lessonItem->getVideoUrl();
+
+        if (str_contains($videoUrl, 'youtube')) {
+            // Get YouTube video ID.
+            $explodedUrl = explode('v=', $videoUrl);
+            if (count($explodedUrl) < 2) {
+                return null;
+            }
+            $ytVideoId = $explodedUrl[1];
+
+            // If URL had other parameters, remove them.
+            $ampersandPosition = strpos('&', $ytVideoId);
+            if ($ampersandPosition !== false) {
+                $ytVideoId = substr($ytVideoId, 0, $ampersandPosition);
+            }
+
+            // Return YouTube embed URL.
+            return sprintf(self::TEMPLATE_YOUTUBE_EMBED_URL, $ytVideoId);
+        }
+
+        if (str_contains($videoUrl, 'youtu.be')) {
+            // Get YouTube video ID.
+            $explodedUrl = explode('/', $videoUrl);
+            $explodedUrlCount = count($explodedUrl);
+            if ($explodedUrlCount === 0) {
+                return null;
+            }
+            $ytVideoId = $explodedUrl[$explodedUrlCount - 1];
+
+            // If URL had other parameters, remove them.
+            $ampersandPosition = strpos('&', $ytVideoId);
+            if ($ampersandPosition !== false) {
+                $ytVideoId = substr($ytVideoId, 0, $ampersandPosition);
+            }
+
+            // Return YouTube embed URL.
+            return sprintf(self::TEMPLATE_YOUTUBE_EMBED_URL, $ytVideoId);
+        }
+
+        return null;
     }
 }

@@ -48,4 +48,9 @@ class LessonItemEmbeddedVideo
 
         return $this;
     }
+
+    public function isYoutubeVideo(): bool
+    {
+        return str_contains($this->videoUrl, 'youtube') || str_contains($this->videoUrl, 'youtu.be');
+    }
 }

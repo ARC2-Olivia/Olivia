@@ -60,3 +60,135 @@
 .lesson-item-description {
     font-size: 0.875rem;
 }
+
+.lesson-sections {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 16px;
+    row-gap: 8px;
+}
+
+.lesson-section-side {
+    flex-basis: 0;
+    flex-grow: 1;
+    align-self: start;
+    position: sticky;
+    top: 1rem;
+}
+
+.lesson-section-main {
+    flex-basis: 0;
+    flex-grow: 4;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.lesson-section-navigation {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}
+
+.lesson-section-navigation-item {
+    cursor: pointer;
+    padding-left: 24px;
+    border-left: solid 4px #ffffff;
+    text-decoration: none;
+}
+
+.lesson-section-navigation-item:hover, .lesson-section-navigation-item.active {
+    border-left-color: var(--app-color-green);
+}
+
+.lesson-section-main-caption, .lesson-section-navigation-caption {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.lesson-section-navigation-item-name-and-type {
+    display: flex;
+    flex-direction: column;
+}
+
+.lesson-section-navigation-item-name {
+    color: #000000
+}
+
+.lesson-section-navigation-item-type {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.lesson-section-main-content {
+    flex-grow: 1;
+}
+
+.lesson-section-main-navigation {
+    clear: both;
+}
+
+.lesson-section-main-navigation-previous {
+    float: left;
+    color: var(--app-color-red);
+}
+
+.lesson-section-main-navigation-next {
+    float: right;
+    color: var(--app-color-red);
+}
+
+.card.file-download {
+    text-align: center;
+    padding: 8px;
+}
+
+.card.file-download .card-text {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    align-items: center;
+}
+
+.file-download {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.file-download:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.file-download-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.lesson-video {
+    width: 100%;
+    background-color: #000000;
+}
+
+iframe.lesson-video {
+    height: 100%;
+}
+
+@media screen and (max-width: 1199px) {
+    .lesson-section-main {
+        flex-grow: 2;
+    }
+}
+
+@media screen and (max-width: 919px) {
+    .lesson-section-side {
+        flex-basis: 100%;
+        flex-grow: 0;
+        position: static;
+    }
+
+    .lesson-section-main {
+        flex-basis: 100%;
+        flex-grow: 0;
+    }
+}

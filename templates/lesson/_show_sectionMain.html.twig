@@ -1,0 +1,39 @@
+{% trans_default_domain 'app' %}
+
+<div class="lesson-section-main lesson-content">
+    <h2 class="lesson-section-main-caption">{{ lesson.name }}</h2>
+
+    <div class="lesson-section-main-content">
+        {% if lesson.type == constant('TYPE_TEXT', lesson) %}
+            <div class="ql-editor">{{ lessonItem.text|raw }}</div>
+        {% elseif lesson.type == constant('TYPE_FILE', lesson) %}
+            <a href="{{ path('file_fetch_lesson_file', {'lessonItemFile': lessonItem.id}) }}" class="card raised file-download" download="download">
+                <div class="card-text">
+                    <span class="file-download-caption">{{ 'common.download'|trans }}</span>
+                    <span class="file-download-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+                                </svg>
+                            </span>
+                </div>
+            </a>
+        {% elseif lesson.type == constant('TYPE_VIDEO', lesson) %}
+            {% if lessonItem.youtubeVideo %}
+                <iframe class="lesson-video" src="{{ lessonItem|youtube_embed_link }}"></iframe>
+            {% else %}
+                <video controls class="lesson-video">
+                    <source src="{{ lessonItem.videoUrl }}">
+                </video>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="lesson-section-main-navigation">
+        {% if previousLesson is not null %}
+            <a href="{{ path('lesson_show', {'lesson': previousLesson.id}) }}" class="lesson-section-main-navigation-previous">{{ 'common.previous'|trans }}</a>
+        {% endif %}
+        {% if nextLesson is not null %}
+            <a href="{{ path('lesson_show', {'lesson': nextLesson.id}) }}" class="lesson-section-main-navigation-next">{{ 'common.next'|trans }}</a>
+        {% endif %}
+    </div>
+</div>

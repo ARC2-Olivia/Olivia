@@ -20,6 +20,9 @@ common:
     delete: Delete
     new: New
     remove: Remove
+    next: Next
+    previous: Previous
+    download: Download
 
 button:
     details: Details
