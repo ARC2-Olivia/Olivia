@@ -90,6 +90,11 @@
     row-gap: 24px;
 }
 
+.lesson-section-navigation a {
+    color: unset;
+    text-decoration: none;
+}
+
 .lesson-section-navigation-item {
     cursor: pointer;
     padding-left: 24px;
