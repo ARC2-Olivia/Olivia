@@ -139,11 +139,13 @@ lesson:
         text: Reading
         file: File
         video: Video
+    delete: Are you sure you want to delete the lesson '%lesson%'?
     extra:
         noLessons: There are currently no defined lessons for this course.
         text: Text
         file: File
         video: Video
+        moderation: Moderiranje
 
 extra:
     free: Free

@@ -179,6 +179,18 @@ iframe.lesson-video {
     height: 100%;
 }
 
+.lesson-section-navigation-caption {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+}
+
+.lesson-section-navigation-back-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    color: var(--app-color-red);
+}
+
 @media screen and (max-width: 1199px) {
     .lesson-section-main {
         flex-grow: 2;

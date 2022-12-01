@@ -1,1 +1,27 @@
-<div class="lesson-section-side lesson-content"></div>
+{% trans_default_domain 'app' %}
+
+<div class="lesson-section-side lesson-content">
+    {% if is_granted('ROLE_MODERATOR') %}
+        <div class="lesson-moderation-tools">
+            <div class="lesson-moderation-tools-caption">{{ 'lesson.extra.moderation'|trans }}</div>
+            <a href="#" class="lesson-moderation-tools-item">
+                <svg viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                </svg>
+                <span>{{ 'common.edit'|trans }}</span>
+            </a>
+            <form action="{{ path('lesson_delete', {'lesson': lesson.id}) }}"
+                  method="post"
+                  onsubmit='return confirm("{{ 'lesson.delete'|trans({'%lesson%': lesson.name}) }}");'
+            >
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('lesson.delete') }}"/>
+                <button type="submit" class="lesson-moderation-tools-item w-100">
+                    <svg viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
+                    </svg>
+                    <span>{{ 'common.delete'|trans }}</span>
+                </button>
+            </form>
+        </div>
+    {% endif %}
+</div>

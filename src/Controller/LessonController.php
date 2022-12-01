@@ -117,6 +117,42 @@ class LessonController extends AbstractController
         ]);
     }
 
+    #[Route("/delete/{lesson}", name: "delete")]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function delete(Lesson $lesson, Request $request): Response
+    {
+        $csrfToken = $request->get('_csrf_token');
+        if ($csrfToken !== null && $this->isCsrfTokenValid('lesson.delete', $csrfToken)) {
+            $course = $lesson->getCourse();
+            $lessonName = $lesson->getName();
+            switch ($lesson->getType()) {
+                case Lesson::TYPE_TEXT: {
+                    $lessonItemText = $this->em->getRepository(LessonItemText::class)->findOneBy(['lesson' => $lesson]);
+                    $this->em->remove($lessonItemText);
+                    break;
+                }
+                case Lesson::TYPE_VIDEO: {
+                    $lessonItemEmbeddedVideo = $this->em->getRepository(LessonItemEmbeddedVideo::class)->findOneBy(['lesson' => $lesson]);
+                    $this->em->remove($lessonItemEmbeddedVideo);
+                    break;
+                }
+                case Lesson::TYPE_FILE: {
+                    $lessonItemFile = $this->em->getRepository(LessonItemFile::class)->findOneBy(['lesson' => $lesson]);
+                    $uploadDir = $this->getParameter('dir.lesson_file');
+                    $this->removeFile($uploadDir . '/' . $lessonItemFile->getFilename());
+                    $this->em->remove($lessonItemFile);
+                    break;
+                }
+            }
+            $this->em->remove($lesson);
+            $this->em->flush();
+            $this->addFlash('warning', $this->translator->trans('warning.lesson.delete', ['%lesson%' => $lessonName, '%course%' => $course->getName()], 'message'));
+            return $this->redirectToRoute('lesson_course', ['course' => $course->getId()]);
+        }
+
+        return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+    }
+
     private function handleTextLessonType(\Symfony\Component\Form\FormInterface $form, Lesson $lesson): void
     {
         $lessonItemText = new LessonItemText();
