@@ -12,49 +12,4 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('quill') }}
-    <style>
-        .lesson-moderation-tools {
-            display: flex;
-            flex-direction: column;
-            row-gap: 24px;
-        }
-
-        .lesson-moderation-tools-caption {
-            font-weight: bold;
-            font-size: 20px;
-            padding: 0;
-            margin: 0;
-        }
-
-        .lesson-moderation-tools-item {
-            color: rgba(0, 0, 0, 0.7);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            column-gap: 1rem;
-            position: relative;
-        }
-
-        .lesson-moderation-tools-item:before {
-            content: "";
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            right: -8px;
-            bottom: -8px;
-            background-color: var(--app-color-green);
-            border-radius: 4px;
-            opacity: 0;
-        }
-
-        .lesson-moderation-tools-item:hover:before {
-            opacity: 0.1;
-        }
-
-        .lesson-moderation-tools-item svg {
-            width: 1.25rem;
-            height: 1.25rem;
-            color: var(--app-color-green);
-        }
-    </style>
 {% endblock %}

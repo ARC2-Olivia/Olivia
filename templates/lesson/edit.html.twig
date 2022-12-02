@@ -1,17 +1,24 @@
-{% extends 'lesson/_base_courseLesson.html.twig' %}
+{% extends 'lesson/_base_lesson.html.twig' %}
 {% trans_default_domain 'app' %}
 
 {% block lessonContent %}
-    {% include 'lesson/_form.html.twig' %}
-    <div class="d-flex flex-row-reverse">
-        <button type="submit" class="btn btn-theme-white bg-blue" form="lesson">{{ 'common.submit'|trans }}</button>
-        <a href="{{ path('lesson_course', {'course': course.id}) }}" class="btn btn-link">{{ 'common.cancel'|trans }}</a>
+    <div class="lesson-sections">
+        {% include 'lesson/_show_sectionNav.html.twig' %}
+        <div class="lesson-section-main lesson-content">
+            {% include '_partials/toasts.html.twig' %}
+            <h2 class="lesson-section-main-caption">{{ 'lesson.edit'|trans({'%lesson%': lesson.name})|raw }}</h2>
+            <div class="lesson-section-main-content">
+                {% include 'lesson/_form.html.twig' with {'lessonType': lesson.type} %}
+                <button type="submit" class="btn btn-theme-white bg-blue float-end" form="{{ form.vars.id }}">{{ 'common.submit'|trans }}</button>
+            </div>
+        </div>
+        {% include 'lesson/_show_sectionOther.html.twig' %}
     </div>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    {% if lessonType == constant('App\\Entity\\Lesson::TYPE_TEXT') %}
+    {% if lesson.type == constant('App\\Entity\\Lesson::TYPE_TEXT') %}
         {{ encore_entry_link_tags('quill') }}
         <style>
             .editor-container {
@@ -24,7 +31,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% if lessonType == constant('App\\Entity\\Lesson::TYPE_TEXT') %}
+    {% if lesson.type == constant('App\\Entity\\Lesson::TYPE_TEXT') %}
         {{ encore_entry_script_tags('quill') }}
         <script>
             window.onload = () => {
@@ -39,6 +46,7 @@
                         ]
                     }
                 });
+                quill.root.innerHTML = '{{ lessonItem.text|raw }}';
 
                 const form = document.querySelector("form#lesson");
                 form.onsubmit = function(e) {
