@@ -5,7 +5,7 @@
         </svg>
         {{ lesson.course.name }}
     </a>
-    {% for l in orderedLessons %}
+    {% for l in lesson.course.orderedLessons %}
         <a class="lesson-section-navigation-item{% if l.id == lesson.id %} active{% endif %}" href="{{ path('lesson_show', {'lesson': l.id}) }}">
             <div class="lesson-section-navigation-item-name-and-type">
                 <div class="lesson-section-navigation-item-name">{{ l.name }}</div>

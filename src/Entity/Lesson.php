@@ -5,10 +5,11 @@ namespace App\Entity;
 use App\Repository\LessonRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LessonRepository::class)]
-class Lesson
+class Lesson extends TranslatableEntity
 {
     public const TYPE_TEXT = 'text';
     public const TYPE_FILE = 'file';
@@ -21,9 +22,11 @@ class Lesson
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'error.lesson.name')]
+    #[Gedmo\Translatable]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'lessons')]

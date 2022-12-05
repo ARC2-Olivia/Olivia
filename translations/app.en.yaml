@@ -101,8 +101,11 @@ form:
         lesson:
             label:
                 name: Name
+                nameAlt: Name (alternate language)
                 description: Description
-                content: Content
+                descriptionAlt: Description (alternate language)
+                text: Content
+                textAlt: Content (altenate language)
                 file: File
                 video: Video embed URL
 

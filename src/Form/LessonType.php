@@ -51,15 +51,15 @@ class LessonType extends AbstractType
         ;
 
         if ($lessonType === Lesson::TYPE_TEXT) {
-            $builder->add('content', HiddenType::class, [
-                'label' => 'form.entity.lesson.label.content',
+            $builder->add('text', HiddenType::class, [
                 'mapped' => false,
+                'label' => 'form.entity.lesson.label.text',
                 'data' => $lessonItem?->getText()
             ]);
         } else if ($lessonType === Lesson::TYPE_FILE) {
             $builder->add('file', FileType::class, [
-                'label' => 'form.entity.lesson.label.file',
                 'mapped' => false,
+                'label' => 'form.entity.lesson.label.file',
                 'constraints' => [
                     new Assert\File([
                         'maxSize' => '20M',
@@ -71,14 +71,33 @@ class LessonType extends AbstractType
             ]);
         } else if ($lessonType === Lesson::TYPE_VIDEO) {
             $builder->add('video', TextType::class, [
-                'label' => 'form.entity.lesson.label.video',
                 'mapped' => false,
+                'label' => 'form.entity.lesson.label.video',
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'error.lesson.video.blank'])
                 ],
                 'attr' => ['class' => 'form-input mb-3'],
                 'data' => $lessonItem?->getVideoUrl()
             ]);
+        }
+
+        if ($options['include_translatable_fields']) {
+            $builder
+                ->add('nameAlt', TextType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.lesson.label.nameAlt',
+                    'attr' => ['class' => 'form-input mb-3']
+                ])
+                ->add('descriptionAlt', TextareaType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.lesson.label.descriptionAlt',
+                    'attr' =>['class' => 'form-textarea mb-3']
+                ])
+                ->add('textAlt', HiddenType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.lesson.label.textAlt'
+                ]);
+            ;
         }
     }
 
@@ -88,6 +107,7 @@ class LessonType extends AbstractType
             'data_class' => Lesson::class,
             'translation_domain' => 'app',
             'attr' => ['novalidate' => 'novalidate'],
+            'include_translatable_fields' => false,
             'lesson_type' => Lesson::TYPE_TEXT,
             'lesson_item' => null
         ]);

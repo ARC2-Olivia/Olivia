@@ -28,7 +28,7 @@
         {{ encore_entry_script_tags('quill') }}
         <script>
             window.onload = () => {
-                const quill = new Quill("#editor", {
+                const settings = {
                     theme: "snow",
                     modules: {
                         toolbar: [
@@ -38,12 +38,17 @@
                             ['link', 'image']
                         ]
                     }
-                });
+                };
+
+                const quill = new Quill("#editor", settings);
+                const quillAlt = new Quill("#editor-alt", settings);
 
                 const form = document.querySelector("form#lesson");
                 form.onsubmit = function(e) {
-                    const content = this.querySelector("#lesson_content");
-                    content.value = quill.root.innerHTML;
+                    const text = this.querySelector("#lesson_text");
+                    text.value = quill.root.innerHTML;
+                    const textAlt = this.querySelector("#lesson_textAlt");
+                    textAlt.value = quillAlt.root.innerHTML;
                 };
             };
         </script>

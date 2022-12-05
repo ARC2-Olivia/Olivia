@@ -147,6 +147,19 @@ class Course extends TranslatableEntity
         return $this->lessons;
     }
 
+    /**
+     * @return Collection<int, Lesson>
+     */
+    public function getOrderedLessons(): Collection
+    {
+        $iterator = $this->lessons->getIterator();
+        $iterator->uasort(function(Lesson $lessonA, Lesson $lessonB) {
+            if ($lessonA->getPosition() === $lessonB->getPosition()) return 0;
+            return $lessonA->getPosition() < $lessonB->getPosition() ? -1 : 1;
+        });
+        return new ArrayCollection($iterator->getArrayCopy());
+    }
+
     public function addLesson(Lesson $lesson): self
     {
         if (!$this->lessons->contains($lesson)) {

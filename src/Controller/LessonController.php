@@ -56,7 +56,7 @@ class LessonController extends AbstractController
             $lessonType = Lesson::TYPE_TEXT;
         }
         $lesson = new Lesson();
-        $form = $this->createForm(LessonType::class, $lesson, ['lesson_type' => $lessonType]);
+        $form = $this->createForm(LessonType::class, $lesson, ['lesson_type' => $lessonType, 'include_translatable_fields' => true]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -64,6 +64,7 @@ class LessonController extends AbstractController
             $lesson->setCourse($course);
             $lesson->setPosition($lessonRepository->nextPositionInCourse($course));
             $lessonRepository->save($lesson, true);
+            $this->processLessonTranslation($lesson, $form);
 
             if ($lesson->getType() === Lesson::TYPE_TEXT) {
                 $this->handleTextLessonType($form, $lesson);
@@ -115,8 +116,7 @@ class LessonController extends AbstractController
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
             'previousLesson' => $previousLesson,
-            'nextLesson' => $nextLesson,
-            'orderedLessons' => $orderedLessons
+            'nextLesson' => $nextLesson
         ]);
     }
 
@@ -226,9 +226,10 @@ class LessonController extends AbstractController
             $persist = true;
         }
         $lessonItemText->setLesson($lesson);
-        $lessonItemText->setText($form->get('content')->getData());
+        $lessonItemText->setText($form->get('text')->getData());
         if ($persist) $this->em->persist($lessonItemText);
         $this->em->flush();
+        if ($persist) $this->processTextLessonItemTranslation($form, $lessonItemText);
     }
 
     private function handleFileLessonType(\Symfony\Component\Form\FormInterface $form, Course $course, Lesson $lesson, ?LessonItemFile $lessonItemFile = null): void
@@ -262,5 +263,41 @@ class LessonController extends AbstractController
         $lessonItemEmbeddedVideo->setVideoUrl($form->get('video')->getData());
         if ($persist) $this->em->persist($lessonItemEmbeddedVideo);
         $this->em->flush();
+    }
+
+    private function processLessonTranslation(Lesson $lesson, \Symfony\Component\Form\FormInterface $form): void
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
+
+        $nameAlt = $form->get('nameAlt')->getData();
+        if ($nameAlt !== null && trim($nameAlt) !== '') {
+            $translationRepository->translate($lesson, 'name', $localeAlt, trim($nameAlt));
+            $translated = true;
+        }
+
+        $descriptionAlt = $form->get('descriptionAlt')->getData();
+        if ($descriptionAlt !== null && trim($descriptionAlt) !== '') {
+            $translationRepository->translate($lesson, 'description', $localeAlt, trim($descriptionAlt));
+            $translated = true;
+        }
+
+        if ($translated) $this->em->flush();
+    }
+
+    private function processTextLessonItemTranslation(\Symfony\Component\Form\FormInterface $form, ?LessonItemText $lessonItemText): void
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
+
+        $textAlt = $form->get('textAlt')->getData();
+        if ($textAlt !== null && trim($textAlt) !== '') {
+            $translationRepository->translate($lessonItemText, 'text', $localeAlt, $textAlt);
+            $translated = true;
+        }
+
+        if ($translated) $this->em->flush();
     }
 }

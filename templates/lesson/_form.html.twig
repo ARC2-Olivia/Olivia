@@ -3,15 +3,31 @@
 {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
     {{ form_label(form.name) }}
     {{ form_widget(form.name) }}
+    {% if form.nameAlt is defined %}
+        {{ form_label(form.nameAlt) }}
+        {{ form_widget(form.nameAlt) }}
+    {% endif %}
+
     {{ form_label(form.description) }}
     {{ form_widget(form.description) }}
+    {% if form.descriptionAlt is defined %}
+        {{ form_label(form.descriptionAlt) }}
+        {{ form_widget(form.descriptionAlt) }}
+    {% endif %}
 
     {% if lessonType == constant('App\\Entity\\Lesson::TYPE_TEXT') %}
-        {{ form_label(form.content) }}
+        {{ form_label(form.text) }}
         <div class="editor-container mb-3">
             <div id="editor"></div>
         </div>
-        {{ form_widget(form.content) }}
+        {{ form_widget(form.text) }}
+        {% if form.textAlt is defined %}
+            {{ form_label(form.textAlt) }}
+            <div class="editor-container mb-3">
+                <div id="editor-alt"></div>
+            </div>
+            {{ form_widget(form.textAlt) }}
+        {% endif %}
     {% elseif lessonType == constant('App\\Entity\\Lesson::TYPE_FILE') %}
         {{ form_label(form.file) }}
         {{ form_widget(form.file) }}

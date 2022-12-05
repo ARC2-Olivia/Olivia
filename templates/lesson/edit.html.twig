@@ -50,7 +50,7 @@
 
                 const form = document.querySelector("form#lesson");
                 form.onsubmit = function(e) {
-                    const content = this.querySelector("#lesson_content");
+                    const content = this.querySelector("#lesson_text");
                     content.value = quill.root.innerHTML;
                 };
             };
