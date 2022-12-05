@@ -10,13 +10,14 @@
     row-gap: 1rem;
 }
 
-.lesson-item--actions {
+.lesson-actions {
     display: flex;
     column-gap: 1rem;
     justify-content: end;
+    padding-top: 32px;
 }
 
-.lesson-item--actions svg {
+.lesson-actions svg {
     width: 1.25rem;
     height: 1.25rem;
 }

@@ -24,6 +24,8 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('quill', './assets/quill.js')
+    .addEntry('sortable', './assets/sortable.js')
+    .addEntry('axios', './assets/axios.js')
 
     .copyFiles({
         from: './assets/images',

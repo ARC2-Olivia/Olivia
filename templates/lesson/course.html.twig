@@ -2,33 +2,84 @@
 {% trans_default_domain 'app' %}
 
 {% block lessonContent %}
-    <div class="lesson-items">
+    <div id="lesson-items" class="lesson-items">
         {% for lesson in lessons %}
             {% include 'lesson/_course_lessonItem.html.twig' with {'lesson': lesson} %}
         {% else %}
             <div>{{ 'lesson.extra.noLessons'|trans }}</div>
         {% endfor %}
-        {% if is_granted('ROLE_MODERATOR') %}
-            <div class="lesson-item--actions">
-                <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'text'}) }}" class="btn btn-link btn-sm">
-                    <svg viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                    </svg>
-                    {{ 'lesson.extra.text'|trans }}
-                </a>
-                <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'file'}) }}" class="btn btn-link btn-sm">
-                    <svg viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                    </svg>
-                    {{ 'lesson.extra.file'|trans }}
-                </a>
-                <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'video'}) }}" class="btn btn-link btn-sm">
-                    <svg viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                    </svg>
-                    {{ 'lesson.extra.video'|trans }}
-                </a>
-            </div>
-        {% endif %}
     </div>
+    {% if is_granted('ROLE_MODERATOR') %}
+        <div class="lesson-actions">
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'text'}) }}" class="btn btn-link btn-sm">
+                <svg viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                </svg>
+                {{ 'lesson.extra.text'|trans }}
+            </a>
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'file'}) }}" class="btn btn-link btn-sm">
+                <svg viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                </svg>
+                {{ 'lesson.extra.file'|trans }}
+            </a>
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'video'}) }}" class="btn btn-link btn-sm">
+                <svg viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                </svg>
+                {{ 'lesson.extra.video'|trans }}
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .lesson-item-reorder-handle {
+            cursor: pointer;
+        }
+
+        .lesson-item-reorder-handle-icon svg {
+            height: 2rem;
+            width: 1rem;
+            color: rgba(0, 0, 0, 0.25);
+        }
+
+        .lesson-item.reordering {
+            opacity: 0.5;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if is_granted('ROLE_MODERATOR') %}
+        {{ encore_entry_script_tags('sortable') }}
+        {{ encore_entry_script_tags('axios') }}
+        <script>
+            window.addEventListener("load", () => {
+                new Sortable(document.getElementById("lesson-items"), {
+                    handle: ".lesson-item-reorder-handle",
+                    animation: 100,
+                    ghostClass: 'reordering',
+                    onEnd: (event) => {
+                        const items = Array.from(event.item.parentElement.children);
+                        let reorders = [];
+                        for (let i = 0; i < items.length; i++) {
+                            const item = items[i];
+                            if ("id" in item.dataset) {
+                                reorders.push({ id: item.dataset.id, position: i+1 });
+                            }
+                        }
+                        axios({
+                            url: "{{ path('lesson_reorder') }}",
+                            method: "post",
+                            data: { reorders: reorders }
+                        }).then((response) => { console.log(response); });
+                    }
+                });
+            });
+        </script>
+    {% endif %}
 {% endblock %}

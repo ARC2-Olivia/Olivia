@@ -21,6 +21,7 @@ use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -109,11 +110,13 @@ class LessonController extends AbstractController
 
         $previousLesson = $lessonRepository->findPreviousLesson($lesson);
         $nextLesson = $lessonRepository->findNextLesson($lesson);
+        $orderedLessons = $lessonRepository->findAllForCourseSortedByPosition($lesson->getCourse());
         return $this->render('lesson/show.html.twig', [
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
             'previousLesson' => $previousLesson,
-            'nextLesson' => $nextLesson
+            'nextLesson' => $nextLesson,
+            'orderedLessons' => $orderedLessons
         ]);
     }
 
@@ -196,6 +199,23 @@ class LessonController extends AbstractController
             'lessonItem' => $lessonItem,
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route("/reorder", name: "reorder", methods: ["POST"])]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function reorder(Request $request, LessonRepository $lessonRepository): Response
+    {
+        $data = json_decode($request->getContent());
+        if ($data !== null && isset($data->reorders) && !empty($data->reorders)) {
+            foreach ($data->reorders as $reorder) {
+                $lesson = $lessonRepository->find($reorder->id);
+                $lesson->setPosition(intval($reorder->position));
+            }
+            $this->em->flush();
+            return new JsonResponse(['status' => 'success']);
+        }
+
+        return new JsonResponse(['status' => 'fail']);
     }
 
     private function handleTextLessonType(\Symfony\Component\Form\FormInterface $form, Lesson $lesson, ?LessonItemText $lessonItemText = null): void
