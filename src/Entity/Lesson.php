@@ -54,7 +54,7 @@ class Lesson extends TranslatableEntity
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -90,7 +90,7 @@ class Lesson extends TranslatableEntity
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType(?string $type): self
     {
         $this->type = $type;
 

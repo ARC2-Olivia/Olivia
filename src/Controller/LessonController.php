@@ -192,6 +192,11 @@ class LessonController extends AbstractController
 
             $this->addFlash('success', $this->translator->trans('success.lesson.edit', [], 'message'));
             return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+            $this->em->refresh($lesson);
         }
 
         return $this->render('lesson/edit.html.twig', [
