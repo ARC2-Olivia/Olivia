@@ -2,7 +2,7 @@
 {% trans_default_domain 'app' %}
 
 {% block lessonContent %}
-    <div id="lesson-items" class="lesson-items">
+    <div id="lesson-items" class="lesson-items"{% if is_granted('ROLE_MODERATOR') %} data-path="{{ path('lesson_reorder') }}"{% endif %}>
         {% for lesson in lessons %}
             {% include 'lesson/_course_lessonItem.html.twig' with {'lesson': lesson} %}
         {% else %}
@@ -57,29 +57,6 @@
     {% if is_granted('ROLE_MODERATOR') %}
         {{ encore_entry_script_tags('sortable') }}
         {{ encore_entry_script_tags('axios') }}
-        <script>
-            window.addEventListener("load", () => {
-                new Sortable(document.getElementById("lesson-items"), {
-                    handle: ".lesson-item-reorder-handle",
-                    animation: 100,
-                    ghostClass: 'reordering',
-                    onEnd: (event) => {
-                        const items = Array.from(event.item.parentElement.children);
-                        let reorders = [];
-                        for (let i = 0; i < items.length; i++) {
-                            const item = items[i];
-                            if ("id" in item.dataset) {
-                                reorders.push({ id: item.dataset.id, position: i+1 });
-                            }
-                        }
-                        axios({
-                            url: "{{ path('lesson_reorder') }}",
-                            method: "post",
-                            data: { reorders: reorders }
-                        });
-                    }
-                });
-            });
-        </script>
+        {{ encore_entry_script_tags('lessons.sort') }}
     {% endif %}
 {% endblock %}

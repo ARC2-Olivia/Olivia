@@ -22,10 +22,15 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
+
+    // Generic
     .addEntry('app', './assets/app.js')
     .addEntry('quill', './assets/quill.js')
     .addEntry('sortable', './assets/sortable.js')
     .addEntry('axios', './assets/axios.js')
+
+    // Page specific
+    .addEntry('lessons.sort', './assets/scripts/lessons.sort.js')
 
     .copyFiles({
         from: './assets/images',
