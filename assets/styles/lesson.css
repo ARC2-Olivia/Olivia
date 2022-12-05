@@ -236,6 +236,20 @@ iframe.lesson-video {
     color: var(--app-color-green);
 }
 
+.lesson-item-reorder-handle {
+    cursor: pointer;
+}
+
+.lesson-item-reorder-handle-icon svg {
+    height: 2rem;
+    width: 1rem;
+    color: rgba(0, 0, 0, 0.25);
+}
+
+.lesson-item.reordering {
+    opacity: 0.5;
+}
+
 @media screen and (max-width: 1199px) {
     .lesson-section-main {
         flex-grow: 2;

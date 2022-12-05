@@ -33,25 +33,6 @@
     {% endif %}
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .lesson-item-reorder-handle {
-            cursor: pointer;
-        }
-
-        .lesson-item-reorder-handle-icon svg {
-            height: 2rem;
-            width: 1rem;
-            color: rgba(0, 0, 0, 0.25);
-        }
-
-        .lesson-item.reordering {
-            opacity: 0.5;
-        }
-    </style>
-{% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
     {% if is_granted('ROLE_MODERATOR') %}
