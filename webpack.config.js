@@ -31,6 +31,7 @@ Encore
 
     // Page specific
     .addEntry('lessons.sort', './assets/scripts/lessons.sort.js')
+    .addEntry('notes.update', './assets/scripts/notes.update.js')
 
     .copyFiles({
         from: './assets/images',

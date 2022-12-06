@@ -250,6 +250,50 @@ iframe.lesson-video {
     opacity: 0.5;
 }
 
+.lesson-notes {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    height: 100%;
+}
+
+.lesson-notes-caption {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+    flex-basis: 0;
+}
+
+.lesson-notes-actions {
+    flex-basis: 0;
+}
+
+.lesson-notes-content {
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+.lesson-notes-content > textarea {
+    display: block;
+    border-radius: 4px;
+    border: solid 1px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    padding: 8px;
+    outline: none;
+    min-height: 512px;
+    height: 100%;
+    resize: none;
+}
+
+.lesson-notes-content > textarea.saved {
+    border-color: var(--app-color-green);
+}
+
+.lesson-notes-content > textarea.edited {
+    border-color: var(--app-color-red);
+}
+
 @media screen and (max-width: 1199px) {
     .lesson-section-main {
         flex-grow: 2;
