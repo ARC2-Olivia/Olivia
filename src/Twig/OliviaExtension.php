@@ -6,6 +6,7 @@ use App\Entity\Course;
 use App\Entity\LessonItemEmbeddedVideo;
 use App\Entity\User;
 use App\Security\EnrollmentService;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -17,25 +18,28 @@ class OliviaExtension extends AbstractExtension
 
     private ?TranslatorInterface $translator = null;
     private ?EnrollmentService $enrollmentService = null;
+    private ?Security $security = null;
 
-    public function __construct(TranslatorInterface $translator, EnrollmentService $enrollmentService)
+    public function __construct(TranslatorInterface $translator, EnrollmentService $enrollmentService, Security $security)
     {
         $this->translator = $translator;
         $this->enrollmentService = $enrollmentService;
+        $this->security = $security;
     }
 
     public function getFilters()
     {
         return [
             new TwigFilter('translate_workload', [$this, 'translateWorkload']),
-            new TwigFilter('youtube_embed_link', [$this, 'getYoutubeEmbedLink']),
+            new TwigFilter('youtube_embed_link', [$this, 'getYoutubeEmbedLink'])
         ];
     }
 
     public function getFunctions()
     {
         return [
-            new TwigFunction('is_enrolled', [$this, 'isEnrolled'])
+            new TwigFunction('is_enrolled', [$this, 'isEnrolled']),
+            new TwigFunction('is_user', [$this, 'isUser']),
         ];
     }
 
@@ -99,8 +103,15 @@ class OliviaExtension extends AbstractExtension
         return null;
     }
 
-    public function isEnrolled(Course $course, User $user): bool
+    public function isEnrolled(Course $course,? User $user): bool
     {
-        return $this->enrollmentService->isEnrolled($course, $user);
+        return $user !== null && $this->enrollmentService->isEnrolled($course, $user);
+    }
+
+    public function isUser(): bool
+    {
+        return $this->security->isGranted('ROLE_USER')
+            && !$this->security->isGranted('ROLE_MODERATOR')
+            && !$this->security->isGranted('ROLE_ADMIN');
     }
 }

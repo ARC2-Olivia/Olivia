@@ -8,6 +8,7 @@ use App\Entity\Lesson;
 use App\Entity\LessonItemEmbeddedVideo;
 use App\Entity\LessonItemFile;
 use App\Entity\LessonItemText;
+use App\Entity\Note;
 use App\Form\LessonType;
 use App\Repository\LessonRepository;
 use App\Traits\BasicFileManagementTrait;
@@ -97,23 +98,28 @@ class LessonController extends AbstractController
 
     #[Route("/show/{lesson}", name: "show")]
     #[IsGranted("view", subject: "lesson")]
-    public function show(Lesson $lesson, LessonRepository $lessonRepository, EntityManagerInterface $em): Response
+    public function show(Lesson $lesson, LessonRepository $lessonRepository): Response
     {
         $lessonItem = match ($lesson->getType()) {
-            Lesson::TYPE_TEXT => $em->getRepository(LessonItemText::class)->findOneBy(['lesson' => $lesson]),
-            Lesson::TYPE_FILE => $em->getRepository(LessonItemFile::class)->findOneBy(['lesson' => $lesson]),
-            Lesson::TYPE_VIDEO => $em->getRepository(LessonItemEmbeddedVideo::class)->findOneBy(['lesson' => $lesson]),
+            Lesson::TYPE_TEXT => $this->em->getRepository(LessonItemText::class)->findOneBy(['lesson' => $lesson]),
+            Lesson::TYPE_FILE => $this->em->getRepository(LessonItemFile::class)->findOneBy(['lesson' => $lesson]),
+            Lesson::TYPE_VIDEO => $this->em->getRepository(LessonItemEmbeddedVideo::class)->findOneBy(['lesson' => $lesson]),
             default => null,
         };
 
+        $note = null;
+        if ($this->isGranted('ROLE_USER') && !$this->isGranted('ROLE_MODERATOR') && !$this->isGranted('ROLE_ADMIN')) {
+            $note = $this->em->getRepository(Note::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
+        }
+
         $previousLesson = $lessonRepository->findPreviousLesson($lesson);
         $nextLesson = $lessonRepository->findNextLesson($lesson);
-        $orderedLessons = $lessonRepository->findAllForCourseSortedByPosition($lesson->getCourse());
         return $this->render('lesson/show.html.twig', [
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
             'previousLesson' => $previousLesson,
-            'nextLesson' => $nextLesson
+            'nextLesson' => $nextLesson,
+            'note' => $note
         ]);
     }
 

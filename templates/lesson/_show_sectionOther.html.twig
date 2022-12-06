@@ -1,6 +1,6 @@
 {% trans_default_domain 'app' %}
 
-<div class="lesson-section-side lesson-content">
+<div class="lesson-section-side lesson-content{% if is_user() %} align-self-stretch{% endif %}">
     {% if is_granted('ROLE_MODERATOR') %}
         <div class="lesson-moderation-tools">
             <div class="lesson-moderation-tools-caption">{{ 'lesson.extra.moderation'|trans }}</div>
@@ -22,6 +22,23 @@
                     <span>{{ 'common.delete'|trans }}</span>
                 </button>
             </form>
+        </div>
+    {% elseif is_user() and is_enrolled(lesson.course, app.user) %}
+        <div class="lesson-notes">
+            <h2 class="lesson-notes-caption">{{ 'lesson.extra.notes'|trans }}</h2>
+            <label class="lesson-notes-content">
+                <textarea id="notes">{% if note is not null %}{{ note.text|raw }}{% endif %}</textarea>
+            </label>
+            <div class="lesson-notes-actions">
+                <button id="save-notes" type="button"
+                        class="btn btn-theme-white bg-blue w-100"
+                        data-path="{{ path('note_update') }}"
+                        data-lesson="{{ lesson.id }}"
+                        data-user="{{ app.user.id }}"
+                >
+                    {{ 'common.save'|trans }}
+                </button>
+            </div>
         </div>
     {% endif %}
 </div>

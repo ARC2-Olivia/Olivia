@@ -149,7 +149,12 @@ lesson:
         text: Text
         file: File
         video: Video
-        moderation: Moderiranje
+        moderation: Moderation
+        notes: Notes
+
+note:
+    extra:
+        displayError: There has been an problem loading the notes widget. Refresh the page to try and load it again or, if the problem persists, report the problem to the Olivia Team.
 
 extra:
     free: Free
