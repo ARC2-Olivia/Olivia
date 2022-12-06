@@ -44,10 +44,14 @@ class Course extends TranslatableEntity
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: Lesson::class, orphanRemoval: true)]
     private Collection $lessons;
 
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: Enrollment::class, orphanRemoval: true)]
+    private Collection $enrollments;
+
     public function __construct()
     {
         $this->instructors = new ArrayCollection();
         $this->lessons = new ArrayCollection();
+        $this->enrollments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,6 +180,36 @@ class Course extends TranslatableEntity
             // set the owning side to null (unless already changed)
             if ($lesson->getCourse() === $this) {
                 $lesson->setCourse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Enrollment>
+     */
+    public function getEnrollments(): Collection
+    {
+        return $this->enrollments;
+    }
+
+    public function addEnrollment(Enrollment $enrollment): self
+    {
+        if (!$this->enrollments->contains($enrollment)) {
+            $this->enrollments->add($enrollment);
+            $enrollment->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnrollment(Enrollment $enrollment): self
+    {
+        if ($this->enrollments->removeElement($enrollment)) {
+            // set the owning side to null (unless already changed)
+            if ($enrollment->getCourse() === $this) {
+                $enrollment->setCourse(null);
             }
         }
 

@@ -8,12 +8,7 @@ use App\Entity\Lesson;
 use App\Entity\LessonItemEmbeddedVideo;
 use App\Entity\LessonItemFile;
 use App\Entity\LessonItemText;
-use App\Entity\User;
-use App\Form\CourseInstructorType;
-use App\Form\CourseType;
 use App\Form\LessonType;
-use App\Repository\CourseRepository;
-use App\Repository\InstructorRepository;
 use App\Repository\LessonRepository;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,6 +37,7 @@ class LessonController extends AbstractController
     }
 
     #[Route("/course/{course}", name: "course")]
+    #[IsGranted("view", subject: "course")]
     public function course(Course $course, LessonRepository $lessonRepository): Response
     {
         $lessons = $lessonRepository->findAllForCourseSortedByPosition($course);
@@ -100,6 +96,7 @@ class LessonController extends AbstractController
     }
 
     #[Route("/show/{lesson}", name: "show")]
+    #[IsGranted("view", subject: "lesson")]
     public function show(Lesson $lesson, LessonRepository $lessonRepository, EntityManagerInterface $em): Response
     {
         $lessonItem = match ($lesson->getType()) {

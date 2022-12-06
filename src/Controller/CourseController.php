@@ -12,6 +12,7 @@ use App\Form\CourseInstructorType;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
 use App\Repository\InstructorRepository;
+use App\Security\EnrollmentService;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
@@ -164,6 +165,16 @@ class CourseController extends AbstractController
             }
         }
         return $this->redirectToRoute('course_instructors', ['course' => $course->getId()]);
+    }
+
+    #[Route("/enroll/{course}", name: "enroll")]
+    #[IsGranted("enroll", subject: "course")]
+    public function enroll(Course $course, EnrollmentService $enrollmentService): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $enrollmentService->enroll($course, $user);
+        return $this->redirectToRoute('lesson_course', ['course' => $course->getId()]);
     }
 
     private function storeCourseImage(?UploadedFile $image, Course $course): void

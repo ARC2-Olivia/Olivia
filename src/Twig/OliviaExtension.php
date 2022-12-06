@@ -4,19 +4,24 @@ namespace App\Twig;
 
 use App\Entity\Course;
 use App\Entity\LessonItemEmbeddedVideo;
+use App\Entity\User;
+use App\Security\EnrollmentService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class OliviaExtension extends AbstractExtension
 {
     const TEMPLATE_YOUTUBE_EMBED_URL = 'https://www.youtube.com/embed/%s';
 
     private ?TranslatorInterface $translator = null;
+    private ?EnrollmentService $enrollmentService = null;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, EnrollmentService $enrollmentService)
     {
         $this->translator = $translator;
+        $this->enrollmentService = $enrollmentService;
     }
 
     public function getFilters()
@@ -24,6 +29,13 @@ class OliviaExtension extends AbstractExtension
         return [
             new TwigFilter('translate_workload', [$this, 'translateWorkload']),
             new TwigFilter('youtube_embed_link', [$this, 'getYoutubeEmbedLink']),
+        ];
+    }
+
+    public function getFunctions()
+    {
+        return [
+            new TwigFunction('is_enrolled', [$this, 'isEnrolled'])
         ];
     }
 
@@ -85,5 +97,10 @@ class OliviaExtension extends AbstractExtension
         }
 
         return null;
+    }
+
+    public function isEnrolled(Course $course, User $user): bool
+    {
+        return $this->enrollmentService->isEnrolled($course, $user);
     }
 }
