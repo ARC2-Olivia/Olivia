@@ -1,4 +1,6 @@
-<div class="lesson-item" data-id="{{ lesson.id }}">
+{% trans_default_domain 'app' %}
+
+<div class="lesson-item" data-id="{{ lessonInfo.lesson.id }}">
     {% if is_granted('ROLE_MODERATOR') %}
         <div class="lesson-item-reorder-handle lesson-item-reorder-handle-icon">
             <svg viewBox="6 0 12 24">
@@ -7,19 +9,19 @@
         </div>
     {% endif %}
 
-    {% if lesson.type == constant('TYPE_TEXT', lesson) %}
+    {% if lessonInfo.lesson.type == constant('TYPE_TEXT', lessonInfo.lesson) %}
         <div class="lesson-item-icon lesson-item-icon--text">
             <svg viewBox="0 0 24 24">
                 <path fill="currentColor" d="M4,5H20V7H4V5M4,9H20V11H4V9M4,13H20V15H4V13M4,17H14V19H4V17Z" />
             </svg>
         </div>
-    {% elseif lesson.type == constant('TYPE_FILE', lesson) %}
+    {% elseif lessonInfo.lesson.type == constant('TYPE_FILE', lessonInfo.lesson) %}
         <div class="lesson-item-icon lesson-item-icon--file">
             <svg viewBox="0 0 24 24">
                 <path fill="currentColor" d="M14,2L20,8V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2H14M18,20V9H13V4H6V20H18M12,19L8,15H10.5V12H13.5V15H16L12,19Z" />
             </svg>
         </div>
-    {% elseif lesson.type == constant('TYPE_VIDEO', lesson) %}
+    {% elseif lessonInfo.lesson.type == constant('TYPE_VIDEO', lessonInfo.lesson) %}
         <div class="lesson-item-icon lesson-item-icon--video">
             <svg viewBox="0 0 24 24">
                 <path fill="currentColor" d="M15,8V16H5V8H15M16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5V7A1,1 0 0,0 16,6Z" />
@@ -28,9 +30,22 @@
     {% endif %}
 
     <div class="lesson-item-name-and-description" href="#">
-        <a class="lesson-item-name" href="{{ path('lesson_show', {'lesson': lesson.id}) }}">{{ lesson.name }}</a>
-        {% if lesson.description is not empty %}<p class="lesson-item-description">{{ lesson.description }}</p>{% endif %}
+        <a class="lesson-item-name" href="{{ lessonInfo.showUrl }}">{{ lessonInfo.lesson.name }}</a>
+        {% if lessonInfo.lesson.description is not empty %}<p class="lesson-item-description">{{ lessonInfo.lesson.description }}</p>{% endif %}
     </div>
 
-    <div class="lesson-item-actions"></div>
+    <div class="lesson-item-actions">
+        {% if is_user() %}
+            {% set completionClassAddition = lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-orange-outline' %}
+            {% set completionText = lessonInfo.completed ? 'lesson.completion.done'|trans : 'lesson.completion.undone'|trans %}
+            <button type="button"
+                    class="completion-marker w-100 btn {{ completionClassAddition }}"
+                    data-path="{{ lessonInfo.toggleUrl }}"
+                    data-text-done="{{ 'lesson.completion.done'|trans }}"
+                    data-text-undone="{{ 'lesson.completion.undone'|trans }}"
+            >
+                {{ completionText }}
+            </button>
+        {% endif %}
+    </div>
 </div>

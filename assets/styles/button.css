@@ -77,3 +77,14 @@
     padding: 0 8px;
     height: 28px;
 }
+
+.btn.btn-thematic-orange-outline {
+    color: var(--app-color-orange);
+    border: solid 1px var(--app-color-orange);
+    background-color: white;
+}
+
+.btn.btn-thematic-orange-outline:hover {
+    color: white;
+    background-color: var(--app-color-orange);
+}

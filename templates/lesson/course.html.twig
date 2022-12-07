@@ -3,8 +3,8 @@
 
 {% block lessonContent %}
     <div id="lesson-items" class="lesson-items"{% if is_granted('ROLE_MODERATOR') %} data-path="{{ path('lesson_reorder') }}"{% endif %}>
-        {% for lesson in lessons %}
-            {% include 'lesson/_course_lessonItem.html.twig' with {'lesson': lesson} %}
+        {% for lessonInfo in lessonsInfo %}
+            {% include 'lesson/_course_lessonItem.html.twig' with {'lessonInfo': lessonInfo} %}
         {% else %}
             <div>{{ 'lesson.extra.noLessons'|trans }}</div>
         {% endfor %}
@@ -35,9 +35,12 @@
 
 {% block javascripts %}
     {{ parent() }}
+    {{ encore_entry_script_tags('axios') }}
     {% if is_granted('ROLE_MODERATOR') %}
         {{ encore_entry_script_tags('sortable') }}
-        {{ encore_entry_script_tags('axios') }}
         {{ encore_entry_script_tags('lessons.sort') }}
+    {% endif %}
+    {% if is_user() %}
+        {{ encore_entry_script_tags('lessons.completion.outer') }}
     {% endif %}
 {% endblock %}

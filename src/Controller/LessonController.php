@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Course;
-use App\Entity\Instructor;
 use App\Entity\Lesson;
+use App\Entity\LessonCompletion;
 use App\Entity\LessonItemEmbeddedVideo;
 use App\Entity\LessonItemFile;
 use App\Entity\LessonItemText;
 use App\Entity\Note;
 use App\Form\LessonType;
+use App\Repository\LessonCompletionRepository;
 use App\Repository\LessonRepository;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,10 +40,20 @@ class LessonController extends AbstractController
 
     #[Route("/course/{course}", name: "course")]
     #[IsGranted("view", subject: "course")]
-    public function course(Course $course, LessonRepository $lessonRepository): Response
+    public function course(Course $course, LessonRepository $lessonRepository, LessonCompletionRepository $lessonCompletionRepository): Response
     {
         $lessons = $lessonRepository->findAllForCourseSortedByPosition($course);
-        return $this->render('lesson/course.html.twig', ['course' => $course, 'lessons' => $lessons]);
+        $lessonsInfo = [];
+        foreach ($lessons as $lesson) {
+            $lessonCompletion = $lessonCompletionRepository->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
+            $lessonsInfo[] = [
+                'lesson' => $lesson,
+                'completed' => $lessonCompletion !== null ? $lessonCompletion->isCompleted() : false,
+                'showUrl' => $this->generateUrl('lesson_show', ['lesson' => $lesson->getId()]),
+                'toggleUrl' => $this->generateUrl('lesson_toggle_completed', ['lesson' => $lesson->getId()])
+            ];
+        }
+        return $this->render('lesson/course.html.twig', ['course' => $course, 'lessonsInfo' => $lessonsInfo]);
     }
 
     #[Route("/course/{course}/new/{lessonType}", name: "new", defaults: ['lessonType' => Lesson::TYPE_TEXT])]
@@ -224,6 +235,24 @@ class LessonController extends AbstractController
         }
 
         return new JsonResponse(['status' => 'fail']);
+    }
+
+    #[Route("/toggle-completed/{lesson}", name: "toggle_completed", methods: ["PATCH"])]
+    public function toggleCompleted(Lesson $lesson, Request $request, LessonCompletionRepository $lessonCompletionRepository): JsonResponse
+    {
+        $response = ['success' => false];
+
+        try {
+            $lessonCompletion = $lessonCompletionRepository->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
+            if ($lessonCompletion === null) $lessonCompletion = (new LessonCompletion())->setLesson($lesson)->setUser($this->getUser());
+            $lessonCompletion->toggleCompleted();
+            $lessonCompletionRepository->save($lessonCompletion, true);
+            $response['success'] = true;
+        } catch (\Exception $ex) {
+        }
+
+        if ($response['success']) $response['action'] = $lessonCompletion->isCompleted() ? 'done' : 'undone';
+        return new JsonResponse($response);
     }
 
     private function handleTextLessonType(\Symfony\Component\Form\FormInterface $form, Lesson $lesson, ?LessonItemText $lessonItemText = null): void

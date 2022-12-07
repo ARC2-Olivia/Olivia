@@ -87,3 +87,7 @@ header {
 .bg-red {
     background-color: var(--app-color-red);
 }
+
+.bg-green {
+    background-color: var(--app-color-green);
+}

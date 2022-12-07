@@ -144,6 +144,9 @@ lesson:
         video: Video
     delete: Are you sure you want to delete the lesson '%lesson%'?
     edit: Editing lesson <i>%lesson%</i>
+    completion:
+        done: Done
+        undone: Mark as done
     extra:
         noLessons: There are currently no defined lessons for this course.
         text: Text
