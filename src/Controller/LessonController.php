@@ -40,19 +40,9 @@ class LessonController extends AbstractController
 
     #[Route("/course/{course}", name: "course")]
     #[IsGranted("view", subject: "course")]
-    public function course(Course $course, LessonRepository $lessonRepository, LessonCompletionRepository $lessonCompletionRepository): Response
+    public function course(Course $course): Response
     {
-        $lessons = $lessonRepository->findAllForCourseSortedByPosition($course);
-        $lessonsInfo = [];
-        foreach ($lessons as $lesson) {
-            $lessonCompletion = $lessonCompletionRepository->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
-            $lessonsInfo[] = [
-                'lesson' => $lesson,
-                'completed' => $lessonCompletion !== null ? $lessonCompletion->isCompleted() : false,
-                'showUrl' => $this->generateUrl('lesson_show', ['lesson' => $lesson->getId()]),
-                'toggleUrl' => $this->generateUrl('lesson_toggle_completed', ['lesson' => $lesson->getId()])
-            ];
-        }
+        $lessonsInfo = $this->getLessonsInfo($course);
         return $this->render('lesson/course.html.twig', ['course' => $course, 'lessonsInfo' => $lessonsInfo]);
     }
 
@@ -123,11 +113,13 @@ class LessonController extends AbstractController
             $note = $this->em->getRepository(Note::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
         }
 
+        $lessonsInfo = $this->getLessonsInfo($lesson->getCourse());
         $previousLesson = $lessonRepository->findPreviousLesson($lesson);
         $nextLesson = $lessonRepository->findNextLesson($lesson);
         return $this->render('lesson/show.html.twig', [
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
+            'lessonsInfo' => $lessonsInfo,
             'previousLesson' => $previousLesson,
             'nextLesson' => $nextLesson,
             'note' => $note
@@ -336,5 +328,23 @@ class LessonController extends AbstractController
         }
 
         if ($translated) $this->em->flush();
+    }
+
+    private function getLessonsInfo(Course $course): array
+    {
+        $lessonRepository = $this->em->getRepository(Lesson::class);
+        $lessonCompletionRepository = $this->em->getRepository(LessonCompletion::class);
+        $lessons = $lessonRepository->findAllForCourseSortedByPosition($course);
+        $lessonsInfo = [];
+        foreach ($lessons as $lesson) {
+            $lessonCompletion = $lessonCompletionRepository->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
+            $lessonsInfo[] = [
+                'lesson' => $lesson,
+                'completed' => $lessonCompletion !== null ? $lessonCompletion->isCompleted() : false,
+                'showUrl' => $this->generateUrl('lesson_show', ['lesson' => $lesson->getId()]),
+                'toggleUrl' => $this->generateUrl('lesson_toggle_completed', ['lesson' => $lesson->getId()])
+            ];
+        }
+        return $lessonsInfo;
     }
 }

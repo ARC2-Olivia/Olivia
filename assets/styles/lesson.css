@@ -103,10 +103,12 @@
 }
 
 .lesson-section-navigation-item {
-    cursor: pointer;
+    display: flex;
+    align-items: center;
     padding-left: 24px;
     border-left: solid 4px #ffffff;
     text-decoration: none;
+    column-gap: 16px;
 }
 
 .lesson-section-navigation-item:hover, .lesson-section-navigation-item.active {

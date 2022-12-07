@@ -5,12 +5,19 @@
         </svg>
         {{ lesson.course.name }}
     </a>
-    {% for l in lesson.course.orderedLessons %}
-        <a class="lesson-section-navigation-item{% if l.id == lesson.id %} active{% endif %}" href="{{ path('lesson_show', {'lesson': l.id}) }}">
-            <div class="lesson-section-navigation-item-name-and-type">
-                <div class="lesson-section-navigation-item-name">{{ l.name }}</div>
-                <div class="lesson-section-navigation-item-type">{% include 'lesson/_show_lessonType.html.twig' with {'lesson': l} %}</div>
-            </div>
-        </a>
+    {% for lessonInfo in lessonsInfo %}
+        <div class="lesson-section-navigation-item{% if lessonInfo.lesson.id == lesson.id %} active{% endif %}">
+            <button class="completion-marker btn btn-round {{ lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-gray-to-green' }}"
+                    data-path="{{ lessonInfo.toggleUrl }}"
+            >
+                <svg class="lesson-section-navigation-item-completion-icon" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                </svg>
+            </button>
+            <a class="lesson-section-navigation-item-name-and-type" href="{{ lessonInfo.showUrl }}">
+                <div class="lesson-section-navigation-item-name">{{ lessonInfo.lesson.name }}</div>
+                <div class="lesson-section-navigation-item-type">{% include 'lesson/_show_lessonType.html.twig' with {'lesson': lessonInfo.lesson} %}</div>
+            </a>
+        </div>
     {% endfor %}
 </div>

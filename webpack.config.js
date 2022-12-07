@@ -32,6 +32,7 @@ Encore
     // Page specific
     .addEntry('lessons.sort', './assets/scripts/lessons.sort.js')
     .addEntry('lessons.completion.outer', './assets/scripts/lessons.completion.outer.js')
+    .addEntry('lessons.completion.inner', './assets/scripts/lessons.completion.inner.js')
     .addEntry('notes.update', './assets/scripts/notes.update.js')
 
     .copyFiles({
