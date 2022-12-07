@@ -12,7 +12,7 @@ use App\Form\CourseInstructorType;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
 use App\Repository\InstructorRepository;
-use App\Security\EnrollmentService;
+use App\Service\EnrollmentService;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;

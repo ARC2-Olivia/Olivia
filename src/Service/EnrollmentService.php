@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace App\Service;
 
 use App\Entity\Course;
 use App\Entity\Enrollment;

@@ -4,6 +4,7 @@ namespace App\Security;
 
 use App\Entity\Lesson;
 use App\Entity\User;
+use App\Service\EnrollmentService;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;

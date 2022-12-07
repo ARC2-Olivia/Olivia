@@ -5,7 +5,7 @@ namespace App\Twig;
 use App\Entity\Course;
 use App\Entity\LessonItemEmbeddedVideo;
 use App\Entity\User;
-use App\Security\EnrollmentService;
+use App\Service\EnrollmentService;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
