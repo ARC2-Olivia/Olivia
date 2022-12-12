@@ -2,8 +2,6 @@
 
 namespace App\EventSubscriber;
 
-use App\Controller\CourseController;
-use App\Controller\LessonController;
 use App\Entity\Course;
 use App\Entity\Lesson;
 use App\Entity\User;
@@ -16,12 +14,14 @@ use Symfony\Component\Security\Core\Security;
 
 class EduLogSubscriber implements EventSubscriberInterface
 {
+    private ?bool $enabled = null;
     private ?Security $security = null;
     private ?EntityManagerInterface $em = null;
     private ?EduLogService $eduLogService = null;
 
-    public function __construct(Security $security, EntityManagerInterface $em, EduLogService $eduLogService)
+    public function __construct(bool $enabled, Security $security, EntityManagerInterface $em, EduLogService $eduLogService)
     {
+        $this->enabled = $enabled;
         $this->security = $security;
         $this->em = $em;
         $this->eduLogService = $eduLogService;
@@ -34,7 +34,7 @@ class EduLogSubscriber implements EventSubscriberInterface
 
     public function handleEduLogging(ControllerEvent $event)
     {
-        if ($this->security->getUser() === null) return;
+        if (!$this->enabled || $this->security->getUser() === null) return;
 
         $isUser = $this->security->isGranted('ROLE_USER')
             && !$this->security->isGranted('ROLE_MODERATOR')

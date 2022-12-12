@@ -10,6 +10,7 @@ parameters:
     dir.course_image:  '%kernel.project_dir%/public/uploads/course/image'
     dir.instructor_image:  '%kernel.project_dir%/public/uploads/instructor/image'
     dir.lesson_file: '%kernel.project_dir%/public/uploads/lesson/file'
+    edulog.enabled: false
 
 services:
     # default configuration for services in *this* file
@@ -28,3 +29,6 @@ services:
 
     App\EventSubscriber\LocaleSubscriber:
         arguments: ['@Gedmo\Translatable\TranslatableListener', '%locale.default%']
+
+    App\EventSubscriber\EduLogSubscriber:
+        arguments: ['%edulog.enabled%']
