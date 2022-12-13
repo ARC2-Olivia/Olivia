@@ -26,4 +26,9 @@ class InvalidLessonTypeAndLessonItemCombinationException extends \Exception
     {
         return self::forLessonType(Lesson::TYPE_VIDEO, $invalidLessonItemClass, $code, $previous);
     }
+
+    public static function forQuizLessonType(string $invalidLessonItemClass, int $code = 0, ?\Throwable $previous = null): self
+    {
+        return self::forLessonType(Lesson::TYPE_QUIZ, $invalidLessonItemClass, $code, $previous);
+    }
 }

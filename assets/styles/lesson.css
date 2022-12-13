@@ -46,6 +46,10 @@
     color: var(--app-color-blue);
 }
 
+.lesson-item-icon.lesson-item-icon--quiz {
+    color: var(--app-color-red);
+}
+
 .lesson-item-name-and-description {
     display: flex;
     flex-direction: column;

@@ -6,9 +6,10 @@ use App\Repository\LessonItemQuizRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: LessonItemQuizRepository::class)]
-class LessonItemQuiz
+class LessonItemQuiz extends TranslatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,9 +19,6 @@ class LessonItemQuiz
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Lesson $lesson = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'quiz', targetEntity: QuizQuestion::class, orphanRemoval: true)]
     private Collection $questions;
@@ -43,18 +41,6 @@ class LessonItemQuiz
     public function setLesson(?Lesson $lesson): self
     {
         $this->lesson = $lesson;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }

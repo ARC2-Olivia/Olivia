@@ -108,6 +108,8 @@ form:
                 textAlt: Content (altenate language)
                 file: File
                 video: Video embed URL
+                quizName: Quiz name
+                quizNameAlt: Quiz name (alternate language)
 
 user:
     title:
@@ -142,6 +144,7 @@ lesson:
         text: Reading
         file: File
         video: Video
+        quiz: Quiz
     delete: Are you sure you want to delete the lesson '%lesson%'?
     edit: Editing lesson <i>%lesson%</i>
     completion:
@@ -152,6 +155,7 @@ lesson:
         text: Text
         file: File
         video: Video
+        quiz: Quiz
         moderation: Moderation
         notes: Notes
 

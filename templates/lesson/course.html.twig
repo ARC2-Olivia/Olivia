@@ -29,6 +29,12 @@
                 </svg>
                 {{ 'lesson.extra.video'|trans }}
             </a>
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'quiz'}) }}" class="btn btn-link btn-sm">
+                <svg viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                </svg>
+                {{ 'lesson.extra.quiz'|trans }}
+            </a>
         </div>
     {% endif %}
 {% endblock %}

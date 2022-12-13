@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Lesson;
 use App\Entity\LessonItemEmbeddedVideo;
 use App\Entity\LessonItemFile;
+use App\Entity\LessonItemQuiz;
 use App\Entity\LessonItemText;
 use App\Exception\InvalidLessonTypeAndLessonItemCombinationException;
 use App\Exception\UnsupportedLessonTypeException;
@@ -35,7 +36,8 @@ class LessonType extends AbstractType
         if ($lessonItem !== null) {
             if ($lessonType === Lesson::TYPE_TEXT && !($lessonItem instanceof LessonItemText)) throw InvalidLessonTypeAndLessonItemCombinationException::forTextLessonType($lessonItem::class);
             if ($lessonType === Lesson::TYPE_FILE && !($lessonItem instanceof LessonItemFile)) throw InvalidLessonTypeAndLessonItemCombinationException::forFileLessonType($lessonItem::class);
-            if ($lessonType === Lesson::TYPE_VIDEO && !($lessonItem instanceof LessonItemEmbeddedVideo)) throw InvalidLessonTypeAndLessonItemCombinationException::forVideoLessonType($lessonItem::class);;
+            if ($lessonType === Lesson::TYPE_VIDEO && !($lessonItem instanceof LessonItemEmbeddedVideo)) throw InvalidLessonTypeAndLessonItemCombinationException::forVideoLessonType($lessonItem::class);
+            if ($lessonType === Lesson::TYPE_QUIZ && !($lessonItem instanceof LessonItemQuiz)) throw InvalidLessonTypeAndLessonItemCombinationException::forQuizLessonType($lessonItem::class);
         }
 
         $builder
@@ -45,7 +47,7 @@ class LessonType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'form.entity.lesson.label.description',
-                'attr' =>['class' => 'form-textarea mb-3']
+                'attr' => ['class' => 'form-textarea mb-3']
             ])
             ->add('type', HiddenType::class, ['data' => $options['lesson_type']]);
         ;
@@ -83,21 +85,10 @@ class LessonType extends AbstractType
 
         if ($options['include_translatable_fields']) {
             $builder
-                ->add('nameAlt', TextType::class, [
-                    'mapped' => false,
-                    'label' => 'form.entity.lesson.label.nameAlt',
-                    'attr' => ['class' => 'form-input mb-3']
-                ])
-                ->add('descriptionAlt', TextareaType::class, [
-                    'mapped' => false,
-                    'label' => 'form.entity.lesson.label.descriptionAlt',
-                    'attr' =>['class' => 'form-textarea mb-3']
-                ])
-                ->add('textAlt', HiddenType::class, [
-                    'mapped' => false,
-                    'label' => 'form.entity.lesson.label.textAlt'
-                ]);
+                ->add('nameAlt', TextType::class, ['mapped' => false, 'label' => 'form.entity.lesson.label.nameAlt', 'attr' => ['class' => 'form-input mb-3']])
+                ->add('descriptionAlt', TextareaType::class, ['mapped' => false, 'label' => 'form.entity.lesson.label.descriptionAlt', 'attr' => ['class' => 'form-textarea mb-3']])
             ;
+            if ($lessonType === Lesson::TYPE_TEXT) $builder->add('textAlt', HiddenType::class, ['mapped' => false, 'label' => 'form.entity.lesson.label.textAlt']);
         }
     }
 
