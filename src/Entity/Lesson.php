@@ -14,6 +14,7 @@ class Lesson extends TranslatableEntity
     public const TYPE_TEXT = 'text';
     public const TYPE_FILE = 'file';
     public const TYPE_VIDEO = 'video';
+    public const TYPE_QUIZ = 'quiz';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -41,7 +42,7 @@ class Lesson extends TranslatableEntity
 
     public static function getSupportedLessonTypes(): array
     {
-        return [self::TYPE_TEXT, self::TYPE_FILE, self::TYPE_VIDEO];
+        return [self::TYPE_TEXT, self::TYPE_FILE, self::TYPE_VIDEO, self::TYPE_QUIZ];
     }
 
     public function getId(): ?int
