@@ -1,0 +1,7 @@
+{% if lessonItem.youtubeVideo %}
+    <iframe class="lesson-video" src="{{ lessonItem|youtube_embed_link }}"></iframe>
+{% else %}
+    <video controls class="lesson-video">
+        <source src="{{ lessonItem.videoUrl }}">
+    </video>
+{% endif %}
