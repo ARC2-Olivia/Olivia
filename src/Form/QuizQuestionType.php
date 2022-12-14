@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\QuizQuestion;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+class QuizQuestionType extends AbstractType
+{
+    private ?TranslatorInterface $translator = null;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $correctAnswerChoices = [
+            $this->translator->trans('common.falseValue', [], 'app') => false,
+            $this->translator->trans('common.trueValue', [], 'app') => true
+        ];
+
+        $builder
+            ->add('text', TextareaType::class, ['label' => 'form.entity.quizQuestion.label.text', 'attr' => ['class' => 'form-textarea mb-3']])
+            ->add('correctAnswer', ChoiceType::class, ['label' => 'form.entity.quizQuestion.label.correctAnswer', 'choices' => $correctAnswerChoices, 'attr' => ['class' => 'form-select mb-3']])
+            ->add('explanation', TextareaType::class, ['label' => 'form.entity.quizQuestion.label.explanation', 'attr' => ['class' => 'form-textarea mb-3']])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => QuizQuestion::class,
+            'translation_domain' => 'app',
+            'attr' => ['novalidate' => 'novalidate']
+        ]);
+    }
+}

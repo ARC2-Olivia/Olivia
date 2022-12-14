@@ -1,0 +1,19 @@
+{% extends 'lesson/_base_lesson.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block lessonContent %}
+    <div class="lesson-sections">
+        {% include 'lesson/_show_sectionNav.html.twig' %}
+        <div class="lesson-section-main lesson-content">
+            {% include '_partials/toasts.html.twig' %}
+            <div class="lesson-section-main-content">
+                {% include 'lesson/quiz/_form.html.twig' %}
+                <div class="d-flex flex-row-reverse">
+                    <button type="submit" class="btn btn-theme-white bg-blue" form="{{ form.vars.id }}">{{ 'common.submit'|trans }}</button>
+                    <a href="{{ path('lesson_show', {'lesson': lesson.id}) }}" class="btn btn-link">{{ 'common.cancel'|trans }}</a>
+                </div>
+            </div>
+        </div>
+        {% include 'lesson/_show_sectionOther.html.twig' %}
+    </div>
+{% endblock %}

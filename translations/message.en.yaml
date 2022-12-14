@@ -15,7 +15,10 @@ success:
         add: You have added <i>%instructor%</i> as an instructor for the course <i>%course%</i>.
     lesson:
         new: You have added a new lesson for the course <i>%course%</i>.
-        edit: Lesson has been editted.
+        edit: Lesson has been edited.
+    quizQuestion:
+        new: You have added a new question to the course.
+        edit: Question has been edited.
 
 warning:
     accountConfirmation:
@@ -64,3 +67,6 @@ error:
         video:
             blank: Video URL is required.
             store: There was an error storing the uploaded video for the lesson.
+    quizQuestion:
+        text: Question text must not be blank.
+        explanation: Explanation text must not be blank.

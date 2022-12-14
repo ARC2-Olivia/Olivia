@@ -7,9 +7,12 @@ use App\Entity\Lesson;
 use App\Entity\LessonCompletion;
 use App\Entity\LessonItemEmbeddedVideo;
 use App\Entity\LessonItemFile;
+use App\Entity\LessonItemQuiz;
 use App\Entity\LessonItemText;
 use App\Entity\Note;
+use App\Entity\QuizQuestion;
 use App\Form\LessonType;
+use App\Form\QuizQuestionType;
 use App\Repository\LessonCompletionRepository;
 use App\Repository\LessonRepository;
 use App\Traits\BasicFileManagementTrait;
@@ -97,6 +100,30 @@ class LessonController extends AbstractController
         return $this->render('lesson/new.html.twig', ['course' => $course, 'form' => $form->createView(), 'lessonType' => $lessonType]);
     }
 
+    #[Route("/quiz/{lesson}/new-question", name: "new_quiz_question")]
+    #[IsGranted("add_quiz_question", subject: "lesson")]
+    public function newQuizQuestion(Lesson $lesson, Request $request): Response
+    {
+        $quizQuestion = new QuizQuestion();
+        $form = $this->createForm(QuizQuestionType::class, $quizQuestion);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $quizQuestion->setLesson($lesson);
+            $this->em->persist($quizQuestion);
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('success.quizQuestion.new', [], 'message'));
+            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+        } else {
+            foreach ($form->getErrors() as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        $lessonsInfo = $this->getLessonsInfo($lesson->getCourse());
+        return $this->render('lesson/quiz/new.html.twig', ['lesson' => $lesson, 'lessonsInfo' => $lessonsInfo, 'form' => $form->createView()]);
+    }
+
     #[Route("/show/{lesson}", name: "show")]
     #[IsGranted("view", subject: "lesson")]
     public function show(Lesson $lesson, LessonRepository $lessonRepository): Response
@@ -105,6 +132,7 @@ class LessonController extends AbstractController
             Lesson::TYPE_TEXT => $this->em->getRepository(LessonItemText::class)->findOneBy(['lesson' => $lesson]),
             Lesson::TYPE_FILE => $this->em->getRepository(LessonItemFile::class)->findOneBy(['lesson' => $lesson]),
             Lesson::TYPE_VIDEO => $this->em->getRepository(LessonItemEmbeddedVideo::class)->findOneBy(['lesson' => $lesson]),
+            Lesson::TYPE_QUIZ => $this->em->getRepository(QuizQuestion::class)->findBy(['lesson' => $lesson]),
             default => null,
         };
 
@@ -205,9 +233,11 @@ class LessonController extends AbstractController
             $this->em->refresh($lesson);
         }
 
+        $lessonsInfo = $this->getLessonsInfo($lesson->getCourse());
         return $this->render('lesson/edit.html.twig', [
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
+            'lessonsInfo' => $lessonsInfo,
             'form' => $form->createView()
         ]);
     }
