@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Security;
 class LessonVoter extends Voter
 {
     const VIEW = 'view';
+    const ADD_QUIZ_QUESTION = 'add_quiz_question';
 
     private ?Security $security = null;
     private ?EnrollmentService $enrollmentService = null;
@@ -29,7 +30,7 @@ class LessonVoter extends Voter
      */
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return $subject instanceof Lesson && $attribute === self::VIEW;
+        return $subject instanceof Lesson && in_array($attribute, [self::VIEW, self::ADD_QUIZ_QUESTION]);
     }
 
     /**
@@ -48,6 +49,10 @@ class LessonVoter extends Voter
             return $this->canView($subject, $user);
         }
 
+        if ($attribute === self::ADD_QUIZ_QUESTION) {
+            return $this->canAddQuizQuestion($subject, $user);
+        }
+
         return false;
     }
 
@@ -55,6 +60,11 @@ class LessonVoter extends Voter
     {
         return $this->security->isGranted('ROLE_MODERATOR')
             || ($this->security->isGranted('ROLE_USER') && $this->enrollmentService->isEnrolled($lesson->getCourse(), $user));
+    }
+
+    private function canAddQuizQuestion(Lesson $lesson, User $user): bool
+    {
+        return $this->security->isGranted('ROLE_MODERATOR') && $lesson->getType() === Lesson::TYPE_QUIZ;
     }
 
 }
