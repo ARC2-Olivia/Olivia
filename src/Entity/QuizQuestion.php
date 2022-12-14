@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\QuizQuestionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: QuizQuestionRepository::class)]
 class QuizQuestion
@@ -14,14 +15,16 @@ class QuizQuestion
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'questions')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?LessonItemQuiz $quiz = null;
+    private ?Lesson $lesson = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'error.quizQuestion.text')]
     private ?string $text = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'error.quizQuestion.explanation')]
     private ?string $explanation = null;
 
     #[ORM\Column]
@@ -32,14 +35,14 @@ class QuizQuestion
         return $this->id;
     }
 
-    public function getQuiz(): ?LessonItemQuiz
+    public function getLesson(): ?Lesson
     {
-        return $this->quiz;
+        return $this->lesson;
     }
 
-    public function setQuiz(?LessonItemQuiz $quiz): self
+    public function setLesson(?Lesson $lesson): self
     {
-        $this->quiz = $quiz;
+        $this->lesson = $lesson;
 
         return $this;
     }
