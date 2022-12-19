@@ -11,6 +11,7 @@
 
 @import "./styles/course.css";
 @import "./styles/lesson.css";
+@import "./styles/quizQuestion.css";
 
 :root {
     --app-font-default: 'Source Sans Pro', sans-serif;

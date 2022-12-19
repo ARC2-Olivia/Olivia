@@ -88,3 +88,23 @@
     color: white;
     background-color: var(--app-color-orange);
 }
+
+.btn.btn-round {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding: 0;
+    min-width: unset;
+    width: 32px;
+    height: 32px;
+}
+
+.btn.btn-thematic-gray-to-green {
+    background-color: rgba(0, 0, 0, 0.125);
+    color: white;
+}
+
+.btn.btn-thematic-gray-to-green:hover {
+    background-color: var(--app-color-green);
+}

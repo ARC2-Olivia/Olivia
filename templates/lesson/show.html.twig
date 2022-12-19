@@ -12,67 +12,8 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('quill') }}
-    <style>
-        .btn.btn-round {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            padding: 0;
-            min-width: unset;
-            width: 32px;
-            height: 32px;
-        }
-
-        .btn.btn-thematic-gray-to-green {
-            background-color: rgba(0, 0, 0, 0.125);
-            color: white;
-        }
-
-        .btn.btn-thematic-gray-to-green:hover {
-            background-color: var(--app-color-green);
-        }
-
-        .lesson-section-navigation-item-completion-icon {
-            width: 24px;
-            height: 24px;
-        }
-
-        .quiz-questions-overview {
-            display: flex;
-            flex-direction: column;
-            row-gap: 24px;
-        }
-
-        .quiz-questions-overview hr {
-            border-color: rgba(0, 0, 0, 0.25);
-        }
-
-        .quiz-questions-overview .quiz-question {
-            display: flex;
-            column-gap: 8px;
-        }
-
-        .quiz-questions-overview .quiz-question-main {
-            display: flex;
-            flex-direction: column;
-            row-gap: 4px;
-            flex-basis: 0;
-            flex-grow: 1;
-        }
-
-        .quiz-questions-overview .quiz-question-text {
-            font-weight: 600;
-        }
-
-        .quiz-questions-overview .quiz-question-explanation {
-            font-style: italic;
-        }
-
-        .quiz-question-overview .quiz-question-side {
-            flex-basis: 0;
-        }
-    </style>
+    {% if lesson.type == constant('App\\Entity\\Lesson::TYPE_QUIZ') %}
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
