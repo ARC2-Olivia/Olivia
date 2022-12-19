@@ -39,4 +39,19 @@ class QuizQuestionController extends BaseController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route("/delete/{quizQuestion}", name: "delete", methods: ["POST"])]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function delete(QuizQuestion $quizQuestion, Request $request): Response
+    {
+        $lesson = $quizQuestion->getQuiz()->getLesson();
+        $csrfToken = $request->request->get('_csrf_token');
+        if ($csrfToken !== null && $this->isCsrfTokenValid('quiz.question.delete', $csrfToken)) {
+            $this->em->remove($quizQuestion);
+            $this->em->flush();
+            $this->addFlash('warning', $this->translator->trans('warning.quizQuestion.delete', ['%lesson%' => $lesson->getName()], 'message'));
+        }
+
+        return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+    }
 }
