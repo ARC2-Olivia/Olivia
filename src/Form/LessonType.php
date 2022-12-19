@@ -12,6 +12,7 @@ use App\Exception\UnsupportedLessonTypeException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,8 +27,9 @@ class LessonType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $lessonType = $options['lesson_type'];
+        /** @var LessonItemText|LessonItemFile|LessonItemEmbeddedVideo|LessonItemQuiz $lessonItem */
         $lessonItem = $options['lesson_item'];
+        $lessonType = $options['lesson_type'];
 
         if (!in_array($lessonType, Lesson::getSupportedLessonTypes())) {
             throw UnsupportedLessonTypeException::withDefaultMessage();
@@ -41,23 +43,13 @@ class LessonType extends AbstractType
         }
 
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'form.entity.lesson.label.name',
-                'attr' => ['class' => 'form-input mb-3']
-            ])
-            ->add('description', TextareaType::class, [
-                'label' => 'form.entity.lesson.label.description',
-                'attr' => ['class' => 'form-textarea mb-3']
-            ])
+            ->add('name', TextType::class, ['label' => 'form.entity.lesson.label.name', 'attr' => ['class' => 'form-input mb-3']])
+            ->add('description', TextareaType::class, ['label' => 'form.entity.lesson.label.description', 'attr' => ['class' => 'form-textarea mb-3']])
             ->add('type', HiddenType::class, ['data' => $options['lesson_type']]);
         ;
 
         if ($lessonType === Lesson::TYPE_TEXT) {
-            $builder->add('text', HiddenType::class, [
-                'mapped' => false,
-                'label' => 'form.entity.lesson.label.text',
-                'data' => $lessonItem?->getText()
-            ]);
+            $builder->add('text', HiddenType::class, ['mapped' => false, 'label' => 'form.entity.lesson.label.text', 'data' => $lessonItem?->getText()]);
         } else if ($lessonType === Lesson::TYPE_FILE) {
             $builder->add('file', FileType::class, [
                 'mapped' => false,
@@ -80,6 +72,17 @@ class LessonType extends AbstractType
                 ],
                 'attr' => ['class' => 'form-input mb-3'],
                 'data' => $lessonItem?->getVideoUrl()
+            ]);
+        } else if ($lessonType === Lesson::TYPE_QUIZ) {
+            $builder->add('passingPercentage', NumberType::class, [
+                'mapped' => false,
+                'label' => 'form.entity.lesson.label.passingPercentage',
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'error.lesson.quiz.blank']),
+                    new Assert\Range(['min' => 0, 'max' => 100, 'notInRangeMessage' => 'error.lesson.quiz.range'])
+                ],
+                'attr' => ['class' => 'form-input mb-3', 'min' => 0, 'max' => 100],
+                'data' => $lessonItem?->getPassingPercentage()
             ]);
         }
 

@@ -110,8 +110,7 @@ form:
                 textAlt: Content (altenate language)
                 file: File
                 video: Video embed URL
-                quizName: Quiz name
-                quizNameAlt: Quiz name (alternate language)
+                passingPercentage: Passing percentage
         quizQuestion:
             label:
                 text: Question text
@@ -169,6 +168,7 @@ lesson:
 quizQuestion:
     add: Add question
     delete: Are you sure you want to delete this question?
+    edit: Editing a quiz question
 
 note:
     extra:

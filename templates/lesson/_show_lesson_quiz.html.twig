@@ -1,10 +1,9 @@
 {% trans_default_domain 'app' %}
 
-{% if is_user() %}
-{% elseif is_granted('ROLE_MODERATOR') %}
+{% if is_granted('ROLE_MODERATOR') %}
 
     <div class="quiz-questions-overview">
-        {% for question in lessonItem %}
+        {% for question in lessonItem.quizQuestions %}
             <div class="quiz-question">
                 <div class="quiz-question-main">
                     <div class="quiz-question-text">{{ question.text }}</div>
@@ -15,7 +14,7 @@
                     <div class="quiz-question-explanation">{{ question.explanation }}</div>
                 </div>
                 <div class="quiz-question-side align-self-end">
-                    <a href="#" class="btn btn-theme-white bg-green">{{ 'common.edit'|trans }}</a>
+                    <a href="{{ path('quiz_question_edit', {'quizQuestion': question.id}) }}" class="btn btn-theme-white bg-green">{{ 'common.edit'|trans }}</a>
                     <a href="#" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</a>
                 </div>
             </div>

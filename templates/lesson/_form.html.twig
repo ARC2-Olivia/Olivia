@@ -34,5 +34,8 @@
     {% elseif lessonType == constant('App\\Entity\\Lesson::TYPE_VIDEO') %}
         {{ form_label(form.video) }}
         {{ form_widget(form.video) }}
+    {% elseif lessonType == constant('App\\Entity\\Lesson::TYPE_QUIZ') %}
+        {{ form_label(form.passingPercentage) }}
+        {{ form_widget(form.passingPercentage) }}
     {% endif %}
 {{ form_end(form) }}

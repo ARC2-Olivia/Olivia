@@ -15,6 +15,7 @@ use App\Form\LessonType;
 use App\Form\QuizQuestionType;
 use App\Repository\LessonCompletionRepository;
 use App\Repository\LessonRepository;
+use App\Service\LessonService;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
@@ -34,18 +35,20 @@ class LessonController extends AbstractController
 
     private ?EntityManagerInterface $em = null;
     private ?TranslatorInterface $translator = null;
+    private ?LessonService $lessonService = null;
 
-    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator)
+    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, LessonService $lessonService)
     {
         $this->em = $em;
         $this->translator = $translator;
+        $this->lessonService = $lessonService;
     }
 
     #[Route("/course/{course}", name: "course")]
     #[IsGranted("view", subject: "course")]
     public function course(Course $course): Response
     {
-        $lessonsInfo = $this->getLessonsInfo($course);
+        $lessonsInfo = $this->lessonService->getLessonsInfo($course, $this->getUser());
         return $this->render('lesson/course.html.twig', ['course' => $course, 'lessonsInfo' => $lessonsInfo]);
     }
 
@@ -87,6 +90,8 @@ class LessonController extends AbstractController
                     $this->em->flush();
                     return $this->redirectToRoute('lesson_new', ['course' => $course->getId()]);
                 }
+            } else if ($lesson->getType() === Lesson::TYPE_QUIZ) {
+                $this->handleQuizLessonType($form, $lesson);
             }
 
             $this->addFlash('success', $this->translator->trans('success.lesson.new', ['%course%' => $course->getName()], 'message'));
@@ -107,20 +112,26 @@ class LessonController extends AbstractController
         $quizQuestion = new QuizQuestion();
         $form = $this->createForm(QuizQuestionType::class, $quizQuestion);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $quizQuestion->setLesson($lesson);
-            $this->em->persist($quizQuestion);
-            $this->em->flush();
-            $this->addFlash('success', $this->translator->trans('success.quizQuestion.new', [], 'message'));
-            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
-        } else {
-            foreach ($form->getErrors() as $error) {
-                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+        $quiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
+        if ($quiz !== null) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $quizQuestion->setQuiz($quiz);
+                $this->em->persist($quizQuestion);
+                $this->em->flush();
+                $this->addFlash('success', $this->translator->trans('success.quizQuestion.new', [], 'message'));
+                return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+            } else {
+                foreach ($form->getErrors() as $error) {
+                    $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+                }
             }
+        } else {
+            $this->addFlash('error', $this->translator->trans('error.lesson.quiz.type', [], 'message'));
+            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
         }
 
-        $lessonsInfo = $this->getLessonsInfo($lesson->getCourse());
+        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
         return $this->render('lesson/quiz/new.html.twig', ['lesson' => $lesson, 'lessonsInfo' => $lessonsInfo, 'form' => $form->createView()]);
     }
 
@@ -128,11 +139,12 @@ class LessonController extends AbstractController
     #[IsGranted("view", subject: "lesson")]
     public function show(Lesson $lesson, LessonRepository $lessonRepository): Response
     {
+        /** @var LessonItemText|LessonItemFile|LessonItemEmbeddedVideo|LessonItemQuiz|null $lessonItem */
         $lessonItem = match ($lesson->getType()) {
             Lesson::TYPE_TEXT => $this->em->getRepository(LessonItemText::class)->findOneBy(['lesson' => $lesson]),
             Lesson::TYPE_FILE => $this->em->getRepository(LessonItemFile::class)->findOneBy(['lesson' => $lesson]),
             Lesson::TYPE_VIDEO => $this->em->getRepository(LessonItemEmbeddedVideo::class)->findOneBy(['lesson' => $lesson]),
-            Lesson::TYPE_QUIZ => $this->em->getRepository(QuizQuestion::class)->findBy(['lesson' => $lesson]),
+            Lesson::TYPE_QUIZ => $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]),
             default => null,
         };
 
@@ -141,7 +153,7 @@ class LessonController extends AbstractController
             $note = $this->em->getRepository(Note::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
         }
 
-        $lessonsInfo = $this->getLessonsInfo($lesson->getCourse());
+        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
         $previousLesson = $lessonRepository->findPreviousLesson($lesson);
         $nextLesson = $lessonRepository->findNextLesson($lesson);
         return $this->render('lesson/show.html.twig', [
@@ -180,6 +192,11 @@ class LessonController extends AbstractController
                     $this->em->remove($lessonItemFile);
                     break;
                 }
+                case Lesson::TYPE_QUIZ: {
+                    $lessonItemQuiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
+                    $this->em->remove($lessonItemQuiz);
+                    break;
+                }
             }
             $this->em->remove($lesson);
             $this->em->flush();
@@ -198,7 +215,8 @@ class LessonController extends AbstractController
             Lesson::TYPE_TEXT => $this->em->getRepository(LessonItemText::class)->findOneBy(['lesson' => $lesson]),
             Lesson::TYPE_FILE => $this->em->getRepository(LessonItemFile::class)->findOneBy(['lesson' => $lesson]),
             Lesson::TYPE_VIDEO => $this->em->getRepository(LessonItemEmbeddedVideo::class)->findOneBy(['lesson' => $lesson]),
-            default => null,
+            Lesson::TYPE_QUIZ => $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]),
+            default => null
         };
         $form = $this->createForm(LessonType::class, $lesson, ['lesson_type' => $lesson->getType(), 'lesson_item' => $lessonItem]);
 
@@ -222,6 +240,8 @@ class LessonController extends AbstractController
                     $this->addFlash('error', $this->translator->trans('error.lesson.video.store', [], 'message'));
                     return $this->redirectToRoute('lesson_edit', ['lesson' => $lesson->getId()]);
                 }
+            }else if ($lesson->getType() === Lesson::TYPE_QUIZ) {
+                $this->handleQuizLessonType($form, $lesson, $lessonItem);
             }
 
             $this->addFlash('success', $this->translator->trans('success.lesson.edit', [], 'message'));
@@ -230,10 +250,9 @@ class LessonController extends AbstractController
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
             }
-            $this->em->refresh($lesson);
         }
 
-        $lessonsInfo = $this->getLessonsInfo($lesson->getCourse());
+        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
         return $this->render('lesson/edit.html.twig', [
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
@@ -260,7 +279,7 @@ class LessonController extends AbstractController
     }
 
     #[Route("/toggle-completed/{lesson}", name: "toggle_completed", methods: ["PATCH"])]
-    public function toggleCompleted(Lesson $lesson, Request $request, LessonCompletionRepository $lessonCompletionRepository): JsonResponse
+    public function toggleCompleted(Lesson $lesson, LessonCompletionRepository $lessonCompletionRepository): JsonResponse
     {
         $response = ['success' => false];
 
@@ -324,6 +343,19 @@ class LessonController extends AbstractController
         $this->em->flush();
     }
 
+    private function handleQuizLessonType(\Symfony\Component\Form\FormInterface $form, Lesson $lesson, ?LessonItemQuiz $lessonItemQuiz = null): void
+    {
+        $persist = false;
+        if ($lessonItemQuiz === null) {
+            $lessonItemQuiz = new LessonItemQuiz();
+            $persist = true;
+        }
+        $lessonItemQuiz->setLesson($lesson);
+        $lessonItemQuiz->setPassingPercentage(intval($form->get('passingPercentage')->getData()));
+        if ($persist) $this->em->persist($lessonItemQuiz);
+        $this->em->flush();
+    }
+
     private function processLessonTranslation(Lesson $lesson, \Symfony\Component\Form\FormInterface $form): void
     {
         $translationRepository = $this->em->getRepository(Translation::class);
@@ -358,23 +390,5 @@ class LessonController extends AbstractController
         }
 
         if ($translated) $this->em->flush();
-    }
-
-    private function getLessonsInfo(Course $course): array
-    {
-        $lessonRepository = $this->em->getRepository(Lesson::class);
-        $lessonCompletionRepository = $this->em->getRepository(LessonCompletion::class);
-        $lessons = $lessonRepository->findAllForCourseSortedByPosition($course);
-        $lessonsInfo = [];
-        foreach ($lessons as $lesson) {
-            $lessonCompletion = $lessonCompletionRepository->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
-            $lessonsInfo[] = [
-                'lesson' => $lesson,
-                'completed' => $lessonCompletion !== null ? $lessonCompletion->isCompleted() : false,
-                'showUrl' => $this->generateUrl('lesson_show', ['lesson' => $lesson->getId()]),
-                'toggleUrl' => $this->generateUrl('lesson_toggle_completed', ['lesson' => $lesson->getId()])
-            ];
-        }
-        return $lessonsInfo;
     }
 }

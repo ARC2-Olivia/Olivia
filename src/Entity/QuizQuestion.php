@@ -17,7 +17,7 @@ class QuizQuestion
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Lesson $lesson = null;
+    private ?LessonItemQuiz $quiz = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'error.quizQuestion.text')]
@@ -35,14 +35,14 @@ class QuizQuestion
         return $this->id;
     }
 
-    public function getLesson(): ?Lesson
+    public function getQuiz(): ?LessonItemQuiz
     {
-        return $this->lesson;
+        return $this->quiz;
     }
 
-    public function setLesson(?Lesson $lesson): self
+    public function setQuiz(?LessonItemQuiz $quiz): self
     {
-        $this->lesson = $lesson;
+        $this->quiz = $quiz;
 
         return $this;
     }

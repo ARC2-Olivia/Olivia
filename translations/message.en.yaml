@@ -67,6 +67,10 @@ error:
         video:
             blank: Video URL is required.
             store: There was an error storing the uploaded video for the lesson.
+        quiz:
+            blank: Passing percentage is required.
+            range: Passing percentage value must be between 0 and 100.
+            type: Unable to add a new question to a lesson that is not a quiz.
     quizQuestion:
         text: Question text must not be blank.
         explanation: Explanation text must not be blank.

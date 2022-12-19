@@ -8,6 +8,7 @@
         <div class="lesson-section-main lesson-content">
             {% include '_partials/toasts.html.twig' %}
             <div class="lesson-section-main-content">
+                <div class="lesson-section-main-caption">{{ 'quizQuestion.edit'|trans() }}</div>
                 {% include 'lesson/quiz/_form.html.twig' %}
                 <div class="d-flex flex-row-reverse">
                     <button type="submit" class="btn btn-theme-white bg-blue" form="{{ form.vars.id }}">{{ 'common.submit'|trans }}</button>
