@@ -29,20 +29,40 @@
     padding: 8px 12px;
 }
 
-input[type=range] {
+.form-slider[type=range] {
+    width: 100%;
     border: none;
+    -webkit-appearance: none;
 }
 
-input[type=range]::-moz-range-track, input[type=range]::-webkit-slider-runnable-track {
+.form-slider[type=range]::-moz-range-track, .form-slider[type=range]::-webkit-slider-runnable-track {
     background-color: var(--app-color-blue);
     height: 16px;
     border-radius: 4px;
 }
 
-input[type=range]::-moz-range-thumb, input[type=range]::-webkit-slider-thumb {
+.form-slider[type=range]::-webkit-slider-runnable-track {
+    background-color: var(--app-color-blue);
+    height: 16px;
+    border-radius: 4px;
+}
+
+.form-slider[type=range]::-moz-range-thumb, .form-slider[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
     background-color: white;
     border: solid 1px var(--app-color-blue);
     border-radius: 4px;
+    height: 24px;
+    width: 48px;
+    cursor: pointer;
+}
+
+.form-slider[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: white;
+    border: solid 1px var(--app-color-blue);
+    border-radius: 4px;
+    margin-top: -4px;
     height: 24px;
     width: 48px;
     cursor: pointer;

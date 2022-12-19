@@ -81,7 +81,7 @@ class LessonType extends AbstractType
                     new Assert\NotBlank(['message' => 'error.lesson.quiz.blank']),
                     new Assert\Range(['min' => 0, 'max' => 100, 'notInRangeMessage' => 'error.lesson.quiz.range'])
                 ],
-                'attr' => ['class' => 'form-input mb-3', 'min' => 0, 'max' => 100],
+                'attr' => ['class' => 'form-slider mb-3', 'min' => 0, 'max' => 100],
                 'data' => $lessonItem?->getPassingPercentage()
             ]);
         }
