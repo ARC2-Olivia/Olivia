@@ -25,18 +25,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/course", name: "course_")]
-class CourseController extends AbstractController
+class CourseController extends BaseController
 {
     use BasicFileManagementTrait;
-
-    private ?EntityManagerInterface $em = null;
-    private ?TranslatorInterface $translator = null;
-
-    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator)
-    {
-        $this->em = $em;
-        $this->translator = $translator;
-    }
 
     #[Route("/", name: "index")]
     public function index(CourseRepository $courseRepository): Response

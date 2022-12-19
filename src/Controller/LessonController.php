@@ -29,19 +29,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/lesson", name: "lesson_")]
-class LessonController extends AbstractController
+class LessonController extends BaseController
 {
     use BasicFileManagementTrait;
 
-    private ?EntityManagerInterface $em = null;
-    private ?TranslatorInterface $translator = null;
     private ?LessonService $lessonService = null;
 
     public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, LessonService $lessonService)
     {
-        $this->em = $em;
-        $this->translator = $translator;
         $this->lessonService = $lessonService;
+        parent::__construct($em, $translator);
     }
 
     #[Route("/course/{course}", name: "course")]

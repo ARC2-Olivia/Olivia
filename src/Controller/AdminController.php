@@ -20,18 +20,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/admin", name: "admin_")]
 #[IsGranted('ROLE_ADMIN')]
-class AdminController extends AbstractController
+class AdminController extends BaseController
 {
     use BasicFileManagementTrait;
-
-    private ?EntityManagerInterface $em = null;
-    private ?TranslatorInterface $translator = null;
-
-    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator)
-    {
-        $this->em = $em;
-        $this->translator = $translator;
-    }
 
     #[Route("/", name: "index")]
     public function index()
