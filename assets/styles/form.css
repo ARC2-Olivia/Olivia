@@ -28,3 +28,22 @@
     line-height: 1.3rem;
     padding: 8px 12px;
 }
+
+input[type=range] {
+    border: none;
+}
+
+input[type=range]::-moz-range-track, input[type=range]::-webkit-slider-runnable-track {
+    background-color: var(--app-color-blue);
+    height: 16px;
+    border-radius: 4px;
+}
+
+input[type=range]::-moz-range-thumb, input[type=range]::-webkit-slider-thumb {
+    background-color: white;
+    border: solid 1px var(--app-color-blue);
+    border-radius: 4px;
+    height: 24px;
+    width: 48px;
+    cursor: pointer;
+}

@@ -12,7 +12,7 @@ use App\Exception\UnsupportedLessonTypeException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -74,7 +74,7 @@ class LessonType extends AbstractType
                 'data' => $lessonItem?->getVideoUrl()
             ]);
         } else if ($lessonType === Lesson::TYPE_QUIZ) {
-            $builder->add('passingPercentage', NumberType::class, [
+            $builder->add('passingPercentage', RangeType::class, [
                 'mapped' => false,
                 'label' => 'form.entity.lesson.label.passingPercentage',
                 'constraints' => [

@@ -36,6 +36,9 @@
         {{ form_widget(form.video) }}
     {% elseif lessonType == constant('App\\Entity\\Lesson::TYPE_QUIZ') %}
         {{ form_label(form.passingPercentage) }}
-        {{ form_widget(form.passingPercentage) }}
+        <div class="d-flex align-items-center" style="column-gap: 16px">
+            <span id="passing-percentage-value" class="mb-3"></span>
+            {{ form_widget(form.passingPercentage) }}
+        </div>
     {% endif %}
 {{ form_end(form) }}

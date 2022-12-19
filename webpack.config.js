@@ -33,6 +33,7 @@ Encore
     .addEntry('lessons.sort', './assets/scripts/lessons.sort.js')
     .addEntry('lessons.completion.outer', './assets/scripts/lessons.completion.outer.js')
     .addEntry('lessons.completion.inner', './assets/scripts/lessons.completion.inner.js')
+    .addEntry('lessons.quiz.passingPercentage', './assets/scripts/lessons.quiz.passingPercentage.js')
     .addEntry('notes.update', './assets/scripts/notes.update.js')
 
     .copyFiles({

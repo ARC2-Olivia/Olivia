@@ -56,4 +56,7 @@
             };
         </script>
     {% endif %}
+    {% if lesson.type == constant('App\\Entity\\Lesson::TYPE_QUIZ') %}
+        {{ encore_entry_script_tags('lessons.quiz.passingPercentage') }}
+    {% endif %}
 {% endblock %}
