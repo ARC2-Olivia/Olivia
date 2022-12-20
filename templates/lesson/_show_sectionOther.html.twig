@@ -1,6 +1,6 @@
 {% trans_default_domain 'app' %}
 
-{% if lesson.type != constant('TYPE_QUIZ', lesson) %}
+{% if is_granted('ROLE_MODERATOR') or lesson.type != constant('TYPE_QUIZ', lesson) %}
 
     <div class="lesson-section-side lesson-content{% if is_user() %} align-self-stretch{% endif %}">
         {% if is_granted('ROLE_MODERATOR') %}
@@ -18,10 +18,12 @@
                         <span>{{ 'common.delete'|trans }}</span>
                     </button>
                 </form>
-                <a href="{{ path('lesson_new_quiz_question', {'lesson': lesson.id}) }}" class="lesson-moderation-tools-item">
-                    {{ mdi('database-plus-outline') }}
-                    <span>{{ 'quizQuestion.add'|trans }}</span>
-                </a>
+                {% if lesson.type == constant('TYPE_QUIZ', lesson) %}
+                    <a href="{{ path('lesson_new_quiz_question', {'lesson': lesson.id}) }}" class="lesson-moderation-tools-item">
+                        {{ mdi('database-plus-outline') }}
+                        <span>{{ 'quizQuestion.add'|trans }}</span>
+                    </a>
+                {% endif %}
             </div>
 
         {% elseif is_user() and is_enrolled(lesson.course, app.user) %}
