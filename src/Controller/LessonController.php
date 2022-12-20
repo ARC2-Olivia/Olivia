@@ -11,7 +11,9 @@ use App\Entity\LessonItemQuiz;
 use App\Entity\LessonItemText;
 use App\Entity\Note;
 use App\Entity\QuizQuestion;
+use App\Entity\QuizQuestionAnswer;
 use App\Form\LessonType;
+use App\Form\Quiz\QuizType;
 use App\Form\QuizQuestionType;
 use App\Repository\LessonCompletionRepository;
 use App\Repository\LessonRepository;
@@ -20,7 +22,6 @@ use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -237,7 +238,7 @@ class LessonController extends BaseController
                     $this->addFlash('error', $this->translator->trans('error.lesson.video.store', [], 'message'));
                     return $this->redirectToRoute('lesson_edit', ['lesson' => $lesson->getId()]);
                 }
-            }else if ($lesson->getType() === Lesson::TYPE_QUIZ) {
+            } else if ($lesson->getType() === Lesson::TYPE_QUIZ) {
                 $this->handleQuizLessonType($form, $lesson, $lessonItem);
             }
 
@@ -256,6 +257,77 @@ class LessonController extends BaseController
             'lessonsInfo' => $lessonsInfo,
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route("/quiz/{lesson}", name: "quiz", methods: ["POST"])]
+    #[IsGranted("solve_quiz", subject: "lesson")]
+    public function quiz(Lesson $lesson, Request $request): Response
+    {
+        $csrfToken = $request->request->get('_csrf_token');
+        if ($csrfToken === null || (!$this->isCsrfTokenValid('quiz.start', $csrfToken) && !$this->isCsrfTokenValid('quiz.finish', $csrfToken))) {
+            $this->addFlash('error', $this->translator->trans('error.lesson.quiz.start', [], 'message'));
+            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+        }
+
+        $lessonItemQuiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
+        if ($lessonItemQuiz === null) {
+            $this->addFlash('error', $this->translator->trans('error.lesson.quiz.missingLessonItemQuiz', [], 'message'));
+            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+        }
+
+        $quizData = ['answers' => []];
+        foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
+            $quizData['answers'][] = [
+                'questionId' => $quizQuestion->getId(),
+                'text' => $quizQuestion->getText(),
+                'answer' => false
+            ];
+        }
+
+        $form = $this->createForm(QuizType::class, $quizData);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $answers = $form->getData()['answers'];
+            $quizQuestionRepository = $this->em->getRepository(QuizQuestion::class);
+            $quizQuestionAnswerRepository = $this->em->getRepository(QuizQuestionAnswer::class);
+
+            $quizQuestionAnswers = [];
+            foreach ($answers as $answer) {
+                $quizQuestion = $quizQuestionRepository->find($answer['questionId']);
+                if ($quizQuestion !== null) {
+                    $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['user' => $this->getUser(), 'question' => $quizQuestion]);
+                    if ($quizQuestionAnswer === null) $quizQuestionAnswer = new QuizQuestionAnswer();
+                    $quizQuestionAnswer->setUser($this->getUser())->setQuestion($quizQuestion)->setAnswer($answer['answer']);
+                    $quizQuestionAnswers[] = $quizQuestionAnswer;
+                    $this->em->persist($quizQuestionAnswer);
+                }
+            }
+            $this->em->flush();
+
+            $sum = 0;
+            $questionCount = 0;
+            foreach ($quizQuestionAnswers as $quizQuestionAnswer) {
+                if ($quizQuestionAnswer->getAnswer() === $quizQuestionAnswer->getQuestion()->getCorrectAnswer()) $sum += 100;
+                $questionCount++;
+            }
+            $percentage = $sum / $questionCount;
+
+            $lessonCompletion = $this->em->getRepository(LessonCompletion::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
+            $persistCompletion = false;
+            if ($lessonCompletion === null) {
+                $lessonCompletion = (new LessonCompletion())->setLesson($lesson)->setUser($this->getUser());
+                $persistCompletion = true;
+            }
+            $lessonCompletion->setCompleted($percentage >= $lessonItemQuiz->getPassingPercentage());
+            if ($persistCompletion) $this->em->persist($lessonCompletion);
+            $this->em->flush();
+
+            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+        }
+
+
+        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
+        return $this->render('lesson/quiz.html.twig', ['lesson' => $lesson, 'lessonsInfo' => $lessonsInfo, 'form' => $form->createView()]);
     }
 
     #[Route("/reorder", name: "reorder", methods: ["POST"])]

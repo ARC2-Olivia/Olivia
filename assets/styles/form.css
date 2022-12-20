@@ -9,6 +9,7 @@
     outline: none;
     width: 100%;
     position: relative;
+    background-color: white;
 }
 
 .form-input:focus {

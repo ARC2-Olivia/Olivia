@@ -159,6 +159,12 @@ lesson:
         quiz:
             passed: Passed
             notPassed: Not passed
+    quiz:
+        explanation:
+            1: This quiz contains <b>%questionCount%</b> true or false questions.
+            2: To pass, you must score atleast <b>%passingPercentage%%</b>. Results will be shown to you after submitting your answers.
+            3: Click on the <i>Start quiz</i> button to start the quiz.
+        action: Start quiz
     extra:
         noLessons: There are currently no defined lessons for this course.
         text: Text
