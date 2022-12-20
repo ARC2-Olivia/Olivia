@@ -311,6 +311,53 @@ iframe.lesson-video {
     border-color: var(--app-color-red);
 }
 
+.lesson-quiz-completion {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 4px;
+    min-width: 64px;
+    height: 36px;
+    padding: 0 16px;
+    text-decoration: none;
+    cursor: default;
+    border: solid 1px;
+}
+
+.lesson-quiz-completion.failed {
+    color: var(--app-color-orange);
+    border-color: var(--app-color-orange);
+    background-color: #ffffff;
+}
+
+.lesson-quiz-completion.passed {
+    color: #ffffff;
+    border-color: var(--app-color-green);
+    background-color: var(--app-color-green);
+}
+
+.lesson-nav-quiz-completion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding: 0;
+    min-width: unset;
+    width: 32px;
+    height: 32px;
+    color: white;
+    cursor: default;
+}
+
+.lesson-nav-quiz-completion.failed {
+    background-color: rgba(0, 0, 0, 0.125);
+}
+
+.lesson-nav-quiz-completion.passed {
+    background-color: var(--app-color-green);
+}
+
 @media screen and (max-width: 1199px) {
     .lesson-section-main {
         flex-grow: 2;

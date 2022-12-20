@@ -8,13 +8,21 @@
     {% for lessonInfo in lessonsInfo %}
         <div class="lesson-section-navigation-item{% if lessonInfo.lesson.id == lesson.id %} active{% endif %}">
             {% if is_user() %}
-                <button class="completion-marker btn btn-round {{ lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-gray-to-green' }}"
-                        data-path="{{ lessonInfo.toggleUrl }}"
-                >
-                    <svg class="lesson-section-navigation-item-completion-icon" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
-                    </svg>
-                </button>
+                {% if lessonInfo.lesson.type == constant('TYPE_QUIZ', lessonInfo.lesson) %}
+                    <div class="lesson-nav-quiz-completion failed">
+                        <svg class="lesson-section-navigation-item-completion-icon" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M17 4V2H7V4H2V11C2 12.1 2.9 13 4 13H7.1C7.5 14.96 9.04 16.5 11 16.9V19.08C8 19.54 8 22 8 22H16C16 22 16 19.54 13 19.08V16.9C14.96 16.5 16.5 14.96 16.9 13H20C21.1 13 22 12.1 22 11V4H17M4 11V6H7V11L4 11M20 11L17 11V6H20L20 11Z" />
+                        </svg>
+                    </div>
+                {% else %}
+                    <button class="completion-marker btn btn-round {{ lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-gray-to-green' }}"
+                            data-path="{{ lessonInfo.toggleUrl }}"
+                    >
+                        <svg class="lesson-section-navigation-item-completion-icon" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                        </svg>
+                    </button>
+                {% endif %}
             {% endif %}
             <a class="lesson-section-navigation-item-name-and-type" href="{{ lessonInfo.showUrl }}">
                 <div class="lesson-section-navigation-item-name">{{ lessonInfo.lesson.name }}</div>

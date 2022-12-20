@@ -1,54 +1,58 @@
 {% trans_default_domain 'app' %}
 
-<div class="lesson-section-side lesson-content{% if is_user() %} align-self-stretch{% endif %}">
-    {% if is_granted('ROLE_MODERATOR') %}
+{% if lesson.type != constant('TYPE_QUIZ', lesson) %}
 
-        <div class="lesson-moderation-tools">
-            <div class="lesson-moderation-tools-caption">{{ 'lesson.extra.moderation'|trans }}</div>
-            <a href="{{ path('lesson_edit', {'lesson': lesson.id}) }}" class="lesson-moderation-tools-item">
-                <svg viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
-                </svg>
-                <span>{{ 'common.edit'|trans }}</span>
-            </a>
-            <form action="{{ path('lesson_delete', {'lesson': lesson.id}) }}"
-                  method="post"
-                  onsubmit='return confirm("{{ 'lesson.delete'|trans({'%lesson%': lesson.name}) }}");'
-            >
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('lesson.delete') }}"/>
-                <button type="submit" class="lesson-moderation-tools-item w-100">
+    <div class="lesson-section-side lesson-content{% if is_user() %} align-self-stretch{% endif %}">
+        {% if is_granted('ROLE_MODERATOR') %}
+
+            <div class="lesson-moderation-tools">
+                <div class="lesson-moderation-tools-caption">{{ 'lesson.extra.moderation'|trans }}</div>
+                <a href="{{ path('lesson_edit', {'lesson': lesson.id}) }}" class="lesson-moderation-tools-item">
                     <svg viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
+                        <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
                     </svg>
-                    <span>{{ 'common.delete'|trans }}</span>
-                </button>
-            </form>
-            <a href="{{ path('lesson_new_quiz_question', {'lesson': lesson.id}) }}" class="lesson-moderation-tools-item">
-                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M20 13.09V7C20 4.79 16.42 3 12 3S4 4.79 4 7V17C4 19.21 7.59 21 12 21C12.46 21 12.9 21 13.33 20.94C13.12 20.33 13 19.68 13 19L13 18.95C12.68 19 12.35 19 12 19C8.13 19 6 17.5 6 17V14.77C7.61 15.55 9.72 16 12 16C12.65 16 13.27 15.96 13.88 15.89C14.93 14.16 16.83 13 19 13C19.34 13 19.67 13.04 20 13.09M18 12.45C16.7 13.4 14.42 14 12 14S7.3 13.4 6 12.45V9.64C7.47 10.47 9.61 11 12 11S16.53 10.47 18 9.64V12.45M12 9C8.13 9 6 7.5 6 7S8.13 5 12 5 18 6.5 18 7 15.87 9 12 9M23 18V20H20V23H18V20H15V18H18V15H20V18H23Z" />
-                </svg>
-                <span>{{ 'quizQuestion.add'|trans }}</span>
-            </a>
-        </div>
-
-    {% elseif is_user() and is_enrolled(lesson.course, app.user) %}
-
-        <div class="lesson-notes">
-            <h2 class="lesson-notes-caption">{{ 'lesson.extra.notes'|trans }}</h2>
-            <label class="lesson-notes-content">
-                <textarea id="notes">{% if note is not null %}{{ note.text|raw }}{% endif %}</textarea>
-            </label>
-            <div class="lesson-notes-actions">
-                <button id="save-notes" type="button"
-                        class="btn btn-theme-white bg-blue w-100"
-                        data-path="{{ path('note_update') }}"
-                        data-lesson="{{ lesson.id }}"
-                        data-user="{{ app.user.id }}"
+                    <span>{{ 'common.edit'|trans }}</span>
+                </a>
+                <form action="{{ path('lesson_delete', {'lesson': lesson.id}) }}"
+                      method="post"
+                      onsubmit='return confirm("{{ 'lesson.delete'|trans({'%lesson%': lesson.name}) }}");'
                 >
-                    {{ 'common.save'|trans }}
-                </button>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('lesson.delete') }}"/>
+                    <button type="submit" class="lesson-moderation-tools-item w-100">
+                        <svg viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
+                        </svg>
+                        <span>{{ 'common.delete'|trans }}</span>
+                    </button>
+                </form>
+                <a href="{{ path('lesson_new_quiz_question', {'lesson': lesson.id}) }}" class="lesson-moderation-tools-item">
+                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M20 13.09V7C20 4.79 16.42 3 12 3S4 4.79 4 7V17C4 19.21 7.59 21 12 21C12.46 21 12.9 21 13.33 20.94C13.12 20.33 13 19.68 13 19L13 18.95C12.68 19 12.35 19 12 19C8.13 19 6 17.5 6 17V14.77C7.61 15.55 9.72 16 12 16C12.65 16 13.27 15.96 13.88 15.89C14.93 14.16 16.83 13 19 13C19.34 13 19.67 13.04 20 13.09M18 12.45C16.7 13.4 14.42 14 12 14S7.3 13.4 6 12.45V9.64C7.47 10.47 9.61 11 12 11S16.53 10.47 18 9.64V12.45M12 9C8.13 9 6 7.5 6 7S8.13 5 12 5 18 6.5 18 7 15.87 9 12 9M23 18V20H20V23H18V20H15V18H18V15H20V18H23Z" />
+                    </svg>
+                    <span>{{ 'quizQuestion.add'|trans }}</span>
+                </a>
             </div>
-        </div>
 
-    {% endif %}
-</div>
+        {% elseif is_user() and is_enrolled(lesson.course, app.user) %}
+
+            <div class="lesson-notes">
+                <h2 class="lesson-notes-caption">{{ 'lesson.extra.notes'|trans }}</h2>
+                <label class="lesson-notes-content">
+                    <textarea id="notes">{% if note is not null %}{{ note.text|raw }}{% endif %}</textarea>
+                </label>
+                <div class="lesson-notes-actions">
+                    <button id="save-notes" type="button"
+                            class="btn btn-theme-white bg-blue w-100"
+                            data-path="{{ path('note_update') }}"
+                            data-lesson="{{ lesson.id }}"
+                            data-user="{{ app.user.id }}"
+                    >
+                        {{ 'common.save'|trans }}
+                    </button>
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+
+{% endif %}

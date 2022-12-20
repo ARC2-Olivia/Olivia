@@ -156,6 +156,9 @@ lesson:
     completion:
         done: Done
         undone: Mark as done
+        quiz:
+            passed: Passed
+            notPassed: Not passed
     extra:
         noLessons: There are currently no defined lessons for this course.
         text: Text

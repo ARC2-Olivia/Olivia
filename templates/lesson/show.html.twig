@@ -12,8 +12,6 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('quill') }}
-    {% if lesson.type == constant('App\\Entity\\Lesson::TYPE_QUIZ') %}
-    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
