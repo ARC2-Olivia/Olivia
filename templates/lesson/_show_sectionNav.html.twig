@@ -1,8 +1,6 @@
 <div class="lesson-section-side lesson-section-navigation lesson-content">
     <a class="lesson-section-navigation-caption" href="{{ path('lesson_course', {'course': lesson.course.id}) }}">
-        <svg class="lesson-section-navigation-back-icon" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M18,11H10L13.5,7.5L12.08,6.08L6.16,12L12.08,17.92L13.5,16.5L10,13H18V11Z" />
-        </svg>
+        {{ mdi('arrow-left-circle', 'lesson-section-navigation-back-icon') }}
         {{ lesson.course.name }}
     </a>
     {% for lessonInfo in lessonsInfo %}
@@ -10,17 +8,13 @@
             {% if is_user() %}
                 {% if lessonInfo.lesson.type == constant('TYPE_QUIZ', lessonInfo.lesson) %}
                     <div class="lesson-nav-quiz-completion failed">
-                        <svg class="lesson-section-navigation-item-completion-icon" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M17 4V2H7V4H2V11C2 12.1 2.9 13 4 13H7.1C7.5 14.96 9.04 16.5 11 16.9V19.08C8 19.54 8 22 8 22H16C16 22 16 19.54 13 19.08V16.9C14.96 16.5 16.5 14.96 16.9 13H20C21.1 13 22 12.1 22 11V4H17M4 11V6H7V11L4 11M20 11L17 11V6H20L20 11Z" />
-                        </svg>
+                        {{ mdi('trophy-variant', 'lesson-section-navigation-item-completion-icon') }}
                     </div>
                 {% else %}
                     <button class="completion-marker btn btn-round {{ lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-gray-to-green' }}"
                             data-path="{{ lessonInfo.toggleUrl }}"
                     >
-                        <svg class="lesson-section-navigation-item-completion-icon" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
-                        </svg>
+                        {{ mdi('check', 'lesson-section-navigation-item-completion-icon') }}
                     </button>
                 {% endif %}
             {% endif %}

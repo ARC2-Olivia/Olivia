@@ -24,6 +24,13 @@
 .course-card-details {
     font-size: 0.875rem;
 }
+
+.course-card-details-icon {
+    height: 18px;
+    width: 18px;
+    color: var(--app-color-orange);
+}
+
 .course-card-name {
     color: black
 }

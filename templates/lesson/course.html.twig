@@ -11,30 +11,10 @@
     </div>
     {% if is_granted('ROLE_MODERATOR') %}
         <div class="lesson-actions">
-            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'text'}) }}" class="btn btn-link btn-sm">
-                <svg viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                </svg>
-                {{ 'lesson.extra.text'|trans }}
-            </a>
-            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'file'}) }}" class="btn btn-link btn-sm">
-                <svg viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                </svg>
-                {{ 'lesson.extra.file'|trans }}
-            </a>
-            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'video'}) }}" class="btn btn-link btn-sm">
-                <svg viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                </svg>
-                {{ 'lesson.extra.video'|trans }}
-            </a>
-            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'quiz'}) }}" class="btn btn-link btn-sm">
-                <svg viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                </svg>
-                {{ 'lesson.extra.quiz'|trans }}
-            </a>
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'text'}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'lesson.extra.text'|trans }}</a>
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'file'}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'lesson.extra.file'|trans }}</a>
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'video'}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'lesson.extra.video'|trans }}</a>
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'quiz'}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'lesson.extra.quiz'|trans }}</a>
         </div>
     {% endif %}
 {% endblock %}
