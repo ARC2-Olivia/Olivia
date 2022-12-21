@@ -322,6 +322,25 @@ iframe.lesson-video {
     border-color: rgba(0, 0, 0, 0.25);
 }
 
+.lesson-quiz-quiz {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}
+
+.lesson-quiz-quiz hr {
+    border-color: rgba(0, 0, 0, 0.125);
+}
+
+.lesson-quiz-quiz-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    background-color: rgba(0, 0, 0, 0.0625);
+    border-radius: 8px;
+    padding: 16px;
+}
+
 .lesson-quiz-completion {
     display: inline-flex;
     justify-content: center;
