@@ -7,7 +7,7 @@
         <div class="lesson-section-navigation-item{% if lessonInfo.lesson.id == lesson.id %} active{% endif %}">
             {% if is_user() %}
                 {% if lessonInfo.lesson.type == constant('TYPE_QUIZ', lessonInfo.lesson) %}
-                    <div class="lesson-nav-quiz-completion failed">
+                    <div class="lesson-nav-quiz-completion {{ lessonInfo.completed ? 'passed' : 'failed' }}">
                         {{ mdi('trophy-variant', 'lesson-section-navigation-item-completion-icon') }}
                     </div>
                 {% else %}

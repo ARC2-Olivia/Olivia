@@ -25,7 +25,9 @@
     <div class="lesson-item-actions">
         {% if is_user() %}
             {% if lessonInfo.lesson.type == constant('TYPE_QUIZ', lessonInfo.lesson) %}
-                <div class="lesson-quiz-completion failed">{{ 'lesson.completion.quiz.notPassed'|trans }}</div>
+                {% set completionClassAddition = lessonInfo.completed ? 'passed' : 'failed' %}
+                {% set completionText = lessonInfo ? 'lesson.completion.quiz.passed'|trans : 'lesson.completion.quiz.notPassed'|trans %}
+                <div class="lesson-quiz-completion {{ completionClassAddition }}">{{ completionText }}</div>
             {% else %}
                 {% set completionClassAddition = lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-orange-outline' %}
                 {% set completionText = lessonInfo.completed ? 'lesson.completion.done'|trans : 'lesson.completion.undone'|trans %}
