@@ -71,6 +71,10 @@ class EduLogSubscriber implements EventSubscriberInterface
             $lesson = $this->em->getRepository(Lesson::class)->find($routeParams['lesson']);
             $this->eduLogService->logLessonCompletionUpdate($lesson, $user, $ipAddress);
         }
+        else if ($route === 'lesson_quiz' && !empty($routeParams) && key_exists('lesson', $routeParams)) {
+            $lesson = $this->em->getRepository(Lesson::class)->find($routeParams['lesson']);
+            $this->eduLogService->logLessonQuizStart($lesson, $user, $ipAddress);
+        }
     }
 
     private function handleModeratorEduLogging(mixed $route)
