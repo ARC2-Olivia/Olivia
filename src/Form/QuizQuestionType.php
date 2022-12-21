@@ -31,6 +31,13 @@ class QuizQuestionType extends AbstractType
             ->add('correctAnswer', ChoiceType::class, ['label' => 'form.entity.quizQuestion.label.correctAnswer', 'choices' => $correctAnswerChoices, 'attr' => ['class' => 'form-select mb-3']])
             ->add('explanation', TextareaType::class, ['label' => 'form.entity.quizQuestion.label.explanation', 'attr' => ['class' => 'form-textarea mb-3']])
         ;
+
+        if ($options['include_translatable_field']) {
+            $builder
+                ->add('textAlt', TextareaType::class, ['mapped' => false, 'label' => 'form.entity.quizQuestion.label.textAlt', 'attr' => ['class' => 'form-textarea mb-3']])
+                ->add('explanationAlt', TextareaType::class, ['mapped' => false, 'label' => 'form.entity.quizQuestion.label.explanationAlt', 'attr' => ['class' => 'form-textarea mb-3']])
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -38,7 +45,8 @@ class QuizQuestionType extends AbstractType
         $resolver->setDefaults([
             'data_class' => QuizQuestion::class,
             'translation_domain' => 'app',
-            'attr' => ['novalidate' => 'novalidate']
+            'attr' => ['novalidate' => 'novalidate'],
+            'include_translatable_field' => false
         ]);
     }
 }

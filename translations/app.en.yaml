@@ -114,7 +114,9 @@ form:
         quizQuestion:
             label:
                 text: Question text
+                textAlt: Question text (alternate language)
                 explanation: Explanation
+                explanationAlt: Explanation (alternate language)
                 correctAnswer: Correct answer
 
 user:

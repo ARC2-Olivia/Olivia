@@ -6,9 +6,10 @@ use App\Repository\QuizQuestionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: QuizQuestionRepository::class)]
-class QuizQuestion
+class QuizQuestion extends TranslatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,10 +22,12 @@ class QuizQuestion
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'error.quizQuestion.text')]
+    #[Gedmo\Translatable]
     private ?string $text = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'error.quizQuestion.explanation')]
+    #[Gedmo\Translatable]
     private ?string $explanation = null;
 
     #[ORM\Column]

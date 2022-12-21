@@ -109,7 +109,7 @@ class LessonController extends BaseController
     public function newQuizQuestion(Lesson $lesson, Request $request): Response
     {
         $quizQuestion = new QuizQuestion();
-        $form = $this->createForm(QuizQuestionType::class, $quizQuestion);
+        $form = $this->createForm(QuizQuestionType::class, $quizQuestion, ['include_translatable_field' => true]);
 
         $quiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
         if ($quiz !== null) {
@@ -118,6 +118,7 @@ class LessonController extends BaseController
                 $quizQuestion->setQuiz($quiz);
                 $this->em->persist($quizQuestion);
                 $this->em->flush();
+                $this->processQuizQuestionTranslation($form, $quizQuestion);
                 $this->addFlash('success', $this->translator->trans('success.quizQuestion.new', [], 'message'));
                 return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
             } else {
@@ -369,7 +370,7 @@ class LessonController extends BaseController
         }
 
         $lessonCompletion = $this->em->getRepository(LessonCompletion::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
-        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
+        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $user);
         $previousLesson = $lessonRepository->findPreviousLesson($lesson);
         $nextLesson = $lessonRepository->findNextLesson($lesson);
         return $this->render('lesson/quizResults.html.twig', [
@@ -508,6 +509,27 @@ class LessonController extends BaseController
         $textAlt = $form->get('textAlt')->getData();
         if ($textAlt !== null && trim($textAlt) !== '') {
             $translationRepository->translate($lessonItemText, 'text', $localeAlt, $textAlt);
+            $translated = true;
+        }
+
+        if ($translated) $this->em->flush();
+    }
+
+    private function processQuizQuestionTranslation(\Symfony\Component\Form\FormInterface $form, QuizQuestion $quizQuestion)
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
+
+        $textAlt = $form->get('textAlt')->getData();
+        if ($textAlt !== null && trim($textAlt) !== '') {
+            $translationRepository->translate($quizQuestion, 'text', $localeAlt, $textAlt);
+            $translated = true;
+        }
+
+        $explanationAlt = $form->get('explanationAlt')->getData();
+        if ($explanationAlt !== null && trim($explanationAlt) !== '') {
+            $translationRepository->translate($quizQuestion, 'explanation', $localeAlt, $explanationAlt);
             $translated = true;
         }
 
