@@ -26,13 +26,23 @@
     </div>
 
 {% elseif is_user() %}
-    <div class="quiz-intro">
+    <div class="lesson-quiz-intro">
         <p>{{ 'lesson.quiz.explanation.1'|trans({'%questionCount%': lessonItem.quizQuestions|length})|raw }}</p>
         <p>{{ 'lesson.quiz.explanation.2'|trans({'%passingPercentage%': lessonItem.passingPercentage})|raw }}</p>
         <p>{{ 'lesson.quiz.explanation.3'|trans|raw }}</p>
-        <form method="post" action="{{ path('lesson_quiz', {'lesson': lessonItem.lesson.id}) }}">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('quiz.start') }}"/>
-            <button type="submit" class="btn btn-theme-white bg-blue">{{ 'lesson.quiz.action'|trans }}</button>
-        </form>
+        {% if lessonCompletion is not null %}
+            <hr class="w-75 mb-3">
+            <p>{{ 'lesson.quiz.yourGrade'|trans }}: <b>{{ quizPercentage }}%</b></p>
+            <hr class="w-75 mt-3">
+        {% endif %}
+        <div class="d-flex justify-content-center">
+            <form method="post" action="{{ path('lesson_quiz', {'lesson': lessonItem.lesson.id}) }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('quiz.start') }}"/>
+                <button type="submit" class="btn btn-theme-white bg-blue">{{ 'lesson.quiz.action'|trans }}</button>
+            </form>
+            {% if lessonCompletion is not null and lessonCompletion.completed %}
+                <a href="#" class="btn btn-theme-white bg-red ms-3">Results</a>
+            {% endif %}
+        </div>
     </div>
 {% endif %}

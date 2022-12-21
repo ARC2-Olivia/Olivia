@@ -311,6 +311,17 @@ iframe.lesson-video {
     border-color: var(--app-color-red);
 }
 
+.lesson-quiz-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    align-items: center;
+}
+
+.lesson-quiz-intro hr {
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
 .lesson-quiz-completion {
     display: inline-flex;
     justify-content: center;

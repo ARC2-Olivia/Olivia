@@ -5,6 +5,8 @@ namespace App\Service;
 use App\Entity\Course;
 use App\Entity\Lesson;
 use App\Entity\LessonCompletion;
+use App\Entity\LessonItemQuiz;
+use App\Entity\QuizQuestionAnswer;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -36,5 +38,30 @@ class LessonService
             ];
         }
         return $lessonsInfo;
+    }
+
+    public function hasCompletionData(Lesson $lesson, User $user): bool
+    {
+        return $this->em->getRepository(LessonCompletion::class)->findOneBy(['lesson' => $lesson, 'user' => $user]);
+    }
+
+    public function getQuizPercentage(Lesson $lesson, User $user): ?int
+    {
+        if ($lesson->getType() !== Lesson::TYPE_QUIZ) return null;
+
+        $lessonItemQuiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
+        if ($lessonItemQuiz === null) return null;
+
+        $quizQuestionAnswerRepository = $this->em->getRepository(QuizQuestionAnswer::class);
+        $sum = 0;
+        $count = 0;
+        foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
+            $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['question' => $quizQuestion, 'user' => $user]);
+            if ($quizQuestionAnswer !== null && $quizQuestionAnswer->getAnswer() === $quizQuestion->getCorrectAnswer()) {
+                $sum += 100;
+            }
+            $count++;
+        }
+        return $sum / $count;
     }
 }

@@ -151,16 +151,19 @@ class LessonController extends BaseController
             $note = $this->em->getRepository(Note::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
         }
 
+        $lessonCompletion = $this->em->getRepository(LessonCompletion::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
         $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
         $previousLesson = $lessonRepository->findPreviousLesson($lesson);
         $nextLesson = $lessonRepository->findNextLesson($lesson);
         return $this->render('lesson/show.html.twig', [
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
+            'lessonCompletion' => $lessonCompletion,
             'lessonsInfo' => $lessonsInfo,
             'previousLesson' => $previousLesson,
             'nextLesson' => $nextLesson,
-            'note' => $note
+            'note' => $note,
+            'quizPercentage' => $this->lessonService->getQuizPercentage($lesson, $this->getUser())
         ]);
     }
 
