@@ -12,6 +12,8 @@ class EduLog
     public const ACTION_COURSE_LESSONS_VIEW = 'course_lessons_view';
     public const ACTION_LESSON_VIEW = 'lesson_view';
     public const ACTION_LESSON_COMPLETION_UPDATE = 'lesson_completion_update';
+    public const ACTION_LESSON_QUIZ_START = 'lesson_quiz_start';
+    public const ACTION_LESSON_QUIZ_FINISH = 'lesson_quiz_finish';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

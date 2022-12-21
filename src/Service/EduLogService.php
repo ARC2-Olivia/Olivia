@@ -55,6 +55,26 @@ class EduLogService
         $this->save($eduLog);
     }
 
+    public function logLessonQuizStart(Lesson $lesson, User $user, string $ipAddress): void
+    {
+        $edulog = $this->prepareEduLog($user, $ipAddress)
+            ->setCourse($lesson->getCourse())
+            ->setLesson($lesson)
+            ->setAction(EduLog::ACTION_LESSON_QUIZ_START)
+        ;
+        $this->save($edulog);
+    }
+
+    public function logLessonQuizFinish(Lesson $lesson, User $user, string $ipAddress): void
+    {
+        $edulog = $this->prepareEduLog($user, $ipAddress)
+            ->setCourse($lesson->getCourse())
+            ->setLesson($lesson)
+            ->setAction(EduLog::ACTION_LESSON_QUIZ_FINISH)
+        ;
+        $this->save($edulog);
+    }
+
     private function prepareEduLog(User $user, string $ipAddress): EduLog
     {
         return (new EduLog())
