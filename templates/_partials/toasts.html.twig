@@ -1,23 +1,21 @@
 {% if classAddition is not defined %}
     {% set classAddition = '' %}
 {% endif %}
-{% if app.flashes is not empty %}
-    <div class="toasts {{ classAddition }}">
-        {% for label, messages in app.flashes(['success', 'warning', 'error']) %}
-            {% for message in messages %}
-                <div class="toast toast-theme-{{ label }}">
-                    <div class="toast-title">
-                        {{ ('type.'~label)|trans({}, 'message') }}
-                        <span class="toast-close">
-                            <svg height="16" width="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <line x1="1" y1="1" x2="19" y2="19" stroke-linecap="round" stroke-width="2" stroke="black"></line>
-                                <line x1="1" y1="1" x2="19" y2="19" transform="matrix(0, 1, -1, 0, 20, 0)" stroke-linecap="round" stroke-width="2" stroke="black"></line>
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="toast-message">{{ message|raw }}</div>
+<div class="toasts {{ classAddition }}">
+    {% for label, messages in app.flashes(['success', 'warning', 'error']) %}
+        {% for message in messages %}
+            <div class="toast toast-theme-{{ label }}">
+                <div class="toast-title">
+                    {{ ('type.'~label)|trans({}, 'message') }}
+                    <span class="toast-close">
+                        <svg height="16" width="16" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="1" y1="1" x2="19" y2="19" stroke-linecap="round" stroke-width="2" stroke="black"></line>
+                            <line x1="1" y1="1" x2="19" y2="19" transform="matrix(0, 1, -1, 0, 20, 0)" stroke-linecap="round" stroke-width="2" stroke="black"></line>
+                        </svg>
+                    </span>
                 </div>
-            {% endfor %}
+                <div class="toast-message">{{ message|raw }}</div>
+            </div>
         {% endfor %}
-    </div>
-{% endif %}
+    {% endfor %}
+</div>

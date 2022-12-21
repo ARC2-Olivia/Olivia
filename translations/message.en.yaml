@@ -75,6 +75,10 @@ error:
             type: Unable to add a new question to a lesson that is not a quiz.
             start: Unable to start the quiz. Please, try again.
             missingLessonItemQuiz: Quiz couldn't start due to an error. Please, report the error to one of the moderators.
+            results:
+                completionData: There are no results to display because the quiz has not been taken.
+                type: Cannot display results of a non-quiz lesson.
+                missingLessonItemQuiz: Quiz results couldn't be shown due to an error. Please, report the error to one of the moderators.
     quizQuestion:
         text: Question text must not be blank.
         explanation: Explanation text must not be blank.

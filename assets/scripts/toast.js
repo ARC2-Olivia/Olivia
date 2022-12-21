@@ -8,3 +8,8 @@ document.querySelectorAll(".toast-close").forEach(function(el) {
         }
     }
 });
+
+const toasts = document.querySelector(".toasts");
+if (toasts.children.length === 0) {
+    toasts.remove();
+}

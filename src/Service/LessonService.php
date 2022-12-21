@@ -42,7 +42,7 @@ class LessonService
 
     public function hasCompletionData(Lesson $lesson, User $user): bool
     {
-        return $this->em->getRepository(LessonCompletion::class)->findOneBy(['lesson' => $lesson, 'user' => $user]);
+        return $this->em->getRepository(LessonCompletion::class)->findOneBy(['lesson' => $lesson, 'user' => $user]) !== null;
     }
 
     public function getQuizPercentage(Lesson $lesson, User $user): ?int
@@ -62,6 +62,7 @@ class LessonService
             }
             $count++;
         }
-        return $sum / $count;
+
+        return $count > 0 ? $sum / $count : null;
     }
 }

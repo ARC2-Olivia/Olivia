@@ -77,18 +77,12 @@ header {
     font-size: 2rem;
 }
 
-.bg-blue {
-    background-color: var(--app-color-blue) !important;
-}
+.bg-orange { background-color: var(--app-color-orange) !important; }
+.bg-green { background-color: var(--app-color-green) !important; }
+.bg-blue { background-color: var(--app-color-blue) !important; }
+.bg-red { background-color: var(--app-color-red) !important; }
 
-.bg-orange {
-    background-color: var(--app-color-orange);
-}
-
-.bg-red {
-    background-color: var(--app-color-red);
-}
-
-.bg-green {
-    background-color: var(--app-color-green);
-}
+.fg-orange { color: var(--app-color-orange) !important; }
+.fg-green { color: var(--app-color-green) !important; }
+.fg-blue { color: var(--app-color-blue) !important; }
+.fg-red { color: var(--app-color-red) !important; }

@@ -12,6 +12,7 @@ use App\Entity\LessonItemText;
 use App\Entity\Note;
 use App\Entity\QuizQuestion;
 use App\Entity\QuizQuestionAnswer;
+use App\Entity\User;
 use App\Form\LessonType;
 use App\Form\Quiz\QuizType;
 use App\Form\QuizQuestionType;
@@ -137,6 +138,9 @@ class LessonController extends BaseController
     #[IsGranted("view", subject: "lesson")]
     public function show(Lesson $lesson, LessonRepository $lessonRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         /** @var LessonItemText|LessonItemFile|LessonItemEmbeddedVideo|LessonItemQuiz|null $lessonItem */
         $lessonItem = match ($lesson->getType()) {
             Lesson::TYPE_TEXT => $this->em->getRepository(LessonItemText::class)->findOneBy(['lesson' => $lesson]),
@@ -148,11 +152,11 @@ class LessonController extends BaseController
 
         $note = null;
         if ($this->isGranted('ROLE_USER') && !$this->isGranted('ROLE_MODERATOR') && !$this->isGranted('ROLE_ADMIN')) {
-            $note = $this->em->getRepository(Note::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
+            $note = $this->em->getRepository(Note::class)->findOneBy(['lesson' => $lesson, 'user' => $user]);
         }
 
         $lessonCompletion = $this->em->getRepository(LessonCompletion::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
-        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
+        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $user);
         $previousLesson = $lessonRepository->findPreviousLesson($lesson);
         $nextLesson = $lessonRepository->findNextLesson($lesson);
         return $this->render('lesson/show.html.twig', [
@@ -163,7 +167,7 @@ class LessonController extends BaseController
             'previousLesson' => $previousLesson,
             'nextLesson' => $nextLesson,
             'note' => $note,
-            'quizPercentage' => $this->lessonService->getQuizPercentage($lesson, $this->getUser())
+            'quizPercentage' => !$this->isGranted('ROLE_MODERATOR') ? $this->lessonService->getQuizPercentage($lesson, $user) : null
         ]);
     }
 
@@ -328,10 +332,56 @@ class LessonController extends BaseController
             return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
         }
 
-
         $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
         return $this->render('lesson/quiz.html.twig', ['lesson' => $lesson, 'lessonsInfo' => $lessonsInfo, 'form' => $form->createView()]);
     }
+
+    #[Route("/quiz-results/{lesson}", name: "quiz_results")]
+    #[IsGranted("view", subject: "lesson")]
+    public function quizResults(Lesson $lesson, LessonRepository $lessonRepository): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($lesson->getType() !== Lesson::TYPE_QUIZ) {
+            $this->addFlash('error', $this->translator->trans('error.lesson.quiz.results.type', [], 'message'));
+            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+        }
+
+        if (!$this->lessonService->hasCompletionData($lesson, $user)) {
+            $this->addFlash('error', $this->translator->trans('error.lesson.quiz.results.completionData', [], 'message'));
+            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+        }
+
+        $lessonItemQuiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
+        if ($lessonItemQuiz === null) {
+            $this->addFlash('error', $this->translator->trans('error.lesson.quiz.results.missingLessonItemQuiz', [], 'message'));
+            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+        }
+
+        $quizQuestionAnswerRepository = $this->em->getRepository(QuizQuestionAnswer::class);
+        $quizResults = [];
+        foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
+            $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['question' => $quizQuestion, 'user' => $user]);
+            if ($quizQuestionAnswer !== null) {
+                $quizResults[] = ['question' => $quizQuestion, 'correct' => $quizQuestionAnswer->getAnswer() === $quizQuestion->getCorrectAnswer(), 'answer' => $quizQuestionAnswer->getAnswer()];
+            }
+        }
+
+        $lessonCompletion = $this->em->getRepository(LessonCompletion::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
+        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
+        $previousLesson = $lessonRepository->findPreviousLesson($lesson);
+        $nextLesson = $lessonRepository->findNextLesson($lesson);
+        return $this->render('lesson/quizResults.html.twig', [
+            'lesson' => $lesson,
+            'quizResults' => $quizResults,
+            'lessonCompletion' => $lessonCompletion,
+            'lessonsInfo' => $lessonsInfo,
+            'previousLesson' => $previousLesson,
+            'nextLesson' => $nextLesson
+        ]);
+    }
+
 
     #[Route("/reorder", name: "reorder", methods: ["POST"])]
     #[IsGranted('ROLE_MODERATOR')]

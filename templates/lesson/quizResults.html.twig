@@ -1,0 +1,95 @@
+{% extends 'lesson/_base_lesson.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block lessonContent %}
+    <div class="lesson-sections">
+        {% include 'lesson/_show_sectionNav.html.twig' %}
+        <div class="lesson-section-main lesson-content">
+            <div class="lesson-section-main-content">
+                <div class="lesson-quiz-results">
+                    {% for quizResult in quizResults %}
+                        <div class="lesson-quiz-result">
+                            <div class="lesson-quiz-result-icon">
+                                {% if quizResult.correct %}
+                                    {{ mdi('check-circle-outline', 'fg-green') }}
+                                {% else %}
+                                    {{ mdi('close-circle-outline', 'fg-red') }}
+                                {% endif %}
+                            </div>
+                            <div class="lesson-quiz-result-info">
+                                <div class="lesson-quiz-result-question">{{ quizResult.question.text }}</div>
+                                <div class="mt-3">{{ 'lesson.quiz.yourAnswer'|trans }}: <b>{{ quizResult.question.correctAnswer ? 'common.trueValue'|trans : 'common.falseValue'|trans }}</b></div>
+                                <div class="mb-3">{{ 'lesson.quiz.correctAnswer'|trans }}: <b>{{ quizResult.answer ? 'common.trueValue'|trans : 'common.falseValue'|trans }}</b></div>
+                                <div class="lesson-quiz-result-explanation">{{ quizResult.question.explanation }}</div>
+                            </div>
+                        </div>
+                        {% if not loop.last %}<hr>{% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="lesson-section-main-navigation">
+                {% if previousLesson is not null %}
+                    <a href="{{ path('lesson_show', {'lesson': previousLesson.id}) }}" class="lesson-section-main-navigation-previous">{{ 'common.previous'|trans }}</a>
+                {% endif %}
+                {% if nextLesson is not null %}
+                    <a href="{{ path('lesson_show', {'lesson': nextLesson.id}) }}" class="lesson-section-main-navigation-next">{{ 'common.next'|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if is_user() %}
+        {{ encore_entry_script_tags('axios') }}
+        {{ encore_entry_script_tags('lessons.completion.inner') }}
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .lesson-quiz-results {
+            display: flex;
+            flex-direction: column;
+            row-gap: 24px;
+        }
+
+        .lesson-quiz-results hr {
+            border-color: rgba(0, 0, 0, 0.25);
+        }
+
+        .lesson-quiz-result {
+            display: flex;
+            column-gap: 16px;
+        }
+
+        .lesson-quiz-result-icon svg {
+            height: 36px;
+            width: 36px;
+            align-self: start;
+        }
+
+        .lesson-quiz-result-icon {
+            flex-basis: 0;
+        }
+
+        .lesson-quiz-result-info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 4px;
+            flex-basis: 0;
+            flex-grow: 1;
+        }
+
+        .lesson-quiz-result-question {
+            font-weight: bold;
+        }
+
+        .lesson-quiz-result-explanation {
+            font-style: italic;
+        }
+    </style>
+{% endblock %}

@@ -26,7 +26,7 @@
         {% if is_user() %}
             {% if lessonInfo.lesson.type == constant('TYPE_QUIZ', lessonInfo.lesson) %}
                 {% set completionClassAddition = lessonInfo.completed ? 'passed' : 'failed' %}
-                {% set completionText = lessonInfo ? 'lesson.completion.quiz.passed'|trans : 'lesson.completion.quiz.notPassed'|trans %}
+                {% set completionText = lessonInfo.completed ? 'lesson.completion.quiz.passed'|trans : 'lesson.completion.quiz.notPassed'|trans %}
                 <div class="lesson-quiz-completion {{ completionClassAddition }}">{{ completionText }}</div>
             {% else %}
                 {% set completionClassAddition = lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-orange-outline' %}
