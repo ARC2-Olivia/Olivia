@@ -14,6 +14,7 @@ class EduLog
     public const ACTION_LESSON_COMPLETION_UPDATE = 'lesson_completion_update';
     public const ACTION_LESSON_QUIZ_START = 'lesson_quiz_start';
     public const ACTION_LESSON_QUIZ_FINISH = 'lesson_quiz_finish';
+    public const ACTION_LESSON_QUIZ_RESULTS = 'lesson_quiz_results';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

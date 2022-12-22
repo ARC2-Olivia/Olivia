@@ -29,6 +29,8 @@ common:
 button:
     details: Details
     startNow: Start now
+    loginToEnroll: Login to enroll
+    results: Results
 
 page:
     login: Olivia | Login

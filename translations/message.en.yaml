@@ -74,7 +74,8 @@ error:
             range: Passing percentage value must be between 0 and 100.
             type: Unable to add a new question to a lesson that is not a quiz.
             start: Unable to start the quiz. Please, try again.
-            missingLessonItemQuiz: Quiz couldn't start due to an error. Please, report the error to one of the moderators.
+            finish: Your session expired while taking the quiz. Please, retake it again.
+            missingLessonItemQuiz: Error occurred while starting or finishing the quiz. Please, report the error to one of the moderators.
             results:
                 completionData: There are no results to display because the quiz has not been taken.
                 type: Cannot display results of a non-quiz lesson.

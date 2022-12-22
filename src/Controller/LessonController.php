@@ -271,8 +271,11 @@ class LessonController extends BaseController
     #[IsGranted("solve_quiz", subject: "lesson")]
     public function quiz(Lesson $lesson, Request $request): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $csrfToken = $request->request->get('_csrf_token');
-        if ($csrfToken === null || (!$this->isCsrfTokenValid('quiz.start', $csrfToken) && !$this->isCsrfTokenValid('quiz.finish', $csrfToken))) {
+        if ($csrfToken === null || !$this->isCsrfTokenValid('quiz.start', $csrfToken)) {
             $this->addFlash('error', $this->translator->trans('error.lesson.quiz.start', [], 'message'));
             return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
         }
@@ -283,15 +286,32 @@ class LessonController extends BaseController
             return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
         }
 
-        $quizData = ['answers' => []];
-        foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
-            $quizData['answers'][] = [
-                'questionId' => $quizQuestion->getId(),
-                'text' => $quizQuestion->getText(),
-                'answer' => false
-            ];
+        $quizData = $this->prepareQuizData($lessonItemQuiz);
+        $form = $this->createForm(QuizType::class, $quizData, ['action' => $this->generateUrl('lesson_quiz_finish', ['lesson' => $lesson->getId()])]);
+        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $user);
+        return $this->render('lesson/quiz.html.twig', ['lesson' => $lesson, 'lessonsInfo' => $lessonsInfo, 'form' => $form->createView()]);
+    }
+
+    #[Route("/finish-quiz/{lesson}", name: "quiz_finish", methods: ["POST"])]
+    #[IsGranted("solve_quiz", subject: "lesson")]
+    public function finishQuiz(Lesson $lesson, Request $request): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $csrfToken = $request->request->get('_csrf_token');
+        if ($csrfToken === null || !$this->isCsrfTokenValid('quiz.finish', $csrfToken)) {
+            $this->addFlash('error', $this->translator->trans('error.lesson.quiz.finish', [], 'message'));
+            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
         }
 
+        $lessonItemQuiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
+        if ($lessonItemQuiz === null) {
+            $this->addFlash('error', $this->translator->trans('error.lesson.quiz.missingLessonItemQuiz', [], 'message'));
+            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+        }
+
+        $quizData = $this->prepareQuizData($lessonItemQuiz);
         $form = $this->createForm(QuizType::class, $quizData);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -303,9 +323,9 @@ class LessonController extends BaseController
             foreach ($answers as $answer) {
                 $quizQuestion = $quizQuestionRepository->find($answer['questionId']);
                 if ($quizQuestion !== null) {
-                    $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['user' => $this->getUser(), 'question' => $quizQuestion]);
+                    $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['user' => $user, 'question' => $quizQuestion]);
                     if ($quizQuestionAnswer === null) $quizQuestionAnswer = new QuizQuestionAnswer();
-                    $quizQuestionAnswer->setUser($this->getUser())->setQuestion($quizQuestion)->setAnswer($answer['answer']);
+                    $quizQuestionAnswer->setUser($user)->setQuestion($quizQuestion)->setAnswer($answer['answer']);
                     $quizQuestionAnswers[] = $quizQuestionAnswer;
                     $this->em->persist($quizQuestionAnswer);
                 }
@@ -329,12 +349,9 @@ class LessonController extends BaseController
             $lessonCompletion->setCompleted($percentage >= $lessonItemQuiz->getPassingPercentage());
             if ($persistCompletion) $this->em->persist($lessonCompletion);
             $this->em->flush();
-
-            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
         }
 
-        $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
-        return $this->render('lesson/quiz.html.twig', ['lesson' => $lesson, 'lessonsInfo' => $lessonsInfo, 'form' => $form->createView()]);
+        return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
     }
 
     #[Route("/quiz-results/{lesson}", name: "quiz_results")]
@@ -534,5 +551,18 @@ class LessonController extends BaseController
         }
 
         if ($translated) $this->em->flush();
+    }
+
+    private function prepareQuizData(LessonItemQuiz $lessonItemQuiz): array
+    {
+        $quizData = ['lesson' => $lessonItemQuiz->getLesson(), 'answers' => []];
+        foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
+            $quizData['answers'][] = [
+                'questionId' => $quizQuestion->getId(),
+                'text' => $quizQuestion->getText(),
+                'answer' => false
+            ];
+        }
+        return $quizData;
     }
 }

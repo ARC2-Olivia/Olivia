@@ -41,7 +41,7 @@
                 <button type="submit" class="btn btn-theme-white bg-blue">{{ 'lesson.quiz.action'|trans }}</button>
             </form>
             {% if lessonCompletion is not null %}
-                <a href="{{ path('lesson_quiz_results', {'lesson': lesson.id}) }}" class="btn btn-theme-white bg-red ms-3">Results</a>
+                <a href="{{ path('lesson_quiz_results', {'lesson': lesson.id}) }}" class="btn btn-theme-white bg-red ms-3">{{ 'button.results'|trans }}</a>
             {% endif %}
         </div>
     </div>

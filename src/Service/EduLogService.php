@@ -57,12 +57,12 @@ class EduLogService
 
     public function logLessonQuizStart(Lesson $lesson, User $user, string $ipAddress): void
     {
-        $edulog = $this->prepareEduLog($user, $ipAddress)
+        $eduLog = $this->prepareEduLog($user, $ipAddress)
             ->setCourse($lesson->getCourse())
             ->setLesson($lesson)
             ->setAction(EduLog::ACTION_LESSON_QUIZ_START)
         ;
-        $this->save($edulog);
+        $this->save($eduLog);
     }
 
     public function logLessonQuizFinish(Lesson $lesson, User $user, string $ipAddress): void
@@ -71,6 +71,16 @@ class EduLogService
             ->setCourse($lesson->getCourse())
             ->setLesson($lesson)
             ->setAction(EduLog::ACTION_LESSON_QUIZ_FINISH)
+        ;
+        $this->save($edulog);
+    }
+
+    public function logLessonQuizResults(Lesson $lesson, User $user, string $ipAddress): void
+    {
+        $edulog = $this->prepareEduLog($user, $ipAddress)
+            ->setCourse($lesson->getCourse())
+            ->setLesson($lesson)
+            ->setAction(EduLog::ACTION_LESSON_QUIZ_RESULTS)
         ;
         $this->save($edulog);
     }
