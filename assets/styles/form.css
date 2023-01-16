@@ -12,6 +12,10 @@
     background-color: white;
 }
 
+.form-select.multiple {
+    height: 128px;
+}
+
 .form-input:focus {
     border: solid 1px var(--app-color-blue);
 }

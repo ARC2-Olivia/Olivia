@@ -4,7 +4,9 @@ namespace App\Controller;
 
 
 use App\Entity\Instructor;
+use App\Entity\User;
 use App\Form\InstructorType;
+use App\Form\UserType;
 use App\Repository\InstructorRepository;
 use App\Repository\UserRepository;
 use App\Traits\BasicFileManagementTrait;
@@ -30,11 +32,28 @@ class AdminController extends BaseController
         return $this->render('admin/index.html.twig');
     }
 
-    #[Route("/users", name: "user_index")]
+    #[Route("/user", name: "user_index")]
     public function users(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
         return $this->render('admin/user/index.html.twig', ['users' => $users]);
+    }
+
+    #[Route("/user/edit/{user}", name: "user_edit")]
+    public function editUser(User $user, Request $request): Response
+    {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('success.user.edit', [], 'message'));
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('admin/user/edit.html.twig', ['form' => $form->createView()]);
     }
 
     #[Route("/instructor", name: "instructor_index")]

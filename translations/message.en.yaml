@@ -4,6 +4,8 @@ type:
     error: Error
 
 success:
+    user:
+        edit: User has been edited.
     accountConfirmation:
         subject: Confirmation success!
         text: Your Olivia Tool account has been activated! Login to access either the Training or Practice modules.

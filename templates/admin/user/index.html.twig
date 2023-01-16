@@ -27,7 +27,7 @@
                                 <td>{{ user.roles|join(', ') }}</td>
                                 <td>{{ user.activated ? 'common.yes'|trans : 'common.no'|trans }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-theme-white btn-sm bg-blue">{{ 'common.edit'|trans }}</a>
+                                    <a href="{{ path('admin_user_edit', {'user': user.id}) }}" class="btn btn-theme-white btn-sm bg-blue">{{ 'common.edit'|trans }}</a>
                                     <form class="d-inline-block">
                                         <button type="button" class="btn btn-theme-white btn-sm bg-red">{{ 'common.delete'|trans }}</button>
                                     </form>
