@@ -27,6 +27,8 @@ class DefaultController extends AbstractController
 
         $request->getSession()->set('_locale', $changedLocale);
         if ($request->getLocale() === null) $request->setLocale($changedLocale);
-        return $this->redirectToRoute('index');
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 }
