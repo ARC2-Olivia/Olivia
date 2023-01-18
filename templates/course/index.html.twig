@@ -11,6 +11,7 @@
             </div>
             <nav class="col-12 col-sm-6 text-end">
                 <ul class="navigation-main p-0">
+                    <li><a href="{{ path('change_locale') }}" class="btn btn-theme-white">{{ 'nav.language'|trans }}<sup class="sup-locale">{{ app.request.locale }}</sup></a></li>
                     {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="{{ path('admin_index') }}" class="btn btn-theme-white">{{ 'nav.admin'|trans }}</a></li>
                     {% endif %}

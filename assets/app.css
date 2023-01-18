@@ -77,6 +77,10 @@ header {
     font-size: 2rem;
 }
 
+.sup-locale {
+    color: rgba(255, 255, 255, 0.5);
+}
+
 .bg-orange { background-color: var(--app-color-orange) !important; }
 .bg-green { background-color: var(--app-color-green) !important; }
 .bg-blue { background-color: var(--app-color-blue) !important; }

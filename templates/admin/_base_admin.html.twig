@@ -11,6 +11,7 @@
             </div>
             <nav class="col-12 col-sm-6 text-end">
                 <ul class="navigation-main p-0">
+                    <li><a href="{{ path('change_locale') }}" class="btn btn-theme-white">{{ 'nav.language'|trans }}<sup class="sup-locale">{{ app.request.locale }}</sup></a></li>
                     <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ 'nav.training'|trans }}</a></li>
                     <li><a href="{{ path('security_logout') }}" class="btn btn-theme-white">{{ 'common.logout'|trans }}</a></li>
                 </ul>

@@ -21,6 +21,9 @@
                             <span>{{ course.lessons|length }} {{ 'course.extra.lessons'|trans }}</span>
                         </div>
                     {% endif %}
+                    <div class="course-header-details-item">
+                        <a href="{{ path('change_locale') }}" class="btn btn-theme-white">{{ 'nav.language'|trans }}<sup class="sup-locale">{{ app.request.locale }}</sup></a>
+                    </div>
                 </div>
             </div>
             <div class="col-12 col-md-3 d-none d-md-block">

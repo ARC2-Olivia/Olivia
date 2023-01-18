@@ -51,6 +51,7 @@ nav:
     admin: Admin
     users: Users
     instructors: Instructors
+    language: Switch language
 
 form:
     security:
