@@ -1,0 +1,36 @@
+.card.evaluation-add {
+    background-color: #3A526A5F;
+    opacity: 0.5;
+    height: 320px !important;
+}
+
+.card.evaluation-add:hover {
+    opacity: 1;
+}
+
+.card.evaluation-add .card-text {
+    height: 100%;
+}
+
+.card.evaluation-add svg {
+    width: 72px;
+    height: 72px;
+}
+
+.card.evaluation-add svg path {
+    fill: var(--app-color-dark-blue);
+}
+
+.evaluation-card-details {
+    font-size: 0.875rem;
+}
+
+.evaluation-card-details-icon {
+    height: 18px;
+    width: 18px;
+    color: var(--app-color-orange);
+}
+
+.course-card-name {
+    color: black
+}

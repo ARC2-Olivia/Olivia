@@ -1,7 +1,7 @@
 .card.course-add {
     background-color: #3A526A5F;
     opacity: 0.5;
-    height: 320px;
+    height: 320px !important;
 }
 
 .card.course-add:hover {

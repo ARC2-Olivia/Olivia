@@ -1,6 +1,7 @@
 app:
     name: Olivia
     brand: OLIVIA tool
+    brand.short: OLIVIA
 
 common:
     id: ID
@@ -44,9 +45,12 @@ page:
         index: Olivia | Lessons
         show: Olivia | Lesson content
     admin: Olivia | Admin
+    evaluation:
+        index: Olivia | Evaluations
 
 nav:
     training: Training
+    practice: Practice
     aboutUs: About us
     admin: Admin
     users: Users
@@ -190,6 +194,11 @@ quizQuestion:
 note:
     extra:
         displayError: There has been an problem loading the notes widget. Refresh the page to try and load it again or, if the problem persists, report the problem to the Olivia Team.
+
+evaluation:
+    title:
+        index: Evaluations
+        new: New evaluation
 
 extra:
     free: Free

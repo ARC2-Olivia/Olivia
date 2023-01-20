@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 {% trans_default_domain 'app' %}
 
-{% block title %}{{ 'page.evaluation.index'|trans }}{% endblock %}
-
 {% block header %}
     <div class="container-fluid py-3 px-5">
         <div class="row align-items-center">
@@ -29,14 +27,14 @@
 {% block body %}
     <div class="container pt-5">
         <div class="row mb-5">
-            <h1 class="text-center">{{ 'course.title.index'|trans }}</h1>
+            <h1 class="text-center">{{ 'evaluation.title.index'|trans }}</h1>
         </div>
         {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
         <div class="row g-3">
-            {% for course in courses %}
-                {% include 'course/_index_course.html.twig' with {'course': course} %}
+            {% for evaluation in evaluations %}ž
+                {% include 'evaluation/_index_evaluation.html.twig' with {'evaluation': evaluation} %}
             {% endfor %}
-            {% if is_granted('ROLE_MODERATOR') %}{% include 'course/_index_add.html.twig' %}{% endif %}
+            {% if is_granted('ROLE_MODERATOR') %}{% include 'evaluation/_index_add.html.twig' %}{% endif %}
         </div>
     </div>
 {% endblock %}
