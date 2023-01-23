@@ -225,6 +225,12 @@ evaluation:
         overview: Overview
         evaluate: Evaluate
         edit: Edit
+        new:
+            question: New question
+            evaluator: New evaluator
+    extra:
+        question: Question
+        evaluator: Evaluator
 
 evaluationQuestion:
     type:
@@ -232,6 +238,10 @@ evaluationQuestion:
         yesNo: Yes/No
         weighted: Weighted
         numericalInput: Numerical input
+    empty: There are no defined questions for this evaluation.
+
+evaluationEvaluator:
+    empty: There are no defined evaluators for this evaluation.
 
 extra:
     free: Free

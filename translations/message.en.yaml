@@ -24,6 +24,9 @@ success:
     evaluation:
         new: You have created a new evaluation.
         edit: Evaluation has been edited.
+    evaluationQuestion:
+        new: A new question has been added to the evaluation.
+        edit: An evaluation question has been updated.
 
 warning:
     accountConfirmation:

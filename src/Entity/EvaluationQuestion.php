@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: EvaluationQuestionRepository::class)]
 class EvaluationQuestion
@@ -29,6 +30,7 @@ class EvaluationQuestion
     private ?string $type = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Gedmo\Translatable]
     private ?string $questionText = null;
 
     #[ORM\OneToMany(mappedBy: 'evaluationQuestion', targetEntity: EvaluationQuestionAnswer::class, orphanRemoval: true)]

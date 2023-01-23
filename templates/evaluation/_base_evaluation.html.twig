@@ -3,10 +3,6 @@
 
 {% block title %}{{ 'page.evaluation.show'|trans }}{% endblock %}
 
-{% if sidebarEnabled is not defined %}
-    {% set sidebarEnabled = false %}
-{% endif %}
-
 {% block header %}
     <div class="container">
         <div class="row gx-2">
@@ -25,7 +21,7 @@
 {% block body %}
     <div class="container">
         <div class="row gx-2">
-            <div class="col-12{% if sidebarEnabled %} col-md-9{% endif%} pt-4">
+            <div class="col-12 pt-4">
                 <div class="container-fluid">
                     <div class="row">
                         {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
@@ -33,22 +29,20 @@
                     <div class="row">
                         <ul class="course-navigation">
                             <li><a href="{{ path('evaluation_overview', {'evaluation': evaluation.id}) }}" class="btn btn-nav w-100{% if activeCard == 'overview'%} active{% endif %}">{{ 'evaluation.nav.overview'|trans }}</a></li>
-                            <li><a href="#" class="btn btn-nav w-100{% if activeCard == 'evaluate'%} active{% endif %}">{{ 'evaluation.nav.evaluate'|trans }}</a></li>
+                            <li><a href="{{ path('evaluation_evaluate', {'evaluation': evaluation.id}) }}" class="btn btn-nav w-100{% if activeCard == 'evaluate'%} active{% endif %}">{{ 'evaluation.nav.evaluate'|trans }}</a></li>
                             {% if is_granted('ROLE_MODERATOR') %}
                                 <li><a href="{{ path('evaluation_edit', {'evaluation': evaluation.id}) }}" class="btn btn-nav w-100{% if activeCard == 'edit'%} active{% endif %}">{{ 'evaluation.nav.edit'|trans }}</a></li>
+                                {% if activeCard == 'newQuestion' %}
+                                    <li><span class="btn btn-nav w-100 active">{{ 'evaluation.nav.new.question'|trans }}</span></li>
+                                {% endif %}
                             {% endif %}
                         </ul>
                     </div>
-                    <div class="row course-content">
+                    <div class="row evaluation-content">
                         {% block evaluationContent %}{% endblock %}
                     </div>
                 </div>
             </div>
-            {% if sidebarEnabled %}
-                <div class="col-12 col-md-3">
-                    {% block evaluationSidebar %}{% endblock %}
-                </div>
-            {% endif %}
         </div>
     </div>
 {% endblock %}

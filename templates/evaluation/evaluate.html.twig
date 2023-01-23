@@ -1,0 +1,20 @@
+{% extends 'evaluation/_base_evaluation.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block evaluationContent %}
+    {% if is_granted('ROLE_MODERATOR') %}
+        {% for eq in evaluation.evaluationQuestions %}
+            <div>{{ eq.questionText }}</div>
+        {% else %}
+            <p>{{ 'evaluationQuestion.empty'|trans }}</p>
+        {% endfor %}
+        <div class="text-end">
+            <a href="{{ path('evaluation_add_question', {'evaluation': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.question'|trans }}</a>
+        </div>
+        <hr>
+        <p>{{ 'evaluationEvaluator.empty'|trans }}</p>
+        <div class="text-end">
+            <a href="#" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.evaluator'|trans }}</a>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -31,6 +31,22 @@
     color: var(--app-color-orange);
 }
 
-.course-card-name {
+.evaluation-card-name {
     color: black
+}
+
+.evaluation-content {
+    background-color: white;
+    padding: 32px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.evaluation-content p {
+    padding: 0;
+}
+
+.evaluation-content hr {
+    border-color: rgba(0, 0, 0, 0.25);
+    border-width: 1px;
+    margin: 24px 0;
 }

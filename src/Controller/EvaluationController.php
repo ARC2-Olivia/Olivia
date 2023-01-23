@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Evaluation;
+use App\Entity\EvaluationQuestion;
+use App\Form\EvaluationQuestionType;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
 use Gedmo\Translatable\Entity\Translation;
@@ -35,6 +37,10 @@ class EvaluationController extends BaseController
             $this->processEvaluationTranslation($evaluation, $form);
             $this->addFlash('success', $this->translator->trans('success.evaluation.new', [], 'message'));
             return $this->redirectToRoute('evaluation_index');
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
         }
 
         return $this->render('evaluation/new.html.twig', ['form' => $form->createView()]);
@@ -55,6 +61,10 @@ class EvaluationController extends BaseController
         if ($form->isSubmitted() && $form->isSubmitted()) {
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.evaluation.edit', [], 'message'));
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
         }
 
         return $this->render('evaluation/edit.html.twig', ['evaluation' => $evaluation, 'activeCard' => 'edit', 'form' => $form->createView()]);
@@ -74,6 +84,35 @@ class EvaluationController extends BaseController
         }
 
         return $this->redirectToRoute('evaluation_edit', ['evaluation' => $evaluation->getId()]);
+    }
+
+    #[Route("/evaluate/{evaluation}", name: 'evaluate')]
+    public function evaluate(Evaluation $evaluation, Request $request): Response
+    {
+        return $this->render('evaluation/evaluate.html.twig', ['evaluation' => $evaluation, 'activeCard' => 'evaluate']);
+    }
+
+    #[Route("/evaluate/{evaluation}/add-question", name: 'add_question')]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function addEvaluationQuestion(Evaluation $evaluation, Request $request): Response
+    {
+        $evaluationQuestion = (new EvaluationQuestion())->setEvaluation($evaluation);
+        $form = $this->createForm(EvaluationQuestionType::class, $evaluationQuestion, ['include_translatable_fields' => true]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($evaluationQuestion);
+            $this->em->flush();
+            $this->processEvaluationQuestionTranslation($evaluationQuestion, $form);
+            $this->addFlash('success', $this->translator->trans('success.evaluationQuestion.new', [], 'message'));
+            return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('evaluation/evaluation_question/new.html.twig', ['evaluation' => $evaluation, 'form' => $form->createView(), 'activeCard' => 'newQuestion']);
     }
 
     private function processEvaluationTranslation(Evaluation $evaluation, \Symfony\Component\Form\FormInterface $form)
@@ -98,6 +137,21 @@ class EvaluationController extends BaseController
         $tagsAlt = $form->get('tagsAlt')->getData();
         if ($tagsAlt !== null && count($tagsAlt) > 0) {
             $translationRepository->translate($evaluation, 'tags', $localeAlt, $tagsAlt);
+            $translated = true;
+        }
+
+        if ($translated) $this->em->flush();
+    }
+
+    private function processEvaluationQuestionTranslation(EvaluationQuestion $evaluationQuestion, \Symfony\Component\Form\FormInterface $form)
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
+
+        $questionTextAlt = $form->get('questionTextAlt')->getData();
+        if ($questionTextAlt !== null && trim($questionTextAlt) !== '') {
+            $translationRepository->translate($evaluationQuestion, 'questionText', $localeAlt, trim($questionTextAlt));
             $translated = true;
         }
 

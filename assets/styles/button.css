@@ -22,6 +22,11 @@
     color: var(--app-color-blue);
 }
 
+.btn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
 .btn.btn-theme-white::before,
 .btn.btn-theme-black::before,
 .btn.btn-link::before {
