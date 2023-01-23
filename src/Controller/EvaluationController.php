@@ -6,6 +6,7 @@ use App\Entity\Evaluation;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
 use Gedmo\Translatable\Entity\Translation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,6 +47,7 @@ class EvaluationController extends BaseController
     }
 
     #[Route("/edit/{evaluation}", name: "edit")]
+    #[IsGranted("ROLE_MODERATOR")]
     public function edit(Evaluation $evaluation, Request $request): Response
     {
         $form = $this->createForm(EvaluationType::class, $evaluation);
@@ -56,6 +58,22 @@ class EvaluationController extends BaseController
         }
 
         return $this->render('evaluation/edit.html.twig', ['evaluation' => $evaluation, 'activeCard' => 'edit', 'form' => $form->createView()]);
+    }
+
+    #[Route("/delete/{evaluation}", name: "delete")]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function delete(Evaluation $evaluation, Request $request): Response
+    {
+        $csrfToken = $request->get('_csrf_token');
+        if ($csrfToken !== null && $this->isCsrfTokenValid('evaluation.delete', $csrfToken)) {
+            $evaluationName = $evaluation->getName();
+            $this->em->remove($evaluation);
+            $this->em->flush();
+            $this->addFlash('warning', $this->translator->trans('warning.evaluation.delete', ['%evaluation%' => $evaluationName], 'message'));
+            return $this->redirectToRoute('evaluation_index');
+        }
+
+        return $this->redirectToRoute('evaluation_edit', ['evaluation' => $evaluation->getId()]);
     }
 
     private function processEvaluationTranslation(Evaluation $evaluation, \Symfony\Component\Form\FormInterface $form)
