@@ -47,6 +47,7 @@ page:
     admin: Olivia | Admin
     evaluation:
         index: Olivia | Evaluations
+        new: Olivia | New evaluation
 
 nav:
     training: Training
@@ -125,6 +126,18 @@ form:
                 explanation: Explanation
                 explanationAlt: Explanation (alternate language)
                 correctAnswer: Correct answer
+        evaluation:
+            label:
+                name: Name
+                nameAlt: Name (alternate language)
+                description: Description
+                descriptionAlt: Description (alternate language)
+                tags: Tags
+                tagsAlt: Tags (alternate language)
+            placeholder:
+                name: Name of the evaluation
+                description: Evaluation description...
+                tags: GDPR,IT,Security
 
 user:
     title:

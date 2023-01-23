@@ -21,6 +21,9 @@ success:
     quizQuestion:
         new: You have added a new question to the course.
         edit: Question has been edited.
+    evaluation:
+        new: You have created a new evaluation.
+        edit: Evaluation has been edited.
 
 warning:
     accountConfirmation:
@@ -85,3 +88,6 @@ error:
     quizQuestion:
         text: Question text must not be blank.
         explanation: Explanation text must not be blank.
+    evaluation:
+        name: Evaluation name must not be blank.
+        description: Evaluation description must not be blank.
