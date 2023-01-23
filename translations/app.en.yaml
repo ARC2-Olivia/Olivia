@@ -139,6 +139,13 @@ form:
                 name: Name of the evaluation
                 description: Evaluation description...
                 tags: GDPR,IT,Security
+        evaluationQuestion:
+            label:
+                type: Question type
+                questionText: Question text
+                questionTextAlt: Question text (alternate language)
+            placeholder:
+                questionText: Question text goes here...
 
 user:
     title:
@@ -216,7 +223,15 @@ evaluation:
         new: New evaluation
     nav:
         overview: Overview
+        evaluate: Evaluate
         edit: Edit
+
+evaluationQuestion:
+    type:
+        noEvaluate: No evaluation
+        yesNo: Yes/No
+        weighted: Weighted
+        numericalInput: Numerical input
 
 extra:
     free: Free

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EvaluationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -29,6 +31,14 @@ class Evaluation extends TranslatableEntity
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     #[Gedmo\Translatable]
     private array $tags = [];
+
+    #[ORM\OneToMany(mappedBy: 'evaluation', targetEntity: EvaluationQuestion::class, orphanRemoval: true)]
+    private Collection $evaluationQuestions;
+
+    public function __construct()
+    {
+        $this->evaluationQuestions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -67,6 +77,36 @@ class Evaluation extends TranslatableEntity
     public function setTags(?array $tags): self
     {
         $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EvaluationQuestion>
+     */
+    public function getEvaluationQuestions(): Collection
+    {
+        return $this->evaluationQuestions;
+    }
+
+    public function addEvaluationQuestion(EvaluationQuestion $evaluationQuestion): self
+    {
+        if (!$this->evaluationQuestions->contains($evaluationQuestion)) {
+            $this->evaluationQuestions->add($evaluationQuestion);
+            $evaluationQuestion->setEvaluation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvaluationQuestion(EvaluationQuestion $evaluationQuestion): self
+    {
+        if ($this->evaluationQuestions->removeElement($evaluationQuestion)) {
+            // set the owning side to null (unless already changed)
+            if ($evaluationQuestion->getEvaluation() === $this) {
+                $evaluationQuestion->setEvaluation(null);
+            }
+        }
 
         return $this;
     }
