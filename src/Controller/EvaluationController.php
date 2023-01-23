@@ -39,6 +39,12 @@ class EvaluationController extends BaseController
         return $this->render('evaluation/new.html.twig', ['form' => $form->createView()]);
     }
 
+    #[Route("/overview/{evaluation}", name: "overview")]
+    public function overview(Evaluation $evaluation, Request $request): Response
+    {
+        return $this->render('evaluation/overview.html.twig', ['evaluation' => $evaluation, 'activeCard' => 'overview']);
+    }
+
     private function processEvaluationTranslation(Evaluation $evaluation, \Symfony\Component\Form\FormInterface $form)
     {
         $translationRepository = $this->em->getRepository(Translation::class);

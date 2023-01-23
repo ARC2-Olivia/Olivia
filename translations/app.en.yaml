@@ -48,6 +48,7 @@ page:
     evaluation:
         index: Olivia | Evaluations
         new: Olivia | New evaluation
+        show: Olivia | Evaluation details
 
 nav:
     training: Training
@@ -212,6 +213,9 @@ evaluation:
     title:
         index: Evaluations
         new: New evaluation
+    nav:
+        overview: Overview
+        edit: Edit
 
 extra:
     free: Free
