@@ -33,7 +33,7 @@
                     <div class="row">
                         <ul class="course-navigation">
                             <li><a href="{{ path('evaluation_overview', {'evaluation': evaluation.id}) }}" class="btn btn-nav w-100{% if activeCard == 'overview'%} active{% endif %}">{{ 'evaluation.nav.overview'|trans }}</a></li>
-                            <li><a href="#" class="btn btn-nav w-100{% if activeCard == 'edit'%} active{% endif %}">{{ 'evaluation.nav.edit'|trans }}</a></li>
+                            <li><a href="{{ path('evaluation_edit', {'evaluation': evaluation.id}) }}" class="btn btn-nav w-100{% if activeCard == 'edit'%} active{% endif %}">{{ 'evaluation.nav.edit'|trans }}</a></li>
                         </ul>
                     </div>
                     <div class="row course-content">

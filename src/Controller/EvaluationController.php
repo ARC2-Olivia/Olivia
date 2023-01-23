@@ -45,6 +45,19 @@ class EvaluationController extends BaseController
         return $this->render('evaluation/overview.html.twig', ['evaluation' => $evaluation, 'activeCard' => 'overview']);
     }
 
+    #[Route("/edit/{evaluation}", name: "edit")]
+    public function edit(Evaluation $evaluation, Request $request): Response
+    {
+        $form = $this->createForm(EvaluationType::class, $evaluation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isSubmitted()) {
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('success.evaluation.edit', [], 'message'));
+        }
+
+        return $this->render('evaluation/edit.html.twig', ['evaluation' => $evaluation, 'activeCard' => 'edit', 'form' => $form->createView()]);
+    }
+
     private function processEvaluationTranslation(Evaluation $evaluation, \Symfony\Component\Form\FormInterface $form)
     {
         $translationRepository = $this->em->getRepository(Translation::class);
