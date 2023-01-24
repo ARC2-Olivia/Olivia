@@ -114,7 +114,7 @@ class EvaluationController extends BaseController
             }
         }
 
-        return $this->render('evaluation/evaluation_question/form.html.twig', ['evaluation' => $evaluation, 'form' => $form->createView(), 'activeCard' => 'newQuestion']);
+        return $this->render('evaluation/evaluation_question/new.html.twig', ['evaluation' => $evaluation, 'form' => $form->createView(), 'activeCard' => 'newQuestion']);
     }
 
     private function processAutomaticEvaluationQuestionAnswerCreation(EvaluationQuestion $evaluationQuestion)

@@ -29,7 +29,7 @@ class EvaluationQuestionController extends BaseController
             }
         }
 
-        return $this->render('evaluation/evaluation_question/form.html.twig', ['evaluation' => $evaluationQuestion->getEvaluation(), 'form' => $form->createView(), 'activeCard' => 'editQuestion']);
+        return $this->render('evaluation/evaluation_question/edit.html.twig', ['evaluation' => $evaluationQuestion->getEvaluation(), 'form' => $form->createView(), 'activeCard' => 'editQuestion']);
     }
 
     #[Route("/delete/{evaluationQuestion}", name: "delete", methods: ["POST"])]
