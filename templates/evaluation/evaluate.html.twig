@@ -6,16 +6,7 @@
         {% if evaluation.evaluationQuestions is not empty %}
             <ul class="mod--evaluation-questions">
                 {% for evaluationQuestion in evaluation.evaluationQuestions %}
-                    <li class="mod--evaluation-question">
-                        <div class="mod--evaluation-question-details">
-                            <div class="mod--evaluation-question-text">{{ evaluationQuestion.questionText }}</div>
-                            <div class="mod--evaluation-question-type">{{ evaluationQuestion.type }}</div>
-                        </div>
-                        <div class="mod--evaluation-question-actions">
-                            <a href="#" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</a>
-                            <a href="{{ path('evaluation_question_edit', {'evaluationQuestion': evaluationQuestion.id}) }}" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('cog') }}</a>
-                        </div>
-                    </li>
+                    {% include 'evaluation/_evaluate_mod_evaluationQuestion.html.twig' %}
                 {% endfor %}
             </ul>
         {% else %}

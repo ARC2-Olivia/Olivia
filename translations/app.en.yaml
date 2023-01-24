@@ -241,6 +241,7 @@ evaluationQuestion:
         yesNo: Yes/No
         weighted: Weighted
         numericalInput: Numerical input
+    delete: Are you sure you want to delete this evaluation question?
     empty: There are no defined questions for this evaluation.
 
 evaluationEvaluator:

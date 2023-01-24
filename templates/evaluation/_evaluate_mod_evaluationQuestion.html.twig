@@ -1,0 +1,15 @@
+{% trans_default_domain 'app' %}
+
+<li class="mod--evaluation-question">
+    <div class="mod--evaluation-question-details">
+        <div class="mod--evaluation-question-text">{{ evaluationQuestion.questionText }}</div>
+        <div class="mod--evaluation-question-type">{{ evaluationQuestion.type }}</div>
+    </div>
+    <div class="mod--evaluation-question-actions">
+        <form action="{{ path('evaluation_question_delete', {'evaluationQuestion': evaluationQuestion.id}) }}" method="post" onsubmit="return confirm('{{ 'evaluationQuestion.delete'|trans }}')">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluationQuestion.delete') }}"/>
+            <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
+        </form>
+        <a href="{{ path('evaluation_question_edit', {'evaluationQuestion': evaluationQuestion.id}) }}" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('cog') }}</a>
+    </div>
+</li>

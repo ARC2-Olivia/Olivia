@@ -31,4 +31,19 @@ class EvaluationQuestionController extends BaseController
 
         return $this->render('evaluation/evaluation_question/form.html.twig', ['evaluation' => $evaluationQuestion->getEvaluation(), 'form' => $form->createView(), 'activeCard' => 'editQuestion']);
     }
+
+    #[Route("/delete/{evaluationQuestion}", name: "delete", methods: ["POST"])]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function delete(EvaluationQuestion $evaluationQuestion, Request $request): Response
+    {
+        $evaluation = $evaluationQuestion->getEvaluation();
+        $csrfToken = $request->get('_csrf_token');
+        if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationQuestion.delete', $csrfToken)) {
+            $this->em->remove($evaluationQuestion);
+            $this->em->flush();
+            $this->addFlash('warning', $this->translator->trans('warning.evaluationQuestion.delete', ['%evaluation%' => $evaluation->getName()], 'message'));
+        }
+
+        return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
+    }
 }

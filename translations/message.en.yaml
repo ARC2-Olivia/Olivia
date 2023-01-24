@@ -47,6 +47,8 @@ warning:
         delete: Question for the quiz <i>%lesson%</i> has been deleted.
     evaluation:
         delete: Evaluation <i>%evaluation%</i> has been deleted.
+    evaluationQuestion:
+        delete: Evaluation question for the <i>%evaluation%</i> evaluation has been deleted.
 
 error:
     login: Invalid credentials.
