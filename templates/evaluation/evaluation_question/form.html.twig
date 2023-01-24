@@ -2,7 +2,8 @@
 {% trans_default_domain 'app' %}
 
 {% block evaluationContent %}
-    {% include 'evaluation/evaluation_question/_form.html.twig' %}
+    {{ form_start(form, {'attr': {'id' : form.vars.id}}) }}
+    {{ form_end(form) }}
     <div class="text-end">
         <button type="submit" form="{{ form.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
     </div>

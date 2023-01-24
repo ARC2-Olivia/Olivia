@@ -224,7 +224,10 @@ evaluation:
     nav:
         overview: Overview
         evaluate: Evaluate
-        edit: Edit
+        edit:
+            default: Edit
+            question: Edit question
+            evaluator: Edit evaluator
         new:
             question: New question
             evaluator: New evaluator

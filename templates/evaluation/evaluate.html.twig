@@ -13,7 +13,7 @@
                         </div>
                         <div class="mod--evaluation-question-actions">
                             <a href="#" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</a>
-                            <a href="#" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('pencil') }}</a>
+                            <a href="{{ path('evaluation_question_edit', {'evaluationQuestion': evaluationQuestion.id}) }}" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('pencil') }}</a>
                         </div>
                     </li>
                 {% endfor %}
