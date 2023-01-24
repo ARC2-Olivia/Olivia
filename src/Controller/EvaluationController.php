@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Evaluation;
 use App\Entity\EvaluationQuestion;
+use App\Entity\EvaluationQuestionAnswer;
 use App\Form\EvaluationQuestionType;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
@@ -104,6 +105,7 @@ class EvaluationController extends BaseController
             $this->em->persist($evaluationQuestion);
             $this->em->flush();
             $this->processEvaluationQuestionTranslation($evaluationQuestion, $form);
+            $this->processAutomaticEvaluationQuestionAnswerCreation($evaluationQuestion);
             $this->addFlash('success', $this->translator->trans('success.evaluationQuestion.new', [], 'message'));
             return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
         } else {
@@ -115,6 +117,14 @@ class EvaluationController extends BaseController
         return $this->render('evaluation/evaluation_question/form.html.twig', ['evaluation' => $evaluation, 'form' => $form->createView(), 'activeCard' => 'newQuestion']);
     }
 
+    private function processAutomaticEvaluationQuestionAnswerCreation(EvaluationQuestion $evaluationQuestion)
+    {
+        if ($evaluationQuestion->getType() === EvaluationQuestion::TYPE_YES_NO || $evaluationQuestion->getType() === EvaluationQuestion::TYPE_NO_EVALUATE) {
+            $this->em->persist((new EvaluationQuestionAnswer())->setEvaluationQuestion($evaluationQuestion)->setAnswerText('common.yes')->setAnswerValue('1'));
+            $this->em->persist((new EvaluationQuestionAnswer())->setEvaluationQuestion($evaluationQuestion)->setAnswerText('common.no')->setAnswerValue('0'));
+            $this->em->flush();
+        }
+    }
 
     private function processEvaluationTranslation(Evaluation $evaluation, \Symfony\Component\Form\FormInterface $form)
     {
