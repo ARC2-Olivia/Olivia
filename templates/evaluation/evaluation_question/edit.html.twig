@@ -6,4 +6,143 @@
     <div class="text-end">
         <button type="submit" form="{{ form.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
     </div>
+
+    {% if evaluationQuestion.type == constant('TYPE_WEIGHTED', evaluationQuestion) %}
+        <hr>
+        <form id="evaluation_question_answers"
+              action="{{ path('evaluation_question_add_answers', {'evaluationQuestion': evaluationQuestion.id}) }}"
+              method="post"
+              class="weighted-evaluation-questions-form"
+              data-answer-form
+        >
+            {% for evaluationQuestionAnswer in evaluationQuestion.evaluationQuestionAnswers %}
+                {% include 'evaluation/evaluation_question/_edit_answer.html.twig' with {'evaluationQuestionAnswer': evaluationQuestionAnswer} %}
+            {% endfor %}
+            <button type="button" class="weighted-evaluation-questions-form-item--add" data-add>{{ mdi('plus-circle') }}</button>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluationQuestion.addAnswers') }}">
+        </form>
+        <div class="text-end mt-3">
+            <button type="submit" form="evaluation_question_answers" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% if evaluationQuestion.type == constant('TYPE_WEIGHTED', evaluationQuestion) %}
+        <style>
+            .weighted-evaluation-questions-form {
+                display: flex;
+                flex-direction: column;
+                row-gap: 1rem;
+                align-items: stretch;
+            }
+
+            .weighted-evaluation-questions-form-item--answer {
+                display: flex;
+                justify-content: space-between;
+                background-color: rgba(0, 0, 0, 0.075);
+                padding: 16px 16px;
+                border-radius: 8px;
+                column-gap: 8px;
+            }
+
+            .weighted-evaluation-questions-form-item--answer-text,
+            .weighted-evaluation-questions-form-item--answer-value {
+                flex-basis: 0;
+                flex-grow: 2;
+            }
+
+            .weighted-evaluation-questions-form-item--answer-text textarea {
+                min-height: 120px !important;
+            }
+
+            .weighted-evaluation-questions-form-item--action {
+                flex-basis: 0;
+                flex-grow: 1;
+                display: flex;
+                justify-content: end;
+            }
+
+            .weighted-evaluation-questions-form-item--add {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: var(--app-color-dark-blue);
+                background-color: #3A526A5F;
+                opacity: 0.5;
+                padding: 8px 0;
+                border-radius: 8px;
+            }
+
+            .weighted-evaluation-questions-form-item--add:hover {
+                opacity: 1;
+            }
+
+            .weighted-evaluation-questions-form-item--add svg {
+                width: 36px;
+                height: 36px;
+            }
+        </style>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('axios') }}
+    {% if evaluationQuestion.type == constant('TYPE_WEIGHTED', evaluationQuestion) %}
+        <script>
+            window.addEventListener("load", () => {
+                document.querySelector(".weighted-evaluation-questions-form-item--answer button[data-remove]")?.addEventListener("click", removeAnswer);
+                document.querySelector(".weighted-evaluation-questions-form button[data-add]").addEventListener("click", addAnswer);
+
+                function removeAnswer(event) {
+                    event.target.closest(".weighted-evaluation-questions-form-item--answer").remove();
+                }
+
+                function addAnswer(event) {
+                    const parser = new DOMParser();
+                    const answerString = `
+                    <div class="weighted-evaluation-questions-form-item--answer" data-answer>
+                        <label class="weighted-evaluation-questions-form-item--answer-text">
+                            <span class="label">{{ 'form.entity.evaluationQuestionAnswer.label.weighted.answerText'|trans }}</span>
+                            <textarea class="form-textarea" data-answer-text></textarea>
+                        </label>
+                        <label class="weighted-evaluation-questions-form-item--answer-value">
+                            <span class="label">{{ 'form.entity.evaluationQuestionAnswer.label.weighted.answerValue'|trans }}</span>
+                            <input type="number" class="form-input" data-answer-value/>
+                        </label>
+                        <div class="weighted-evaluation-questions-form-item--action">
+                            <button type="button" class="btn btn-theme-black btn-round" data-remove>{{ mdi('trash-can-outline') }}</button>
+                        </div>
+                    </div>
+                    `;
+                    const answerDoc = parser.parseFromString(answerString, "text/html");
+                    const answerDOM = answerDoc.body.firstChild;
+                    answerDOM.querySelector(".weighted-evaluation-questions-form-item--action button[data-remove]").addEventListener("click", removeAnswer);
+
+                    const form = document.querySelector(".weighted-evaluation-questions-form");
+                    form.insertBefore(answerDOM, this);
+                }
+
+                const form = document.querySelector("form[data-answer-form]");
+                form.addEventListener("formdata", function(event) {
+                    const answers = event.target.querySelectorAll("[data-answer]");
+                    let data = [];
+                    answers.forEach(function(answer) {
+                        const answerText = answer.querySelector("textarea[data-answer-text]")?.value;
+                        const answerValue = answer.querySelector("input[data-answer-value]")?.value;
+                        if (answerText !== null && answerValue !== null) {
+                            data.push({ answerText: answerText, answerValue: answerValue });
+                        }
+                    });
+
+                    const formData = event.formData;
+                    formData.set('answers', JSON.stringify(data));
+                });
+            });
+        </script>
+    {% endif %}
 {% endblock %}

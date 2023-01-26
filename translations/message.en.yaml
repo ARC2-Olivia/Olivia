@@ -27,6 +27,8 @@ success:
     evaluationQuestion:
         new: A new question has been added to the evaluation.
         edit: An evaluation question has been updated.
+    evaluationQuestionAnswer:
+        add: Evaluation question answers have been updated.
 
 warning:
     accountConfirmation:
@@ -98,3 +100,6 @@ error:
     evaluation:
         name: Evaluation name must not be blank.
         description: Evaluation description must not be blank.
+    evaluationQuestionAnswer:
+        csrf: There was an error processing answers for the evaluation question. Please, try to add them again.
+        empty: There were no answers to add to the evaluation question.

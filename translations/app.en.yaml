@@ -146,6 +146,11 @@ form:
                 questionTextAlt: Question text (alternate language)
             placeholder:
                 questionText: Question text goes here...
+        evaluationQuestionAnswer:
+            label:
+                weighted:
+                    answerText: Answer text
+                    answerValue: Weight
 
 user:
     title:

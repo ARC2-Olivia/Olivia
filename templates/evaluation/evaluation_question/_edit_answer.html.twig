@@ -1,0 +1,14 @@
+{% trans_default_domain 'app' %}
+<div class="weighted-evaluation-questions-form-item--answer" data-answer>
+    <label class="weighted-evaluation-questions-form-item--answer-text">
+        <span class="label">{{ 'form.entity.evaluationQuestionAnswer.label.weighted.answerText'|trans }}</span>
+        <textarea class="form-textarea" data-answer-text>{{ evaluationQuestionAnswer.answerText }}</textarea>
+    </label>
+    <label class="weighted-evaluation-questions-form-item--answer-value">
+        <span class="label">{{ 'form.entity.evaluationQuestionAnswer.label.weighted.answerValue'|trans }}</span>
+        <input type="number" class="form-input" value="{{ evaluationQuestionAnswer.answerValue }}" data-answer-value/>
+    </label>
+    <div class="weighted-evaluation-questions-form-item--action">
+        <button type="button" class="btn btn-theme-black btn-round" data-remove>{{ mdi('trash-can-outline') }}</button>
+    </div>
+</div>
