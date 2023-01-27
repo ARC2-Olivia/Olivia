@@ -97,7 +97,7 @@ class EvaluationController extends BaseController
     #[IsGranted("ROLE_MODERATOR")]
     public function addEvaluationQuestion(Evaluation $evaluation, Request $request): Response
     {
-        $evaluationQuestion = (new EvaluationQuestion())->setEvaluation($evaluation);
+        $evaluationQuestion = (new EvaluationQuestion())->setEvaluation($evaluation)->setLocale($this->getParameter('locale.default'));
         $form = $this->createForm(EvaluationQuestionType::class, $evaluationQuestion, ['include_translatable_fields' => true]);
         $form->handleRequest($request);
 

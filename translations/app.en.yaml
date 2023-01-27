@@ -150,6 +150,7 @@ form:
             label:
                 weighted:
                     answerText: Answer text
+                    answerTextAlt: Answer text (alternate language)
                     answerValue: Weight
 
 user:
@@ -236,9 +237,11 @@ evaluation:
         new:
             question: New question
             evaluator: New evaluator
+            answer: New answer
     extra:
         question: Question
         evaluator: Evaluator
+        answer: Answer
 
 evaluationQuestion:
     type:

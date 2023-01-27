@@ -51,19 +51,22 @@
     margin: 24px 0;
 }
 
-.mod--evaluation-questions {
+.mod--evaluation-questions,
+.mod--evaluation-question-answers {
     display: flex;
     flex-direction: column;
     row-gap: 8px;
     margin-bottom: 24px;
 }
 
-ul.mod--evaluation-questions {
+ul.mod--evaluation-questions,
+ul.mod--evaluation-question-answers {
     list-style: none;
     padding: 0;
 }
 
-.mod--evaluation-question {
+.mod--evaluation-question,
+.mod--evaluation-question-answer  {
     display: flex;
     justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.075);
@@ -72,21 +75,25 @@ ul.mod--evaluation-questions {
     align-items: center;
 }
 
-.mod--evaluation-question-details {
+.mod--evaluation-question-details,
+.mod--evaluation-question-answer-details {
     display: flex;
     flex-direction: column;
 }
 
-.mod--evaluation-question-text {
+.mod--evaluation-question-text,
+.mod--evaluation-question-answer-text {
     font-weight: 600;
 }
 
-.mod--evaluation-question-type {
+.mod--evaluation-question-type,
+.mod--evaluation-question-answer-value {
     font-size: small;
     color: rgba(0, 0, 0, 0.66667);
 }
 
-.mod--evaluation-question-actions {
+.mod--evaluation-question-actions,
+.mod--evaluation-question-answer-actions {
     display: flex;
     column-gap: 12px;
 }

@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\EvaluationQuestion;
 use App\Entity\EvaluationQuestionAnswer;
+use App\Form\EvaluationQuestionAnswerWeightedType;
 use App\Form\EvaluationQuestionType;
+use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,44 +55,46 @@ class EvaluationQuestionController extends BaseController
         return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
     }
 
-    #[Route("/add-answers/{evaluationQuestion}", name: "add_answers", methods: ["POST"])]
+    #[Route("/add-weighted-answer/{evaluationQuestion}", name: "add_weighted_answer")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function addAnswers(EvaluationQuestion $evaluationQuestion, Request $request): Response
+    public function addWeightedAnswer(EvaluationQuestion $evaluationQuestion, Request $request): Response
     {
-        $csrfToken = $request->request->get('_csrf_token');
-        $answers = json_decode($request->request->get('answers'), true);
+        $evaluationQuestionAnswer = (new EvaluationQuestionAnswer())->setEvaluationQuestion($evaluationQuestion)->setLocale($this->getParameter('locale.default'));
+        $form = $this->createForm(EvaluationQuestionAnswerWeightedType::class, $evaluationQuestionAnswer, ['include_translatable_fields' => true]);
+        $form->handleRequest($request);
 
-        if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationQuestion.addAnswers', $csrfToken)) {
-            if (count($answers) > 0) {
-                $this->clearExistingEvaluationQuestionAnswers($evaluationQuestion);
-                $this->createNewEvaluationQuestionAnswers($answers, $evaluationQuestion);
-                $this->em->flush();
-                $this->addFlash('success', $this->translator->trans('success.evaluationQuestionAnswer.add', [], 'message'));
-            } else {
-                $this->addFlash('error', $this->translator->trans('error.evaluationQuestionAnswer.empty', [], 'message'));
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($evaluationQuestionAnswer);
+            $this->em->flush();
+            $this->processEvaluationQuestionAnswerTranslation($evaluationQuestionAnswer, $form);
+            $this->addFlash('success', $this->translator->trans('success.evaluationQuestionAnswer.new', [], 'message'));
+            return $this->redirectToRoute('evaluation_question_edit', ['evaluationQuestion' => $evaluationQuestion->getId()]);
         } else {
-            $this->addFlash('error', $this->translator->trans('error.evaluationQuestionAnswer.csrf', [], 'message'));
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $error->getMessage());
+            }
         }
 
-        return $this->redirectToRoute('evaluation_question_edit', ['evaluationQuestion' => $evaluationQuestion->getId()]);
+        return $this->render('evaluation/evaluation_question/evaluation_question_answer/new.html.twig', [
+            'evaluation' => $evaluationQuestion->getEvaluation(),
+            'evaluationQuestion' => $evaluationQuestion,
+            'form' => $form->createView(),
+            'activeCard' => 'newAnswer'
+        ]);
     }
 
-    private function clearExistingEvaluationQuestionAnswers(EvaluationQuestion $evaluationQuestion): void
+    private function processEvaluationQuestionAnswerTranslation(EvaluationQuestionAnswer $evaluationQuestionAnswer, \Symfony\Component\Form\FormInterface $form)
     {
-        foreach ($evaluationQuestion->getEvaluationQuestionAnswers() as $eqa) {
-            $this->em->remove($eqa);
-        }
-    }
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
 
-    private function createNewEvaluationQuestionAnswers(mixed $answers, EvaluationQuestion $evaluationQuestion): void
-    {
-        foreach ($answers as $answer) {
-            $eqa = (new EvaluationQuestionAnswer())
-                ->setEvaluationQuestion($evaluationQuestion)
-                ->setAnswerText($answer['answerText'])
-                ->setAnswerValue($answer['answerValue']);
-            $this->em->persist($eqa);
+        $answerTextAlt = $form->get('answerTextAlt')->getData();
+        if ($answerTextAlt !== null && trim($answerTextAlt) !== '') {
+            $translationRepository->translate($evaluationQuestionAnswer, 'answerText', $localeAlt, trim($answerTextAlt));
+            $translated = true;
         }
+
+        if ($translated) $this->em->flush();
     }
 }

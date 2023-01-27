@@ -28,7 +28,7 @@ success:
         new: A new question has been added to the evaluation.
         edit: An evaluation question has been updated.
     evaluationQuestionAnswer:
-        add: Evaluation question answers have been updated.
+        new: A new answer has been added to the evaluation question.
 
 warning:
     accountConfirmation:
@@ -101,5 +101,8 @@ error:
         name: Evaluation name must not be blank.
         description: Evaluation description must not be blank.
     evaluationQuestionAnswer:
+        answerText: Answer text must not be empty.
+        answerValue:
+            weighted: Answer weight must be a number.
         csrf: There was an error processing answers for the evaluation question. Please, try to add them again.
         empty: There were no answers to add to the evaluation question.

@@ -1,0 +1,12 @@
+{{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+    {{ form_label(form.answerText) }}
+    {{ form_widget(form.answerText) }}
+
+    {% if form.answerText is defined %}
+        {{ form_label(form.answerTextAlt) }}
+        {{ form_widget(form.answerTextAlt) }}
+    {% endif %}
+
+    {{ form_label(form.answerValue) }}
+    {{ form_widget(form.answerValue) }}
+{{ form_end(form) }}

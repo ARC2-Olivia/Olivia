@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: EvaluationQuestionRepository::class)]
-class EvaluationQuestion
+class EvaluationQuestion extends TranslatableEntity
 {
     public const TYPE_NO_EVALUATE = 'no_evaluate';
     public const TYPE_YES_NO = 'yes_no';

@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Repository\EvaluationQuestionAnswerRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvaluationQuestionAnswerRepository::class)]
-class EvaluationQuestionAnswer
+class EvaluationQuestionAnswer extends TranslatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,9 +21,12 @@ class EvaluationQuestionAnswer
     private ?EvaluationQuestion $evaluationQuestion = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'error.evaluationQuestionAnswer.answerText')]
+    #[Gedmo\Translatable]
     private ?string $answerText = null;
 
     #[ORM\Column(length: 63)]
+    #[Assert\NotNull(message: 'error.evaluationQuestionAnswer.answerValue.weighted')]
     private ?string $answerValue = null;
 
     public function getId(): ?int
