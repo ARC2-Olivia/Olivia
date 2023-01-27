@@ -18,7 +18,11 @@
                             <div class="mod--evaluation-question-answer-value">{{ evaluationQuestionAnswer.answerValue }}</div>
                         </div>
                         <div class="mod--evaluation-question-actions">
-                            <a href="#" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('pencil') }}</a>
+                            <a href="{{ path('evaluation_question_answer_edit', {'evaluationQuestionAnswer': evaluationQuestionAnswer.id}) }}"
+                               class="btn btn-sm btn-round btn-theme-white bg-green"
+                            >
+                                {{ mdi('pencil') }}
+                            </a>
                         </div>
                     </li>
                 {% endfor %}
@@ -31,13 +35,4 @@
         </div>
     {% endif %}
 
-{% endblock %}
-
-
-{% block stylesheets %}
-    {{ parent() }}
-    {% if evaluationQuestion.type == constant('TYPE_WEIGHTED', evaluationQuestion) %}
-        <style>
-        </style>
-    {% endif %}
 {% endblock %}

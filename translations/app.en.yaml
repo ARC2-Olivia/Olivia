@@ -234,6 +234,7 @@ evaluation:
             default: Edit
             question: Edit question
             evaluator: Edit evaluator
+            answer: Edit answer
         new:
             question: New question
             evaluator: New evaluator
