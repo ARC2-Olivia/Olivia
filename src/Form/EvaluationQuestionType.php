@@ -22,16 +22,25 @@ class EvaluationQuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $typeChoices = [
-            $this->translator->trans('evaluationQuestion.type.noEvaluate', [], 'app') => EvaluationQuestion::TYPE_NO_EVALUATE,
             $this->translator->trans('evaluationQuestion.type.yesNo', [], 'app') => EvaluationQuestion::TYPE_YES_NO,
             $this->translator->trans('evaluationQuestion.type.weighted', [], 'app') => EvaluationQuestion::TYPE_WEIGHTED,
             $this->translator->trans('evaluationQuestion.type.numericalInput', [], 'app') => EvaluationQuestion::TYPE_NUMERICAL_INPUT
+        ];
+
+        $evaluatableChoices = [
+            $this->translator->trans('common.no', [], 'app') => false,
+            $this->translator->trans('common.yes', [], 'app') => true
         ];
 
         $builder
             ->add('type', ChoiceType::class, [
                 'label' => 'form.entity.evaluationQuestion.label.type',
                 'choices' => $typeChoices,
+                'attr' => ['class' => 'form-select mb-3']
+            ])
+            ->add('evaluable', ChoiceType::class, [
+                'label' => 'form.entity.evaluationQuestion.label.evaluatable',
+                'choices' => $evaluatableChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('questionText', TextareaType::class, [

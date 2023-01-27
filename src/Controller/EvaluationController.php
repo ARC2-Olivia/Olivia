@@ -103,10 +103,13 @@ class EvaluationController extends BaseController
     #[IsGranted("ROLE_MODERATOR")]
     public function addEvaluationQuestion(Evaluation $evaluation, Request $request): Response
     {
-        $evaluationQuestion = (new EvaluationQuestion())->setEvaluation($evaluation)->setLocale($this->getParameter('locale.default'));
+        $evaluationQuestion = (new EvaluationQuestion())
+            ->setEvaluation($evaluation)
+            ->setLocale($this->getParameter('locale.default'))
+            ->setEvaluable(true);
+
         $form = $this->createForm(EvaluationQuestionType::class, $evaluationQuestion, ['include_translatable_fields' => true]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($evaluationQuestion);
             $this->em->flush();
@@ -125,7 +128,7 @@ class EvaluationController extends BaseController
 
     private function processAutomaticEvaluationQuestionAnswerCreation(EvaluationQuestion $evaluationQuestion)
     {
-        if ($evaluationQuestion->getType() === EvaluationQuestion::TYPE_YES_NO || $evaluationQuestion->getType() === EvaluationQuestion::TYPE_NO_EVALUATE) {
+        if ($evaluationQuestion->getType() === EvaluationQuestion::TYPE_YES_NO) {
             $this->em->persist((new EvaluationQuestionAnswer())->setEvaluationQuestion($evaluationQuestion)->setAnswerText('common.yes')->setAnswerValue('1'));
             $this->em->persist((new EvaluationQuestionAnswer())->setEvaluationQuestion($evaluationQuestion)->setAnswerText('common.no')->setAnswerValue('0'));
             $this->em->flush();

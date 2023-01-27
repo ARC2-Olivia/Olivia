@@ -144,6 +144,7 @@ form:
                 type: Question type
                 questionText: Question text
                 questionTextAlt: Question text (alternate language)
+                evaluatable: Used in evaluation
             placeholder:
                 questionText: Question text goes here...
         evaluationQuestionAnswer:

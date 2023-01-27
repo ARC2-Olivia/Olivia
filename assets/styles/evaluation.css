@@ -73,12 +73,17 @@ ul.mod--evaluation-question-answers {
     padding: 8px 16px;
     border-radius: 8px;
     align-items: center;
+    column-gap: 8px;
 }
 
 .mod--evaluation-question-details,
 .mod--evaluation-question-answer-details {
     display: flex;
     flex-direction: column;
+}
+
+.mod--evaluation-question-details {
+    text-align: center;
 }
 
 .mod--evaluation-question-text,
@@ -96,4 +101,17 @@ ul.mod--evaluation-question-answers {
 .mod--evaluation-question-answer-actions {
     display: flex;
     column-gap: 12px;
+}
+
+.mod--evaluation-question-evaluable svg {
+    width: 32px;
+    height: 32px;
+}
+
+.mod--evaluation-question-evaluable svg.evaluable {
+    color: var(--app-color-green);
+}
+
+.mod--evaluation-question-evaluable svg.not-evaluable {
+    color: var(--app-color-orange);
 }

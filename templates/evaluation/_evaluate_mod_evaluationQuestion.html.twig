@@ -1,6 +1,13 @@
 {% trans_default_domain 'app' %}
 
 <li class="mod--evaluation-question">
+    <div class="mod--evaluation-question-evaluable">
+        {% if evaluationQuestion.evaluable %}
+            {{ mdi('text-box-check', 'evaluable') }}
+        {% else %}
+            {{ mdi('text-box-minus', 'not-evaluable') }}
+        {% endif %}
+    </div>
     <div class="mod--evaluation-question-details">
         <div class="mod--evaluation-question-text">{{ evaluationQuestion.questionText }}</div>
         <div class="mod--evaluation-question-type">{{ evaluationQuestion.type }}</div>
