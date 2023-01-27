@@ -78,6 +78,12 @@ class EvaluationController extends BaseController
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('evaluation.delete', $csrfToken)) {
             $evaluationName = $evaluation->getName();
+            foreach ($evaluation->getEvaluationQuestions() as $evaluationQuestion) {
+                foreach ($evaluationQuestion->getEvaluationQuestionAnswers() as $evaluationQuestionAnswer) {
+                    $this->em->remove($evaluationQuestionAnswer);
+                }
+                $this->em->remove($evaluationQuestion);
+            }
             $this->em->remove($evaluation);
             $this->em->flush();
             $this->addFlash('warning', $this->translator->trans('warning.evaluation.delete', ['%evaluation%' => $evaluationName], 'message'));
