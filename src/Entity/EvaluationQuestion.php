@@ -36,6 +36,9 @@ class EvaluationQuestion extends TranslatableEntity
     #[ORM\OneToMany(mappedBy: 'evaluationQuestion', targetEntity: EvaluationQuestionAnswer::class, orphanRemoval: true)]
     private Collection $evaluationQuestionAnswers;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $evaluatable = null;
+
     public function __construct()
     {
         $this->evaluationQuestionAnswers = new ArrayCollection();
@@ -108,6 +111,18 @@ class EvaluationQuestion extends TranslatableEntity
                 $evaluationQuestionAnswer->setEvaluationQuestion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isEvaluatable(): ?bool
+    {
+        return $this->evaluatable;
+    }
+
+    public function setEvaluatable(?bool $evaluatable): self
+    {
+        $this->evaluatable = $evaluatable;
 
         return $this;
     }
