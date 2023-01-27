@@ -29,7 +29,7 @@ success:
         edit: An evaluation question has been updated.
     evaluationQuestionAnswer:
         new: A new answer has been added to the evaluation question.
-        edit: The evaluation question answer has been updated.
+        edit: The evaluation question answer has been updatedž.
 
 warning:
     accountConfirmation:
@@ -52,6 +52,8 @@ warning:
         delete: Evaluation <i>%evaluation%</i> has been deleted.
     evaluationQuestion:
         delete: Evaluation question for the <i>%evaluation%</i> evaluation has been deleted.
+    evaluationQuestionAnswer:
+        delete: Evaluation question answer has been deleted.
 
 error:
     login: Invalid credentials.

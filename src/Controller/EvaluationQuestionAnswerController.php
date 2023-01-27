@@ -35,4 +35,18 @@ class EvaluationQuestionAnswerController extends BaseController
             'activeCard' => 'editAnswer'
         ]);
     }
+
+    #[Route("/delete/{evaluationQuestionAnswer}", name: "delete", methods: ["POST"])]
+    public function delete(EvaluationQuestionAnswer $evaluationQuestionAnswer, Request $request): Response
+    {
+        $evaluationQuestion = $evaluationQuestionAnswer->getEvaluationQuestion();
+        $csrfToken = $request->get('_csrf_token');
+        if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationQuestionAnswer.delete', $csrfToken)) {
+            $this->em->remove($evaluationQuestionAnswer);
+            $this->em->flush();
+            $this->addFlash('warning', $this->translator->trans('warning.evaluationQuestionAnswer.delete', [], 'message'));
+        }
+
+        return $this->redirectToRoute('evaluation_question_edit', ['evaluationQuestion' => $evaluationQuestion->getId()]);
+    }
 }

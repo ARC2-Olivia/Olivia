@@ -253,6 +253,9 @@ evaluationQuestion:
     delete: Are you sure you want to delete this evaluation question?
     empty: There are no defined questions for this evaluation.
 
+evaluationQuestionAnswer:
+    delete: Are you sure you want to delete this evaluation question answer?
+
 evaluationEvaluator:
     empty: There are no defined evaluators for this evaluation.
 

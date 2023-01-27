@@ -18,6 +18,13 @@
                             <div class="mod--evaluation-question-answer-value">{{ evaluationQuestionAnswer.answerValue }}</div>
                         </div>
                         <div class="mod--evaluation-question-actions">
+                            <form action="{{ path('evaluation_question_answer_delete', {'evaluationQuestionAnswer': evaluationQuestionAnswer.id}) }}"
+                                  method="post"
+                                  onsubmit="return confirm('{{ 'evaluationQuestionAnswer.delete'|trans }}')"
+                            >
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluationQuestionAnswer.delete') }}"/>
+                                <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
+                            </form>
                             <a href="{{ path('evaluation_question_answer_edit', {'evaluationQuestionAnswer': evaluationQuestionAnswer.id}) }}"
                                class="btn btn-sm btn-round btn-theme-white bg-green"
                             >
