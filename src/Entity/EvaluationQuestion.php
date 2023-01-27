@@ -12,7 +12,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: EvaluationQuestionRepository::class)]
 class EvaluationQuestion extends TranslatableEntity
 {
-    public const TYPE_NO_EVALUATE = 'no_evaluate';
     public const TYPE_YES_NO = 'yes_no';
     public const TYPE_WEIGHTED = 'weighted';
     public const TYPE_NUMERICAL_INPUT = 'numerical_input';
@@ -37,7 +36,7 @@ class EvaluationQuestion extends TranslatableEntity
     private Collection $evaluationQuestionAnswers;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $evaluatable = null;
+    private ?bool $evaluable = null;
 
     public function __construct()
     {
@@ -115,14 +114,14 @@ class EvaluationQuestion extends TranslatableEntity
         return $this;
     }
 
-    public function isEvaluatable(): ?bool
+    public function isEvaluable(): ?bool
     {
-        return $this->evaluatable;
+        return $this->evaluable;
     }
 
-    public function setEvaluatable(?bool $evaluatable): self
+    public function setEvaluable(?bool $evaluable): self
     {
-        $this->evaluatable = $evaluatable;
+        $this->evaluable = $evaluable;
 
         return $this;
     }
