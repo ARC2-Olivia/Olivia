@@ -1,0 +1,91 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\EvaluationEvaluatorRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: EvaluationEvaluatorRepository::class)]
+class EvaluationEvaluator
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'evaluationEvaluators')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Evaluation $evaluation = null;
+
+    #[ORM\Column(length: 63)]
+    private ?string $type = null;
+
+    #[ORM\OneToOne(mappedBy: 'evaluationEvaluator', cascade: ['persist', 'remove'])]
+    private ?EvaluationEvaluatorSimple $evaluationEvaluatorSimple = null;
+
+    #[ORM\OneToOne(mappedBy: 'evaluationEvaluator', cascade: ['persist', 'remove'])]
+    private ?EvaluationEvaluatorSumAggregate $evaluationEvaluatorSumAggregate = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getEvaluation(): ?Evaluation
+    {
+        return $this->evaluation;
+    }
+
+    public function setEvaluation(?Evaluation $evaluation): self
+    {
+        $this->evaluation = $evaluation;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getEvaluationEvaluatorSimple(): ?EvaluationEvaluatorSimple
+    {
+        return $this->evaluationEvaluatorSimple;
+    }
+
+    public function setEvaluationEvaluatorSimple(EvaluationEvaluatorSimple $evaluationEvaluatorSimple): self
+    {
+        // set the owning side of the relation if necessary
+        if ($evaluationEvaluatorSimple->getEvaluationEvaluator() !== $this) {
+            $evaluationEvaluatorSimple->setEvaluationEvaluator($this);
+        }
+
+        $this->evaluationEvaluatorSimple = $evaluationEvaluatorSimple;
+
+        return $this;
+    }
+
+    public function getEvaluationEvaluatorSumAggregate(): ?EvaluationEvaluatorSumAggregate
+    {
+        return $this->evaluationEvaluatorSumAggregate;
+    }
+
+    public function setEvaluationEvaluatorSumAggregate(EvaluationEvaluatorSumAggregate $evaluationEvaluatorSumAggregate): self
+    {
+        // set the owning side of the relation if necessary
+        if ($evaluationEvaluatorSumAggregate->getEvaluationEvaluator() !== $this) {
+            $evaluationEvaluatorSumAggregate->setEvaluationEvaluator($this);
+        }
+
+        $this->evaluationEvaluatorSumAggregate = $evaluationEvaluatorSumAggregate;
+
+        return $this;
+    }
+}

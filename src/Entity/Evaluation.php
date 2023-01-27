@@ -35,9 +35,13 @@ class Evaluation extends TranslatableEntity
     #[ORM\OneToMany(mappedBy: 'evaluation', targetEntity: EvaluationQuestion::class, orphanRemoval: true)]
     private Collection $evaluationQuestions;
 
+    #[ORM\OneToMany(mappedBy: 'evaluation', targetEntity: EvaluationEvaluator::class, orphanRemoval: true)]
+    private Collection $evaluationEvaluators;
+
     public function __construct()
     {
         $this->evaluationQuestions = new ArrayCollection();
+        $this->evaluationEvaluators = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,6 +109,36 @@ class Evaluation extends TranslatableEntity
             // set the owning side to null (unless already changed)
             if ($evaluationQuestion->getEvaluation() === $this) {
                 $evaluationQuestion->setEvaluation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EvaluationEvaluator>
+     */
+    public function getEvaluationEvaluators(): Collection
+    {
+        return $this->evaluationEvaluators;
+    }
+
+    public function addEvaluationEvaluator(EvaluationEvaluator $evaluationEvaluator): self
+    {
+        if (!$this->evaluationEvaluators->contains($evaluationEvaluator)) {
+            $this->evaluationEvaluators->add($evaluationEvaluator);
+            $evaluationEvaluator->setEvaluation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvaluationEvaluator(EvaluationEvaluator $evaluationEvaluator): self
+    {
+        if ($this->evaluationEvaluators->removeElement($evaluationEvaluator)) {
+            // set the owning side to null (unless already changed)
+            if ($evaluationEvaluator->getEvaluation() === $this) {
+                $evaluationEvaluator->setEvaluation(null);
             }
         }
 
