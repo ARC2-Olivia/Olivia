@@ -3,6 +3,7 @@
 
 {% block evaluationContent %}
     {% if is_granted('ROLE_MODERATOR') %}
+        <h2 class="mb-3">{{ 'evaluation.extra.questions'|trans }}</h2>
         {% if evaluation.evaluationQuestions is not empty %}
             <ul class="mod--evaluation-questions">
                 {% for evaluationQuestion in evaluation.evaluationQuestions %}
@@ -16,7 +17,16 @@
             <a href="{{ path('evaluation_add_question', {'evaluation': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.question'|trans }}</a>
         </div>
         <hr>
-        <p>{{ 'evaluationEvaluator.empty'|trans }}</p>
+        <h2 class="mb-3">{{ 'evaluation.extra.evaluators'|trans }}</h2>
+        {% if evaluation.evaluationEvaluators is not empty %}
+            <ul class="mod--evaluation-evaluators">
+                {% for evaluationEvaluator in evaluation.evaluationEvaluators %}
+                    {% include 'evaluation/_evaluate_mod_evaluationEvaluator.html.twig' %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>{{ 'evaluationEvaluator.empty'|trans }}</p>
+        {% endif %}
         <div class="text-end">
             <a href="{{ path('evaluation_add_evaluator', {'evaluation': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.evaluator'|trans }}</a>
         </div>

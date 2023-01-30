@@ -41,7 +41,7 @@
     color: rgba(0, 0, 0, 0.7);
 }
 
-.evaluation-content p {
+.evaluation-content :is(p, h1, h2, h3, h4, h5, h6) {
     padding: 0;
 }
 
@@ -52,6 +52,7 @@
 }
 
 .mod--evaluation-questions,
+.mod--evaluation-evaluators,
 .mod--evaluation-question-answers {
     display: flex;
     flex-direction: column;
@@ -60,12 +61,14 @@
 }
 
 ul.mod--evaluation-questions,
+ul.mod--evaluation-evaluators,
 ul.mod--evaluation-question-answers {
     list-style: none;
     padding: 0;
 }
 
 .mod--evaluation-question,
+.mod--evaluation-evaluator,
 .mod--evaluation-question-answer  {
     display: flex;
     justify-content: space-between;
@@ -77,6 +80,7 @@ ul.mod--evaluation-question-answers {
 }
 
 .mod--evaluation-question-details,
+.mod--evaluation-evaluator-details,
 .mod--evaluation-question-answer-details {
     display: flex;
     flex-direction: column;
@@ -87,17 +91,20 @@ ul.mod--evaluation-question-answers {
 }
 
 .mod--evaluation-question-text,
+.mod--evaluation-evaluator-text,
 .mod--evaluation-question-answer-text {
     font-weight: 600;
 }
 
 .mod--evaluation-question-type,
+.mod--evaluation-evaluator-type,
 .mod--evaluation-question-answer-value {
     font-size: small;
     color: rgba(0, 0, 0, 0.66667);
 }
 
 .mod--evaluation-question-actions,
+.mod--evaluation-evaluator-actions,
 .mod--evaluation-question-answer-actions {
     display: flex;
     column-gap: 12px;
