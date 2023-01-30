@@ -55,7 +55,9 @@ warning:
     evaluationQuestion:
         delete: Evaluation question for the <i>%evaluation%</i> evaluation has been deleted.
     evaluationQuestionAnswer:
-        delete: Evaluation question answer has been deleted.
+        delete: Answer has been deleted from the question.
+    evaluationEvaluator:
+        delete: Evaluator has been deleted from the evaluation.
 
 error:
     login: Invalid credentials.
