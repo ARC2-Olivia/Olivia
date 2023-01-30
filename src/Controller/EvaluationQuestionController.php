@@ -19,7 +19,7 @@ class EvaluationQuestionController extends BaseController
     #[IsGranted("ROLE_MODERATOR")]
     public function edit(EvaluationQuestion $evaluationQuestion, Request $request): Response
     {
-        $form = $this->createForm(EvaluationQuestionType::class, $evaluationQuestion);
+        $form = $this->createForm(EvaluationQuestionType::class, $evaluationQuestion, ['edit_mode' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

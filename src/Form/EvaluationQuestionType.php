@@ -21,26 +21,27 @@ class EvaluationQuestionType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $typeChoices = [
-            $this->translator->trans('evaluationQuestion.type.yesNo', [], 'app') => EvaluationQuestion::TYPE_YES_NO,
-            $this->translator->trans('evaluationQuestion.type.weighted', [], 'app') => EvaluationQuestion::TYPE_WEIGHTED,
-            $this->translator->trans('evaluationQuestion.type.numericalInput', [], 'app') => EvaluationQuestion::TYPE_NUMERICAL_INPUT
-        ];
-
-        $evaluatableChoices = [
-            $this->translator->trans('common.no', [], 'app') => false,
-            $this->translator->trans('common.yes', [], 'app') => true
-        ];
-
-        $builder
-            ->add('type', ChoiceType::class, [
+        if ($options['edit_mode'] === false) {
+            $typeChoices = [
+                $this->translator->trans('evaluationQuestion.type.yesNo', [], 'app') => EvaluationQuestion::TYPE_YES_NO,
+                $this->translator->trans('evaluationQuestion.type.weighted', [], 'app') => EvaluationQuestion::TYPE_WEIGHTED,
+                $this->translator->trans('evaluationQuestion.type.numericalInput', [], 'app') => EvaluationQuestion::TYPE_NUMERICAL_INPUT
+            ];
+            $builder->add('type', ChoiceType::class, [
                 'label' => 'form.entity.evaluationQuestion.label.type',
                 'choices' => $typeChoices,
                 'attr' => ['class' => 'form-select mb-3']
-            ])
+            ]);
+        }
+
+        $evaluableChoices = [
+            $this->translator->trans('common.no', [], 'app') => false,
+            $this->translator->trans('common.yes', [], 'app') => true
+        ];
+        $builder
             ->add('evaluable', ChoiceType::class, [
                 'label' => 'form.entity.evaluationQuestion.label.evaluatable',
-                'choices' => $evaluatableChoices,
+                'choices' => $evaluableChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('questionText', TextareaType::class, [
@@ -70,6 +71,7 @@ class EvaluationQuestionType extends AbstractType
             'data_class' => EvaluationQuestion::class,
             'translation_domain' => 'app',
             'include_translatable_fields' => false,
+            'edit_mode' => false,
             'attr' => [
                 'class' => 'd-flex flex-column',
                 'novalidate' => 'novalidate'
