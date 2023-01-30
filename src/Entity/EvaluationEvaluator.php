@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorRepository::class)]
 class EvaluationEvaluator
 {
+    public const TYPE_SIMPLE = 'simple';
+    public const TYPE_SUM_AGGREGATE = 'sum_aggregate';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -19,6 +22,9 @@ class EvaluationEvaluator
 
     #[ORM\Column(length: 63)]
     private ?string $type = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
 
     #[ORM\OneToOne(mappedBy: 'evaluationEvaluator', cascade: ['persist', 'remove'])]
     private ?EvaluationEvaluatorSimple $evaluationEvaluatorSimple = null;
@@ -51,6 +57,18 @@ class EvaluationEvaluator
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
