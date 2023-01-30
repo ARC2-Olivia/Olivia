@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EvaluationEvaluatorRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorRepository::class)]
 class EvaluationEvaluator
@@ -24,6 +25,7 @@ class EvaluationEvaluator
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'error.evaluationEvaluator.name')]
     private ?string $name = null;
 
     #[ORM\OneToOne(mappedBy: 'evaluationEvaluator', cascade: ['persist', 'remove'])]

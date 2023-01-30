@@ -1,2 +1,15 @@
-{{ form_start(form, {'attr': {'id' : form.vars.id}}) }}
+{{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+    {{ form_label(form.type) }}
+    {{ form_widget(form.type) }}
+
+    {{ form_label(form.evaluable) }}
+    {{ form_widget(form.evaluable) }}
+
+    {{ form_label(form.questionText) }}
+    {{ form_widget(form.questionText) }}
+
+    {% if form.questionTextAlt is defined %}
+        {{ form_label(form.questionTextAlt) }}
+        {{ form_widget(form.questionTextAlt) }}
+    {% endif %}
 {{ form_end(form) }}

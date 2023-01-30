@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Evaluation;
+use App\Entity\EvaluationEvaluator;
 use App\Entity\EvaluationQuestion;
 use App\Entity\EvaluationQuestionAnswer;
+use App\Form\EvaluationEvaluatorType;
 use App\Form\EvaluationQuestionType;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
@@ -124,6 +126,27 @@ class EvaluationController extends BaseController
         }
 
         return $this->render('evaluation/evaluation_question/new.html.twig', ['evaluation' => $evaluation, 'form' => $form->createView(), 'activeCard' => 'newQuestion']);
+    }
+
+    #[Route("/evaluate/{evaluation}/add-evaluator", name: "add_evaluator")]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function addEvaluationEvaluator(Evaluation $evaluation, Request $request): Response
+    {
+        $evaluationEvaluator = (new EvaluationEvaluator())->setEvaluation($evaluation);
+        $form = $this->createForm(EvaluationEvaluatorType::class, $evaluationEvaluator);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($evaluationEvaluator);
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('success.evaluationEvaluator.new', [], 'message'));
+            return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('evaluation/evaluation_evaluator/new.html.twig', ['evaluation' => $evaluation, 'form' => $form->createView(), 'activeCard' => 'newEvaluator']);
     }
 
     private function processAutomaticEvaluationQuestionAnswerCreation(EvaluationQuestion $evaluationQuestion)

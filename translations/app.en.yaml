@@ -153,6 +153,19 @@ form:
                     answerText: Answer text
                     answerTextAlt: Answer text (alternate language)
                     answerValue: Weight
+        evaluationEvaluator:
+            label:
+                type: Evaluator type
+                name: Evaluator name
+                evaluationQuestion: Evaluation question
+                evaluationQuestions: Evaluation questions
+                expectedValue: Expected value
+                expectedValueRange:
+                    start: Expected value (start of the range)
+                    end: Expected value (end of the range)
+                resultText: Result text
+            placeholder:
+                name: Name of the evaluator for easier identification
 
 user:
     title:
@@ -247,7 +260,6 @@ evaluation:
 
 evaluationQuestion:
     type:
-        noEvaluate: No evaluation
         yesNo: Yes/No
         weighted: Weighted
         numericalInput: Numerical input
@@ -258,6 +270,9 @@ evaluationQuestionAnswer:
     delete: Are you sure you want to delete this evaluation question answer?
 
 evaluationEvaluator:
+    type:
+        simple: Simple
+        sumAggregate: Sum aggregate
     empty: There are no defined evaluators for this evaluation.
 
 extra:

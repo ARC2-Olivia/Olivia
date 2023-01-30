@@ -29,7 +29,9 @@ success:
         edit: An evaluation question has been updated.
     evaluationQuestionAnswer:
         new: A new answer has been added to the evaluation question.
-        edit: The evaluation question answer has been updatedž.
+        edit: The evaluation question answer has been updated.
+    evaluationEvaluator:
+        new: A new evaluator has been created for the evaluation.
 
 warning:
     accountConfirmation:
@@ -109,3 +111,5 @@ error:
             weighted: Answer weight must be a number.
         csrf: There was an error processing answers for the evaluation question. Please, try to add them again.
         empty: There were no answers to add to the evaluation question.
+    evaluationEvaluator:
+        name: Evaluator name must not be empty.

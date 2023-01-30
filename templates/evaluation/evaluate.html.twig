@@ -18,7 +18,7 @@
         <hr>
         <p>{{ 'evaluationEvaluator.empty'|trans }}</p>
         <div class="text-end">
-            <a href="#" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.evaluator'|trans }}</a>
+            <a href="{{ path('evaluation_add_evaluator', {'evaluation': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.evaluator'|trans }}</a>
         </div>
     {% endif %}
 {% endblock %}
