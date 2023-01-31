@@ -32,6 +32,7 @@ success:
         edit: The evaluation question answer has been updated.
     evaluationEvaluator:
         new: A new evaluator has been created for the evaluation.
+        edit: Evaluator has been updated.
 
 warning:
     accountConfirmation:
