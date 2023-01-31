@@ -33,7 +33,8 @@ class EvaluationEvaluatorSumAggregateType extends AbstractType
                 return $repository->createQueryBuilder('eq')
                     ->where('eq.evaluation = :evaluation')
                     ->andWhere('eq.evaluable = :evaluable')
-                    ->setParameters(['evaluation' => $evaluationEvaluator->getEvaluation(), 'evaluable' => true]);
+                    ->andWhere('eq.type IN (:types)')
+                    ->setParameters(['evaluation' => $evaluationEvaluator->getEvaluation(), 'evaluable' => true, 'types' => EvaluationQuestion::getNumericTypes()]);
             };
         }
 

@@ -38,6 +38,11 @@ class EvaluationQuestion extends TranslatableEntity
     #[ORM\Column(nullable: true)]
     private ?bool $evaluable = null;
 
+    public static function getNumericTypes(): array
+    {
+        return [self::TYPE_WEIGHTED, self::TYPE_NUMERICAL_INPUT];
+    }
+
     public function __construct()
     {
         $this->evaluationQuestionAnswers = new ArrayCollection();
