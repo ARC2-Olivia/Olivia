@@ -26,23 +26,12 @@ class EvaluationEvaluatorSimpleType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $evaluationEvaluator = $builder->getData()?->getEvaluationEvaluator();
-        $evaluationQuestionQueryBuilder = null;
-        if ($evaluationEvaluator !== null) {
-            $evaluationQuestionQueryBuilder = function (EntityRepository $repository) use ($evaluationEvaluator) {
-                return $repository->createQueryBuilder('eq')
-                    ->where('eq.evaluation = :evaluation')
-                    ->andWhere('eq.evaluable = :evaluable')
-                    ->setParameters(['evaluation' => $evaluationEvaluator->getEvaluation(), 'evaluable' => true]);
-            };
-        }
-
         $builder
             ->add('evaluationQuestion', EntityType::class, [
                 'class' => EvaluationQuestion::class,
                 'label' => 'form.entity.evaluationEvaluator.label.evaluationQuestion',
                 'choice_label' => 'questionText',
-                'query_builder' => $evaluationQuestionQueryBuilder,
+                'query_builder' => $this->makeQueryBuilder($builder),
                 'attr' => ['class' => 'form-select mb-3'],
                 'placeholder' => 'form.entity.evaluationEvaluator.placeholder.evaluationQuestion'
             ])
@@ -67,5 +56,20 @@ class EvaluationEvaluatorSimpleType extends AbstractType
                 'class' => 'd-flex flex-column'
             ]
         ]);
+    }
+
+    private function makeQueryBuilder(FormBuilderInterface $builder): ?\Closure
+    {
+        $evaluationEvaluator = $builder->getData()?->getEvaluationEvaluator();
+        $evaluationQuestionQueryBuilder = null;
+        if ($evaluationEvaluator !== null) {
+            $evaluationQuestionQueryBuilder = function (EntityRepository $repository) use ($evaluationEvaluator) {
+                return $repository->createQueryBuilder('eq')
+                    ->where('eq.evaluation = :evaluation')
+                    ->andWhere('eq.evaluable = :evaluable')
+                    ->setParameters(['evaluation' => $evaluationEvaluator->getEvaluation(), 'evaluable' => true]);
+            };
+        }
+        return $evaluationQuestionQueryBuilder;
     }
 }
