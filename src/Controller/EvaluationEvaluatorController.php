@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\EvaluationEvaluator;
+use App\Form\EvaluationEvaluatorType;
+use App\Service\EvaluationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,5 +27,22 @@ class EvaluationEvaluatorController extends BaseController
         }
 
         return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
+    }
+
+    #[Route('/edit/{evaluationEvaluator}', name: 'edit')]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function edit(EvaluationEvaluator $evaluationEvaluator, Request $request, EvaluationService $evaluationService): Response
+    {
+        $evaluationEvaluatorImpl = $evaluationService->getEvaluatorImplementation($evaluationEvaluator);
+        $baseForm = $this->createForm(EvaluationEvaluatorType::class, $evaluationEvaluator, ['edit_mode' => true]);
+        $implForm = $this->createForm($evaluationService->getEvaluatorImplementationFormClass($evaluationEvaluator), $evaluationEvaluatorImpl);
+
+        return $this->render('evaluation/evaluation_evaluator/edit.html.twig', [
+            'evaluation' => $evaluationEvaluator->getEvaluation(),
+            'evaluationEvaluator' => $evaluationEvaluator,
+            'baseForm' => $baseForm->createView(),
+            'implForm' => $implForm->createView(),
+            'activeCard' => 'editEvaluator'
+        ]);
     }
 }

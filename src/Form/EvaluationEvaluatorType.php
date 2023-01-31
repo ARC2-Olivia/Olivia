@@ -26,17 +26,18 @@ class EvaluationEvaluatorType extends AbstractType
             $this->translator->trans('evaluationEvaluator.type.sumAggregate', [], 'app') => EvaluationEvaluator::TYPE_SUM_AGGREGATE
         ];
 
-        $builder
-            ->add('type', ChoiceType::class, [
+        if ($options['edit_mode'] === false) {
+            $builder->add('type', ChoiceType::class, [
                 'label' => 'form.entity.evaluationEvaluator.label.type',
                 'choices' => $typeChoices,
                 'attr' => ['class' => 'form-select mb-3']
-            ])
-            ->add('name', TextType::class, [
-                'label' => 'form.entity.evaluationEvaluator.label.name',
-                'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.evaluationEvaluator.placeholder.name', [], 'app')]
-            ])
-        ;
+            ]);
+        }
+
+        $builder->add('name', TextType::class, [
+            'label' => 'form.entity.evaluationEvaluator.label.name',
+            'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.evaluationEvaluator.placeholder.name', [], 'app')]
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -44,6 +45,7 @@ class EvaluationEvaluatorType extends AbstractType
         $resolver->setDefaults([
             'data_class' => EvaluationEvaluator::class,
             'translation_domain' => 'app',
+            'edit_mode' => false,
             'attr' => [
                 'novalidate' => 'novalidate',
                 'class' => 'd-flex flex-column'

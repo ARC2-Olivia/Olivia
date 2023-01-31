@@ -34,6 +34,11 @@ class EvaluationEvaluator
     #[ORM\OneToOne(mappedBy: 'evaluationEvaluator', cascade: ['persist', 'remove'])]
     private ?EvaluationEvaluatorSumAggregate $evaluationEvaluatorSumAggregate = null;
 
+    public static function getSupportedEvaluationEvaluatorTypes(): array
+    {
+        return [self::TYPE_SIMPLE, self::TYPE_SUM_AGGREGATE];
+    }
+
     public function getId(): ?int
     {
         return $this->id;
