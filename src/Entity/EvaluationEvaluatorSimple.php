@@ -66,7 +66,7 @@ class EvaluationEvaluatorSimple
         return $this->expectedValue;
     }
 
-    public function setExpectedValue(string $expectedValue): self
+    public function setExpectedValue(?string $expectedValue): self
     {
         $this->expectedValue = $expectedValue;
 
@@ -78,7 +78,7 @@ class EvaluationEvaluatorSimple
         return $this->resultText;
     }
 
-    public function setResultText(string $resultText): self
+    public function setResultText(?string $resultText): self
     {
         $this->resultText = $resultText;
 

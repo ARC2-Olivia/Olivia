@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorSumAggregateRepository::class)]
 class EvaluationEvaluatorSumAggregate
@@ -40,6 +41,25 @@ class EvaluationEvaluatorSumAggregate
     public function __construct()
     {
         $this->evaluationQuestions = new ArrayCollection();
+    }
+
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        $startIsNumeric = is_numeric($this->getExpectedValueRangeStart());
+        $endIsNumeric = is_numeric($this->getExpectedValueRangeEnd());
+
+        if (!$startIsNumeric) {
+            $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.start')->atPath('expectedValueRangeStart')->addViolation();
+        }
+
+        if (!$endIsNumeric) {
+            $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.end')->atPath('expectedValueRangeEnd')->addViolation();
+        }
+
+        if ($startIsNumeric && $endIsNumeric && $this->getExpectedValueRangeStart() > $this->getExpectedValueRangeEnd()) {
+            $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.invalid')->addViolation();
+        }
     }
 
     public function getId(): ?int
@@ -88,7 +108,7 @@ class EvaluationEvaluatorSumAggregate
         return $this->expectedValueRangeStart;
     }
 
-    public function setExpectedValueRangeStart(int $expectedValueRangeStart): self
+    public function setExpectedValueRangeStart(?int $expectedValueRangeStart): self
     {
         $this->expectedValueRangeStart = $expectedValueRangeStart;
 
@@ -100,7 +120,7 @@ class EvaluationEvaluatorSumAggregate
         return $this->expectedValueRangeEnd;
     }
 
-    public function setExpectedValueRangeEnd(int $expectedValueRangeEnd): self
+    public function setExpectedValueRangeEnd(?int $expectedValueRangeEnd): self
     {
         $this->expectedValueRangeEnd = $expectedValueRangeEnd;
 
@@ -112,7 +132,7 @@ class EvaluationEvaluatorSumAggregate
         return $this->resultText;
     }
 
-    public function setResultText(string $resultText): self
+    public function setResultText(?string $resultText): self
     {
         $this->resultText = $resultText;
 

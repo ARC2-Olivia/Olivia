@@ -125,4 +125,5 @@ error:
         expectedValueRange:
             start: Start of the expected value range needs to be a number.
             end: End of the expected value range needs to be a number.
+            invalid: Start of the expected value range has to be less or equal to (≤) the end of the expected value range.
         resultText: A resulting text that the evaluator will generate upon successful evaluation needs to be assigned.
