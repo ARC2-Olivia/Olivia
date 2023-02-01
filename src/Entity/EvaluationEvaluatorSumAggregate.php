@@ -7,11 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorSumAggregateRepository::class)]
-class EvaluationEvaluatorSumAggregate
+class EvaluationEvaluatorSumAggregate extends TranslatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -36,6 +37,7 @@ class EvaluationEvaluatorSumAggregate
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'error.evaluationEvaluatorSumAggregate.resultText')]
+    #[Gedmo\Translatable]
     private ?string $resultText = null;
 
     public function __construct()

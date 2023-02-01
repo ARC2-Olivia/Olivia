@@ -5,10 +5,11 @@ namespace App\Entity;
 use App\Repository\EvaluationEvaluatorSimpleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorSimpleRepository::class)]
-class EvaluationEvaluatorSimple
+class EvaluationEvaluatorSimple extends TranslatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,6 +31,7 @@ class EvaluationEvaluatorSimple
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'error.evaluationEvaluatorSimple.resultText')]
+    #[Gedmo\Translatable]
     private ?string $resultText = null;
 
     public function getId(): ?int
