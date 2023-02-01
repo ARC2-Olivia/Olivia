@@ -116,3 +116,7 @@ error:
         empty: There were no answers to add to the evaluation question.
     evaluationEvaluator:
         name: Evaluator name must not be empty.
+    evaluationEvaluatorSimple:
+        evaluationQuestion: An evaluation question has to be chosen for the evaluator.
+        expectedValue: An expected value has to be given to the evaluator.
+        resultText: A resulting text that the evaluator will generate upon successful evaluation needs to be assigned.

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EvaluationEvaluatorSimpleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorSimpleRepository::class)]
 class EvaluationEvaluatorSimple
@@ -20,12 +21,15 @@ class EvaluationEvaluatorSimple
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'error.evaluationEvaluatorSimple.evaluationQuestion')]
     private ?EvaluationQuestion $evaluationQuestion = null;
 
     #[ORM\Column(length: 63)]
+    #[Assert\NotBlank(message: 'error.evaluationEvaluatorSimple.expectedValue')]
     private ?string $expectedValue = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'error.evaluationEvaluatorSimple.resultText')]
     private ?string $resultText = null;
 
     public function getId(): ?int
