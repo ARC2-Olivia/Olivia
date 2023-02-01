@@ -14,6 +14,17 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+        <style>
+            .exit-immitation {
+                position: fixed;
+                bottom: 64px;
+                right: 16px;
+            }
+
+            .exit-immitation .btn {
+                padding: 24px;
+            }
+        </style>
     </head>
     <body>
         <header>{% block header %}{% endblock %}</header>
@@ -21,5 +32,8 @@
             {% block body %}{% endblock %}
         </div>
         <footer>{% block footer %}{% endblock %}</footer>
+        {% if is_granted('IS_IMPERSONATOR') %}
+            {% include '_partials/exit_immitation.html.twig' %}
+        {% endif %}
     </body>
 </html>
