@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorSumAggregateRepository::class)]
 class EvaluationEvaluatorSumAggregate
@@ -21,15 +22,19 @@ class EvaluationEvaluatorSumAggregate
     private ?EvaluationEvaluator $evaluationEvaluator = null;
 
     #[ORM\ManyToMany(targetEntity: EvaluationQuestion::class)]
+    #[Assert\NotBlank(message: 'error.evaluationEvaluatorSumAggregate.evaluationQuestions')]
     private Collection $evaluationQuestions;
 
     #[ORM\Column]
+    #[Assert\Type(type: 'numeric', message: 'error.evaluationEvaluatorSumAggregate.expectedValueRange.start')]
     private ?int $expectedValueRangeStart = null;
 
     #[ORM\Column]
+    #[Assert\Type(type: 'numeric', message: 'error.evaluationEvaluatorSumAggregate.expectedValueRange.end')]
     private ?int $expectedValueRangeEnd = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'error.evaluationEvaluatorSumAggregate.resultText')]
     private ?string $resultText = null;
 
     public function __construct()

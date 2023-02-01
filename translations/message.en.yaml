@@ -120,3 +120,9 @@ error:
         evaluationQuestion: An evaluation question has to be chosen for the evaluator.
         expectedValue: An expected value has to be given to the evaluator.
         resultText: A resulting text that the evaluator will generate upon successful evaluation needs to be assigned.
+    evaluationEvaluatorSumAggregate:
+        evaluationQuestions: Atleast one evaluation question needs to be assigned to the evaluator.
+        expectedValueRange:
+            start: Start of the expected value range needs to be a number.
+            end: End of the expected value range needs to be a number.
+        resultText: A resulting text that the evaluator will generate upon successful evaluation needs to be assigned.
