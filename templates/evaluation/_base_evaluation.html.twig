@@ -28,24 +28,15 @@
                     </div>
                     <div class="row">
                         <ul class="course-navigation">
-                            <li><a href="{{ path('evaluation_overview', {'evaluation': evaluation.id}) }}" class="btn btn-nav w-100{% if activeCard == 'overview'%} active{% endif %}">{{ 'evaluation.nav.overview'|trans }}</a></li>
-                            <li><a href="{{ path('evaluation_evaluate', {'evaluation': evaluation.id}) }}" class="btn btn-nav w-100{% if activeCard == 'evaluate'%} active{% endif %}">{{ 'evaluation.nav.evaluate'|trans }}</a></li>
-                            {% if is_granted('ROLE_MODERATOR') %}
-                                <li><a href="{{ path('evaluation_edit', {'evaluation': evaluation.id}) }}" class="btn btn-nav w-100{% if activeCard == 'edit'%} active{% endif %}">{{ 'evaluation.nav.edit.default'|trans }}</a></li>
-                                {% if activeCard == 'newQuestion' %}
-                                    <li><span class="btn btn-nav w-100 active">{{ 'evaluation.nav.new.question'|trans }}</span></li>
-                                {% elseif activeCard == 'editQuestion' %}
-                                    <li><span class="btn btn-nav w-100 active">{{ 'evaluation.nav.edit.question'|trans }}</span></li>
-                                {% elseif activeCard == 'newAnswer' %}
-                                    <li><span class="btn btn-nav w-100 active">{{ 'evaluation.nav.new.answer'|trans }}</span></li>
-                                {% elseif activeCard == 'editAnswer' %}
-                                    <li><span class="btn btn-nav w-100 active">{{ 'evaluation.nav.edit.answer'|trans }}</span></li>
-                                {% elseif activeCard == 'newEvaluator' %}
-                                    <li><span class="btn btn-nav w-100 active">{{ 'evaluation.nav.new.evaluator'|trans }}</span></li>
-                                {% elseif activeCard == 'editEvaluator' %}
-                                    <li><span class="btn btn-nav w-100 active">{{ 'evaluation.nav.edit.evaluator'|trans }}</span></li>
-                                {% endif %}
-                            {% endif %}
+                            {% for nav in navigation %}
+                                <li>
+                                    {% if nav.path is defined and nav.path is not empty %}
+                                        <a href="{{ nav.path }}" class="btn btn-nav w-100{% if nav.active %} active{% endif %}">{{ nav.text }}</a>
+                                    {% else %}
+                                        <span class="btn btn-nav w-100{% if nav.active %} active{% endif %}">{{ nav.text }}</span>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="row evaluation-content">

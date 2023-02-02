@@ -10,15 +10,26 @@ use App\Form\EvaluationEvaluatorType;
 use App\Form\EvaluationQuestionType;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
+use App\Service\NavigationService;
+use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/evaluation", name: "evaluation_")]
 class EvaluationController extends BaseController
 {
+    private ?NavigationService $navigationService = null;
+
+    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, NavigationService $navigationService)
+    {
+        parent::__construct($em, $translator);
+        $this->navigationService = $navigationService;
+    }
+
     #[Route("/", name: "index")]
     public function index(EvaluationRepository $evaluationRepository): Response
     {
@@ -52,7 +63,10 @@ class EvaluationController extends BaseController
     #[Route("/overview/{evaluation}", name: "overview")]
     public function overview(Evaluation $evaluation, Request $request): Response
     {
-        return $this->render('evaluation/overview.html.twig', ['evaluation' => $evaluation, 'activeCard' => 'overview']);
+        return $this->render('evaluation/overview.html.twig', [
+            'evaluation' => $evaluation,
+            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_OVERVIEW)
+        ]);
     }
 
     #[Route("/edit/{evaluation}", name: "edit")]
@@ -70,7 +84,11 @@ class EvaluationController extends BaseController
             }
         }
 
-        return $this->render('evaluation/edit.html.twig', ['evaluation' => $evaluation, 'activeCard' => 'edit', 'form' => $form->createView()]);
+        return $this->render('evaluation/edit.html.twig', [
+            'evaluation' => $evaluation,
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EDIT)
+        ]);
     }
 
     #[Route("/delete/{evaluation}", name: "delete")]
@@ -98,7 +116,10 @@ class EvaluationController extends BaseController
     #[Route("/evaluate/{evaluation}", name: 'evaluate')]
     public function evaluate(Evaluation $evaluation, Request $request): Response
     {
-        return $this->render('evaluation/evaluate.html.twig', ['evaluation' => $evaluation, 'activeCard' => 'evaluate']);
+        return $this->render('evaluation/evaluate.html.twig', [
+            'evaluation' => $evaluation,
+            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EVALUATE)
+        ]);
     }
 
     #[Route("/evaluate/{evaluation}/add-question", name: 'add_question')]
@@ -125,7 +146,11 @@ class EvaluationController extends BaseController
             }
         }
 
-        return $this->render('evaluation/evaluation_question/new.html.twig', ['evaluation' => $evaluation, 'form' => $form->createView(), 'activeCard' => 'newQuestion']);
+        return $this->render('evaluation/evaluation_question/new.html.twig', [
+            'evaluation' => $evaluation,
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EXTRA_NEW_QUESTION)
+        ]);
     }
 
     #[Route("/evaluate/{evaluation}/add-evaluator", name: "add_evaluator")]
@@ -146,7 +171,11 @@ class EvaluationController extends BaseController
             }
         }
 
-        return $this->render('evaluation/evaluation_evaluator/new.html.twig', ['evaluation' => $evaluation, 'form' => $form->createView(), 'activeCard' => 'newEvaluator']);
+        return $this->render('evaluation/evaluation_evaluator/new.html.twig', [
+            'evaluation' => $evaluation,
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EXTRA_NEW_EVALUATOR)
+        ]);
     }
 
     private function processAutomaticEvaluationQuestionAnswerCreation(EvaluationQuestion $evaluationQuestion)

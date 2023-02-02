@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\EvaluationQuestionAnswer;
 use App\Form\EvaluationQuestionAnswerWeightedType;
+use App\Service\NavigationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ class EvaluationQuestionAnswerController extends BaseController
 {
     #[Route("/edit-weighted/{evaluationQuestionAnswer}", name: "edit")]
     #[IsGranted('ROLE_MODERATOR')]
-    public function editWeighted(EvaluationQuestionAnswer $evaluationQuestionAnswer, Request $request): Response
+    public function editWeighted(EvaluationQuestionAnswer $evaluationQuestionAnswer, Request $request, NavigationService $navigationService): Response
     {
         $form = $this->createForm(EvaluationQuestionAnswerWeightedType::class, $evaluationQuestionAnswer);
         $form->handleRequest($request);
@@ -32,7 +33,7 @@ class EvaluationQuestionAnswerController extends BaseController
             'evaluation' => $evaluationQuestionAnswer->getEvaluationQuestion()->getEvaluation(),
             'evaluationQuestionAnswer' => $evaluationQuestionAnswer,
             'form' => $form->createView(),
-            'activeCard' => 'editAnswer'
+            'navigation' => $navigationService->forEvaluation($evaluationQuestionAnswer->getEvaluationQuestion()->getEvaluation(), NavigationService::EVALUATION_EXTRA_EDIT_ANSWER)
         ]);
     }
 

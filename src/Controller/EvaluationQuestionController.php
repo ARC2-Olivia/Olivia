@@ -6,15 +6,26 @@ use App\Entity\EvaluationQuestion;
 use App\Entity\EvaluationQuestionAnswer;
 use App\Form\EvaluationQuestionAnswerWeightedType;
 use App\Form\EvaluationQuestionType;
+use App\Service\NavigationService;
+use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/evaluation-question", name: "evaluation_question_")]
 class EvaluationQuestionController extends BaseController
 {
+    private ?NavigationService $navigationService = null;
+
+    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, NavigationService $navigationService)
+    {
+        parent::__construct($em, $translator);
+        $this->navigationService = $navigationService;
+    }
+
     #[Route("/edit/{evaluationQuestion}", name: "edit")]
     #[IsGranted("ROLE_MODERATOR")]
     public function edit(EvaluationQuestion $evaluationQuestion, Request $request): Response
@@ -36,7 +47,7 @@ class EvaluationQuestionController extends BaseController
             'evaluationQuestion' => $evaluationQuestion,
             'evaluation' => $evaluationQuestion->getEvaluation(),
             'form' => $form->createView(),
-            'activeCard' => 'editQuestion'
+            'navigation' => $this->navigationService->forEvaluation($evaluationQuestion->getEvaluation(), NavigationService::EVALUATION_EXTRA_EDIT_QUESTION)
         ]);
     }
 
@@ -82,7 +93,7 @@ class EvaluationQuestionController extends BaseController
             'evaluation' => $evaluationQuestion->getEvaluation(),
             'evaluationQuestion' => $evaluationQuestion,
             'form' => $form->createView(),
-            'activeCard' => 'newAnswer'
+            'navigation' => $this->navigationService->forEvaluation($evaluationQuestion->getEvaluation(), NavigationService::EVALUATION_EXTRA_NEW_ANSWER)
         ]);
     }
 
