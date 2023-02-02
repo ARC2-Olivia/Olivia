@@ -43,11 +43,15 @@
                     </div>
                     <div class="row">
                         <ul class="course-navigation">
-                            <li><a href="{{ path('course_overview', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'overview' %} active{% endif %}">{{ 'course.nav.overview'|trans }}</a></li>
-                            <li><a href="{{ path('course_instructors', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'instructors' %} active{% endif %}">{{ 'course.nav.instructors'|trans }}</a></li>
-                            {% if is_granted('ROLE_MODERATOR') %}
-                                <li><a href="{{ path('course_edit', {'course': course.id}) }}" class="btn btn-nav w-100{% if activeCard == 'edit' %} active{% endif %}">{{ 'course.nav.edit'|trans }}</a></li>
-                            {% endif %}
+                            {% for nav in navigation %}
+                                <li>
+                                    {% if nav.path is defined and nav.path is not empty %}
+                                        <a href="{{ nav.path }}" class="btn btn-nav w-100{% if nav.active %} active{% endif %}">{{ nav.text }}</a>
+                                    {% else %}
+                                        <span class="btn btn-nav w-100{% if nav.active %} active{% endif %}">{{ nav.text }}</span>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="row course-content">

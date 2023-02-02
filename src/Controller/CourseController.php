@@ -13,6 +13,7 @@ use App\Form\CourseType;
 use App\Repository\CourseRepository;
 use App\Repository\InstructorRepository;
 use App\Service\EnrollmentService;
+use App\Service\NavigationService;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
@@ -28,6 +29,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CourseController extends BaseController
 {
     use BasicFileManagementTrait;
+
+    private ?NavigationService $navigationService = null;
+
+    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, NavigationService $navigationService)
+    {
+        parent::__construct($em, $translator);
+        $this->navigationService = $navigationService;
+    }
 
     #[Route("/", name: "index")]
     public function index(CourseRepository $courseRepository): Response
@@ -64,7 +73,10 @@ class CourseController extends BaseController
     #[Route("/overview/{course}", name: "overview")]
     public function overview(Course $course, Request $request): Response
     {
-        return $this->render('course/overview.html.twig', ['course' => $course, 'activeCard' => 'overview']);
+        return $this->render('course/overview.html.twig', [
+            'course' => $course,
+            'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_OVERVIEW)
+        ]);
     }
 
     #[Route("/instructors/{course}", name: "instructors")]
@@ -85,7 +97,11 @@ class CourseController extends BaseController
             }
         }
 
-        return $this->render('course/instructors.html.twig', ['course' => $course, 'activeCard' => 'instructors', 'form' => $form->createView(),]);
+        return $this->render('course/instructors.html.twig', [
+            'course' => $course,
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_INSTRUCTORS)
+        ]);
     }
 
     #[Route("/edit/{course}", name: "edit")]
@@ -107,7 +123,11 @@ class CourseController extends BaseController
             }
         }
 
-        return $this->render('course/edit.html.twig', ['course' => $course, 'activeCard' => 'edit', 'form' => $form->createView()]);
+        return $this->render('course/edit.html.twig', [
+            'course' => $course,
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_EDIT)
+        ]);
     }
 
     #[Route("/delete/{course}", name: "delete")]

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Course;
 use App\Entity\Evaluation;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
@@ -9,6 +10,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NavigationService
 {
+    public const COURSE_OVERVIEW    = 0;
+    public const COURSE_INSTRUCTORS = 1;
+    public const COURSE_EDIT        = 2;
+
     public const EVALUATION_OVERVIEW             = 0;
     public const EVALUATION_EVALUATE             = 1;
     public const EVALUATION_EDIT                 = 2;
@@ -28,6 +33,32 @@ class NavigationService
         $this->translator = $translator;
         $this->router = $router;
         $this->security = $security;
+    }
+
+    public function forCourse(Course $course, ?int $activeNav = null): array
+    {
+        $navigation = [
+            [
+                'text' => $this->translator->trans('course.nav.overview', [], 'app'),
+                'path' => $this->router->generate('course_overview', ['course' => $course->getId()]),
+                'active' => $activeNav === self::COURSE_OVERVIEW
+            ],
+            [
+                'text' => $this->translator->trans('course.nav.instructors', [], 'app'),
+                'path' => $this->router->generate('course_instructors', ['course' => $course->getId()]),
+                'active' => $activeNav === self::COURSE_INSTRUCTORS
+            ]
+        ];
+
+        if ($this->security->isGranted('ROLE_MODERATOR')) {
+            $navigation[] = [
+                'text' => $this->translator->trans('course.nav.edit', [], 'app'),
+                'path' => $this->router->generate('course_edit', ['course' => $course->getId()]),
+                'active' => $activeNav === self::COURSE_EDIT
+            ];
+        }
+
+        return $navigation;
     }
 
     public function forEvaluation(Evaluation $evaluation, ?int $activeNav = null): array
