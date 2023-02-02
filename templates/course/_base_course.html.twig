@@ -41,19 +41,7 @@
                     <div class="row">
                         {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
                     </div>
-                    <div class="row">
-                        <ul class="course-navigation">
-                            {% for nav in navigation %}
-                                <li>
-                                    {% if nav.path is defined and nav.path is not empty %}
-                                        <a href="{{ nav.path }}" class="btn btn-nav w-100{% if nav.active %} active{% endif %}">{{ nav.text }}</a>
-                                    {% else %}
-                                        <span class="btn btn-nav w-100{% if nav.active %} active{% endif %}">{{ nav.text }}</span>
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                    <div class="row">{% include '_partials/tab_navigation.html.twig' %}</div>
                     <div class="row course-content">
                         {% block courseContent %}{% endblock %}
                     </div>
