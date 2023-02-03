@@ -192,8 +192,16 @@ class EvaluationController extends BaseController
     #[IsGranted("ROLE_USER")]
     public function startAssessment(Evaluation $evaluation, Request $request, EvaluationService $evaluationService): Response
     {
-        $evaluationAssessment = $evaluationService->prepareEvaluationAssessment($evaluation, $this->getUser());
-        return $this->redirectToRoute('evaluation_assessment_start', ['evaluationAssessment' => $evaluationAssessment->getId()]);
+        $csrfToken = $request->get('_csrf_token');
+
+        if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationAssessment.start', $csrfToken)) {
+            $request->getSession()->set('evaluationAssessment.start', true);
+            $evaluationAssessment = $evaluationService->prepareEvaluationAssessment($evaluation, $this->getUser());
+            return $this->forward('App\Controller\EvaluationAssessmentController::start', ['evaluationAssessment' => $evaluationAssessment]);
+        }
+
+        $this->addFlash('error', $this->translator->trans('error.evaluationAssessment.start', [], 'message'));
+        return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
     }
 
     private function processAutomaticEvaluationQuestionAnswerCreation(EvaluationQuestion $evaluationQuestion)

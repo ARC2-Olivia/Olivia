@@ -16,8 +16,16 @@ class EvaluationAssessmentController extends BaseController
 {
     #[Route("/start/{evaluationAssessment}", name: "start")]
     #[IsGranted("ROLE_USER")]
-    public function start(EvaluationAssessment $evaluationAssessment, NavigationService $navigationService): Response
+    public function start(EvaluationAssessment $evaluationAssessment, Request $request, NavigationService $navigationService): Response
     {
+        $session = $request->getSession();
+        $allowedToStart = $session->has('evaluationAssessment.start') && $session->get('evaluationAssessment.start') === true;
+        if (!$allowedToStart) {
+            $this->addFlash('error', $this->translator->trans('error.evaluationAssessment.start', [], 'message'));
+            return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluationAssessment->getEvaluation()->getId()]);
+        }
+        $session->remove('evaluationAssessment.start');
+
         $evaluation = $evaluationAssessment->getEvaluation();
 
         $assessment = ['id' => $evaluationAssessment->getId(), 'questions' => []];

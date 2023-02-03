@@ -42,7 +42,7 @@
             <p>{{ 'evaluationAssessment.message.3'|trans|raw }}</p>
             <div class="d-flex justify-content-center">
                 <form action="{{ path('evaluation_start_assessment', {'evaluation': evaluation.id}) }}" method="post">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluation.start') }}"/>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluationAssessment.start') }}"/>
                     <button type="submit" class="btn btn-theme-white bg-blue">{{ 'evaluationAssessment.action.start'|trans }}</button>
                 </form>
             </div>
