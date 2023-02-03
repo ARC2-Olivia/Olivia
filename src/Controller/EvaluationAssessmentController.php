@@ -57,6 +57,8 @@ class EvaluationAssessmentController extends BaseController
             $evaluationQuestionRepository = $this->em->getRepository(EvaluationQuestion::class);
             $noQuestionError = false;
 
+            $evaluationAssessment->setCompleted(true);
+
             foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $evaluationAssessmentAnswer) {
                 $this->em->remove($evaluationAssessmentAnswer);
             }

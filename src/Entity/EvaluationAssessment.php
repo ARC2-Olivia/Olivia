@@ -29,6 +29,9 @@ class EvaluationAssessment
     #[ORM\OneToMany(mappedBy: 'evaluationAssessment', targetEntity: EvaluationAssessmentAnswer::class, orphanRemoval: true)]
     private Collection $evaluationAssessmentAnswers;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $completed = null;
+
     public function __construct()
     {
         $this->evaluationAssessmentAnswers = new ArrayCollection();
@@ -101,6 +104,18 @@ class EvaluationAssessment
                 $evaluationAssessmentAnswer->setEvaluationAssessment(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isCompleted(): ?bool
+    {
+        return $this->completed;
+    }
+
+    public function setCompleted(?bool $completed): self
+    {
+        $this->completed = $completed;
 
         return $this;
     }

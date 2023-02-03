@@ -62,13 +62,13 @@ class EvaluationService
         $evaluationAssessment = $this->em->getRepository(EvaluationAssessment::class)->findOneBy(['evaluation' => $evaluation, 'user' => $user]);
         $created = false;
         if ($evaluationAssessment === null) {
-            $evaluationAssessment = (new EvaluationAssessment())->setEvaluation($evaluation)->setUser($user)->setTakenAt(new \DateTimeImmutable());
+            $evaluationAssessment = (new EvaluationAssessment())->setEvaluation($evaluation)->setUser($user)->setTakenAt(new \DateTimeImmutable())->setCompleted(false);
             $this->em->persist($evaluationAssessment);
             $this->em->flush();
             $created = true;
         }
         if (!$created) {
-            $evaluationAssessment->setTakenAt(new \DateTimeImmutable());
+            $evaluationAssessment->setTakenAt(new \DateTimeImmutable())->setCompleted(false);
             $this->em->flush();
         }
         return $evaluationAssessment;
