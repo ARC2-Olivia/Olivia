@@ -119,15 +119,15 @@ class EvaluationController extends BaseController
     #[IsGranted("ROLE_USER")]
     public function evaluate(Evaluation $evaluation, Request $request): Response
     {
-        $assessmentExists = false;
+        $assessmentCompleted = false;
         if ($this->isGranted('ROLE_USER')) {
             $evaluationAssessment = $this->em->getRepository(EvaluationAssessment::class)->findOneBy(['evaluation' => $evaluation, 'user' => $this->getUser()]);
-            $assessmentExists = $evaluationAssessment !== null;
+            $assessmentCompleted = $evaluationAssessment !== null && $evaluationAssessment->isCompleted();
         }
 
         return $this->render('evaluation/evaluate.html.twig', [
             'evaluation' => $evaluation,
-            'assessmentExists' => $assessmentExists,
+            'assessmentCompleted' => $assessmentCompleted,
             'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EVALUATE)
         ]);
     }

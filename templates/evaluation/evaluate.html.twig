@@ -45,6 +45,9 @@
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluationAssessment.start') }}"/>
                     <button type="submit" class="btn btn-theme-white bg-blue">{{ 'evaluationAssessment.action.start'|trans }}</button>
                 </form>
+                {% if assessmentCompleted %}
+                    <a href="#" class="btn btn-theme-white bg-red ms-3">{{ 'button.results'|trans }}</a>
+                {% endif %}
             </div>
         </div>
 
