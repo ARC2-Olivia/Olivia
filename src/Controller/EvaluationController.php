@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Evaluation;
+use App\Entity\EvaluationAssessment;
 use App\Entity\EvaluationEvaluator;
 use App\Entity\EvaluationQuestion;
 use App\Entity\EvaluationQuestionAnswer;
@@ -10,6 +11,7 @@ use App\Form\EvaluationEvaluatorType;
 use App\Form\EvaluationQuestionType;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
+use App\Service\EvaluationService;
 use App\Service\NavigationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
@@ -114,10 +116,18 @@ class EvaluationController extends BaseController
     }
 
     #[Route("/evaluate/{evaluation}", name: 'evaluate')]
+    #[IsGranted("ROLE_USER")]
     public function evaluate(Evaluation $evaluation, Request $request): Response
     {
+        $assessmentExists = false;
+        if ($this->isGranted('ROLE_USER')) {
+            $evaluationAssessment = $this->em->getRepository(EvaluationAssessment::class)->findOneBy(['evaluation' => $evaluation, 'user' => $this->getUser()]);
+            $assessmentExists = $evaluationAssessment !== null;
+        }
+
         return $this->render('evaluation/evaluate.html.twig', [
             'evaluation' => $evaluation,
+            'assessmentExists' => $assessmentExists,
             'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EVALUATE)
         ]);
     }
@@ -176,6 +186,14 @@ class EvaluationController extends BaseController
             'form' => $form->createView(),
             'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EXTRA_NEW_EVALUATOR)
         ]);
+    }
+
+    #[Route("/evaluate/{evaluation}/assessment", name: "start_assessment")]
+    #[IsGranted("ROLE_USER")]
+    public function startAssessment(Evaluation $evaluation, Request $request, EvaluationService $evaluationService): Response
+    {
+        $evaluationAssessment = $evaluationService->prepareEvaluationAssessment($evaluation, $this->getUser());
+        return $this->redirectToRoute('evaluation_assessment_start', ['evaluationAssessment' => $evaluationAssessment->getId()]);
     }
 
     private function processAutomaticEvaluationQuestionAnswerCreation(EvaluationQuestion $evaluationQuestion)

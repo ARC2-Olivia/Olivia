@@ -3,6 +3,7 @@
 
 {% block evaluationContent %}
     {% if is_granted('ROLE_MODERATOR') %}
+
         <h2 class="mb-3">{{ 'evaluation.extra.questions'|trans }}</h2>
         {% if evaluation.evaluationQuestions is not empty %}
             <ul class="mod--evaluation-questions">
@@ -16,7 +17,9 @@
         <div class="text-end">
             <a href="{{ path('evaluation_add_question', {'evaluation': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.question'|trans }}</a>
         </div>
+
         <hr>
+
         <h2 class="mb-3">{{ 'evaluation.extra.evaluators'|trans }}</h2>
         {% if evaluation.evaluationEvaluators is not empty %}
             <ul class="mod--evaluation-evaluators">
@@ -30,5 +33,20 @@
         <div class="text-end">
             <a href="{{ path('evaluation_add_evaluator', {'evaluation': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.evaluator'|trans }}</a>
         </div>
+
+    {% elseif is_user() %}
+
+        <div class="evaluation-assessment-intro">
+            <p>{{ 'evaluationAssessment.message.1'|trans({'%questionCount%': evaluation.evaluationQuestions|length})|raw }}</p>
+            <p>{{ 'evaluationAssessment.message.2'|trans|raw }}</p>
+            <p>{{ 'evaluationAssessment.message.3'|trans|raw }}</p>
+            <div class="d-flex justify-content-center">
+                <form action="{{ path('evaluation_start_assessment', {'evaluation': evaluation.id}) }}" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluation.start') }}"/>
+                    <button type="submit" class="btn btn-theme-white bg-blue">{{ 'evaluationAssessment.action.start'|trans }}</button>
+                </form>
+            </div>
+        </div>
+
     {% endif %}
 {% endblock %}

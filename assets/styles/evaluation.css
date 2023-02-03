@@ -122,3 +122,14 @@ ul.mod--evaluation-question-answers {
 .mod--evaluation-question-evaluable svg.not-evaluable {
     color: var(--app-color-orange);
 }
+
+.evaluation-assessment-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 16px;
+}
+
+.evaluation-assessment-intro p {
+    text-align: center;
+}

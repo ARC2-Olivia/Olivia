@@ -2,9 +2,12 @@
 
 namespace App\Service;
 
+use App\Entity\Evaluation;
+use App\Entity\EvaluationAssessment;
 use App\Entity\EvaluationEvaluator;
 use App\Entity\EvaluationEvaluatorSimple;
 use App\Entity\EvaluationEvaluatorSumAggregate;
+use App\Entity\User;
 use App\Exception\UnsupportedEvaluationEvaluatorTypeException;
 use App\Form\EvaluationEvaluatorSimpleType;
 use App\Form\EvaluationEvaluatorSumAggregateType;
@@ -52,5 +55,22 @@ class EvaluationService
 
         if ($formClass === null) throw UnsupportedEvaluationEvaluatorTypeException::withDefaultMessage();
         return $formClass;
+    }
+
+    public function prepareEvaluationAssessment(Evaluation $evaluation, User $user): EvaluationAssessment
+    {
+        $evaluationAssessment = $this->em->getRepository(EvaluationAssessment::class)->findOneBy(['evaluation' => $evaluation, 'user' => $user]);
+        $created = false;
+        if ($evaluationAssessment === null) {
+            $evaluationAssessment = (new EvaluationAssessment())->setEvaluation($evaluation)->setUser($user)->setTakenAt(new \DateTimeImmutable());
+            $this->em->persist($evaluationAssessment);
+            $this->em->flush();
+            $created = true;
+        }
+        if (!$created) {
+            $evaluationAssessment->setTakenAt(new \DateTimeImmutable());
+            $this->em->flush();
+        }
+        return $evaluationAssessment;
     }
 }
