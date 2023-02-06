@@ -46,7 +46,7 @@
                     <button type="submit" class="btn btn-theme-white bg-blue">{{ 'evaluationAssessment.action.start'|trans }}</button>
                 </form>
                 {% if assessmentCompleted %}
-                    <a href="#" class="btn btn-theme-white bg-red ms-3">{{ 'button.results'|trans }}</a>
+                    <a href="{{ path('evaluation_results', {'evaluation': evaluation.id}) }}" class="btn btn-theme-white bg-red ms-3">{{ 'button.results'|trans }}</a>
                 {% endif %}
             </div>
         </div>

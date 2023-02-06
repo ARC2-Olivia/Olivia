@@ -1,0 +1,23 @@
+{% extends 'evaluation/_base_evaluation.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block evaluationContent %}
+    <div class="evaluation-results">
+        {% for result in results %}
+            <p>{{ result|nl2br }}</p>
+        {% else %}
+            <p>{{ 'evaluation.extra.noResults'|trans }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .evaluation-results {
+            display: flex;
+            flex-direction: column;
+            row-gap: 24px;
+        }
+    </style>
+{% endblock %}

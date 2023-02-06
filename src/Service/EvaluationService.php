@@ -7,6 +7,7 @@ use App\Entity\EvaluationAssessment;
 use App\Entity\EvaluationEvaluator;
 use App\Entity\EvaluationEvaluatorSimple;
 use App\Entity\EvaluationEvaluatorSumAggregate;
+use App\Entity\EvaluationQuestion;
 use App\Entity\User;
 use App\Exception\UnsupportedEvaluationEvaluatorTypeException;
 use App\Form\EvaluationEvaluatorSimpleType;
@@ -72,5 +73,78 @@ class EvaluationService
             $this->em->flush();
         }
         return $evaluationAssessment;
+    }
+
+    /** @return string[] */
+    public function runEvaluators(EvaluationAssessment $evaluationAssessment): array
+    {
+        $messages = [];
+
+        $evaluators = $evaluationAssessment->getEvaluation()->getEvaluationEvaluators();
+        foreach ($evaluators as $evaluator) {
+            $message = match ($evaluator->getType()) {
+                EvaluationEvaluator::TYPE_SIMPLE => $this->runSimpleEvaluator($evaluator, $evaluationAssessment),
+                EvaluationEvaluator::TYPE_SUM_AGGREGATE => $this->runSumAggregateEvaluator($evaluator, $evaluationAssessment),
+                default => null
+            };
+
+            if ($message !== null) $messages[] = $message;
+        }
+
+        return $messages;
+    }
+
+    public function runSimpleEvaluator(EvaluationEvaluator $evaluator, EvaluationAssessment $evaluationAssessment): ?string
+    {
+        $evaluatorSimple = $evaluator->getEvaluationEvaluatorSimple();
+        if ($evaluatorSimple->getEvaluationQuestion() === null) return null;
+
+        $message = null;
+        foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
+            if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluatorSimple->getEvaluationQuestion()->getId()) {
+                $givenAnswer = $assessmentAnswer->getGivenAnswer();
+                $expectedAnswer = $evaluatorSimple->getExpectedValue();
+
+                switch ($evaluatorSimple->getEvaluationQuestion()->getType()) {
+                    case EvaluationQuestion::TYPE_YES_NO:
+                        $givenAnswer = (bool) $givenAnswer;
+                        $expectedAnswer = (bool) $expectedAnswer;
+                        break;
+                    case EvaluationQuestion::TYPE_WEIGHTED:
+                    case EvaluationQuestion::TYPE_NUMERICAL_INPUT:
+                        $givenAnswer = (integer) $givenAnswer;
+                        $expectedAnswer = (integer) $expectedAnswer;
+                        break;
+                    default: return null;
+                }
+
+                if ($givenAnswer === $expectedAnswer) {
+                    $message = $evaluatorSimple->getResultText();
+                }
+                break;
+            }
+        }
+
+        return $message;
+    }
+
+    private function runSumAggregateEvaluator(EvaluationEvaluator $evaluator, EvaluationAssessment $evaluationAssessment): ?string
+    {
+        $evaluatorSumAggregate = $evaluator->getEvaluationEvaluatorSumAggregate();
+        if ($evaluatorSumAggregate->getEvaluationQuestions()->isEmpty()) return null;
+
+        $sum = 0;
+        foreach ($evaluatorSumAggregate->getEvaluationQuestions() as $evaluationQuestion) {
+            foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluationQuestion->getId()) {
+                    $sum += (integer) $assessmentAnswer->getGivenAnswer();
+                    break;
+                }
+            }
+        }
+
+        return $sum >= $evaluatorSumAggregate->getExpectedValueRangeStart() && $sum <= $evaluatorSumAggregate->getExpectedValueRangeEnd()
+            ? $evaluatorSumAggregate->getResultText()
+            : null;
     }
 }

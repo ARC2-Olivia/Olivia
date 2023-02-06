@@ -247,6 +247,7 @@ evaluation:
     nav:
         overview: Overview
         evaluate: Evaluate
+        results: Results
         edit:
             default: Edit
             question: Edit question
@@ -262,6 +263,7 @@ evaluation:
         evaluator: Evaluator
         evaluators: Evaluators
         answer: Answer
+        noResults: You passed the evaluation.
 
 evaluationQuestion:
     type:

@@ -204,6 +204,18 @@ class EvaluationController extends BaseController
         return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
     }
 
+    #[Route("/evaluate/{evaluation}/results", name: "results")]
+    #[IsGranted("ROLE_USER")]
+    public function results(Evaluation $evaluation, EvaluationService $evaluationService): Response
+    {
+        $evaluationAssessment = $this->em->getRepository(EvaluationAssessment::class)->findOneBy(['evaluation' => $evaluation, 'user' => $this->getUser()]);
+        $results = $evaluationService->runEvaluators($evaluationAssessment);
+        return $this->render('evaluation/results.html.twig', [
+            'evaluation' => $evaluation,
+            'results' => $results,
+            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EXTRA_RESULTS)]);
+    }
+
     private function processAutomaticEvaluationQuestionAnswerCreation(EvaluationQuestion $evaluationQuestion)
     {
         if ($evaluationQuestion->getType() === EvaluationQuestion::TYPE_YES_NO) {

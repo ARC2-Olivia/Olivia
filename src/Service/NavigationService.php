@@ -17,12 +17,13 @@ class NavigationService
     public const EVALUATION_OVERVIEW             = 0;
     public const EVALUATION_EVALUATE             = 1;
     public const EVALUATION_EDIT                 = 2;
-    public const EVALUATION_EXTRA_NEW_QUESTION   = 3;
-    public const EVALUATION_EXTRA_EDIT_QUESTION  = 4;
-    public const EVALUATION_EXTRA_NEW_ANSWER     = 5;
-    public const EVALUATION_EXTRA_EDIT_ANSWER    = 6;
-    public const EVALUATION_EXTRA_NEW_EVALUATOR  = 7;
-    public const EVALUATION_EXTRA_EDIT_EVALUATOR = 8;
+    public const EVALUATION_EXTRA_RESULTS        = 3;
+    public const EVALUATION_EXTRA_NEW_QUESTION   = 4;
+    public const EVALUATION_EXTRA_EDIT_QUESTION  = 5;
+    public const EVALUATION_EXTRA_NEW_ANSWER     = 6;
+    public const EVALUATION_EXTRA_EDIT_ANSWER    = 7;
+    public const EVALUATION_EXTRA_NEW_EVALUATOR  = 8;
+    public const EVALUATION_EXTRA_EDIT_EVALUATOR = 9;
 
     private ?TranslatorInterface $translator = null;
     private ?RouterInterface $router = null;
@@ -77,6 +78,8 @@ class NavigationService
                 'path' => $this->router->generate('evaluation_evaluate', ['evaluation' => $evaluation->getId()]),
                 'active' => $activeNav === self::EVALUATION_EVALUATE
             ];
+
+            if ($activeNav === self::EVALUATION_EXTRA_RESULTS) $navigation[] = ['text' => $this->translator->trans('evaluation.nav.results', [], 'app'), 'active' => true];
         }
 
         if ($this->security->isGranted('ROLE_MODERATOR')) {
@@ -87,11 +90,11 @@ class NavigationService
             ];
 
             switch ($activeNav) {
-                case self::EVALUATION_EXTRA_NEW_QUESTION: $navigation[]   = ['text' => $this->translator->trans('evaluation.nav.new.question', [], 'app'), 'active' => true];   break;
-                case self::EVALUATION_EXTRA_EDIT_QUESTION: $navigation[]  = ['text' => $this->translator->trans('evaluation.nav.edit.question', [], 'app'), 'active' => true];  break;
-                case self::EVALUATION_EXTRA_NEW_ANSWER: $navigation[]     = ['text' => $this->translator->trans('evaluation.nav.new.answer', [], 'app'), 'active' => true];     break;
-                case self::EVALUATION_EXTRA_EDIT_ANSWER: $navigation[]    = ['text' => $this->translator->trans('evaluation.nav.edit.answer', [], 'app'), 'active' => true];    break;
-                case self::EVALUATION_EXTRA_NEW_EVALUATOR: $navigation[]  = ['text' => $this->translator->trans('evaluation.nav.new.evaluator', [], 'app'), 'active' => true];  break;
+                case self::EVALUATION_EXTRA_NEW_QUESTION:   $navigation[] = ['text' => $this->translator->trans('evaluation.nav.new.question', [], 'app'), 'active' => true];   break;
+                case self::EVALUATION_EXTRA_EDIT_QUESTION:  $navigation[] = ['text' => $this->translator->trans('evaluation.nav.edit.question', [], 'app'), 'active' => true];  break;
+                case self::EVALUATION_EXTRA_NEW_ANSWER:     $navigation[] = ['text' => $this->translator->trans('evaluation.nav.new.answer', [], 'app'), 'active' => true];     break;
+                case self::EVALUATION_EXTRA_EDIT_ANSWER:    $navigation[] = ['text' => $this->translator->trans('evaluation.nav.edit.answer', [], 'app'), 'active' => true];    break;
+                case self::EVALUATION_EXTRA_NEW_EVALUATOR:  $navigation[] = ['text' => $this->translator->trans('evaluation.nav.new.evaluator', [], 'app'), 'active' => true];  break;
                 case self::EVALUATION_EXTRA_EDIT_EVALUATOR: $navigation[] = ['text' => $this->translator->trans('evaluation.nav.edit.evaluator', [], 'app'), 'active' => true]; break;
             }
         }
