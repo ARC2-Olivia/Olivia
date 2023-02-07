@@ -15,14 +15,17 @@ use App\Form\EvaluationEvaluatorProductAggregateType;
 use App\Form\EvaluationEvaluatorSimpleType;
 use App\Form\EvaluationEvaluatorSumAggregateType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class EvaluationService
 {
     private ?EntityManagerInterface $em = null;
+    private ?ValidatorInterface $validator = null;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, ValidatorInterface $validator)
     {
         $this->em = $em;
+        $this->validator = $validator;
     }
 
     /**
@@ -107,7 +110,8 @@ class EvaluationService
     public function runSimpleEvaluator(EvaluationEvaluator $evaluator, EvaluationAssessment $evaluationAssessment): ?string
     {
         $evaluatorSimple = $evaluator->getEvaluationEvaluatorSimple();
-        if ($evaluatorSimple->getEvaluationQuestion() === null) return null;
+        $errors = $this->validator->validate($evaluatorSimple);
+        if ($errors->count() > 0 || $evaluatorSimple->getEvaluationQuestion() === null) return null;
 
         $message = null;
         foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
@@ -141,7 +145,8 @@ class EvaluationService
     private function runSumAggregateEvaluator(EvaluationEvaluator $evaluator, EvaluationAssessment $evaluationAssessment): ?string
     {
         $evaluatorSumAggregate = $evaluator->getEvaluationEvaluatorSumAggregate();
-        if ($evaluatorSumAggregate->getEvaluationQuestions()->isEmpty()) return null;
+        $errors = $this->validator->validate($evaluatorSumAggregate);
+        if ($errors->count() > 0 || $evaluatorSumAggregate->getEvaluationQuestions()->isEmpty()) return null;
 
         $sum = 0;
         foreach ($evaluatorSumAggregate->getEvaluationQuestions() as $evaluationQuestion) {
@@ -161,7 +166,8 @@ class EvaluationService
     private function runProductAggregateEvaluator(EvaluationEvaluator $evaluator, EvaluationAssessment $evaluationAssessment): ?string
     {
         $evaluatorProductAggregate = $evaluator->getEvaluationEvaluatorProductAggregate();
-        if ($evaluatorProductAggregate->getEvaluationQuestions()->isEmpty()) return null;
+        $errors = $this->validator->validate($evaluatorProductAggregate);
+        if ($errors->count() > 0 || $evaluatorProductAggregate->getEvaluationQuestions()->isEmpty()) return null;
 
         $product = 1;
         foreach ($evaluatorProductAggregate->getEvaluationQuestions() as $evaluationQuestion) {
