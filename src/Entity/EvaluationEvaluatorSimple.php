@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorSimpleRepository::class)]
 class EvaluationEvaluatorSimple extends TranslatableEntity
@@ -26,13 +27,29 @@ class EvaluationEvaluatorSimple extends TranslatableEntity
     private ?EvaluationQuestion $evaluationQuestion = null;
 
     #[ORM\Column(length: 63)]
-    #[Assert\NotBlank(message: 'error.evaluationEvaluatorSimple.expectedValue')]
+    #[Assert\NotBlank(message: 'error.evaluationEvaluatorSimple.expectedValue.blank')]
     private ?string $expectedValue = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'error.evaluationEvaluatorSimple.resultText')]
     #[Gedmo\Translatable]
     private ?string $resultText = null;
+
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, $payload): void
+    {
+        if ($this->evaluationQuestion !== null) {
+            switch ($this->evaluationQuestion->getType()) {
+                case EvaluationQuestion::TYPE_YES_NO:
+                    if ($this->expectedValue !== '0' && $this->expectedValue !== '1') $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.notBool')->addViolation();
+                    break;
+                case EvaluationQuestion::TYPE_WEIGHTED:
+                case EvaluationQuestion::TYPE_NUMERICAL_INPUT:
+                    if (!is_numeric($this->expectedValue)) $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.notNumeric')->addViolation();
+                    break;
+            }
+        }
+    }
 
     public function getId(): ?int
     {

@@ -46,7 +46,7 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity
     }
 
     #[Assert\Callback]
-    public function validate(ExecutionContextInterface $context, $payload)
+    public function validate(ExecutionContextInterface $context, $payload): void
     {
         $startIsNumeric = is_numeric($this->getExpectedValueRangeStart());
         $endIsNumeric = is_numeric($this->getExpectedValueRangeEnd());

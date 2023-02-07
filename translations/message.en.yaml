@@ -122,7 +122,10 @@ error:
         name: Evaluator name must not be empty.
     evaluationEvaluatorSimple:
         evaluationQuestion: An evaluation question has to be chosen for the evaluator.
-        expectedValue: An expected value has to be given to the evaluator.
+        expectedValue:
+            blank: An expected value has to be given to the evaluator.
+            notBool: For the chosen evaluation question, the expected answer should be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
+            notNumeric: For the chosen evaluation question, the expected answer needs to be a number.
         resultText: A resulting text that the evaluator will generate upon successful evaluation needs to be assigned.
     evaluationEvaluatorSumAggregate:
         evaluationQuestions: Atleast one evaluation question needs to be assigned to the evaluator.
