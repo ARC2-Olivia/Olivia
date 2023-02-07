@@ -26,27 +26,33 @@ class EvaluationEvaluatorSimple extends TranslatableEntity
     #[Assert\NotNull(message: 'error.evaluationEvaluatorSimple.evaluationQuestion')]
     private ?EvaluationQuestion $evaluationQuestion = null;
 
-    #[ORM\Column(length: 63)]
-    #[Assert\NotBlank(message: 'error.evaluationEvaluatorSimple.expectedValue.blank')]
+    #[ORM\Column(length: 63, nullable: true)]
     private ?string $expectedValue = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'error.evaluationEvaluatorSimple.resultText')]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable]
     private ?string $resultText = null;
 
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
-        if ($this->evaluationQuestion !== null) {
-            switch ($this->evaluationQuestion->getType()) {
-                case EvaluationQuestion::TYPE_YES_NO:
-                    if ($this->expectedValue !== '0' && $this->expectedValue !== '1') $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.notBool')->addViolation();
-                    break;
-                case EvaluationQuestion::TYPE_WEIGHTED:
-                case EvaluationQuestion::TYPE_NUMERICAL_INPUT:
-                    if (!is_numeric($this->expectedValue)) $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.notNumeric')->addViolation();
-                    break;
+        if ($this->evaluationEvaluator !== null && $this->evaluationEvaluator->isIncluded()) {
+            // Expected value and result text must not be NULL if the evaluator is included in the result generation.
+            if ($this->expectedValue === null) $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.blank')->atPath('expectedPath')->addViolation();
+            if ($this->resultText === null) $context->buildViolation('error.evaluationEvaluatorSimple.resultText')->atPath('resultText')->addViolation();
+
+            // Expected value has to be written in a specific way depending on the type of question. This will only be validated if the evaluator is included in the result
+            // generation.
+            if ($this->evaluationQuestion !== null) {
+                switch ($this->evaluationQuestion->getType()) {
+                    case EvaluationQuestion::TYPE_YES_NO:
+                        if ($this->expectedValue !== '0' && $this->expectedValue !== '1') $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.notBool')->atPath('expectedValue')->addViolation();
+                        break;
+                    case EvaluationQuestion::TYPE_WEIGHTED:
+                    case EvaluationQuestion::TYPE_NUMERICAL_INPUT:
+                        if (!is_numeric($this->expectedValue)) $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.notNumeric')->atPath('expectedValue')->addViolation();
+                        break;
+                }
             }
         }
     }
