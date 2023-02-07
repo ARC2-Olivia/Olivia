@@ -27,16 +27,13 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity
     #[Assert\NotBlank(message: 'error.evaluationEvaluatorSumAggregate.evaluationQuestions')]
     private Collection $evaluationQuestions;
 
-    #[ORM\Column]
-    #[Assert\Type(type: 'numeric', message: 'error.evaluationEvaluatorSumAggregate.expectedValueRange.start')]
+    #[ORM\Column(nullable: true)]
     private ?int $expectedValueRangeStart = null;
 
-    #[ORM\Column]
-    #[Assert\Type(type: 'numeric', message: 'error.evaluationEvaluatorSumAggregate.expectedValueRange.end')]
+    #[ORM\Column(nullable: true)]
     private ?int $expectedValueRangeEnd = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'error.evaluationEvaluatorSumAggregate.resultText')]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable]
     private ?string $resultText = null;
 
@@ -48,19 +45,10 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
-        $startIsNumeric = is_numeric($this->getExpectedValueRangeStart());
-        $endIsNumeric = is_numeric($this->getExpectedValueRangeEnd());
-
-        if (!$startIsNumeric) {
-            $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.start')->atPath('expectedValueRangeStart')->addViolation();
-        }
-
-        if (!$endIsNumeric) {
-            $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.end')->atPath('expectedValueRangeEnd')->addViolation();
-        }
-
-        if ($startIsNumeric && $endIsNumeric && $this->getExpectedValueRangeStart() > $this->getExpectedValueRangeEnd()) {
-            $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.invalid')->addViolation();
+        if ($this->evaluationEvaluator !== null && $this->evaluationEvaluator->isIncluded()) {
+            $this->validateEvaluationQuestions($context);
+            $this->validateExpectedValueRanges($context);
+            $this->validateResultText($context);
         }
     }
 
@@ -139,5 +127,31 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity
         $this->resultText = $resultText;
 
         return $this;
+    }
+
+    private function validateEvaluationQuestions(ExecutionContextInterface $context)
+    {
+        if ($this->evaluationQuestions->isEmpty()) {
+            $context->buildViolation('error.evaluationEvaluatorSumAggregate.evaluationQuestions')->atPath('evaluationQuestions')->addViolation();
+        }
+    }
+
+    private function validateExpectedValueRanges(ExecutionContextInterface $context): void
+    {
+        $startIsNumeric = is_numeric($this->getExpectedValueRangeStart());
+        $endIsNumeric = is_numeric($this->getExpectedValueRangeEnd());
+
+        if (!$startIsNumeric) $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.start')->atPath('expectedValueRangeStart')->addViolation();
+        if (!$endIsNumeric) $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.end')->atPath('expectedValueRangeEnd')->addViolation();
+        if ($startIsNumeric && $endIsNumeric && $this->getExpectedValueRangeStart() > $this->getExpectedValueRangeEnd()) {
+            $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.invalid')->addViolation();
+        }
+    }
+
+    private function validateResultText(ExecutionContextInterface $context): void
+    {
+        if ($this->resultText === null && trim($this->resultText) === '' ) {
+            $context->buildViolation('error.evaluationEvaluatorSumAggregate.resultText')->atPath('resultText')->addViolation();
+        }
     }
 }
