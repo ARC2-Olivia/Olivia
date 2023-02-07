@@ -388,6 +388,47 @@ iframe.lesson-video {
     background-color: var(--app-color-green);
 }
 
+.lesson-quiz-results {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}
+
+.lesson-quiz-results hr {
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+.lesson-quiz-result {
+    display: flex;
+    column-gap: 16px;
+}
+
+.lesson-quiz-result-icon svg {
+    height: 36px;
+    width: 36px;
+    align-self: start;
+}
+
+.lesson-quiz-result-icon {
+    flex-basis: 0;
+}
+
+.lesson-quiz-result-info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+.lesson-quiz-result-question {
+    font-weight: bold;
+}
+
+.lesson-quiz-result-explanation {
+    font-style: italic;
+}
+
 @media screen and (max-width: 1199px) {
     .lesson-section-main {
         flex-grow: 2;
