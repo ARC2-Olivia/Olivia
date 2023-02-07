@@ -89,7 +89,7 @@ class EvaluationService
     {
         $messages = [];
 
-        $evaluators = $evaluationAssessment->getEvaluation()->getEvaluationEvaluators();
+        $evaluators = $this->em->getRepository(EvaluationEvaluator::class)->findBy(['evaluation' => $evaluationAssessment->getEvaluation(), 'included' => true]);
         foreach ($evaluators as $evaluator) {
             $message = match ($evaluator->getType()) {
                 EvaluationEvaluator::TYPE_SIMPLE => $this->runSimpleEvaluator($evaluator, $evaluationAssessment),

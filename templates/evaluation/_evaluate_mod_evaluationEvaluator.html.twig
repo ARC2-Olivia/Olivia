@@ -1,6 +1,13 @@
 {% trans_default_domain 'app' %}
 
 <li class="mod--evaluation-evaluator">
+    <div class="mod--evaluation-evaluator-included">
+        {% if evaluationEvaluator.included %}
+            {{ mdi('text-box-check', 'included') }}
+        {% else %}
+            {{ mdi('text-box-minus', 'not-included') }}
+        {% endif %}
+    </div>
     <div class="mod--evaluation-evaluator-details">
         <div class="mod--evaluation-evaluator-text">{{ evaluationEvaluator.name }}</div>
         <div class="mod--evaluation-evaluator-type">{{ evaluationEvaluator.type }}</div>

@@ -167,7 +167,7 @@ class EvaluationController extends BaseController
     #[IsGranted("ROLE_MODERATOR")]
     public function addEvaluationEvaluator(Evaluation $evaluation, Request $request): Response
     {
-        $evaluationEvaluator = (new EvaluationEvaluator())->setEvaluation($evaluation);
+        $evaluationEvaluator = (new EvaluationEvaluator())->setEvaluation($evaluation)->setIncluded(true);
         $form = $this->createForm(EvaluationEvaluatorType::class, $evaluationEvaluator);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -27,6 +27,11 @@ class EvaluationEvaluatorType extends AbstractType
             $this->translator->trans('evaluationEvaluator.type.productAggregate', [], 'app') => EvaluationEvaluator::TYPE_PRODUCT_AGGREGATE
         ];
 
+        $includedChoices = [
+            $this->translator->trans('common.no', [], 'app') => false,
+            $this->translator->trans('common.yes', [], 'app') => true
+        ];
+
         if ($options['edit_mode'] === false) {
             $builder->add('type', ChoiceType::class, [
                 'label' => 'form.entity.evaluationEvaluator.label.type',
@@ -35,10 +40,17 @@ class EvaluationEvaluatorType extends AbstractType
             ]);
         }
 
-        $builder->add('name', TextType::class, [
-            'label' => 'form.entity.evaluationEvaluator.label.name',
-            'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.evaluationEvaluator.placeholder.name', [], 'app')]
-        ]);
+        $builder
+            ->add('name', TextType::class, [
+                'label' => 'form.entity.evaluationEvaluator.label.name',
+                'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.evaluationEvaluator.placeholder.name', [], 'app')]
+            ])
+            ->add('included', ChoiceType::class, [
+                'label' => 'form.entity.evaluationEvaluator.label.included',
+                'choices' => $includedChoices,
+                'attr' => ['class' => 'form-select mb-3']
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

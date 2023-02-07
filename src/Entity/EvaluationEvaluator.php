@@ -29,6 +29,9 @@ class EvaluationEvaluator
     #[Assert\NotBlank(message: 'error.evaluationEvaluator.name')]
     private ?string $name = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $included = null;
+
     #[ORM\OneToOne(mappedBy: 'evaluationEvaluator', cascade: ['persist', 'remove'])]
     private ?EvaluationEvaluatorSimple $evaluationEvaluatorSimple = null;
 
@@ -80,6 +83,18 @@ class EvaluationEvaluator
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function isIncluded(): ?bool
+    {
+        return $this->included;
+    }
+
+    public function setIncluded(?bool $included): self
+    {
+        $this->included = $included;
 
         return $this;
     }

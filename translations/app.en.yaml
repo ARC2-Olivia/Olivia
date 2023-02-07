@@ -158,6 +158,7 @@ form:
             label:
                 type: Evaluator type
                 name: Evaluator name
+                included: Include in the result calculation
                 evaluationQuestion: Evaluation question
                 evaluationQuestions: Evaluation questions
                 expectedValue: Expected value

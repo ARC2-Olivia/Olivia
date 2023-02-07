@@ -86,7 +86,8 @@ ul.mod--evaluation-question-answers {
     flex-direction: column;
 }
 
-.mod--evaluation-question-details {
+.mod--evaluation-question-details,
+.mod--evaluation-evaluator-details {
     text-align: center;
 }
 
@@ -110,16 +111,19 @@ ul.mod--evaluation-question-answers {
     column-gap: 12px;
 }
 
-.mod--evaluation-question-evaluable svg {
+.mod--evaluation-question-evaluable svg,
+.mod--evaluation-evaluator-included svg {
     width: 32px;
     height: 32px;
 }
 
-.mod--evaluation-question-evaluable svg.evaluable {
+.mod--evaluation-question-evaluable svg.evaluable,
+.mod--evaluation-evaluator-included svg.included {
     color: var(--app-color-green);
 }
 
-.mod--evaluation-question-evaluable svg.not-evaluable {
+.mod--evaluation-question-evaluable svg.not-evaluable,
+.mod--evaluation-evaluator-included svg.not-included {
     color: var(--app-color-orange);
 }
 
