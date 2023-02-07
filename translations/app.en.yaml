@@ -280,6 +280,7 @@ evaluationEvaluator:
     type:
         simple: Simple
         sumAggregate: Sum aggregate
+        productAggregate: Product aggregate
     delete: Are you sure you want to delete this evaluator?
     empty: There are no defined evaluators for this evaluation.
     heading:

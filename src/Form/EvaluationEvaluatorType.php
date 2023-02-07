@@ -23,7 +23,8 @@ class EvaluationEvaluatorType extends AbstractType
     {
         $typeChoices = [
             $this->translator->trans('evaluationEvaluator.type.simple', [], 'app') => EvaluationEvaluator::TYPE_SIMPLE,
-            $this->translator->trans('evaluationEvaluator.type.sumAggregate', [], 'app') => EvaluationEvaluator::TYPE_SUM_AGGREGATE
+            $this->translator->trans('evaluationEvaluator.type.sumAggregate', [], 'app') => EvaluationEvaluator::TYPE_SUM_AGGREGATE,
+            $this->translator->trans('evaluationEvaluator.type.productAggregate', [], 'app') => EvaluationEvaluator::TYPE_PRODUCT_AGGREGATE
         ];
 
         if ($options['edit_mode'] === false) {

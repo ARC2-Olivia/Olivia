@@ -5,11 +5,13 @@ namespace App\Service;
 use App\Entity\Evaluation;
 use App\Entity\EvaluationAssessment;
 use App\Entity\EvaluationEvaluator;
+use App\Entity\EvaluationEvaluatorProductAggregate;
 use App\Entity\EvaluationEvaluatorSimple;
 use App\Entity\EvaluationEvaluatorSumAggregate;
 use App\Entity\EvaluationQuestion;
 use App\Entity\User;
 use App\Exception\UnsupportedEvaluationEvaluatorTypeException;
+use App\Form\EvaluationEvaluatorProductAggregateType;
 use App\Form\EvaluationEvaluatorSimpleType;
 use App\Form\EvaluationEvaluatorSumAggregateType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +28,7 @@ class EvaluationService
     /**
      * @throws UnsupportedEvaluationEvaluatorTypeException
      */
-    public function getEvaluatorImplementation(EvaluationEvaluator $evaluationEvaluator): EvaluationEvaluatorSimple|EvaluationEvaluatorSumAggregate
+    public function getEvaluatorImplementation(EvaluationEvaluator $evaluationEvaluator): EvaluationEvaluatorSimple|EvaluationEvaluatorSumAggregate|EvaluationEvaluatorProductAggregate
     {
         if ($evaluationEvaluator->getType() === EvaluationEvaluator::TYPE_SIMPLE) {
             $evaluatorImpl = $this->em->getRepository(EvaluationEvaluatorSimple::class)->findOneBy(['evaluationEvaluator' => $evaluationEvaluator]);
@@ -37,6 +39,12 @@ class EvaluationService
         if ($evaluationEvaluator->getType() === EvaluationEvaluator::TYPE_SUM_AGGREGATE) {
             $evaluatorImpl = $this->em->getRepository(EvaluationEvaluatorSumAggregate::class)->findOneBy(['evaluationEvaluator' => $evaluationEvaluator]);
             if ($evaluatorImpl === null) $evaluatorImpl = (new EvaluationEvaluatorSumAggregate())->setEvaluationEvaluator($evaluationEvaluator);
+            return $evaluatorImpl;
+        }
+
+        if ($evaluationEvaluator->getType() === EvaluationEvaluator::TYPE_PRODUCT_AGGREGATE) {
+            $evaluatorImpl = $this->em->getRepository(EvaluationEvaluatorProductAggregate::class)->findOneBy(['evaluationEvaluator' => $evaluationEvaluator]);
+            if ($evaluatorImpl === null) $evaluatorImpl = (new EvaluationEvaluatorProductAggregate())->setEvaluationEvaluator($evaluationEvaluator);
             return $evaluatorImpl;
         }
 
@@ -51,6 +59,7 @@ class EvaluationService
         $formClass = match ($evaluationEvaluator->getType()) {
             EvaluationEvaluator::TYPE_SIMPLE => EvaluationEvaluatorSimpleType::class,
             EvaluationEvaluator::TYPE_SUM_AGGREGATE => EvaluationEvaluatorSumAggregateType::class,
+            EvaluationEvaluator::TYPE_PRODUCT_AGGREGATE => EvaluationEvaluatorProductAggregateType::class,
             default => null
         };
 
@@ -85,6 +94,7 @@ class EvaluationService
             $message = match ($evaluator->getType()) {
                 EvaluationEvaluator::TYPE_SIMPLE => $this->runSimpleEvaluator($evaluator, $evaluationAssessment),
                 EvaluationEvaluator::TYPE_SUM_AGGREGATE => $this->runSumAggregateEvaluator($evaluator, $evaluationAssessment),
+                EvaluationEvaluator::TYPE_PRODUCT_AGGREGATE => $this->runProductAggregateEvaluator($evaluator, $evaluationAssessment),
                 default => null
             };
 
@@ -145,6 +155,26 @@ class EvaluationService
 
         return $sum >= $evaluatorSumAggregate->getExpectedValueRangeStart() && $sum <= $evaluatorSumAggregate->getExpectedValueRangeEnd()
             ? $evaluatorSumAggregate->getResultText()
+            : null;
+    }
+
+    private function runProductAggregateEvaluator(EvaluationEvaluator $evaluator, EvaluationAssessment $evaluationAssessment): ?string
+    {
+        $evaluatorProductAggregate = $evaluator->getEvaluationEvaluatorProductAggregate();
+        if ($evaluatorProductAggregate->getEvaluationQuestions()->isEmpty()) return null;
+
+        $product = 1;
+        foreach ($evaluatorProductAggregate->getEvaluationQuestions() as $evaluationQuestion) {
+            foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluationQuestion->getId()) {
+                    $product *= (integer) $assessmentAnswer->getGivenAnswer();
+                    break;
+                }
+            }
+        }
+
+        return $product >= $evaluatorProductAggregate->getExpectedValueRangeStart() && $product <= $evaluatorProductAggregate->getExpectedValueRangeEnd()
+            ? $evaluatorProductAggregate->getResultText()
             : null;
     }
 }

@@ -11,6 +11,7 @@ class EvaluationEvaluator
 {
     public const TYPE_SIMPLE = 'simple';
     public const TYPE_SUM_AGGREGATE = 'sum_aggregate';
+    public const TYPE_PRODUCT_AGGREGATE = 'product_aggregate';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,6 +34,9 @@ class EvaluationEvaluator
 
     #[ORM\OneToOne(mappedBy: 'evaluationEvaluator', cascade: ['persist', 'remove'])]
     private ?EvaluationEvaluatorSumAggregate $evaluationEvaluatorSumAggregate = null;
+
+    #[ORM\OneToOne(mappedBy: 'evaluationEvaluator', cascade: ['persist', 'remove'])]
+    private ?EvaluationEvaluatorProductAggregate $evaluationEvaluatorProductAggregate = null;
 
     public static function getSupportedEvaluationEvaluatorTypes(): array
     {
@@ -110,6 +114,23 @@ class EvaluationEvaluator
         }
 
         $this->evaluationEvaluatorSumAggregate = $evaluationEvaluatorSumAggregate;
+
+        return $this;
+    }
+
+    public function getEvaluationEvaluatorProductAggregate(): ?EvaluationEvaluatorProductAggregate
+    {
+        return $this->evaluationEvaluatorProductAggregate;
+    }
+
+    public function setEvaluationEvaluatorProductAggregate(EvaluationEvaluatorProductAggregate $evaluationEvaluatorProductAggregate): self
+    {
+        // set the owning side of the relation if necessary
+        if ($evaluationEvaluatorProductAggregate->getEvaluationEvaluator() !== $this) {
+            $evaluationEvaluatorProductAggregate->setEvaluationEvaluator($this);
+        }
+
+        $this->evaluationEvaluatorProductAggregate = $evaluationEvaluatorProductAggregate;
 
         return $this;
     }
