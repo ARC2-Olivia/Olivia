@@ -24,7 +24,6 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity
     private ?EvaluationEvaluator $evaluationEvaluator = null;
 
     #[ORM\ManyToMany(targetEntity: EvaluationQuestion::class)]
-    #[Assert\NotBlank(message: 'error.evaluationEvaluatorSumAggregate.evaluationQuestions')]
     private Collection $evaluationQuestions;
 
     #[ORM\Column(nullable: true)]

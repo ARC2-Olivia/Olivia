@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorProductAggregateRepository::class)]
 class EvaluationEvaluatorProductAggregate
@@ -23,18 +25,28 @@ class EvaluationEvaluatorProductAggregate
     #[ORM\ManyToMany(targetEntity: EvaluationQuestion::class)]
     private Collection $evaluationQuestions;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $expectedValueRangeStart = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $expectedValueRangeEnd = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $resultText = null;
 
     public function __construct()
     {
         $this->evaluationQuestions = new ArrayCollection();
+    }
+
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, $payload): void
+    {
+        if ($this->evaluationEvaluator !== null && $this->evaluationEvaluator->isIncluded()) {
+            $this->validateEvaluationQuestions($context);
+            $this->validateExpectedValueRanges($context);
+            $this->validateResultText($context);
+        }
     }
 
     public function getId(): ?int
@@ -83,7 +95,7 @@ class EvaluationEvaluatorProductAggregate
         return $this->expectedValueRangeStart;
     }
 
-    public function setExpectedValueRangeStart(int $expectedValueRangeStart): self
+    public function setExpectedValueRangeStart(?int $expectedValueRangeStart): self
     {
         $this->expectedValueRangeStart = $expectedValueRangeStart;
 
@@ -95,7 +107,7 @@ class EvaluationEvaluatorProductAggregate
         return $this->expectedValueRangeEnd;
     }
 
-    public function setExpectedValueRangeEnd(int $expectedValueRangeEnd): self
+    public function setExpectedValueRangeEnd(?int $expectedValueRangeEnd): self
     {
         $this->expectedValueRangeEnd = $expectedValueRangeEnd;
 
@@ -107,10 +119,36 @@ class EvaluationEvaluatorProductAggregate
         return $this->resultText;
     }
 
-    public function setResultText(string $resultText): self
+    public function setResultText(?string $resultText): self
     {
         $this->resultText = $resultText;
 
         return $this;
+    }
+
+    private function validateEvaluationQuestions(ExecutionContextInterface $context)
+    {
+        if ($this->evaluationQuestions->isEmpty()) {
+            $context->buildViolation('error.evaluationEvaluatorProductAggregate.evaluationQuestions')->atPath('evaluationQuestions')->addViolation();
+        }
+    }
+
+    private function validateExpectedValueRanges(ExecutionContextInterface $context): void
+    {
+        $startIsNumeric = is_numeric($this->getExpectedValueRangeStart());
+        $endIsNumeric = is_numeric($this->getExpectedValueRangeEnd());
+
+        if (!$startIsNumeric) $context->buildViolation('error.evaluationEvaluatorProductAggregate.expectedValueRange.start')->atPath('expectedValueRangeStart')->addViolation();
+        if (!$endIsNumeric) $context->buildViolation('error.evaluationEvaluatorProductAggregate.expectedValueRange.end')->atPath('expectedValueRangeEnd')->addViolation();
+        if ($startIsNumeric && $endIsNumeric && $this->getExpectedValueRangeStart() > $this->getExpectedValueRangeEnd()) {
+            $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.invalid')->addViolation();
+        }
+    }
+
+    private function validateResultText(ExecutionContextInterface $context): void
+    {
+        if ($this->resultText === null && trim($this->resultText) === '' ) {
+            $context->buildViolation('error.evaluationEvaluatorProductAggregate.resultText')->atPath('resultText')->addViolation();
+        }
     }
 }
