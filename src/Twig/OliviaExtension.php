@@ -3,10 +3,12 @@
 namespace App\Twig;
 
 use App\Entity\Course;
+use App\Entity\EvaluationEvaluatorImplInterface;
 use App\Entity\LessonItemEmbeddedVideo;
 use App\Entity\User;
 use App\Service\EnrollmentService;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -19,19 +21,22 @@ class OliviaExtension extends AbstractExtension
     private ?TranslatorInterface $translator = null;
     private ?EnrollmentService $enrollmentService = null;
     private ?Security $security = null;
+    private ?ValidatorInterface $validator;
 
-    public function __construct(TranslatorInterface $translator, EnrollmentService $enrollmentService, Security $security)
+    public function __construct(TranslatorInterface $translator, EnrollmentService $enrollmentService, Security $security, ValidatorInterface $validator)
     {
         $this->translator = $translator;
         $this->enrollmentService = $enrollmentService;
         $this->security = $security;
+        $this->validator = $validator;
     }
 
     public function getFilters()
     {
         return [
             new TwigFilter('translate_workload', [$this, 'translateWorkload']),
-            new TwigFilter('youtube_embed_link', [$this, 'getYoutubeEmbedLink'])
+            new TwigFilter('youtube_embed_link', [$this, 'getYoutubeEmbedLink']),
+            new TwigFilter('is_valid_evaluator', [$this, 'isValidEvaluator'])
         ];
     }
 
@@ -101,6 +106,12 @@ class OliviaExtension extends AbstractExtension
         }
 
         return null;
+    }
+
+    public function isValidEvaluator(EvaluationEvaluatorImplInterface $evaluationEvaluatorImplementation)
+    {
+        $errors = $this->validator->validate($evaluationEvaluatorImplementation);
+        return $errors->count() === 0;
     }
 
     public function isEnrolled(Course $course,? User $user): bool

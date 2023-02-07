@@ -127,6 +127,10 @@ ul.mod--evaluation-question-answers {
     color: var(--app-color-orange);
 }
 
+.mod--evaluation-evaluator-included svg.invalid {
+    color: var(--app-color-red);
+}
+
 .evaluation-assessment-intro {
     display: flex;
     flex-direction: column;

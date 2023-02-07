@@ -149,4 +149,14 @@ class EvaluationEvaluator
 
         return $this;
     }
+
+    public function getEvaluationEvaluatorImplementation(): ?EvaluationEvaluatorImplInterface
+    {
+        return match ($this->type) {
+            self::TYPE_SIMPLE => $this->getEvaluationEvaluatorSimple(),
+            self::TYPE_SUM_AGGREGATE => $this->getEvaluationEvaluatorSumAggregate(),
+            self::TYPE_PRODUCT_AGGREGATE => $this->evaluationEvaluatorProductAggregate,
+            default => null
+        };
+    }
 }

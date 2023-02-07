@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorSumAggregateRepository::class)]
-class EvaluationEvaluatorSumAggregate extends TranslatableEntity
+class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements EvaluationEvaluatorImplInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorSimpleRepository::class)]
-class EvaluationEvaluatorSimple extends TranslatableEntity
+class EvaluationEvaluatorSimple extends TranslatableEntity implements EvaluationEvaluatorImplInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

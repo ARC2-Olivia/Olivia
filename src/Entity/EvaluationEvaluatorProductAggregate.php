@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorProductAggregateRepository::class)]
-class EvaluationEvaluatorProductAggregate
+class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
