@@ -133,3 +133,28 @@ ul.mod--evaluation-question-answers {
 .evaluation-assessment-intro p {
     text-align: center;
 }
+
+.evaluation-assessment {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.evaluation-assessment-question {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+.evaluation-assessment-question-text {
+    font-weight: 600;
+}
+
+.evaluation-assessment-question-answers {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}

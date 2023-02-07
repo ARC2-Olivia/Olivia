@@ -36,6 +36,9 @@ Encore
     .addEntry('lessons.quiz.passingPercentage', './assets/scripts/lessons.quiz.passingPercentage.js')
     .addEntry('notes.update', './assets/scripts/notes.update.js')
 
+    // Classes
+    .addEntry('EvaluationAssessment', './assets/scripts/classes/EvaluationAssessment.js')
+
     .copyFiles({
         from: './assets/images',
         to: 'images/[path][name].[ext]'
