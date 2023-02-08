@@ -24,6 +24,7 @@
     {{ encore_entry_script_tags('axios') }}
     {% if is_granted('ROLE_MODERATOR') %}
         {{ encore_entry_script_tags('sortable') }}
+        {{ encore_entry_script_tags('Reorderer') }}
         {{ encore_entry_script_tags('lessons.sort') }}
     {% endif %}
     {% if is_user() %}

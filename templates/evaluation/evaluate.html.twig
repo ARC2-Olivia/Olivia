@@ -59,6 +59,7 @@
     {% if is_granted('ROLE_MODERATOR') %}
         {{ encore_entry_script_tags('axios') }}
         {{ encore_entry_script_tags('sortable') }}
+        {{ encore_entry_script_tags('Reorderer') }}
         {{ encore_entry_script_tags('evaluation.questions.sort') }}
         {{ encore_entry_script_tags('evaluation.evaluators.sort') }}
     {% endif %}

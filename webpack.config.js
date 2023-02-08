@@ -40,6 +40,7 @@ Encore
 
     // Classes
     .addEntry('EvaluationAssessment', './assets/scripts/classes/EvaluationAssessment.js')
+    .addEntry('Reorderer', './assets/scripts/classes/Reorderer.js')
 
     .copyFiles({
         from: './assets/images',
