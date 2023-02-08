@@ -6,10 +6,12 @@ use App\Entity\EvaluationQuestion;
 use App\Entity\EvaluationQuestionAnswer;
 use App\Form\EvaluationQuestionAnswerWeightedType;
 use App\Form\EvaluationQuestionType;
+use App\Repository\EvaluationQuestionRepository;
 use App\Service\NavigationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -95,6 +97,23 @@ class EvaluationQuestionController extends BaseController
             'form' => $form->createView(),
             'navigation' => $this->navigationService->forEvaluation($evaluationQuestion->getEvaluation(), NavigationService::EVALUATION_EXTRA_NEW_ANSWER)
         ]);
+    }
+
+    #[Route("/reorder", name: "reorder", methods: ["POST"])]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function reorder(Request $request, EvaluationQuestionRepository $evaluationQuestionRepository): Response
+    {
+        $data = json_decode($request->getContent());
+        if ($data !== null && isset($data->reorders) && !empty($data->reorders)) {
+            foreach ($data->reorders as $reorder) {
+                $evaluationQuestion = $evaluationQuestionRepository->find($reorder->id);
+                $evaluationQuestion->setPosition(intval($reorder->position));
+            }
+            $this->em->flush();
+            return new JsonResponse(['status' => 'success']);
+        }
+
+        return new JsonResponse(['status' => 'fail']);
     }
 
     private function processEvaluationQuestionAnswerTranslation(EvaluationQuestionAnswer $evaluationQuestionAnswer, \Symfony\Component\Form\FormInterface $form)

@@ -38,6 +38,9 @@ class EvaluationQuestion extends TranslatableEntity
     #[ORM\Column(nullable: true)]
     private ?bool $evaluable = null;
 
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $position = null;
+
     public static function getNumericTypes(): array
     {
         return [self::TYPE_WEIGHTED, self::TYPE_NUMERICAL_INPUT];
@@ -127,6 +130,18 @@ class EvaluationQuestion extends TranslatableEntity
     public function setEvaluable(?bool $evaluable): self
     {
         $this->evaluable = $evaluable;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

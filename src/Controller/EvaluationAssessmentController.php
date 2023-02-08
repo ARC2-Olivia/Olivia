@@ -29,7 +29,8 @@ class EvaluationAssessmentController extends BaseController
         $evaluation = $evaluationAssessment->getEvaluation();
 
         $assessment = ['id' => $evaluationAssessment->getId(), 'questions' => []];
-        foreach ($evaluation->getEvaluationQuestions() as $evaluationQuestion) {
+        $evaluationQuestions = $this->em->getRepository(EvaluationQuestion::class)->findOrderedForEvaluation($evaluation);
+        foreach ($evaluationQuestions as $evaluationQuestion) {
             $question = ['id' => $evaluationQuestion->getId(), 'type' => $evaluationQuestion->getType(), 'question' => $evaluationQuestion->getQuestionText(), 'answers' => []];
             foreach ($evaluationQuestion->getEvaluationQuestionAnswers() as $evaluationQuestionAnswer) {
                 $answerText = $evaluationQuestionAnswer->getAnswerText();

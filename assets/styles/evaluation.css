@@ -79,6 +79,11 @@ ul.mod--evaluation-question-answers {
     column-gap: 8px;
 }
 
+.mod--evaluation-question.reordering,
+.mod--evaluation-evaluator.reordering {
+    opacity: 0.5;
+}
+
 .mod--evaluation-question-details,
 .mod--evaluation-evaluator-details,
 .mod--evaluation-question-answer-details {
@@ -129,6 +134,18 @@ ul.mod--evaluation-question-answers {
 
 .mod--evaluation-evaluator-included svg.invalid {
     color: var(--app-color-red);
+}
+
+.mod--evaluation-question-status {
+    display: flex;
+    column-gap: 8px;
+}
+
+.mod--evaluation-question-reorder-handle {
+    color: rgba(0, 0, 0, 0.3);
+    width: 16px;
+    margin-left: -8px;
+    cursor: pointer;
 }
 
 .evaluation-assessment-intro {

@@ -117,7 +117,7 @@ class EvaluationController extends BaseController
 
     #[Route("/evaluate/{evaluation}", name: 'evaluate')]
     #[IsGranted("ROLE_USER")]
-    public function evaluate(Evaluation $evaluation, Request $request): Response
+    public function evaluate(Evaluation $evaluation): Response
     {
         $assessmentCompleted = false;
         if ($this->isGranted('ROLE_USER')) {
@@ -125,8 +125,10 @@ class EvaluationController extends BaseController
             $assessmentCompleted = $evaluationAssessment !== null && $evaluationAssessment->isCompleted();
         }
 
+        $evaluationQuestions = $this->em->getRepository(EvaluationQuestion::class)->findOrderedForEvaluation($evaluation);
         return $this->render('evaluation/evaluate.html.twig', [
             'evaluation' => $evaluation,
+            'evaluationQuestions' => $evaluationQuestions,
             'assessmentCompleted' => $assessmentCompleted,
             'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EVALUATE)
         ]);
@@ -213,7 +215,8 @@ class EvaluationController extends BaseController
         return $this->render('evaluation/results.html.twig', [
             'evaluation' => $evaluation,
             'results' => $results,
-            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EXTRA_RESULTS)]);
+            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EXTRA_RESULTS)
+        ]);
     }
 
     private function processAutomaticEvaluationQuestionAnswerCreation(EvaluationQuestion $evaluationQuestion)
