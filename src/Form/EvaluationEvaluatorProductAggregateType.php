@@ -36,12 +36,12 @@ class EvaluationEvaluatorProductAggregateType extends AbstractType
             ->add('expectedValueRangeStart', NumberType::class, [
                 'label' => 'form.entity.evaluationEvaluator.label.expectedValueRange.start',
                 'html5' => true,
-                'attr' => ['class' => 'form-input mb-3']
+                'attr' => ['class' => 'form-input mb-3', 'step' => 0.01]
             ])
             ->add('expectedValueRangeEnd', NumberType::class, [
                 'label' => 'form.entity.evaluationEvaluator.label.expectedValueRange.end',
                 'html5' => true,
-                'attr' => ['class' => 'form-input mb-3']
+                'attr' => ['class' => 'form-input mb-3', 'step' => 0.01]
             ])
             ->add('resultText', TextareaType::class, [
                 'label' => 'form.entity.evaluationEvaluator.label.resultText',
