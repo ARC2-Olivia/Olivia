@@ -26,11 +26,11 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
     #[ORM\ManyToMany(targetEntity: EvaluationQuestion::class)]
     private Collection $evaluationQuestions;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $expectedValueRangeStart = null;
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
+    private ?string $expectedValueRangeStart = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $expectedValueRangeEnd = null;
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
+    private ?string $expectedValueRangeEnd = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable]
@@ -92,24 +92,24 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
         return $this;
     }
 
-    public function getExpectedValueRangeStart(): ?int
+    public function getExpectedValueRangeStart(): ?string
     {
         return $this->expectedValueRangeStart;
     }
 
-    public function setExpectedValueRangeStart(?int $expectedValueRangeStart): self
+    public function setExpectedValueRangeStart(?string $expectedValueRangeStart): self
     {
         $this->expectedValueRangeStart = $expectedValueRangeStart;
 
         return $this;
     }
 
-    public function getExpectedValueRangeEnd(): ?int
+    public function getExpectedValueRangeEnd(): ?string
     {
         return $this->expectedValueRangeEnd;
     }
 
-    public function setExpectedValueRangeEnd(?int $expectedValueRangeEnd): self
+    public function setExpectedValueRangeEnd(?string $expectedValueRangeEnd): self
     {
         $this->expectedValueRangeEnd = $expectedValueRangeEnd;
 
