@@ -78,7 +78,7 @@ class EvaluationAssessment {
     #createNumericalInputAnswer(questionData) {
         const answer = this.#parser.parseFromString(`
             <label class="evaluation-assessment-question-answer">
-                <input type="number" class="form-input" name="evaluation_assessment[${questionData.id}]"/>
+                <input type="number" step="0.01" class="form-input" name="evaluation_assessment[${questionData.id}]"/>
             </label>
         `, "text/html")
         return answer.body.firstChild;

@@ -16,12 +16,12 @@ class EvaluationQuestionAnswerWeightedType extends AbstractType
         $builder
             ->add('answerText', TextareaType::class, [
                 'label' => 'form.entity.evaluationQuestionAnswer.label.weighted.answerText',
-                'attr' => ['class' => 'form-textarea mb-3']
+                'attr' => ['class' => 'form-textarea mb-3', 'step' => 0.01]
             ])
             ->add('answerValue', NumberType::class, [
                 'label' => 'form.entity.evaluationQuestionAnswer.label.weighted.answerValue',
                 'html5' => true,
-                'attr' => ['class' => 'form-input mb-3']
+                'attr' => ['class' => 'form-input mb-3', 'step' => 0.01]
             ])
         ;
 
