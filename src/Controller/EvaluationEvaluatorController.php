@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\EvaluationEvaluator;
 use App\Form\EvaluationEvaluatorType;
+use App\Repository\EvaluationEvaluatorRepository;
 use App\Service\EvaluationService;
 use App\Service\NavigationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -68,5 +70,22 @@ class EvaluationEvaluatorController extends BaseController
             'implForm' => $implForm->createView(),
             'navigation' => $navigationService->forEvaluation($evaluationEvaluator->getEvaluation(), NavigationService::EVALUATION_EXTRA_EDIT_EVALUATOR)
         ]);
+    }
+
+    #[Route("/reorder", name: "reorder", methods: ["POST"])]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function reorder(Request $request, EvaluationEvaluatorRepository $evaluationEvaluatorRepository): Response
+    {
+        $data = json_decode($request->getContent());
+        if ($data !== null && isset($data->reorders) && !empty($data->reorders)) {
+            foreach ($data->reorders as $reorder) {
+                $evaluationEvaluator = $evaluationEvaluatorRepository->find($reorder->id);
+                $evaluationEvaluator->setPosition($reorder->position);
+            }
+            $this->em->flush();
+            return new JsonResponse(['status' => 'success']);
+        }
+
+        return new JsonResponse(['status' => 'fail']);
     }
 }

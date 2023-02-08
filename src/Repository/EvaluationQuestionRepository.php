@@ -46,6 +46,6 @@ class EvaluationQuestionRepository extends ServiceEntityRepository
             ->where('eq.evaluation = :evaluation')
             ->orderBy('eq.position', 'ASC')
             ->setParameter('evaluation', $evaluation)
-            ->getQuery()->getArrayResult();
+            ->getQuery()->getResult();
     }
 }

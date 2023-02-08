@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EvaluationEvaluatorRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -40,6 +41,9 @@ class EvaluationEvaluator
 
     #[ORM\OneToOne(mappedBy: 'evaluationEvaluator', cascade: ['persist', 'remove'])]
     private ?EvaluationEvaluatorProductAggregate $evaluationEvaluatorProductAggregate = null;
+
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $position = null;
 
     public static function getSupportedEvaluationEvaluatorTypes(): array
     {
@@ -158,5 +162,17 @@ class EvaluationEvaluator
             self::TYPE_PRODUCT_AGGREGATE => $this->evaluationEvaluatorProductAggregate,
             default => null
         };
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
     }
 }

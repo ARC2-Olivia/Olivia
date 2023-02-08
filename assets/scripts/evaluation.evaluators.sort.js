@@ -1,7 +1,7 @@
 window.addEventListener("load", () => {
 
-    new Sortable(document.getElementById("evaluation_questions"), {
-        handle: ".mod--evaluation-question-reorder-handle",
+    new Sortable(document.getElementById("evaluation_evaluators"), {
+        handle: ".mod--evaluation-evaluator-reorder-handle",
         animation: 100,
         ghostClass: "reordering",
         onEnd: (event) => {

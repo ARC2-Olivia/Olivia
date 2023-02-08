@@ -35,6 +35,8 @@ Encore
     .addEntry('lessons.completion.inner', './assets/scripts/lessons.completion.inner.js')
     .addEntry('lessons.quiz.passingPercentage', './assets/scripts/lessons.quiz.passingPercentage.js')
     .addEntry('notes.update', './assets/scripts/notes.update.js')
+    .addEntry('evaluation.questions.sort', './assets/scripts/evaluation.questions.sort.js')
+    .addEntry('evaluation.evaluators.sort', './assets/scripts/evaluation.evaluators.sort.js')
 
     // Classes
     .addEntry('EvaluationAssessment', './assets/scripts/classes/EvaluationAssessment.js')

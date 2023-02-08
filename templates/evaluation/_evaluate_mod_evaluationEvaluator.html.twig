@@ -1,14 +1,17 @@
 {% trans_default_domain 'app' %}
 
-<li class="mod--evaluation-evaluator">
-    <div class="mod--evaluation-evaluator-included">
-        {% if not evaluationEvaluator.evaluationEvaluatorImplementation|is_valid_evaluator %}
-            {{ mdi('text-box-remove', 'invalid') }}
-        {% elseif evaluationEvaluator.included %}
-            {{ mdi('text-box-check', 'included') }}
-        {% else %}
-            {{ mdi('text-box-minus', 'not-included') }}
-        {% endif %}
+<li class="mod--evaluation-evaluator" data-id="{{ evaluationEvaluator.id }}">
+    <div class="mod--evaluation-evaluator-status">
+        <div class="mod--evaluation-evaluator-reorder-handle">{{ mdi('drag-vertical', '', '6 0 12 24') }}</div>
+        <div class="mod--evaluation-evaluator-included">
+            {% if not evaluationEvaluator.evaluationEvaluatorImplementation|is_valid_evaluator %}
+                {{ mdi('text-box-remove', 'invalid') }}
+            {% elseif evaluationEvaluator.included %}
+                {{ mdi('text-box-check', 'included') }}
+            {% else %}
+                {{ mdi('text-box-minus', 'not-included') }}
+            {% endif %}
+        </div>
     </div>
     <div class="mod--evaluation-evaluator-details">
         <div class="mod--evaluation-evaluator-text">{{ evaluationEvaluator.name }}</div>

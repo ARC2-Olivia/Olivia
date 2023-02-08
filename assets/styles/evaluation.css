@@ -136,12 +136,14 @@ ul.mod--evaluation-question-answers {
     color: var(--app-color-red);
 }
 
-.mod--evaluation-question-status {
+.mod--evaluation-question-status,
+.mod--evaluation-evaluator-status {
     display: flex;
     column-gap: 8px;
 }
 
-.mod--evaluation-question-reorder-handle {
+.mod--evaluation-question-reorder-handle,
+.mod--evaluation-evaluator-reorder-handle {
     color: rgba(0, 0, 0, 0.3);
     width: 16px;
     margin-left: -8px;

@@ -125,10 +125,15 @@ class EvaluationController extends BaseController
             $assessmentCompleted = $evaluationAssessment !== null && $evaluationAssessment->isCompleted();
         }
 
-        $evaluationQuestions = $this->em->getRepository(EvaluationQuestion::class)->findOrderedForEvaluation($evaluation);
+        $evaluationQuestions = $evaluationEvaluators = null;
+        if ($this->isGranted('ROLE_MODERATOR')) {
+            $evaluationQuestions = $this->em->getRepository(EvaluationQuestion::class)->findOrderedForEvaluation($evaluation);
+            $evaluationEvaluators = $this->em->getRepository(EvaluationEvaluator::class)->findOrderedForEvaluation($evaluation);
+        }
         return $this->render('evaluation/evaluate.html.twig', [
             'evaluation' => $evaluation,
             'evaluationQuestions' => $evaluationQuestions,
+            'evaluationEvaluators' => $evaluationEvaluators,
             'assessmentCompleted' => $assessmentCompleted,
             'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EVALUATE)
         ]);

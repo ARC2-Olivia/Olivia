@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Evaluation;
 use App\Entity\EvaluationEvaluator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,28 +40,12 @@ class EvaluationEvaluatorRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return EvaluationEvaluator[] Returns an array of EvaluationEvaluator objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?EvaluationEvaluator
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findOrderedForEvaluation(Evaluation $evaluation)
+    {
+        return $this->createQueryBuilder('ee')
+            ->where('ee.evaluation = :evaluation')
+            ->orderBy('ee.position', 'ASC')
+            ->setParameter('evaluation', $evaluation)
+            ->getQuery()->getResult();
+    }
 }

@@ -5,7 +5,7 @@
     {% if is_granted('ROLE_MODERATOR') %}
 
         <h2 class="mb-3">{{ 'evaluation.extra.questions'|trans }}</h2>
-        {% if evaluation.evaluationQuestions is not empty %}
+        {% if evaluationQuestions is not empty %}
             <ul id="evaluation_questions" class="mod--evaluation-questions" data-path="{{ path('evaluation_question_reorder') }}">
                 {% for evaluationQuestion in evaluationQuestions %}
                     {% include 'evaluation/_evaluate_mod_evaluationQuestion.html.twig' %}
@@ -21,9 +21,9 @@
         <hr>
 
         <h2 class="mb-3">{{ 'evaluation.extra.evaluators'|trans }}</h2>
-        {% if evaluation.evaluationEvaluators is not empty %}
-            <ul class="mod--evaluation-evaluators">
-                {% for evaluationEvaluator in evaluation.evaluationEvaluators %}
+        {% if evaluationEvaluators is not empty %}
+            <ul id="evaluation_evaluators" class="mod--evaluation-evaluators" data-path="{{ path('evaluation_evaluator_reorder') }}">
+                {% for evaluationEvaluator in evaluationEvaluators %}
                     {% include 'evaluation/_evaluate_mod_evaluationEvaluator.html.twig' %}
                 {% endfor %}
             </ul>
@@ -59,45 +59,7 @@
     {% if is_granted('ROLE_MODERATOR') %}
         {{ encore_entry_script_tags('axios') }}
         {{ encore_entry_script_tags('sortable') }}
-        <script>
-            window.addEventListener("load", () => {
-
-                new Sortable(document.getElementById("evaluation_questions"), {
-                    handle: ".mod--evaluation-question-reorder-handle",
-                    animation: 100,
-                    ghostClass: "reordering",
-                    onEnd: (event) => {
-                        const parent = event.item.parentElement;
-                        if ("path" in parent.dataset) {
-                            let reorders = readReorderData(parent);
-                            sendReorderRequest(parent.dataset.path, reorders);
-                        }
-                    }
-                });
-
-                function readReorderData(parent) {
-                    const items = Array.from(parent.children);
-                    let reorders = [];
-                    for (let i = 0; i < items.length; i++) {
-                        const item = items[i];
-                        if ("id" in item.dataset) {
-                            reorders.push({id: item.dataset.id, position: i + 1});
-                        }
-                    }
-                    return reorders;
-                }
-
-                function sendReorderRequest(path, reorders) {
-                    if (reorders.length > 0) {
-                        axios({
-                            url: path,
-                            method: "post",
-                            data: {reorders: reorders}
-                        });
-                    }
-                }
-
-            });
-        </script>
+        {{ encore_entry_script_tags('evaluation.questions.sort') }}
+        {{ encore_entry_script_tags('evaluation.evaluators.sort') }}
     {% endif %}
 {% endblock %}

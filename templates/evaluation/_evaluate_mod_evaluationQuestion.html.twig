@@ -2,9 +2,7 @@
 
 <li class="mod--evaluation-question" data-id="{{ evaluationQuestion.id }}">
     <div class="mod--evaluation-question-status">
-        <div class="mod--evaluation-question-reorder-handle">
-            {{ mdi('drag-vertical', '', '6 0 12 24') }}
-        </div>
+        <div class="mod--evaluation-question-reorder-handle">{{ mdi('drag-vertical', '', '6 0 12 24') }}</div>
         <div class="mod--evaluation-question-evaluable">
             {% if evaluationQuestion.evaluable %}
                 {{ mdi('text-box-check', 'evaluable') }}
