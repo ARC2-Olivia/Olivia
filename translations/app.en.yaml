@@ -161,6 +161,7 @@ form:
                 included: Include in the result calculation
                 evaluationQuestion: Evaluation question
                 evaluationQuestions: Evaluation questions
+                evaluationEvaluators: Evaluation evaluators
                 expectedValue: Expected value
                 expectedValueRange:
                     start: Expected value (start of the range)

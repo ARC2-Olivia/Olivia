@@ -8,9 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorSimpleRepository::class)]
-class EvaluationEvaluatorSimple extends TranslatableEntity implements EvaluationEvaluatorImplInterface
+class EvaluationEvaluatorSimple extends TranslatableEntity implements EvaluationEvaluatorImplementationInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -40,6 +41,30 @@ class EvaluationEvaluatorSimple extends TranslatableEntity implements Evaluation
             $this->validateExpectedValue($context);
             $this->validateResultText($context);
         }
+    }
+
+    public function calculateResult(EvaluationAssessment $evaluationAssessment, ValidatorInterface $validator = null): bool
+    {
+        foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
+            if ($assessmentAnswer->getEvaluationQuestion()->getId() === $this->evaluationQuestion->getId()) {
+                $givenAnswer = $assessmentAnswer->getGivenAnswer();
+                $expectedAnswer = $this->getExpectedValue();
+
+                if ($this->getEvaluationQuestion()->getType() === EvaluationQuestion::TYPE_YES_NO) {
+                    $givenAnswer = (bool)$givenAnswer;
+                    $expectedAnswer = (bool)$expectedAnswer;
+                }
+
+                return $givenAnswer === $expectedAnswer;
+            }
+        }
+
+        return false;
+    }
+
+    public function checkConformity(EvaluationAssessment $evaluationAssessment, ValidatorInterface $validator = null): bool
+    {
+        return $this->calculateResult($evaluationAssessment, $validator);
     }
 
     public function getId(): ?int

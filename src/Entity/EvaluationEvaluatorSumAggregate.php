@@ -10,9 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorSumAggregateRepository::class)]
-class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements EvaluationEvaluatorImplInterface
+class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements EvaluationEvaluatorImplementationInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,6 +26,9 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
 
     #[ORM\ManyToMany(targetEntity: EvaluationQuestion::class)]
     private Collection $evaluationQuestions;
+
+    #[ORM\ManyToMany(targetEntity: EvaluationEvaluator::class)]
+    private Collection $evaluationEvaluators;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?string $expectedValueRangeStart = null;
@@ -39,6 +43,7 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
     public function __construct()
     {
         $this->evaluationQuestions = new ArrayCollection();
+        $this->evaluationEvaluators = new ArrayCollection();
     }
 
     #[Assert\Callback]
@@ -49,6 +54,32 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
             $this->validateExpectedValueRanges($context);
             $this->validateResultText($context);
         }
+    }
+
+    public function calculateResult(EvaluationAssessment $evaluationAssessment, ValidatorInterface $validator = null): int
+    {
+        $sum = 0;
+        foreach ($this->getEvaluationQuestions() as $evaluationQuestion) {
+            foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluationQuestion->getId()) {
+                    $sum += $assessmentAnswer->getGivenAnswer();
+                    break;
+                }
+            }
+        }
+        foreach ($this->getEvaluationEvaluators() as $evaluationEvaluator) {
+            $evaluationEvaluatorImplementation = $evaluationEvaluator->getEvaluationEvaluatorImplementation();
+            if ($validator !== null && $validator->validate($evaluationEvaluatorImplementation)->count() === 0) {
+                $sum += $evaluationEvaluatorImplementation->calculateResult($evaluationAssessment);
+            }
+        }
+        return $sum;
+    }
+
+    public function checkConformity(EvaluationAssessment $evaluationAssessment, ValidatorInterface $validator = null): bool
+    {
+        $result = $this->calculateResult($evaluationAssessment, $validator);
+        return $result >= $this->expectedValueRangeStart && $result <= $this->expectedValueRangeEnd;
     }
 
     public function getId(): ?int
@@ -88,6 +119,30 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
     public function removeEvaluationQuestion(EvaluationQuestion $evaluationQuestion): self
     {
         $this->evaluationQuestions->removeElement($evaluationQuestion);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EvaluationEvaluator>
+     */
+    public function getEvaluationEvaluators(): Collection
+    {
+        return $this->evaluationEvaluators;
+    }
+
+    public function addEvaluationEvaluator(EvaluationEvaluator $evaluationEvaluator): self
+    {
+        if (!$this->evaluationEvaluators->contains($evaluationEvaluator)) {
+            $this->evaluationEvaluators->add($evaluationEvaluator);
+        }
+
+        return $this;
+    }
+
+    public function removeEvaluationEvaluator(EvaluationEvaluator $evaluationEvaluator): self
+    {
+        $this->evaluationEvaluators->removeElement($evaluationEvaluator);
 
         return $this;
     }

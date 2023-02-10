@@ -111,76 +111,23 @@ class EvaluationService
     {
         $evaluatorSimple = $evaluator->getEvaluationEvaluatorSimple();
         $errors = $this->validator->validate($evaluatorSimple);
-        if ($errors->count() > 0 || $evaluatorSimple->getEvaluationQuestion() === null) return null;
-
-        $message = null;
-        foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
-            if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluatorSimple->getEvaluationQuestion()->getId()) {
-                $givenAnswer = $assessmentAnswer->getGivenAnswer();
-                $expectedAnswer = $evaluatorSimple->getExpectedValue();
-
-                switch ($evaluatorSimple->getEvaluationQuestion()->getType()) {
-                    case EvaluationQuestion::TYPE_YES_NO:
-                        $givenAnswer = (bool) $givenAnswer;
-                        $expectedAnswer = (bool) $expectedAnswer;
-                        break;
-                    case EvaluationQuestion::TYPE_WEIGHTED:
-                    case EvaluationQuestion::TYPE_NUMERICAL_INPUT:
-                        $givenAnswer = (integer) $givenAnswer;
-                        $expectedAnswer = (integer) $expectedAnswer;
-                        break;
-                    default: return null;
-                }
-
-                if ($givenAnswer === $expectedAnswer) {
-                    $message = $evaluatorSimple->getResultText();
-                }
-                break;
-            }
-        }
-
-        return $message;
+        if ($errors->count() > 0 || $evaluatorSimple->getEvaluationQuestion() === null || !$evaluatorSimple->checkConformity($evaluationAssessment)) return null;
+        return $evaluatorSimple->getResultText();
     }
 
     private function runSumAggregateEvaluator(EvaluationEvaluator $evaluator, EvaluationAssessment $evaluationAssessment): ?string
     {
         $evaluatorSumAggregate = $evaluator->getEvaluationEvaluatorSumAggregate();
         $errors = $this->validator->validate($evaluatorSumAggregate);
-        if ($errors->count() > 0 || $evaluatorSumAggregate->getEvaluationQuestions()->isEmpty()) return null;
-
-        $sum = 0;
-        foreach ($evaluatorSumAggregate->getEvaluationQuestions() as $evaluationQuestion) {
-            foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
-                if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluationQuestion->getId()) {
-                    $sum += (integer) $assessmentAnswer->getGivenAnswer();
-                    break;
-                }
-            }
-        }
-
-        return $sum >= $evaluatorSumAggregate->getExpectedValueRangeStart() && $sum <= $evaluatorSumAggregate->getExpectedValueRangeEnd()
-            ? $evaluatorSumAggregate->getResultText()
-            : null;
+        if ($errors->count() > 0 || $evaluatorSumAggregate->getEvaluationQuestions()->isEmpty() || !$evaluatorSumAggregate->checkConformity($evaluationAssessment, $this->validator)) return null;
+        return $evaluatorSumAggregate->getResultText();
     }
 
     private function runProductAggregateEvaluator(EvaluationEvaluator $evaluator, EvaluationAssessment $evaluationAssessment): ?string
     {
         $evaluatorProductAggregate = $evaluator->getEvaluationEvaluatorProductAggregate();
         $errors = $this->validator->validate($evaluatorProductAggregate);
-        if ($errors->count() > 0 || $evaluatorProductAggregate->getEvaluationQuestions()->isEmpty()) return null;
-
-        $product = 1;
-        foreach ($evaluatorProductAggregate->getEvaluationQuestions() as $evaluationQuestion) {
-            foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
-                if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluationQuestion->getId()) {
-                    $product *= (integer) $assessmentAnswer->getGivenAnswer();
-                    break;
-                }
-            }
-        }
-
-        return $product >= $evaluatorProductAggregate->getExpectedValueRangeStart() && $product <= $evaluatorProductAggregate->getExpectedValueRangeEnd()
-            ? $evaluatorProductAggregate->getResultText()
-            : null;
+        if ($errors->count() > 0 || $evaluatorProductAggregate->getEvaluationQuestions()->isEmpty() || !$evaluatorProductAggregate->checkConformity($evaluationAssessment, $this->validator)) return null;
+        return $evaluatorProductAggregate->getResultText();
     }
 }

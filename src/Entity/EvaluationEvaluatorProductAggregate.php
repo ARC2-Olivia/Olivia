@@ -9,9 +9,10 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationEvaluatorProductAggregateRepository::class)]
-class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplInterface
+class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplementationInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,6 +26,9 @@ class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplInte
     #[ORM\ManyToMany(targetEntity: EvaluationQuestion::class)]
     private Collection $evaluationQuestions;
 
+    #[ORM\ManyToMany(targetEntity: EvaluationEvaluator::class)]
+    private Collection $evaluationEvaluators;
+
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?string $expectedValueRangeStart = null;
 
@@ -37,6 +41,7 @@ class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplInte
     public function __construct()
     {
         $this->evaluationQuestions = new ArrayCollection();
+        $this->evaluationEvaluators = new ArrayCollection();
     }
 
     #[Assert\Callback]
@@ -47,6 +52,32 @@ class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplInte
             $this->validateExpectedValueRanges($context);
             $this->validateResultText($context);
         }
+    }
+
+    public function calculateResult(EvaluationAssessment $evaluationAssessment, ValidatorInterface $validator = null)
+    {
+        $product = 1;
+        foreach ($this->getEvaluationQuestions() as $evaluationQuestion) {
+            foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluationQuestion->getId()) {
+                    $product *= $assessmentAnswer->getGivenAnswer();
+                    break;
+                }
+            }
+        }
+        foreach ($this->getEvaluationEvaluators() as $evaluationEvaluator) {
+            $evaluationEvaluatorImplementation = $evaluationEvaluator->getEvaluationEvaluatorImplementation();
+            if ($validator !== null && $validator->validate($evaluationEvaluatorImplementation)->count() === 0) {
+                $product *= $evaluationEvaluatorImplementation->calculateResult($evaluationAssessment);
+            }
+        }
+        return $product;
+    }
+
+    public function checkConformity(EvaluationAssessment $evaluationAssessment, ValidatorInterface $validator = null): bool
+    {
+        $result = $this->calculateResult($evaluationAssessment, $validator);
+        return $result >= $this->expectedValueRangeStart && $result <= $this->expectedValueRangeEnd;
     }
 
     public function getId(): ?int
@@ -86,6 +117,30 @@ class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplInte
     public function removeEvaluationQuestion(EvaluationQuestion $evaluationQuestion): self
     {
         $this->evaluationQuestions->removeElement($evaluationQuestion);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EvaluationEvaluator>
+     */
+    public function getEvaluationEvaluators(): Collection
+    {
+        return $this->evaluationEvaluators;
+    }
+
+    public function addEvaluationEvaluator(EvaluationEvaluator $evaluationEvaluator): self
+    {
+        if (!$this->evaluationEvaluators->contains($evaluationEvaluator)) {
+            $this->evaluationEvaluators->add($evaluationEvaluator);
+        }
+
+        return $this;
+    }
+
+    public function removeEvaluationEvaluator(EvaluationEvaluator $evaluationEvaluator): self
+    {
+        $this->evaluationEvaluators->removeElement($evaluationEvaluator);
 
         return $this;
     }

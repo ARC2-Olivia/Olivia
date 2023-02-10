@@ -13,16 +13,19 @@
 
 {% if evaluationEvaluator.type in [constant('TYPE_SUM_AGGREGATE', evaluationEvaluator), constant('TYPE_PRODUCT_AGGREGATE', evaluationEvaluator)]  %}
     {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
-    {{ form_label(form.evaluationQuestions) }}
-    {{ form_widget(form.evaluationQuestions) }}
+        {{ form_label(form.evaluationQuestions) }}
+        {{ form_widget(form.evaluationQuestions) }}
 
-    {{ form_label(form.expectedValueRangeStart) }}
-    {{ form_widget(form.expectedValueRangeStart) }}
+        {{ form_label(form.evaluationEvaluators) }}
+        {{ form_widget(form.evaluationEvaluators) }}
 
-    {{ form_label(form.expectedValueRangeEnd) }}
-    {{ form_widget(form.expectedValueRangeEnd) }}
+        {{ form_label(form.expectedValueRangeStart) }}
+        {{ form_widget(form.expectedValueRangeStart) }}
 
-    {{ form_label(form.resultText) }}
-    {{ form_widget(form.resultText) }}
+        {{ form_label(form.expectedValueRangeEnd) }}
+        {{ form_widget(form.expectedValueRangeEnd) }}
+
+        {{ form_label(form.resultText) }}
+        {{ form_widget(form.resultText) }}
     {{ form_end(form) }}
 {% endif %}

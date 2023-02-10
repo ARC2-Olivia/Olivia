@@ -154,7 +154,7 @@ class EvaluationEvaluator
         return $this;
     }
 
-    public function getEvaluationEvaluatorImplementation(): ?EvaluationEvaluatorImplInterface
+    public function getEvaluationEvaluatorImplementation(): ?EvaluationEvaluatorImplementationInterface
     {
         return match ($this->type) {
             self::TYPE_SIMPLE => $this->getEvaluationEvaluatorSimple(),

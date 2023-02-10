@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\EvaluationEvaluator;
 use App\Entity\EvaluationEvaluatorSumAggregate;
 use App\Entity\EvaluationQuestion;
 use Doctrine\ORM\EntityRepository;
@@ -29,7 +30,15 @@ class EvaluationEvaluatorSumAggregateType extends AbstractType
                 'class' => EvaluationQuestion::class,
                 'label' => 'form.entity.evaluationEvaluator.label.evaluationQuestion',
                 'choice_label' => 'questionText',
-                'query_builder' => $this->makeQueryBuilder($builder),
+                'query_builder' => $this->makeEvaluationQuestionQueryBuilder($builder),
+                'attr' => ['class' => 'form-select multiple mb-3'],
+                'multiple' => true
+            ])
+            ->add('evaluationEvaluators', EntityType::class, [
+                'class' => EvaluationEvaluator::class,
+                'label' => 'form.entity.evaluationEvaluator.label.evaluationEvaluators',
+                'choice_label' => 'name',
+                'query_builder' => $this->makeEvaluationEvaluatorQueryBuilder($builder),
                 'attr' => ['class' => 'form-select multiple mb-3'],
                 'multiple' => true
             ])
@@ -65,7 +74,7 @@ class EvaluationEvaluatorSumAggregateType extends AbstractType
         ]);
     }
 
-    private function makeQueryBuilder(FormBuilderInterface $builder): ?\Closure
+    private function makeEvaluationQuestionQueryBuilder(FormBuilderInterface $builder): ?\Closure
     {
         $evaluationEvaluator = $builder->getData()?->getEvaluationEvaluator();
         $evaluationQuestionQueryBuilder = null;
@@ -79,5 +88,20 @@ class EvaluationEvaluatorSumAggregateType extends AbstractType
             };
         }
         return $evaluationQuestionQueryBuilder;
+    }
+
+    private function makeEvaluationEvaluatorQueryBuilder(FormBuilderInterface $builder): ?\Closure
+    {
+        $evaluationEvaluator = $builder->getData()?->getEvaluationEvaluator();
+        $evaluationEvaluatorQueryBuilder = null;
+        if ($evaluationEvaluator !== null) {
+            $evaluationEvaluatorQueryBuilder = function (EntityRepository $repository) use ($evaluationEvaluator) {
+                return $repository->createQueryBuilder('ee')
+                    ->where('ee != :evaluationEvaluator')
+                    ->andWhere('ee.evaluation = :evaluation')
+                    ->setParameters(['evaluationEvaluator' => $evaluationEvaluator, 'evaluation' => $evaluationEvaluator->getEvaluation()]);
+            };
+        }
+        return $evaluationEvaluatorQueryBuilder;
     }
 }
