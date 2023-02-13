@@ -92,6 +92,10 @@ header {
     padding: 24px;
 }
 
+.hide {
+    display: none;
+}
+
 .bg-orange { background-color: var(--app-color-orange) !important; }
 .bg-green { background-color: var(--app-color-green) !important; }
 .bg-blue { background-color: var(--app-color-blue) !important; }

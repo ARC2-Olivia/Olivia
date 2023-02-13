@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: EvaluationQuestionRepository::class)]
 class EvaluationQuestion extends TranslatableEntity
@@ -40,6 +42,32 @@ class EvaluationQuestion extends TranslatableEntity
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $position = null;
+
+    #[ORM\ManyToOne(targetEntity: self::class)]
+    private ?self $dependentEvaluationQuestion = null;
+
+    #[ORM\Column(length: 63, nullable: true)]
+    private ?string $dependentValue = null;
+
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, $payload): void
+    {
+        if ($this->dependentEvaluationQuestion !== null) {
+            switch ($this->dependentEvaluationQuestion->getType()) {
+                case EvaluationQuestion::TYPE_YES_NO:
+                    if ($this->dependentValue !== '0' && $this->dependentValue !== '1') {
+                        $context->buildViolation('error.evaluationQuestion.dependentValue.notBool')->atPath('dependentValue')->addViolation();
+                    }
+                    break;
+                case EvaluationQuestion::TYPE_WEIGHTED:
+                case EvaluationQuestion::TYPE_NUMERICAL_INPUT:
+                    if (!is_numeric($this->dependentValue)) {
+                        $context->buildViolation('error.evaluationQuestion.dependentValue.notNumeric')->atPath('dependentValue')->addViolation();
+                    }
+                    break;
+            }
+        }
+    }
 
     public static function getNumericTypes(): array
     {
@@ -142,6 +170,30 @@ class EvaluationQuestion extends TranslatableEntity
     public function setPosition(?int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getDependentEvaluationQuestion(): ?self
+    {
+        return $this->dependentEvaluationQuestion;
+    }
+
+    public function setDependentEvaluationQuestion(?self $dependentEvaluationQuestion): self
+    {
+        $this->dependentEvaluationQuestion = $dependentEvaluationQuestion;
+
+        return $this;
+    }
+
+    public function getDependentValue(): ?string
+    {
+        return $this->dependentValue;
+    }
+
+    public function setDependentValue(?string $dependentValue): self
+    {
+        $this->dependentValue = $dependentValue;
 
         return $this;
     }

@@ -145,9 +145,12 @@ form:
                 type: Question type
                 questionText: Question text
                 questionTextAlt: Question text (alternate language)
-                evaluatable: Used in evaluation
+                evaluable: Used in evaluation
+                dependentQuestion: Dependent question
+                dependentValue: Dependent question value
             placeholder:
                 questionText: Question text goes here...
+                dependentEvaluationQuestion: Nothing selected...
         evaluationQuestionAnswer:
             label:
                 weighted:

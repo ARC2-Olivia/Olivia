@@ -32,6 +32,9 @@ class EvaluationAssessmentController extends BaseController
         $evaluationQuestions = $this->em->getRepository(EvaluationQuestion::class)->findOrderedForEvaluation($evaluation);
         foreach ($evaluationQuestions as $evaluationQuestion) {
             $question = ['id' => $evaluationQuestion->getId(), 'type' => $evaluationQuestion->getType(), 'question' => $evaluationQuestion->getQuestionText(), 'answers' => []];
+            if ($evaluationQuestion->getDependentEvaluationQuestion() !== null) {
+                $question['dependency'] = ['questionId' => strval($evaluationQuestion->getDependentEvaluationQuestion()->getId()), 'answer' => $evaluationQuestion->getDependentValue()];
+            }
             foreach ($evaluationQuestion->getEvaluationQuestionAnswers() as $evaluationQuestionAnswer) {
                 $answerText = $evaluationQuestionAnswer->getAnswerText();
                 if ($question['type'] === EvaluationQuestion::TYPE_YES_NO) $answerText = $this->translator->trans($answerText, [], 'app');

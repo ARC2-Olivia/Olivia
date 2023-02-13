@@ -112,6 +112,10 @@ error:
     evaluation:
         name: Evaluation name must not be blank.
         description: Evaluation description must not be blank.
+    evaluationQuestion:
+        dependentValue:
+            notBool: For the chosen dependent question, the dependent value must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
+            notNumeric: For the chosen dependent question, the dependent value needs to be a number.
     evaluationQuestionAnswer:
         answerText: Answer text must not be empty.
         answerValue:
@@ -124,7 +128,7 @@ error:
         evaluationQuestion: An evaluation question has to be chosen for the evaluator.
         expectedValue:
             blank: An expected value has to be given to the evaluator.
-            notBool: For the chosen evaluation question, the expected answer should be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
+            notBool: For the chosen evaluation question, the expected answer must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
             notNumeric: For the chosen evaluation question, the expected answer needs to be a number.
         resultText: A resulting text that the evaluator will generate upon successful evaluation needs to be assigned.
     evaluationEvaluatorSumAggregate:

@@ -12,6 +12,12 @@ class EvaluationAssessment {
         if (form === null || form === undefined || form.tagName !== "FORM") {
             throw new Error("Query selector does not return a form element.")
         }
+        form.addEventListener("answerchange", function(event) {
+            this.querySelectorAll("[data-question]").forEach((question) => {
+                if (question.onAnswerChange) question.onAnswerChange(event.detail);
+            });
+            event.stopPropagation();
+        });
         this.#form = form;
     }
 
@@ -23,10 +29,13 @@ class EvaluationAssessment {
     }
 
     #createQuestion(questionData) {
+        const context = this;
+
         const question = document.createElement("DIV");
         question.classList.add('evaluation-assessment-question');
         question.dataset.id = questionData.id;
         question.dataset.type = questionData.type;
+        question.dataset.question = "";
 
         const questionText = document.createElement("DIV");
         questionText.classList.add('evaluation-assessment-question-text');
@@ -43,7 +52,21 @@ class EvaluationAssessment {
             default: finalize = false;
         }
 
-        if (finalize) question.append(questionText, questionAnswers);
+        if (finalize) {
+            if (questionData.dependency) {
+                const dependency = questionData.dependency;
+                context.#enableQuestion(question);
+                question.onAnswerChange = function({ questionId, answer }) {
+                    if (dependency.questionId == questionId) {
+                        if (dependency.answer == answer)
+                            context.#disableQuestion(this);
+                        else
+                            context.#enableQuestion(this);
+                    }
+                };
+            }
+            question.append(questionText, questionAnswers);
+        }
         return question;
     }
 
@@ -55,7 +78,14 @@ class EvaluationAssessment {
                     <input type="radio" value="${answerData.value}" name="evaluation_assessment[${questionData.id}]" required/>
                     <span>${answerData.text}</span>
                 </label>
-            `, "text/html")
+            `, "text/html");
+
+            const input = answer.body.firstChild.querySelector("input");
+            input.addEventListener("click", function(event) {
+                const eventAnswerChange = new CustomEvent("answerchange", { bubbles: true, detail: { questionId: questionData.id, answer: event.target.value } });
+                event.target.dispatchEvent(eventAnswerChange);
+            });
+
             answers.push(answer.body.firstChild);
         });
         return answers;
@@ -69,7 +99,14 @@ class EvaluationAssessment {
                     <input type="radio" value="${answerData.value}" name="evaluation_assessment[${questionData.id}]" required/>
                     <span>${answerData.text}</span>
                 </label>
-            `, "text/html")
+            `, "text/html");
+
+            const input = answer.body.firstChild.querySelector("input");
+            input.addEventListener("click", function(event) {
+                const eventAnswerChange = new CustomEvent("answerchange", { bubbles: true, detail: { questionId: questionData.id, answer: event.target.value } });
+                event.target.dispatchEvent(eventAnswerChange);
+            });
+
             answers.push(answer.body.firstChild);
         });
         return answers;
@@ -78,10 +115,33 @@ class EvaluationAssessment {
     #createNumericalInputAnswer(questionData) {
         const answer = this.#parser.parseFromString(`
             <label class="evaluation-assessment-question-answer">
-                <input type="number" step="0.01" class="form-input" name="evaluation_assessment[${questionData.id}]"/>
+                <input type="number" step="0.01" class="form-input" name="evaluation_assessment[${questionData.id}]" required/>
             </label>
-        `, "text/html")
+        `, "text/html");
+
+        const input = answer.body.firstChild.querySelector("input");
+        input.addEventListener("input", function(event) {
+            const eventAnswerChange = new CustomEvent("answerchange", { bubbles: true, detail: { questionId: questionData.id, answer: element.target.value } });
+            event.target.dispatchEvent(eventAnswerChange);
+        });
+
         return answer.body.firstChild;
+    }
+
+    #enableQuestion(questionElement) {
+        if (!questionElement.classList.contains("hide")) questionElement.classList.add("hide");
+        questionElement.querySelectorAll("input").forEach((input) => {
+            input.required = false;
+            input.disabled = true;
+        });
+    }
+
+    #disableQuestion(questionElement) {
+        if (questionElement.classList.contains("hide")) questionElement.classList.remove("hide");
+        questionElement.querySelectorAll("input").forEach((input) => {
+            input.required = true;
+            input.disabled = false;
+        });
     }
 }
 

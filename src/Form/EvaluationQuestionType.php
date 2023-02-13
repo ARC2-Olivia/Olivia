@@ -3,9 +3,12 @@
 namespace App\Form;
 
 use App\Entity\EvaluationQuestion;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -40,9 +43,21 @@ class EvaluationQuestionType extends AbstractType
         ];
         $builder
             ->add('evaluable', ChoiceType::class, [
-                'label' => 'form.entity.evaluationQuestion.label.evaluatable',
+                'label' => 'form.entity.evaluationQuestion.label.evaluable',
                 'choices' => $evaluableChoices,
                 'attr' => ['class' => 'form-select mb-3']
+            ])
+            ->add('dependentEvaluationQuestion', EntityType::class, [
+                'class' => EvaluationQuestion::class,
+                'label' => 'form.entity.evaluationQuestion.label.dependentQuestion',
+                'query_builder' => $this->makeDependentQuestionQueryBuilder($builder),
+                'choice_label' => 'questionText',
+                'placeholder' => 'form.entity.evaluationQuestion.placeholder.dependentEvaluationQuestion',
+                'attr' => ['class' => 'form-select mb-3']
+            ])
+            ->add('dependentValue', TextType::class, [
+                'label' => 'form.entity.evaluationQuestion.label.dependentValue',
+                'attr' => ['class' => 'form-input mb-3']
             ])
             ->add('questionText', TextareaType::class, [
                 'label' => 'form.entity.evaluationQuestion.label.questionText',
@@ -77,5 +92,22 @@ class EvaluationQuestionType extends AbstractType
                 'novalidate' => 'novalidate'
             ]
         ]);
+    }
+
+    private function makeDependentQuestionQueryBuilder(FormBuilderInterface $builder): \Closure|null
+    {
+        /** @var EvaluationQuestion $evaluationQuestion */
+        $evaluationQuestion = $builder->getData();
+        $queryBuilder = null;
+        if ($evaluationQuestion !== null) {
+            $queryBuilder = function (EntityRepository $repository) use ($evaluationQuestion) {
+                return $repository->createQueryBuilder('eq')
+                    ->where('eq != :evaluationQuestion')
+                    ->andWhere('eq.evaluation = :evaluation')
+                    ->setParameters(['evaluationQuestion' => $evaluationQuestion, 'evaluation' => $evaluationQuestion->getEvaluation()])
+                ;
+            };
+        }
+        return $queryBuilder;
     }
 }
