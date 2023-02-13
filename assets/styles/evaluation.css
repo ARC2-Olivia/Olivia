@@ -185,3 +185,22 @@ ul.mod--evaluation-question-answers {
     flex-direction: column;
     row-gap: 8px;
 }
+
+.evaluation-assessment-question-answer {
+    display: flex;
+    column-gap: 8px;
+    align-items: start;
+}
+
+.evaluation-assessment-question-answer :is(input, span) {
+    flex-basis: 0;
+}
+
+.evaluation-assessment-question-answer input[type="radio"] {
+    margin-top: 4px;
+}
+
+.evaluation-assessment-question-answer span {
+    flex-grow: 1;
+    white-space: pre-line;
+}

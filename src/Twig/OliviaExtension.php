@@ -108,10 +108,13 @@ class OliviaExtension extends AbstractExtension
         return null;
     }
 
-    public function isValidEvaluator(EvaluationEvaluatorImplementationInterface $evaluationEvaluatorImplementation)
+    public function isValidEvaluator(?EvaluationEvaluatorImplementationInterface $evaluationEvaluatorImplementation)
     {
-        $errors = $this->validator->validate($evaluationEvaluatorImplementation);
-        return $errors->count() === 0;
+        if ($evaluationEvaluatorImplementation !== null) {
+            $errors = $this->validator->validate($evaluationEvaluatorImplementation);
+            return $errors->count() === 0;
+        }
+        return false;
     }
 
     public function isEnrolled(Course $course,? User $user): bool

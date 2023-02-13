@@ -50,7 +50,7 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
     public function validate(ExecutionContextInterface $context, $payload): void
     {
         if ($this->evaluationEvaluator !== null && $this->evaluationEvaluator->isIncluded()) {
-            $this->validateEvaluationQuestions($context);
+            $this->validateEvaluationQuestionsAndEvaluators($context);
             $this->validateExpectedValueRanges($context);
             $this->validateResultText($context);
         }
@@ -70,7 +70,7 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
         foreach ($this->getEvaluationEvaluators() as $evaluationEvaluator) {
             $evaluationEvaluatorImplementation = $evaluationEvaluator->getEvaluationEvaluatorImplementation();
             if ($validator !== null && $validator->validate($evaluationEvaluatorImplementation)->count() === 0) {
-                $sum += $evaluationEvaluatorImplementation->calculateResult($evaluationAssessment);
+                $sum += $evaluationEvaluatorImplementation->calculateResult($evaluationAssessment, $validator);
             }
         }
         return $sum;
@@ -183,10 +183,10 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
         return $this;
     }
 
-    private function validateEvaluationQuestions(ExecutionContextInterface $context)
+    private function validateEvaluationQuestionsAndEvaluators(ExecutionContextInterface $context)
     {
-        if ($this->evaluationQuestions->isEmpty()) {
-            $context->buildViolation('error.evaluationEvaluatorSumAggregate.evaluationQuestions')->atPath('evaluationQuestions')->addViolation();
+        if ($this->evaluationQuestions->isEmpty() && $this->evaluationEvaluators->isEmpty()) {
+            $context->buildViolation('error.evaluationEvaluatorSumAggregate.evaluationQuestionsAndEvaluators')->addViolation();
         }
     }
 

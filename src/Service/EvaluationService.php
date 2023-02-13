@@ -119,7 +119,7 @@ class EvaluationService
     {
         $evaluatorSumAggregate = $evaluator->getEvaluationEvaluatorSumAggregate();
         $errors = $this->validator->validate($evaluatorSumAggregate);
-        if ($errors->count() > 0 || $evaluatorSumAggregate->getEvaluationQuestions()->isEmpty() || !$evaluatorSumAggregate->checkConformity($evaluationAssessment, $this->validator)) return null;
+        if ($errors->count() > 0 || !$evaluatorSumAggregate->checkConformity($evaluationAssessment, $this->validator)) return null;
         return $evaluatorSumAggregate->getResultText();
     }
 
@@ -127,7 +127,7 @@ class EvaluationService
     {
         $evaluatorProductAggregate = $evaluator->getEvaluationEvaluatorProductAggregate();
         $errors = $this->validator->validate($evaluatorProductAggregate);
-        if ($errors->count() > 0 || $evaluatorProductAggregate->getEvaluationQuestions()->isEmpty() || !$evaluatorProductAggregate->checkConformity($evaluationAssessment, $this->validator)) return null;
+        if ($errors->count() > 0 || !$evaluatorProductAggregate->checkConformity($evaluationAssessment, $this->validator)) return null;
         return $evaluatorProductAggregate->getResultText();
     }
 }

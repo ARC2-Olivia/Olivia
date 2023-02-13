@@ -98,14 +98,21 @@ class EvaluationQuestionType extends AbstractType
     {
         /** @var EvaluationQuestion $evaluationQuestion */
         $evaluationQuestion = $builder->getData();
+        $evaluation = $evaluationQuestion?->getEvaluation();
+
         $queryBuilder = null;
-        if ($evaluationQuestion !== null) {
+        if ($evaluationQuestion !== null && $evaluation !== null) {
             $queryBuilder = function (EntityRepository $repository) use ($evaluationQuestion) {
-                return $repository->createQueryBuilder('eq')
-                    ->where('eq != :evaluationQuestion')
-                    ->andWhere('eq.evaluation = :evaluation')
-                    ->setParameters(['evaluationQuestion' => $evaluationQuestion, 'evaluation' => $evaluationQuestion->getEvaluation()])
+                $qb = $repository->createQueryBuilder('eq')
+                    ->where('eq.evaluation = :evaluation')
+                    ->setParameter('evaluation', $evaluationQuestion->getEvaluation())
                 ;
+
+                if ($evaluationQuestion->getId() !== null) {
+                    $qb->andWhere('eq != :evaluationQuestion')->setParameter('evaluationQuestion', $evaluationQuestion);
+                }
+
+                return $qb;
             };
         }
         return $queryBuilder;

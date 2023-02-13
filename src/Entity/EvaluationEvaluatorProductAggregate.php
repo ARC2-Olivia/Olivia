@@ -48,7 +48,7 @@ class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplemen
     public function validate(ExecutionContextInterface $context, $payload): void
     {
         if ($this->evaluationEvaluator !== null && $this->evaluationEvaluator->isIncluded()) {
-            $this->validateEvaluationQuestions($context);
+            $this->validateEvaluationQuestionsAndEvaluators($context);
             $this->validateExpectedValueRanges($context);
             $this->validateResultText($context);
         }
@@ -68,7 +68,7 @@ class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplemen
         foreach ($this->getEvaluationEvaluators() as $evaluationEvaluator) {
             $evaluationEvaluatorImplementation = $evaluationEvaluator->getEvaluationEvaluatorImplementation();
             if ($validator !== null && $validator->validate($evaluationEvaluatorImplementation)->count() === 0) {
-                $product *= $evaluationEvaluatorImplementation->calculateResult($evaluationAssessment);
+                $product *= $evaluationEvaluatorImplementation->calculateResult($evaluationAssessment, $validator);
             }
         }
         return $product;
@@ -181,10 +181,10 @@ class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplemen
         return $this;
     }
 
-    private function validateEvaluationQuestions(ExecutionContextInterface $context)
+    private function validateEvaluationQuestionsAndEvaluators(ExecutionContextInterface $context)
     {
-        if ($this->evaluationQuestions->isEmpty()) {
-            $context->buildViolation('error.evaluationEvaluatorProductAggregate.evaluationQuestions')->atPath('evaluationQuestions')->addViolation();
+        if ($this->evaluationQuestions->isEmpty() && $this->evaluationEvaluators->isEmpty()) {
+            $context->buildViolation('error.evaluationEvaluatorProductAggregate.evaluationQuestionsAndEvaluators')->addViolation();
         }
     }
 
