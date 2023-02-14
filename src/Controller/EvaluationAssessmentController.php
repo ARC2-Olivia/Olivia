@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\EvaluationAssessment;
 use App\Entity\EvaluationAssessmentAnswer;
 use App\Entity\EvaluationQuestion;
+use App\Entity\EvaluationQuestionAnswer;
 use App\Service\NavigationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,12 +71,7 @@ class EvaluationAssessmentController extends BaseController
             foreach ($assessmentData as $questionId => $givenAnswer) {
                 $evaluationQuestion = $evaluationQuestionRepository->find($questionId);
                 if ($evaluationQuestion !== null) {
-                    $evaluationAssessmentAnswer = (new EvaluationAssessmentAnswer())
-                        ->setEvaluationAssessment($evaluationAssessment)
-                        ->setEvaluationQuestion($evaluationQuestion)
-                        ->setGivenAnswer($givenAnswer)
-                    ;
-                    $this->em->persist($evaluationAssessmentAnswer);
+                    $this->storeAnswer($evaluationAssessment, $evaluationQuestion, $givenAnswer);
                 } else {
                     $noQuestionError = true;
                 }
@@ -92,5 +88,24 @@ class EvaluationAssessmentController extends BaseController
         }
 
         return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluationAssessment->getEvaluation()->getId()]);
+    }
+
+    private function storeAnswer(EvaluationAssessment $evaluationAssessment, EvaluationQuestion $evaluationQuestion, string $givenAnswer): void
+    {
+        if ($evaluationQuestion->getType() === EvaluationQuestion::TYPE_YES_NO || $evaluationQuestion->getType() === EvaluationQuestion::TYPE_WEIGHTED) {
+            $evaluationQuestionAnswer = $this->em->getRepository(EvaluationQuestionAnswer::class)->findOneBy(['evaluationQuestion' => $evaluationQuestion, 'id' => $givenAnswer]);
+            $evaluationAssessmentAnswer = (new EvaluationAssessmentAnswer())
+                ->setEvaluationAssessment($evaluationAssessment)
+                ->setEvaluationQuestion($evaluationQuestion)
+                ->setEvaluationQuestionAnswer($evaluationQuestionAnswer)
+                ->setAnswerValue($evaluationQuestionAnswer->getAnswerValue());
+            $this->em->persist($evaluationAssessmentAnswer);
+        } else {
+            $evaluationAssessmentAnswer = (new EvaluationAssessmentAnswer())
+                ->setEvaluationAssessment($evaluationAssessment)
+                ->setEvaluationQuestion($evaluationQuestion)
+                ->setAnswerValue($givenAnswer);
+            $this->em->persist($evaluationAssessmentAnswer);
+        }
     }
 }

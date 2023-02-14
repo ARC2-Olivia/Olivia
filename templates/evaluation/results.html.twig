@@ -6,9 +6,26 @@
         {% for result in results %}
             <p>{{ result|nl2br }}</p>
         {% else %}
-            <p>{{ 'evaluation.extra.noResults'|trans }}</p>
+            <p>{{ 'evaluation.extra.results.empty'|trans }}</p>
         {% endfor %}
     </div>
+    <hr>
+    <div class="evaluation-assessment-data">
+        {% for assessmentAnswer in evaluationAssessment.evaluationAssessmentAnswers %}
+            <div class="evaluation-assessment-datum">
+                <div class="evaluation-assessment-datum-question">{{ assessmentAnswer.evaluationQuestion.questionText }}</div>
+                <div class="evaluation-assessment-datum-answer">
+                    {% if assessmentAnswer.evaluationQuestionAnswer is not null %}
+                        {{ assessmentAnswer.evaluationQuestionAnswer.answerText|trans|nl2br }}
+                    {% else %}
+                        {{ assessmentAnswer.answerValue }}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <p class="text-center">{{ 'evaluation.extra.results.final'|trans }}</p>
 {% endblock %}
 
 {% block stylesheets %}
@@ -18,6 +35,23 @@
             display: flex;
             flex-direction: column;
             row-gap: 24px;
+        }
+
+        .evaluation-assessment-data {
+            display: flex;
+            flex-direction: column;
+            row-gap: 16px;
+        }
+
+        .evaluation-assessment-datum {
+            background-color: rgba(0, 0, 0, 0.075);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .evaluation-assessment-datum-question {
+            font-weight: 600;
+            margin-bottom: 8px;
         }
     </style>
 {% endblock %}

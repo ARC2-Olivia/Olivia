@@ -62,7 +62,7 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
         foreach ($this->getEvaluationQuestions() as $evaluationQuestion) {
             foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
                 if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluationQuestion->getId()) {
-                    $sum += $assessmentAnswer->getGivenAnswer();
+                    $sum += $assessmentAnswer->getAnswerValue();
                     break;
                 }
             }

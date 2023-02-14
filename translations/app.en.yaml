@@ -268,7 +268,9 @@ evaluation:
         evaluator: Evaluator
         evaluators: Evaluators
         answer: Answer
-        noResults: You passed the evaluation.
+        results:
+            empty: Nothing to show.
+            final: This assessment is intended for educational and information purposes only.
 
 evaluationQuestion:
     type:

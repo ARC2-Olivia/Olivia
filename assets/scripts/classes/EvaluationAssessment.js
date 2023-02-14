@@ -75,14 +75,14 @@ class EvaluationAssessment {
         questionData.answers.forEach((answerData) => {
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="radio" value="${answerData.value}" name="evaluation_assessment[${questionData.id}]" required/>
+                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}" required/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
 
             const input = answer.body.firstChild.querySelector("input");
             input.addEventListener("click", function(event) {
-                const eventAnswerChange = new CustomEvent("answerchange", { bubbles: true, detail: { questionId: questionData.id, answer: event.target.value } });
+                const eventAnswerChange = new CustomEvent("answerchange", { bubbles: true, detail: { questionId: questionData.id, answer: event.target.dataset.value } });
                 event.target.dispatchEvent(eventAnswerChange);
             });
 
@@ -96,14 +96,14 @@ class EvaluationAssessment {
         questionData.answers.forEach((answerData) => {
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="radio" value="${answerData.value}" name="evaluation_assessment[${questionData.id}]" required/>
+                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}" required/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
 
             const input = answer.body.firstChild.querySelector("input");
             input.addEventListener("click", function(event) {
-                const eventAnswerChange = new CustomEvent("answerchange", { bubbles: true, detail: { questionId: questionData.id, answer: event.target.value } });
+                const eventAnswerChange = new CustomEvent("answerchange", { bubbles: true, detail: { questionId: questionData.id, answer: event.target.dataset.value } });
                 event.target.dispatchEvent(eventAnswerChange);
             });
 

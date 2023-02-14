@@ -60,7 +60,7 @@ class EvaluationEvaluatorProductAggregate implements EvaluationEvaluatorImplemen
         foreach ($this->getEvaluationQuestions() as $evaluationQuestion) {
             foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
                 if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluationQuestion->getId()) {
-                    $product *= $assessmentAnswer->getGivenAnswer();
+                    $product *= $assessmentAnswer->getAnswerValue();
                     break;
                 }
             }

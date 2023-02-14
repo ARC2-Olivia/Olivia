@@ -21,8 +21,11 @@ class EvaluationAssessmentAnswer
     #[ORM\JoinColumn(nullable: false)]
     private ?EvaluationQuestion $evaluationQuestion = null;
 
+    #[ORM\ManyToOne]
+    private ?EvaluationQuestionAnswer $evaluationQuestionAnswer = null;
+
     #[ORM\Column(length: 63)]
-    private ?string $givenAnswer = null;
+    private ?string $answerValue = null;
 
     public function getId(): ?int
     {
@@ -53,14 +56,26 @@ class EvaluationAssessmentAnswer
         return $this;
     }
 
-    public function getGivenAnswer(): ?string
+    public function getEvaluationQuestionAnswer(): ?EvaluationQuestionAnswer
     {
-        return $this->givenAnswer;
+        return $this->evaluationQuestionAnswer;
     }
 
-    public function setGivenAnswer(string $givenAnswer): self
+    public function setEvaluationQuestionAnswer(?EvaluationQuestionAnswer $evaluationQuestionAnswer): self
     {
-        $this->givenAnswer = $givenAnswer;
+        $this->evaluationQuestionAnswer = $evaluationQuestionAnswer;
+
+        return $this;
+    }
+
+    public function getAnswerValue(): ?string
+    {
+        return $this->answerValue;
+    }
+
+    public function setAnswerValue(string $answerValue): self
+    {
+        $this->answerValue = $answerValue;
 
         return $this;
     }

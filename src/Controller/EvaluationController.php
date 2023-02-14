@@ -219,6 +219,7 @@ class EvaluationController extends BaseController
         $results = $evaluationService->runEvaluators($evaluationAssessment);
         return $this->render('evaluation/results.html.twig', [
             'evaluation' => $evaluation,
+            'evaluationAssessment' => $evaluationAssessment,
             'results' => $results,
             'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EXTRA_RESULTS)
         ]);

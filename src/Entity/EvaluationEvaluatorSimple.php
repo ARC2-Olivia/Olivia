@@ -47,7 +47,7 @@ class EvaluationEvaluatorSimple extends TranslatableEntity implements Evaluation
     {
         foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
             if ($assessmentAnswer->getEvaluationQuestion()->getId() === $this->evaluationQuestion->getId()) {
-                $givenAnswer = $assessmentAnswer->getGivenAnswer();
+                $givenAnswer = $assessmentAnswer->getAnswerValue();
                 $expectedAnswer = $this->getExpectedValue();
 
                 if ($this->getEvaluationQuestion()->getType() === EvaluationQuestion::TYPE_YES_NO) {
