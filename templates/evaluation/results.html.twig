@@ -27,31 +27,3 @@
     <hr>
     <p class="text-center">{{ 'evaluation.extra.results.final'|trans }}</p>
 {% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .evaluation-results {
-            display: flex;
-            flex-direction: column;
-            row-gap: 24px;
-        }
-
-        .evaluation-assessment-data {
-            display: flex;
-            flex-direction: column;
-            row-gap: 16px;
-        }
-
-        .evaluation-assessment-datum {
-            background-color: rgba(0, 0, 0, 0.075);
-            border-radius: 8px;
-            padding: 16px;
-        }
-
-        .evaluation-assessment-datum-question {
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-    </style>
-{% endblock %}
