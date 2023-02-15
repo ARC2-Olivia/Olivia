@@ -1,8 +1,11 @@
 class EvaluationAssessment {
     #form;
     #parser;
+    #eventBus;
+
     constructor(querySelector, assessmentData) {
         this.#parser = new DOMParser();
+        this.#eventBus = new EventBus();
         this.#initializeForm(querySelector);
         this.#initializeAssessmentFromData(assessmentData);
     }
@@ -12,12 +15,6 @@ class EvaluationAssessment {
         if (form === null || form === undefined || form.tagName !== "FORM") {
             throw new Error("Query selector does not return a form element.")
         }
-        form.addEventListener("answerchange", function(event) {
-            this.querySelectorAll("[data-question]").forEach((question) => {
-                if (question.onAnswerChange) question.onAnswerChange(event.detail);
-            });
-            event.stopPropagation();
-        });
         this.#form = form;
     }
 
@@ -55,15 +52,16 @@ class EvaluationAssessment {
         if (finalize) {
             if (questionData.dependency) {
                 const dependency = questionData.dependency;
+                this.#eventBus.attach(question);
                 context.#enableQuestion(question);
-                question.onAnswerChange = function({ questionId, answer }) {
+                question.on("answerchange", function(sender, { questionId, answer }) {
                     if (dependency.questionId == questionId) {
                         if (dependency.answer == answer)
                             context.#disableQuestion(this);
                         else
                             context.#enableQuestion(this);
                     }
-                };
+                });
             }
             question.append(questionText, questionAnswers);
         }
@@ -81,9 +79,9 @@ class EvaluationAssessment {
             `, "text/html");
 
             const input = answer.body.firstChild.querySelector("input");
+            this.#eventBus.attach(input);
             input.addEventListener("click", function(event) {
-                const eventAnswerChange = new CustomEvent("answerchange", { bubbles: true, detail: { questionId: questionData.id, answer: event.target.dataset.value } });
-                event.target.dispatchEvent(eventAnswerChange);
+                event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value })
             });
 
             answers.push(answer.body.firstChild);
@@ -102,9 +100,9 @@ class EvaluationAssessment {
             `, "text/html");
 
             const input = answer.body.firstChild.querySelector("input");
+            this.#eventBus.attach(input);
             input.addEventListener("click", function(event) {
-                const eventAnswerChange = new CustomEvent("answerchange", { bubbles: true, detail: { questionId: questionData.id, answer: event.target.dataset.value } });
-                event.target.dispatchEvent(eventAnswerChange);
+                event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value });
             });
 
             answers.push(answer.body.firstChild);
@@ -120,9 +118,9 @@ class EvaluationAssessment {
         `, "text/html");
 
         const input = answer.body.firstChild.querySelector("input");
+        this.#eventBus.attach(input);
         input.addEventListener("input", function(event) {
-            const eventAnswerChange = new CustomEvent("answerchange", { bubbles: true, detail: { questionId: questionData.id, answer: element.target.value } });
-            event.target.dispatchEvent(eventAnswerChange);
+            event.target.dispatch("answerchange", { questionId: questionData.id, answer: element.target.value });
         });
 
         return answer.body.firstChild;
