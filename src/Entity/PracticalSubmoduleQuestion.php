@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\EvaluationQuestionRepository;
+use App\Repository\PracticalSubmoduleQuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -11,8 +11,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-#[ORM\Entity(repositoryClass: EvaluationQuestionRepository::class)]
-class EvaluationQuestion extends TranslatableEntity
+#[ORM\Entity(repositoryClass: PracticalSubmoduleQuestionRepository::class)]
+class PracticalSubmoduleQuestion extends TranslatableEntity
 {
     public const TYPE_YES_NO = 'yes_no';
     public const TYPE_WEIGHTED = 'weighted';
@@ -23,9 +23,9 @@ class EvaluationQuestion extends TranslatableEntity
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'evaluationQuestions')]
+    #[ORM\ManyToOne(inversedBy: 'practicalSubmoduleQuestions')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Evaluation $evaluation = null;
+    private ?PracticalSubmodule $practicalSubmodule = null;
 
     #[ORM\Column(length: 63)]
     private ?string $type = null;
@@ -34,8 +34,8 @@ class EvaluationQuestion extends TranslatableEntity
     #[Gedmo\Translatable]
     private ?string $questionText = null;
 
-    #[ORM\OneToMany(mappedBy: 'evaluationQuestion', targetEntity: EvaluationQuestionAnswer::class, orphanRemoval: true)]
-    private Collection $evaluationQuestionAnswers;
+    #[ORM\OneToMany(mappedBy: 'practicalSubmoduleQuestion', targetEntity: PracticalSubmoduleQuestionAnswer::class, orphanRemoval: true)]
+    private Collection $practicalSubmoduleQuestionAnswers;
 
     #[ORM\Column(nullable: true)]
     private ?bool $evaluable = null;
@@ -44,7 +44,7 @@ class EvaluationQuestion extends TranslatableEntity
     private ?int $position = null;
 
     #[ORM\ManyToOne(targetEntity: self::class)]
-    private ?self $dependentEvaluationQuestion = null;
+    private ?self $dependentPracticalSubmoduleQuestion = null;
 
     #[ORM\Column(length: 63, nullable: true)]
     private ?string $dependentValue = null;
@@ -52,15 +52,15 @@ class EvaluationQuestion extends TranslatableEntity
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
-        if ($this->dependentEvaluationQuestion !== null) {
-            switch ($this->dependentEvaluationQuestion->getType()) {
-                case EvaluationQuestion::TYPE_YES_NO:
+        if ($this->dependentPracticalSubmoduleQuestion !== null) {
+            switch ($this->dependentPracticalSubmoduleQuestion->getType()) {
+                case PracticalSubmoduleQuestion::TYPE_YES_NO:
                     if ($this->dependentValue !== '0' && $this->dependentValue !== '1') {
                         $context->buildViolation('error.evaluationQuestion.dependentValue.notBool')->atPath('dependentValue')->addViolation();
                     }
                     break;
-                case EvaluationQuestion::TYPE_WEIGHTED:
-                case EvaluationQuestion::TYPE_NUMERICAL_INPUT:
+                case PracticalSubmoduleQuestion::TYPE_WEIGHTED:
+                case PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT:
                     if (!is_numeric($this->dependentValue)) {
                         $context->buildViolation('error.evaluationQuestion.dependentValue.notNumeric')->atPath('dependentValue')->addViolation();
                     }
@@ -76,7 +76,7 @@ class EvaluationQuestion extends TranslatableEntity
 
     public function __construct()
     {
-        $this->evaluationQuestionAnswers = new ArrayCollection();
+        $this->practicalSubmoduleQuestionAnswers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,14 +84,14 @@ class EvaluationQuestion extends TranslatableEntity
         return $this->id;
     }
 
-    public function getEvaluation(): ?Evaluation
+    public function getPracticalSubmodule(): ?PracticalSubmodule
     {
-        return $this->evaluation;
+        return $this->practicalSubmodule;
     }
 
-    public function setEvaluation(?Evaluation $evaluation): self
+    public function setPracticalSubmodule(?PracticalSubmodule $practicalSubmodule): self
     {
-        $this->evaluation = $evaluation;
+        $this->practicalSubmodule = $practicalSubmodule;
 
         return $this;
     }
@@ -121,29 +121,29 @@ class EvaluationQuestion extends TranslatableEntity
     }
 
     /**
-     * @return Collection<int, EvaluationQuestionAnswer>
+     * @return Collection<int, PracticalSubmoduleQuestionAnswer>
      */
-    public function getEvaluationQuestionAnswers(): Collection
+    public function getPracticalSubmoduleQuestionAnswers(): Collection
     {
-        return $this->evaluationQuestionAnswers;
+        return $this->practicalSubmoduleQuestionAnswers;
     }
 
-    public function addEvaluationQuestionAnswer(EvaluationQuestionAnswer $evaluationQuestionAnswer): self
+    public function addPracticalSubmoduleQuestionAnswer(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer): self
     {
-        if (!$this->evaluationQuestionAnswers->contains($evaluationQuestionAnswer)) {
-            $this->evaluationQuestionAnswers->add($evaluationQuestionAnswer);
-            $evaluationQuestionAnswer->setEvaluationQuestion($this);
+        if (!$this->practicalSubmoduleQuestionAnswers->contains($practicalSubmoduleQuestionAnswer)) {
+            $this->practicalSubmoduleQuestionAnswers->add($practicalSubmoduleQuestionAnswer);
+            $practicalSubmoduleQuestionAnswer->setPracticalSubmoduleQuestion($this);
         }
 
         return $this;
     }
 
-    public function removeEvaluationQuestionAnswer(EvaluationQuestionAnswer $evaluationQuestionAnswer): self
+    public function removePracticalSubmoduleQuestionAnswer(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer): self
     {
-        if ($this->evaluationQuestionAnswers->removeElement($evaluationQuestionAnswer)) {
+        if ($this->practicalSubmoduleQuestionAnswers->removeElement($practicalSubmoduleQuestionAnswer)) {
             // set the owning side to null (unless already changed)
-            if ($evaluationQuestionAnswer->getEvaluationQuestion() === $this) {
-                $evaluationQuestionAnswer->setEvaluationQuestion(null);
+            if ($practicalSubmoduleQuestionAnswer->getPracticalSubmoduleQuestion() === $this) {
+                $practicalSubmoduleQuestionAnswer->setPracticalSubmoduleQuestion(null);
             }
         }
 
@@ -174,14 +174,14 @@ class EvaluationQuestion extends TranslatableEntity
         return $this;
     }
 
-    public function getDependentEvaluationQuestion(): ?self
+    public function getDependentPracticalSubmoduleQuestion(): ?self
     {
-        return $this->dependentEvaluationQuestion;
+        return $this->dependentPracticalSubmoduleQuestion;
     }
 
-    public function setDependentEvaluationQuestion(?self $dependentEvaluationQuestion): self
+    public function setDependentPracticalSubmoduleQuestion(?self $dependentPracticalSubmoduleQuestion): self
     {
-        $this->dependentEvaluationQuestion = $dependentEvaluationQuestion;
+        $this->dependentPracticalSubmoduleQuestion = $dependentPracticalSubmoduleQuestion;
 
         return $this;
     }

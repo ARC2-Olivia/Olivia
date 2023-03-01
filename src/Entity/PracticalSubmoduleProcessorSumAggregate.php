@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\EvaluationEvaluatorSumAggregateRepository;
+use App\Repository\PracticalSubmoduleProcessorSumAggregateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -12,23 +12,25 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[ORM\Entity(repositoryClass: EvaluationEvaluatorSumAggregateRepository::class)]
-class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements EvaluationEvaluatorImplementationInterface
+#[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorSumAggregateRepository::class)]
+class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity implements PracticalSubmoduleProcessorImplementationInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'evaluationEvaluatorSumAggregate', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'practicalSubmoduleProcessorSumAggregate', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?EvaluationEvaluator $evaluationEvaluator = null;
+    private ?PracticalSubmoduleProcessor $practicalSubmoduleProcessor = null;
 
-    #[ORM\ManyToMany(targetEntity: EvaluationQuestion::class)]
-    private Collection $evaluationQuestions;
+    #[ORM\ManyToMany(targetEntity: PracticalSubmoduleQuestion::class)]
+    #[ORM\JoinTable(name: 'practical_submodule_processor_sum_aggregate_question')]
+    private Collection $practicalSubmoduleQuestions;
 
-    #[ORM\ManyToMany(targetEntity: EvaluationEvaluator::class)]
-    private Collection $evaluationEvaluators;
+    #[ORM\ManyToMany(targetEntity: PracticalSubmoduleProcessor::class)]
+    #[ORM\JoinTable(name: 'practical_submodule_processor_sum_aggregate_processor')]
+    private Collection $practicalSubmoduleProcessors;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?string $expectedValueRangeStart = null;
@@ -42,43 +44,43 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
 
     public function __construct()
     {
-        $this->evaluationQuestions = new ArrayCollection();
-        $this->evaluationEvaluators = new ArrayCollection();
+        $this->practicalSubmoduleQuestions = new ArrayCollection();
+        $this->practicalSubmoduleProcessors = new ArrayCollection();
     }
 
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
-        if ($this->evaluationEvaluator !== null && $this->evaluationEvaluator->isIncluded()) {
-            $this->validateEvaluationQuestionsAndEvaluators($context);
+        if ($this->practicalSubmoduleProcessor !== null && $this->practicalSubmoduleProcessor->isIncluded()) {
+            $this->validatePracticalSubmoduleQuestionsAndProcessors($context);
             $this->validateExpectedValueRanges($context);
             $this->validateResultText($context);
         }
     }
 
-    public function calculateResult(EvaluationAssessment $evaluationAssessment, ValidatorInterface $validator = null): int
+    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): int
     {
         $sum = 0;
-        foreach ($this->getEvaluationQuestions() as $evaluationQuestion) {
-            foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
-                if ($assessmentAnswer->getEvaluationQuestion()->getId() === $evaluationQuestion->getId()) {
+        foreach ($this->getPracticalSubmoduleQuestions() as $evaluationQuestion) {
+            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $evaluationQuestion->getId()) {
                     $sum += $assessmentAnswer->getAnswerValue();
                     break;
                 }
             }
         }
-        foreach ($this->getEvaluationEvaluators() as $evaluationEvaluator) {
+        foreach ($this->getPracticalSubmoduleProcessors() as $evaluationEvaluator) {
             $evaluationEvaluatorImplementation = $evaluationEvaluator->getEvaluationEvaluatorImplementation();
             if ($validator !== null && $validator->validate($evaluationEvaluatorImplementation)->count() === 0) {
-                $sum += $evaluationEvaluatorImplementation->calculateResult($evaluationAssessment, $validator);
+                $sum += $evaluationEvaluatorImplementation->calculateResult($practicalSubmoduleAssessment, $validator);
             }
         }
         return $sum;
     }
 
-    public function checkConformity(EvaluationAssessment $evaluationAssessment, ValidatorInterface $validator = null): bool
+    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
-        $result = $this->calculateResult($evaluationAssessment, $validator);
+        $result = $this->calculateResult($practicalSubmoduleAssessment, $validator);
         return $result >= $this->expectedValueRangeStart && $result <= $this->expectedValueRangeEnd;
     }
 
@@ -87,62 +89,62 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
         return $this->id;
     }
 
-    public function getEvaluationEvaluator(): ?EvaluationEvaluator
+    public function getPracticalSubmoduleProcessor(): ?PracticalSubmoduleProcessor
     {
-        return $this->evaluationEvaluator;
+        return $this->practicalSubmoduleProcessor;
     }
 
-    public function setEvaluationEvaluator(EvaluationEvaluator $evaluationEvaluator): self
+    public function setPracticalSubmoduleProcessor(PracticalSubmoduleProcessor $practicalSubmoduleProcessor): self
     {
-        $this->evaluationEvaluator = $evaluationEvaluator;
+        $this->practicalSubmoduleProcessor = $practicalSubmoduleProcessor;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, EvaluationQuestion>
+     * @return Collection<int, PracticalSubmoduleQuestion>
      */
-    public function getEvaluationQuestions(): Collection
+    public function getPracticalSubmoduleQuestions(): Collection
     {
-        return $this->evaluationQuestions;
+        return $this->practicalSubmoduleQuestions;
     }
 
-    public function addEvaluationQuestion(EvaluationQuestion $evaluationQuestion): self
+    public function addPracticalSubmoduleQuestion(PracticalSubmoduleQuestion $practicalSubmoduleQuestion): self
     {
-        if (!$this->evaluationQuestions->contains($evaluationQuestion)) {
-            $this->evaluationQuestions->add($evaluationQuestion);
+        if (!$this->practicalSubmoduleQuestions->contains($practicalSubmoduleQuestion)) {
+            $this->practicalSubmoduleQuestions->add($practicalSubmoduleQuestion);
         }
 
         return $this;
     }
 
-    public function removeEvaluationQuestion(EvaluationQuestion $evaluationQuestion): self
+    public function removePracticalSubmoduleQuestion(PracticalSubmoduleQuestion $practicalSubmoduleQuestion): self
     {
-        $this->evaluationQuestions->removeElement($evaluationQuestion);
+        $this->practicalSubmoduleQuestions->removeElement($practicalSubmoduleQuestion);
 
         return $this;
     }
 
     /**
-     * @return Collection<int, EvaluationEvaluator>
+     * @return Collection<int, PracticalSubmoduleProcessor>
      */
-    public function getEvaluationEvaluators(): Collection
+    public function getPracticalSubmoduleProcessors(): Collection
     {
-        return $this->evaluationEvaluators;
+        return $this->practicalSubmoduleProcessors;
     }
 
-    public function addEvaluationEvaluator(EvaluationEvaluator $evaluationEvaluator): self
+    public function addPracticalSubmoduleProcessor(PracticalSubmoduleProcessor $practicalSubmoduleProcessor): self
     {
-        if (!$this->evaluationEvaluators->contains($evaluationEvaluator)) {
-            $this->evaluationEvaluators->add($evaluationEvaluator);
+        if (!$this->practicalSubmoduleProcessors->contains($practicalSubmoduleProcessor)) {
+            $this->practicalSubmoduleProcessors->add($practicalSubmoduleProcessor);
         }
 
         return $this;
     }
 
-    public function removeEvaluationEvaluator(EvaluationEvaluator $evaluationEvaluator): self
+    public function removePracticalSubmoduleProcessor(PracticalSubmoduleProcessor $practicalSubmoduleProcessor): self
     {
-        $this->evaluationEvaluators->removeElement($evaluationEvaluator);
+        $this->practicalSubmoduleProcessors->removeElement($practicalSubmoduleProcessor);
 
         return $this;
     }
@@ -183,9 +185,9 @@ class EvaluationEvaluatorSumAggregate extends TranslatableEntity implements Eval
         return $this;
     }
 
-    private function validateEvaluationQuestionsAndEvaluators(ExecutionContextInterface $context)
+    private function validatePracticalSubmoduleQuestionsAndProcessors(ExecutionContextInterface $context)
     {
-        if ($this->evaluationQuestions->isEmpty() && $this->evaluationEvaluators->isEmpty()) {
+        if ($this->practicalSubmoduleQuestions->isEmpty() && $this->practicalSubmoduleProcessors->isEmpty()) {
             $context->buildViolation('error.evaluationEvaluatorSumAggregate.evaluationQuestionsAndEvaluators')->addViolation();
         }
     }

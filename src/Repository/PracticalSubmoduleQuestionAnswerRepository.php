@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\EvaluationQuestionAnswer;
+use App\Entity\PracticalSubmoduleQuestionAnswer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<EvaluationQuestionAnswer>
+ * @extends ServiceEntityRepository<PracticalSubmoduleQuestionAnswer>
  *
- * @method EvaluationQuestionAnswer|null find($id, $lockMode = null, $lockVersion = null)
- * @method EvaluationQuestionAnswer|null findOneBy(array $criteria, array $orderBy = null)
- * @method EvaluationQuestionAnswer[]    findAll()
- * @method EvaluationQuestionAnswer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PracticalSubmoduleQuestionAnswer|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PracticalSubmoduleQuestionAnswer|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PracticalSubmoduleQuestionAnswer[]    findAll()
+ * @method PracticalSubmoduleQuestionAnswer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EvaluationQuestionAnswerRepository extends ServiceEntityRepository
+class PracticalSubmoduleQuestionAnswerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EvaluationQuestionAnswer::class);
+        parent::__construct($registry, PracticalSubmoduleQuestionAnswer::class);
     }
 
-    public function save(EvaluationQuestionAnswer $entity, bool $flush = false): void
+    public function save(PracticalSubmoduleQuestionAnswer $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class EvaluationQuestionAnswerRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(EvaluationQuestionAnswer $entity, bool $flush = false): void
+    public function remove(PracticalSubmoduleQuestionAnswer $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 

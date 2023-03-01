@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\EvaluationEvaluatorSumAggregate;
+use App\Entity\PracticalSubmoduleAssessment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<EvaluationEvaluatorSumAggregate>
+ * @extends ServiceEntityRepository<PracticalSubmoduleAssessment>
  *
- * @method EvaluationEvaluatorSumAggregate|null find($id, $lockMode = null, $lockVersion = null)
- * @method EvaluationEvaluatorSumAggregate|null findOneBy(array $criteria, array $orderBy = null)
- * @method EvaluationEvaluatorSumAggregate[]    findAll()
- * @method EvaluationEvaluatorSumAggregate[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PracticalSubmoduleAssessment|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PracticalSubmoduleAssessment|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PracticalSubmoduleAssessment[]    findAll()
+ * @method PracticalSubmoduleAssessment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EvaluationEvaluatorSumAggregateRepository extends ServiceEntityRepository
+class PracticalSubmoduleAssessmentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EvaluationEvaluatorSumAggregate::class);
+        parent::__construct($registry, PracticalSubmoduleAssessment::class);
     }
 
-    public function save(EvaluationEvaluatorSumAggregate $entity, bool $flush = false): void
+    public function save(PracticalSubmoduleAssessment $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class EvaluationEvaluatorSumAggregateRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(EvaluationEvaluatorSumAggregate $entity, bool $flush = false): void
+    public function remove(PracticalSubmoduleAssessment $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class EvaluationEvaluatorSumAggregateRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return EvaluationEvaluatorSumAggregate[] Returns an array of EvaluationEvaluatorSumAggregate objects
+//     * @return EvaluationAssessment[] Returns an array of EvaluationAssessment objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class EvaluationEvaluatorSumAggregateRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?EvaluationEvaluatorSumAggregate
+//    public function findOneBySomeField($value): ?EvaluationAssessment
 //    {
 //        return $this->createQueryBuilder('e')
 //            ->andWhere('e.exampleField = :val')

@@ -2,14 +2,14 @@
 
 namespace App\Form;
 
-use App\Entity\EvaluationQuestionAnswer;
+use App\Entity\PracticalSubmoduleQuestionAnswer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EvaluationQuestionAnswerWeightedType extends AbstractType
+class PracticalSubmoduleQuestionAnswerWeightedType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -37,7 +37,7 @@ class EvaluationQuestionAnswerWeightedType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => EvaluationQuestionAnswer::class,
+            'data_class' => PracticalSubmoduleQuestionAnswer::class,
             'translation_domain' => 'app',
             'include_translatable_fields' => false,
             'attr' => ['novalidate' => 'novalidate', 'class' => 'd-flex flex-column']

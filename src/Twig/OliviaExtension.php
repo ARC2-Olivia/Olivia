@@ -3,7 +3,7 @@
 namespace App\Twig;
 
 use App\Entity\Course;
-use App\Entity\EvaluationEvaluatorImplementationInterface;
+use App\Entity\PracticalSubmoduleProcessorImplementationInterface;
 use App\Entity\LessonItemEmbeddedVideo;
 use App\Entity\User;
 use App\Service\EnrollmentService;
@@ -108,7 +108,7 @@ class OliviaExtension extends AbstractExtension
         return null;
     }
 
-    public function isValidEvaluator(?EvaluationEvaluatorImplementationInterface $evaluationEvaluatorImplementation)
+    public function isValidEvaluator(?PracticalSubmoduleProcessorImplementationInterface $evaluationEvaluatorImplementation)
     {
         if ($evaluationEvaluatorImplementation !== null) {
             $errors = $this->validator->validate($evaluationEvaluatorImplementation);

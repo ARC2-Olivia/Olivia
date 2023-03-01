@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\EvaluationEvaluator;
-use App\Form\EvaluationEvaluatorType;
-use App\Repository\EvaluationEvaluatorRepository;
+use App\Entity\PracticalSubmoduleProcessor;
+use App\Form\PracticalSubmoduleProcessorType;
+use App\Repository\PracticalSubmoduleProcessorRepository;
 use App\Service\EvaluationService;
 use App\Service\NavigationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -18,9 +18,9 @@ class EvaluationEvaluatorController extends BaseController
 {
     #[Route('/delete/{evaluationEvaluator}', name: 'delete')]
     #[IsGranted('ROLE_MODERATOR')]
-    public function delete(EvaluationEvaluator $evaluationEvaluator, Request $request): Response
+    public function delete(PracticalSubmoduleProcessor $evaluationEvaluator, Request $request): Response
     {
-        $evaluation = $evaluationEvaluator->getEvaluation();
+        $evaluation = $evaluationEvaluator->getPracticalSubmodule();
 
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationEvaluator.delete', $csrfToken)) {
@@ -34,10 +34,10 @@ class EvaluationEvaluatorController extends BaseController
 
     #[Route('/edit/{evaluationEvaluator}', name: 'edit')]
     #[IsGranted('ROLE_MODERATOR')]
-    public function edit(EvaluationEvaluator $evaluationEvaluator, Request $request, EvaluationService $evaluationService, NavigationService $navigationService): Response
+    public function edit(PracticalSubmoduleProcessor $evaluationEvaluator, Request $request, EvaluationService $evaluationService, NavigationService $navigationService): Response
     {
         $evaluationEvaluatorImpl = $evaluationService->getEvaluatorImplementation($evaluationEvaluator);
-        $baseForm = $this->createForm(EvaluationEvaluatorType::class, $evaluationEvaluator, ['edit_mode' => true]);
+        $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $evaluationEvaluator, ['edit_mode' => true]);
         $implForm = $this->createForm($evaluationService->getEvaluatorImplementationFormClass($evaluationEvaluator), $evaluationEvaluatorImpl);
         $updated = false;
 
@@ -64,17 +64,17 @@ class EvaluationEvaluatorController extends BaseController
 
         if ($updated === true) $this->addFlash('success', $this->translator->trans('success.evaluationEvaluator.edit', [], 'message'));
         return $this->render('evaluation/evaluation_evaluator/edit.html.twig', [
-            'evaluation' => $evaluationEvaluator->getEvaluation(),
+            'evaluation' => $evaluationEvaluator->getPracticalSubmodule(),
             'evaluationEvaluator' => $evaluationEvaluator,
             'baseForm' => $baseForm->createView(),
             'implForm' => $implForm->createView(),
-            'navigation' => $navigationService->forEvaluation($evaluationEvaluator->getEvaluation(), NavigationService::EVALUATION_EXTRA_EDIT_EVALUATOR)
+            'navigation' => $navigationService->forEvaluation($evaluationEvaluator->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_EVALUATOR)
         ]);
     }
 
     #[Route("/reorder", name: "reorder", methods: ["POST"])]
     #[IsGranted("ROLE_MODERATOR")]
-    public function reorder(Request $request, EvaluationEvaluatorRepository $evaluationEvaluatorRepository): Response
+    public function reorder(Request $request, PracticalSubmoduleProcessorRepository $evaluationEvaluatorRepository): Response
     {
         $data = json_decode($request->getContent());
         if ($data !== null && isset($data->reorders) && !empty($data->reorders)) {

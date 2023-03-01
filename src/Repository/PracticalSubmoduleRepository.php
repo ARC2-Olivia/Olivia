@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\EvaluationAssessment;
+use App\Entity\PracticalSubmodule;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<EvaluationAssessment>
+ * @extends ServiceEntityRepository<PracticalSubmodule>
  *
- * @method EvaluationAssessment|null find($id, $lockMode = null, $lockVersion = null)
- * @method EvaluationAssessment|null findOneBy(array $criteria, array $orderBy = null)
- * @method EvaluationAssessment[]    findAll()
- * @method EvaluationAssessment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PracticalSubmodule|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PracticalSubmodule|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PracticalSubmodule[]    findAll()
+ * @method PracticalSubmodule[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EvaluationAssessmentRepository extends ServiceEntityRepository
+class PracticalSubmoduleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EvaluationAssessment::class);
+        parent::__construct($registry, PracticalSubmodule::class);
     }
 
-    public function save(EvaluationAssessment $entity, bool $flush = false): void
+    public function save(PracticalSubmodule $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class EvaluationAssessmentRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(EvaluationAssessment $entity, bool $flush = false): void
+    public function remove(PracticalSubmodule $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class EvaluationAssessmentRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return EvaluationAssessment[] Returns an array of EvaluationAssessment objects
+//     * @return Evaluation[] Returns an array of Evaluation objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class EvaluationAssessmentRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?EvaluationAssessment
+//    public function findOneBySomeField($value): ?Evaluation
 //    {
 //        return $this->createQueryBuilder('e')
 //            ->andWhere('e.exampleField = :val')

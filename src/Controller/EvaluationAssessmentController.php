@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\EvaluationAssessment;
-use App\Entity\EvaluationAssessmentAnswer;
-use App\Entity\EvaluationQuestion;
-use App\Entity\EvaluationQuestionAnswer;
+use App\Entity\PracticalSubmoduleAssessment;
+use App\Entity\PracticalSubmoduleAssessmentAnswer;
+use App\Entity\PracticalSubmoduleQuestion;
+use App\Entity\PracticalSubmoduleQuestionAnswer;
 use App\Service\NavigationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,20 +17,20 @@ class EvaluationAssessmentController extends BaseController
 {
     #[Route("/start/{evaluationAssessment}", name: "start")]
     #[IsGranted("ROLE_USER")]
-    public function start(EvaluationAssessment $evaluationAssessment, Request $request, NavigationService $navigationService): Response
+    public function start(PracticalSubmoduleAssessment $evaluationAssessment, Request $request, NavigationService $navigationService): Response
     {
         $session = $request->getSession();
         $allowedToStart = $session->has('evaluationAssessment.start') && $session->get('evaluationAssessment.start') === true;
         if (!$allowedToStart) {
             $this->addFlash('error', $this->translator->trans('error.evaluationAssessment.start', [], 'message'));
-            return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluationAssessment->getEvaluation()->getId()]);
+            return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluationAssessment->getPracticalSubmodule()->getId()]);
         }
         $session->remove('evaluationAssessment.start');
 
-        $evaluation = $evaluationAssessment->getEvaluation();
+        $evaluation = $evaluationAssessment->getPracticalSubmodule();
 
         $assessment = ['id' => $evaluationAssessment->getId(), 'questions' => []];
-        $evaluationQuestions = $this->em->getRepository(EvaluationQuestion::class)->findOrderedForEvaluation($evaluation);
+        $evaluationQuestions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForEvaluation($evaluation);
         foreach ($evaluationQuestions as $evaluationQuestion) {
             $question = ['id' => $evaluationQuestion->getId(), 'type' => $evaluationQuestion->getType(), 'question' => $evaluationQuestion->getQuestionText(), 'answers' => []];
             if ($evaluationQuestion->getDependentEvaluationQuestion() !== null) {
@@ -38,7 +38,7 @@ class EvaluationAssessmentController extends BaseController
             }
             foreach ($evaluationQuestion->getEvaluationQuestionAnswers() as $evaluationQuestionAnswer) {
                 $answerText = $evaluationQuestionAnswer->getAnswerText();
-                if ($question['type'] === EvaluationQuestion::TYPE_YES_NO) $answerText = $this->translator->trans($answerText, [], 'app');
+                if ($question['type'] === PracticalSubmoduleQuestion::TYPE_YES_NO) $answerText = $this->translator->trans($answerText, [], 'app');
                 $answer = ['id' => $evaluationQuestionAnswer->getId(), 'text' => $answerText, 'value' => $evaluationQuestionAnswer->getAnswerValue()];
                 $question['answers'][] = $answer;
             }
@@ -54,17 +54,17 @@ class EvaluationAssessmentController extends BaseController
 
     #[Route("/finish/{evaluationAssessment}", name: "finish")]
     #[IsGranted("ROLE_USER")]
-    public function finish(EvaluationAssessment $evaluationAssessment, Request $request): Response
+    public function finish(PracticalSubmoduleAssessment $evaluationAssessment, Request $request): Response
     {
         $csrfToken = $request->request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationAssessment.finish', $csrfToken)) {
             $assessmentData = $request->request->all('evaluation_assessment');
-            $evaluationQuestionRepository = $this->em->getRepository(EvaluationQuestion::class);
+            $evaluationQuestionRepository = $this->em->getRepository(PracticalSubmoduleQuestion::class);
             $noQuestionError = false;
 
             $evaluationAssessment->setCompleted(true);
 
-            foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $evaluationAssessmentAnswer) {
+            foreach ($evaluationAssessment->getPracticalSubmoduleAssessmentAnswers() as $evaluationAssessmentAnswer) {
                 $this->em->remove($evaluationAssessmentAnswer);
             }
 
@@ -87,23 +87,23 @@ class EvaluationAssessmentController extends BaseController
             $this->addFlash('error', $this->translator->trans('error.evaluationAssessment.finish', [], 'message'));
         }
 
-        return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluationAssessment->getEvaluation()->getId()]);
+        return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluationAssessment->getPracticalSubmodule()->getId()]);
     }
 
-    private function storeAnswer(EvaluationAssessment $evaluationAssessment, EvaluationQuestion $evaluationQuestion, string $givenAnswer): void
+    private function storeAnswer(PracticalSubmoduleAssessment $evaluationAssessment, PracticalSubmoduleQuestion $evaluationQuestion, string $givenAnswer): void
     {
-        if ($evaluationQuestion->getType() === EvaluationQuestion::TYPE_YES_NO || $evaluationQuestion->getType() === EvaluationQuestion::TYPE_WEIGHTED) {
-            $evaluationQuestionAnswer = $this->em->getRepository(EvaluationQuestionAnswer::class)->findOneBy(['evaluationQuestion' => $evaluationQuestion, 'id' => $givenAnswer]);
-            $evaluationAssessmentAnswer = (new EvaluationAssessmentAnswer())
-                ->setEvaluationAssessment($evaluationAssessment)
-                ->setEvaluationQuestion($evaluationQuestion)
-                ->setEvaluationQuestionAnswer($evaluationQuestionAnswer)
+        if ($evaluationQuestion->getType() === PracticalSubmoduleQuestion::TYPE_YES_NO || $evaluationQuestion->getType() === PracticalSubmoduleQuestion::TYPE_WEIGHTED) {
+            $evaluationQuestionAnswer = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findOneBy(['evaluationQuestion' => $evaluationQuestion, 'id' => $givenAnswer]);
+            $evaluationAssessmentAnswer = (new PracticalSubmoduleAssessmentAnswer())
+                ->setPracticalSubmoduleAssessment($evaluationAssessment)
+                ->setPracticalSubmoduleQuestion($evaluationQuestion)
+                ->setPracticalSubmoduleQuestionAnswer($evaluationQuestionAnswer)
                 ->setAnswerValue($evaluationQuestionAnswer->getAnswerValue());
             $this->em->persist($evaluationAssessmentAnswer);
         } else {
-            $evaluationAssessmentAnswer = (new EvaluationAssessmentAnswer())
-                ->setEvaluationAssessment($evaluationAssessment)
-                ->setEvaluationQuestion($evaluationQuestion)
+            $evaluationAssessmentAnswer = (new PracticalSubmoduleAssessmentAnswer())
+                ->setPracticalSubmoduleAssessment($evaluationAssessment)
+                ->setPracticalSubmoduleQuestion($evaluationQuestion)
                 ->setAnswerValue($givenAnswer);
             $this->em->persist($evaluationAssessmentAnswer);
         }

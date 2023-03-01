@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Evaluation;
+use App\Entity\PracticalSubmodule;
 use App\Form\Transformer\SimpleArrayToStringTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class EvaluationType extends AbstractType
+class PracticalSubmoduleType extends AbstractType
 {
     private ?TranslatorInterface $translator = null;
 
@@ -80,7 +80,7 @@ class EvaluationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Evaluation::class,
+            'data_class' => PracticalSubmodule::class,
             'translation_domain' => 'app',
             'include_translatable_fields' => false,
             'attr' => [

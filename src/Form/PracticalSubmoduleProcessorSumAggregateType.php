@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\EvaluationEvaluator;
-use App\Entity\EvaluationEvaluatorSumAggregate;
-use App\Entity\EvaluationQuestion;
+use App\Entity\PracticalSubmoduleProcessor;
+use App\Entity\PracticalSubmoduleProcessorSumAggregate;
+use App\Entity\PracticalSubmoduleQuestion;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class EvaluationEvaluatorSumAggregateType extends AbstractType
+class PracticalSubmoduleProcessorSumAggregateType extends AbstractType
 {
     private ?TranslatorInterface $translator = null;
 
@@ -27,7 +27,7 @@ class EvaluationEvaluatorSumAggregateType extends AbstractType
     {
         $builder
             ->add('evaluationQuestions', EntityType::class, [
-                'class' => EvaluationQuestion::class,
+                'class' => PracticalSubmoduleQuestion::class,
                 'label' => 'form.entity.evaluationEvaluator.label.evaluationQuestion',
                 'choice_label' => 'questionText',
                 'query_builder' => $this->makeEvaluationQuestionQueryBuilder($builder),
@@ -35,7 +35,7 @@ class EvaluationEvaluatorSumAggregateType extends AbstractType
                 'multiple' => true
             ])
             ->add('evaluationEvaluators', EntityType::class, [
-                'class' => EvaluationEvaluator::class,
+                'class' => PracticalSubmoduleProcessor::class,
                 'label' => 'form.entity.evaluationEvaluator.label.evaluationEvaluators',
                 'choice_label' => 'name',
                 'query_builder' => $this->makeEvaluationEvaluatorQueryBuilder($builder),
@@ -65,7 +65,7 @@ class EvaluationEvaluatorSumAggregateType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => EvaluationEvaluatorSumAggregate::class,
+            'data_class' => PracticalSubmoduleProcessorSumAggregate::class,
             'translation_domain' => 'app',
             'attr' => [
                 'novalidate' => 'novalidate',
@@ -84,7 +84,7 @@ class EvaluationEvaluatorSumAggregateType extends AbstractType
                     ->where('eq.evaluation = :evaluation')
                     ->andWhere('eq.evaluable = :evaluable')
                     ->andWhere('eq.type IN (:types)')
-                    ->setParameters(['evaluation' => $evaluationEvaluator->getEvaluation(), 'evaluable' => true, 'types' => EvaluationQuestion::getNumericTypes()]);
+                    ->setParameters(['evaluation' => $evaluationEvaluator->getEvaluation(), 'evaluable' => true, 'types' => PracticalSubmoduleQuestion::getNumericTypes()]);
             };
         }
         return $evaluationQuestionQueryBuilder;

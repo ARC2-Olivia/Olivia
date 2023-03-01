@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Evaluation;
+use App\Entity\PracticalSubmoduleProcessorSimple;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Evaluation>
+ * @extends ServiceEntityRepository<PracticalSubmoduleProcessorSimple>
  *
- * @method Evaluation|null find($id, $lockMode = null, $lockVersion = null)
- * @method Evaluation|null findOneBy(array $criteria, array $orderBy = null)
- * @method Evaluation[]    findAll()
- * @method Evaluation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PracticalSubmoduleProcessorSimple|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PracticalSubmoduleProcessorSimple|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PracticalSubmoduleProcessorSimple[]    findAll()
+ * @method PracticalSubmoduleProcessorSimple[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EvaluationRepository extends ServiceEntityRepository
+class PracticalSubmoduleProcessorSimpleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Evaluation::class);
+        parent::__construct($registry, PracticalSubmoduleProcessorSimple::class);
     }
 
-    public function save(Evaluation $entity, bool $flush = false): void
+    public function save(PracticalSubmoduleProcessorSimple $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class EvaluationRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Evaluation $entity, bool $flush = false): void
+    public function remove(PracticalSubmoduleProcessorSimple $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class EvaluationRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Evaluation[] Returns an array of Evaluation objects
+//     * @return EvaluationEvaluatorSimple[] Returns an array of EvaluationEvaluatorSimple objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class EvaluationRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Evaluation
+//    public function findOneBySomeField($value): ?EvaluationEvaluatorSimple
 //    {
 //        return $this->createQueryBuilder('e')
 //            ->andWhere('e.exampleField = :val')

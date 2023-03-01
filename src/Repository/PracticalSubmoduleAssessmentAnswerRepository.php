@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\EvaluationEvaluatorProductAggregate;
+use App\Entity\PracticalSubmoduleAssessmentAnswer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<EvaluationEvaluatorProductAggregate>
+ * @extends ServiceEntityRepository<PracticalSubmoduleAssessmentAnswer>
  *
- * @method EvaluationEvaluatorProductAggregate|null find($id, $lockMode = null, $lockVersion = null)
- * @method EvaluationEvaluatorProductAggregate|null findOneBy(array $criteria, array $orderBy = null)
- * @method EvaluationEvaluatorProductAggregate[]    findAll()
- * @method EvaluationEvaluatorProductAggregate[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PracticalSubmoduleAssessmentAnswer|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PracticalSubmoduleAssessmentAnswer|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PracticalSubmoduleAssessmentAnswer[]    findAll()
+ * @method PracticalSubmoduleAssessmentAnswer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EvaluationEvaluatorProductAggregateRepository extends ServiceEntityRepository
+class PracticalSubmoduleAssessmentAnswerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EvaluationEvaluatorProductAggregate::class);
+        parent::__construct($registry, PracticalSubmoduleAssessmentAnswer::class);
     }
 
-    public function save(EvaluationEvaluatorProductAggregate $entity, bool $flush = false): void
+    public function save(PracticalSubmoduleAssessmentAnswer $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class EvaluationEvaluatorProductAggregateRepository extends ServiceEntityReposit
         }
     }
 
-    public function remove(EvaluationEvaluatorProductAggregate $entity, bool $flush = false): void
+    public function remove(PracticalSubmoduleAssessmentAnswer $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class EvaluationEvaluatorProductAggregateRepository extends ServiceEntityReposit
     }
 
 //    /**
-//     * @return EvaluationEvaluatorProductAggregate[] Returns an array of EvaluationEvaluatorProductAggregate objects
+//     * @return EvaluationAssessmentAnswer[] Returns an array of EvaluationAssessmentAnswer objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class EvaluationEvaluatorProductAggregateRepository extends ServiceEntityReposit
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?EvaluationEvaluatorProductAggregate
+//    public function findOneBySomeField($value): ?EvaluationAssessmentAnswer
 //    {
 //        return $this->createQueryBuilder('e')
 //            ->andWhere('e.exampleField = :val')

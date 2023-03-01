@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\EvaluationEvaluatorSimple;
-use App\Entity\EvaluationQuestion;
+use App\Entity\PracticalSubmoduleProcessorSimple;
+use App\Entity\PracticalSubmoduleQuestion;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class EvaluationEvaluatorSimpleType extends AbstractType
+class PracticalSubmoduleProcessorSimpleType extends AbstractType
 {
     private ?TranslatorInterface $translator = null;
 
@@ -26,7 +26,7 @@ class EvaluationEvaluatorSimpleType extends AbstractType
     {
         $builder
             ->add('evaluationQuestion', EntityType::class, [
-                'class' => EvaluationQuestion::class,
+                'class' => PracticalSubmoduleQuestion::class,
                 'label' => 'form.entity.evaluationEvaluator.label.evaluationQuestion',
                 'choice_label' => 'questionText',
                 'query_builder' => $this->makeQueryBuilder($builder),
@@ -47,7 +47,7 @@ class EvaluationEvaluatorSimpleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => EvaluationEvaluatorSimple::class,
+            'data_class' => PracticalSubmoduleProcessorSimple::class,
             'translation_domain' => 'app',
             'attr' => [
                 'novalidate' => 'novalidate',

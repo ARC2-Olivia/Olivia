@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\EvaluationEvaluator;
+use App\Entity\PracticalSubmoduleProcessor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class EvaluationEvaluatorType extends AbstractType
+class PracticalSubmoduleProcessorType extends AbstractType
 {
     private ?TranslatorInterface $translator = null;
 
@@ -22,9 +22,9 @@ class EvaluationEvaluatorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $typeChoices = [
-            $this->translator->trans('evaluationEvaluator.type.simple', [], 'app') => EvaluationEvaluator::TYPE_SIMPLE,
-            $this->translator->trans('evaluationEvaluator.type.sumAggregate', [], 'app') => EvaluationEvaluator::TYPE_SUM_AGGREGATE,
-            $this->translator->trans('evaluationEvaluator.type.productAggregate', [], 'app') => EvaluationEvaluator::TYPE_PRODUCT_AGGREGATE
+            $this->translator->trans('evaluationEvaluator.type.simple', [], 'app') => PracticalSubmoduleProcessor::TYPE_SIMPLE,
+            $this->translator->trans('evaluationEvaluator.type.sumAggregate', [], 'app') => PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE,
+            $this->translator->trans('evaluationEvaluator.type.productAggregate', [], 'app') => PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE
         ];
 
         $includedChoices = [
@@ -56,7 +56,7 @@ class EvaluationEvaluatorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => EvaluationEvaluator::class,
+            'data_class' => PracticalSubmoduleProcessor::class,
             'translation_domain' => 'app',
             'edit_mode' => false,
             'attr' => [

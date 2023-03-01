@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Course;
-use App\Entity\Evaluation;
+use App\Entity\PracticalSubmodule;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -62,7 +62,7 @@ class NavigationService
         return $navigation;
     }
 
-    public function forEvaluation(Evaluation $evaluation, ?int $activeNav = null): array
+    public function forEvaluation(PracticalSubmodule $evaluation, ?int $activeNav = null): array
     {
         $navigation = [
             [

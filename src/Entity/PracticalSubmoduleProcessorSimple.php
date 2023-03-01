@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\EvaluationEvaluatorSimpleRepository;
+use App\Repository\PracticalSubmoduleProcessorSimpleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -10,22 +10,22 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[ORM\Entity(repositoryClass: EvaluationEvaluatorSimpleRepository::class)]
-class EvaluationEvaluatorSimple extends TranslatableEntity implements EvaluationEvaluatorImplementationInterface
+#[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorSimpleRepository::class)]
+class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements PracticalSubmoduleProcessorImplementationInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'evaluationEvaluatorSimple', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'practicalSubmoduleProcessorSimple', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?EvaluationEvaluator $evaluationEvaluator = null;
+    private ?PracticalSubmoduleProcessor $practicalSubmoduleProcessor = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'error.evaluationEvaluatorSimple.evaluationQuestion')]
-    private ?EvaluationQuestion $evaluationQuestion = null;
+    private ?PracticalSubmoduleQuestion $practicalSubmoduleQuestion = null;
 
     #[ORM\Column(length: 63, nullable: true)]
     private ?string $expectedValue = null;
@@ -37,20 +37,20 @@ class EvaluationEvaluatorSimple extends TranslatableEntity implements Evaluation
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
-        if ($this->evaluationEvaluator !== null && $this->evaluationEvaluator->isIncluded()) {
+        if ($this->practicalSubmoduleProcessor !== null && $this->practicalSubmoduleProcessor->isIncluded()) {
             $this->validateExpectedValue($context);
             $this->validateResultText($context);
         }
     }
 
-    public function calculateResult(EvaluationAssessment $evaluationAssessment, ValidatorInterface $validator = null): bool
+    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
-        foreach ($evaluationAssessment->getEvaluationAssessmentAnswers() as $assessmentAnswer) {
-            if ($assessmentAnswer->getEvaluationQuestion()->getId() === $this->evaluationQuestion->getId()) {
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
                 $givenAnswer = $assessmentAnswer->getAnswerValue();
                 $expectedAnswer = $this->getExpectedValue();
 
-                if ($this->getEvaluationQuestion()->getType() === EvaluationQuestion::TYPE_YES_NO) {
+                if ($this->getPracticalSubmoduleQuestion()->getType() === PracticalSubmoduleQuestion::TYPE_YES_NO) {
                     $givenAnswer = (bool)$givenAnswer;
                     $expectedAnswer = (bool)$expectedAnswer;
                 }
@@ -62,9 +62,9 @@ class EvaluationEvaluatorSimple extends TranslatableEntity implements Evaluation
         return false;
     }
 
-    public function checkConformity(EvaluationAssessment $evaluationAssessment, ValidatorInterface $validator = null): bool
+    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
-        return $this->calculateResult($evaluationAssessment, $validator);
+        return $this->calculateResult($practicalSubmoduleAssessment, $validator);
     }
 
     public function getId(): ?int
@@ -72,26 +72,26 @@ class EvaluationEvaluatorSimple extends TranslatableEntity implements Evaluation
         return $this->id;
     }
 
-    public function getEvaluationEvaluator(): ?EvaluationEvaluator
+    public function getPracticalSubmoduleProcessor(): ?PracticalSubmoduleProcessor
     {
-        return $this->evaluationEvaluator;
+        return $this->practicalSubmoduleProcessor;
     }
 
-    public function setEvaluationEvaluator(EvaluationEvaluator $evaluationEvaluator): self
+    public function setPracticalSubmoduleProcessor(PracticalSubmoduleProcessor $practicalSubmoduleProcessor): self
     {
-        $this->evaluationEvaluator = $evaluationEvaluator;
+        $this->practicalSubmoduleProcessor = $practicalSubmoduleProcessor;
 
         return $this;
     }
 
-    public function getEvaluationQuestion(): ?EvaluationQuestion
+    public function getPracticalSubmoduleQuestion(): ?PracticalSubmoduleQuestion
     {
-        return $this->evaluationQuestion;
+        return $this->practicalSubmoduleQuestion;
     }
 
-    public function setEvaluationQuestion(?EvaluationQuestion $evaluationQuestion): self
+    public function setPracticalSubmoduleQuestion(?PracticalSubmoduleQuestion $practicalSubmoduleQuestion): self
     {
-        $this->evaluationQuestion = $evaluationQuestion;
+        $this->practicalSubmoduleQuestion = $practicalSubmoduleQuestion;
 
         return $this;
     }
@@ -126,13 +126,13 @@ class EvaluationEvaluatorSimple extends TranslatableEntity implements Evaluation
             $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.blank')->atPath('expectedPath')->addViolation();
         }
 
-        if ($this->evaluationQuestion !== null) {
-            switch ($this->evaluationQuestion->getType()) {
-                case EvaluationQuestion::TYPE_YES_NO:
+        if ($this->practicalSubmoduleQuestion !== null) {
+            switch ($this->practicalSubmoduleQuestion->getType()) {
+                case PracticalSubmoduleQuestion::TYPE_YES_NO:
                     if ($this->expectedValue !== '0' && $this->expectedValue !== '1') $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.notBool')->atPath('expectedValue')->addViolation();
                     break;
-                case EvaluationQuestion::TYPE_WEIGHTED:
-                case EvaluationQuestion::TYPE_NUMERICAL_INPUT:
+                case PracticalSubmoduleQuestion::TYPE_WEIGHTED:
+                case PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT:
                     if (!is_numeric($this->expectedValue)) $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.notNumeric')->atPath('expectedValue')->addViolation();
                     break;
             }

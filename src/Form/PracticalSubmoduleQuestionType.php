@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\EvaluationQuestion;
+use App\Entity\PracticalSubmoduleQuestion;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class EvaluationQuestionType extends AbstractType
+class PracticalSubmoduleQuestionType extends AbstractType
 {
     private ?TranslatorInterface $translator = null;
 
@@ -26,9 +26,9 @@ class EvaluationQuestionType extends AbstractType
     {
         if ($options['edit_mode'] === false) {
             $typeChoices = [
-                $this->translator->trans('evaluationQuestion.type.yesNo', [], 'app') => EvaluationQuestion::TYPE_YES_NO,
-                $this->translator->trans('evaluationQuestion.type.weighted', [], 'app') => EvaluationQuestion::TYPE_WEIGHTED,
-                $this->translator->trans('evaluationQuestion.type.numericalInput', [], 'app') => EvaluationQuestion::TYPE_NUMERICAL_INPUT
+                $this->translator->trans('evaluationQuestion.type.yesNo', [], 'app') => PracticalSubmoduleQuestion::TYPE_YES_NO,
+                $this->translator->trans('evaluationQuestion.type.weighted', [], 'app') => PracticalSubmoduleQuestion::TYPE_WEIGHTED,
+                $this->translator->trans('evaluationQuestion.type.numericalInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT
             ];
             $builder->add('type', ChoiceType::class, [
                 'label' => 'form.entity.evaluationQuestion.label.type',
@@ -48,7 +48,7 @@ class EvaluationQuestionType extends AbstractType
                 'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('dependentEvaluationQuestion', EntityType::class, [
-                'class' => EvaluationQuestion::class,
+                'class' => PracticalSubmoduleQuestion::class,
                 'label' => 'form.entity.evaluationQuestion.label.dependentQuestion',
                 'query_builder' => $this->makeDependentQuestionQueryBuilder($builder),
                 'choice_label' => 'questionText',
@@ -83,7 +83,7 @@ class EvaluationQuestionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => EvaluationQuestion::class,
+            'data_class' => PracticalSubmoduleQuestion::class,
             'translation_domain' => 'app',
             'include_translatable_fields' => false,
             'edit_mode' => false,
@@ -96,16 +96,16 @@ class EvaluationQuestionType extends AbstractType
 
     private function makeDependentQuestionQueryBuilder(FormBuilderInterface $builder): \Closure|null
     {
-        /** @var EvaluationQuestion $evaluationQuestion */
+        /** @var PracticalSubmoduleQuestion $evaluationQuestion */
         $evaluationQuestion = $builder->getData();
-        $evaluation = $evaluationQuestion?->getEvaluation();
+        $evaluation = $evaluationQuestion?->getPracticalSubmodule();
 
         $queryBuilder = null;
         if ($evaluationQuestion !== null && $evaluation !== null) {
             $queryBuilder = function (EntityRepository $repository) use ($evaluationQuestion) {
                 $qb = $repository->createQueryBuilder('eq')
                     ->where('eq.evaluation = :evaluation')
-                    ->setParameter('evaluation', $evaluationQuestion->getEvaluation())
+                    ->setParameter('evaluation', $evaluationQuestion->getPracticalSubmodule())
                 ;
 
                 if ($evaluationQuestion->getId() !== null) {
