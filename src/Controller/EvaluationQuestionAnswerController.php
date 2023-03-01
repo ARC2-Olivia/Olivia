@@ -33,7 +33,7 @@ class EvaluationQuestionAnswerController extends BaseController
             'evaluation' => $evaluationQuestionAnswer->getPracticalSubmoduleQuestion()->getPracticalSubmodule(),
             'evaluationQuestionAnswer' => $evaluationQuestionAnswer,
             'form' => $form->createView(),
-            'navigation' => $navigationService->forEvaluation($evaluationQuestionAnswer->getPracticalSubmoduleQuestion()->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_ANSWER)
+            'navigation' => $navigationService->forPracticalSubmodule($evaluationQuestionAnswer->getPracticalSubmoduleQuestion()->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_ANSWER)
         ]);
     }
 

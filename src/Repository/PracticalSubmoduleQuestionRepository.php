@@ -40,12 +40,12 @@ class PracticalSubmoduleQuestionRepository extends ServiceEntityRepository
         }
     }
 
-    public function findOrderedForEvaluation(PracticalSubmodule $evaluation)
+    public function findOrderedForSubmodule(PracticalSubmodule $practicalSubmodule)
     {
-        return $this->createQueryBuilder('eq')
-            ->where('eq.evaluation = :evaluation')
-            ->orderBy('eq.position', 'ASC')
-            ->setParameter('evaluation', $evaluation)
+        return $this->createQueryBuilder('psq')
+            ->where('psq.practicalSubmodule = :submodule')
+            ->orderBy('psq.position', 'ASC')
+            ->setParameter('submodule', $practicalSubmodule)
             ->getQuery()->getResult();
     }
 }

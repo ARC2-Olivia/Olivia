@@ -49,7 +49,7 @@ class EvaluationQuestionController extends BaseController
             'evaluationQuestion' => $evaluationQuestion,
             'evaluation' => $evaluationQuestion->getPracticalSubmodule(),
             'form' => $form->createView(),
-            'navigation' => $this->navigationService->forEvaluation($evaluationQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_QUESTION)
+            'navigation' => $this->navigationService->forPracticalSubmodule($evaluationQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_QUESTION)
         ]);
     }
 
@@ -95,7 +95,7 @@ class EvaluationQuestionController extends BaseController
             'evaluation' => $evaluationQuestion->getPracticalSubmodule(),
             'evaluationQuestion' => $evaluationQuestion,
             'form' => $form->createView(),
-            'navigation' => $this->navigationService->forEvaluation($evaluationQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_NEW_ANSWER)
+            'navigation' => $this->navigationService->forPracticalSubmodule($evaluationQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_NEW_ANSWER)
         ]);
     }
 

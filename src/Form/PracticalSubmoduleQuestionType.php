@@ -47,7 +47,7 @@ class PracticalSubmoduleQuestionType extends AbstractType
                 'choices' => $evaluableChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
-            ->add('dependentEvaluationQuestion', EntityType::class, [
+            ->add('dependentPracticalSubmoduleQuestion', EntityType::class, [
                 'class' => PracticalSubmoduleQuestion::class,
                 'label' => 'form.entity.evaluationQuestion.label.dependentQuestion',
                 'query_builder' => $this->makeDependentQuestionQueryBuilder($builder),

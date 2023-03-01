@@ -26,19 +26,19 @@ class PracticalSubmoduleProcessorSumAggregateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('evaluationQuestions', EntityType::class, [
+            ->add('practicalSubmoduleQuestions', EntityType::class, [
                 'class' => PracticalSubmoduleQuestion::class,
                 'label' => 'form.entity.evaluationEvaluator.label.evaluationQuestion',
                 'choice_label' => 'questionText',
-                'query_builder' => $this->makeEvaluationQuestionQueryBuilder($builder),
+                'query_builder' => $this->makePracticalSubmoduleQuestionQueryBuilder($builder),
                 'attr' => ['class' => 'form-select multiple mb-3'],
                 'multiple' => true
             ])
-            ->add('evaluationEvaluators', EntityType::class, [
+            ->add('practicalSubmoduleProcessors', EntityType::class, [
                 'class' => PracticalSubmoduleProcessor::class,
                 'label' => 'form.entity.evaluationEvaluator.label.evaluationEvaluators',
                 'choice_label' => 'name',
-                'query_builder' => $this->makeEvaluationEvaluatorQueryBuilder($builder),
+                'query_builder' => $this->makePracticalSubmoduleProcessorQueryBuilder($builder),
                 'attr' => ['class' => 'form-select multiple mb-3'],
                 'multiple' => true
             ])
@@ -74,34 +74,36 @@ class PracticalSubmoduleProcessorSumAggregateType extends AbstractType
         ]);
     }
 
-    private function makeEvaluationQuestionQueryBuilder(FormBuilderInterface $builder): ?\Closure
+    private function makePracticalSubmoduleQuestionQueryBuilder(FormBuilderInterface $builder): ?\Closure
     {
-        $evaluationEvaluator = $builder->getData()?->getEvaluationEvaluator();
-        $evaluationQuestionQueryBuilder = null;
-        if ($evaluationEvaluator !== null) {
-            $evaluationQuestionQueryBuilder = function (EntityRepository $repository) use ($evaluationEvaluator) {
-                return $repository->createQueryBuilder('eq')
-                    ->where('eq.evaluation = :evaluation')
-                    ->andWhere('eq.evaluable = :evaluable')
-                    ->andWhere('eq.type IN (:types)')
-                    ->setParameters(['evaluation' => $evaluationEvaluator->getEvaluation(), 'evaluable' => true, 'types' => PracticalSubmoduleQuestion::getNumericTypes()]);
+        /** @var PracticalSubmoduleProcessor $practicalSubmoduleProcessor */
+        $practicalSubmoduleProcessor = $builder->getData()?->getPracticalSubmoduleProcessor();
+        $queryBuilder = null;
+        if ($practicalSubmoduleProcessor !== null) {
+            $queryBuilder = function (EntityRepository $repository) use ($practicalSubmoduleProcessor) {
+                return $repository->createQueryBuilder('psq')
+                    ->where('psq.practicalSubmodule = :submodule')
+                    ->andWhere('psq.evaluable = :evaluable')
+                    ->andWhere('psq.type IN (:types)')
+                    ->setParameters(['submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(), 'evaluable' => true, 'types' => PracticalSubmoduleQuestion::getNumericTypes()]);
             };
         }
-        return $evaluationQuestionQueryBuilder;
+        return $queryBuilder;
     }
 
-    private function makeEvaluationEvaluatorQueryBuilder(FormBuilderInterface $builder): ?\Closure
+    private function makePracticalSubmoduleProcessorQueryBuilder(FormBuilderInterface $builder): ?\Closure
     {
-        $evaluationEvaluator = $builder->getData()?->getEvaluationEvaluator();
-        $evaluationEvaluatorQueryBuilder = null;
-        if ($evaluationEvaluator !== null) {
-            $evaluationEvaluatorQueryBuilder = function (EntityRepository $repository) use ($evaluationEvaluator) {
-                return $repository->createQueryBuilder('ee')
-                    ->where('ee != :evaluationEvaluator')
-                    ->andWhere('ee.evaluation = :evaluation')
-                    ->setParameters(['evaluationEvaluator' => $evaluationEvaluator, 'evaluation' => $evaluationEvaluator->getEvaluation()]);
+        /** @var PracticalSubmoduleProcessor $practicalSubmoduleProcessor */
+        $practicalSubmoduleProcessor = $builder->getData()?->getPracticalSubmoduleProcessor();
+        $queryBuilder = null;
+        if ($practicalSubmoduleProcessor !== null) {
+            $queryBuilder = function (EntityRepository $repository) use ($practicalSubmoduleProcessor) {
+                return $repository->createQueryBuilder('psp')
+                    ->where('psp != :processor')
+                    ->andWhere('psp.practicalSubmodule = :submodule')
+                    ->setParameters(['processor' => $practicalSubmoduleProcessor, 'submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule()]);
             };
         }
-        return $evaluationEvaluatorQueryBuilder;
+        return $queryBuilder;
     }
 }

@@ -15,7 +15,7 @@
             <p>{{ 'evaluationQuestion.empty'|trans }}</p>
         {% endif %}
         <div class="text-end">
-            <a href="{{ path('evaluation_add_question', {'evaluation': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.question'|trans }}</a>
+            <a href="{{ path('evaluation_add_question', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.question'|trans }}</a>
         </div>
 
         <hr>
@@ -31,17 +31,17 @@
             <p>{{ 'evaluationEvaluator.empty'|trans }}</p>
         {% endif %}
         <div class="text-end">
-            <a href="{{ path('evaluation_add_evaluator', {'evaluation': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.evaluator'|trans }}</a>
+            <a href="{{ path('evaluation_add_evaluator', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'evaluation.extra.evaluator'|trans }}</a>
         </div>
 
     {% elseif is_user() %}
 
         <div class="evaluation-assessment-intro">
-            <p>{{ 'evaluationAssessment.message.1'|trans({'%questionCount%': evaluation.evaluationQuestions|length})|raw }}</p>
+            <p>{{ 'evaluationAssessment.message.1'|trans({'%questionCount%': evaluation.practicalSubmoduleQuestions|length})|raw }}</p>
             <p>{{ 'evaluationAssessment.message.2'|trans|raw }}</p>
             <p>{{ 'evaluationAssessment.message.3'|trans|raw }}</p>
             <div class="d-flex justify-content-center">
-                <form action="{{ path('evaluation_start_assessment', {'evaluation': evaluation.id}) }}" method="post">
+                <form action="{{ path('evaluation_start_assessment', {'practicalSubmodule': evaluation.id}) }}" method="post">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluationAssessment.start') }}"/>
                     <button type="submit" class="btn btn-theme-white bg-blue">{{ 'evaluationAssessment.action.start'|trans }}</button>
                 </form>

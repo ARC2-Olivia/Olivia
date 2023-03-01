@@ -11,7 +11,7 @@ use App\Form\PracticalSubmoduleProcessorType;
 use App\Form\PracticalSubmoduleQuestionType;
 use App\Form\PracticalSubmoduleType;
 use App\Repository\PracticalSubmoduleRepository;
-use App\Service\EvaluationService;
+use App\Service\PracticalSubmoduleService;
 use App\Service\NavigationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
@@ -33,24 +33,24 @@ class EvaluationController extends BaseController
     }
 
     #[Route("/", name: "index")]
-    public function index(PracticalSubmoduleRepository $evaluationRepository): Response
+    public function index(PracticalSubmoduleRepository $practicalSubmoduleRepository): Response
     {
-        $evaluations = $evaluationRepository->findAll();
-        return $this->render("evaluation/index.html.twig", ['evaluations' => $evaluations]);
+        $submodules = $practicalSubmoduleRepository->findAll();
+        return $this->render("evaluation/index.html.twig", ['evaluations' => $submodules]);
     }
 
     #[Route("/new", name: "new")]
     public function new(Request $request): Response
     {
-        $evaluation = new PracticalSubmodule();
-        $evaluation->setLocale($this->getParameter('locale.default'));
-        $form = $this->createForm(PracticalSubmoduleType::class, $evaluation, ['include_translatable_fields' => true]);
+        $practicalSubmodule = new PracticalSubmodule();
+        $practicalSubmodule->setLocale($this->getParameter('locale.default'));
+        $form = $this->createForm(PracticalSubmoduleType::class, $practicalSubmodule, ['include_translatable_fields' => true]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->persist($evaluation);
+            $this->em->persist($practicalSubmodule);
             $this->em->flush();
-            $this->processEvaluationTranslation($evaluation, $form);
+            $this->processPracticalSubmoduleTranslation($practicalSubmodule, $form);
             $this->addFlash('success', $this->translator->trans('success.evaluation.new', [], 'message'));
             return $this->redirectToRoute('evaluation_index');
         } else {
@@ -62,20 +62,20 @@ class EvaluationController extends BaseController
         return $this->render('evaluation/new.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route("/overview/{evaluation}", name: "overview")]
-    public function overview(PracticalSubmodule $evaluation, Request $request): Response
+    #[Route("/overview/{practicalSubmodule}", name: "overview")]
+    public function overview(PracticalSubmodule $practicalSubmodule, Request $request): Response
     {
         return $this->render('evaluation/overview.html.twig', [
-            'evaluation' => $evaluation,
-            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_OVERVIEW)
+            'evaluation' => $practicalSubmodule,
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_OVERVIEW)
         ]);
     }
 
-    #[Route("/edit/{evaluation}", name: "edit")]
+    #[Route("/edit/{practicalSubmodule}", name: "edit")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function edit(PracticalSubmodule $evaluation, Request $request): Response
+    public function edit(PracticalSubmodule $practicalSubmodule, Request $request): Response
     {
-        $form = $this->createForm(PracticalSubmoduleType::class, $evaluation);
+        $form = $this->createForm(PracticalSubmoduleType::class, $practicalSubmodule);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isSubmitted()) {
             $this->em->flush();
@@ -87,76 +87,76 @@ class EvaluationController extends BaseController
         }
 
         return $this->render('evaluation/edit.html.twig', [
-            'evaluation' => $evaluation,
+            'evaluation' => $practicalSubmodule,
             'form' => $form->createView(),
-            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EDIT)
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EDIT)
         ]);
     }
 
-    #[Route("/delete/{evaluation}", name: "delete")]
+    #[Route("/delete/{practicalSubmodule}", name: "delete")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function delete(PracticalSubmodule $evaluation, Request $request): Response
+    public function delete(PracticalSubmodule $practicalSubmodule, Request $request): Response
     {
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('evaluation.delete', $csrfToken)) {
-            $evaluationName = $evaluation->getName();
-            foreach ($evaluation->getPracticalSubmoduleQuestions() as $evaluationQuestion) {
-                foreach ($evaluationQuestion->getPracticalSubmoduleQuestionAnswers() as $evaluationQuestionAnswer) {
-                    $this->em->remove($evaluationQuestionAnswer);
+            $submoduleName = $practicalSubmodule->getName();
+            foreach ($practicalSubmodule->getPracticalSubmoduleQuestions() as $question) {
+                foreach ($question->getPracticalSubmoduleQuestionAnswers() as $questionAnswer) {
+                    $this->em->remove($questionAnswer);
                 }
-                $this->em->remove($evaluationQuestion);
+                $this->em->remove($question);
             }
-            $this->em->remove($evaluation);
+            $this->em->remove($practicalSubmodule);
             $this->em->flush();
-            $this->addFlash('warning', $this->translator->trans('warning.evaluation.delete', ['%evaluation%' => $evaluationName], 'message'));
+            $this->addFlash('warning', $this->translator->trans('warning.evaluation.delete', ['%evaluation%' => $submoduleName], 'message'));
             return $this->redirectToRoute('evaluation_index');
         }
 
-        return $this->redirectToRoute('evaluation_edit', ['evaluation' => $evaluation->getId()]);
+        return $this->redirectToRoute('evaluation_edit', ['practicalSubmodule' => $practicalSubmodule->getId()]);
     }
 
-    #[Route("/evaluate/{evaluation}", name: 'evaluate')]
+    #[Route("/evaluate/{practicalSubmodule}", name: 'evaluate')]
     #[IsGranted("ROLE_USER")]
-    public function evaluate(PracticalSubmodule $evaluation): Response
+    public function evaluate(PracticalSubmodule $practicalSubmodule): Response
     {
         $assessmentCompleted = false;
         if ($this->isGranted('ROLE_USER')) {
-            $evaluationAssessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['evaluation' => $evaluation, 'user' => $this->getUser()]);
-            $assessmentCompleted = $evaluationAssessment !== null && $evaluationAssessment->isCompleted();
+            $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
+            $assessmentCompleted = $assessment !== null && $assessment->isCompleted();
         }
 
-        $evaluationQuestions = $evaluationEvaluators = null;
+        $questions = $processors = null;
         if ($this->isGranted('ROLE_MODERATOR')) {
-            $evaluationQuestions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForEvaluation($evaluation);
-            $evaluationEvaluators = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findOrderedForEvaluation($evaluation);
+            $questions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForSubmodule($practicalSubmodule);
+            $processors = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findOrderedForSubmodule($practicalSubmodule);
         }
         return $this->render('evaluation/evaluate.html.twig', [
-            'evaluation' => $evaluation,
-            'evaluationQuestions' => $evaluationQuestions,
-            'evaluationEvaluators' => $evaluationEvaluators,
+            'evaluation' => $practicalSubmodule,
+            'evaluationQuestions' => $questions,
+            'evaluationEvaluators' => $processors,
             'assessmentCompleted' => $assessmentCompleted,
-            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EVALUATE)
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE)
         ]);
     }
 
-    #[Route("/evaluate/{evaluation}/add-question", name: 'add_question')]
+    #[Route("/evaluate/{practicalSubmodule}/add-question", name: 'add_question')]
     #[IsGranted("ROLE_MODERATOR")]
-    public function addEvaluationQuestion(PracticalSubmodule $evaluation, Request $request): Response
+    public function addEvaluationQuestion(PracticalSubmodule $practicalSubmodule, Request $request): Response
     {
-        $evaluationQuestion = (new PracticalSubmoduleQuestion())
-            ->setPracticalSubmodule($evaluation)
+        $question = (new PracticalSubmoduleQuestion())
+            ->setPracticalSubmodule($practicalSubmodule)
             ->setLocale($this->getParameter('locale.default'))
             ->setEvaluable(true);
 
-        $form = $this->createForm(PracticalSubmoduleQuestionType::class, $evaluationQuestion, ['include_translatable_fields' => true]);
+        $form = $this->createForm(PracticalSubmoduleQuestionType::class, $question, ['include_translatable_fields' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->persist($evaluationQuestion);
+            $this->em->persist($question);
             $this->em->flush();
-            $this->processEvaluationQuestionTranslation($evaluationQuestion, $form);
-            $this->processAutomaticEvaluationQuestionAnswerCreation($evaluationQuestion);
+            $this->processPracticalSubmoduleQuestionTranslation($question, $form);
+            $this->processAutomaticPracticalSubmoduleQuestionAnswerCreation($question);
             $this->addFlash('success', $this->translator->trans('success.evaluationQuestion.new', [], 'message'));
-            return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
+            return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
@@ -164,24 +164,24 @@ class EvaluationController extends BaseController
         }
 
         return $this->render('evaluation/evaluation_question/new.html.twig', [
-            'evaluation' => $evaluation,
+            'evaluation' => $practicalSubmodule,
             'form' => $form->createView(),
-            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EXTRA_NEW_QUESTION)
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_NEW_QUESTION)
         ]);
     }
 
-    #[Route("/evaluate/{evaluation}/add-evaluator", name: "add_evaluator")]
+    #[Route("/evaluate/{practicalSubmodule}/add-evaluator", name: "add_evaluator")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function addEvaluationEvaluator(PracticalSubmodule $evaluation, Request $request): Response
+    public function addPracticalSubmoduleProcessor(PracticalSubmodule $practicalSubmodule, Request $request): Response
     {
-        $evaluationEvaluator = (new PracticalSubmoduleProcessor())->setPracticalSubmodule($evaluation)->setIncluded(true);
-        $form = $this->createForm(PracticalSubmoduleProcessorType::class, $evaluationEvaluator);
+        $processor = (new PracticalSubmoduleProcessor())->setPracticalSubmodule($practicalSubmodule)->setIncluded(true);
+        $form = $this->createForm(PracticalSubmoduleProcessorType::class, $processor);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->persist($evaluationEvaluator);
+            $this->em->persist($processor);
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.evaluationEvaluator.new', [], 'message'));
-            return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
+            return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
@@ -189,43 +189,43 @@ class EvaluationController extends BaseController
         }
 
         return $this->render('evaluation/evaluation_evaluator/new.html.twig', [
-            'evaluation' => $evaluation,
+            'evaluation' => $practicalSubmodule,
             'form' => $form->createView(),
-            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EXTRA_NEW_EVALUATOR)
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_NEW_EVALUATOR)
         ]);
     }
 
-    #[Route("/evaluate/{evaluation}/assessment", name: "start_assessment")]
+    #[Route("/evaluate/{practicalSubmodule}/assessment", name: "start_assessment")]
     #[IsGranted("ROLE_USER")]
-    public function startAssessment(PracticalSubmodule $evaluation, Request $request, EvaluationService $evaluationService): Response
+    public function startAssessment(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
         $csrfToken = $request->get('_csrf_token');
 
         if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationAssessment.start', $csrfToken)) {
             $request->getSession()->set('evaluationAssessment.start', true);
-            $evaluationAssessment = $evaluationService->prepareEvaluationAssessment($evaluation, $this->getUser());
-            return $this->forward('App\Controller\EvaluationAssessmentController::start', ['evaluationAssessment' => $evaluationAssessment]);
+            $practicalSubmoduleAssessment = $practicalSubmoduleService->prepareAssessment($practicalSubmodule, $this->getUser());
+            return $this->forward('App\Controller\EvaluationAssessmentController::start', ['practicalSubmoduleAssessment' => $practicalSubmoduleAssessment]);
         }
 
         $this->addFlash('error', $this->translator->trans('error.evaluationAssessment.start', [], 'message'));
-        return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
+        return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
     }
 
-    #[Route("/evaluate/{evaluation}/results", name: "results")]
+    #[Route("/evaluate/{practicalSubmodule}/results", name: "results")]
     #[IsGranted("ROLE_USER")]
-    public function results(PracticalSubmodule $evaluation, EvaluationService $evaluationService): Response
+    public function results(PracticalSubmodule $practicalSubmodule, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
-        $evaluationAssessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['evaluation' => $evaluation, 'user' => $this->getUser()]);
-        $results = $evaluationService->runEvaluators($evaluationAssessment);
+        $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
+        $results = $practicalSubmoduleService->runProcessors($assessment);
         return $this->render('evaluation/results.html.twig', [
-            'evaluation' => $evaluation,
-            'evaluationAssessment' => $evaluationAssessment,
+            'evaluation' => $practicalSubmodule,
+            'evaluationAssessment' => $assessment,
             'results' => $results,
-            'navigation' => $this->navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EXTRA_RESULTS)
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_RESULTS)
         ]);
     }
 
-    private function processAutomaticEvaluationQuestionAnswerCreation(PracticalSubmoduleQuestion $evaluationQuestion)
+    private function processAutomaticPracticalSubmoduleQuestionAnswerCreation(PracticalSubmoduleQuestion $evaluationQuestion)
     {
         if ($evaluationQuestion->getType() === PracticalSubmoduleQuestion::TYPE_YES_NO) {
             $this->em->persist((new PracticalSubmoduleQuestionAnswer())->setPracticalSubmoduleQuestion($evaluationQuestion)->setAnswerText('common.yes')->setAnswerValue('1'));
@@ -234,7 +234,7 @@ class EvaluationController extends BaseController
         }
     }
 
-    private function processEvaluationTranslation(PracticalSubmodule $evaluation, \Symfony\Component\Form\FormInterface $form)
+    private function processPracticalSubmoduleTranslation(PracticalSubmodule $evaluation, \Symfony\Component\Form\FormInterface $form)
     {
         $translationRepository = $this->em->getRepository(Translation::class);
         $localeAlt = $this->getParameter('locale.alternate');
@@ -262,7 +262,7 @@ class EvaluationController extends BaseController
         if ($translated) $this->em->flush();
     }
 
-    private function processEvaluationQuestionTranslation(PracticalSubmoduleQuestion $evaluationQuestion, \Symfony\Component\Form\FormInterface $form)
+    private function processPracticalSubmoduleQuestionTranslation(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, \Symfony\Component\Form\FormInterface $form)
     {
         $translationRepository = $this->em->getRepository(Translation::class);
         $localeAlt = $this->getParameter('locale.alternate');
@@ -270,7 +270,7 @@ class EvaluationController extends BaseController
 
         $questionTextAlt = $form->get('questionTextAlt')->getData();
         if ($questionTextAlt !== null && trim($questionTextAlt) !== '') {
-            $translationRepository->translate($evaluationQuestion, 'questionText', $localeAlt, trim($questionTextAlt));
+            $translationRepository->translate($practicalSubmoduleQuestion, 'questionText', $localeAlt, trim($questionTextAlt));
             $translated = true;
         }
 

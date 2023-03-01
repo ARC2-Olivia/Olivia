@@ -62,12 +62,12 @@ class NavigationService
         return $navigation;
     }
 
-    public function forEvaluation(PracticalSubmodule $evaluation, ?int $activeNav = null): array
+    public function forPracticalSubmodule(PracticalSubmodule $practicalSubmodule, ?int $activeNav = null): array
     {
         $navigation = [
             [
                 'text' => $this->translator->trans('evaluation.nav.overview', [], 'app'),
-                'path' => $this->router->generate('evaluation_overview', ['evaluation' => $evaluation->getId()]),
+                'path' => $this->router->generate('evaluation_overview', ['practicalSubmodule' => $practicalSubmodule->getId()]),
                 'active' => $activeNav === self::EVALUATION_OVERVIEW
             ]
         ];
@@ -75,7 +75,7 @@ class NavigationService
         if ($this->security->isGranted('ROLE_USER')) {
             $navigation[] = [
                 'text' => $this->translator->trans('evaluation.nav.evaluate', [], 'app'),
-                'path' => $this->router->generate('evaluation_evaluate', ['evaluation' => $evaluation->getId()]),
+                'path' => $this->router->generate('evaluation_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]),
                 'active' => $activeNav === self::EVALUATION_EVALUATE
             ];
 
@@ -85,7 +85,7 @@ class NavigationService
         if ($this->security->isGranted('ROLE_MODERATOR')) {
             $navigation[] = [
                 'text' => $this->translator->trans('evaluation.nav.edit.default', [], 'app'),
-                'path' => $this->router->generate('evaluation_edit', ['evaluation' => $evaluation->getId()]),
+                'path' => $this->router->generate('evaluation_edit', ['practicalSubmodule' => $practicalSubmodule->getId()]),
                 'active' => $activeNav === self::EVALUATION_EDIT
             ];
 

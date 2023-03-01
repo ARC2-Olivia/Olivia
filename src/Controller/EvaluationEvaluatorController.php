@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\PracticalSubmoduleProcessor;
 use App\Form\PracticalSubmoduleProcessorType;
 use App\Repository\PracticalSubmoduleProcessorRepository;
-use App\Service\EvaluationService;
+use App\Service\PracticalSubmoduleService;
 use App\Service\NavigationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,11 +34,11 @@ class EvaluationEvaluatorController extends BaseController
 
     #[Route('/edit/{evaluationEvaluator}', name: 'edit')]
     #[IsGranted('ROLE_MODERATOR')]
-    public function edit(PracticalSubmoduleProcessor $evaluationEvaluator, Request $request, EvaluationService $evaluationService, NavigationService $navigationService): Response
+    public function edit(PracticalSubmoduleProcessor $evaluationEvaluator, Request $request, PracticalSubmoduleService $evaluationService, NavigationService $navigationService): Response
     {
-        $evaluationEvaluatorImpl = $evaluationService->getEvaluatorImplementation($evaluationEvaluator);
+        $evaluationEvaluatorImpl = $evaluationService->getProcessorImplementation($evaluationEvaluator);
         $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $evaluationEvaluator, ['edit_mode' => true]);
-        $implForm = $this->createForm($evaluationService->getEvaluatorImplementationFormClass($evaluationEvaluator), $evaluationEvaluatorImpl);
+        $implForm = $this->createForm($evaluationService->getProcessorImplementationFormClass($evaluationEvaluator), $evaluationEvaluatorImpl);
         $updated = false;
 
         $baseForm->handleRequest($request);
@@ -68,7 +68,7 @@ class EvaluationEvaluatorController extends BaseController
             'evaluationEvaluator' => $evaluationEvaluator,
             'baseForm' => $baseForm->createView(),
             'implForm' => $implForm->createView(),
-            'navigation' => $navigationService->forEvaluation($evaluationEvaluator->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_EVALUATOR)
+            'navigation' => $navigationService->forPracticalSubmodule($evaluationEvaluator->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_EVALUATOR)
         ]);
     }
 

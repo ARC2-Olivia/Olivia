@@ -5,7 +5,7 @@
     <div class="p-0">
         {% include 'evaluation/_form.html.twig' %}
         <div class="d-flex justify-content-between mt-3">
-            <form action="{{ path('evaluation_delete', {'evaluation': evaluation.id}) }}"
+            <form action="{{ path('evaluation_delete', {'practicalSubmodule': evaluation.id}) }}"
                   onsubmit="return confirm('{{ 'evaluation.delete'|trans({'%evaluation%': evaluation.name}) }}')"
                   method="post"
             >

@@ -30,7 +30,7 @@ class EvaluationAssessmentController extends BaseController
         $evaluation = $evaluationAssessment->getPracticalSubmodule();
 
         $assessment = ['id' => $evaluationAssessment->getId(), 'questions' => []];
-        $evaluationQuestions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForEvaluation($evaluation);
+        $evaluationQuestions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForSubmodule($evaluation);
         foreach ($evaluationQuestions as $evaluationQuestion) {
             $question = ['id' => $evaluationQuestion->getId(), 'type' => $evaluationQuestion->getType(), 'question' => $evaluationQuestion->getQuestionText(), 'answers' => []];
             if ($evaluationQuestion->getDependentEvaluationQuestion() !== null) {
@@ -47,7 +47,7 @@ class EvaluationAssessmentController extends BaseController
 
         return $this->render('evaluation/assessment.html.twig', [
             'evaluation' => $evaluation,
-            'navigation' => $navigationService->forEvaluation($evaluation, NavigationService::EVALUATION_EVALUATE),
+            'navigation' => $navigationService->forPracticalSubmodule($evaluation, NavigationService::EVALUATION_EVALUATE),
             'assessment' => $assessment
         ]);
     }

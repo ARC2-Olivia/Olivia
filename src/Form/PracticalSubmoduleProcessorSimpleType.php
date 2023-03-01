@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleProcessorSimple;
 use App\Entity\PracticalSubmoduleQuestion;
 use Doctrine\ORM\EntityRepository;
@@ -25,7 +26,7 @@ class PracticalSubmoduleProcessorSimpleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('evaluationQuestion', EntityType::class, [
+            ->add('practicalSubmoduleQuestion', EntityType::class, [
                 'class' => PracticalSubmoduleQuestion::class,
                 'label' => 'form.entity.evaluationEvaluator.label.evaluationQuestion',
                 'choice_label' => 'questionText',
@@ -58,16 +59,17 @@ class PracticalSubmoduleProcessorSimpleType extends AbstractType
 
     private function makeQueryBuilder(FormBuilderInterface $builder): ?\Closure
     {
-        $evaluationEvaluator = $builder->getData()?->getEvaluationEvaluator();
-        $evaluationQuestionQueryBuilder = null;
-        if ($evaluationEvaluator !== null) {
-            $evaluationQuestionQueryBuilder = function (EntityRepository $repository) use ($evaluationEvaluator) {
-                return $repository->createQueryBuilder('eq')
-                    ->where('eq.evaluation = :evaluation')
-                    ->andWhere('eq.evaluable = :evaluable')
-                    ->setParameters(['evaluation' => $evaluationEvaluator->getEvaluation(), 'evaluable' => true]);
+        /** @var PracticalSubmoduleProcessor $practicalSubmoduleProcessor */
+        $practicalSubmoduleProcessor = $builder->getData()?->getPracticalSubmoduleProcessor();
+        $queryBuilder = null;
+        if ($practicalSubmoduleProcessor !== null) {
+            $queryBuilder = function (EntityRepository $repository) use ($practicalSubmoduleProcessor) {
+                return $repository->createQueryBuilder('psq')
+                    ->where('psq.practicalSubmodule = :submodule')
+                    ->andWhere('psq.evaluable = :evaluable')
+                    ->setParameters(['submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(), 'evaluable' => true]);
             };
         }
-        return $evaluationQuestionQueryBuilder;
+        return $queryBuilder;
     }
 }
