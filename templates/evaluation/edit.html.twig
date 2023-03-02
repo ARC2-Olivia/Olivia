@@ -12,7 +12,7 @@
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluation.delete') }}"/>
                 <button type="submit" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</button>
             </form>
-            <button type="submit" form="evaluation" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+            <button type="submit" form="{{ form.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
         </div>
     </div>
 {% endblock %}

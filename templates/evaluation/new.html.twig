@@ -38,7 +38,7 @@
                     {% include 'evaluation/_form.html.twig' %}
                 </div>
                 <div class="card-actions justify-content-end">
-                    <button type="submit" class="btn btn-theme-white bg-blue" form="evaluation">{{ 'common.save'|trans }}</button>
+                    <button type="submit" class="btn btn-theme-white bg-blue" form="{{ form.vars.id }}">{{ 'common.save'|trans }}</button>
                 </div>
             </div>
         </div>

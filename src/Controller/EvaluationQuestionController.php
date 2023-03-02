@@ -28,17 +28,17 @@ class EvaluationQuestionController extends BaseController
         $this->navigationService = $navigationService;
     }
 
-    #[Route("/edit/{evaluationQuestion}", name: "edit")]
+    #[Route("/edit/{practicalSubmoduleQuestion}", name: "edit")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function edit(PracticalSubmoduleQuestion $evaluationQuestion, Request $request): Response
+    public function edit(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request): Response
     {
-        $form = $this->createForm(PracticalSubmoduleQuestionType::class, $evaluationQuestion, ['edit_mode' => true]);
+        $form = $this->createForm(PracticalSubmoduleQuestionType::class, $practicalSubmoduleQuestion, ['edit_mode' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.evaluationQuestion.edit', [], 'message'));
-            return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluationQuestion->getPracticalSubmodule()->getId()]);
+            return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $practicalSubmoduleQuestion->getPracticalSubmodule()->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
@@ -46,45 +46,48 @@ class EvaluationQuestionController extends BaseController
         }
 
         return $this->render('evaluation/evaluation_question/edit.html.twig', [
-            'evaluationQuestion' => $evaluationQuestion,
-            'evaluation' => $evaluationQuestion->getPracticalSubmodule(),
+            'evaluationQuestion' => $practicalSubmoduleQuestion,
+            'evaluation' => $practicalSubmoduleQuestion->getPracticalSubmodule(),
             'form' => $form->createView(),
-            'navigation' => $this->navigationService->forPracticalSubmodule($evaluationQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_QUESTION)
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmoduleQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_QUESTION)
         ]);
     }
 
-    #[Route("/delete/{evaluationQuestion}", name: "delete", methods: ["POST"])]
+    #[Route("/delete/{practicalSubmoduleQuestion}", name: "delete", methods: ["POST"])]
     #[IsGranted("ROLE_MODERATOR")]
-    public function delete(PracticalSubmoduleQuestion $evaluationQuestion, Request $request): Response
+    public function delete(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request): Response
     {
-        $evaluation = $evaluationQuestion->getPracticalSubmodule();
+        $evaluation = $practicalSubmoduleQuestion->getPracticalSubmodule();
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationQuestion.delete', $csrfToken)) {
-            foreach ($evaluationQuestion->getPracticalSubmoduleQuestionAnswers() as $evaluationQuestionAnswer) {
-                $this->em->remove($evaluationQuestionAnswer);
+            foreach ($practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers() as $practicalSubmoduleQuestionAnswer) {
+                $this->em->remove($practicalSubmoduleQuestionAnswer);
             }
-            $this->em->remove($evaluationQuestion);
+            $this->em->remove($practicalSubmoduleQuestion);
             $this->em->flush();
             $this->addFlash('warning', $this->translator->trans('warning.evaluationQuestion.delete', ['%evaluation%' => $evaluation->getName()], 'message'));
         }
 
-        return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
+        return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $evaluation->getId()]);
     }
 
-    #[Route("/add-weighted-answer/{evaluationQuestion}", name: "add_weighted_answer")]
+    #[Route("/add-weighted-answer/{practicalSubmoduleQuestion}", name: "add_weighted_answer")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function addWeightedAnswer(PracticalSubmoduleQuestion $evaluationQuestion, Request $request): Response
+    public function addWeightedAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request): Response
     {
-        $evaluationQuestionAnswer = (new PracticalSubmoduleQuestionAnswer())->setPracticalSubmoduleQuestion($evaluationQuestion)->setLocale($this->getParameter('locale.default'));
-        $form = $this->createForm(PracticalSubmoduleQuestionAnswerWeightedType::class, $evaluationQuestionAnswer, ['include_translatable_fields' => true]);
+        $practicalSubmoduleQuestionAnswer = (new PracticalSubmoduleQuestionAnswer())
+            ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+            ->setLocale($this->getParameter('locale.default'))
+        ;
+        $form = $this->createForm(PracticalSubmoduleQuestionAnswerWeightedType::class, $practicalSubmoduleQuestionAnswer, ['include_translatable_fields' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->persist($evaluationQuestionAnswer);
+            $this->em->persist($practicalSubmoduleQuestionAnswer);
             $this->em->flush();
-            $this->processEvaluationQuestionAnswerTranslation($evaluationQuestionAnswer, $form);
+            $this->processPracticalSubmoduleQuestionAnswerTranslation($practicalSubmoduleQuestionAnswer, $form);
             $this->addFlash('success', $this->translator->trans('success.evaluationQuestionAnswer.new', [], 'message'));
-            return $this->redirectToRoute('evaluation_question_edit', ['evaluationQuestion' => $evaluationQuestion->getId()]);
+            return $this->redirectToRoute('evaluation_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $error->getMessage());
@@ -92,22 +95,22 @@ class EvaluationQuestionController extends BaseController
         }
 
         return $this->render('evaluation/evaluation_question/evaluation_question_answer/new.html.twig', [
-            'evaluation' => $evaluationQuestion->getPracticalSubmodule(),
-            'evaluationQuestion' => $evaluationQuestion,
+            'evaluation' => $practicalSubmoduleQuestion->getPracticalSubmodule(),
+            'evaluationQuestion' => $practicalSubmoduleQuestion,
             'form' => $form->createView(),
-            'navigation' => $this->navigationService->forPracticalSubmodule($evaluationQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_NEW_ANSWER)
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmoduleQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_NEW_ANSWER)
         ]);
     }
 
     #[Route("/reorder", name: "reorder", methods: ["POST"])]
     #[IsGranted("ROLE_MODERATOR")]
-    public function reorder(Request $request, PracticalSubmoduleQuestionRepository $evaluationQuestionRepository): Response
+    public function reorder(Request $request, PracticalSubmoduleQuestionRepository $practicalSubmoduleQuestionRepository): Response
     {
         $data = json_decode($request->getContent());
         if ($data !== null && isset($data->reorders) && !empty($data->reorders)) {
             foreach ($data->reorders as $reorder) {
-                $evaluationQuestion = $evaluationQuestionRepository->find($reorder->id);
-                $evaluationQuestion->setPosition(intval($reorder->position));
+                $practicalSubmoduleQuestion = $practicalSubmoduleQuestionRepository->find($reorder->id);
+                $practicalSubmoduleQuestion->setPosition(intval($reorder->position));
             }
             $this->em->flush();
             return new JsonResponse(['status' => 'success']);
@@ -116,7 +119,7 @@ class EvaluationQuestionController extends BaseController
         return new JsonResponse(['status' => 'fail']);
     }
 
-    private function processEvaluationQuestionAnswerTranslation(PracticalSubmoduleQuestionAnswer $evaluationQuestionAnswer, \Symfony\Component\Form\FormInterface $form)
+    private function processPracticalSubmoduleQuestionAnswerTranslation(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, \Symfony\Component\Form\FormInterface $form)
     {
         $translationRepository = $this->em->getRepository(Translation::class);
         $localeAlt = $this->getParameter('locale.alternate');
@@ -124,7 +127,7 @@ class EvaluationQuestionController extends BaseController
 
         $answerTextAlt = $form->get('answerTextAlt')->getData();
         if ($answerTextAlt !== null && trim($answerTextAlt) !== '') {
-            $translationRepository->translate($evaluationQuestionAnswer, 'answerText', $localeAlt, trim($answerTextAlt));
+            $translationRepository->translate($practicalSubmoduleQuestionAnswer, 'answerText', $localeAlt, trim($answerTextAlt));
             $translated = true;
         }
 

@@ -9,23 +9,23 @@
 
     {% if evaluationQuestion.type == constant('TYPE_WEIGHTED', evaluationQuestion) %}
         <hr>
-        {% if evaluationQuestion.evaluationQuestionAnswers.count > 0 %}
+        {% if evaluationQuestion.practicalSubmoduleQuestionAnswers.count > 0 %}
             <ul class="mod--evaluation-question-answers">
-                {% for evaluationQuestionAnswer in evaluationQuestion.evaluationQuestionAnswers %}
+                {% for evaluationQuestionAnswer in evaluationQuestion.practicalSubmoduleQuestionAnswers %}
                     <li class="mod--evaluation-question-answer">
                         <div class="mod--evaluation-question-answer-details">
                             <div class="mod--evaluation-question-answer-text">{{ evaluationQuestionAnswer.answerText }}</div>
                             <div class="mod--evaluation-question-answer-value">{{ evaluationQuestionAnswer.answerValue }}</div>
                         </div>
                         <div class="mod--evaluation-question-actions">
-                            <form action="{{ path('evaluation_question_answer_delete', {'evaluationQuestionAnswer': evaluationQuestionAnswer.id}) }}"
+                            <form action="{{ path('evaluation_question_answer_delete', {'practicalSubmoduleQuestionAnswer': evaluationQuestionAnswer.id}) }}"
                                   method="post"
                                   onsubmit="return confirm('{{ 'evaluationQuestionAnswer.delete'|trans }}')"
                             >
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluationQuestionAnswer.delete') }}"/>
                                 <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
                             </form>
-                            <a href="{{ path('evaluation_question_answer_edit', {'evaluationQuestionAnswer': evaluationQuestionAnswer.id}) }}"
+                            <a href="{{ path('evaluation_question_answer_edit', {'practicalSubmoduleQuestionAnswer': evaluationQuestionAnswer.id}) }}"
                                class="btn btn-sm btn-round btn-theme-white bg-green"
                             >
                                 {{ mdi('pencil') }}
@@ -36,7 +36,7 @@
             </ul>
         {% endif %}
         <div class="text-end">
-            <a href="{{ path('evaluation_question_add_weighted_answer', {'evaluationQuestion': evaluationQuestion.id}) }}" class="btn btn-link btn-sm">
+            <a href="{{ path('evaluation_question_add_weighted_answer', {'practicalSubmoduleQuestion': evaluationQuestion.id}) }}" class="btn btn-link btn-sm">
                 {{ mdi('plus') }} {{ 'evaluation.extra.answer'|trans }}
             </a>
         </div>

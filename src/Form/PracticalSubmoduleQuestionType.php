@@ -96,20 +96,20 @@ class PracticalSubmoduleQuestionType extends AbstractType
 
     private function makeDependentQuestionQueryBuilder(FormBuilderInterface $builder): \Closure|null
     {
-        /** @var PracticalSubmoduleQuestion $evaluationQuestion */
-        $evaluationQuestion = $builder->getData();
-        $evaluation = $evaluationQuestion?->getPracticalSubmodule();
+        /** @var PracticalSubmoduleQuestion $practicalSubmoduleQuestion */
+        $practicalSubmoduleQuestion = $builder->getData();
+        $practicalSubmodule = $practicalSubmoduleQuestion?->getPracticalSubmodule();
 
         $queryBuilder = null;
-        if ($evaluationQuestion !== null && $evaluation !== null) {
-            $queryBuilder = function (EntityRepository $repository) use ($evaluationQuestion) {
-                $qb = $repository->createQueryBuilder('eq')
-                    ->where('eq.evaluation = :evaluation')
-                    ->setParameter('evaluation', $evaluationQuestion->getPracticalSubmodule())
+        if ($practicalSubmoduleQuestion !== null && $practicalSubmodule !== null) {
+            $queryBuilder = function (EntityRepository $repository) use ($practicalSubmoduleQuestion) {
+                $qb = $repository->createQueryBuilder('psq')
+                    ->where('psq.practicalSubmodule = :submodule')
+                    ->setParameter('submodule', $practicalSubmoduleQuestion->getPracticalSubmodule())
                 ;
 
-                if ($evaluationQuestion->getId() !== null) {
-                    $qb->andWhere('eq != :evaluationQuestion')->setParameter('evaluationQuestion', $evaluationQuestion);
+                if ($practicalSubmoduleQuestion->getId() !== null) {
+                    $qb->andWhere('psq != :question')->setParameter('question', $practicalSubmoduleQuestion);
                 }
 
                 return $qb;

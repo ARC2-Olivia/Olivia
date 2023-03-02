@@ -4,7 +4,7 @@
 {% block evaluationContent %}
     {% include 'evaluation/evaluation_question/evaluation_question_answer/_form.html.twig' %}
     <div class="text-end">
-        <a href="{{ path('evaluation_question_edit', {'evaluationQuestion': evaluationQuestion.id}) }}" class="btn btn-link me-2">{{ 'common.cancel'|trans }}</a>
+        <a href="{{ path('evaluation_question_edit', {'practicalSubmoduleQuestion': evaluationQuestion.id}) }}" class="btn btn-link me-2">{{ 'common.cancel'|trans }}</a>
         <button type="submit" form="{{ form.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
     </div>
 {% endblock %}

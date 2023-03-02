@@ -13,11 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route("/evaluation-question-answer", name: "evaluation_question_answer_")]
 class EvaluationQuestionAnswerController extends BaseController
 {
-    #[Route("/edit-weighted/{evaluationQuestionAnswer}", name: "edit")]
+    #[Route("/edit-weighted/{practicalSubmoduleQuestionAnswer}", name: "edit")]
     #[IsGranted('ROLE_MODERATOR')]
-    public function editWeighted(PracticalSubmoduleQuestionAnswer $evaluationQuestionAnswer, Request $request, NavigationService $navigationService): Response
+    public function editWeighted(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request, NavigationService $navigationService): Response
     {
-        $form = $this->createForm(PracticalSubmoduleQuestionAnswerWeightedType::class, $evaluationQuestionAnswer);
+        $form = $this->createForm(PracticalSubmoduleQuestionAnswerWeightedType::class, $practicalSubmoduleQuestionAnswer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -30,24 +30,24 @@ class EvaluationQuestionAnswerController extends BaseController
         }
 
         return $this->render('evaluation/evaluation_question/evaluation_question_answer/edit.html.twig', [
-            'evaluation' => $evaluationQuestionAnswer->getPracticalSubmoduleQuestion()->getPracticalSubmodule(),
-            'evaluationQuestionAnswer' => $evaluationQuestionAnswer,
+            'evaluation' => $practicalSubmoduleQuestionAnswer->getPracticalSubmoduleQuestion()->getPracticalSubmodule(),
+            'evaluationQuestionAnswer' => $practicalSubmoduleQuestionAnswer,
             'form' => $form->createView(),
-            'navigation' => $navigationService->forPracticalSubmodule($evaluationQuestionAnswer->getPracticalSubmoduleQuestion()->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_ANSWER)
+            'navigation' => $navigationService->forPracticalSubmodule($practicalSubmoduleQuestionAnswer->getPracticalSubmoduleQuestion()->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_ANSWER)
         ]);
     }
 
-    #[Route("/delete/{evaluationQuestionAnswer}", name: "delete", methods: ["POST"])]
-    public function delete(PracticalSubmoduleQuestionAnswer $evaluationQuestionAnswer, Request $request): Response
+    #[Route("/delete/{practicalSubmoduleQuestionAnswer}", name: "delete", methods: ["POST"])]
+    public function delete(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request): Response
     {
-        $evaluationQuestion = $evaluationQuestionAnswer->getPracticalSubmoduleQuestion();
+        $practicalSubmoduleQuestion = $practicalSubmoduleQuestionAnswer->getPracticalSubmoduleQuestion();
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationQuestionAnswer.delete', $csrfToken)) {
-            $this->em->remove($evaluationQuestionAnswer);
+            $this->em->remove($practicalSubmoduleQuestionAnswer);
             $this->em->flush();
             $this->addFlash('warning', $this->translator->trans('warning.evaluationQuestionAnswer.delete', [], 'message'));
         }
 
-        return $this->redirectToRoute('evaluation_question_edit', ['evaluationQuestion' => $evaluationQuestion->getId()]);
+        return $this->redirectToRoute('evaluation_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
     }
 }
