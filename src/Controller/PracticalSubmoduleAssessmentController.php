@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/practical-submodule-assessment", name: "evaluation_assessment_")]
-class EvaluationAssessmentController extends BaseController
+#[Route("/practical-submodule-assessment", name: "practical_submodule_assessment_")]
+class PracticalSubmoduleAssessmentController extends BaseController
 {
     #[Route("/start/{practicalSubmoduleAssessment}", name: "start")]
     #[IsGranted("ROLE_USER")]
@@ -23,7 +23,7 @@ class EvaluationAssessmentController extends BaseController
         $allowedToStart = $session->has('evaluationAssessment.start') && $session->get('evaluationAssessment.start') === true;
         if (!$allowedToStart) {
             $this->addFlash('error', $this->translator->trans('error.evaluationAssessment.start', [], 'message'));
-            return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $practicalSubmoduleAssessment->getPracticalSubmodule()->getId()]);
+            return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmoduleAssessment->getPracticalSubmodule()->getId()]);
         }
         $session->remove('evaluationAssessment.start');
 
@@ -99,7 +99,7 @@ class EvaluationAssessmentController extends BaseController
             $this->addFlash('error', $this->translator->trans('error.evaluationAssessment.finish', [], 'message'));
         }
 
-        return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $practicalSubmoduleAssessment->getPracticalSubmodule()->getId()]);
+        return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmoduleAssessment->getPracticalSubmodule()->getId()]);
     }
 
     private function storeAnswer(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, PracticalSubmoduleQuestion $practicalSubmoduleQuestion, string $givenAnswer): void

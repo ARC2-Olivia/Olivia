@@ -6,7 +6,7 @@
 {% block evaluationContent %}
     <form id="evaluation_assessment"
           class="evaluation-assessment"
-          action="{{ path('evaluation_assessment_finish', {'practicalSubmoduleAssessment': assessment.id}) }}"
+          action="{{ path('practical_submodule_assessment_finish', {'practicalSubmoduleAssessment': assessment.id}) }}"
           method="post"
     >
         <input type="hidden" name="_csrf_token" value="{{ csrf_token("evaluationAssessment.finish") }}"/>

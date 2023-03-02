@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/practical-submodule-processor', name: 'evaluation_evaluator_')]
-class EvaluationEvaluatorController extends BaseController
+#[Route('/practical-submodule-processor', name: 'practical_submodule_processor_')]
+class PracticalSubmoduleProcessorController extends BaseController
 {
     #[Route('/delete/{practicalSubmoduleProcessor}', name: 'delete')]
     #[IsGranted('ROLE_MODERATOR')]
@@ -29,7 +29,7 @@ class EvaluationEvaluatorController extends BaseController
             $this->addFlash('warning', $this->translator->trans('warning.evaluationEvaluator.delete', [], 'message'));
         }
 
-        return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $evaluation->getId()]);
+        return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $evaluation->getId()]);
     }
 
     #[Route('/edit/{practicalSubmoduleProcessor}', name: 'edit')]

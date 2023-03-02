@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route("/practical-submodule-question", name: "evaluation_question_")]
-class EvaluationQuestionController extends BaseController
+#[Route("/practical-submodule-question", name: "practical_submodule_question_")]
+class PracticalSubmoduleQuestionController extends BaseController
 {
     private ?NavigationService $navigationService = null;
 
@@ -38,7 +38,7 @@ class EvaluationQuestionController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.evaluationQuestion.edit', [], 'message'));
-            return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $practicalSubmoduleQuestion->getPracticalSubmodule()->getId()]);
+            return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmoduleQuestion->getPracticalSubmodule()->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
@@ -68,7 +68,7 @@ class EvaluationQuestionController extends BaseController
             $this->addFlash('warning', $this->translator->trans('warning.evaluationQuestion.delete', ['%evaluation%' => $evaluation->getName()], 'message'));
         }
 
-        return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $evaluation->getId()]);
+        return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $evaluation->getId()]);
     }
 
     #[Route("/add-weighted-answer/{practicalSubmoduleQuestion}", name: "add_weighted_answer")]
@@ -87,7 +87,7 @@ class EvaluationQuestionController extends BaseController
             $this->em->flush();
             $this->processPracticalSubmoduleQuestionAnswerTranslation($practicalSubmoduleQuestionAnswer, $form);
             $this->addFlash('success', $this->translator->trans('success.evaluationQuestionAnswer.new', [], 'message'));
-            return $this->redirectToRoute('evaluation_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
+            return $this->redirectToRoute('practical_submodule_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $error->getMessage());

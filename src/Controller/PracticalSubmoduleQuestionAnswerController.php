@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/practical-submodule-question-answer", name: "evaluation_question_answer_")]
-class EvaluationQuestionAnswerController extends BaseController
+#[Route("/practical-submodule-question-answer", name: "practical_submodule_question_answer_")]
+class PracticalSubmoduleQuestionAnswerController extends BaseController
 {
     #[Route("/edit-weighted/{practicalSubmoduleQuestionAnswer}", name: "edit")]
     #[IsGranted('ROLE_MODERATOR')]
@@ -48,6 +48,6 @@ class EvaluationQuestionAnswerController extends BaseController
             $this->addFlash('warning', $this->translator->trans('warning.evaluationQuestionAnswer.delete', [], 'message'));
         }
 
-        return $this->redirectToRoute('evaluation_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
+        return $this->redirectToRoute('practical_submodule_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
     }
 }
