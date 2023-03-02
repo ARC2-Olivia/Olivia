@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route("/evaluation-question", name: "evaluation_question_")]
+#[Route("/practical-submodule-question", name: "evaluation_question_")]
 class EvaluationQuestionController extends BaseController
 {
     private ?NavigationService $navigationService = null;

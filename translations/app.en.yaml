@@ -46,10 +46,10 @@ page:
         show: Olivia | Lesson content
     admin: Olivia | Admin
     evaluation:
-        index: Olivia | Evaluations
-        new: Olivia | New evaluation
-        show: Olivia | Evaluation details
-        assessment: Olivia | Evaluation assessment
+        index: Olivia | Practical submodules
+        new: Olivia | New practical submodule
+        show: Olivia | Practical submodule details
+        assessment: Olivia | Practical submodule assessment
 
 nav:
     training: Training
@@ -145,7 +145,7 @@ form:
                 type: Question type
                 questionText: Question text
                 questionTextAlt: Question text (alternate language)
-                evaluable: Used in evaluation
+                evaluable: Used in assessment
                 dependentQuestion: Dependent question
                 dependentValue: Dependent question value
             placeholder:
@@ -159,20 +159,20 @@ form:
                     answerValue: Weight
         evaluationEvaluator:
             label:
-                type: Evaluator type
-                name: Evaluator name
+                type: Processor type
+                name: Processor name
                 included: Include in the result calculation
-                evaluationQuestion: Evaluation question
-                evaluationQuestions: Evaluation questions
-                evaluationEvaluators: Evaluation evaluators
+                evaluationQuestion: Question
+                evaluationQuestions: Questions
+                evaluationEvaluators: Processors
                 expectedValue: Expected value
                 expectedValueRange:
                     start: Expected value (start of the range)
                     end: Expected value (end of the range)
                 resultText: Result text
             placeholder:
-                name: Name of the evaluator for easier identification
-                resultText: What text will the evaluator return when the evaluation succeeds?
+                name: Name of the processor for easier identification
+                resultText: What text will the processor return as a result?
                 evaluationQuestion: Choose a question...
 
 user:
@@ -245,28 +245,28 @@ note:
         displayError: There has been an problem loading the notes widget. Refresh the page to try and load it again or, if the problem persists, report the problem to the Olivia Team.
 
 evaluation:
-    delete: Are you sure you want to delete the evaluation \'%evaluation%\'?
+    delete: Are you sure you want to delete the practical submodule \'%evaluation%\'?
     title:
-        index: Evaluations
-        new: New evaluation
+        index: Practical submodules
+        new: New practical submodule
     nav:
         overview: Overview
-        evaluate: Evaluate
+        evaluate: Assessment
         results: Results
         edit:
             default: Edit
             question: Edit question
-            evaluator: Edit evaluator
+            evaluator: Edit processor
             answer: Edit answer
         new:
             question: New question
-            evaluator: New evaluator
+            evaluator: New processor
             answer: New answer
     extra:
         question: Question
         questions: Questions
-        evaluator: Evaluator
-        evaluators: Evaluators
+        evaluator: Processor
+        evaluators: Processors
         answer: Answer
         results:
             empty: Nothing to show.
@@ -277,30 +277,30 @@ evaluationQuestion:
         yesNo: Yes/No
         weighted: Weighted
         numericalInput: Numerical input
-    delete: Are you sure you want to delete this evaluation question?
-    empty: There are no defined questions for this evaluation.
+    delete: Are you sure you want to delete this question?
+    empty: There are no defined questions for this submodule.
 
 evaluationQuestionAnswer:
-    delete: Are you sure you want to delete this evaluation question answer?
+    delete: Are you sure you want to delete this question answer?
 
 evaluationEvaluator:
     type:
         simple: Simple
         sumAggregate: Sum aggregate
         productAggregate: Product aggregate
-    delete: Are you sure you want to delete this evaluator?
-    empty: There are no defined evaluators for this evaluation.
+    delete: Are you sure you want to delete this processor?
+    empty: There are no defined processors for this submodule.
     heading:
         basicOptions: Basic options
-        specificOptions: Evaluator specific options
+        specificOptions: Processor specific options
 
 evaluationAssessment:
     message:
         1: This evaluation contains <b>%questionCount%</b> questions. Some questions will only appear if you answered one of the previous questions in a specific way.
-        2: Evaluation can be retried as many times as wanted or needed.
-        3: Click on the <i>Start evaluation</i> button to start the evaluation.
+        2: Assessment can be retried as many times as wanted or needed.
+        3: Click on the <i>Start assessment</i> button to start the evaluation.
     action:
-        start: Start evaluation
+        start: Start assessment
         results: View results
 
 extra:

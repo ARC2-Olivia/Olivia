@@ -37,7 +37,7 @@
     {% elseif is_user() %}
 
         <div class="evaluation-assessment-intro">
-            <p>{{ 'evaluationAssessment.message.1'|trans({'%questionCount%': evaluation.practicalSubmoduleQuestions|length})|raw }}</p>
+            <p>{{ 'evaluationAssessment.message.1'|trans({'%questionCount%': questionCount})|raw }}</p>
             <p>{{ 'evaluationAssessment.message.2'|trans|raw }}</p>
             <p>{{ 'evaluationAssessment.message.3'|trans|raw }}</p>
             <div class="d-flex justify-content-center">
@@ -46,7 +46,7 @@
                     <button type="submit" class="btn btn-theme-white bg-blue">{{ 'evaluationAssessment.action.start'|trans }}</button>
                 </form>
                 {% if assessmentCompleted %}
-                    <a href="{{ path('evaluation_results', {'evaluation': evaluation.id}) }}" class="btn btn-theme-white bg-red ms-3">{{ 'button.results'|trans }}</a>
+                    <a href="{{ path('evaluation_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-red ms-3">{{ 'button.results'|trans }}</a>
                 {% endif %}
             </div>
         </div>

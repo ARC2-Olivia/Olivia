@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/evaluation-question-answer", name: "evaluation_question_answer_")]
+#[Route("/practical-submodule-question-answer", name: "evaluation_question_answer_")]
 class EvaluationQuestionAnswerController extends BaseController
 {
     #[Route("/edit-weighted/{practicalSubmoduleQuestionAnswer}", name: "edit")]

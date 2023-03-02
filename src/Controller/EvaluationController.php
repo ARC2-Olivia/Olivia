@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route("/evaluation", name: "evaluation_")]
+#[Route("/practical-submodule", name: "evaluation_")]
 class EvaluationController extends BaseController
 {
     private ?NavigationService $navigationService = null;
@@ -135,7 +135,8 @@ class EvaluationController extends BaseController
             'evaluationQuestions' => $questions,
             'evaluationEvaluators' => $processors,
             'assessmentCompleted' => $assessmentCompleted,
-            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE)
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE),
+            'questionCount' => $this->em->getRepository(PracticalSubmoduleQuestion::class)->count(['practicalSubmodule' => $practicalSubmodule])
         ]);
     }
 

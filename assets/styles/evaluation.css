@@ -192,7 +192,7 @@ ul.mod--evaluation-question-answers {
     align-items: start;
 }
 
-.evaluation-assessment-question-answer :is(input, span) {
+.evaluation-assessment-question-answer :is(input[type="radio"], span) {
     flex-basis: 0;
 }
 

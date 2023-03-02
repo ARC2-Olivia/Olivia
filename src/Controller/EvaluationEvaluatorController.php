@@ -13,32 +13,36 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/evaluation-evaluator', name: 'evaluation_evaluator_')]
+#[Route('/practical-submodule-processor', name: 'evaluation_evaluator_')]
 class EvaluationEvaluatorController extends BaseController
 {
-    #[Route('/delete/{evaluationEvaluator}', name: 'delete')]
+    #[Route('/delete/{practicalSubmoduleProcessor}', name: 'delete')]
     #[IsGranted('ROLE_MODERATOR')]
-    public function delete(PracticalSubmoduleProcessor $evaluationEvaluator, Request $request): Response
+    public function delete(PracticalSubmoduleProcessor $practicalSubmoduleProcessor, Request $request): Response
     {
-        $evaluation = $evaluationEvaluator->getPracticalSubmodule();
+        $evaluation = $practicalSubmoduleProcessor->getPracticalSubmodule();
 
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationEvaluator.delete', $csrfToken)) {
-            $this->em->remove($evaluationEvaluator);
+            $this->em->remove($practicalSubmoduleProcessor);
             $this->em->flush();
             $this->addFlash('warning', $this->translator->trans('warning.evaluationEvaluator.delete', [], 'message'));
         }
 
-        return $this->redirectToRoute('evaluation_evaluate', ['evaluation' => $evaluation->getId()]);
+        return $this->redirectToRoute('evaluation_evaluate', ['practicalSubmodule' => $evaluation->getId()]);
     }
 
-    #[Route('/edit/{evaluationEvaluator}', name: 'edit')]
+    #[Route('/edit/{practicalSubmoduleProcessor}', name: 'edit')]
     #[IsGranted('ROLE_MODERATOR')]
-    public function edit(PracticalSubmoduleProcessor $evaluationEvaluator, Request $request, PracticalSubmoduleService $evaluationService, NavigationService $navigationService): Response
+    public function edit(PracticalSubmoduleProcessor $practicalSubmoduleProcessor,
+                         PracticalSubmoduleService $practicalSubmoduleService,
+                         NavigationService $navigationService,
+                         Request $request,
+    ): Response
     {
-        $evaluationEvaluatorImpl = $evaluationService->getProcessorImplementation($evaluationEvaluator);
-        $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $evaluationEvaluator, ['edit_mode' => true]);
-        $implForm = $this->createForm($evaluationService->getProcessorImplementationFormClass($evaluationEvaluator), $evaluationEvaluatorImpl);
+        $processorImpl = $practicalSubmoduleService->getProcessorImplementation($practicalSubmoduleProcessor);
+        $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $practicalSubmoduleProcessor, ['edit_mode' => true]);
+        $implForm = $this->createForm($practicalSubmoduleService->getProcessorImplementationFormClass($practicalSubmoduleProcessor), $processorImpl);
         $updated = false;
 
         $baseForm->handleRequest($request);
@@ -53,7 +57,7 @@ class EvaluationEvaluatorController extends BaseController
 
         $implForm->handleRequest($request);
         if ($implForm->isSubmitted() && $implForm->isValid()) {
-            if ($evaluationEvaluatorImpl->getId() === null) $this->em->persist($evaluationEvaluatorImpl);
+            if ($processorImpl->getId() === null) $this->em->persist($processorImpl);
             $this->em->flush();
             $updated = true;
         } else {
@@ -64,23 +68,23 @@ class EvaluationEvaluatorController extends BaseController
 
         if ($updated === true) $this->addFlash('success', $this->translator->trans('success.evaluationEvaluator.edit', [], 'message'));
         return $this->render('evaluation/evaluation_evaluator/edit.html.twig', [
-            'evaluation' => $evaluationEvaluator->getPracticalSubmodule(),
-            'evaluationEvaluator' => $evaluationEvaluator,
+            'evaluation' => $practicalSubmoduleProcessor->getPracticalSubmodule(),
+            'evaluationEvaluator' => $practicalSubmoduleProcessor,
             'baseForm' => $baseForm->createView(),
             'implForm' => $implForm->createView(),
-            'navigation' => $navigationService->forPracticalSubmodule($evaluationEvaluator->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_EVALUATOR)
+            'navigation' => $navigationService->forPracticalSubmodule($practicalSubmoduleProcessor->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_EVALUATOR)
         ]);
     }
 
     #[Route("/reorder", name: "reorder", methods: ["POST"])]
     #[IsGranted("ROLE_MODERATOR")]
-    public function reorder(Request $request, PracticalSubmoduleProcessorRepository $evaluationEvaluatorRepository): Response
+    public function reorder(Request $request, PracticalSubmoduleProcessorRepository $practicalSubmoduleProcessorRepository): Response
     {
         $data = json_decode($request->getContent());
         if ($data !== null && isset($data->reorders) && !empty($data->reorders)) {
             foreach ($data->reorders as $reorder) {
-                $evaluationEvaluator = $evaluationEvaluatorRepository->find($reorder->id);
-                $evaluationEvaluator->setPosition($reorder->position);
+                $practicalSubmoduleProcessor = $practicalSubmoduleProcessorRepository->find($reorder->id);
+                $practicalSubmoduleProcessor->setPosition($reorder->position);
             }
             $this->em->flush();
             return new JsonResponse(['status' => 'success']);

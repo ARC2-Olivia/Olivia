@@ -11,12 +11,12 @@
     </div>
     <hr>
     <div class="evaluation-assessment-data">
-        {% for assessmentAnswer in evaluationAssessment.evaluationAssessmentAnswers %}
+        {% for assessmentAnswer in evaluationAssessment.practicalSubmoduleAssessmentAnswers %}
             <div class="evaluation-assessment-datum">
-                <div class="evaluation-assessment-datum-question">{{ assessmentAnswer.evaluationQuestion.questionText }}</div>
+                <div class="evaluation-assessment-datum-question">{{ assessmentAnswer.practicalSubmoduleQuestion.questionText }}</div>
                 <div class="evaluation-assessment-datum-answer">
-                    {% if assessmentAnswer.evaluationQuestionAnswer is not null %}
-                        {{ assessmentAnswer.evaluationQuestionAnswer.answerText|trans|nl2br }}
+                    {% if assessmentAnswer.practicalSubmoduleQuestionAnswer is not null %}
+                        {{ assessmentAnswer.practicalSubmoduleQuestionAnswer.answerText|trans|nl2br }}
                     {% else %}
                         {{ assessmentAnswer.answerValue }}
                     {% endif %}
