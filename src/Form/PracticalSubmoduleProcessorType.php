@@ -22,9 +22,9 @@ class PracticalSubmoduleProcessorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $typeChoices = [
-            $this->translator->trans('evaluationEvaluator.type.simple', [], 'app') => PracticalSubmoduleProcessor::TYPE_SIMPLE,
-            $this->translator->trans('evaluationEvaluator.type.sumAggregate', [], 'app') => PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE,
-            $this->translator->trans('evaluationEvaluator.type.productAggregate', [], 'app') => PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE
+            $this->translator->trans('practicalSubmoduleProcessor.type.simple', [], 'app') => PracticalSubmoduleProcessor::TYPE_SIMPLE,
+            $this->translator->trans('practicalSubmoduleProcessor.type.sumAggregate', [], 'app') => PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE,
+            $this->translator->trans('practicalSubmoduleProcessor.type.productAggregate', [], 'app') => PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE
         ];
 
         $includedChoices = [
@@ -34,7 +34,7 @@ class PracticalSubmoduleProcessorType extends AbstractType
 
         if ($options['edit_mode'] === false) {
             $builder->add('type', ChoiceType::class, [
-                'label' => 'form.entity.evaluationEvaluator.label.type',
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.type',
                 'choices' => $typeChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ]);
@@ -42,11 +42,11 @@ class PracticalSubmoduleProcessorType extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
-                'label' => 'form.entity.evaluationEvaluator.label.name',
-                'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.evaluationEvaluator.placeholder.name', [], 'app')]
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.name',
+                'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleProcessor.placeholder.name', [], 'app')]
             ])
             ->add('included', ChoiceType::class, [
-                'label' => 'form.entity.evaluationEvaluator.label.included',
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.included',
                 'choices' => $includedChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])

@@ -27,7 +27,7 @@ class PracticalSubmoduleProcessor
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'error.evaluationEvaluator.name')]
+    #[Assert\NotBlank(message: 'error.practicalSubmoduleProcessor.name')]
     private ?string $name = null;
 
     #[ORM\Column(nullable: true)]

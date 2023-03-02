@@ -19,12 +19,12 @@ class PracticalSubmodule extends TranslatableEntity
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "error.evaluation.name")]
+    #[Assert\NotBlank(message: "error.practicalSubmodule.name")]
     #[Gedmo\Translatable]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: "error.evaluation.description")]
+    #[Assert\NotBlank(message: "error.practicalSubmodule.description")]
     #[Gedmo\Translatable]
     private ?string $description = null;
 

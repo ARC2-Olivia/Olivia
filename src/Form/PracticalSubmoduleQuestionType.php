@@ -26,12 +26,12 @@ class PracticalSubmoduleQuestionType extends AbstractType
     {
         if ($options['edit_mode'] === false) {
             $typeChoices = [
-                $this->translator->trans('evaluationQuestion.type.yesNo', [], 'app') => PracticalSubmoduleQuestion::TYPE_YES_NO,
-                $this->translator->trans('evaluationQuestion.type.weighted', [], 'app') => PracticalSubmoduleQuestion::TYPE_WEIGHTED,
-                $this->translator->trans('evaluationQuestion.type.numericalInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT
+                $this->translator->trans('practicalSubmoduleQuestion.type.yesNo', [], 'app') => PracticalSubmoduleQuestion::TYPE_YES_NO,
+                $this->translator->trans('practicalSubmoduleQuestion.type.weighted', [], 'app') => PracticalSubmoduleQuestion::TYPE_WEIGHTED,
+                $this->translator->trans('practicalSubmoduleQuestion.type.numericalInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT
             ];
             $builder->add('type', ChoiceType::class, [
-                'label' => 'form.entity.evaluationQuestion.label.type',
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.type',
                 'choices' => $typeChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ]);
@@ -43,27 +43,27 @@ class PracticalSubmoduleQuestionType extends AbstractType
         ];
         $builder
             ->add('evaluable', ChoiceType::class, [
-                'label' => 'form.entity.evaluationQuestion.label.evaluable',
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.evaluable',
                 'choices' => $evaluableChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('dependentPracticalSubmoduleQuestion', EntityType::class, [
                 'class' => PracticalSubmoduleQuestion::class,
-                'label' => 'form.entity.evaluationQuestion.label.dependentQuestion',
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.dependentQuestion',
                 'query_builder' => $this->makeDependentQuestionQueryBuilder($builder),
                 'choice_label' => 'questionText',
-                'placeholder' => 'form.entity.evaluationQuestion.placeholder.dependentEvaluationQuestion',
+                'placeholder' => 'form.entity.practicalSubmoduleQuestion.placeholder.dependentEvaluationQuestion',
                 'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('dependentValue', TextType::class, [
-                'label' => 'form.entity.evaluationQuestion.label.dependentValue',
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.dependentValue',
                 'attr' => ['class' => 'form-input mb-3']
             ])
             ->add('questionText', TextareaType::class, [
-                'label' => 'form.entity.evaluationQuestion.label.questionText',
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.questionText',
                 'attr' => [
                     'class' => 'form-textarea mb-3',
-                    'placeholder' => $this->translator->trans('form.entity.evaluationQuestion.placeholder.questionText', [], 'app')
+                    'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleQuestion.placeholder.questionText', [], 'app')
                 ]
             ])
         ;
@@ -71,10 +71,10 @@ class PracticalSubmoduleQuestionType extends AbstractType
         if ($options['include_translatable_fields']) {
             $builder->add('questionTextAlt', TextareaType::class, [
                 'mapped' => false,
-                'label' => 'form.entity.evaluationQuestion.label.questionTextAlt',
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.questionTextAlt',
                 'attr' => [
                     'class' => 'form-textarea mb-3',
-                    'placeholder' => $this->translator->trans('form.entity.evaluationQuestion.placeholder.questionText', [], 'app')
+                    'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleQuestion.placeholder.questionText', [], 'app')
                 ]
             ]);
         }

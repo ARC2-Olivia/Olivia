@@ -15,11 +15,11 @@ class PracticalSubmoduleQuestionAnswerWeightedType extends AbstractType
     {
         $builder
             ->add('answerText', TextareaType::class, [
-                'label' => 'form.entity.evaluationQuestionAnswer.label.weighted.answerText',
+                'label' => 'form.entity.practicalSubmoduleQuestionAnswer.label.weighted.answerText',
                 'attr' => ['class' => 'form-textarea mb-3', 'step' => 0.01]
             ])
             ->add('answerValue', NumberType::class, [
-                'label' => 'form.entity.evaluationQuestionAnswer.label.weighted.answerValue',
+                'label' => 'form.entity.practicalSubmoduleQuestionAnswer.label.weighted.answerValue',
                 'html5' => true,
                 'attr' => ['class' => 'form-input mb-3', 'step' => 0.01]
             ])
@@ -28,7 +28,7 @@ class PracticalSubmoduleQuestionAnswerWeightedType extends AbstractType
         if ($options['include_translatable_fields']) {
             $builder->add('answerTextAlt', TextareaType::class, [
                 'mapped' => false,
-                'label' => 'form.entity.evaluationQuestionAnswer.label.weighted.answerTextAlt',
+                'label' => 'form.entity.practicalSubmoduleQuestionAnswer.label.weighted.answerTextAlt',
                 'attr' => ['class' => 'form-textarea mb-3']
             ]);
         }

@@ -66,7 +66,7 @@ class NavigationService
     {
         $navigation = [
             [
-                'text' => $this->translator->trans('evaluation.nav.overview', [], 'app'),
+                'text' => $this->translator->trans('practicalSubmodule.nav.overview', [], 'app'),
                 'path' => $this->router->generate('practical_submodule_overview', ['practicalSubmodule' => $practicalSubmodule->getId()]),
                 'active' => $activeNav === self::EVALUATION_OVERVIEW
             ]
@@ -74,28 +74,28 @@ class NavigationService
 
         if ($this->security->isGranted('ROLE_USER')) {
             $navigation[] = [
-                'text' => $this->translator->trans('evaluation.nav.evaluate', [], 'app'),
+                'text' => $this->translator->trans('practicalSubmodule.nav.evaluate', [], 'app'),
                 'path' => $this->router->generate('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]),
                 'active' => $activeNav === self::EVALUATION_EVALUATE
             ];
 
-            if ($activeNav === self::EVALUATION_EXTRA_RESULTS) $navigation[] = ['text' => $this->translator->trans('evaluation.nav.results', [], 'app'), 'active' => true];
+            if ($activeNav === self::EVALUATION_EXTRA_RESULTS) $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.results', [], 'app'), 'active' => true];
         }
 
         if ($this->security->isGranted('ROLE_MODERATOR')) {
             $navigation[] = [
-                'text' => $this->translator->trans('evaluation.nav.edit.default', [], 'app'),
+                'text' => $this->translator->trans('practicalSubmodule.nav.edit.default', [], 'app'),
                 'path' => $this->router->generate('practical_submodule_edit', ['practicalSubmodule' => $practicalSubmodule->getId()]),
                 'active' => $activeNav === self::EVALUATION_EDIT
             ];
 
             switch ($activeNav) {
-                case self::EVALUATION_EXTRA_NEW_QUESTION:   $navigation[] = ['text' => $this->translator->trans('evaluation.nav.new.question', [], 'app'), 'active' => true];   break;
-                case self::EVALUATION_EXTRA_EDIT_QUESTION:  $navigation[] = ['text' => $this->translator->trans('evaluation.nav.edit.question', [], 'app'), 'active' => true];  break;
-                case self::EVALUATION_EXTRA_NEW_ANSWER:     $navigation[] = ['text' => $this->translator->trans('evaluation.nav.new.answer', [], 'app'), 'active' => true];     break;
-                case self::EVALUATION_EXTRA_EDIT_ANSWER:    $navigation[] = ['text' => $this->translator->trans('evaluation.nav.edit.answer', [], 'app'), 'active' => true];    break;
-                case self::EVALUATION_EXTRA_NEW_EVALUATOR:  $navigation[] = ['text' => $this->translator->trans('evaluation.nav.new.evaluator', [], 'app'), 'active' => true];  break;
-                case self::EVALUATION_EXTRA_EDIT_EVALUATOR: $navigation[] = ['text' => $this->translator->trans('evaluation.nav.edit.evaluator', [], 'app'), 'active' => true]; break;
+                case self::EVALUATION_EXTRA_NEW_QUESTION:   $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.question', [], 'app'), 'active' => true];   break;
+                case self::EVALUATION_EXTRA_EDIT_QUESTION:  $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.question', [], 'app'), 'active' => true];  break;
+                case self::EVALUATION_EXTRA_NEW_ANSWER:     $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.answer', [], 'app'), 'active' => true];     break;
+                case self::EVALUATION_EXTRA_EDIT_ANSWER:    $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.answer', [], 'app'), 'active' => true];    break;
+                case self::EVALUATION_EXTRA_NEW_EVALUATOR:  $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.evaluator', [], 'app'), 'active' => true];  break;
+                case self::EVALUATION_EXTRA_EDIT_EVALUATOR: $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.evaluator', [], 'app'), 'active' => true]; break;
             }
         }
 

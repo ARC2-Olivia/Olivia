@@ -6,10 +6,10 @@
         {% include 'evaluation/_form.html.twig' %}
         <div class="d-flex justify-content-between mt-3">
             <form action="{{ path('practical_submodule_delete', {'practicalSubmodule': evaluation.id}) }}"
-                  onsubmit="return confirm('{{ 'evaluation.delete'|trans({'%evaluation%': evaluation.name}) }}')"
+                  onsubmit="return confirm('{{ 'practicalSubmodule.delete'|trans({'%evaluation%': evaluation.name}) }}')"
                   method="post"
             >
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('evaluation.delete') }}"/>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmodule.delete') }}"/>
                 <button type="submit" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</button>
             </form>
             <button type="submit" form="{{ form.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>

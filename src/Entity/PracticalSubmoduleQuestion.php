@@ -56,13 +56,13 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
             switch ($this->dependentPracticalSubmoduleQuestion->getType()) {
                 case PracticalSubmoduleQuestion::TYPE_YES_NO:
                     if ($this->dependentValue !== '0' && $this->dependentValue !== '1') {
-                        $context->buildViolation('error.evaluationQuestion.dependentValue.notBool')->atPath('dependentValue')->addViolation();
+                        $context->buildViolation('error.practicalSubmoduleQuestion.dependentValue.notBool')->atPath('dependentValue')->addViolation();
                     }
                     break;
                 case PracticalSubmoduleQuestion::TYPE_WEIGHTED:
                 case PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT:
                     if (!is_numeric($this->dependentValue)) {
-                        $context->buildViolation('error.evaluationQuestion.dependentValue.notNumeric')->atPath('dependentValue')->addViolation();
+                        $context->buildViolation('error.practicalSubmoduleQuestion.dependentValue.notNumeric')->atPath('dependentValue')->addViolation();
                     }
                     break;
             }

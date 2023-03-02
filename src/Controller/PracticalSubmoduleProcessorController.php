@@ -23,10 +23,10 @@ class PracticalSubmoduleProcessorController extends BaseController
         $evaluation = $practicalSubmoduleProcessor->getPracticalSubmodule();
 
         $csrfToken = $request->get('_csrf_token');
-        if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationEvaluator.delete', $csrfToken)) {
+        if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleProcessor.delete', $csrfToken)) {
             $this->em->remove($practicalSubmoduleProcessor);
             $this->em->flush();
-            $this->addFlash('warning', $this->translator->trans('warning.evaluationEvaluator.delete', [], 'message'));
+            $this->addFlash('warning', $this->translator->trans('warning.practicalSubmoduleProcessor.delete', [], 'message'));
         }
 
         return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $evaluation->getId()]);
@@ -66,7 +66,7 @@ class PracticalSubmoduleProcessorController extends BaseController
             }
         }
 
-        if ($updated === true) $this->addFlash('success', $this->translator->trans('success.evaluationEvaluator.edit', [], 'message'));
+        if ($updated === true) $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleProcessor.edit', [], 'message'));
         return $this->render('evaluation/evaluation_evaluator/edit.html.twig', [
             'evaluation' => $practicalSubmoduleProcessor->getPracticalSubmodule(),
             'evaluationEvaluator' => $practicalSubmoduleProcessor,

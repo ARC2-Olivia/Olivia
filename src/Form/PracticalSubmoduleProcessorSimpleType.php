@@ -28,18 +28,18 @@ class PracticalSubmoduleProcessorSimpleType extends AbstractType
         $builder
             ->add('practicalSubmoduleQuestion', EntityType::class, [
                 'class' => PracticalSubmoduleQuestion::class,
-                'label' => 'form.entity.evaluationEvaluator.label.evaluationQuestion',
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.evaluationQuestion',
                 'choice_label' => 'questionText',
                 'query_builder' => $this->makeQueryBuilder($builder),
                 'attr' => ['class' => 'form-select mb-3'],
-                'placeholder' => 'form.entity.evaluationEvaluator.placeholder.evaluationQuestion'
+                'placeholder' => 'form.entity.practicalSubmoduleProcessor.placeholder.evaluationQuestion'
             ])
-            ->add('expectedValue', TextType::class, ['label' => 'form.entity.evaluationEvaluator.label.expectedValue', 'attr' => ['class' => 'form-input mb-3']])
+            ->add('expectedValue', TextType::class, ['label' => 'form.entity.practicalSubmoduleProcessor.label.expectedValue', 'attr' => ['class' => 'form-input mb-3']])
             ->add('resultText', TextareaType::class, [
-                'label' => 'form.entity.evaluationEvaluator.label.resultText',
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.resultText',
                 'attr' => [
                     'class' => 'form-textarea mb-3',
-                    'placeholder' => $this->translator->trans('form.entity.evaluationEvaluator.placeholder.resultText', [], 'app')
+                    'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleProcessor.placeholder.resultText', [], 'app')
                 ]
             ])
         ;

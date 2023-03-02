@@ -186,7 +186,7 @@ class PracticalSubmoduleProcessorProductAggregate implements PracticalSubmoduleP
     private function validatePracticalSubmoduleQuestionsAndProcessors(ExecutionContextInterface $context)
     {
         if ($this->practicalSubmoduleQuestions->isEmpty() && $this->practicalSubmoduleProcessors->isEmpty()) {
-            $context->buildViolation('error.evaluationEvaluatorProductAggregate.evaluationQuestionsAndEvaluators')->addViolation();
+            $context->buildViolation('error.practicalSubmoduleProcessorProductAggregate.questionsAndProcessors')->addViolation();
         }
     }
 
@@ -195,17 +195,17 @@ class PracticalSubmoduleProcessorProductAggregate implements PracticalSubmoduleP
         $startIsNumeric = is_numeric($this->getExpectedValueRangeStart());
         $endIsNumeric = is_numeric($this->getExpectedValueRangeEnd());
 
-        if (!$startIsNumeric) $context->buildViolation('error.evaluationEvaluatorProductAggregate.expectedValueRange.start')->atPath('expectedValueRangeStart')->addViolation();
-        if (!$endIsNumeric) $context->buildViolation('error.evaluationEvaluatorProductAggregate.expectedValueRange.end')->atPath('expectedValueRangeEnd')->addViolation();
+        if (!$startIsNumeric) $context->buildViolation('error.practicalSubmoduleProcessorProductAggregate.expectedValueRange.start')->atPath('expectedValueRangeStart')->addViolation();
+        if (!$endIsNumeric) $context->buildViolation('error.practicalSubmoduleProcessorProductAggregate.expectedValueRange.end')->atPath('expectedValueRangeEnd')->addViolation();
         if ($startIsNumeric && $endIsNumeric && $this->getExpectedValueRangeStart() > $this->getExpectedValueRangeEnd()) {
-            $context->buildViolation('error.evaluationEvaluatorSumAggregate.expectedValueRange.invalid')->addViolation();
+            $context->buildViolation('error.practicalSubmoduleProcessorSumAggregate.expectedValueRange.invalid')->addViolation();
         }
     }
 
     private function validateResultText(ExecutionContextInterface $context): void
     {
         if ($this->resultText === null && trim($this->resultText) === '' ) {
-            $context->buildViolation('error.evaluationEvaluatorProductAggregate.resultText')->atPath('resultText')->addViolation();
+            $context->buildViolation('error.practicalSubmoduleProcessorProductAggregate.resultText')->atPath('resultText')->addViolation();
         }
     }
 }

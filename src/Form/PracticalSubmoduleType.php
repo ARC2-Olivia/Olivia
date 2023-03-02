@@ -23,24 +23,24 @@ class PracticalSubmoduleType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'form.entity.evaluation.label.name',
+                'label' => 'form.entity.practicalSubmodule.label.name',
                 'attr' => [
                     'class' => 'form-input mb-3',
-                    'placeholder' => $this->translator->trans('form.entity.evaluation.placeholder.name', [], 'app')
+                    'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.name', [], 'app')
                 ]
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'form.entity.evaluation.label.description',
+                'label' => 'form.entity.practicalSubmodule.label.description',
                 'attr' => [
                     'class' => 'form-textarea mb-3',
-                    'placeholder' => $this->translator->trans('form.entity.evaluation.placeholder.description', [], 'app')
+                    'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.description', [], 'app')
                 ]
             ])
             ->add('tags', TextareaType::class, [
-                'label' => 'form.entity.evaluation.label.tags',
+                'label' => 'form.entity.practicalSubmodule.label.tags',
                 'attr' => [
                     'class' => 'form-input mb-3',
-                    'placeholder' => $this->translator->trans('form.entity.evaluation.placeholder.tags', [], 'app')
+                    'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.tags', [], 'app')
                 ]
             ])
         ;
@@ -50,26 +50,26 @@ class PracticalSubmoduleType extends AbstractType
             $builder
                 ->add('nameAlt', TextType::class, [
                     'mapped' => false,
-                    'label' => 'form.entity.evaluation.label.nameAlt',
+                    'label' => 'form.entity.practicalSubmodule.label.nameAlt',
                     'attr' => [
                         'class' => 'form-input mb-3',
-                        'placeholder' => $this->translator->trans('form.entity.evaluation.placeholder.name', [], 'app')
+                        'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.name', [], 'app')
                     ]
                 ])
                 ->add('descriptionAlt', TextareaType::class, [
                     'mapped' => false,
-                    'label' => 'form.entity.evaluation.label.descriptionAlt',
+                    'label' => 'form.entity.practicalSubmodule.label.descriptionAlt',
                     'attr' => [
                         'class' => 'form-textarea mb-3',
-                        'placeholder' => $this->translator->trans('form.entity.evaluation.placeholder.description', [], 'app')
+                        'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.description', [], 'app')
                     ]
                 ])
                 ->add('tagsAlt', TextareaType::class, [
                     'mapped' => false,
-                    'label' => 'form.entity.evaluation.label.tagsAlt',
+                    'label' => 'form.entity.practicalSubmodule.label.tagsAlt',
                     'attr' => [
                         'class' => 'form-input mb-3',
-                        'placeholder' => $this->translator->trans('form.entity.evaluation.placeholder.tags', [], 'app')
+                        'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.tags', [], 'app')
                     ]
                 ])
             ;

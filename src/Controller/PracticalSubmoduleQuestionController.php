@@ -37,7 +37,7 @@ class PracticalSubmoduleQuestionController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
-            $this->addFlash('success', $this->translator->trans('success.evaluationQuestion.edit', [], 'message'));
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.edit', [], 'message'));
             return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmoduleQuestion->getPracticalSubmodule()->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
@@ -59,13 +59,13 @@ class PracticalSubmoduleQuestionController extends BaseController
     {
         $evaluation = $practicalSubmoduleQuestion->getPracticalSubmodule();
         $csrfToken = $request->get('_csrf_token');
-        if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationQuestion.delete', $csrfToken)) {
+        if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleQuestion.delete', $csrfToken)) {
             foreach ($practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers() as $practicalSubmoduleQuestionAnswer) {
                 $this->em->remove($practicalSubmoduleQuestionAnswer);
             }
             $this->em->remove($practicalSubmoduleQuestion);
             $this->em->flush();
-            $this->addFlash('warning', $this->translator->trans('warning.evaluationQuestion.delete', ['%evaluation%' => $evaluation->getName()], 'message'));
+            $this->addFlash('warning', $this->translator->trans('warning.practicalSubmoduleQuestion.delete', ['%evaluation%' => $evaluation->getName()], 'message'));
         }
 
         return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $evaluation->getId()]);
@@ -86,7 +86,7 @@ class PracticalSubmoduleQuestionController extends BaseController
             $this->em->persist($practicalSubmoduleQuestionAnswer);
             $this->em->flush();
             $this->processPracticalSubmoduleQuestionAnswerTranslation($practicalSubmoduleQuestionAnswer, $form);
-            $this->addFlash('success', $this->translator->trans('success.evaluationQuestionAnswer.new', [], 'message'));
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestionAnswer.new', [], 'message'));
             return $this->redirectToRoute('practical_submodule_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {

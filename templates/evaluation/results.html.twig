@@ -6,7 +6,7 @@
         {% for result in results %}
             <p>{{ result|nl2br }}</p>
         {% else %}
-            <p>{{ 'evaluation.extra.results.empty'|trans }}</p>
+            <p>{{ 'practicalSubmodule.extra.results.empty'|trans }}</p>
         {% endfor %}
     </div>
     <hr>
@@ -25,5 +25,5 @@
         {% endfor %}
     </div>
     <hr>
-    <p class="text-center">{{ 'evaluation.extra.results.final'|trans }}</p>
+    <p class="text-center">{{ 'practicalSubmodule.extra.results.final'|trans }}</p>
 {% endblock %}

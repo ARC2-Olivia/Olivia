@@ -21,12 +21,12 @@ class PracticalSubmoduleQuestionAnswer extends TranslatableEntity
     private ?PracticalSubmoduleQuestion $practicalSubmoduleQuestion = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'error.evaluationQuestionAnswer.answerText')]
+    #[Assert\NotBlank(message: 'error.practicalSubmoduleQuestionAnswer.answerText')]
     #[Gedmo\Translatable]
     private ?string $answerText = null;
 
     #[ORM\Column(length: 63)]
-    #[Assert\NotNull(message: 'error.evaluationQuestionAnswer.answerValue.weighted')]
+    #[Assert\NotNull(message: 'error.practicalSubmoduleQuestionAnswer.answerValue.weighted')]
     private ?string $answerValue = null;
 
     public function getId(): ?int

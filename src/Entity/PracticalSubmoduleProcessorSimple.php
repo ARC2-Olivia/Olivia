@@ -24,7 +24,7 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotNull(message: 'error.evaluationEvaluatorSimple.evaluationQuestion')]
+    #[Assert\NotNull(message: 'error.practicalSubmoduleProcessorSimple.evaluationQuestion')]
     private ?PracticalSubmoduleQuestion $practicalSubmoduleQuestion = null;
 
     #[ORM\Column(length: 63, nullable: true)]
@@ -123,17 +123,17 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
     private function validateExpectedValue(ExecutionContextInterface $context): void
     {
         if ($this->expectedValue === null) {
-            $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.blank')->atPath('expectedPath')->addViolation();
+            $context->buildViolation('error.practicalSubmoduleProcessorSimple.expectedValue.blank')->atPath('expectedPath')->addViolation();
         }
 
         if ($this->practicalSubmoduleQuestion !== null) {
             switch ($this->practicalSubmoduleQuestion->getType()) {
                 case PracticalSubmoduleQuestion::TYPE_YES_NO:
-                    if ($this->expectedValue !== '0' && $this->expectedValue !== '1') $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.notBool')->atPath('expectedValue')->addViolation();
+                    if ($this->expectedValue !== '0' && $this->expectedValue !== '1') $context->buildViolation('error.practicalSubmoduleProcessorSimple.expectedValue.notBool')->atPath('expectedValue')->addViolation();
                     break;
                 case PracticalSubmoduleQuestion::TYPE_WEIGHTED:
                 case PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT:
-                    if (!is_numeric($this->expectedValue)) $context->buildViolation('error.evaluationEvaluatorSimple.expectedValue.notNumeric')->atPath('expectedValue')->addViolation();
+                    if (!is_numeric($this->expectedValue)) $context->buildViolation('error.practicalSubmoduleProcessorSimple.expectedValue.notNumeric')->atPath('expectedValue')->addViolation();
                     break;
             }
         }
@@ -142,7 +142,7 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
     private function validateResultText(ExecutionContextInterface $context): void
     {
         if ($this->resultText === null) {
-            $context->buildViolation('error.evaluationEvaluatorSimple.resultText')->atPath('resultText')->addViolation();
+            $context->buildViolation('error.practicalSubmoduleProcessorSimple.resultText')->atPath('resultText')->addViolation();
         }
     }
 }

@@ -51,7 +51,7 @@ class PracticalSubmoduleController extends BaseController
             $this->em->persist($practicalSubmodule);
             $this->em->flush();
             $this->processPracticalSubmoduleTranslation($practicalSubmodule, $form);
-            $this->addFlash('success', $this->translator->trans('success.evaluation.new', [], 'message'));
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmodule.new', [], 'message'));
             return $this->redirectToRoute('practical_submodule_index');
         } else {
             foreach ($form->getErrors(true) as $error) {
@@ -79,7 +79,7 @@ class PracticalSubmoduleController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isSubmitted()) {
             $this->em->flush();
-            $this->addFlash('success', $this->translator->trans('success.evaluation.edit', [], 'message'));
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmodule.edit', [], 'message'));
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
@@ -98,7 +98,7 @@ class PracticalSubmoduleController extends BaseController
     public function delete(PracticalSubmodule $practicalSubmodule, Request $request): Response
     {
         $csrfToken = $request->get('_csrf_token');
-        if ($csrfToken !== null && $this->isCsrfTokenValid('evaluation.delete', $csrfToken)) {
+        if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmodule.delete', $csrfToken)) {
             $submoduleName = $practicalSubmodule->getName();
             foreach ($practicalSubmodule->getPracticalSubmoduleQuestions() as $question) {
                 foreach ($question->getPracticalSubmoduleQuestionAnswers() as $questionAnswer) {
@@ -108,7 +108,7 @@ class PracticalSubmoduleController extends BaseController
             }
             $this->em->remove($practicalSubmodule);
             $this->em->flush();
-            $this->addFlash('warning', $this->translator->trans('warning.evaluation.delete', ['%evaluation%' => $submoduleName], 'message'));
+            $this->addFlash('warning', $this->translator->trans('warning.practicalSubmodule.delete', ['%evaluation%' => $submoduleName], 'message'));
             return $this->redirectToRoute('practical_submodule_index');
         }
 
@@ -156,7 +156,7 @@ class PracticalSubmoduleController extends BaseController
             $this->em->flush();
             $this->processPracticalSubmoduleQuestionTranslation($question, $form);
             $this->processAutomaticPracticalSubmoduleQuestionAnswerCreation($question);
-            $this->addFlash('success', $this->translator->trans('success.evaluationQuestion.new', [], 'message'));
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.new', [], 'message'));
             return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
@@ -181,7 +181,7 @@ class PracticalSubmoduleController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($processor);
             $this->em->flush();
-            $this->addFlash('success', $this->translator->trans('success.evaluationEvaluator.new', [], 'message'));
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleProcessor.new', [], 'message'));
             return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
@@ -202,13 +202,13 @@ class PracticalSubmoduleController extends BaseController
     {
         $csrfToken = $request->get('_csrf_token');
 
-        if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationAssessment.start', $csrfToken)) {
-            $request->getSession()->set('evaluationAssessment.start', true);
+        if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleAssessment.start', $csrfToken)) {
+            $request->getSession()->set('practicalSubmoduleAssessment.start', true);
             $practicalSubmoduleAssessment = $practicalSubmoduleService->prepareAssessment($practicalSubmodule, $this->getUser());
             return $this->forward('App\Controller\PracticalSubmoduleAssessmentController::start', ['practicalSubmoduleAssessment' => $practicalSubmoduleAssessment]);
         }
 
-        $this->addFlash('error', $this->translator->trans('error.evaluationAssessment.start', [], 'message'));
+        $this->addFlash('error', $this->translator->trans('error.practicalSubmoduleAssessment.start', [], 'message'));
         return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
     }
 

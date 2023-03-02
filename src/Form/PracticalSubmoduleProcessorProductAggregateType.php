@@ -28,7 +28,7 @@ class PracticalSubmoduleProcessorProductAggregateType extends AbstractType
         $builder
             ->add('practicalSubmoduleQuestions', EntityType::class, [
                 'class' => PracticalSubmoduleQuestion::class,
-                'label' => 'form.entity.evaluationEvaluator.label.evaluationQuestion',
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.evaluationQuestion',
                 'choice_label' => 'questionText',
                 'query_builder' => $this->makePracticalSubmoduleQuestionQueryBuilder($builder),
                 'attr' => ['class' => 'form-select multiple mb-3'],
@@ -36,27 +36,27 @@ class PracticalSubmoduleProcessorProductAggregateType extends AbstractType
             ])
             ->add('practicalSubmoduleProcessors', EntityType::class, [
                 'class' => PracticalSubmoduleProcessor::class,
-                'label' => 'form.entity.evaluationEvaluator.label.evaluationEvaluators',
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.evaluationEvaluators',
                 'choice_label' => 'name',
                 'query_builder' => $this->makePracticalSubmoduleProcessorQueryBuilder($builder),
                 'attr' => ['class' => 'form-select multiple mb-3'],
                 'multiple' => true
             ])
             ->add('expectedValueRangeStart', NumberType::class, [
-                'label' => 'form.entity.evaluationEvaluator.label.expectedValueRange.start',
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.expectedValueRange.start',
                 'html5' => true,
                 'attr' => ['class' => 'form-input mb-3', 'step' => 0.01]
             ])
             ->add('expectedValueRangeEnd', NumberType::class, [
-                'label' => 'form.entity.evaluationEvaluator.label.expectedValueRange.end',
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.expectedValueRange.end',
                 'html5' => true,
                 'attr' => ['class' => 'form-input mb-3', 'step' => 0.01]
             ])
             ->add('resultText', TextareaType::class, [
-                'label' => 'form.entity.evaluationEvaluator.label.resultText',
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.resultText',
                 'attr' => [
                     'class' => 'form-textarea mb-3',
-                    'placeholder' => $this->translator->trans('form.entity.evaluationEvaluator.placeholder.resultText', [], 'app')
+                    'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleProcessor.placeholder.resultText', [], 'app')
                 ]
             ])
         ;

@@ -20,12 +20,12 @@ class PracticalSubmoduleAssessmentController extends BaseController
     public function start(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, Request $request, NavigationService $navigationService): Response
     {
         $session = $request->getSession();
-        $allowedToStart = $session->has('evaluationAssessment.start') && $session->get('evaluationAssessment.start') === true;
+        $allowedToStart = $session->has('practicalSubmoduleAssessment.start') && $session->get('practicalSubmoduleAssessment.start') === true;
         if (!$allowedToStart) {
-            $this->addFlash('error', $this->translator->trans('error.evaluationAssessment.start', [], 'message'));
+            $this->addFlash('error', $this->translator->trans('error.practicalSubmoduleAssessment.start', [], 'message'));
             return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmoduleAssessment->getPracticalSubmodule()->getId()]);
         }
-        $session->remove('evaluationAssessment.start');
+        $session->remove('practicalSubmoduleAssessment.start');
 
         $practicalSubmodule = $practicalSubmoduleAssessment->getPracticalSubmodule();
 
@@ -69,7 +69,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
     public function finish(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, Request $request): Response
     {
         $csrfToken = $request->request->get('_csrf_token');
-        if ($csrfToken !== null && $this->isCsrfTokenValid('evaluationAssessment.finish', $csrfToken)) {
+        if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleAssessment.finish', $csrfToken)) {
             $assessmentData = $request->request->all('evaluation_assessment');
             $evaluationQuestionRepository = $this->em->getRepository(PracticalSubmoduleQuestion::class);
             $noQuestionError = false;
@@ -90,13 +90,13 @@ class PracticalSubmoduleAssessmentController extends BaseController
             }
 
             if ($noQuestionError) {
-                $this->addFlash('warning', $this->translator->trans('warning.evaluationAssessment.noQuestion', [], 'message'));
+                $this->addFlash('warning', $this->translator->trans('warning.practicalSubmoduleAssessment.noQuestion', [], 'message'));
             }
 
             $this->em->flush();
-            $this->addFlash('success', $this->translator->trans('success.evaluationAssessment.finish', [], 'message'));
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleAssessment.finish', [], 'message'));
         } else {
-            $this->addFlash('error', $this->translator->trans('error.evaluationAssessment.finish', [], 'message'));
+            $this->addFlash('error', $this->translator->trans('error.practicalSubmoduleAssessment.finish', [], 'message'));
         }
 
         return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmoduleAssessment->getPracticalSubmodule()->getId()]);

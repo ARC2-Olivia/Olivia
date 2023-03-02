@@ -2,7 +2,7 @@
 {% trans_default_domain 'app' %}
 
 {% block evaluationContent %}
-    <h2 class="mb-3">{{ 'evaluationEvaluator.heading.basicOptions'|trans }}</h2>
+    <h2 class="mb-3">{{ 'practicalSubmoduleProcessor.heading.basicOptions'|trans }}</h2>
     {% include 'evaluation/evaluation_evaluator/_form_base.html.twig' with {'form': baseForm} %}
     <div class="text-end">
         <button type="submit" form="{{ baseForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
@@ -10,7 +10,7 @@
 
     <hr>
 
-    <h2 class="mb-3">{{ 'evaluationEvaluator.heading.specificOptions'|trans }}</h2>
+    <h2 class="mb-3">{{ 'practicalSubmoduleProcessor.heading.specificOptions'|trans }}</h2>
     {% include 'evaluation/evaluation_evaluator/_form_impl.html.twig' with {'form': implForm} %}
     <div class="text-end">
         <button type="submit" form="{{ implForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
