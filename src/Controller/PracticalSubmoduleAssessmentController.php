@@ -34,7 +34,8 @@ class PracticalSubmoduleAssessmentController extends BaseController
         $assessment = ['id' => $practicalSubmoduleAssessment->getId(), 'questions' => []];
         foreach ($practicalSubmoduleQuestions as $practicalSubmoduleQuestion) {
             $question = [
-                'id' => $practicalSubmoduleQuestion->getId(), 'type' => $practicalSubmoduleQuestion->getType(),
+                'id' => $practicalSubmoduleQuestion->getId(),
+                'type' => $practicalSubmoduleQuestion->getType(),
                 'question' => $practicalSubmoduleQuestion->getQuestionText(),
                 'answers' => []
             ];

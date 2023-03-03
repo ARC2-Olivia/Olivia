@@ -9,7 +9,7 @@
           action="{{ path('practical_submodule_assessment_finish', {'practicalSubmoduleAssessment': assessment.id}) }}"
           method="post"
     >
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token("evaluationAssessment.finish") }}"/>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token("practicalSubmoduleAssessment.finish") }}"/>
     </form>
     <div class="d-flex justify-content-end mt-3">
         <button type="submit" class="btn btn-theme-white bg-green" form="evaluation_assessment">{{ 'common.submit'|trans }}</button>

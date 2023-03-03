@@ -46,6 +46,7 @@ class EvaluationAssessment {
             case 'yes_no': this.#createYesNoAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
             case 'weighted': this.#createWeightedAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
             case 'numerical_input': questionAnswers.append(this.#createNumericalInputAnswer(questionData)); break;
+            case 'text_input': questionAnswers.append(this.#createTextInputAnswer(questionData)); break;
             default: finalize = false;
         }
 
@@ -114,6 +115,22 @@ class EvaluationAssessment {
         const answer = this.#parser.parseFromString(`
             <label class="evaluation-assessment-question-answer">
                 <input type="number" step="0.01" class="form-input" name="evaluation_assessment[${questionData.id}]" required/>
+            </label>
+        `, "text/html");
+
+        const input = answer.body.firstChild.querySelector("input");
+        this.#eventBus.attach(input);
+        input.addEventListener("input", function(event) {
+            event.target.dispatch("answerchange", { questionId: questionData.id, answer: element.target.value });
+        });
+
+        return answer.body.firstChild;
+    }
+
+    #createTextInputAnswer(questionData) {
+        const answer = this.#parser.parseFromString(`
+            <label class="evaluation-assessment-question-answer">
+                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}]" required/>
             </label>
         `, "text/html");
 

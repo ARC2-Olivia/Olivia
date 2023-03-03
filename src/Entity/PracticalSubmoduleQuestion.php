@@ -17,6 +17,7 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public const TYPE_YES_NO = 'yes_no';
     public const TYPE_WEIGHTED = 'weighted';
     public const TYPE_NUMERICAL_INPUT = 'numerical_input';
+    public const TYPE_TEXT_INPUT = 'text_input';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
