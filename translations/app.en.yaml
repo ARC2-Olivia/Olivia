@@ -50,6 +50,12 @@ page:
         new: Olivia | New practical submodule
         show: Olivia | Practical submodule details
         assessment: Olivia | Practical submodule assessment
+    termsOfService:
+        index: Olivia | Terms of service listing
+        new: Olivia | New terms of service
+        show: Olivia | Terms of service
+        edit: Olivia | Edit terms of service
+        revise: Olivia | Revise terms of service
 
 nav:
     training: Training
@@ -59,6 +65,7 @@ nav:
     users: Users
     instructors: Instructors
     language: Switch language
+    termsOfService: Terms of service
 
 form:
     security:
@@ -174,6 +181,14 @@ form:
                 name: Name of the processor for easier identification
                 resultText: What text will the processor return as a result?
                 evaluationQuestion: Choose a question...
+        termsOfService:
+            label:
+                id: ID
+                title: Title
+                version: Version
+                revision: Revision
+                startedAt: Started at
+                endedAt: Ended at
 
 user:
     title:
@@ -303,6 +318,10 @@ practicalSubmoduleAssessment:
     action:
         start: Start assessment
         results: View results
+
+termsOfService:
+    title:
+        index: Terms of service listing
 
 extra:
     free: Free

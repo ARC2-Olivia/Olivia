@@ -28,6 +28,7 @@ Encore
     .addEntry('quill', './assets/quill.js')
     .addEntry('sortable', './assets/sortable.js')
     .addEntry('axios', './assets/axios.js')
+    .addEntry('apexgrid', './assets/apexgrid.js')
 
     // Page specific
     .addEntry('lessons.sort', './assets/scripts/lessons.sort.js')
