@@ -74,6 +74,7 @@ form:
                 email: E-mail
                 password: Password
                 confirmPassword: Confirm password
+                termsOfService: I accept the <a href="%url%" target="_blank">Terms of service</a>.
         login:
             label:
                 email: E-mail

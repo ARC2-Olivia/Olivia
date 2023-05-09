@@ -16,6 +16,10 @@
                     <label>{{ form_widget(form.email, {'attr': {'placeholder': form.email.vars.label}}) }}</label>
                     <label>{{ form_widget(form.plainPassword.first, {'attr': {'placeholder': form.plainPassword.first.vars.label}}) }}</label>
                     <label>{{ form_widget(form.plainPassword.second, {'attr': {'placeholder': form.plainPassword.second.vars.label}}) }}</label>
+                    <label class="d-flex align-items-center mb-3">
+                        {{ form_widget(form.acceptedTermsOfService) }}
+                        <span class="ms-2">{{ form.acceptedTermsOfService.vars.label|raw }}</span>
+                    </label>
                     <button type="submit" class="btn btn-theme-white bg-black w-100 mb-3">{{ 'common.submit'|trans }}</button>
                     {{ form_end(form) }}
                     <a href="{{ path('security_login') }}" class="btn btn-link">{{ 'common.login'|trans }}</a>

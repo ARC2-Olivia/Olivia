@@ -75,6 +75,7 @@ error:
         password:
             blank: Password fields must not be empty.
             repeated: Passwords must match!
+        termsOfService: To proceed with the registration, and to be allowed to use the application, the terms of service have to be accepted.
     course:
         name: Course name must not be empty.
         description: Course description must not be empty.

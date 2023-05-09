@@ -14,6 +14,9 @@ class RegistrationData
     #[Assert\NotBlank(message: 'error.registration.password.blank')]
     private ?string $plainPassword = null;
 
+    #[Assert\IsTrue(message: 'error.registration.termsOfService')]
+    private ?bool $acceptedTermsOfService = null;
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -33,6 +36,17 @@ class RegistrationData
     public function setPlainPassword(?string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    public function getAcceptedTermsOfService(): ?bool
+    {
+        return $this->acceptedTermsOfService;
+    }
+
+    public function setAcceptedTermsOfService(?bool $acceptedTermsOfService): self
+    {
+        $this->acceptedTermsOfService = $acceptedTermsOfService;
         return $this;
     }
 }
