@@ -68,7 +68,7 @@ class TermsOfServiceController extends AbstractController
     #[Route("/show/{termsOfService}", name: "show")]
     public function show(TermsOfService $termsOfService): Response
     {
-        return new Response();
+        return $this->render('termsOfService/show.html.twig', ['termsOfService' => $termsOfService]);
     }
 
     #[Route("/edit/{termsOfService}", name: "edit")]

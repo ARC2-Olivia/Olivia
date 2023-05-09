@@ -322,7 +322,8 @@ practicalSubmoduleAssessment:
         results: View results
 
 termsOfService:
-    format: Version %version%, revision %revision%
+    format: Ver. %version%, rev. %revision%
+    ongoing: ongoing
     title:
         index: Terms of service listing
         new: New terms of service

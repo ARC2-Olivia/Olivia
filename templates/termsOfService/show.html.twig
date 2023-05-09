@@ -1,0 +1,12 @@
+{% extends 'termsOfService/_base_tos.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block tosContent %}
+    <div class="card card-body">
+        <div class="text-center">
+            <h1>{{ 'termsOfService.format'|trans({'%version%': termsOfService.version, '%revision%': termsOfService.revision}) }}</h1>
+            <p>{{ termsOfService.startedAt|date('d.m.Y.') }} &mdash; {{ termsOfService.endedAt is not null ? termsOfService.endedAt|date('d.m.Y.') : 'termsOfService.ongoing'|trans }}</p>
+        </div>
+        <div class="ql-editor">{{ termsOfService.content|raw }}</div>
+    </div>
+{% endblock %}
