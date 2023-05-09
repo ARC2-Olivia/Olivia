@@ -189,6 +189,7 @@ form:
                 revision: Revision
                 startedAt: Started at
                 endedAt: Ended at
+                active: Active
                 content: Content
                 contentAlt: Content (alternate language)
 
