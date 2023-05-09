@@ -189,6 +189,8 @@ form:
                 revision: Revision
                 startedAt: Started at
                 endedAt: Ended at
+                content: Content
+                contentAlt: Content (alternate language)
 
 user:
     title:
@@ -320,8 +322,10 @@ practicalSubmoduleAssessment:
         results: View results
 
 termsOfService:
+    format: Version %version%, revision %revision%
     title:
         index: Terms of service listing
+        new: New terms of service
 
 extra:
     free: Free

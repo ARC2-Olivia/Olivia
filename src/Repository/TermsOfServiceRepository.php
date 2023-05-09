@@ -39,28 +39,21 @@ class TermsOfServiceRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return TermsOfService[] Returns an array of TermsOfService objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getLatestVersionNumber(): int
+    {
+        return $this->createQueryBuilder('tos')
+            ->select('COALESCE(MAX(tos.version), 0)')
+            ->getQuery()->getSingleScalarResult()
+        ;
+    }
 
-//    public function findOneBySomeField($value): ?TermsOfService
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getLatestRevisionNumberForVersion(int $version): int
+    {
+        return $this->createQueryBuilder('tos')
+            ->select('COALESCE(MAX(tos.revision), 0)')
+            ->where('tos.version = :version')
+            ->setParameter('version', $version)
+            ->getQuery()->getSingleScalarResult()
+        ;
+    }
 }

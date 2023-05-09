@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TermsOfServiceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: TermsOfServiceRepository::class)]
 class TermsOfService
@@ -27,6 +28,7 @@ class TermsOfService
     private ?\DateTimeImmutable $endedAt = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable]
     private ?string $content = null;
 
     public function getId(): ?int

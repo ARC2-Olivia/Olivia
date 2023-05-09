@@ -2,6 +2,7 @@ import "igniteui-webcomponents/themes/light/bootstrap.css";
 import "./styles/apexgrid.override.css";
 
 import { ApexGrid } from "apex-grid";
+import axios from "axios";
 ApexGrid.register();
 
 function createApexLinkColumnDef(columnDef) {
@@ -12,7 +13,7 @@ function createApexLinkColumnDef(columnDef) {
         cellTemplate: (params) => {
             const link = document.createElement("A");
             link.setAttribute("href", params.value.url);
-            link.innerText = params.value.value;
+            link.innerText = params.value.text;
             return link;
         }
     };
@@ -41,10 +42,26 @@ function generateColumnDefs(grid) {
     }
 }
 
+function fillWithData(grid) {
+    if ("url" in grid.dataset) {
+        axios({
+            method: "GET",
+            url: grid.dataset.url,
+            responseType: "json",
+        }).then(function (response) {
+            const dataFromResponse = response.data;
+            if (dataFromResponse.status === 'success') {
+                grid.data = dataFromResponse.data;
+            }
+        });
+    }
+}
+
 window.addEventListener("load", () => {
     const grids = document.getElementsByTagName("apex-grid");
 
     for (const grid of grids) {
         generateColumnDefs(grid);
+        fillWithData(grid);
     }
 });

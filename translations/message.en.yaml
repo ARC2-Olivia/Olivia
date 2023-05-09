@@ -35,6 +35,8 @@ success:
         edit: Evaluator has been updated.
     practicalSubmoduleAssessment:
         finish: Your evaluation has been saved. You can view the evaluation results by clicking the <i>Results</i> from the <i>Evaluate</i> tab.
+    termsOfService:
+        new: A new terms of service has been created. Users will have to accept the terms of service in order to use the application.
 
 warning:
     accountConfirmation:
@@ -148,3 +150,6 @@ error:
     practicalSubmoduleAssessment:
         start: Unable to start the evaluation. Please, try again.
         finish: There was an error processing your evaluation. Please, take the evaluation again.
+    termsOfService:
+        content: Content of the terms of service must not be empty.
+        contentAlt: Translation of the content of the terms of service must not be empty.
