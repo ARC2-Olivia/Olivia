@@ -73,6 +73,13 @@ class TermsOfServiceController extends AbstractController
         return $this->render('termsOfService/show.html.twig', ['termsOfService' => $termsOfService]);
     }
 
+    #[Route("/active", name: "active")]
+    public function active(): Response
+    {
+        $termsOfService = $this->em->getRepository(TermsOfService::class)->findCurrentlyActive();
+        return $this->render('termsOfService/active.html.twig', ['termsOfService' => $termsOfService]);
+    }
+
     #[Route("/edit/{termsOfService}", name: "edit")]
     public function edit(TermsOfService $termsOfService): Response
     {
