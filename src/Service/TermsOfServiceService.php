@@ -4,20 +4,32 @@ namespace App\Service;
 
 use App\Entity\TermsOfService;
 use App\Repository\TermsOfServiceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TermsOfServiceService
 {
-    private TermsOfServiceRepository $termsOfServiceRepository;
+    private EntityManagerInterface $em;
 
-    public function __construct(TermsOfServiceRepository $termsOfServiceRepository)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->termsOfServiceRepository = $termsOfServiceRepository;
+        $this->em = $em;
     }
 
     public function create(TermsOfService $termsOfService): void
     {
-        $version = $this->termsOfServiceRepository->getLatestVersionNumber() + 1;
-        $termsOfService->setVersion($version)->setRevision(0)->setStartedAt(new \DateTimeImmutable());
-        $this->termsOfServiceRepository->save($termsOfService, true);
+        $version = $this->em->getRepository(TermsOfService::class)->getLatestVersionNumber() + 1;
+        $termsOfService->setVersion($version)->setRevision(0)->setStartedAt(new \DateTimeImmutable())->setActive(true);
+        $this->em->persist($termsOfService);
+        $this->em->flush();
+    }
+
+    public function deactivateCurrentlyActive(): void
+    {
+        $activeTermsOfService = $this->em->getRepository(TermsOfService::class)->findCurrentlyActive(false);
+        /** @var TermsOfService $termsOfService */
+        foreach ($activeTermsOfService as $termsOfService) {
+            $termsOfService->setActive(false)->setEndedAt(new \DateTimeImmutable());
+        }
+        $this->em->flush();
     }
 }

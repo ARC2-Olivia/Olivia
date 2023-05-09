@@ -31,6 +31,9 @@ class TermsOfService
     #[Gedmo\Translatable]
     private ?string $content = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $active = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class TermsOfService
     public function setContent(?string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

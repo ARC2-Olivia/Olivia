@@ -52,6 +52,7 @@ class TermsOfServiceController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $termsOfServiceService->deactivateCurrentlyActive();
             $termsOfServiceService->create($termsOfService);
             $this->processTranslation($termsOfService, $form);
             $this->addFlash('success', $this->translator->trans('success.termsOfService.new', [], 'message'));

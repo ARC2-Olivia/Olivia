@@ -39,6 +39,17 @@ class TermsOfServiceRepository extends ServiceEntityRepository
         }
     }
 
+    public function findCurrentlyActive(bool $single = true): TermsOfService|array|null
+    {
+        $qb = $this->createQueryBuilder('tos')
+            ->where('tos.active = :true')
+            ->setParameter('true', true)
+            ->orderBy('tos.startedAt', 'DESC')
+        ;
+        if ($single) return $qb->setMaxResults(1)->getQuery()->getOneOrNullResult();
+        return $qb->getQuery()->getResult();
+    }
+
     public function getLatestVersionNumber(): int
     {
         return $this->createQueryBuilder('tos')
