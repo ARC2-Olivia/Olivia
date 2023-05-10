@@ -8,8 +8,8 @@ ApexGrid.register();
 function createApexLinkColumnDef(columnDef) {
     return {
         key: columnDef.key,
-        sort: columnDef.sort,
-        filter: columnDef.filter,
+        sort: columnDef.sort || false,
+        filter: columnDef.filter || false,
         cellTemplate: (params) => {
             const link = document.createElement("A");
             link.setAttribute("href", params.value.url);
@@ -22,8 +22,8 @@ function createApexLinkColumnDef(columnDef) {
 function createApexNormalColumnDef(columnDef) {
     return {
         key: columnDef.key,
-        sort: columnDef.sort,
-        filter: columnDef.filter
+        sort: columnDef.sort || false,
+        filter: columnDef.filter || false
     };
 }
 

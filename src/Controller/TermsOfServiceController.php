@@ -36,7 +36,7 @@ class TermsOfServiceController extends AbstractController
     {
         $columnDefs = [
             ['key' => $this->translator->trans('form.entity.termsOfService.label.id', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
-            ['key' => $this->translator->trans('form.entity.termsOfService.label.title', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'link'],
+            ['key' => $this->translator->trans('form.entity.termsOfService.label.title', [], 'app'), 'type' => 'link'],
             ['key' => $this->translator->trans('form.entity.termsOfService.label.startedAt', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
             ['key' => $this->translator->trans('form.entity.termsOfService.label.endedAt', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
             ['key' => $this->translator->trans('form.entity.termsOfService.label.active', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
