@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\TermsOfService;
+use App\Entity\User;
 use App\Repository\TermsOfServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -31,5 +32,16 @@ class TermsOfServiceService
             $termsOfService->setActive(false)->setEndedAt(new \DateTimeImmutable());
         }
         $this->em->flush();
+    }
+
+    public function userAcceptsTermsOfService(User $user, TermsOfService $termsOfService): void
+    {
+        // TODO: Implement accepting
+    }
+
+    public function userAcceptsCurrentlyActiveTermsOfService(User $user): void
+    {
+        $termsOfService = $this->em->getRepository(TermsOfService::class)->findCurrentlyActive();
+        $this->userAcceptsTermsOfService($user, $termsOfService);
     }
 }

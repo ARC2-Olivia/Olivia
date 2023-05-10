@@ -9,6 +9,7 @@ use App\Security\LoginData;
 use App\Security\RegistrationData;
 use App\Service\MailerService;
 use App\Service\SecurityService;
+use App\Service\TermsOfServiceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,12 +20,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route("/security", name: "security_")]
 class SecurityController extends AbstractController
 {
+    private TranslatorInterface $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     #[Route("/login", name: "login")]
-    public function login(AuthenticationUtils $authenticationUtils, TranslatorInterface $translator): Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->isGranted(User::ROLE_USER)) return $this->redirectToRoute('index');
         $error = $authenticationUtils->getLastAuthenticationError();
-        if ($error) $this->addFlash('error', $translator->trans('error.login', [], 'message'));
+        if ($error) $this->addFlash('error', $this->translator->trans('error.login', [], 'message'));
         return $this->render('security/login.html.twig', [
             'form' => $this->createForm(LoginType::class)->createView()
         ]);
@@ -37,7 +45,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route("/registration", name: "registration")]
-    public function registration(Request $request, SecurityService $securityService, MailerService $mailerService, TranslatorInterface $translator): Response
+    public function registration(Request $request, SecurityService $securityService, MailerService $mailerService, TermsOfServiceService $termsOfServiceService): Response
     {
         if ($this->isGranted(User::ROLE_USER)) return $this->redirectToRoute('index');
         $registration = new RegistrationData();
@@ -46,14 +54,15 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$securityService->userExists($registration->getEmail())) {
                 $user = $securityService->createUnactivatedUser($registration);
+                $termsOfServiceService->userAcceptsCurrentlyActiveTermsOfService($user);
                 $mailerService->sendConfirmationMail($user);
-                $this->addFlash('success', $translator->trans('success.registration', [], 'message'));
+                $this->addFlash('success', $this->translator->trans('success.registration', [], 'message'));
             } else {
-                $this->addFlash('warning', $translator->trans('warning.registration.userExists', [], 'message'));
+                $this->addFlash('warning', $this->translator->trans('warning.registration.userExists', [], 'message'));
             }
         } else {
             foreach ($form->getErrors(true) as $error) {
-                $this->addFlash('error', $translator->trans($error->getMessage(), [], 'message'));
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
             }
         }
         return $this->render('security/registration.html.twig', ['form' => $form->createView()]);
