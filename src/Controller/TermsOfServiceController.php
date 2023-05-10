@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -104,9 +105,28 @@ class TermsOfServiceController extends AbstractController
     }
 
     #[Route("/revise/{termsOfService}", name: "revise")]
-    public function revise(TermsOfService $termsOfService): Response
+    #[IsGranted(TermsOfServiceVoter::EDIT, subject: "termsOfService")]
+    public function revise(TermsOfService $termsOfService, ParameterBagInterface $parameterBag, TermsOfServiceService $termsOfServiceService, Request $request): Response
     {
-        return new Response();
+        list($content, $contentAlt) = $this->extractDefaultAndTranslatedContent($termsOfService, $request);
+
+        $revisedTermsOfService = new TermsOfService();
+        $form = $this->createForm(TermsOfServiceType::class, $revisedTermsOfService);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $termsOfServiceService->deactivateCurrentlyActive();
+            $termsOfServiceService->revise($revisedTermsOfService);
+            $this->processTranslation($revisedTermsOfService, $form);
+            $this->addFlash('success', $this->translator->trans('success.termsOfService.revise', [], 'message'));
+            return $this->redirectToRoute('tos_index');
+        }
+
+        return $this->render('termsOfService/revise.html.twig', [
+            'termsOfService' => $termsOfService,
+            'form' => $form->createView(),
+            'content' => $content,
+            'contentAlt' => $contentAlt]
+        );
     }
 
     #[Route("/ajax/index", name: "ajax_index", methods: ["GET"])]
@@ -141,5 +161,24 @@ class TermsOfServiceController extends AbstractController
         $contentAlt = $form->get('contentAlt')->getData();
         $translationRepository->translate($termsOfService, 'content', $localeAlt, $contentAlt);
         $this->em->flush();
+    }
+
+    private function extractDefaultAndTranslatedContent(TermsOfService $termsOfService, Request $request): array
+    {
+        $termsOfServiceRepository = $this->em->getRepository(TermsOfService::class);
+        $defaultLocale = $this->getParameter('locale.default');
+        $alternateLocale = $this->getParameter('locale.alternate');
+
+        $content = $contentAlt = null;
+        if ($request->getLocale() === $defaultLocale) {
+            $content = $termsOfService->getContent();
+            $termsOfService = $termsOfServiceRepository->findByIdForLocale($termsOfService->getId(), $alternateLocale);
+            $contentAlt = $termsOfService->getContent();
+        } else if ($request->getLocale() === $alternateLocale) {
+            $contentAlt = $termsOfService->getContent();
+            $termsOfService = $termsOfServiceRepository->findByIdForLocale($termsOfService->getId(), $defaultLocale);
+            $content = $termsOfService->getContent();
+        }
+        return array($content, $contentAlt);
     }
 }

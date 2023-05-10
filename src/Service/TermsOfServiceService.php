@@ -16,12 +16,23 @@ class TermsOfServiceService
         $this->em = $em;
     }
 
-    public function create(TermsOfService $termsOfService): void
+    public function create(TermsOfService $termsOfService): TermsOfService
     {
         $version = $this->em->getRepository(TermsOfService::class)->getLatestVersionNumber() + 1;
         $termsOfService->setVersion($version)->setRevision(0)->setStartedAt(new \DateTimeImmutable())->setActive(true);
         $this->em->persist($termsOfService);
         $this->em->flush();
+        return $termsOfService;
+    }
+
+    public function revise(TermsOfService $revisedTermsOfService): TermsOfService
+    {
+        $termsOfServiceRepository = $this->em->getRepository(TermsOfService::class);
+        $version = $termsOfServiceRepository->getLatestVersionNumber();
+        $revision = $termsOfServiceRepository->getLatestRevisionNumberForVersion($version) + 1;
+        $revisedTermsOfService->setVersion($version)->setRevision($revision)->setStartedAt(new \DateTimeImmutable())->setActive(true);
+        $this->em->persist($revisedTermsOfService);
+        return $revisedTermsOfService;
     }
 
     public function deactivateCurrentlyActive(): void

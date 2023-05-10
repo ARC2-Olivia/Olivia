@@ -4,7 +4,10 @@ namespace App\Repository;
 
 use App\Entity\TermsOfService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Gedmo\Translatable\Query\TreeWalker\TranslationWalker;
+use Gedmo\Translatable\TranslatableListener;
 
 /**
  * @extends ServiceEntityRepository<TermsOfService>
@@ -66,5 +69,18 @@ class TermsOfServiceRepository extends ServiceEntityRepository
             ->setParameter('version', $version)
             ->getQuery()->getSingleScalarResult()
         ;
+    }
+
+    public function findByIdForLocale(int $id, string $locale): TermsOfService|null
+    {
+        $query = $this->createQueryBuilder('tos')
+            ->where('tos.id = :id')
+            ->setParameter('id', $id)
+            ->setMaxResults(1)
+            ->getQuery()
+        ;
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, TranslationWalker::class);
+        $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
+        return $query->getOneOrNullResult();
     }
 }

@@ -330,6 +330,7 @@ termsOfService:
         index: Terms of service listing
         new: New terms of service
         edit: Editing <i>%termsOfService%</i>
+        revise: Revising <i>%termsOfService%</i>
     extra:
         revise: Revise
 
