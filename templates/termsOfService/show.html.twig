@@ -8,6 +8,12 @@
         <div class="text-center">
             <h1>{{ 'termsOfService.format'|trans({'%version%': termsOfService.version, '%revision%': termsOfService.revision}) }}</h1>
             <p>{{ termsOfService.startedAt|date('d.m.Y.') }} &mdash; {{ termsOfService.endedAt is not null ? termsOfService.endedAt|date('d.m.Y.') : 'termsOfService.ongoing'|trans }}</p>
+            {% if is_granted('ROLE_ADMIN') and termsOfService.active %}
+                <div class="mt-3">
+                    <a href="{{ path('tos_edit', {'termsOfService': termsOfService.id}) }}" class="btn btn-theme-white bg-blue">{{ 'common.edit'|trans }}</a>
+                    <a href="{{ path('tos_revise', {'termsOfService': termsOfService.id}) }}" class="btn btn-theme-white bg-green me-1">{{ 'termsOfService.extra.revise'|trans }}</a>
+                </div>
+            {% endif %}
         </div>
         <div class="ql-editor">{{ termsOfService.content|raw }}</div>
     </div>

@@ -329,6 +329,9 @@ termsOfService:
     title:
         index: Terms of service listing
         new: New terms of service
+        edit: Editing <i>%termsOfService%</i>
+    extra:
+        revise: Revise
 
 extra:
     free: Free

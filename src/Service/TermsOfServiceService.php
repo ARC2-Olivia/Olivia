@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class TermsOfServiceService
 {
-    private EntityManagerInterface $em;
+    private ?EntityManagerInterface $em = null;
 
     public function __construct(EntityManagerInterface $em)
     {

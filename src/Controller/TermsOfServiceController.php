@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\TermsOfService;
 use App\Form\TermsOfServiceType;
+use App\Security\TermsOfServiceVoter;
 use App\Service\TermsOfServiceService;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
@@ -21,8 +22,8 @@ class TermsOfServiceController extends AbstractController
     private const AJAX_STATUS_FAIL = 'fail';
     private const AJAX_STATUS_SUCCESS = 'success';
 
-    private EntityManagerInterface $em;
-    private TranslatorInterface $translator;
+    private ?EntityManagerInterface $em = null;
+    private ?TranslatorInterface $translator = null;
 
     public function __construct(EntityManagerInterface $em, TranslatorInterface $translator)
     {
@@ -82,9 +83,24 @@ class TermsOfServiceController extends AbstractController
     }
 
     #[Route("/edit/{termsOfService}", name: "edit")]
-    public function edit(TermsOfService $termsOfService): Response
+    #[IsGranted(TermsOfServiceVoter::EDIT, subject: "termsOfService")]
+    public function edit(TermsOfService $termsOfService, Request $request): Response
     {
-        return new Response();
+        $form = $this->createForm(TermsOfServiceType::class, $termsOfService, ['is_edit' => true]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $tosTitle = $this->translator->trans('termsOfService.format', ['%version%' => $termsOfService->getVersion(), '%revision%' => $termsOfService->getRevision()], 'app');
+            $this->addFlash('success', $this->translator->trans('success.termsOfService.edit', ['%termsOfService%' => $tosTitle], 'message'));
+            return $this->redirectToRoute('tos_show', ['termsOfService' => $termsOfService->getId()]);
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('termsOfService/edit.html.twig', ['termsOfService' => $termsOfService, 'form' => $form->createView()]);
     }
 
     #[Route("/revise/{termsOfService}", name: "revise")]
