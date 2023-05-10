@@ -68,6 +68,7 @@ class TermsOfServiceController extends AbstractController
     }
 
     #[Route("/show/{termsOfService}", name: "show")]
+    #[IsGranted('ROLE_USER')]
     public function show(TermsOfService $termsOfService): Response
     {
         return $this->render('termsOfService/show.html.twig', ['termsOfService' => $termsOfService]);

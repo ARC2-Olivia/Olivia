@@ -1,10 +1,8 @@
 {% extends 'base.html.twig' %}
 {% trans_default_domain 'app' %}
 
-{% block title %}{{ 'page.termsOfService.index'|trans }}{% endblock %}
-
 {% block header %}
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <nav>
                 <ul class="navigation-main">
@@ -12,8 +10,10 @@
                     <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ 'nav.training'|trans }}</a></li>
                     <li><a href="{{ path('practical_submodule_index') }}" class="btn btn-theme-white">{{ 'nav.practice'|trans }}</a></li>
                     <li><a href="#" class="btn btn-theme-white">{{ 'nav.aboutUs'|trans }}</a></li>
-                    {% if is_granted('ROLE_USER') %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="{{ path('tos_index') }}" class="btn btn-theme-white">{{ 'nav.termsOfService'|trans }}</a></li>
+                        <li><a href="{{ path('security_logout') }}" class="btn btn-theme-white">{{ 'common.logout'|trans }}</a></li>
+                    {% elseif is_granted('ROLE_USER') %}
                         <li><a href="{{ path('security_logout') }}" class="btn btn-theme-white">{{ 'common.logout'|trans }}</a></li>
                     {% else %}
                         <a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'common.login'|trans }}</a>
