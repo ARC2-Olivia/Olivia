@@ -11,10 +11,8 @@ function createApexLinkColumnDef(columnDef) {
         sort: columnDef.sort || false,
         filter: columnDef.filter || false,
         cellTemplate: (params) => {
-            const link = document.createElement("A");
-            link.setAttribute("href", params.value.url);
-            link.innerText = params.value.text;
-            return link;
+            const parser = new DOMParser();
+            return parser.parseFromString(params.value, "text/html").body;
         }
     };
 }

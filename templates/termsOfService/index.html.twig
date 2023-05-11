@@ -7,7 +7,9 @@
     <div class="card card-body">
         <div class="d-flex justify-content-between align-items-center flex-wrap">
             <h1 class="card-title">{{ 'termsOfService.title.index'|trans }}</h1>
-            <a href="{{ path('tos_new') }}" class="btn btn-theme-white bg-blue btn-sm">{{ mdi('plus') }}</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('tos_new') }}" class="btn btn-theme-white bg-blue btn-sm">{{ mdi('plus') }}</a>
+            {% endif %}
         </div>
         <apex-grid class="apex-style-override" data-column-defs="{{ columnDefs|json_encode }}" data-url="{{ path('tos_ajax_index') }}" style="height: 400px"></apex-grid>
     </div>

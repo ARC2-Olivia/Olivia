@@ -34,12 +34,12 @@ class TermsOfServiceController extends AbstractController
     }
 
     #[Route("/", name: "index")]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_USER')]
     public function index(): Response
     {
         $columnDefs = [
             ['key' => $this->translator->trans('form.entity.termsOfService.label.id', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
-            ['key' => $this->translator->trans('form.entity.termsOfService.label.title', [], 'app'), 'type' => 'link'],
+            ['key' => $this->translator->trans('form.entity.termsOfService.label.title', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'link'],
             ['key' => $this->translator->trans('form.entity.termsOfService.label.startedAt', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
             ['key' => $this->translator->trans('form.entity.termsOfService.label.endedAt', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
             ['key' => $this->translator->trans('form.entity.termsOfService.label.active', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
@@ -161,19 +161,18 @@ class TermsOfServiceController extends AbstractController
     #[Route("/ajax/index", name: "ajax_index", methods: ["GET"])]
     public function ajaxIndex(): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_USER')) {
             return new JsonResponse(['status' => self::AJAX_STATUS_FAIL]);
         }
 
         $data = [];
         /** @var TermsOfService $termsOfService */
         foreach ($this->em->getRepository(TermsOfService::class)->findBy([], ['id' => 'DESC']) as $termsOfService) {
+            $tosTitle = $this->translator->trans('termsOfService.format', ['%version%' => $termsOfService->getVersion(), '%revision%' => $termsOfService->getRevision()], 'app');
+            $tosUrl = $this->generateUrl('tos_show', ['termsOfService' => $termsOfService->getId()]);
             $data[] = [
                 $this->translator->trans('form.entity.termsOfService.label.id', [], 'app') => $termsOfService->getId(),
-                $this->translator->trans('form.entity.termsOfService.label.title', [], 'app') => [
-                    'text' => $this->translator->trans('termsOfService.format', ['%version%' => $termsOfService->getVersion(), '%revision%' => $termsOfService->getRevision()], 'app'),
-                    'url' => $this->generateUrl('tos_show', ['termsOfService' => $termsOfService->getId()])
-                ],
+                $this->translator->trans('form.entity.termsOfService.label.title', [], 'app') => "<a href='$tosUrl'>$tosTitle</a>",
                 $this->translator->trans('form.entity.termsOfService.label.startedAt', [], 'app') => $termsOfService->getStartedAt()->format('d.m.Y.'),
                 $this->translator->trans('form.entity.termsOfService.label.endedAt', [], 'app') => $termsOfService->getEndedAt() !== null ? $termsOfService->getEndedAt()->format('d.m.Y.') : '-',
                 $this->translator->trans('form.entity.termsOfService.label.active', [], 'app') => $termsOfService->isActive() ? $this->translator->trans('common.yes', [], 'app') : $this->translator->trans('common.no', [], 'app')
