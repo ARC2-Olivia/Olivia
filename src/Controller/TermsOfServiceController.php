@@ -144,6 +144,20 @@ class TermsOfServiceController extends AbstractController
         return $this->redirectToRoute('tos_show', ['termsOfService' => $termsOfService->getId()]);
     }
 
+    #[Route("/rescind/{termsOfService}", name: "rescind")]
+    #[IsGranted(TermsOfServiceVoter::RESCIND, subject: "termsOfService")]
+    public function rescind(TermsOfService $termsOfService, Request $request, TermsOfServiceService $termsOfServiceService): Response
+    {
+        $csrfToken = $request->request->get('_csrf_token');
+        if ($csrfToken !== null && $this->isCsrfTokenValid('tos.rescind', $csrfToken)) {
+            /** @var User $user */
+            $user = $this->getUser();
+            $termsOfServiceService->userRescindsTermsOfService($user, $termsOfService);
+            $this->addFlash('success', $this->translator->trans('success.termsOfService.rescind', [], 'message'));
+        }
+        return $this->redirectToRoute('tos_active');
+    }
+
     #[Route("/ajax/index", name: "ajax_index", methods: ["GET"])]
     public function ajaxIndex(): Response
     {

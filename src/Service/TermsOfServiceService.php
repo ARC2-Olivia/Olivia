@@ -72,4 +72,11 @@ class TermsOfServiceService
         $termsOfService = $this->em->getRepository(TermsOfService::class)->findCurrentlyActive();
         return $this->userAcceptedTermsOfService($user, $termsOfService);
     }
+
+    public function userRescindsTermsOfService(User $user, TermsOfService $termsOfService): void
+    {
+        $acceptedTermsOfServices = $this->em->getRepository(AcceptedTermsOfService::class)->findBy(['user' => $user, 'termsOfService' => $termsOfService]);
+        foreach ($acceptedTermsOfServices as $acceptedTermsOfService) $this->em->remove($acceptedTermsOfService);
+        $this->em->flush();
+    }
 }

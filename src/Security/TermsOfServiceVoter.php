@@ -14,6 +14,7 @@ class TermsOfServiceVoter extends Voter
 {
     public const EDIT = 'tos_edit';
     public const ACCEPT = 'tos_accept';
+    public const RESCIND = 'tos_rescind';
 
     private ?Security $security = null;
     private ?TermsOfServiceService $termsOfServiceService = null;
@@ -26,7 +27,7 @@ class TermsOfServiceVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-        return $subject instanceof TermsOfService && in_array($attribute, [self::EDIT, self::ACCEPT]);
+        return $subject instanceof TermsOfService && in_array($attribute, [self::EDIT, self::ACCEPT, self::RESCIND]);
     }
 
     /**
@@ -44,6 +45,7 @@ class TermsOfServiceVoter extends Voter
         switch ($attribute) {
             case self::EDIT: return $this->canEdit($subject);
             case self::ACCEPT: return $this->canAccept($subject, $user);
+            case self::RESCIND: return $this->canRescind($subject, $user);
         }
 
         return false;
@@ -57,6 +59,11 @@ class TermsOfServiceVoter extends Voter
     private function canAccept(TermsOfService $termsOfService, User $user)
     {
         return $this->isRegularUser() && $termsOfService->isActive() && !$this->termsOfServiceService->userAcceptedTermsOfService($user, $termsOfService);
+    }
+
+    private function canRescind(TermsOfService $termsOfService, User $user)
+    {
+        return $this->isRegularUser() && $this->termsOfServiceService->userAcceptedTermsOfService($user, $termsOfService);
     }
 
     private function isRegularUser()

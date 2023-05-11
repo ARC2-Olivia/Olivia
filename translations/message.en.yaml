@@ -40,6 +40,7 @@ success:
         edit: Terms of service <i>%termsOfService%</i> have been edited.
         revise: Terms of service have been revised. Users will have to accept the terms of service in order to use the application.
         accept: Terms of service have been accepted.
+        rescind: Terms of service have been rescinded.
 
 warning:
     accountConfirmation:

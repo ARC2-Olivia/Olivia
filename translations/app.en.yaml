@@ -334,6 +334,7 @@ termsOfService:
     extra:
         revise: Revise
         accept: Accept terms of service
+        rescind: Rescind terms of service
 
 extra:
     free: Free
