@@ -36,9 +36,10 @@ success:
     practicalSubmoduleAssessment:
         finish: Your evaluation has been saved. You can view the evaluation results by clicking the <i>Results</i> from the <i>Evaluate</i> tab.
     termsOfService:
-        new: A new terms of service has been created. Users will have to accept the terms of service in order to use the application.
-        edit: Terms of service <i>%termsOfService%</i> has been edited.
-        revise: Terms of service has been revised. Users will have to accept the terms of service in order to use the application.
+        new: A new terms of service have been created. Users will have to accept the terms of service in order to use the application.
+        edit: Terms of service <i>%termsOfService%</i> have been edited.
+        revise: Terms of service have been revised. Users will have to accept the terms of service in order to use the application.
+        accept: Terms of service have been accepted.
 
 warning:
     accountConfirmation:

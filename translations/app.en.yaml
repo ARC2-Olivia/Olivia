@@ -333,6 +333,7 @@ termsOfService:
         revise: Revising <i>%termsOfService%</i>
     extra:
         revise: Revise
+        accept: Accept terms of service
 
 extra:
     free: Free

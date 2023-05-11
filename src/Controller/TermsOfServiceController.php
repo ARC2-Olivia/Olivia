@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\TermsOfService;
+use App\Entity\User;
 use App\Form\TermsOfServiceType;
 use App\Security\TermsOfServiceVoter;
 use App\Service\TermsOfServiceService;
@@ -127,6 +128,20 @@ class TermsOfServiceController extends AbstractController
             'content' => $content,
             'contentAlt' => $contentAlt]
         );
+    }
+
+    #[Route("/accept/{termsOfService}", name: "accept")]
+    #[IsGranted(TermsOfServiceVoter::ACCEPT, subject: "termsOfService")]
+    public function accept(TermsOfService $termsOfService, Request $request, TermsOfServiceService $termsOfServiceService): Response
+    {
+        $csrfToken = $request->request->get('_csrf_token');
+        if ($csrfToken !== null && $this->isCsrfTokenValid('tos.accept', $csrfToken)) {
+            /** @var User $user */
+            $user = $this->getUser();
+            $termsOfServiceService->userAcceptsTermsOfService($user, $termsOfService);
+            $this->addFlash('success', $this->translator->trans('success.termsOfService.accept', [], 'message'));
+        }
+        return $this->redirectToRoute('tos_show', ['termsOfService' => $termsOfService->getId()]);
     }
 
     #[Route("/ajax/index", name: "ajax_index", methods: ["GET"])]

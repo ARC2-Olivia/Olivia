@@ -30,7 +30,7 @@ class TermsOfServiceSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         $route = $event->getRequest()->attributes->get('_route');
 
-        if ($this->checkRoutes($route) && $this->isRegularUser() && !$this->termsOfServiceService->userAcceptedCurrentlyActiveTermsOfService($user)) {
+        if (!$this->isException($event->getRequest()) && $this->checkRoutes($route) && $this->isRegularUser() && !$this->termsOfServiceService->userAcceptedCurrentlyActiveTermsOfService($user)) {
             $event->setController(function () {
                 return new RedirectResponse($this->router->generate('tos_active'));
             });
@@ -49,6 +49,11 @@ class TermsOfServiceSubscriber implements EventSubscriberInterface
 
     private function checkRoutes(string $route): bool
     {
-        return !in_array($route, ['_wdt', '_profiler', 'tos_active', 'security_logout', 'change_locale']);
+        return !in_array($route, ['_wdt', '_profiler', 'tos_active', 'security_logout', 'change_locale', 'tos_accept']);
+    }
+
+    private function isException(\Symfony\Component\HttpFoundation\Request $request): bool
+    {
+        return $request->attributes->has('exception');
     }
 }

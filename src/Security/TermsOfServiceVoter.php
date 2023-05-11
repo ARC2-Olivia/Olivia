@@ -4,6 +4,7 @@ namespace App\Security;
 
 use App\Entity\TermsOfService;
 use App\Entity\User;
+use App\Service\TermsOfServiceService;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -12,15 +13,20 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class TermsOfServiceVoter extends Voter
 {
     public const EDIT = 'tos_edit';
+    public const ACCEPT = 'tos_accept';
 
-    public function __construct(Security $security)
+    private ?Security $security = null;
+    private ?TermsOfServiceService $termsOfServiceService = null;
+
+    public function __construct(Security $security, TermsOfServiceService $termsOfServiceService)
     {
         $this->security = $security;
+        $this->termsOfServiceService = $termsOfServiceService;
     }
 
     protected function supports(string $attribute, $subject): bool
     {
-        return $subject instanceof TermsOfService && $attribute === self::EDIT;
+        return $subject instanceof TermsOfService && in_array($attribute, [self::EDIT, self::ACCEPT]);
     }
 
     /**
@@ -31,14 +37,30 @@ class TermsOfServiceVoter extends Voter
      */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
+        /** @var User $user */
         $user = $token->getUser();
         if (!$user instanceof UserInterface) return false;
-        if ($attribute === self::EDIT) return $this->canEdit($subject, $user);
+
+        switch ($attribute) {
+            case self::EDIT: return $this->canEdit($subject);
+            case self::ACCEPT: return $this->canAccept($subject, $user);
+        }
+
         return false;
     }
 
-    private function canEdit(TermsOfService $termsOfService, UserInterface $user)
+    private function canEdit(TermsOfService $termsOfService)
     {
-        return in_array(User::ROLE_ADMIN, $user->getRoles()) && $termsOfService->isActive();
+        return $this->security->isGranted(User::ROLE_USER) && $termsOfService->isActive();
+    }
+
+    private function canAccept(TermsOfService $termsOfService, User $user)
+    {
+        return $this->isRegularUser() && $termsOfService->isActive() && !$this->termsOfServiceService->userAcceptedTermsOfService($user, $termsOfService);
+    }
+
+    private function isRegularUser()
+    {
+        return $this->security->isGranted(User::ROLE_USER) && !$this->security->isGranted('ROLE_ADMIN') && !$this->security->isGranted('ROLE_MODERATOR');
     }
 }
