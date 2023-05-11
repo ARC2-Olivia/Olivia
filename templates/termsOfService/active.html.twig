@@ -16,12 +16,12 @@
             {% endif %}
             {% if is_user() %}
                 {% if terms_of_service_accepted(termsOfService) %}
-                    <form class="mt-3" method="post" action="{{ path('tos_rescind', {'termsOfService': termsOfService.id}) }}">
+                    <form class="mt-3" method="post" action="{{ path('tos_rescind', {'termsOfService': termsOfService.id}) }}" onsubmit="return confirm('{{ 'termsOfService.message.rescind'|trans }}')">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('tos.rescind') }}"/>
                         <button type="submit" class="btn btn-theme-white bg-red">{{ 'termsOfService.extra.rescind'|trans }}</button>
                     </form>
                 {% else %}
-                    <form class="mt-3" method="post" action="{{ path('tos_accept', {'termsOfService': termsOfService.id}) }}">
+                    <form class="mt-3" method="post" action="{{ path('tos_accept', {'termsOfService': termsOfService.id}) }}" onsubmit="return confirm('{{ 'termsOfService.message.accept'|trans }}')">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('tos.accept') }}"/>
                         <button type="submit" class="btn btn-theme-white bg-blue">{{ 'termsOfService.extra.accept'|trans }}</button>
                     </form>

@@ -326,6 +326,10 @@ practicalSubmoduleAssessment:
 termsOfService:
     format: Ver. %version%, rev. %revision%
     ongoing: ongoing
+    message:
+        accept: Are you sure you want to accept the terms of service?
+        rescind: Are you sure you want to rescind the terms of service?
+        rescindInactive: Rescinding inactive terms of service will not prohibit you from using the Olivia tool.
     title:
         index: Terms of service listing
         new: New terms of service

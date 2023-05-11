@@ -14,6 +14,15 @@
                     <a href="{{ path('tos_revise', {'termsOfService': termsOfService.id}) }}" class="btn btn-theme-white bg-green me-1">{{ 'termsOfService.extra.revise'|trans }}</a>
                 </div>
             {% endif %}
+            {% if is_user() and terms_of_service_accepted(termsOfService) %}
+                <form class="mt-3" method="post" action="{{ path('tos_rescind', {'termsOfService': termsOfService.id}) }}" onsubmit="return confirm('{{ 'termsOfService.message.rescind'|trans }}')">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('tos.rescind') }}"/>
+                    <button type="submit" class="btn btn-theme-white bg-red">{{ 'termsOfService.extra.rescind'|trans }}</button>
+                    {% if not termsOfService.active %}
+                        <br><small>{{ 'termsOfService.message.rescindInactive'|trans }}</small>
+                    {% endif %}
+                </form>
+            {% endif %}
         </div>
         <div class="ql-editor">{{ termsOfService.content|raw }}</div>
     </div>
