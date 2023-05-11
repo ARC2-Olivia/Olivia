@@ -1,33 +1,18 @@
 <?php
 
-namespace App\Twig;
+namespace App\Twig\Runtime;
 
 use Twig\Environment;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-use Twig\Extension\AbstractExtension;
+use Twig\Extension\RuntimeExtensionInterface;
 use Twig\Markup;
-use Twig\TwigFilter;
-use Twig\TwigFunction;
 
-class MdiExtension extends AbstractExtension
+class MdiRuntime implements RuntimeExtensionInterface
 {
     private ?Environment $twig = null;
 
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
-    }
-
-    public function getFilters()
-    {
-        return [new TwigFilter('mdi', [$this, 'mdi'])];
-    }
-
-    public function getFunctions()
-    {
-        return [new TwigFunction('mdi', [$this, 'mdi'])];
     }
 
     public function mdi(string $mdiName, string $mdiClass = "", string $mdiViewBox = "0 0 24 24"): Markup

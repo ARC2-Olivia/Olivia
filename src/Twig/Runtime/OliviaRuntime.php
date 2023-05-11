@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Twig;
+namespace App\Twig\Runtime;
 
 use App\Entity\Course;
-use App\Entity\PracticalSubmoduleProcessorImplementationInterface;
 use App\Entity\LessonItemEmbeddedVideo;
+use App\Entity\PracticalSubmoduleProcessorImplementationInterface;
 use App\Entity\User;
 use App\Service\EnrollmentService;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
-use Twig\TwigFunction;
+use Twig\Extension\RuntimeExtensionInterface;
 
-class OliviaExtension extends AbstractExtension
+class OliviaRuntime implements RuntimeExtensionInterface
 {
     const TEMPLATE_YOUTUBE_EMBED_URL = 'https://www.youtube.com/embed/%s';
 
@@ -29,23 +27,6 @@ class OliviaExtension extends AbstractExtension
         $this->enrollmentService = $enrollmentService;
         $this->security = $security;
         $this->validator = $validator;
-    }
-
-    public function getFilters()
-    {
-        return [
-            new TwigFilter('translate_workload', [$this, 'translateWorkload']),
-            new TwigFilter('youtube_embed_link', [$this, 'getYoutubeEmbedLink']),
-            new TwigFilter('is_valid_evaluator', [$this, 'isValidEvaluator'])
-        ];
-    }
-
-    public function getFunctions()
-    {
-        return [
-            new TwigFunction('is_enrolled', [$this, 'isEnrolled']),
-            new TwigFunction('is_user', [$this, 'isUser']),
-        ];
     }
 
     public function translateWorkload(Course $course): string
