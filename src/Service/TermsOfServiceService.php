@@ -61,8 +61,15 @@ class TermsOfServiceService
         $this->userAcceptsTermsOfService($user, $termsOfService);
     }
 
-    public function userAcceptedTermsOfService(User $user, TermsOfService $termsOfService): bool
+    public function userAcceptedTermsOfService(User $user, ?TermsOfService $termsOfService): bool
     {
+        if ($termsOfService === null) return true;
         return $this->em->getRepository(AcceptedTermsOfService::class)->count(['user' => $user, 'termsOfService' => $termsOfService]) > 0;
+    }
+
+    public function userAcceptedCurrentlyActiveTermsOfService(User $user): bool
+    {
+        $termsOfService = $this->em->getRepository(TermsOfService::class)->findCurrentlyActive();
+        return $this->userAcceptedTermsOfService($user, $termsOfService);
     }
 }
