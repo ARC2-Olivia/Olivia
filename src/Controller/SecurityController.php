@@ -54,7 +54,6 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$securityService->userExists($registration->getEmail())) {
                 $user = $securityService->createUnactivatedUser($registration);
-                $termsOfServiceService->userAcceptsCurrentlyActiveTermsOfService($user);
                 $mailerService->sendConfirmationMail($user);
                 $this->addFlash('success', $this->translator->trans('success.registration', [], 'message'));
             } else {
@@ -69,9 +68,11 @@ class SecurityController extends AbstractController
     }
 
     #[Route("/confirmation/{confirmationToken}", name: "confirmation")]
-    public function confirmation(string $confirmationToken, SecurityService $securityService): Response
+    public function confirmation(string $confirmationToken, SecurityService $securityService, TermsOfServiceService $termsOfServiceService): Response
     {
-        $activationSuccess = $securityService->activateUserWithToken($confirmationToken);
+        $user = null;
+        $activationSuccess = $securityService->activateUserWithToken($confirmationToken, $user);
+        if ($user !== null) $termsOfServiceService->userAcceptsCurrentlyActiveTermsOfService($user);
         return $this->render('security/confirmation.html.twig', ['activationSuccess' => $activationSuccess]);
     }
 }

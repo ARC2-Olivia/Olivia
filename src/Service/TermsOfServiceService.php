@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\AcceptedTermsOfService;
 use App\Entity\TermsOfService;
 use App\Entity\User;
 use App\Repository\TermsOfServiceRepository;
@@ -47,12 +48,21 @@ class TermsOfServiceService
 
     public function userAcceptsTermsOfService(User $user, TermsOfService $termsOfService): void
     {
-        // TODO: Implement accepting
+        if (!$this->userAcceptedTermsOfService($user, $termsOfService)) {
+            $acceptedTermsOfService = (new AcceptedTermsOfService())->setUser($user)->setTermsOfService($termsOfService)->setAcceptedAt(new \DateTimeImmutable());
+            $this->em->persist($acceptedTermsOfService);
+            $this->em->flush();
+        }
     }
 
     public function userAcceptsCurrentlyActiveTermsOfService(User $user): void
     {
         $termsOfService = $this->em->getRepository(TermsOfService::class)->findCurrentlyActive();
         $this->userAcceptsTermsOfService($user, $termsOfService);
+    }
+
+    public function userAcceptedTermsOfService(User $user, TermsOfService $termsOfService): bool
+    {
+        return $this->em->getRepository(AcceptedTermsOfService::class)->count(['user' => $user, 'termsOfService' => $termsOfService]) > 0;
     }
 }

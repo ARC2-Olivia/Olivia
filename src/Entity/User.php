@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -36,6 +38,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $activated = null;
+
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: AcceptedTermsOfService::class, orphanRemoval: true)]
+    private Collection $acceptedTermsOfServices;
+
+    public function __construct()
+    {
+        $this->acceptedTermsOfServices = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -127,6 +137,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setActivated(bool $activated): self
     {
         $this->activated = $activated;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AcceptedTermsOfService>
+     */
+    public function getAcceptedTermsOfServices(): Collection
+    {
+        return $this->acceptedTermsOfServices;
+    }
+
+    public function addAcceptedTermsOfService(AcceptedTermsOfService $acceptedTermsOfService): self
+    {
+        if (!$this->acceptedTermsOfServices->contains($acceptedTermsOfService)) {
+            $this->acceptedTermsOfServices->add($acceptedTermsOfService);
+            $acceptedTermsOfService->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAcceptedTermsOfService(AcceptedTermsOfService $acceptedTermsOfService): self
+    {
+        if ($this->acceptedTermsOfServices->removeElement($acceptedTermsOfService)) {
+            // set the owning side to null (unless already changed)
+            if ($acceptedTermsOfService->getUser() === $this) {
+                $acceptedTermsOfService->setUser(null);
+            }
+        }
 
         return $this;
     }

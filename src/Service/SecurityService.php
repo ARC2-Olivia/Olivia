@@ -35,7 +35,7 @@ class SecurityService
         return $user;
     }
 
-    public function activateUserWithToken(string $confirmationToken): bool
+    public function activateUserWithToken(string $confirmationToken, User &$user = null): bool
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['confirmationToken' => $confirmationToken]);
         if ($user !== null) {
