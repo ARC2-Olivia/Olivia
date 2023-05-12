@@ -13,7 +13,7 @@
                     <li>
                         <button id="profile-button" class="btn btn-theme-white">{{ app.user.email }}</button>
                         <ul id="profile-dropdown" class="dropdown" data-dropdown data-for="#profile-button">
-                            <li class="dropdown-item">Profile</li>
+                            <li class="dropdown-item"><a href="{{ path('profile') }}">{{ 'common.profile'|trans }}</a></li>
                             <li class="dropdown-item"><a href="{{ path('security_logout') }}">{{ 'common.logout'|trans }}</a></li>
                         </ul>
                     </li>

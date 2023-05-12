@@ -8,6 +8,7 @@
     height: 36px;
     padding: 0 16px;
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .btn.btn-theme-white {

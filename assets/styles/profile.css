@@ -1,0 +1,29 @@
+.profile hr {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.profile p {
+    margin: 0;
+}
+
+.profile .action-and-description {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.profile .action-and-description > .action {
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+.profile .action-and-description > .description {
+    flex-basis: 0;
+    flex-grow: 4;
+}
+
+@media screen and (max-width: 768px) {
+    .profile .action-and-description {
+        flex-direction: column;
+    }
+}

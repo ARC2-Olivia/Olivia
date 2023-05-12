@@ -13,6 +13,7 @@
 @import "./styles/lesson.css";
 @import "./styles/quizQuestion.css";
 @import "./styles/evaluation.css";
+@import "./styles/profile.css";
 
 :root {
     --app-font-default: 'Source Sans Pro', sans-serif;

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,5 +31,12 @@ class DefaultController extends AbstractController
 
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
+    }
+
+    #[Route("/profile", name: "profile")]
+    #[IsGranted("ROLE_USER")]
+    public function profile(): Response
+    {
+        return $this->render('default/profile.html.twig');
     }
 }
