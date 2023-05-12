@@ -26,6 +26,16 @@ class DataRequest
     #[ORM\Column]
     private ?\DateTimeImmutable $requestedAt = null;
 
+    public static function createAccessRequest(User $user): self
+    {
+        return (new DataRequest())->setUser($user)->setType(self::TYPE_ACCESS)->setRequestedAt(new \DateTimeImmutable());
+    }
+
+    public static function createDeletionRequest(User $user): self
+    {
+        return (new DataRequest())->setUser($user)->setType(self::TYPE_DELETE)->setRequestedAt(new \DateTimeImmutable());
+    }
+
     public function getId(): ?int
     {
         return $this->id;
