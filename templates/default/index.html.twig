@@ -2,31 +2,18 @@
 {% trans_default_domain 'app' %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <nav>
-                <ul class="navigation-main">
-                    <li><a href="{{ path('change_locale') }}" class="btn btn-theme-white">{{ 'nav.language'|trans }}<sup class="sup-locale">{{ app.request.locale }}</sup></a></li>
-                    <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ 'nav.training'|trans }}</a></li>
-                    <li><a href="{{ path('practical_submodule_index') }}" class="btn btn-theme-white">{{ 'nav.practice'|trans }}</a></li>
-                    <li><a href="#" class="btn btn-theme-white">{{ 'nav.aboutUs'|trans }}</a></li>
-                    {% if is_granted('ROLE_USER') %}
-                        <li><a href="{{ path('tos_index') }}" class="btn btn-theme-white">{{ 'nav.termsOfService'|trans }}</a></li>
-                        <li><a href="{{ path('security_logout') }}" class="btn btn-theme-white">{{ 'common.logout'|trans }}</a></li>
-                    {% else %}
-                        <a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'common.login'|trans }}</a>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
-    </div>
+    {% include 'default/_nav.html.twig' %}
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
+    {{ encore_entry_link_tags('popper.dropdown') }}
     <style>
-        .body {
-            background-color: var(--app-color-dark-blue);
-        }
+        .body { background-color: var(--app-color-dark-blue); }
     </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('popper.dropdown') }}
 {% endblock %}
