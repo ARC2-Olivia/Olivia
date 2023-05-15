@@ -4,21 +4,7 @@
 {% block title %}{{ 'page.admin'|trans }}{% endblock %}
 
 {% block header %}
-    <div class="container-fluid py-3 px-5">
-        <div class="row align-items-center">
-            <div class="col-12 col-sm-6">
-                <span class="brand">{{ 'app.brand.short'|trans }}</span>
-            </div>
-            <nav class="col-12 col-sm-6 text-end">
-                <ul class="navigation-main p-0">
-                    <li><a href="{{ path('change_locale') }}" class="btn btn-theme-white">{{ 'nav.language'|trans }}<sup class="sup-locale">{{ app.request.locale }}</sup></a></li>
-                    <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ 'nav.training'|trans }}</a></li>
-                    <li><a href="{{ path('practical_submodule_index') }}" class="btn btn-theme-white">{{ 'nav.practice'|trans }}</a></li>
-                    <li><a href="{{ path('security_logout') }}" class="btn btn-theme-white">{{ 'common.logout'|trans }}</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    {% include 'default/_nav.html.twig' with {'wide': true} %}
 {% endblock %}
 
 {% block body %}
@@ -26,9 +12,20 @@
         <ul class="navigation-admin">
             <li><a href="{{ path('admin_user_index') }}">{{ 'nav.users'|trans }}</a></li>
             <li><a href="{{ path('admin_instructor_index') }}">{{ 'nav.instructors'|trans }}</a></li>
+            <li><a href="{{ path('admin_data_request_index') }}">{{ 'nav.dataRequests'|trans }}</a></li>
         </ul>
         <div class="flex-grow-1">
             {% block adminContent %}{% endblock %}
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('popper.dropdown') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('popper.dropdown') }}
 {% endblock %}

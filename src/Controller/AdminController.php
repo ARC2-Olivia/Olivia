@@ -3,22 +3,21 @@
 namespace App\Controller;
 
 
+use App\Entity\DataRequest;
 use App\Entity\Instructor;
 use App\Entity\User;
 use App\Form\InstructorType;
 use App\Form\UserType;
+use App\Repository\DataRequestRepository;
 use App\Repository\InstructorRepository;
 use App\Repository\UserRepository;
 use App\Traits\BasicFileManagementTrait;
-use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/admin", name: "admin_")]
 #[IsGranted('ROLE_ADMIN')]
@@ -121,6 +120,19 @@ class AdminController extends BaseController
             $this->addFlash('warning', $this->translator->trans('warning.instructor.delete', [], 'message'));
         }
         return $this->redirectToRoute('admin_instructor_index');
+    }
+
+    #[Route("/data-request", name: "data_request_index")]
+    public function dataRequests(DataRequestRepository $dataRequestRepository): Response
+    {
+        /** @var DataRequest $dataAccessRequests */ $dataAccessRequests = $dataRequestRepository->findUnresolvedByType(DataRequest::TYPE_ACCESS);
+        /** @var DataRequest $dataDeletionRequests */ $dataDeletionRequests = $dataRequestRepository->findUnresolvedByType(DataRequest::TYPE_DELETE);
+        /** @var DataRequest $resolvedDataRequests */ $resolvedDataRequests = $dataRequestRepository->findResolved();
+        return $this->render('admin/dataRequest/index.html.twig', [
+            'dataAccessRequests' => $dataAccessRequests,
+            'dataDeletionRequests' => $dataDeletionRequests,
+            'resolvedDataRequests' => $resolvedDataRequests
+        ]);
     }
 
     private function storeInstructorImage(?UploadedFile $image, Instructor $instructor)

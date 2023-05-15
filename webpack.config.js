@@ -29,6 +29,7 @@ Encore
     .addEntry('sortable', './assets/sortable.js')
     .addEntry('axios', './assets/axios.js')
     .addEntry('apexgrid', './assets/apexgrid.js')
+    .addEntry('gridjs', './assets/grid.js')
     .addEntry('popper.dropdown', './assets/scripts/popper.dropdown.js')
 
     // Page specific

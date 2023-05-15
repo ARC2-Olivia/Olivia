@@ -38,4 +38,27 @@ class DataRequestRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    /**
+     * @return DataRequest[]
+     */
+    public function findUnresolvedByType(string $type): array
+    {
+        return $this->createQueryBuilder('dr')
+            ->where('dr.type = :type')->andWhere('dr.resolvedAt IS NULL')
+            ->setParameter('type', $type)
+            ->getQuery()->getResult()
+        ;
+    }
+
+    /**
+     * @return DataRequest[]
+     */
+    public function findResolved(): array
+    {
+        return $this->createQueryBuilder('dr')
+            ->where('dr.resolvedAt IS NOT NULL')
+            ->getQuery()->getResult()
+        ;
+    }
 }

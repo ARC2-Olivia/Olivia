@@ -27,6 +27,7 @@ common:
     previous: Previous
     download: Download
     profile: Profile
+    resolve: Resolve
 
 button:
     details: Details
@@ -67,6 +68,7 @@ nav:
     instructors: Instructors
     language: Switch language
     termsOfService: Terms of service
+    dataRequests: Data requests
 
 form:
     security:
@@ -194,6 +196,13 @@ form:
                 active: Active
                 content: Content
                 contentAlt: Content (alternate language)
+        dataRequest:
+            label:
+                id: ID
+                user: User
+                type: Type
+                requestedAt: Requested at
+                resolvedAt: Resolved at
 
 profile:
     request:
@@ -353,6 +362,14 @@ termsOfService:
         revise: Revise
         accept: Accept terms of service
         rescind: Rescind terms of service
+
+dataRequest:
+    title:
+        index:
+            default: Data requests
+            typeAccess: Data access requests
+            typeDelete: Data deletion requests
+            resolved: Resolved data requests
 
 extra:
     free: Free

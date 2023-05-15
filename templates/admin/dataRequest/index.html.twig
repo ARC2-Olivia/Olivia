@@ -1,0 +1,112 @@
+{% extends 'admin/_base_admin.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block adminContent %}
+    <div class="container-fluid p-5">
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">{{ 'dataRequest.title.index.typeAccess'|trans }}</span>
+            </div>
+            <div class="card-body">
+                <div id="data-access-requests-table-wrapper"></div>
+                <table id="data-access-requests-table">
+                    <thead>
+                        <tr>
+                            <th>{{ 'form.entity.dataRequest.label.id'|trans }}</th>
+                            <th>{{ 'form.entity.dataRequest.label.user'|trans }}</th>
+                            <th>{{ 'form.entity.dataRequest.label.requestedAt'|trans }}</th>
+                            <th>{{ 'common.actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dr in dataAccessRequests %}
+                            <tr>
+                                <td>{{ dr.id }}</td>
+                                <td>{{ dr.user.email }}</td>
+                                <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
+                                <td><a href="#" class="btn btn-theme-white bg-green">{{ 'common.resolve'|trans }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <span class="card-title">{{ 'dataRequest.title.index.typeDelete'|trans }}</span>
+            </div>
+            <div class="card-body">
+                <div id="data-deletion-requests-table-wrapper"></div>
+                <table id="data-deletion-requests-table">
+                    <thead>
+                        <tr>
+                            <th>{{ 'form.entity.dataRequest.label.id'|trans }}</th>
+                            <th>{{ 'form.entity.dataRequest.label.user'|trans }}</th>
+                            <th>{{ 'form.entity.dataRequest.label.requestedAt'|trans }}</th>
+                            <th>{{ 'common.actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dr in dataDeletionRequests %}
+                            <tr>
+                                <td>{{ dr.id }}</td>
+                                <td>{{ dr.user.email }}</td>
+                                <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
+                                <td><a href="#" class="btn btn-theme-white bg-green">{{ 'common.resolve'|trans }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <span class="card-title">{{ 'dataRequest.title.index.resolved'|trans }}</span>
+            </div>
+            <div class="card-body">
+                <div id="resolved-data-requests-table-wrapper"></div>
+                <table id="resolved-data-requests-table">
+                    <thead>
+                        <tr>
+                            <th>{{ 'form.entity.dataRequest.label.id'|trans }}</th>
+                            <th>{{ 'form.entity.dataRequest.label.user'|trans }}</th>
+                            <th>{{ 'form.entity.dataRequest.label.type'|trans }}</th>
+                            <th>{{ 'form.entity.dataRequest.label.requestedAt'|trans }}</th>
+                            <th>{{ 'form.entity.dataRequest.label.resolvedAt'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dr in resolvedDataRequests %}
+                            <tr>
+                                <td>{{ dr.id }}</td>
+                                <td>{{ dr.user.email }}</td>
+                                <td>{{ dr.type }}</td>
+                                <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
+                                <td>{{ dr.resolvedAt|date('d.m.Y. H:i') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('gridjs') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('gridjs') }}
+    <script>
+        window.addEventListener("load", () => {
+            new Grid({ from: document.getElementById("data-access-requests-table"), sort: true, search: true, pagination: true }).render(document.getElementById("data-access-requests-table-wrapper"));
+            new Grid({ from: document.getElementById("data-deletion-requests-table"), sort: true, search: true, pagination: true }).render(document.getElementById("data-deletion-requests-table-wrapper"));
+            new Grid({ from: document.getElementById("resolved-data-requests-table"), sort: true, search: true, pagination: true }).render(document.getElementById("resolved-data-requests-table-wrapper"));
+        });
+    </script>
+{% endblock %}

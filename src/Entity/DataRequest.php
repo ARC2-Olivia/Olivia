@@ -26,6 +26,9 @@ class DataRequest
     #[ORM\Column]
     private ?\DateTimeImmutable $requestedAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $resolvedAt = null;
+
     public static function createAccessRequest(User $user): self
     {
         return (new DataRequest())->setUser($user)->setType(self::TYPE_ACCESS)->setRequestedAt(new \DateTimeImmutable());
@@ -73,6 +76,18 @@ class DataRequest
     public function setRequestedAt(\DateTimeImmutable $requestedAt): self
     {
         $this->requestedAt = $requestedAt;
+
+        return $this;
+    }
+
+    public function getResolvedAt(): ?\DateTimeImmutable
+    {
+        return $this->resolvedAt;
+    }
+
+    public function setResolvedAt(?\DateTimeImmutable $resolvedAt): self
+    {
+        $this->resolvedAt = $resolvedAt;
 
         return $this;
     }
