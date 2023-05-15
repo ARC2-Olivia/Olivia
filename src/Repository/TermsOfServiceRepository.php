@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\TermsOfService;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Gedmo\Translatable\Query\TreeWalker\TranslationWalker;
@@ -82,5 +84,17 @@ class TermsOfServiceRepository extends ServiceEntityRepository
         $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, TranslationWalker::class);
         $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
         return $query->getOneOrNullResult();
+    }
+
+    public function dumpForDataAccess(User $user): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare('SELECT tos.id, tos.version, tos.revision, tos.started_at, tos.ended_at, tos.content, tos.active, atos.accepted_at FROM terms_of_service tos LEFT JOIN accepted_terms_of_service atos ON atos.terms_of_service_id = tos.id WHERE atos.user_id = :userId');
+            $result = $stmt->executeQuery(['userId' => $user->getId()]);
+            return $result->fetchAllAssociative();
+        } catch (Exception $e) {
+            return [];
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\DataRequest;
 use App\Entity\Instructor;
+use App\Entity\Note;
 use App\Entity\User;
 use App\Form\InstructorType;
 use App\Form\UserType;
@@ -128,6 +129,7 @@ class AdminController extends BaseController
         /** @var DataRequest $dataAccessRequests */ $dataAccessRequests = $dataRequestRepository->findUnresolvedByType(DataRequest::TYPE_ACCESS);
         /** @var DataRequest $dataDeletionRequests */ $dataDeletionRequests = $dataRequestRepository->findUnresolvedByType(DataRequest::TYPE_DELETE);
         /** @var DataRequest $resolvedDataRequests */ $resolvedDataRequests = $dataRequestRepository->findResolved();
+
         return $this->render('admin/dataRequest/index.html.twig', [
             'dataAccessRequests' => $dataAccessRequests,
             'dataDeletionRequests' => $dataDeletionRequests,

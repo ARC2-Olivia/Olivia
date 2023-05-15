@@ -222,6 +222,10 @@ user:
         index: Users
         new: New user
         edit: Edit user
+    dataAccess:
+        id: ID
+        email: E-mail
+        roles: Roles
 
 instructor:
     title:
@@ -283,6 +287,11 @@ quizQuestion:
     edit: Editing a quiz question
 
 note:
+    dataAccess:
+        id: ID
+        lesson: Lesson ID
+        text: Text
+        updatedAt: Updated at
     extra:
         displayError: There has been an problem loading the notes widget. Refresh the page to try and load it again or, if the problem persists, report the problem to the Olivia Team.
 
@@ -358,6 +367,15 @@ termsOfService:
         new: New terms of service
         edit: Editing <i>%termsOfService%</i>
         revise: Revising <i>%termsOfService%</i>
+    dataAccess:
+        id: ID
+        version: Version
+        revision: Revision
+        startedAt: Started at
+        endedAt: Ended at
+        content: Content
+        active: Active
+        acceptedAt: Accepted at
     extra:
         revise: Revise
         accept: Accept terms of service

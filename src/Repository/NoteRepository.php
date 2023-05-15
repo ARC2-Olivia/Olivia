@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Note;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,15 @@ class NoteRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Note[] Returns an array of Note objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('n.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Note
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function dumpForDataAccess(User $user): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare('SELECT n.id AS note_id, n.lesson_id, n.text, n.updated_at FROM note n WHERE n.user_id = :userId');
+            $result = $stmt->executeQuery(['userId' => $user->getId()]);
+            return $result->fetchAllAssociative();
+        } catch (Exception $e) {
+            return [];
+        }
+    }
 }

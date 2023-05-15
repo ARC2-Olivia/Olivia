@@ -1,0 +1,161 @@
+<?php
+
+namespace App\Service;
+
+use App\Entity\DataRequest;
+use App\Entity\Note;
+use App\Entity\TermsOfService;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+class DataRequestService
+{
+    private EntityManagerInterface $em;
+    private ParameterBagInterface $parameterBag;
+    private TranslatorInterface $translator;
+    private MailerInterface $mailer;
+
+    public function __construct(EntityManagerInterface $em, ParameterBagInterface $parameterBag, TranslatorInterface $translator, MailerInterface $mailer)
+    {
+        $this->em = $em;
+        $this->parameterBag = $parameterBag;
+        $this->translator = $translator;
+        $this->mailer = $mailer;
+    }
+
+    public function resolve(DataRequest $dataRequest): void
+    {
+
+        if ($dataRequest->getType() === DataRequest::TYPE_ACCESS) {
+            $this->resolveDataAccessRequest($dataRequest);
+        } else if ($dataRequest->getType() === DataRequest::TYPE_DELETE) {
+            $this->resolveDataDeletionRequest($dataRequest);
+        }
+    }
+
+    private function resolveDataAccessRequest(DataRequest $dataRequest): void
+    {
+        $fs = new Filesystem();
+
+        if (!$fs->exists($this->parameterBag->get('dir.temp'))) {
+            $fs->mkdir($this->parameterBag->get('dir.temp'));
+        }
+
+        $csvFiles = [
+            'User.csv' => $this->makeUserCsv($dataRequest, $fs),
+            'Note.csv' => $this->makeNoteCsv($dataRequest, $fs),
+            'TermsOfService.csv' => $this->makeTermsOfServiceCsv($dataRequest, $fs),
+        ];
+
+        $zip = new \ZipArchive();
+        $zipFilename = $fs->tempnam($this->parameterBag->get('dir.temp'), 'Olivia-user-data-', '.zip');;
+        $zipFileOpened = $zip->open($zipFilename, \ZipArchive::CREATE);
+
+        if ($zipFileOpened === true) {
+            foreach ($csvFiles as $name => $filepath) {
+                $zip->addFile($filepath, $name);
+            }
+            $zip->close();
+
+            $email = (new Email())
+                ->from($this->parameterBag->get('mail.from'))
+                ->to($dataRequest->getUser()->getEmail())
+                ->subject($this->translator->trans('mail.dataAccess.subject', [], 'mail'))
+                ->text($this->translator->trans('mail.dataAccess.body', [], 'mail'))
+                ->attachFromPath($zipFilename, 'Olivia-user-data.zip', 'application/zip')
+            ;
+            $this->mailer->send($email);
+
+            $dataRequest->setResolvedAt(new \DateTimeImmutable());
+            $this->em->flush();
+        }
+
+        unlink($zipFilename);
+        foreach ($csvFiles as $name => $filepath) {
+            unlink($filepath);
+        }
+    }
+
+    private function resolveDataDeletionRequest(DataRequest $dataRequest): void
+    {
+    }
+
+    private function makeUserCsv(DataRequest $dataRequest, Filesystem $fs): string
+    {
+        $csvUser = $fs->tempnam($this->parameterBag->get('dir.temp'), 'User-', '.csv');
+        if (($stream = fopen($csvUser, 'w')) !== false) {
+            $header = [
+                $this->translator->trans('user.dataAccess.id', [], 'app'),
+                $this->translator->trans('user.dataAccess.email', [], 'app'),
+                $this->translator->trans('user.dataAccess.roles', [], 'app')
+            ];
+            fputcsv($stream, $header, ';');
+
+            $row = [
+                strval($dataRequest->getUser()->getId()),
+                $dataRequest->getUser()->getEmail(),
+                implode(',', $dataRequest->getUser()->getRoles())
+            ];
+            fputcsv($stream, $row, ';');
+
+            fclose($stream);
+        }
+        return $csvUser;
+    }
+
+    private function makeNoteCsv(DataRequest $dataRequest, Filesystem $fs)
+    {
+        $csvNote = $fs->tempnam($this->parameterBag->get('dir.temp'), 'Note-', '.csv');
+        if (($stream = fopen($csvNote, 'w')) !== false) {
+            $header = [
+                $this->translator->trans('note.dataAccess.id', [], 'app'),
+                $this->translator->trans('note.dataAccess.lesson', [], 'app'),
+                $this->translator->trans('note.dataAccess.text', [], 'app'),
+                $this->translator->trans('note.dataAccess.updatedAt', [], 'app'),
+            ];
+            fputcsv($stream, $header, ';');
+
+            $dumpedNotes = $this->em->getRepository(Note::class)->dumpForDataAccess($dataRequest->getUser());
+            foreach ($dumpedNotes as $item) {
+                $row = [$item['note_id'], $item['lesson_id'], $item['text'], $item['updated_at']];
+                fputcsv($stream, $row, ';');
+            }
+
+            fclose($stream);
+        }
+
+        return $csvNote;
+    }
+
+    private function makeTermsOfServiceCsv(DataRequest $dataRequest, Filesystem $fs)
+    {
+        $csvAcceptedTermsOfService = $fs->tempnam($this->parameterBag->get('dir.temp'), 'AcceptedTermsOfService-', '.csv');
+        if (($stream = fopen($csvAcceptedTermsOfService, 'w')) !== false) {
+            $header = [
+                $this->translator->trans('termsOfService.dataAccess.id', [], 'app'),
+                $this->translator->trans('termsOfService.dataAccess.version', [], 'app'),
+                $this->translator->trans('termsOfService.dataAccess.revision', [], 'app'),
+                $this->translator->trans('termsOfService.dataAccess.startedAt', [], 'app'),
+                $this->translator->trans('termsOfService.dataAccess.endedAt', [], 'app'),
+                $this->translator->trans('termsOfService.dataAccess.content', [], 'app'),
+                $this->translator->trans('termsOfService.dataAccess.active', [], 'app'),
+                $this->translator->trans('termsOfService.dataAccess.acceptedAt', [], 'app'),
+            ];
+            fputcsv($stream, $header, ';');
+
+            $dumpedTermsOfServices = $this->em->getRepository(TermsOfService::class)->dumpForDataAccess($dataRequest->getUser());
+            foreach ($dumpedTermsOfServices as $item) {
+                $row = [$item['id'], $item['version'], $item['revision'], $item['started_at'], $item['ended_at'], $item['content'], $item['active'], $item['accepted_at']];
+                fputcsv($stream, $row, ';');
+            }
+            fclose($stream);
+        }
+        return $csvAcceptedTermsOfService;
+    }
+}
