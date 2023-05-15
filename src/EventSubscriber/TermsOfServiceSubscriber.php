@@ -47,7 +47,7 @@ class TermsOfServiceSubscriber implements EventSubscriberInterface
         return $this->security->isGranted(User::ROLE_USER) && !$this->security->isGranted(User::ROLE_ADMIN) && !$this->security->isGranted(User::ROLE_MODERATOR);
     }
 
-    private function checkRoutes(string $route): bool
+    private function checkRoutes(?string $route): bool
     {
         return !in_array($route, ['_wdt', '_profiler', 'tos_active', 'security_logout', 'change_locale', 'tos_accept']);
     }
