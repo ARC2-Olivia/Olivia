@@ -2,5 +2,51 @@
 {% trans_default_domain 'app' %}
 
 {% block body %}
+    <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
+        <div class="index-banner-wrapper">
+            <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
+            <div class="index-banner-subtitle">{{ 'app.subtitle'|trans }}</div>
+            <div class="index-banner-actions">
+                <a href="#" class="btn btn-theme-white bg-orange">{{ 'nav.training'|trans }}</a>
+                <a href="#" class="btn btn-theme-white bg-blue ms-3">{{ 'nav.practice'|trans }}</a>
+            </div>
+        </div>
+    </div>
 
+    <div class="index-about">
+        <div class="index-about--left">
+            <h2>{{ 'index.about.left.title'|trans }}</h2>
+            <p>{{ 'index.about.left.description'|trans }}</p>
+        </div>
+        <div class="index-about--right">
+            <div class="index-about--right--item">
+                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                <div class="index-about--right--item-info">
+                    <h3>{{ 'index.about.right.1.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.1.text'|trans }}</p>
+                </div>
+            </div>
+            <div class="index-about--right--item">
+                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                <div class="index-about--right--item-info">
+                    <h3>{{ 'index.about.right.1.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.1.text'|trans }}</p>
+                </div>
+            </div>
+            <div class="index-about--right--item">
+                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                <div class="index-about--right--item-info">
+                    <h3>{{ 'index.about.right.1.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.1.text'|trans }}</p>
+                </div>
+            </div>
+            <div class="index-about--right--item">
+                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                <div class="index-about--right--item-info">
+                    <h3>{{ 'index.about.right.1.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.1.text'|trans }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -2,6 +2,7 @@ app:
     name: Olivia
     brand: OLIVIA tool
     brand.short: OLIVIA
+    subtitle: Tool for GDPR compliance
 
 common:
     id: ID
@@ -60,7 +61,7 @@ page:
         revise: Olivia | Revise terms of service
 
 nav:
-    training: Training
+    training: Theory
     practice: Practice
     aboutUs: About us
     admin: Admin
@@ -74,6 +75,16 @@ footer:
     contact: "Contact: ???"
     projectUrl: "<a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
     text: This tool is developed within ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs project funded by European Commission.
+
+index:
+    about:
+        left:
+            title: About tool
+            description: The main objective of the Olivia web tool is providing practical support to Croatian and Italian SMEs in the implementation of the data protection legislation and principles of the day-to-day business activities.
+        right:
+            1:
+                title: Innovative
+                text: Lorem ipsum lorem ipsum lorem ipsum lorem ipsum
 
 form:
     security:
