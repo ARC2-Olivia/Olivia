@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'security/_base.html.twig' %}
 {% trans_default_domain 'app' %}
 
 {% block title %}{{ 'page.registration'|trans }}{% endblock %}
@@ -27,12 +27,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block stylesheets %}
-    <style>
-        .body {
-            background-color: var(--app-color-dark-blue);
-        }
-    </style>
 {% endblock %}
