@@ -13,6 +13,50 @@
         {{ encore_entry_link_tags('app') }}
         {{ encore_entry_link_tags('popper.dropdown') }}
         {% block stylesheets %}{% endblock %}
+        <style>
+            footer a {
+                text-decoration: none;
+                color: inherit;
+            }
+
+            footer .footer-1 {
+                background-color: #00455f;
+                color: #ffffff;
+                padding-top: 24px;
+                padding-bottom: 24px;
+            }
+
+            footer .footer-2 {
+                background-color: #ffffff;
+                padding-top: 24px;
+                padding-bottom: 24px;
+            }
+
+            footer .footer-column {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                row-gap: 4px;
+            }
+
+            footer .footer-cofinancing {
+                width: 25%;
+            }
+
+            footer .footer-logos {
+                width: 75%;
+            }
+
+            @media screen and (max-width: 768px) {
+                footer .footer-cofinancing {
+                    width: 50%;
+                }
+
+                footer .footer-logos {
+                    width: 90%;
+                }
+            }
+        </style>
 
         {{ encore_entry_script_tags('app') }}
         {{ encore_entry_script_tags('popper.dropdown') }}
@@ -26,7 +70,7 @@
         <div class="body">
             {% block body %}{% endblock %}
         </div>
-        <footer>{% block footer %}{% endblock %}</footer>
+        <footer>{% block footer %}{% include 'footer.html.twig' %}{% endblock %}</footer>
         {% if is_granted('IS_IMPERSONATOR') %}
             {% include '_partials/exit_immitation.html.twig' %}
         {% endif %}
