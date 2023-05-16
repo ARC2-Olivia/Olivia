@@ -9,15 +9,20 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+
+        {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('popper.dropdown') }}
+        {% block stylesheets %}{% endblock %}
+
+        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('popper.dropdown') }}
+        {% block javascripts %}{% endblock %}
     </head>
     <body>
-        <header>{% block header %}{% endblock %}</header>
+        <header>
+            {% include 'nav.html.twig' %}
+            {% block header %}{% endblock %}
+        </header>
         <div class="body">
             {% block body %}{% endblock %}
         </div>

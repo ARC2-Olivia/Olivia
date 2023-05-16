@@ -2,18 +2,5 @@
 {% trans_default_domain 'app' %}
 
 {% block body %}
-    {% include 'default/_nav.html.twig' %}
-{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('popper.dropdown') }}
-    <style>
-        .body { background-color: var(--app-color-dark-blue); }
-    </style>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('popper.dropdown') }}
 {% endblock %}
