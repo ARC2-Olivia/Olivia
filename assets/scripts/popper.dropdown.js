@@ -8,7 +8,7 @@ window.addEventListener('load', () => {
         if (binding) {
             createPopper(binding, dropdown, { placement: "bottom-end"});
             binding.addEventListener("click", () => {
-               dropdown.setAttribute("data-show", "");
+                dropdown.classList.toggle("dropdown-show")
             });
             dropdown.style.minWidth = `${binding.offsetWidth}px`;
         }

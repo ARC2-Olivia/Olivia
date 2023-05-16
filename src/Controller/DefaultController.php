@@ -18,13 +18,16 @@ class DefaultController extends AbstractController
         return $this->render('default/index.html.twig');
     }
 
-    #[Route("/change-locale", name: "change_locale")]
-    public function changeLocale(Request $request): Response
+    #[Route("/change-locale/{locale}", name: "change_locale")]
+    public function changeLocale(string $locale, Request $request): Response
     {
-        $locale = $request->getLocale() ?? $request->getDefaultLocale();
         $defaultLocale = $this->getParameter('locale.default');
         $alternateLocale = $this->getParameter('locale.alternate');
-        $changedLocale = $locale === $defaultLocale ? $alternateLocale : $defaultLocale;
+
+        $changedLocale = match ($locale) {
+            $alternateLocale => $alternateLocale,
+            default => $defaultLocale
+        };
 
         $request->getSession()->set('_locale', $changedLocale);
         if ($request->getLocale() === null) $request->setLocale($changedLocale);

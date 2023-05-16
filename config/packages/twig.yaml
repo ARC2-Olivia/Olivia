@@ -1,5 +1,8 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    globals:
+        locale_default: '%locale.default%'
+        locale_alternate: '%locale.alternate%'
 
 when@test:
     twig:
