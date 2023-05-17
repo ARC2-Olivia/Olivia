@@ -66,10 +66,38 @@
             </div>
         </div>
     </div>
+
+    {% if testimonials is not empty %}
+        <div class="container-fluid my-5">
+            <div id="carousel" class="index-carousel">
+                {% for testimonial in testimonials %}
+                    <div class="index-carousel-slide">
+                        <div class="index-testimonial container">
+                            <h3>{{ testimonial.title }}</h3>
+                            <p>{{ testimonial.text }}</p>
+                            <div class="index-testimonial-person">
+                                <img src="{{ testimonial.image }}" alt="Image of the person giving testimony"/>
+                                <div class="d-flex flex-column">
+                                    <span>{{ testimonial.personName }}</span>
+                                    <span>{{ testimonial.personJob }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block stylesheets %}
     <style>
-
+        .body { background-color: white; }
     </style>
+{% endblock %}
+
+{% block javascripts %}
+    {% if testimonials is not empty %}
+        {{ encore_entry_script_tags('index.carousel') }}
+    {% endif %}
 {% endblock %}

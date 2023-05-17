@@ -40,6 +40,7 @@ Encore
     .addEntry('notes.update', './assets/scripts/notes.update.js')
     .addEntry('evaluation.questions.sort', './assets/scripts/evaluation.questions.sort.js')
     .addEntry('evaluation.evaluators.sort', './assets/scripts/evaluation.evaluators.sort.js')
+    .addEntry('index.carousel', './assets/scripts/index.carousel.js')
 
     // Classes
     .addEntry('EvaluationAssessment', './assets/scripts/classes/EvaluationAssessment.js')
