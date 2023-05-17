@@ -85,6 +85,13 @@ index:
             1:
                 title: Innovative
                 text: Lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+    modules:
+        upper:
+            theoreticalModule: Theoretical module
+            practicalModule: Practical module
+        lower:
+            title: Lorem ipsum
+            description: Ut congue elementum aliquet. Nulla orci mi, feugiat eu turpis vel, vestibulum hendrerit urna. Proin id mi leo. Sed finibus ultrices lorem nec accumsan. Phasellus accumsan neque augue, nec ultricies metus ultrices quis. Vestibulum facilisis placerat orci, nec pharetra mauris aliquet et. Nulla tincidunt mauris a ante accumsan vehicula.
 
 form:
     security:
