@@ -1,11 +1,28 @@
-.navigation-main {
+.navigation-responsive {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    position: relative;
+}
+.navigation-responsive > .navigation-open {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    height: auto;
+}
+
+.navigation-responsive > .navigation-main {
     color: white;
     display: flex;
-    justify-content: end;
     padding-top: 1rem;
     padding-bottom: 1rem;
     font-size: 1.15rem;
     column-gap: 1.75rem;
+    row-gap: 1rem;
+    position: static;
+    z-index: 1020;
 }
 
 ul.navigation-main,
@@ -37,4 +54,25 @@ ul.navigation-admin {
 
 .navigation-admin a:hover {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media screen and (max-width: 991px) {
+    .navigation-responsive > .navigation-open {
+        display: flex;
+    }
+
+    .navigation-responsive > .navigation-main {
+        visibility: hidden;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        transform: translateY(100%);
+        width: 100vw;
+        background-color: var(--app-color-dark-blue);
+    }
+
+    .navigation-responsive > .navigation-main.show {
+        visibility: visible;
+    }
 }

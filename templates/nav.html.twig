@@ -2,7 +2,8 @@
 
 <div class="container{% if wide is defined and wide == true %}-fluid{% endif %}">
     <div class="row">
-        <nav>
+        <nav class="navigation-responsive">
+            <button class="navigation-open btn btn-theme-white">{{ mdi('menu') }}</button>
             <ul class="navigation-main">
                 <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ 'nav.training'|trans }}</a></li>
                 <li><a href="{{ path('practical_submodule_index') }}" class="btn btn-theme-white">{{ 'nav.practice'|trans }}</a></li>

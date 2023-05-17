@@ -6,7 +6,7 @@ window.addEventListener('load', () => {
     for (const dropdown of dropdowns) {
         const binding = document.querySelector(dropdown.dataset.for);
         if (binding) {
-            createPopper(binding, dropdown, { placement: "bottom-end"});
+            createPopper(binding, dropdown, { placement: "bottom-end", strategy: "fixed"});
             binding.addEventListener("click", () => {
                 dropdown.classList.toggle("dropdown-show")
             });
