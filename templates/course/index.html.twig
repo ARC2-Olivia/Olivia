@@ -4,10 +4,13 @@
 {% block title %}{{ 'page.evaluation.index'|trans }}{% endblock %}
 
 {% block body %}
-    <div class="container pt-5">
-        <div class="row mb-5">
-            <h1 class="text-center">{{ 'course.title.index'|trans }}</h1>
+    <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-module-theory.png') }}'); background-position: center 60%">
+        <div class="index-banner-wrapper">
+            <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
+            <div class="index-banner-subtitle">{{ 'course.title.index'|trans }}</div>
         </div>
+    </div>
+    <div class="container py-5">
         {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
         <div class="row g-3">
             {% for course in courses %}

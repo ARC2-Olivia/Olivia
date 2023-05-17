@@ -260,7 +260,7 @@ instructor:
 
 course:
     title:
-        index: Courses
+        index: Theoretical module
         new: New course
     delete: Are you sure you want to delete the course \'%course%\'?
     nav:
@@ -321,7 +321,7 @@ note:
 practicalSubmodule:
     delete: Are you sure you want to delete the practical submodule \'%evaluation%\'?
     title:
-        index: Practical submodules
+        index: Practical module
         new: New practical submodule
     nav:
         overview: Overview
