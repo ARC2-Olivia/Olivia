@@ -54,6 +54,8 @@ class PracticalSubmoduleController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($practicalSubmodule);
             $this->em->flush();
+            $image = $form->get('image')->getData();
+            $this->storePracticalSubmoduleImage($image, $practicalSubmodule);
             $this->processPracticalSubmoduleTranslation($practicalSubmodule, $form);
             $this->addFlash('success', $this->translator->trans('success.practicalSubmodule.new', [], 'message'));
             return $this->redirectToRoute('practical_submodule_index');
