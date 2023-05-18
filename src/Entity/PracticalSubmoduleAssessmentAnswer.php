@@ -13,7 +13,7 @@ class PracticalSubmoduleAssessmentAnswer
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'evaluationAssessmentAnswers')]
+    #[ORM\ManyToOne(inversedBy: 'practicalSubmoduleAssessmentAnswers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?PracticalSubmoduleAssessment $practicalSubmoduleAssessment = null;
 

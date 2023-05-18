@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Course;
 use App\Entity\Instructor;
 use App\Entity\LessonItemFile;
+use App\Entity\PracticalSubmodule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,6 +17,14 @@ class FileFetchController extends AbstractController
     {
         $dir = $this->getParameter('dir.course_image');
         $filepath = $dir . '/' . $course->getImage();
+        return $this->file($filepath);
+    }
+
+    #[Route("/practical-submodule-image/{practicalSubmodule}", name: 'practical_submodule_image')]
+    public function practicalSubmoduleImage(PracticalSubmodule $practicalSubmodule)
+    {
+        $dir = $this->getParameter('dir.practical_submodule_image');
+        $filepath = $dir . '/' . $practicalSubmodule->getImage();
         return $this->file($filepath);
     }
 

@@ -3,31 +3,8 @@
 
 {% block title %}{{ 'page.evaluation.new'|trans }}{% endblock %}
 
-{% block header %}
-    <div class="container-fluid py-3 px-5">
-        <div class="row align-items-center">
-            <div class="col-12 col-sm-6">
-                <span class="brand">{{ 'app.brand.short'|trans }}</span>
-            </div>
-            <nav class="col-12 col-sm-6 text-end">
-                <ul class="navigation-main p-0">
-                    <li><a href="{{ path('change_locale') }}" class="btn btn-theme-white">{{ 'nav.language'|trans }}<sup class="sup-locale">{{ app.request.locale }}</sup></a></li>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <li><a href="{{ path('admin_index') }}" class="btn btn-theme-white">{{ 'nav.admin'|trans }}</a></li>
-                    {% endif %}
-                    {% if is_granted('ROLE_USER') %}
-                        <li><a href="{{ path('security_logout') }}" class="btn btn-theme-white">{{ 'common.logout'|trans }}</a></li>
-                    {% else %}
-                        <li><a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'common.login'|trans }}</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
-    </div>
-{% endblock %}
-
 {% block body %}
-    <div class="container pt-5">
+    <div class="container py-5">
         <div class="row mb-5">
             <h1 class="text-center">{{ 'practicalSubmodule.title.new'|trans }}</h1>
         </div>

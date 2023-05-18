@@ -32,10 +32,10 @@ class PracticalSubmodule extends TranslatableEntity
     #[Gedmo\Translatable]
     private array $tags = [];
 
-    #[ORM\OneToMany(mappedBy: 'evaluation', targetEntity: PracticalSubmoduleQuestion::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'practicalSubmodule', targetEntity: PracticalSubmoduleQuestion::class, orphanRemoval: true)]
     private Collection $practicalSubmoduleQuestions;
 
-    #[ORM\OneToMany(mappedBy: 'evaluation', targetEntity: PracticalSubmoduleProcessor::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'practicalSubmodule', targetEntity: PracticalSubmoduleProcessor::class, orphanRemoval: true)]
     private Collection $practicalSubmoduleProcessors;
 
     #[ORM\Column(length: 255, nullable: true)]

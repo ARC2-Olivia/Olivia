@@ -19,7 +19,7 @@ class PracticalSubmoduleProcessor
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'evaluationEvaluators')]
+    #[ORM\ManyToOne(inversedBy: 'practicalSubmoduleProcessors')]
     #[ORM\JoinColumn(nullable: false)]
     private ?PracticalSubmodule $practicalSubmodule = null;
 
