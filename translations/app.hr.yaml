@@ -1,0 +1,417 @@
+app:
+    name: Olivia
+    brand: OLIVIA tool
+    brand.short: OLIVIA
+    subtitle: Tool for GDPR compliance
+
+common:
+    id: ID
+    username: E-mail
+    password: Password
+    homepage: Homepage
+    login: Prijava
+    logout: Odjava
+    registration: Registration
+    submit: Submit
+    save: Save
+    cancel: Cancel
+    yes: Yes
+    no: No
+    trueValue: 'True'
+    falseValue: 'False'
+    actions: Actions
+    edit: Edit
+    delete: Delete
+    new: New
+    remove: Remove
+    next: Next
+    previous: Previous
+    download: Download
+    profile: Profile
+    resolve: Resolve
+
+button:
+    details: Details
+    startNow: Start now
+    loginToEnroll: Login to enroll
+    results: Results
+
+page:
+    login: Olivia | Login
+    registration: Olivia | Registration
+    confirmation: Olivia | Account confirmation
+    course:
+        index: Olivia | Courses
+        new: Olivia | New course
+        show: Olivia | Course details
+    lesson:
+        index: Olivia | Lessons
+        show: Olivia | Lesson content
+    admin: Olivia | Admin
+    evaluation:
+        index: Olivia | Practical submodules
+        new: Olivia | New practical submodule
+        show: Olivia | Practical submodule details
+        assessment: Olivia | Practical submodule assessment
+    termsOfService:
+        index: Olivia | Terms of service listing
+        new: Olivia | New terms of service
+        show: Olivia | Terms of service
+        edit: Olivia | Edit terms of service
+        revise: Olivia | Revise terms of service
+
+nav:
+    training: Teorija
+    practice: Praktika
+    aboutUs: O nama
+    admin: Admin
+    users: Korisnici
+    instructors: Instruktori
+    language: Promjeni jezik
+    termsOfService: Uvjeti korištenja
+    dataRequests: Podatkovni zahtjevi
+
+footer:
+    contact: "Contact: ???"
+    projectUrl: "<a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
+    text: This tool is developed within ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs project funded by European Commission.
+
+index:
+    about:
+        left:
+            title: About tool
+            description: The main objective of the Olivia web tool is providing practical support to Croatian and Italian SMEs in the implementation of the data protection legislation and principles of the day-to-day business activities.
+        right:
+            1:
+                title: Innovative
+                text: Lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+    modules:
+        upper:
+            theoreticalModule: Theoretical module
+            practicalModule: Practical module
+        lower:
+            title: Lorem ipsum
+            description: Ut congue elementum aliquet. Nulla orci mi, feugiat eu turpis vel, vestibulum hendrerit urna. Proin id mi leo. Sed finibus ultrices lorem nec accumsan. Phasellus accumsan neque augue, nec ultricies metus ultrices quis. Vestibulum facilisis placerat orci, nec pharetra mauris aliquet et. Nulla tincidunt mauris a ante accumsan vehicula.
+
+form:
+    security:
+        registration:
+            label:
+                email: E-mail
+                password: Password
+                confirmPassword: Confirm password
+                termsOfService: I accept the <a href="%url%" target="_blank">Terms of service</a>.
+        login:
+            label:
+                email: E-mail
+                password: Password
+    entity:
+        user:
+            label:
+                email: E-mail
+                roles: Roles
+                activated: Activated
+        instructor:
+            label:
+                firstName: First name
+                lastName: Last name
+                email: E-mail
+                institution: Institution
+                institutionAlt: Institution (alternate language)
+                image: Image
+                biography: Biography
+                biographyAlt: Biography (alternate language)
+        course:
+            label:
+                name: Name
+                nameAlt: Name (alternate language)
+                description: Description
+                descriptionAlt: Description (alternate language)
+                image: Image (max. 5MB)
+                estimatedWorkload: Estimated workload
+                tags: Comma separated tags
+                tagsAlt: Comma separated tags (alternate language)
+            placeholder:
+                name: Course name
+                description: Course description...
+                workloadValue: 12 or 2.5
+                tags: GDPR,IT,Security,...
+                instructor: Choose an instructor...
+            choices:
+                estimatedWorkload:
+                    hours: hour(s)
+                    days: day(s)
+                    weeks: week(s)
+                    months: month(s)
+                    years: year(s)
+        lesson:
+            label:
+                name: Name
+                nameAlt: Name (alternate language)
+                description: Description
+                descriptionAlt: Description (alternate language)
+                text: Content
+                textAlt: Content (altenate language)
+                file: File
+                video: Video embed URL
+                passingPercentage: Passing percentage
+        quizQuestion:
+            label:
+                text: Question text
+                textAlt: Question text (alternate language)
+                explanation: Explanation
+                explanationAlt: Explanation (alternate language)
+                correctAnswer: Correct answer
+        practicalSubmodule:
+            label:
+                name: Name
+                nameAlt: Name (alternate language)
+                description: Description
+                descriptionAlt: Description (alternate language)
+                tags: Tags
+                tagsAlt: Tags (alternate language)
+            placeholder:
+                name: Name of the evaluation
+                description: Evaluation description...
+                tags: GDPR,IT,Security
+        practicalSubmoduleQuestion:
+            label:
+                type: Question type
+                questionText: Question text
+                questionTextAlt: Question text (alternate language)
+                evaluable: Used in assessment
+                dependentQuestion: Dependent question
+                dependentValue: Dependent question value
+            placeholder:
+                questionText: Question text goes here...
+                dependentEvaluationQuestion: Nothing selected...
+        practicalSubmoduleQuestionAnswer:
+            label:
+                weighted:
+                    answerText: Answer text
+                    answerTextAlt: Answer text (alternate language)
+                    answerValue: Weight
+        practicalSubmoduleProcessor:
+            label:
+                type: Processor type
+                name: Processor name
+                included: Include in the result calculation
+                evaluationQuestion: Question
+                evaluationQuestions: Questions
+                evaluationEvaluators: Processors
+                expectedValue: Expected value
+                expectedValueRange:
+                    start: Expected value (start of the range)
+                    end: Expected value (end of the range)
+                resultText: Result text
+            placeholder:
+                name: Name of the processor for easier identification
+                resultText: What text will the processor return as a result?
+                evaluationQuestion: Choose a question...
+        termsOfService:
+            label:
+                id: ID
+                title: Title
+                version: Version
+                revision: Revision
+                startedAt: Started at
+                endedAt: Ended at
+                active: Active
+                content: Content
+                contentAlt: Content (alternate language)
+        dataRequest:
+            label:
+                id: ID
+                user: User
+                type: Type
+                requestedAt: Requested at
+                resolvedAt: Resolved at
+
+profile:
+    request:
+        access:
+            button: Request data access
+            description: "At any time, you can send a request to access all the data you either inputted or it was generated by your activities in the Olivia tool. The data will be sent to your registered e-mail address as an attachment in the form of a compressed ZIP archive containing multiple CSV files. The data includes: enrollments in training module courses, training module lesson notes, training module lesson completions, training module quiz answers, training module quiz results, training module activity logs, practice module assessment answers, practice module assessment results, and your Olivia tool account data."
+            disclaimer: "DISCLAIMER: The data access request won't be immediately processed, but an e-mail will be sent to your registered e-mail address with attached data."
+            confirmation: Are you sure you want to send a data access request?
+        delete:
+            button: Request data deletion
+            description: "At any time, you can send a request for deleting all the data you either inputted or it was generated by your activities in the Olivia tool. The data includes: enrollments in training module courses, training module lesson notes, training module lesson completions, training module quiz answers, training module quiz results, training module activity logs, practice module assessment answers, practice module assessment results, and your Olivia tool account."
+            disclaimer: "DISCLAIMER: The data deletion request won't be immediately processed, but one final e-mail will be sent to your registered e-mail address to notify you of the finished process."
+            confirmation: Are you sure you want to send a data deletion request?
+
+user:
+    title:
+        index: Users
+        new: New user
+        edit: Edit user
+    dataAccess:
+        id: ID
+        email: E-mail
+        roles: Roles
+
+instructor:
+    title:
+        index: Instructors
+        new: New instructor
+        edit: Edit instructor
+    delete: Are you sure you want to delete this instructor?
+    remove: Are you sure you want to remove %instructor% as an instructor from this course?
+
+course:
+    title:
+        index: Theoretical module
+        new: New course
+    delete: Are you sure you want to delete the course \'%course%\'?
+    nav:
+        overview: Overview
+        instructors: Instructors
+        lessons: Lessons
+        edit: Edit
+    extra:
+        noInstructors: There are currently no defined instructors for this course.
+        lessons: lessons
+
+lesson:
+    type:
+        text: Reading
+        file: File
+        video: Video
+        quiz: Quiz
+    delete: Are you sure you want to delete the lesson \'%lesson%\'?
+    edit: Editing lesson <i>%lesson%</i>
+    completion:
+        done: Done
+        undone: Mark as done
+        quiz:
+            passed: Passed
+            notPassed: Not passed
+    quiz:
+        explanation:
+            1: This quiz contains <b>%questionCount%</b> true or false questions.
+            2: To pass, you must score atleast <b>%passingPercentage%%</b>. Results will be available to you after submitting your answers.
+            3: Click on the <i>Take quiz</i> button to start the quiz.
+        action: Take quiz
+        yourGrade: Your grade
+        yourAnswer: Your answer
+        correctAnswer: Correct answer
+    extra:
+        noLessons: There are currently no defined lessons for this course.
+        text: Text
+        file: File
+        video: Video
+        quiz: Quiz
+        moderation: Moderation
+        notes: Notes
+
+quizQuestion:
+    add: Add question
+    delete: Are you sure you want to delete this question?
+    edit: Editing a quiz question
+
+note:
+    dataAccess:
+        id: ID
+        lesson: Lesson ID
+        text: Text
+        updatedAt: Updated at
+    extra:
+        displayError: There has been an problem loading the notes widget. Refresh the page to try and load it again or, if the problem persists, report the problem to the Olivia Team.
+
+practicalSubmodule:
+    delete: Are you sure you want to delete the practical submodule \'%evaluation%\'?
+    title:
+        index: Practical module
+        new: New practical submodule
+    nav:
+        overview: Overview
+        evaluate: Assessment
+        results: Results
+        edit:
+            default: Edit
+            question: Edit question
+            evaluator: Edit processor
+            answer: Edit answer
+        new:
+            question: New question
+            evaluator: New processor
+            answer: New answer
+    extra:
+        question: Question
+        questions: Questions
+        evaluator: Processor
+        evaluators: Processors
+        answer: Answer
+        results:
+            empty: Nothing to show.
+            final: This assessment is intended for educational and information purposes only.
+
+practicalSubmoduleQuestion:
+    type:
+        yesNo: Yes/No
+        weighted: Weighted
+        numericalInput: Numerical input
+        textInput: Text input
+    delete: Are you sure you want to delete this question?
+    empty: There are no defined questions for this submodule.
+
+practicalSubmoduleQuestionAnswer:
+    delete: Are you sure you want to delete this question answer?
+
+practicalSubmoduleProcessor:
+    type:
+        simple: Simple
+        sumAggregate: Sum aggregate
+        productAggregate: Product aggregate
+    delete: Are you sure you want to delete this processor?
+    empty: There are no defined processors for this submodule.
+    heading:
+        basicOptions: Basic options
+        specificOptions: Processor specific options
+
+practicalSubmoduleAssessment:
+    message:
+        1: This evaluation contains <b>%questionCount%</b> questions. Some questions will only appear if you answered one of the previous questions in a specific way.
+        2: Assessment can be retried as many times as wanted or needed.
+        3: Click on the <i>Start assessment</i> button to start the evaluation.
+    action:
+        start: Start assessment
+        results: View results
+
+termsOfService:
+    format: Ver. %version%, rev. %revision%
+    ongoing: ongoing
+    message:
+        accept: Are you sure you want to accept the terms of service?
+        rescind: Are you sure you want to rescind the terms of service?
+        rescindInactive: Rescinding inactive terms of service will not prohibit you from using the Olivia tool.
+    title:
+        index: Terms of service listing
+        new: New terms of service
+        edit: Editing <i>%termsOfService%</i>
+        revise: Revising <i>%termsOfService%</i>
+    dataAccess:
+        id: ID
+        version: Version
+        revision: Revision
+        startedAt: Started at
+        endedAt: Ended at
+        content: Content
+        active: Active
+        acceptedAt: Accepted at
+    extra:
+        revise: Revise
+        accept: Accept terms of service
+        rescind: Rescind terms of service
+
+dataRequest:
+    title:
+        index:
+            default: Data requests
+            typeAccess: Data access requests
+            typeDelete: Data deletion requests
+            resolved: Resolved data requests
+
+extra:
+    free: Free
+    exitImmitation: Exit immitation
