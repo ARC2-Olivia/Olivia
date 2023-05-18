@@ -6,6 +6,7 @@
 parameters:
     locale.default: 'en'
     locale.alternate: 'hr'
+    locale.supported: '%locale.default%|%locale.alternate%'
     mail.from: noreply.olivia@foi.hr
     dir.course_image:  '%kernel.project_dir%/public/uploads/course/image'
     dir.instructor_image:  '%kernel.project_dir%/public/uploads/instructor/image'

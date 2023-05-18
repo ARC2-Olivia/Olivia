@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/{_locale}/admin", name: "admin_")]
+#[Route("/{_locale}/admin", name: "admin_", requirements: ["_locale" => "%locale.supported%"])]
 #[IsGranted('ROLE_ADMIN')]
 class AdminController extends BaseController
 {

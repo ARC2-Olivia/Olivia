@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/{_locale}/practical-submodule-assessment", name: "practical_submodule_assessment_")]
+#[Route("/{_locale}/practical-submodule-assessment", name: "practical_submodule_assessment_", requirements: ["_locale" => "%locale.supported%"])]
 class PracticalSubmoduleAssessmentController extends BaseController
 {
     #[Route("/start/{practicalSubmoduleAssessment}", name: "start")]

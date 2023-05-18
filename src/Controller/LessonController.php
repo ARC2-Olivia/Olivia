@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route("/{_locale}/lesson", name: "lesson_")]
+#[Route("/{_locale}/lesson", name: "lesson_", requirements: ["_locale" => "%locale.supported%"])]
 class LessonController extends BaseController
 {
     use BasicFileManagementTrait;

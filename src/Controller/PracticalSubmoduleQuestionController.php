@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route("/{_locale}/practical-submodule-question", name: "practical_submodule_question_")]
+#[Route("/{_locale}/practical-submodule-question", name: "practical_submodule_question_", requirements: ["_locale" => "%locale.supported%"])]
 class PracticalSubmoduleQuestionController extends BaseController
 {
     private ?NavigationService $navigationService = null;

@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route("/{_locale}/course", name: "course_")]
+#[Route("/{_locale}/course", name: "course_", requirements: ["_locale" => "%locale.supported%"])]
 class CourseController extends BaseController
 {
     use BasicFileManagementTrait;

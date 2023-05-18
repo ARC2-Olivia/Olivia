@@ -22,7 +22,7 @@ class DefaultController extends AbstractController
         return $this->redirectToRoute('index', ['_locale' => $this->getParameter('locale.default')]);
     }
 
-    #[Route("/{_locale}", name: "index")]
+    #[Route("/{_locale}", name: "index", requirements: ["_locale" => "%locale.supported%"])]
     public function index(): Response
     {
         $package = new Package(new EmptyVersionStrategy());
@@ -34,7 +34,7 @@ class DefaultController extends AbstractController
         return $this->render('default/index.html.twig', ['testimonials' => $testimonials]);
     }
 
-    #[Route("/{_locale}/profile", name: "profile")]
+    #[Route("/{_locale}/profile", name: "profile", requirements: ["_locale" => "%locale.supported%"])]
     #[IsGranted("ROLE_USER")]
     public function profile(): Response
     {

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/{_locale}/practical-submodule-question-answer", name: "practical_submodule_question_answer_")]
+#[Route("/{_locale}/practical-submodule-question-answer", name: "practical_submodule_question_answer_", requirements: ["_locale" => "%locale.supported%"])]
 class PracticalSubmoduleQuestionAnswerController extends BaseController
 {
     #[Route("/edit-weighted/{practicalSubmoduleQuestionAnswer}", name: "edit")]
