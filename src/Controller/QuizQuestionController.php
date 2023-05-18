@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/quiz-question', name: 'quiz_question_')]
+#[Route('/{_locale}/quiz-question', name: 'quiz_question_')]
 class QuizQuestionController extends BaseController
 {
     #[Route("/edit/{quizQuestion}", name: "edit")]

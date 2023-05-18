@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route("/security", name: "security_")]
+#[Route("/{_locale}/security", name: "security_")]
 class SecurityController extends AbstractController
 {
     private TranslatorInterface $translator;

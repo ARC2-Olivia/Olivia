@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route("tos", name: "tos_")]
+#[Route("/{_locale}/tos", name: "tos_")]
 class TermsOfServiceController extends AbstractController
 {
     private const AJAX_STATUS_FAIL = 'fail';

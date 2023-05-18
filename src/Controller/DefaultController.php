@@ -11,10 +11,18 @@ use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DefaultController extends AbstractController
 {
-    #[Route("/", name: "index")]
+    #[Route("/", name: "index_without_locale")]
+    public function indexWithoutLocale(): Response
+    {
+        return $this->redirectToRoute('index', ['_locale' => $this->getParameter('locale.default')]);
+    }
+
+    #[Route("/{_locale}", name: "index")]
     public function index(): Response
     {
         $package = new Package(new EmptyVersionStrategy());
@@ -26,25 +34,7 @@ class DefaultController extends AbstractController
         return $this->render('default/index.html.twig', ['testimonials' => $testimonials]);
     }
 
-    #[Route("/change-locale/{locale}", name: "change_locale")]
-    public function changeLocale(string $locale, Request $request): Response
-    {
-        $defaultLocale = $this->getParameter('locale.default');
-        $alternateLocale = $this->getParameter('locale.alternate');
-
-        $changedLocale = match ($locale) {
-            $alternateLocale => $alternateLocale,
-            default => $defaultLocale
-        };
-
-        $request->getSession()->set('_locale', $changedLocale);
-        if ($request->getLocale() === null) $request->setLocale($changedLocale);
-
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
-    }
-
-    #[Route("/profile", name: "profile")]
+    #[Route("/{_locale}/profile", name: "profile")]
     #[IsGranted("ROLE_USER")]
     public function profile(): Response
     {

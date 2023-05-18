@@ -5,22 +5,22 @@
         <nav class="navigation-responsive">
             <button class="navigation-open btn btn-theme-white">{{ mdi('menu') }}</button>
             <ul class="navigation-main">
-                <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ 'nav.training'|trans({}, 'app', app.request.locale) }}</a></li>
-                <li><a href="{{ path('practical_submodule_index') }}" class="btn btn-theme-white">{{ 'nav.practice'|trans({}, 'app', app.request.locale) }}</a></li>
+                <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ 'nav.training'|trans }}</a></li>
+                <li><a href="{{ path('practical_submodule_index') }}" class="btn btn-theme-white">{{ 'nav.practice'|trans }}</a></li>
                 {% if is_granted('ROLE_USER') %}
-                    <li><a href="{{ path('tos_index') }}" class="btn btn-theme-white">{{ 'nav.termsOfService'|trans({}, 'app', app.request.locale) }}</a></li>
+                    <li><a href="{{ path('tos_index') }}" class="btn btn-theme-white">{{ 'nav.termsOfService'|trans }}</a></li>
                     <li>
                         <button id="profile-button" class="btn btn-theme-white">{{ app.user.email }}</button>
                         <ul class="dropdown" data-dropdown data-for="#profile-button">
-                            <li class="dropdown-item"><a href="{{ path('profile') }}">{{ 'common.profile'|trans({}, 'app', app.request.locale) }}</a></li>
+                            <li class="dropdown-item"><a href="{{ path('profile') }}">{{ 'common.profile'|trans }}</a></li>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li class="dropdown-item"><a href="{{ path('admin_index') }}">{{ 'nav.admin'|trans({}, 'app', app.request.locale) }}</a></li>
+                                <li class="dropdown-item"><a href="{{ path('admin_index') }}">{{ 'nav.admin'|trans }}</a></li>
                             {% endif %}
-                            <li class="dropdown-item"><a href="{{ path('security_logout') }}">{{ 'common.logout'|trans({}, 'app', app.request.locale) }}</a></li>
+                            <li class="dropdown-item"><a href="{{ path('security_logout') }}">{{ 'common.logout'|trans }}</a></li>
                         </ul>
                     </li>
                 {% else %}
-                    <a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'common.login'|trans({}, 'app', app.request.locale) }}</a>
+                    <a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'common.login'|trans }}</a>
                 {% endif %}
                 <li>
                     <button id="locale-button" class="btn btn-theme-white">
@@ -28,8 +28,10 @@
                         <sup class="nav-locale">{{ app.request.locale }}</sup>
                     </button>
                     <ul class="dropdown" data-dropdown data-for="#locale-button">
-                        <li class="dropdown-item"><a href="{{ path('change_locale', {'locale': locale_default}) }}">{{ locale_default }}</a></li>
-                        <li class="dropdown-item"><a href="{{ path('change_locale', {'locale': locale_alternate}) }}">{{ locale_alternate }}</a></li>
+                        {% set currentRoute = app.request.attributes.get('_route', 'index') %}
+                        {% set currentRouteParams = app.request.attributes.get('_route_params', {}) %}
+                        <li class="dropdown-item"><a href="{{ path(currentRoute, currentRouteParams|merge({'_locale': locale_default})) }}">{{ locale_default }}</a></li>
+                        <li class="dropdown-item"><a href="{{ path(currentRoute, currentRouteParams|merge({'_locale': locale_alternate})) }}">{{ locale_alternate }}</a></li>
                     </ul>
                 </li>
             </ul>
