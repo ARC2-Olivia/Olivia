@@ -37,14 +37,9 @@ class TermsOfServiceController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function index(): Response
     {
-        $columnDefs = [
-            ['key' => $this->translator->trans('form.entity.termsOfService.label.id', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
-            ['key' => $this->translator->trans('form.entity.termsOfService.label.title', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'link'],
-            ['key' => $this->translator->trans('form.entity.termsOfService.label.startedAt', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
-            ['key' => $this->translator->trans('form.entity.termsOfService.label.endedAt', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
-            ['key' => $this->translator->trans('form.entity.termsOfService.label.active', [], 'app'), 'filter' => true, 'sort' => true, 'type' => 'normal'],
-        ];
-        return $this->render('termsOfService/index.html.twig', ['columnDefs' => $columnDefs]);
+        /** @var TermsOfService[] $tosList */
+        $tosList = $this->em->getRepository(TermsOfService::class)->findBy([], ['id' => 'DESC']);
+        return $this->render('termsOfService/index.html.twig', ['tosList' => $tosList]);
     }
 
     #[Route("/new", name: "new")]

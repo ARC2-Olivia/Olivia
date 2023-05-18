@@ -11,16 +11,43 @@
                 <a href="{{ path('tos_new') }}" class="btn btn-theme-white bg-blue btn-sm">{{ mdi('plus') }}</a>
             {% endif %}
         </div>
-        <apex-grid class="apex-style-override" data-column-defs="{{ columnDefs|json_encode }}" data-url="{{ path('tos_ajax_index') }}" style="height: 400px"></apex-grid>
+        <div id="tos-table-wrapper"></div>
+        <table id="tos-table">
+            <thead>
+                <tr>
+                    <th>{{ 'form.entity.termsOfService.label.id'|trans }}</th>
+                    <th>{{ 'form.entity.termsOfService.label.title'|trans }}</th>
+                    <th>{{ 'form.entity.termsOfService.label.startedAt'|trans }}</th>
+                    <th>{{ 'form.entity.termsOfService.label.endedAt'|trans }}</th>
+                    <th>{{ 'form.entity.termsOfService.label.active'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tos in tosList %}
+                    <tr>
+                        <td>{{ tos.id }}</td>
+                        <td><a href="{{ path('tos_show', {'termsOfService': tos.id}) }}">{{ 'termsOfService.format'|trans({'%version%': tos.version, '%revision%': tos.revision}) }}</a></td>
+                        <td>{{ tos.startedAt|date('d.m.Y.') }}</td>
+                        <td>{{ tos.endedAt is not null ? tos.endedAt|date('d.m.Y.') : '&mdash;' }}</td>
+                        <td>{{ tos.active ? 'common.yes'|trans : 'common.no'|trans }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('apexgrid') }}
+    {{ encore_entry_link_tags('gridjs') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('apexgrid') }}
+    {{ encore_entry_script_tags('gridjs') }}
+    <script>
+        window.addEventListener("load", () => {
+            new Grid({ from: document.getElementById("tos-table"), sort: true, search: true, pagination: true }).render(document.getElementById("tos-table-wrapper"));
+        });
+    </script>
 {% endblock %}
