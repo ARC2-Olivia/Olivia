@@ -6,6 +6,9 @@
         {{ form_widget(form.nameAlt) }}
     {% endif %}
 
+    {{ form_label(form.image) }}
+    {{ form_widget(form.image) }}
+
     {{ form_label(form.description) }}
     {{ form_widget(form.description) }}
     {% if form.descriptionAlt is defined %}

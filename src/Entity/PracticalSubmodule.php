@@ -38,6 +38,9 @@ class PracticalSubmodule extends TranslatableEntity
     #[ORM\OneToMany(mappedBy: 'evaluation', targetEntity: PracticalSubmoduleProcessor::class, orphanRemoval: true)]
     private Collection $practicalSubmoduleProcessors;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
@@ -141,6 +144,18 @@ class PracticalSubmodule extends TranslatableEntity
                 $practicalSubmoduleProcessor->setPracticalSubmodule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

@@ -13,9 +13,11 @@ use App\Form\PracticalSubmoduleType;
 use App\Repository\PracticalSubmoduleRepository;
 use App\Service\PracticalSubmoduleService;
 use App\Service\NavigationService;
+use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +26,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route("/{_locale}/practical-submodule", name: "practical_submodule_", requirements: ["_locale" => "%locale.supported%"])]
 class PracticalSubmoduleController extends BaseController
 {
+    use BasicFileManagementTrait;
+
     private ?NavigationService $navigationService = null;
 
     public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, NavigationService $navigationService)
@@ -79,6 +83,9 @@ class PracticalSubmoduleController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isSubmitted()) {
             $this->em->flush();
+            $image = $form->get('image')->getData();
+            if ($image !== null) $this->removePracticalSubmoduleImage($practicalSubmodule);
+            $this->storePracticalSubmoduleImage($image, $practicalSubmodule);
             $this->addFlash('success', $this->translator->trans('success.practicalSubmodule.edit', [], 'message'));
         } else {
             foreach ($form->getErrors(true) as $error) {
@@ -276,5 +283,30 @@ class PracticalSubmoduleController extends BaseController
         }
 
         if ($translated) $this->em->flush();
+    }
+
+    private function removePracticalSubmoduleImage(PracticalSubmodule $practicalSubmodule)
+    {
+        if ($practicalSubmodule->getImage() !== null) {
+            $uploadDir = $this->getParameter('dir.course_image');
+            $this->removeFile($uploadDir . '/' . $practicalSubmodule->getImage());
+            $practicalSubmodule->setImage(null);
+            $this->em->flush();
+        }
+    }
+
+    private function storePracticalSubmoduleImage(?UploadedFile $image, PracticalSubmodule $practicalSubmodule)
+    {
+        try {
+            if ($image !== null) {
+                $uploadDir = $this->getParameter('dir.practical_submodule_image');
+                $filenamePrefix = sprintf('practical-submodule-%d-', $practicalSubmodule->getId());
+                $filename = $this->storeFile($image, $uploadDir, $filenamePrefix);
+                $practicalSubmodule->setImage($filename);
+                $this->em->flush();
+            }
+        } catch (\Exception $ex) {
+            $this->addFlash('warning', $this->translator->trans('warning.practicalSubmodule.image.store', [], 'message'));
+        }
     }
 }

@@ -63,6 +63,7 @@ warning:
     quizQuestion:
         delete: Question for the quiz <i>%lesson%</i> has been deleted.
     practicalSubmodule:
+        image.store: There was an error storing the image for the practical submodule. You can try to reupload it while editing the basic practical submodule information.
         delete: Evaluation <i>%evaluation%</i> has been deleted.
     practicalSubmoduleQuestion:
         delete: Evaluation question for the <i>%evaluation%</i> evaluation has been deleted.
@@ -122,6 +123,9 @@ error:
     practicalSubmodule:
         name: Evaluation name must not be blank.
         description: Evaluation description must not be blank.
+        image:
+            maxSize: File exceeds the allowed maximum size of 5 megabytes.
+            mimeType: File has to be an image.
     practicalSubmoduleQuestion:
         dependentValue:
             notBool: For the chosen dependent question, the dependent value must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.

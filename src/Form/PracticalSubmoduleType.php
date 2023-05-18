@@ -5,11 +5,13 @@ namespace App\Form;
 use App\Entity\PracticalSubmodule;
 use App\Form\Transformer\SimpleArrayToStringTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class PracticalSubmoduleType extends AbstractType
 {
@@ -27,6 +29,20 @@ class PracticalSubmoduleType extends AbstractType
                 'attr' => [
                     'class' => 'form-input mb-3',
                     'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.name', [], 'app')
+                ]
+            ])
+            ->add('image', FileType::class, [
+                'label' => 'form.entity.practicalSubmodule.label.image',
+                'attr' => ['class' => 'form-input mb-3'],
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Assert\File([
+                        'maxSize' => '5M',
+                        'maxSizeMessage' => 'error.practicalSubmodule.image.maxSize',
+                        'mimeTypes' => 'image/*',
+                        'mimeTypesMessage' => 'error.practicalSubmodule.image.mimeType'
+                    ])
                 ]
             ])
             ->add('description', TextareaType::class, [

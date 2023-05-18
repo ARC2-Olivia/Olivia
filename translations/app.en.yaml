@@ -166,6 +166,7 @@ form:
             label:
                 name: Name
                 nameAlt: Name (alternate language)
+                image: Image
                 description: Description
                 descriptionAlt: Description (alternate language)
                 tags: Tags
