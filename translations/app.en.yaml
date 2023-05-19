@@ -35,6 +35,7 @@ button:
     startNow: Start now
     loginToEnroll: Login to enroll
     results: Results
+    lessons: Lessons
 
 page:
     login: Olivia | Login

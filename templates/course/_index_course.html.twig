@@ -16,8 +16,11 @@
             {% endif %}
             <div class="course-card-name">{{ course.name }}</div>
         </div>
-        <div class="card-actions ps-2 pe-2 pb-2">
+        <div class="card-actions ps-2 pe-2 pb-2 justify-content-between">
             <a href="{{ path('course_overview', {'course': course.id}) }}" class="btn btn-thematic-blue-outline">{{ 'button.details'|trans }}</a>
+            {% if is_granted('ROLE_ADMIN') or is_enrolled(course, app.user) %}
+                <a href="{{ path('lesson_course', {'course': course.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.lessons'|trans }}</a>
+            {% endif %}
         </div>
     </div>
 </div>
