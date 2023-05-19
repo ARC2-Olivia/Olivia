@@ -47,9 +47,17 @@ header, footer, .body {
 }
 
 .h1-login {
-    font-weight: bold;
     color: var(--app-color-blue);
     margin: 0;
+    font-size: 64px;
+}
+
+.h1-login :first-child {
+    font-weight: bold;
+}
+
+.h1-login :last-child {
+    font-weight: normal;
 }
 
 .raised {

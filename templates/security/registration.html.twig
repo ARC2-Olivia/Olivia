@@ -9,7 +9,10 @@
             {% include '_partials/toasts.html.twig' %}
             <div class="card">
                 <div class="card-title py-5">
-                    <h1 class="h1-login text-center">{{ 'app.brand'|trans }}</h1>
+                    <h1 class="h1-login text-center">
+                        <span>{{ 'app.brand.1'|trans }}</span>
+                        <span>{{ 'app.brand.2'|trans }}</span>
+                    </h1>
                 </div>
                 <div class="card-text">
                     {{ form_start(form) }}

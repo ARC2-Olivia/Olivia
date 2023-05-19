@@ -1,6 +1,8 @@
 app:
     name: Olivia
     brand: OLIVIA tool
+    brand.1: OLIVIA
+    brand.2: Tool
     brand.short: OLIVIA
     subtitle: Tool for GDPR compliance
 
