@@ -99,6 +99,12 @@ header {
     display: none;
 }
 
+.panel {
+    background-color: #c5d6e7;
+    border-radius: 8px;
+    padding: 16px;
+}
+
 .bg-orange { background-color: var(--app-color-orange) !important; }
 .bg-green { background-color: var(--app-color-green) !important; }
 .bg-blue { background-color: var(--app-color-blue) !important; }

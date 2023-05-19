@@ -47,11 +47,15 @@ class Course extends TranslatableEntity
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: Enrollment::class, orphanRemoval: true)]
     private Collection $enrollments;
 
+    #[ORM\ManyToMany(targetEntity: PracticalSubmodule::class, mappedBy: 'courses')]
+    private Collection $practicalSubmodules;
+
     public function __construct()
     {
         $this->instructors = new ArrayCollection();
         $this->lessons = new ArrayCollection();
         $this->enrollments = new ArrayCollection();
+        $this->practicalSubmodules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,6 +215,33 @@ class Course extends TranslatableEntity
             if ($enrollment->getCourse() === $this) {
                 $enrollment->setCourse(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PracticalSubmodule>
+     */
+    public function getPracticalSubmodules(): Collection
+    {
+        return $this->practicalSubmodules;
+    }
+
+    public function addPracticalSubmodule(PracticalSubmodule $practicalSubmodule): self
+    {
+        if (!$this->practicalSubmodules->contains($practicalSubmodule)) {
+            $this->practicalSubmodules->add($practicalSubmodule);
+            $practicalSubmodule->addCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removePracticalSubmodule(PracticalSubmodule $practicalSubmodule): self
+    {
+        if ($this->practicalSubmodules->removeElement($practicalSubmodule)) {
+            $practicalSubmodule->removeCourse($this);
         }
 
         return $this;

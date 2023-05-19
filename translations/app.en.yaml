@@ -171,6 +171,7 @@ form:
                 descriptionAlt: Description (alternate language)
                 tags: Tags
                 tagsAlt: Tags (alternate language)
+                courses: Connected courses (Ctrl + Left mouse click to select multiple courses)
             placeholder:
                 name: Name of the evaluation
                 description: Evaluation description...
@@ -346,6 +347,7 @@ practicalSubmodule:
         results:
             empty: Nothing to show.
             final: This assessment is intended for educational and information purposes only.
+        connectedTo: "The assessment is connected to the following courses:"
 
 practicalSubmoduleQuestion:
     type:

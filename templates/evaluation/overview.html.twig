@@ -2,5 +2,15 @@
 {% trans_default_domain 'app' %}
 
 {% block evaluationContent %}
+    {% if evaluation.courses is not empty %}
+    <div class="panel mb-3">
+        <p class="mb-2">{{ 'practicalSubmodule.extra.connectedTo'|trans }}</p>
+        <ul>
+            {% for course in evaluation.courses %}
+                <li class="ms-3"><a href="{{ path('course_overview', {'course': course.id}) }}" target="_blank">{{ course.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
     <p>{{ evaluation.description|nl2br }}</p>
 {% endblock %}

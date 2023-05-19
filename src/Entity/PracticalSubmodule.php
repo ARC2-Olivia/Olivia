@@ -41,10 +41,14 @@ class PracticalSubmodule extends TranslatableEntity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'practicalSubmodules')]
+    private Collection $courses;
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
         $this->practicalSubmoduleProcessors = new ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,6 +160,30 @@ class PracticalSubmodule extends TranslatableEntity
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Course>
+     */
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function addCourse(Course $course): self
+    {
+        if (!$this->courses->contains($course)) {
+            $this->courses->add($course);
+        }
+
+        return $this;
+    }
+
+    public function removeCourse(Course $course): self
+    {
+        $this->courses->removeElement($course);
 
         return $this;
     }
