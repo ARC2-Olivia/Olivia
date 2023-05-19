@@ -95,6 +95,17 @@
     background-color: var(--app-color-orange);
 }
 
+.btn.btn-thematic-blue-outline {
+    color: var(--app-color-blue);
+    border: solid 1px var(--app-color-blue);
+    background-color: white;
+}
+
+.btn.btn-thematic-blue-outline:hover {
+    color: white;
+    background-color: var(--app-color-blue);
+}
+
 .btn.btn-round {
     display: flex;
     justify-content: center;
