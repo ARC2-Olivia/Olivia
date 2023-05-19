@@ -131,6 +131,7 @@ form:
                 estimatedWorkload: Estimated workload
                 tags: Comma separated tags
                 tagsAlt: Comma separated tags (alternate language)
+                practicalSubmodules: Connected practical assessments (Ctrl + Left mouse click to select multiple assessments)
             placeholder:
                 name: Course name
                 description: Course description...
@@ -273,6 +274,7 @@ course:
     extra:
         noInstructors: There are currently no defined instructors for this course.
         lessons: lessons
+        connectedTo: "This course's lessons are connected to the following practical assessments:"
 
 lesson:
     type:

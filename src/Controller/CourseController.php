@@ -7,6 +7,7 @@ use App\Entity\Instructor;
 use App\Entity\Lesson;
 use App\Entity\LessonItemFile;
 use App\Entity\LessonItemText;
+use App\Entity\PracticalSubmodule;
 use App\Entity\User;
 use App\Form\CourseInstructorType;
 use App\Form\CourseType;
@@ -111,12 +112,13 @@ class CourseController extends BaseController
         $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->persist($course);
+            foreach ($this->em->getRepository(PracticalSubmodule::class)->findContainingCourse($course) as $ps) $ps->removeCourse($course);
+            foreach ($course->getPracticalSubmodules() as $ps) $ps->addCourse($course);
             $this->em->flush();
             $image = $form->get('image')->getData();
             if ($image !== null) $this->removeCourseImage($course);
             $this->storeCourseImage($image, $course);
-            $this->addFlash('success', $this->translator->trans('success.course.new', ['%courseName%' => $course->getName()], 'message'));
+            $this->addFlash('success', $this->translator->trans('success.course.edit', ['%courseName%' => $course->getName()], 'message'));
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));

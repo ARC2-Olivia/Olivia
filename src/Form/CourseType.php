@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Course;
+use App\Entity\PracticalSubmodule;
 use App\Form\Custom\WorkloadType;
 use App\Form\Transformer\SimpleArrayToStringTransformer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -62,6 +64,13 @@ class CourseType extends AbstractType
             ->add('tags', TextType::class, [
                 'label' => 'form.entity.course.label.tags',
                 'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.tags', [], 'app')]
+            ])
+            ->add('practicalSubmodules', EntityType::class, [
+                'class' => PracticalSubmodule::class,
+                'label' => 'form.entity.course.label.practicalSubmodules',
+                'choice_label' => 'name',
+                'attr' => ['class' => 'form-select multiple mb-3'],
+                'multiple' => true
             ])
         ;
         $builder->get('tags')->addModelTransformer(new SimpleArrayToStringTransformer());

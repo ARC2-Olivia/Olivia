@@ -1,5 +1,16 @@
 {% extends 'course/_base_course.html.twig' %}
+{% trans_default_domain 'app' %}
 
 {% block courseContent %}
+    {% if course.practicalSubmodules is not empty %}
+        <div class="panel mb-3">
+            <p class="mb-2">{{ 'course.extra.connectedTo'|trans }}</p>
+            <ul>
+                {% for ps in course.practicalSubmodules %}
+                    <li class="ms-3"><a href="{{ path('practical_submodule_overview', {'practicalSubmodule': ps.id}) }}">{{ ps.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
     <p>{{ course.description|nl2br }}</p>
 {% endblock %}

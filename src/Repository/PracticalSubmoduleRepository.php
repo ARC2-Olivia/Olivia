@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Course;
 use App\Entity\PracticalSubmodule;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,28 +40,12 @@ class PracticalSubmoduleRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Evaluation[] Returns an array of Evaluation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Evaluation
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findContainingCourse(Course $course)
+    {
+        return $this->createQueryBuilder('ps')
+            ->leftJoin('ps.courses', 'c')
+            ->where('c = :course')
+            ->setParameter('course', $course)
+            ->getQuery()->getResult();
+    }
 }

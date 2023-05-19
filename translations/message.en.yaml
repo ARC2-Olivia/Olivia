@@ -12,6 +12,7 @@ success:
     registration: Confirmation e-mail has been sent. Click or navigate to the URL in the e-mail to activate your account.
     course:
         new: Course <i>%courseName%</i> has been successfully created.
+        edit: Course has been successfully updated.
     instructor:
         new: You have created a new instructor.
         add: You have added <i>%instructor%</i> as an instructor for the course <i>%course%</i>.
