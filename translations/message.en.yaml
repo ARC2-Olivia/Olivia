@@ -23,19 +23,19 @@ success:
         new: You have added a new question to the course.
         edit: Question has been edited.
     practicalSubmodule:
-        new: You have created a new evaluation.
-        edit: Evaluation has been edited.
+        new: You have created a new practical submodule.
+        edit: A practical submodule has been edited.
     practicalSubmoduleQuestion:
-        new: A new question has been added to the evaluation.
-        edit: An evaluation question has been updated.
+        new: A new question has been added to the submodule.
+        edit: Question has been updated.
     practicalSubmoduleQuestionAnswer:
-        new: A new answer has been added to the evaluation question.
-        edit: The evaluation question answer has been updated.
+        new: A new answer has been added to the question.
+        edit: Question answer has been updated.
     practicalSubmoduleProcessor:
-        new: A new evaluator has been created for the evaluation.
-        edit: Evaluator has been updated.
+        new: A new processor has been created for the submodule.
+        edit: Processor has been updated.
     practicalSubmoduleAssessment:
-        finish: Your evaluation has been saved. You can view the evaluation results by clicking the <i>Results</i> from the <i>Evaluate</i> tab.
+        finish: Your assessment has been saved. You can view the results by clicking the <i>Results</i> from the <i>Assessment</i> tab.
     termsOfService:
         new: A new terms of service have been created. Users will have to accept the terms of service in order to use the application.
         edit: Terms of service <i>%termsOfService%</i> have been edited.

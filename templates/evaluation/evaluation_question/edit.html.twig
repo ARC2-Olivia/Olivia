@@ -26,7 +26,7 @@
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmoduleQuestionAnswer.delete') }}"/>
                                 <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
                             </form>
-                            <a href="{{ path('practical_submodule_question_answer_edit', {'practicalSubmoduleQuestionAnswer': evaluationQuestionAnswer.id}) }}"
+                            <a href="{{ path('practical_submodule_question_answer_edit_weighted', {'practicalSubmoduleQuestionAnswer': evaluationQuestionAnswer.id}) }}"
                                class="btn btn-sm btn-round btn-theme-white bg-green"
                             >
                                 {{ mdi('pencil') }}

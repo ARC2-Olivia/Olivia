@@ -56,28 +56,7 @@ class PracticalSubmoduleQuestionController extends BaseController
         ];
 
         if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
-            $ttt = new TranslatableTemplatedText();
-            if ($practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->isEmpty()) {
-                $params['tttForm'] = $this->createForm(TranslatableTemplatedTextType::class, $ttt, [
-                    'method' => 'POST',
-                    'action' => $this->generateUrl('practical_submodule_question_new_templated_text_answer', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()])
-                ])->createView();
-            } else {
-                $psqa = $practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->get(0);
-                if ($request->getLocale() === $this->getParameter('locale.default')) {
-                    $ttt->setText($psqa->getAnswerText());
-                    $psqa = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findByIdForLocale($psqa->getId(), $this->getParameter('locale.alternate'));
-                    $ttt->setTranslatedText($psqa->getAnswerText());
-                } else {
-                    $ttt->setTranslatedText($psqa->getAnswerText());
-                    $psqa = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findByIdForLocale($psqa->getId(), $this->getParameter('locale.default'));
-                    $ttt->setText($psqa->getAnswerText());
-                }
-                $params['tttForm'] = $this->createForm(TranslatableTemplatedTextType::class, $ttt, [
-                    'method' => 'POST',
-                    'action' => ''
-                ])->createView();
-            }
+            $params['tttForm'] = $this->prepareTemplatedTextAnswerForm($practicalSubmoduleQuestion, $request);
         }
 
         return $this->render('evaluation/evaluation_question/edit.html.twig', $params);
@@ -150,6 +129,7 @@ class PracticalSubmoduleQuestionController extends BaseController
             $this->em->persist($practicalSubmoduleQuestionAnswer);
             $this->em->flush();
             $this->processPracticalSubmoduleQuestionAnswerTranslation($practicalSubmoduleQuestionAnswer, $form);
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestionAnswer.new', [], 'message'));
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
@@ -192,11 +172,30 @@ class PracticalSubmoduleQuestionController extends BaseController
         if ($translated) $this->em->flush();
     }
 
-    private function getTemplatedTextFields(string $templatedText): array
+    private function prepareTemplatedTextAnswerForm(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request): \Symfony\Component\Form\FormView
     {
-        $pattern = '/\{\{\s*(\w+)\s*\}\}/';
-        $matches = null;
-        preg_match_all($pattern, $templatedText, $matches);
-        return empty($matches) ? [] : $matches[1];
+        $ttt = new TranslatableTemplatedText();
+
+        if ($practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->isEmpty()) {
+            return $this->createForm(TranslatableTemplatedTextType::class, $ttt, [
+                'method' => 'POST',
+                'action' => $this->generateUrl('practical_submodule_question_new_templated_text_answer', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()])
+            ])->createView();
+        }
+
+        $psqa = $practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->get(0);
+        if ($request->getLocale() === $this->getParameter('locale.default')) {
+            $ttt->setText($psqa->getAnswerText());
+            $psqa = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findByIdForLocale($psqa->getId(), $this->getParameter('locale.alternate'));
+            $ttt->setTranslatedText($psqa->getAnswerText());
+        } else {
+            $ttt->setTranslatedText($psqa->getAnswerText());
+            $psqa = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findByIdForLocale($psqa->getId(), $this->getParameter('locale.default'));
+            $ttt->setText($psqa->getAnswerText());
+        }
+        return $this->createForm(TranslatableTemplatedTextType::class, $ttt, [
+            'method' => 'POST',
+            'action' => $this->generateUrl('practical_submodule_question_answer_edit_templated_text', ['practicalSubmoduleQuestionAnswer' => $psqa->getId()])
+        ])->createView();
     }
 }

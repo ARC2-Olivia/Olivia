@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
+use App\Form\PracticalSubmodule\TranslatableTemplatedText;
+use App\Form\PracticalSubmodule\TranslatableTemplatedTextType;
 use App\Form\PracticalSubmoduleQuestionAnswerWeightedType;
 use App\Service\NavigationService;
+use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route("/{_locale}/practical-submodule-question-answer", name: "practical_submodule_question_answer_", requirements: ["_locale" => "%locale.supported%"])]
 class PracticalSubmoduleQuestionAnswerController extends BaseController
 {
-    #[Route("/edit-weighted/{practicalSubmoduleQuestionAnswer}", name: "edit")]
+    #[Route("/edit-weighted/{practicalSubmoduleQuestionAnswer}", name: "edit_weighted")]
     #[IsGranted('ROLE_MODERATOR')]
     public function editWeighted(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request, NavigationService $navigationService): Response
     {
@@ -37,6 +41,29 @@ class PracticalSubmoduleQuestionAnswerController extends BaseController
         ]);
     }
 
+    #[Route("/edit-templated-text/{practicalSubmoduleQuestionAnswer}", name: "edit_templated_text")]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function editTemplatedText(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request, NavigationService $navigationService): Response
+    {
+        $ttt = new TranslatableTemplatedText();
+        $form = $this->createForm(TranslatableTemplatedTextType::class, $ttt);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $practicalSubmoduleQuestionAnswer = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findByIdForLocale($practicalSubmoduleQuestionAnswer->getId(), $this->getParameter('locale.default'));
+            $practicalSubmoduleQuestionAnswer->setAnswerText($ttt->getText())->setTemplatedTextFields($ttt->getTextFields());
+            $this->em->flush();
+            $this->processTemplatedTextTranslation($practicalSubmoduleQuestionAnswer, $form);
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestionAnswer.edit', [], 'message'));
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->redirectToRoute('practical_submodule_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestionAnswer->getPracticalSubmoduleQuestion()->getId()]);
+    }
+
     #[Route("/delete/{practicalSubmoduleQuestionAnswer}", name: "delete", methods: ["POST"])]
     public function delete(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request): Response
     {
@@ -49,5 +76,20 @@ class PracticalSubmoduleQuestionAnswerController extends BaseController
         }
 
         return $this->redirectToRoute('practical_submodule_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
+    }
+
+    private function processTemplatedTextTranslation(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, \Symfony\Component\Form\FormInterface $form): void
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
+
+        $answerTextAlt = $form->get('translatedText')->getData();
+        if ($answerTextAlt !== null && trim($answerTextAlt) !== '') {
+            $translationRepository->translate($practicalSubmoduleQuestionAnswer, 'answerText', $localeAlt, trim($answerTextAlt));
+            $translated = true;
+        }
+
+        if ($translated) $this->em->flush();
     }
 }
