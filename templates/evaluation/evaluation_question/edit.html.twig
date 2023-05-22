@@ -8,7 +8,8 @@
     </div>
 
     {% if evaluationQuestion.type == constant('TYPE_WEIGHTED', evaluationQuestion) %}
-        <hr>
+
+        <hr/>
         {% if evaluationQuestion.practicalSubmoduleQuestionAnswers.count > 0 %}
             <ul class="mod--evaluation-question-answers">
                 {% for evaluationQuestionAnswer in evaluationQuestion.practicalSubmoduleQuestionAnswers %}
@@ -40,6 +41,20 @@
                 {{ mdi('plus') }} {{ 'practicalSubmodule.extra.answer'|trans }}
             </a>
         </div>
+
+    {% elseif tttForm is defined %}
+
+        <hr/>
+        {{ form_start(tttForm, {'attr': {'id': tttForm.vars.id}}) }}
+            {{ form_label(tttForm.text) }}
+            {{ form_widget(tttForm.text) }}
+            {{ form_label(tttForm.translatedText) }}
+            {{ form_widget(tttForm.translatedText) }}
+        {{ form_end(tttForm) }}
+        <div class="text-end">
+            <button type="submit" form="{{ tttForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+
     {% endif %}
 
 {% endblock %}

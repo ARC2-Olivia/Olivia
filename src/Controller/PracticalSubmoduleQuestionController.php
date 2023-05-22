@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
+use App\Form\PracticalSubmodule\TranslatableTemplatedText;
+use App\Form\PracticalSubmodule\TranslatableTemplatedTextType;
 use App\Form\PracticalSubmoduleQuestionAnswerWeightedType;
 use App\Form\PracticalSubmoduleQuestionType;
 use App\Repository\PracticalSubmoduleQuestionRepository;
@@ -11,6 +13,7 @@ use App\Service\NavigationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,12 +48,39 @@ class PracticalSubmoduleQuestionController extends BaseController
             }
         }
 
-        return $this->render('evaluation/evaluation_question/edit.html.twig', [
+        $params = [
             'evaluationQuestion' => $practicalSubmoduleQuestion,
             'evaluation' => $practicalSubmoduleQuestion->getPracticalSubmodule(),
             'form' => $form->createView(),
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmoduleQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_QUESTION)
-        ]);
+        ];
+
+        if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
+            $ttt = new TranslatableTemplatedText();
+            if ($practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->isEmpty()) {
+                $params['tttForm'] = $this->createForm(TranslatableTemplatedTextType::class, $ttt, [
+                    'method' => 'POST',
+                    'action' => $this->generateUrl('practical_submodule_question_new_templated_text_answer', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()])
+                ])->createView();
+            } else {
+                $psqa = $practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->get(0);
+                if ($request->getLocale() === $this->getParameter('locale.default')) {
+                    $ttt->setText($psqa->getAnswerText());
+                    $psqa = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findByIdForLocale($psqa->getId(), $this->getParameter('locale.alternate'));
+                    $ttt->setTranslatedText($psqa->getAnswerText());
+                } else {
+                    $ttt->setTranslatedText($psqa->getAnswerText());
+                    $psqa = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findByIdForLocale($psqa->getId(), $this->getParameter('locale.default'));
+                    $ttt->setText($psqa->getAnswerText());
+                }
+                $params['tttForm'] = $this->createForm(TranslatableTemplatedTextType::class, $ttt, [
+                    'method' => 'POST',
+                    'action' => ''
+                ])->createView();
+            }
+        }
+
+        return $this->render('evaluation/evaluation_question/edit.html.twig', $params);
     }
 
     #[Route("/delete/{practicalSubmoduleQuestion}", name: "delete", methods: ["POST"])]
@@ -90,7 +120,7 @@ class PracticalSubmoduleQuestionController extends BaseController
             return $this->redirectToRoute('practical_submodule_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
-                $this->addFlash('error', $error->getMessage());
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
             }
         }
 
@@ -100,6 +130,33 @@ class PracticalSubmoduleQuestionController extends BaseController
             'form' => $form->createView(),
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmoduleQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_NEW_ANSWER)
         ]);
+    }
+
+    #[Route("/new-templated-text-answer/{practicalSubmoduleQuestion}", name: "new_templated_text_answer")]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function newTemplatedTextAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request): Response
+    {
+        $ttt = new TranslatableTemplatedText();
+        $form = $this->createForm(TranslatableTemplatedTextType::class, $ttt);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $practicalSubmoduleQuestionAnswer = (new PracticalSubmoduleQuestionAnswer())
+                ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+                ->setLocale($this->getParameter('locale.default'))
+                ->setAnswerText($ttt->getText())
+                ->setTemplatedTextFields($ttt->getTextFields())
+            ;
+            $this->em->persist($practicalSubmoduleQuestionAnswer);
+            $this->em->flush();
+            $this->processPracticalSubmoduleQuestionAnswerTranslation($practicalSubmoduleQuestionAnswer, $form);
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->redirectToRoute('practical_submodule_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
     }
 
     #[Route("/reorder", name: "reorder", methods: ["POST"])]
@@ -119,18 +176,27 @@ class PracticalSubmoduleQuestionController extends BaseController
         return new JsonResponse(['status' => 'fail']);
     }
 
-    private function processPracticalSubmoduleQuestionAnswerTranslation(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, \Symfony\Component\Form\FormInterface $form)
+    private function processPracticalSubmoduleQuestionAnswerTranslation(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, \Symfony\Component\Form\FormInterface $form): void
     {
         $translationRepository = $this->em->getRepository(Translation::class);
         $localeAlt = $this->getParameter('locale.alternate');
         $translated = false;
 
-        $answerTextAlt = $form->get('answerTextAlt')->getData();
+        $formKey = $practicalSubmoduleQuestionAnswer->getPracticalSubmoduleQuestion()->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT ? 'translatedText' : 'answerTextAlt';
+        $answerTextAlt = $form->get($formKey)->getData();
         if ($answerTextAlt !== null && trim($answerTextAlt) !== '') {
             $translationRepository->translate($practicalSubmoduleQuestionAnswer, 'answerText', $localeAlt, trim($answerTextAlt));
             $translated = true;
         }
 
         if ($translated) $this->em->flush();
+    }
+
+    private function getTemplatedTextFields(string $templatedText): array
+    {
+        $pattern = '/\{\{\s*(\w+)\s*\}\}/';
+        $matches = null;
+        preg_match_all($pattern, $templatedText, $matches);
+        return empty($matches) ? [] : $matches[1];
     }
 }

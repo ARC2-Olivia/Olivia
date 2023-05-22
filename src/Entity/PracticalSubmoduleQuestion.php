@@ -18,6 +18,7 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public const TYPE_WEIGHTED = 'weighted';
     public const TYPE_NUMERICAL_INPUT = 'numerical_input';
     public const TYPE_TEXT_INPUT = 'text_input';
+    public const TYPE_TEMPLATED_TEXT_INPUT = 'templated_text_input';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

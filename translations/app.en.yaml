@@ -197,6 +197,9 @@ form:
                     answerText: Answer text
                     answerTextAlt: Answer text (alternate language)
                     answerValue: Weight
+                templatedText:
+                    answerText: Answering template
+                    answerTextAlt: Answering template (alternate language)
         practicalSubmoduleProcessor:
             label:
                 type: Processor type
@@ -360,6 +363,7 @@ practicalSubmoduleQuestion:
         weighted: Weighted
         numericalInput: Numerical input
         textInput: Text input
+        templatedTextInput: Templated text input
     delete: Are you sure you want to delete this question?
     empty: There are no defined questions for this submodule.
 

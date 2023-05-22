@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: PracticalSubmoduleQuestionAnswerRepository::class)]
 class PracticalSubmoduleQuestionAnswer extends TranslatableEntity
@@ -25,9 +26,19 @@ class PracticalSubmoduleQuestionAnswer extends TranslatableEntity
     #[Gedmo\Translatable]
     private ?string $answerText = null;
 
-    #[ORM\Column(length: 63)]
-    #[Assert\NotNull(message: 'error.practicalSubmoduleQuestionAnswer.answerValue.weighted')]
+    #[ORM\Column(length: 63, nullable: true)]
     private ?string $answerValue = null;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    private array $templatedTextFields = [];
+
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, $payload): void
+    {
+        if ($this->practicalSubmoduleQuestion->getType() !== PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT && $this->answerValue === null) {
+            $context->buildViolation('error.practicalSubmoduleQuestionAnswer.answerValue.weighted')->atPath('answerValue')->addViolation();
+        }
+    }
 
     public function getId(): ?int
     {
@@ -66,6 +77,18 @@ class PracticalSubmoduleQuestionAnswer extends TranslatableEntity
     public function setAnswerValue(string $answerValue): self
     {
         $this->answerValue = $answerValue;
+
+        return $this;
+    }
+
+    public function getTemplatedTextFields(): array
+    {
+        return $this->templatedTextFields;
+    }
+
+    public function setTemplatedTextFields(?array $templatedTextFields): self
+    {
+        $this->templatedTextFields = $templatedTextFields;
 
         return $this;
     }

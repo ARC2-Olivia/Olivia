@@ -137,6 +137,8 @@ error:
             weighted: Answer weight must be a number.
         csrf: There was an error processing answers for the evaluation question. Please, try to add them again.
         empty: There were no answers to add to the evaluation question.
+        templatedText:
+            textFields: Both default and translated answering templates need to contain same number of fields with the same names.
     practicalSubmoduleProcessor:
         name: Processor name must not be empty.
     practicalSubmoduleProcessorSimple:
