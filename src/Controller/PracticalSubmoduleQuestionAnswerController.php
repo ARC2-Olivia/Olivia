@@ -43,17 +43,16 @@ class PracticalSubmoduleQuestionAnswerController extends BaseController
 
     #[Route("/edit-templated-text/{practicalSubmoduleQuestionAnswer}", name: "edit_templated_text")]
     #[IsGranted('ROLE_MODERATOR')]
-    public function editTemplatedText(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request, NavigationService $navigationService): Response
+    public function editTemplatedText(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request): Response
     {
         $ttt = new TranslatableTemplatedText();
         $form = $this->createForm(TranslatableTemplatedTextType::class, $ttt);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $practicalSubmoduleQuestionAnswer = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findByIdForLocale($practicalSubmoduleQuestionAnswer->getId(), $this->getParameter('locale.default'));
-            $practicalSubmoduleQuestionAnswer->setAnswerText($ttt->getText())->setTemplatedTextFields($ttt->getTextFields());
+            $practicalSubmoduleQuestionAnswer->setTemplatedTextFields($ttt->getTextFields());
             $this->em->flush();
-            $this->processTemplatedTextTranslation($practicalSubmoduleQuestionAnswer, $form);
+            $this->processTemplatedTextTranslations($practicalSubmoduleQuestionAnswer, $form);
             $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestionAnswer.edit', [], 'message'));
         } else {
             foreach ($form->getErrors(true) as $error) {
@@ -78,11 +77,18 @@ class PracticalSubmoduleQuestionAnswerController extends BaseController
         return $this->redirectToRoute('practical_submodule_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
     }
 
-    private function processTemplatedTextTranslation(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, \Symfony\Component\Form\FormInterface $form): void
+    private function processTemplatedTextTranslations(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, \Symfony\Component\Form\FormInterface $form): void
     {
         $translationRepository = $this->em->getRepository(Translation::class);
+        $localeDefault = $this->getParameter('locale.default');
         $localeAlt = $this->getParameter('locale.alternate');
         $translated = false;
+
+        $answerText = $form->get('text')->getData();
+        if ($answerText !== null && trim($answerText) !== '') {
+            $translationRepository->translate($practicalSubmoduleQuestionAnswer, 'answerText', $localeDefault, trim($answerText));
+            $translated = true;
+        }
 
         $answerTextAlt = $form->get('translatedText')->getData();
         if ($answerTextAlt !== null && trim($answerTextAlt) !== '') {
