@@ -79,4 +79,24 @@ class PracticalSubmoduleAssessmentAnswer
 
         return $this;
     }
+
+    public function getDisplayableAnswer(): ?string
+    {
+        if ($this->practicalSubmoduleQuestionAnswer !== null) {
+            return $this->practicalSubmoduleQuestionAnswer->getAnswerText();
+        }
+
+        if ($this->practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
+            $answeredFields = json_decode($this->getAnswerValue(), true);
+            $displayableAnswer = $this->practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->get(0)->getAnswerText();
+            foreach ($answeredFields as $field => $answer) {
+                $pattern = '/\{\{\s*'.$field.'\s*\}\}/';
+                $replacement = '<b>'.$answer.'</b>';
+                $displayableAnswer = preg_replace($pattern, $replacement, $displayableAnswer);
+            }
+            return $displayableAnswer;
+        }
+
+        return $this->answerValue;
+    }
 }
