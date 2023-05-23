@@ -104,9 +104,10 @@ class PracticalSubmoduleService
         $evaluators = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findBy(['practicalSubmodule' => $assessment->getPracticalSubmodule(), 'included' => true]);
         foreach ($evaluators as $evaluator) {
             $message = match ($evaluator->getType()) {
-                PracticalSubmoduleProcessor::TYPE_SIMPLE => $this->runSimpleEvaluator($evaluator, $assessment),
-                PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => $this->runSumAggregateEvaluator($evaluator, $assessment),
-                PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => $this->runProductAggregateEvaluator($evaluator, $assessment),
+                PracticalSubmoduleProcessor::TYPE_SIMPLE => $this->runSimpleProcessor($evaluator, $assessment),
+                PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => $this->runSumAggregateProcessor($evaluator, $assessment),
+                PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => $this->runProductAggregateProcessor($evaluator, $assessment),
+                PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT => $this->runTemplatedTextProcessor($evaluator, $assessment),
                 default => null
             };
 
@@ -116,7 +117,7 @@ class PracticalSubmoduleService
         return $messages;
     }
 
-    public function runSimpleEvaluator(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
+    public function runSimpleProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
     {
         $processorSimple = $processor->getPracticalSubmoduleProcessorSimple();
         $errors = $this->validator->validate($processorSimple);
@@ -124,7 +125,7 @@ class PracticalSubmoduleService
         return $processorSimple->getResultText();
     }
 
-    private function runSumAggregateEvaluator(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
+    private function runSumAggregateProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
     {
         $processorSumAggregate = $processor->getPracticalSubmoduleProcessorSumAggregate();
         $errors = $this->validator->validate($processorSumAggregate);
@@ -132,11 +133,20 @@ class PracticalSubmoduleService
         return $processorSumAggregate->getResultText();
     }
 
-    private function runProductAggregateEvaluator(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
+    private function runProductAggregateProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
     {
         $processorProductAggregate = $processor->getPracticalSubmoduleProcessorProductAggregate();
         $errors = $this->validator->validate($processorProductAggregate);
         if ($errors->count() > 0 || !$processorProductAggregate->checkConformity($assessment, $this->validator)) return null;
         return $processorProductAggregate->getResultText();
+    }
+
+    private function runTemplatedTextProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
+    {
+        $processorTemplatedText = $processor->getPracticalSubmoduleProcessorTemplatedText();
+        $errors = $this->validator->validate($processorTemplatedText);
+        if ($errors->count() > 0) return null;
+        $processorTemplatedText->calculateResult($assessment);
+        return $processorTemplatedText->getResultText();
     }
 }

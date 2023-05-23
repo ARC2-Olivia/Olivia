@@ -30,6 +30,8 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
     #[Gedmo\Translatable]
     private ?string $resultText = null;
 
+    private ?string $processedText = null;
+
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -40,7 +42,15 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
 
     public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null)
     {
-        // Nothing needs to be calculated.
+        if ($this->practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT && !$practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers()->isEmpty()) {
+            $this->processedText = $this->resultText;
+            $assessmentAnswer = $practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers()->get(0);
+            $givenAnswer = json_decode($assessmentAnswer->getAnswerValue(), true);
+            foreach ($givenAnswer as $field => $value) {
+                $pattern = '/\{\{\s*'.$field.'\s*\}\}/';
+                $this->processedText = preg_replace($pattern, $value, $this->processedText);
+            }
+        }
     }
 
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
@@ -79,6 +89,9 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
 
     public function getResultText(): ?string
     {
+        if ($this->processedText !== null) {
+            return $this->processedText;
+        }
         return $this->resultText;
     }
 

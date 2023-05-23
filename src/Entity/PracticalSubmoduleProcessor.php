@@ -43,6 +43,9 @@ class PracticalSubmoduleProcessor
     #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
     private ?PracticalSubmoduleProcessorProductAggregate $practicalSubmoduleProcessorProductAggregate = null;
 
+    #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
+    private ?PracticalSubmoduleProcessorTemplatedText $practicalSubmoduleProcessorTemplatedText = null;
+
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $position = null;
 
@@ -155,12 +158,30 @@ class PracticalSubmoduleProcessor
         return $this;
     }
 
+    public function getPracticalSubmoduleProcessorTemplatedText(): ?PracticalSubmoduleProcessorTemplatedText
+    {
+        return $this->practicalSubmoduleProcessorTemplatedText;
+    }
+
+    public function setPracticalSubmoduleProcessorTemplatedText(PracticalSubmoduleProcessorTemplatedText $practicalSubmoduleProcessorTemplatedText): self
+    {
+        // set the owning side of the relation if necessary
+        if ($practicalSubmoduleProcessorTemplatedText->getPracticalSubmoduleProcessor() !== $this) {
+            $practicalSubmoduleProcessorTemplatedText->setPracticalSubmoduleProcessor($this);
+        }
+
+        $this->practicalSubmoduleProcessorTemplatedText = $practicalSubmoduleProcessorTemplatedText;
+
+        return $this;
+    }
+
     public function getEvaluationEvaluatorImplementation(): ?PracticalSubmoduleProcessorImplementationInterface
     {
         return match ($this->type) {
             self::TYPE_SIMPLE => $this->getPracticalSubmoduleProcessorSimple(),
             self::TYPE_SUM_AGGREGATE => $this->getPracticalSubmoduleProcessorSumAggregate(),
             self::TYPE_PRODUCT_AGGREGATE => $this->getPracticalSubmoduleProcessorProductAggregate(),
+            self::TYPE_TEMPLATED_TEXT => $this->getPracticalSubmoduleProcessorTemplatedText(),
             default => null
         };
     }
