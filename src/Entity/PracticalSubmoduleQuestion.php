@@ -76,6 +76,11 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
         return [self::TYPE_WEIGHTED, self::TYPE_NUMERICAL_INPUT];
     }
 
+    public static function getMultipleChoiceTypes(): array
+    {
+        return [self::TYPE_YES_NO, self::TYPE_WEIGHTED];
+    }
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestionAnswers = new ArrayCollection();

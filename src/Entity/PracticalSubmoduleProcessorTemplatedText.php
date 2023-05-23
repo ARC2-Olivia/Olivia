@@ -43,12 +43,26 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
     public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null)
     {
         if ($this->practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT && !$practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers()->isEmpty()) {
-            $this->processedText = $this->resultText;
-            $assessmentAnswer = $practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers()->get(0);
-            $givenAnswer = json_decode($assessmentAnswer->getAnswerValue(), true);
-            foreach ($givenAnswer as $field => $value) {
-                $pattern = '/\{\{\s*'.$field.'\s*\}\}/';
-                $this->processedText = preg_replace($pattern, $value, $this->processedText);
+            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                    $this->processedText = $this->resultText;
+                    $givenAnswer = json_decode($assessmentAnswer->getAnswerValue(), true);
+                    foreach ($givenAnswer as $field => $value) {
+                        $pattern = '/\{\{\s*'.$field.'\s*\}\}/';
+                        $this->processedText = preg_replace($pattern, $value, $this->processedText);
+                    }
+                    break;
+                }
+            }
+        } else if (!in_array($this->practicalSubmoduleQuestion->getType(), PracticalSubmoduleQuestion::getMultipleChoiceTypes())) {
+            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                    $this->processedText = $this->resultText;
+                    $givenAnswer = $assessmentAnswer->getAnswerValue();
+                    $pattern = '/\{\{\s*value\s*\}\}/i';
+                    $this->processedText = preg_replace($pattern, $givenAnswer, $this->processedText);
+                    break;
+                }
             }
         }
     }
