@@ -53,6 +53,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
                     'text' => $answerText,
                     'value' => $practicalSubmoduleQuestionAnswer->getAnswerValue()
                 ];
+                if ($question['type'] === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) $answer['fields'] = $practicalSubmoduleQuestionAnswer->getTemplatedTextFields();
                 $question['answers'][] = $answer;
             }
             $assessment['questions'][] = $question;
@@ -103,7 +104,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
         return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmoduleAssessment->getPracticalSubmodule()->getId()]);
     }
 
-    private function storeAnswer(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, PracticalSubmoduleQuestion $practicalSubmoduleQuestion, string $givenAnswer): void
+    private function storeAnswer(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, PracticalSubmoduleQuestion $practicalSubmoduleQuestion, mixed $givenAnswer): void
     {
         if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_YES_NO || $practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_WEIGHTED) {
             $practicalSubmoduleQuestionAnswer = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findOneBy(['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion, 'id' => $givenAnswer]);
@@ -112,6 +113,12 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
                 ->setPracticalSubmoduleQuestionAnswer($practicalSubmoduleQuestionAnswer)
                 ->setAnswerValue($practicalSubmoduleQuestionAnswer->getAnswerValue());
+            $this->em->persist($practicalSubmoduleAssessmentAnswer);
+        } else if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
+            $practicalSubmoduleAssessmentAnswer = (new PracticalSubmoduleAssessmentAnswer())
+                ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
+                ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+                ->setAnswerValue(json_encode($givenAnswer));
             $this->em->persist($practicalSubmoduleAssessmentAnswer);
         } else {
             $practicalSubmoduleAssessmentAnswer = (new PracticalSubmoduleAssessmentAnswer())

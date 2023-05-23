@@ -192,6 +192,14 @@ ul.mod--evaluation-question-answers {
     align-items: start;
 }
 
+.evaluation-assessment-question-answer--inline {
+    display: inline-block;
+}
+
+.evaluation-assessment-question-answer--inline > input {
+    width: 200px;
+}
+
 .evaluation-assessment-question-answer :is(input[type="radio"], span) {
     flex-basis: 0;
 }

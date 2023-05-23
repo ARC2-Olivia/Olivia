@@ -47,6 +47,7 @@ class EvaluationAssessment {
             case 'weighted': this.#createWeightedAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
             case 'numerical_input': questionAnswers.append(this.#createNumericalInputAnswer(questionData)); break;
             case 'text_input': questionAnswers.append(this.#createTextInputAnswer(questionData)); break;
+            case 'templated_text_input': questionAnswers.append(this.#createTemplatedTextInputAnswer(questionData)); break;
             default: finalize = false;
         }
 
@@ -140,6 +141,22 @@ class EvaluationAssessment {
             event.target.dispatch("answerchange", { questionId: questionData.id, answer: element.target.value });
         });
 
+        return answer.body.firstChild;
+    }
+
+    #createTemplatedTextInputAnswer(questionData) {
+        const answerData = questionData.answers[0];
+        let answerRaw = `<div>${answerData.text}</div>`;
+
+        for (const field of answerData.fields) {
+            const pattern = new RegExp(`{{\\s*${field}\\s*}}`);
+            const inputRaw = `<label class="evaluation-assessment-question-answer--inline">
+                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field}]" required/>
+            </label>`;
+            answerRaw = answerRaw.replace(pattern, inputRaw);
+        }
+
+        const answer = this.#parser.parseFromString(answerRaw, "text/html");
         return answer.body.firstChild;
     }
 
