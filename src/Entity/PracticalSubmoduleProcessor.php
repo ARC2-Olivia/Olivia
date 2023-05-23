@@ -13,6 +13,7 @@ class PracticalSubmoduleProcessor
     public const TYPE_SIMPLE = 'simple';
     public const TYPE_SUM_AGGREGATE = 'sum_aggregate';
     public const TYPE_PRODUCT_AGGREGATE = 'product_aggregate';
+    public const TYPE_TEMPLATED_TEXT = 'templated_text';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

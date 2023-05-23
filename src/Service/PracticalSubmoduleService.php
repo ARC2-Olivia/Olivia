@@ -5,15 +5,18 @@ namespace App\Service;
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\PracticalSubmoduleProcessor;
+use App\Entity\PracticalSubmoduleProcessorImplementationInterface;
 use App\Entity\PracticalSubmoduleProcessorProductAggregate;
 use App\Entity\PracticalSubmoduleProcessorSimple;
 use App\Entity\PracticalSubmoduleProcessorSumAggregate;
+use App\Entity\PracticalSubmoduleProcessorTemplatedText;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\User;
 use App\Exception\UnsupportedEvaluationEvaluatorTypeException;
 use App\Form\PracticalSubmoduleProcessorProductAggregateType;
 use App\Form\PracticalSubmoduleProcessorSimpleType;
 use App\Form\PracticalSubmoduleProcessorSumAggregateType;
+use App\Form\PracticalSubmoduleProcessorTemplatedTextType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -31,7 +34,7 @@ class PracticalSubmoduleService
     /**
      * @throws UnsupportedEvaluationEvaluatorTypeException
      */
-    public function getProcessorImplementation(PracticalSubmoduleProcessor $processor): PracticalSubmoduleProcessorSimple|PracticalSubmoduleProcessorSumAggregate|PracticalSubmoduleProcessorProductAggregate
+    public function getProcessorImplementation(PracticalSubmoduleProcessor $processor): PracticalSubmoduleProcessorImplementationInterface
     {
         if ($processor->getType() === PracticalSubmoduleProcessor::TYPE_SIMPLE) {
             $processorImpl = $this->em->getRepository(PracticalSubmoduleProcessorSimple::class)->findOneBy(['practicalSubmoduleProcessor' => $processor]);
@@ -51,6 +54,12 @@ class PracticalSubmoduleService
             return $processorImpl;
         }
 
+        if ($processor->getType() === PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT) {
+            $processorImpl = $this->em->getRepository(PracticalSubmoduleProcessorTemplatedText::class)->findOneBy(['practicalSubmoduleProcessor' => $processor]);
+            if ($processorImpl === null) $processorImpl = (new PracticalSubmoduleProcessorTemplatedText())->setPracticalSubmoduleProcessor($processor);
+            return $processorImpl;
+        }
+
         throw UnsupportedEvaluationEvaluatorTypeException::withDefaultMessage();
     }
 
@@ -63,9 +72,9 @@ class PracticalSubmoduleService
             PracticalSubmoduleProcessor::TYPE_SIMPLE => PracticalSubmoduleProcessorSimpleType::class,
             PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => PracticalSubmoduleProcessorSumAggregateType::class,
             PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => PracticalSubmoduleProcessorProductAggregateType::class,
+            PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT => PracticalSubmoduleProcessorTemplatedTextType::class,
             default => null
         };
-
         if ($formClass === null) throw UnsupportedEvaluationEvaluatorTypeException::withDefaultMessage();
         return $formClass;
     }

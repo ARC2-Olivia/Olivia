@@ -24,7 +24,8 @@ class PracticalSubmoduleProcessorType extends AbstractType
         $typeChoices = [
             $this->translator->trans('practicalSubmoduleProcessor.type.simple', [], 'app') => PracticalSubmoduleProcessor::TYPE_SIMPLE,
             $this->translator->trans('practicalSubmoduleProcessor.type.sumAggregate', [], 'app') => PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE,
-            $this->translator->trans('practicalSubmoduleProcessor.type.productAggregate', [], 'app') => PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE
+            $this->translator->trans('practicalSubmoduleProcessor.type.productAggregate', [], 'app') => PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE,
+            $this->translator->trans('practicalSubmoduleProcessor.type.templatedText', [], 'app') => PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT
         ];
 
         $includedChoices = [

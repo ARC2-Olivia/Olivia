@@ -162,6 +162,8 @@ error:
             end: End of the expected value range needs to be a number.
             invalid: Start of the expected value range has to be less or equal to (≤) the end of the expected value range.
         resultText: A resulting text that the processor will generate upon successful evaluation needs to be assigned.
+    practicalSubmoduleProcessorTemplatedText:
+        question: A question has to be chosen for the processor.
     practicalSubmoduleAssessment:
         start: Unable to start the evaluation. Please, try again.
         finish: There was an error processing your evaluation. Please, take the evaluation again.
