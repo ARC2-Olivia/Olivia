@@ -364,6 +364,7 @@ practicalSubmoduleQuestion:
         numericalInput: Numerical input
         textInput: Text input
         templatedTextInput: Templated text input
+        multipleChoice: Multiple choice
     delete: Are you sure you want to delete this question?
     empty: There are no defined questions for this submodule.
 

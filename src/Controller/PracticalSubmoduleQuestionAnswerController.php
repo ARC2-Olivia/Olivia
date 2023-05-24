@@ -6,6 +6,7 @@ use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
 use App\Form\PracticalSubmodule\TranslatableTemplatedText;
 use App\Form\PracticalSubmodule\TranslatableTemplatedTextType;
+use App\Form\PracticalSubmoduleQuestionAnswerMultiChoiceType;
 use App\Form\PracticalSubmoduleQuestionAnswerWeightedType;
 use App\Service\NavigationService;
 use Gedmo\Translatable\Entity\Translation;
@@ -22,6 +23,30 @@ class PracticalSubmoduleQuestionAnswerController extends BaseController
     public function editWeighted(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request, NavigationService $navigationService): Response
     {
         $form = $this->createForm(PracticalSubmoduleQuestionAnswerWeightedType::class, $practicalSubmoduleQuestionAnswer);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestionAnswer.edit', [], 'message'));
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('evaluation/evaluation_question/evaluation_question_answer/edit.html.twig', [
+            'evaluation' => $practicalSubmoduleQuestionAnswer->getPracticalSubmoduleQuestion()->getPracticalSubmodule(),
+            'evaluationQuestionAnswer' => $practicalSubmoduleQuestionAnswer,
+            'form' => $form->createView(),
+            'navigation' => $navigationService->forPracticalSubmodule($practicalSubmoduleQuestionAnswer->getPracticalSubmoduleQuestion()->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_ANSWER)
+        ]);
+    }
+
+    #[Route("/edit-multi-choice/{practicalSubmoduleQuestionAnswer}", name: "edit_multi_choice")]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function editMultiChoice(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request, NavigationService $navigationService): Response
+    {
+        $form = $this->createForm(PracticalSubmoduleQuestionAnswerMultiChoiceType::class, $practicalSubmoduleQuestionAnswer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

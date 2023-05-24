@@ -35,7 +35,7 @@ class PracticalSubmoduleQuestionAnswer extends TranslatableEntity
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
-        if ($this->practicalSubmoduleQuestion->getType() !== PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT && $this->answerValue === null) {
+        if ($this->practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_WEIGHTED && $this->answerValue === null) {
             $context->buildViolation('error.practicalSubmoduleQuestionAnswer.answerValue.weighted')->atPath('answerValue')->addViolation();
         }
     }

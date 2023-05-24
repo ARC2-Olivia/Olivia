@@ -6,6 +6,7 @@ use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
 use App\Form\PracticalSubmodule\TranslatableTemplatedText;
 use App\Form\PracticalSubmodule\TranslatableTemplatedTextType;
+use App\Form\PracticalSubmoduleQuestionAnswerMultiChoiceType;
 use App\Form\PracticalSubmoduleQuestionAnswerWeightedType;
 use App\Form\PracticalSubmoduleQuestionType;
 use App\Repository\PracticalSubmoduleQuestionRepository;
@@ -89,6 +90,37 @@ class PracticalSubmoduleQuestionController extends BaseController
             ->setLocale($this->getParameter('locale.default'))
         ;
         $form = $this->createForm(PracticalSubmoduleQuestionAnswerWeightedType::class, $practicalSubmoduleQuestionAnswer, ['include_translatable_fields' => true]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($practicalSubmoduleQuestionAnswer);
+            $this->em->flush();
+            $this->processPracticalSubmoduleQuestionAnswerTranslation($practicalSubmoduleQuestionAnswer, $form);
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestionAnswer.new', [], 'message'));
+            return $this->redirectToRoute('practical_submodule_question_edit', ['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion->getId()]);
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('evaluation/evaluation_question/evaluation_question_answer/new.html.twig', [
+            'evaluation' => $practicalSubmoduleQuestion->getPracticalSubmodule(),
+            'evaluationQuestion' => $practicalSubmoduleQuestion,
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmoduleQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_NEW_ANSWER)
+        ]);
+    }
+
+    #[Route("/add-multi-choice-answer/{practicalSubmoduleQuestion}", name: "add_multi_choice_answer")]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function addMultiChoiceAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request): Response
+    {
+        $practicalSubmoduleQuestionAnswer = (new PracticalSubmoduleQuestionAnswer())
+            ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+            ->setLocale($this->getParameter('locale.default'))
+        ;
+        $form = $this->createForm(PracticalSubmoduleQuestionAnswerMultiChoiceType::class, $practicalSubmoduleQuestionAnswer, ['include_translatable_fields' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

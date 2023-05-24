@@ -7,6 +7,8 @@
         {{ form_widget(form.answerTextAlt) }}
     {% endif %}
 
-    {{ form_label(form.answerValue) }}
-    {{ form_widget(form.answerValue) }}
+    {% if form.answerValue is defined %}
+        {{ form_label(form.answerValue) }}
+        {{ form_widget(form.answerValue) }}
+    {% endif %}
 {{ form_end(form) }}
