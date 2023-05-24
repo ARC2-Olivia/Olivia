@@ -54,7 +54,7 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
                     break;
                 }
             }
-        } else if (in_array($this->practicalSubmoduleQuestion->getType(), PracticalSubmoduleQuestion::getMultipleChoiceTypes())) {
+        } else if (in_array($this->practicalSubmoduleQuestion->getType(), PracticalSubmoduleQuestion::getSingleChoiceTypes())) {
             foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
                 if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId() && $assessmentAnswer->getPracticalSubmoduleQuestionAnswer() !== null) {
                     $this->processedText = $this->resultText;
