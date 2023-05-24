@@ -227,9 +227,19 @@ class PracticalSubmoduleController extends BaseController
     {
         $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
         $results = $practicalSubmoduleService->runProcessors($assessment);
+
+        $answerData = [];
+        foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
+            $questionId = $answer->getPracticalSubmoduleQuestion()->getId();
+            if (!key_exists($questionId, $answerData)) {
+                $answerData[$questionId] = ['question' => $answer->getPracticalSubmoduleQuestion()->getQuestionText(), 'answers' => []];
+            }
+            $answerData[$questionId]['answers'][] = $answer->getDisplayableAnswer();
+        }
+
         return $this->render('evaluation/results.html.twig', [
             'evaluation' => $practicalSubmodule,
-            'evaluationAssessment' => $assessment,
+            'answerData' => $answerData,
             'results' => $results,
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_RESULTS)
         ]);
