@@ -48,6 +48,7 @@ class EvaluationAssessment {
             case 'numerical_input': questionAnswers.append(this.#createNumericalInputAnswer(questionData)); break;
             case 'text_input': questionAnswers.append(this.#createTextInputAnswer(questionData)); break;
             case 'templated_text_input': questionAnswers.append(this.#createTemplatedTextInputAnswer(questionData)); break;
+            case 'multi_choice': this.#createMultiChoiceAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
             default: finalize = false;
         }
 
@@ -109,6 +110,36 @@ class EvaluationAssessment {
 
             answers.push(answer.body.firstChild);
         });
+        return answers;
+    }
+
+    #createMultiChoiceAnswers(questionData) {
+        const answers = [];
+        questionData.answers.forEach((answerData) => {
+            const answer = this.#parser.parseFromString(`
+                <label class="evaluation-assessment-question-answer">
+                    <input type="checkbox" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][choices][]" data-value="${answerData.id}"/>
+                    <span>${answerData.text}</span>
+                </label>
+            `, "text/html");
+
+            const input = answer.body.firstChild.querySelector("input");
+            this.#eventBus.attach(input);
+            input.addEventListener("click", function(event) {
+                event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value });
+            });
+
+            answers.push(answer.body.firstChild);
+        });
+
+        const other = this.#parser.parseFromString(`
+            <label class="evaluation-assessment-question-answer mt-3">
+                <span>Other</span>
+                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][other]"/>
+            </label>
+        `, "text/html");
+        answers.push(other.body.firstChild);
+
         return answers;
     }
 

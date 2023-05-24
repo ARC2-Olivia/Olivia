@@ -107,25 +107,64 @@ class PracticalSubmoduleAssessmentController extends BaseController
     private function storeAnswer(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, PracticalSubmoduleQuestion $practicalSubmoduleQuestion, mixed $givenAnswer): void
     {
         if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_YES_NO || $practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_WEIGHTED) {
-            $practicalSubmoduleQuestionAnswer = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findOneBy(['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion, 'id' => $givenAnswer]);
-            $practicalSubmoduleAssessmentAnswer = (new PracticalSubmoduleAssessmentAnswer())
-                ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
-                ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
-                ->setPracticalSubmoduleQuestionAnswer($practicalSubmoduleQuestionAnswer)
-                ->setAnswerValue($practicalSubmoduleQuestionAnswer->getAnswerValue());
-            $this->em->persist($practicalSubmoduleAssessmentAnswer);
+            $this->storeSingleChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
         } else if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
-            $practicalSubmoduleAssessmentAnswer = (new PracticalSubmoduleAssessmentAnswer())
-                ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
-                ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
-                ->setAnswerValue(json_encode($givenAnswer));
-            $this->em->persist($practicalSubmoduleAssessmentAnswer);
+            $this->storeTemplatedTextInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
+        } else if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE) {
+            $this->storeMultiChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
         } else {
-            $practicalSubmoduleAssessmentAnswer = (new PracticalSubmoduleAssessmentAnswer())
+            $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
+        }
+    }
+
+    private function storeSingleChoiceAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
+    {
+        $practicalSubmoduleQuestionAnswer = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findOneBy([
+            'practicalSubmoduleQuestion' => $practicalSubmoduleQuestion,
+            'id' => $givenAnswer
+        ]);
+        $practicalSubmoduleAssessmentAnswer = (new PracticalSubmoduleAssessmentAnswer())
+            ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
+            ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+            ->setPracticalSubmoduleQuestionAnswer($practicalSubmoduleQuestionAnswer)
+            ->setAnswerValue($practicalSubmoduleQuestionAnswer->getAnswerValue());
+        $this->em->persist($practicalSubmoduleAssessmentAnswer);
+    }
+
+    private function storeTemplatedTextInputAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
+    {
+        $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, json_encode($givenAnswer));
+    }
+
+    private function storeMultiChoiceAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer)
+    {
+        if (isset($givenAnswer['choices']) && is_array($givenAnswer['choices'])) {
+            $practicalSubmoduleQuestionAnswerRepository = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class);
+            foreach ($givenAnswer['choices'] as $choice) {
+                if (($qa = $practicalSubmoduleQuestionAnswerRepository->find($choice)) !== null) {
+                    $choiceAnswer = (new PracticalSubmoduleAssessmentAnswer())
+                        ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
+                        ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+                        ->setPracticalSubmoduleQuestionAnswer($qa);
+                    $this->em->persist($choiceAnswer);
+                }
+            }
+        }
+        if (isset($givenAnswer['other'])) {
+            $otherAnswer = (new PracticalSubmoduleAssessmentAnswer())
                 ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
                 ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
-                ->setAnswerValue($givenAnswer);
-            $this->em->persist($practicalSubmoduleAssessmentAnswer);
+                ->setAnswerValue($givenAnswer['other']);
+            $this->em->persist($otherAnswer);
         }
+    }
+
+    private function storeSimpleAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
+    {
+        $practicalSubmoduleAssessmentAnswer = (new PracticalSubmoduleAssessmentAnswer())
+            ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
+            ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+            ->setAnswerValue($givenAnswer);
+        $this->em->persist($practicalSubmoduleAssessmentAnswer);
     }
 }

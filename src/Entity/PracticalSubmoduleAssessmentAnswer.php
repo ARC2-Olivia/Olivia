@@ -24,7 +24,7 @@ class PracticalSubmoduleAssessmentAnswer
     #[ORM\ManyToOne]
     private ?PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer = null;
 
-    #[ORM\Column(length: 63)]
+    #[ORM\Column(length: 63, nullable: true)]
     private ?string $answerValue = null;
 
     public function getId(): ?int
