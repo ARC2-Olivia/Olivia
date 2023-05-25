@@ -10,6 +10,7 @@ use App\Form\PracticalSubmodule\TranslatableTemplatedTextType;
 use App\Form\PracticalSubmoduleQuestionAnswerMultiChoiceType;
 use App\Form\PracticalSubmoduleQuestionAnswerWeightedType;
 use App\Service\NavigationService;
+use App\Service\PracticalSubmoduleService;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -90,7 +91,7 @@ class PracticalSubmoduleQuestionAnswerController extends BaseController
     }
 
     #[Route("/delete/{practicalSubmoduleQuestionAnswer}", name: "delete", methods: ["POST"])]
-    public function delete(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request): Response
+    public function delete(PracticalSubmoduleQuestionAnswer $practicalSubmoduleQuestionAnswer, Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
         $practicalSubmoduleQuestion = $practicalSubmoduleQuestionAnswer->getPracticalSubmoduleQuestion();
         $csrfToken = $request->get('_csrf_token');
@@ -100,6 +101,9 @@ class PracticalSubmoduleQuestionAnswerController extends BaseController
             }
             $this->em->remove($practicalSubmoduleQuestionAnswer);
             $this->em->flush();
+            if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE) {
+                $practicalSubmoduleService->resetAnswerValuesForMultiChoiceQuestion($practicalSubmoduleQuestion);
+            }
             $this->addFlash('warning', $this->translator->trans('warning.practicalSubmoduleQuestionAnswer.delete', [], 'message'));
         }
 

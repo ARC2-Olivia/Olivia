@@ -47,6 +47,20 @@ class PracticalSubmoduleService
         return $maxValue + 1;
     }
 
+    public function resetAnswerValuesForMultiChoiceQuestion(PracticalSubmoduleQuestion $practicalSubmoduleQuestion): void
+    {
+        if ($practicalSubmoduleQuestion->getType() !== PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE) {
+            throw InvalidPracticalSubmoduleQuestionTypeException::forMultiChoiceType($practicalSubmoduleQuestion->getType());
+        }
+
+        $questionAnswers = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findBy(['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion],  ['answerValue' => 'ASC']);
+        $answerValue = 1;
+        foreach ($questionAnswers as $questionAnswer) {
+            $questionAnswer->setAnswerValue($answerValue++);
+        }
+        $this->em->flush();
+    }
+
     /**
      * @throws UnsupportedEvaluationEvaluatorTypeException
      */
