@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\PracticalSubmoduleAssessmentAnswer;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
 use App\Form\PracticalSubmodule\TranslatableTemplatedText;
@@ -94,6 +95,9 @@ class PracticalSubmoduleQuestionAnswerController extends BaseController
         $practicalSubmoduleQuestion = $practicalSubmoduleQuestionAnswer->getPracticalSubmoduleQuestion();
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleQuestionAnswer.delete', $csrfToken)) {
+            foreach ($this->em->getRepository(PracticalSubmoduleAssessmentAnswer::class)->findBy(['practicalSubmoduleQuestionAnswer' => $practicalSubmoduleQuestionAnswer]) as $assessmentAnswer) {
+                $this->em->remove($assessmentAnswer);
+            }
             $this->em->remove($practicalSubmoduleQuestionAnswer);
             $this->em->flush();
             $this->addFlash('warning', $this->translator->trans('warning.practicalSubmoduleQuestionAnswer.delete', [], 'message'));

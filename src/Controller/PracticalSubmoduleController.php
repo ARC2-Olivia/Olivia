@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
+use App\Entity\PracticalSubmoduleAssessmentAnswer;
 use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
@@ -109,12 +110,17 @@ class PracticalSubmoduleController extends BaseController
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmodule.delete', $csrfToken)) {
             $submoduleName = $practicalSubmodule->getName();
+
             foreach ($practicalSubmodule->getPracticalSubmoduleQuestions() as $question) {
+                foreach ($this->em->getRepository(PracticalSubmoduleAssessmentAnswer::class)->findBy(['practicalSubmoduleQuestion' => $question]) as $assessmentAnswer) {
+                    $this->em->remove($assessmentAnswer);
+                }
                 foreach ($question->getPracticalSubmoduleQuestionAnswers() as $questionAnswer) {
                     $this->em->remove($questionAnswer);
                 }
                 $this->em->remove($question);
             }
+
             $this->em->remove($practicalSubmodule);
             $this->em->flush();
             $this->addFlash('warning', $this->translator->trans('warning.practicalSubmodule.delete', ['%evaluation%' => $submoduleName], 'message'));
