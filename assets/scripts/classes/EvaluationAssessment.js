@@ -57,12 +57,19 @@ class EvaluationAssessment {
                 const dependency = questionData.dependency;
                 this.#eventBus.attach(question);
                 context.#enableQuestion(question);
-                question.on("answerchange", function(sender, { questionId, answer }) {
+                question.on("answerchange", function(sender, { questionId, answer, checkType }) {
+                    checkType = checkType || "equals";
                     if (dependency.questionId == questionId) {
-                        if (dependency.answer == answer)
+                        let enableQuestion = false;
+                        switch (checkType) {
+                            case "equals": enableQuestion = answer == dependency.answer; break;
+                            case "contains": enableQuestion = answer.includes(dependency.answer); break;
+                        }
+                        if (enableQuestion === true) {
                             context.#disableQuestion(this);
-                        else
+                        } else {
                             context.#enableQuestion(this);
+                        }
                     }
                 });
             }
@@ -84,7 +91,7 @@ class EvaluationAssessment {
             const input = answer.body.firstChild.querySelector("input");
             this.#eventBus.attach(input);
             input.addEventListener("click", function(event) {
-                event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value })
+                event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value, checkType: 'equals' })
             });
 
             answers.push(answer.body.firstChild);
@@ -105,7 +112,7 @@ class EvaluationAssessment {
             const input = answer.body.firstChild.querySelector("input");
             this.#eventBus.attach(input);
             input.addEventListener("click", function(event) {
-                event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value });
+                event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value, checkType: 'equals' });
             });
 
             answers.push(answer.body.firstChild);
@@ -115,18 +122,24 @@ class EvaluationAssessment {
 
     #createMultiChoiceAnswers(questionData) {
         const answers = [];
+        const inputs = [];
         questionData.answers.forEach((answerData) => {
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="checkbox" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][choices][]" data-value="${answerData.id}"/>
+                    <input type="checkbox" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][choices][]" data-value="${answerData.value}"/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
 
             const input = answer.body.firstChild.querySelector("input");
-            this.#eventBus.attach(input);
-            input.addEventListener("click", function(event) {
-                event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value });
+            inputs.push(input);
+
+            inputs.forEach((input) => {
+                this.#eventBus.attach(input);
+                input.addEventListener("click", function(event) {
+                    const checkedValues = inputs.filter(i => i.checked === true).map(i => i.dataset.value);
+                    event.target.dispatch("answerchange", { questionId: questionData.id, answer: checkedValues, checkType: 'contains' });
+                });
             });
 
             answers.push(answer.body.firstChild);
@@ -153,7 +166,7 @@ class EvaluationAssessment {
         const input = answer.body.firstChild.querySelector("input");
         this.#eventBus.attach(input);
         input.addEventListener("input", function(event) {
-            event.target.dispatch("answerchange", { questionId: questionData.id, answer: element.target.value });
+            event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.value, checkType: 'equals' });
         });
 
         return answer.body.firstChild;
@@ -169,7 +182,7 @@ class EvaluationAssessment {
         const input = answer.body.firstChild.querySelector("input");
         this.#eventBus.attach(input);
         input.addEventListener("input", function(event) {
-            event.target.dispatch("answerchange", { questionId: questionData.id, answer: element.target.value });
+            event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.value, checkType: 'equals' });
         });
 
         return answer.body.firstChild;
