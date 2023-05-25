@@ -12,6 +12,7 @@ use App\Form\PracticalSubmoduleQuestionAnswerWeightedType;
 use App\Form\PracticalSubmoduleQuestionType;
 use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Service\NavigationService;
+use App\Service\PracticalSubmoduleService;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -118,7 +119,7 @@ class PracticalSubmoduleQuestionController extends BaseController
 
     #[Route("/add-multi-choice-answer/{practicalSubmoduleQuestion}", name: "add_multi_choice_answer")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function addMultiChoiceAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request): Response
+    public function addMultiChoiceAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
         $practicalSubmoduleQuestionAnswer = (new PracticalSubmoduleQuestionAnswer())
             ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
@@ -128,6 +129,7 @@ class PracticalSubmoduleQuestionController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $practicalSubmoduleQuestionAnswer->setAnswerValue($practicalSubmoduleService->getNextAnswerValueForMultiChoiceQuestion($practicalSubmoduleQuestion));
             $this->em->persist($practicalSubmoduleQuestionAnswer);
             $this->em->flush();
             $this->processPracticalSubmoduleQuestionAnswerTranslation($practicalSubmoduleQuestionAnswer, $form);

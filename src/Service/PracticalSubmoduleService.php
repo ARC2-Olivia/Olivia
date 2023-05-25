@@ -11,13 +11,16 @@ use App\Entity\PracticalSubmoduleProcessorSimple;
 use App\Entity\PracticalSubmoduleProcessorSumAggregate;
 use App\Entity\PracticalSubmoduleProcessorTemplatedText;
 use App\Entity\PracticalSubmoduleQuestion;
+use App\Entity\PracticalSubmoduleQuestionAnswer;
 use App\Entity\User;
+use App\Exception\InvalidPracticalSubmoduleQuestionTypeException;
 use App\Exception\UnsupportedEvaluationEvaluatorTypeException;
 use App\Form\PracticalSubmoduleProcessorProductAggregateType;
 use App\Form\PracticalSubmoduleProcessorSimpleType;
 use App\Form\PracticalSubmoduleProcessorSumAggregateType;
 use App\Form\PracticalSubmoduleProcessorTemplatedTextType;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Exception\UnexpectedValueException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PracticalSubmoduleService
@@ -29,6 +32,19 @@ class PracticalSubmoduleService
     {
         $this->em = $em;
         $this->validator = $validator;
+    }
+
+    /**
+     * @throws InvalidPracticalSubmoduleQuestionTypeException
+     */
+    public function getNextAnswerValueForMultiChoiceQuestion(PracticalSubmoduleQuestion $practicalSubmoduleQuestion): int
+    {
+        if ($practicalSubmoduleQuestion->getType() !== PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE) {
+            throw InvalidPracticalSubmoduleQuestionTypeException::forMultiChoiceType($practicalSubmoduleQuestion->getType());
+        }
+
+        $maxValue = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->getMaxAnswerValueForQuestion($practicalSubmoduleQuestion);
+        return $maxValue + 1;
     }
 
     /**

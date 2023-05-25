@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -53,5 +54,15 @@ class PracticalSubmoduleQuestionAnswerRepository extends ServiceEntityRepository
         $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, TranslationWalker::class);
         $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
         return $query->getOneOrNullResult();
+    }
+
+    public function getMaxAnswerValueForQuestion(PracticalSubmoduleQuestion $practicalSubmoduleQuestion): int
+    {
+        return $this->createQueryBuilder('psqa')
+            ->select('COALESCE(MAX(psqa.answerValue), 0)')
+            ->where('psqa.practicalSubmoduleQuestion = :question')
+            ->setParameter('question', $practicalSubmoduleQuestion)
+            ->getQuery()->getSingleScalarResult()
+        ;
     }
 }
