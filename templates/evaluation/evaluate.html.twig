@@ -4,35 +4,13 @@
 {% block evaluationContent %}
     {% if is_granted('ROLE_MODERATOR') %}
 
-        <h2 class="mb-3">{{ 'practicalSubmodule.extra.questions'|trans }}</h2>
-        {% if evaluationQuestions is not empty %}
-            <ul id="evaluation_questions" class="mod--evaluation-questions" data-path="{{ path('practical_submodule_question_reorder') }}">
-                {% for evaluationQuestion in evaluationQuestions %}
-                    {% include 'evaluation/_evaluate_mod_evaluationQuestion.html.twig' %}
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>{{ 'practicalSubmoduleQuestion.empty'|trans }}</p>
-        {% endif %}
-        <div class="text-end">
-            <a href="{{ path('practical_submodule_add_question', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'practicalSubmodule.extra.question'|trans }}</a>
-        </div>
-
+        {% include 'evaluation/_evaluate_mod_questions.html.twig' %}
         <hr>
-
-        <h2 class="mb-3">{{ 'practicalSubmodule.extra.evaluators'|trans }}</h2>
-        {% if evaluationEvaluators is not empty %}
-            <ul id="evaluation_evaluators" class="mod--evaluation-evaluators" data-path="{{ path('practical_submodule_processor_reorder') }}">
-                {% for evaluationEvaluator in evaluationEvaluators %}
-                    {% include 'evaluation/_evaluate_mod_evaluationEvaluator.html.twig' %}
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>{{ 'practicalSubmoduleProcessor.empty'|trans }}</p>
+        {% include 'evaluation/_evaluate_mod_processors.html.twig' %}
+        {% if evaluation.paging %}
+            <hr>
+            {% include 'evaluation/_evaluate_mod_pages.html.twig' %}
         {% endif %}
-        <div class="text-end">
-            <a href="{{ path('practical_submodule_add_processor', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'practicalSubmodule.extra.evaluator'|trans }}</a>
-        </div>
 
     {% elseif is_user() %}
 

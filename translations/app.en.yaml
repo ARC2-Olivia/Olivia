@@ -352,6 +352,8 @@ practicalSubmodule:
         questions: Questions
         evaluator: Processor
         evaluators: Processors
+        page: Page
+        pages: Pages
         answer: Answer
         results:
             empty: Nothing to show.

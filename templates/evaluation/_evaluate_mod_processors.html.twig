@@ -1,0 +1,15 @@
+{% trans_default_domain 'app' %}
+
+<h2 class="mb-3">{{ 'practicalSubmodule.extra.evaluators'|trans }}</h2>
+{% if evaluationEvaluators is not empty %}
+    <ul id="evaluation_evaluators" class="mod--evaluation-evaluators" data-path="{{ path('practical_submodule_processor_reorder') }}">
+        {% for evaluationEvaluator in evaluationEvaluators %}
+            {% include 'evaluation/_evaluate_mod_evaluationEvaluator.html.twig' %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>{{ 'practicalSubmoduleProcessor.empty'|trans }}</p>
+{% endif %}
+<div class="text-end">
+    <a href="{{ path('practical_submodule_add_processor', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'practicalSubmodule.extra.evaluator'|trans }}</a>
+</div>
