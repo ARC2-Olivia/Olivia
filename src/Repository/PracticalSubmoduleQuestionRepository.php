@@ -48,4 +48,13 @@ class PracticalSubmoduleQuestionRepository extends ServiceEntityRepository
             ->setParameter('submodule', $practicalSubmodule)
             ->getQuery()->getResult();
     }
+
+    public function maxPositionForSubmodule(PracticalSubmodule $practicalSubmodule): int
+    {
+        return $this->createQueryBuilder('psq')
+            ->select('COALESCE(MAX(psq.position), 0)')
+            ->where('psq.practicalSubmodule = :submodule')
+            ->setParameter('submodule', $practicalSubmodule)
+            ->getQuery()->getSingleScalarResult();
+    }
 }

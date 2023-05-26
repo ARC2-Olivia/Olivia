@@ -11,6 +11,7 @@ use App\Entity\PracticalSubmoduleQuestionAnswer;
 use App\Form\PracticalSubmoduleProcessorType;
 use App\Form\PracticalSubmoduleQuestionType;
 use App\Form\PracticalSubmoduleType;
+use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Repository\PracticalSubmoduleRepository;
 use App\Service\PracticalSubmoduleService;
 use App\Service\NavigationService;
@@ -157,7 +158,7 @@ class PracticalSubmoduleController extends BaseController
 
     #[Route("/evaluate/{practicalSubmodule}/add-question", name: 'add_question')]
     #[IsGranted("ROLE_MODERATOR")]
-    public function addQuestion(PracticalSubmodule $practicalSubmodule, Request $request): Response
+    public function addQuestion(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleQuestionRepository $practicalSubmoduleQuestionRepository): Response
     {
         $question = (new PracticalSubmoduleQuestion())
             ->setPracticalSubmodule($practicalSubmodule)
@@ -167,6 +168,7 @@ class PracticalSubmoduleController extends BaseController
         $form = $this->createForm(PracticalSubmoduleQuestionType::class, $question, ['include_translatable_fields' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $question->setPosition($practicalSubmoduleQuestionRepository->maxPositionForSubmodule($practicalSubmodule) + 1);
             $this->em->persist($question);
             $this->em->flush();
             $this->processPracticalSubmoduleQuestionTranslation($question, $form);
