@@ -52,6 +52,9 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     #[ORM\Column(length: 63, nullable: true)]
     private ?string $dependentValue = null;
 
+    #[ORM\ManyToOne(inversedBy: 'practicalSubmoduleQuestions')]
+    private ?PracticalSubmodulePage $practicalSubmodulePage = null;
+
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -202,6 +205,18 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public function setDependentValue(?string $dependentValue): self
     {
         $this->dependentValue = $dependentValue;
+
+        return $this;
+    }
+
+    public function getPracticalSubmodulePage(): ?PracticalSubmodulePage
+    {
+        return $this->practicalSubmodulePage;
+    }
+
+    public function setPracticalSubmodulePage(?PracticalSubmodulePage $practicalSubmodulePage): self
+    {
+        $this->practicalSubmodulePage = $practicalSubmodulePage;
 
         return $this;
     }

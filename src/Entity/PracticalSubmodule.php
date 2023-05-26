@@ -44,11 +44,18 @@ class PracticalSubmodule extends TranslatableEntity
     #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'practicalSubmodules')]
     private Collection $courses;
 
+    #[ORM\OneToMany(mappedBy: 'practicalSubmodule', targetEntity: PracticalSubmodulePage::class, orphanRemoval: true)]
+    private Collection $practicalSubmodulePages;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $paging = null;
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
         $this->practicalSubmoduleProcessors = new ArrayCollection();
         $this->courses = new ArrayCollection();
+        $this->practicalSubmodulePages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,6 +191,48 @@ class PracticalSubmodule extends TranslatableEntity
     public function removeCourse(Course $course): self
     {
         $this->courses->removeElement($course);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PracticalSubmodulePage>
+     */
+    public function getPracticalSubmodulePages(): Collection
+    {
+        return $this->practicalSubmodulePages;
+    }
+
+    public function addPracticalSubmodulePage(PracticalSubmodulePage $practicalSubmodulePage): self
+    {
+        if (!$this->practicalSubmodulePages->contains($practicalSubmodulePage)) {
+            $this->practicalSubmodulePages->add($practicalSubmodulePage);
+            $practicalSubmodulePage->setPracticalSubmodule($this);
+        }
+
+        return $this;
+    }
+
+    public function removePracticalSubmodulePage(PracticalSubmodulePage $practicalSubmodulePage): self
+    {
+        if ($this->practicalSubmodulePages->removeElement($practicalSubmodulePage)) {
+            // set the owning side to null (unless already changed)
+            if ($practicalSubmodulePage->getPracticalSubmodule() === $this) {
+                $practicalSubmodulePage->setPracticalSubmodule(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isPaging(): ?bool
+    {
+        return $this->paging;
+    }
+
+    public function setPaging(?bool $paging): self
+    {
+        $this->paging = $paging;
 
         return $this;
     }
