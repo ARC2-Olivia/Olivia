@@ -16,6 +16,9 @@
         {{ form_widget(form.descriptionAlt) }}
     {% endif %}
 
+    {{ form_label(form.paging) }}
+    {{ form_widget(form.paging) }}
+
     {{ form_label(form.tags) }}
     {{ form_widget(form.tags) }}
     {% if form.tagsAlt is defined %}

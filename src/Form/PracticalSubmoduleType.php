@@ -7,6 +7,7 @@ use App\Entity\PracticalSubmodule;
 use App\Form\Transformer\SimpleArrayToStringTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,6 +26,11 @@ class PracticalSubmoduleType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $pagingChoices = [
+            $this->translator->trans('common.no', [], 'app') => false,
+            $this->translator->trans('common.yes', [], 'app') => true
+        ];
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.name',
@@ -53,6 +59,11 @@ class PracticalSubmoduleType extends AbstractType
                     'class' => 'form-textarea mb-3',
                     'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.description', [], 'app')
                 ]
+            ])
+            ->add('paging', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmodule.label.paging',
+                'choices' => $pagingChoices,
+                'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('tags', TextareaType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.tags',

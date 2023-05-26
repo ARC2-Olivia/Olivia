@@ -173,6 +173,7 @@ form:
                 image: Image
                 description: Description
                 descriptionAlt: Description (alternate language)
+                paging: Paging
                 tags: Tags
                 tagsAlt: Tags (alternate language)
                 courses: Connected courses (Ctrl + Left mouse click to select multiple courses)
