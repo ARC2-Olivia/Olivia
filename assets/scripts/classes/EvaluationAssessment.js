@@ -126,7 +126,7 @@ class EvaluationAssessment {
         questionData.answers.forEach((answerData) => {
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="checkbox" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][choices][]" data-value="${answerData.value}"/>
+                    <input type="checkbox" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][]" data-value="${answerData.value}"/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
@@ -145,6 +145,7 @@ class EvaluationAssessment {
             answers.push(answer.body.firstChild);
         });
 
+        /*
         const other = this.#parser.parseFromString(`
             <label class="evaluation-assessment-question-answer mt-3">
                 <span>Other</span>
@@ -152,6 +153,7 @@ class EvaluationAssessment {
             </label>
         `, "text/html");
         answers.push(other.body.firstChild);
+        */
 
         return answers;
     }
@@ -190,11 +192,11 @@ class EvaluationAssessment {
 
     #createTemplatedTextInputAnswer(questionData) {
         const answerData = questionData.answers[0];
-        let answerRaw = `<div>${answerData.text}</div>`;
+        let answerRaw = `<div style="white-space: pre">${answerData.text}</div>`;
 
         for (const field of answerData.fields) {
             const pattern = new RegExp(`{{\\s*${field}\\s*}}`);
-            const inputRaw = `<label class="evaluation-assessment-question-answer--inline">
+            const inputRaw = `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal">
                 <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field}]" required/>
             </label>`;
             answerRaw = answerRaw.replace(pattern, inputRaw);

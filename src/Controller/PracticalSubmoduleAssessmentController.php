@@ -138,18 +138,17 @@ class PracticalSubmoduleAssessmentController extends BaseController
 
     private function storeMultiChoiceAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer)
     {
-        if (isset($givenAnswer['choices']) && is_array($givenAnswer['choices'])) {
-            $practicalSubmoduleQuestionAnswerRepository = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class);
-            foreach ($givenAnswer['choices'] as $choice) {
-                if (($qa = $practicalSubmoduleQuestionAnswerRepository->find($choice)) !== null) {
-                    $choiceAnswer = (new PracticalSubmoduleAssessmentAnswer())
-                        ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
-                        ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
-                        ->setPracticalSubmoduleQuestionAnswer($qa);
-                    $this->em->persist($choiceAnswer);
-                }
+        $practicalSubmoduleQuestionAnswerRepository = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class);
+        foreach ($givenAnswer as $choice) {
+            if (($qa = $practicalSubmoduleQuestionAnswerRepository->find($choice)) !== null) {
+                $choiceAnswer = (new PracticalSubmoduleAssessmentAnswer())
+                    ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
+                    ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+                    ->setPracticalSubmoduleQuestionAnswer($qa);
+                $this->em->persist($choiceAnswer);
             }
         }
+        /*
         if (isset($givenAnswer['other'])) {
             $otherAnswer = (new PracticalSubmoduleAssessmentAnswer())
                 ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
@@ -157,6 +156,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 ->setAnswerValue($givenAnswer['other']);
             $this->em->persist($otherAnswer);
         }
+        */
     }
 
     private function storeSimpleAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
