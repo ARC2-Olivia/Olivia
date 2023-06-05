@@ -40,5 +40,8 @@
         {{ encore_entry_script_tags('Reorderer') }}
         {{ encore_entry_script_tags('evaluation.questions.sort') }}
         {{ encore_entry_script_tags('evaluation.evaluators.sort') }}
+        {% if evaluation.paging %}
+            {{ encore_entry_script_tags('ps.pages.sort') }}
+        {% endif %}
     {% endif %}
 {% endblock %}
