@@ -6,6 +6,7 @@ use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Repository\PracticalSubmoduleQuestionRepository;
+use App\Validator\PageAndQuestions;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,6 +18,9 @@ class PracticalSubmodulePageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var PracticalSubmodulePage $data */
+        $data = $builder->getData();
+
         $builder
             ->add('questions', EntityType::class, [
                 'label' => 'form.entity.practicalSubmodulePage.label.questions',
@@ -25,7 +29,10 @@ class PracticalSubmodulePageType extends AbstractType
                 'multiple' => true,
                 'mapped' => false,
                 'choice_label' => 'questionText',
-                'query_builder' => $this->makeQueryBuilder($builder)
+                'query_builder' => $this->makeQueryBuilder($builder),
+                'constraints' => [
+                    new PageAndQuestions(['submoduleToMatch' => $data->getPracticalSubmodule()])
+                ]
             ])
             ->add('title', TextType::class, [
                 'label' => 'form.entity.practicalSubmodulePage.label.title',

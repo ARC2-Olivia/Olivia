@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: PracticalSubmodulePageRepository::class)]
 class PracticalSubmodulePage extends TranslatableEntity
@@ -38,6 +40,17 @@ class PracticalSubmodulePage extends TranslatableEntity
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
+    }
+
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, $payload): void
+    {
+        foreach ($this->practicalSubmoduleQuestions as $practicalSubmoduleQuestion) {
+            if ($practicalSubmoduleQuestion->getPracticalSubmodule()->getId() !== $this->practicalSubmodule->getId()) {
+                $context->buildViolation('error.practicalSubmodulePage.submoduleMismatch')->atPath('practicalSubmoduleQuestions')->addViolation();
+                break;
+            }
+        }
     }
 
     public function getId(): ?int

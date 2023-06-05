@@ -170,6 +170,9 @@ error:
     practicalSubmoduleAssessment:
         start: Unable to start the evaluation. Please, try again.
         finish: There was an error processing your evaluation. Please, take the evaluation again.
+    practicalSubmodulePage:
+        questions: You have to add at least one question to the page.
+        submoduleMismatch: One of the selected questions doesn't belong to the same submodule as the page.
     termsOfService:
         content: Content of the terms of service must not be empty.
         contentAlt: Translation of the content of the terms of service must not be empty.
