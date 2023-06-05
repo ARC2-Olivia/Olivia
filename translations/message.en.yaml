@@ -68,15 +68,17 @@ warning:
         delete: Question for the quiz <i>%lesson%</i> has been deleted.
     practicalSubmodule:
         image.store: There was an error storing the image for the practical submodule. You can try to reupload it while editing the basic practical submodule information.
-        delete: Evaluation <i>%evaluation%</i> has been deleted.
+        delete: Submodule <i>%evaluation%</i> has been deleted.
     practicalSubmoduleQuestion:
-        delete: Evaluation question for the <i>%evaluation%</i> evaluation has been deleted.
+        delete: Evaluation question for the <i>%evaluation%</i> submodule has been deleted.
     practicalSubmoduleQuestionAnswer:
         delete: Answer has been deleted from the question.
     practicalSubmoduleProcessor:
-        delete: Evaluator has been deleted from the evaluation.
+        delete: Processor has been deleted from the submodule.
     practicalSubmoduleAssessment:
         noQuestion: There was an error storing the answer to one of the questions.
+    practicalSubmodulePage:
+        delete: Page has been deleted from the submodule.
 
 error:
     login: Invalid credentials.
