@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\PracticalSubmoduleAssessmentAnswer;
+use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
+use App\Form\PracticalSubmodulePageType;
 use App\Form\PracticalSubmoduleProcessorType;
 use App\Form\PracticalSubmoduleQuestionType;
 use App\Form\PracticalSubmoduleType;
+use App\Repository\PracticalSubmodulePageRepository;
 use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Repository\PracticalSubmoduleRepository;
 use App\Service\PracticalSubmoduleService;
@@ -141,15 +144,17 @@ class PracticalSubmoduleController extends BaseController
             $assessmentCompleted = $assessment !== null && $assessment->isCompleted();
         }
 
-        $questions = $processors = null;
+        $questions = $processors = $pages = null;
         if ($this->isGranted('ROLE_MODERATOR')) {
             $questions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForSubmodule($practicalSubmodule);
             $processors = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findOrderedForSubmodule($practicalSubmodule);
+            $pages = $this->em->getRepository(PracticalSubmodulePage::class)->findOrderedForSubmodule($practicalSubmodule);
         }
         return $this->render('evaluation/evaluate.html.twig', [
             'evaluation' => $practicalSubmodule,
             'evaluationQuestions' => $questions,
             'evaluationEvaluators' => $processors,
+            'pages' => $pages,
             'assessmentCompleted' => $assessmentCompleted,
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE),
             'questionCount' => $this->em->getRepository(PracticalSubmoduleQuestion::class)->count(['practicalSubmodule' => $practicalSubmodule])
@@ -210,6 +215,42 @@ class PracticalSubmoduleController extends BaseController
             'evaluation' => $practicalSubmodule,
             'form' => $form->createView(),
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_NEW_EVALUATOR)
+        ]);
+    }
+
+    #[Route("/evaluate/{practicalSubmodule}/add-page", name: "add_page")]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function addPage(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmodulePageRepository $practicalSubmodulePageRepository): Response
+    {
+        $page = (new PracticalSubmodulePage())->setPracticalSubmodule($practicalSubmodule);
+        $form = $this->createForm(PracticalSubmodulePageType::class, $page, ['include_translatable_fields' => true]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $page->setPosition($practicalSubmodulePageRepository->maxPositionForSubmodule($practicalSubmodule) + 1);
+            $this->em->persist($page);
+
+            /** @var PracticalSubmoduleQuestion[] $questions */
+            $questions = $form->get('questions')->getData();
+            if ($questions !== null) {
+                foreach ($questions as $question) {
+                    $question->setPracticalSubmodulePage($page);
+                }
+            }
+
+            $this->em->flush();
+            $this->processPracticalSubmodulePageTranslation($page, $form);
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmodulePage.new', [], 'message'));
+            return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('evaluation/page/new.html.twig', [
+            'evaluation' => $practicalSubmodule,
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_NEW_PAGE)
         ]);
     }
 
@@ -290,7 +331,7 @@ class PracticalSubmoduleController extends BaseController
         if ($translated) $this->em->flush();
     }
 
-    private function processPracticalSubmoduleQuestionTranslation(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, \Symfony\Component\Form\FormInterface $form)
+    private function processPracticalSubmoduleQuestionTranslation(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, \Symfony\Component\Form\FormInterface $form): void
     {
         $translationRepository = $this->em->getRepository(Translation::class);
         $localeAlt = $this->getParameter('locale.alternate');
@@ -299,6 +340,27 @@ class PracticalSubmoduleController extends BaseController
         $questionTextAlt = $form->get('questionTextAlt')->getData();
         if ($questionTextAlt !== null && trim($questionTextAlt) !== '') {
             $translationRepository->translate($practicalSubmoduleQuestion, 'questionText', $localeAlt, trim($questionTextAlt));
+            $translated = true;
+        }
+
+        if ($translated) $this->em->flush();
+    }
+
+    private function processPracticalSubmodulePageTranslation(PracticalSubmodulePage $practicalSubmodulePage, \Symfony\Component\Form\FormInterface $form): void
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
+
+        $titleAlt = $form->get('titleAlt')->getData();
+        if ($titleAlt !== null && trim($titleAlt) !== '') {
+            $translationRepository->translate($practicalSubmodulePage, 'title', $localeAlt, trim($titleAlt));
+            $translated = true;
+        }
+
+        $descriptionAlt = $form->get('descriptionAlt')->getData();
+        if ($descriptionAlt !== null && trim($descriptionAlt) !== '') {
+            $translationRepository->translate($practicalSubmodulePage, 'description', $localeAlt, trim($descriptionAlt));
             $translated = true;
         }
 

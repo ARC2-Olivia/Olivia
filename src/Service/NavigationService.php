@@ -24,6 +24,8 @@ class NavigationService
     public const EVALUATION_EXTRA_EDIT_ANSWER    = 7;
     public const EVALUATION_EXTRA_NEW_EVALUATOR  = 8;
     public const EVALUATION_EXTRA_EDIT_EVALUATOR = 9;
+    public const EVALUATION_EXTRA_NEW_PAGE       = 10;
+    public const EVALUATION_EXTRA_EDIT_PAGE      = 11;
 
     private ?TranslatorInterface $translator = null;
     private ?RouterInterface $router = null;
@@ -96,6 +98,8 @@ class NavigationService
                 case self::EVALUATION_EXTRA_EDIT_ANSWER:    $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.answer', [], 'app'), 'active' => true];    break;
                 case self::EVALUATION_EXTRA_NEW_EVALUATOR:  $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.evaluator', [], 'app'), 'active' => true];  break;
                 case self::EVALUATION_EXTRA_EDIT_EVALUATOR: $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.evaluator', [], 'app'), 'active' => true]; break;
+                case self::EVALUATION_EXTRA_NEW_PAGE:       $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.page', [], 'app'), 'active' => true];       break;
+                case self::EVALUATION_EXTRA_EDIT_PAGE:      $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.page', [], 'app'), 'active' => true];      break;
             }
         }
 

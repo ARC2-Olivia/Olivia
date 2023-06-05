@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmodulePage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,28 +40,21 @@ class PracticalSubmodulePageRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return PracticalSubmodulePage[] Returns an array of PracticalSubmodulePage objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findOrderedForSubmodule(PracticalSubmodule $practicalSubmodule)
+    {
+        return $this->createQueryBuilder('psp')
+            ->where('psp.practicalSubmodule = :submodule')
+            ->orderBy('psp.position', 'ASC')
+            ->setParameter('submodule', $practicalSubmodule)
+            ->getQuery()->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?PracticalSubmodulePage
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function maxPositionForSubmodule(PracticalSubmodule $practicalSubmodule): int
+    {
+        return $this->createQueryBuilder('psp')
+            ->select('COALESCE(MAX(psp.position), 0)')
+            ->where('psp.practicalSubmodule = :submodule')
+            ->setParameter('submodule', $practicalSubmodule)
+            ->getQuery()->getSingleScalarResult();
+    }
 }

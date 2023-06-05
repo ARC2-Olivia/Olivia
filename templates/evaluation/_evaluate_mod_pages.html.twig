@@ -1,6 +1,10 @@
 {% trans_default_domain 'app' %}
 
 <h2 class="mb-3">{{ 'practicalSubmodule.extra.pages'|trans }}</h2>
+{% if pages is not empty %}
+{% else %}
+    <p>{{ 'practicalSubmodulePage.empty'|trans }}</p>
+{% endif %}
 <div class="text-end">
-    <a href="#" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'practicalSubmodule.extra.page'|trans }}</a>
+    <a href="{{ path('practical_submodule_add_page', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'practicalSubmodule.extra.page'|trans }}</a>
 </div>

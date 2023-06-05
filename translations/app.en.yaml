@@ -218,6 +218,13 @@ form:
                 name: Name of the processor for easier identification
                 resultText: What text will the processor return as a result?
                 evaluationQuestion: Choose a question...
+        practicalSubmodulePage:
+            label:
+                title: Title
+                titleAlt: Title (alternate language)
+                description: Description
+                descriptionAlt: Description (alternate language)
+                questions: Questions
         termsOfService:
             label:
                 id: ID
@@ -343,10 +350,12 @@ practicalSubmodule:
             question: Edit question
             evaluator: Edit processor
             answer: Edit answer
+            page: Edit page
         new:
             question: New question
             evaluator: New processor
             answer: New answer
+            page: New page
     extra:
         question: Question
         questions: Questions
@@ -385,6 +394,9 @@ practicalSubmoduleProcessor:
     heading:
         basicOptions: Basic options
         specificOptions: Processor specific options
+
+practicalSubmodulePage:
+    empty: There are no defined pages for this submodule.
 
 practicalSubmoduleAssessment:
     message:
