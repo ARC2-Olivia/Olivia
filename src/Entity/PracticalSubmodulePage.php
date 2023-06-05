@@ -135,4 +135,12 @@ class PracticalSubmodulePage extends TranslatableEntity
 
         return $this;
     }
+
+    public function removeItselfFromPracticalSubmoduleQuestions(): void
+    {
+        /** @var PracticalSubmoduleQuestion $practicalSubmoduleQuestion */
+        foreach ($this->practicalSubmoduleQuestions as $practicalSubmoduleQuestion) {
+            $practicalSubmoduleQuestion->setPracticalSubmodulePage(null);
+        }
+    }
 }

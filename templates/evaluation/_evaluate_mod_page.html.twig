@@ -11,7 +11,7 @@
         <div class="mod--ps-page-text">{{ page.position }}</div>
     {% endif %}
     <div class="mod--ps-page-actions">
-        <form action="" method="post" onsubmit="return confirm('{{ 'practicalSubmodulePage.delete'|trans }}')">
+        <form action="{{ path('practical_submodule_page_delete', {'practicalSubmodulePage': page.id}) }}" method="post" onsubmit="return confirm('{{ 'practicalSubmodulePage.delete'|trans }}')">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmodulePage.delete') }}"/>
             <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
         </form>
