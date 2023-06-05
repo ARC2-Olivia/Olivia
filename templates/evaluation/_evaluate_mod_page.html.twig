@@ -1,0 +1,20 @@
+{% trans_default_domain 'app' %}
+
+<li class="mod--evaluation-evaluator" data-id="{{ page.id }}">
+    <div class="mod--ps-page-reorder-handle">{{ mdi('drag-vertical', '', '6 0 12 24') }}</div>
+    {% if page.title is not null %}
+        <div class="mod--ps-page-details">
+            <div class="mod--ps-page-text">{{ page.title }}</div>
+            <div class="mod--ps-page-order">{{ page.position }}</div>
+        </div>
+    {% else %}
+        <div class="mod--ps-page-text">{{ page.position }}</div>
+    {% endif %}
+    <div class="mod--ps-page-actions">
+        <form action="" method="post" onsubmit="return confirm('{{ 'practicalSubmodulePage.delete'|trans }}')">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmodulePage.delete') }}"/>
+            <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
+        </form>
+        <a href="#" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('cog') }}</a>
+    </div>
+</li>

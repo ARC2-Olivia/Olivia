@@ -53,7 +53,8 @@
 
 .mod--evaluation-questions,
 .mod--evaluation-evaluators,
-.mod--evaluation-question-answers {
+.mod--evaluation-question-answers,
+.mod--ps-pages {
     display: flex;
     flex-direction: column;
     row-gap: 8px;
@@ -62,14 +63,16 @@
 
 ul.mod--evaluation-questions,
 ul.mod--evaluation-evaluators,
-ul.mod--evaluation-question-answers {
+ul.mod--evaluation-question-answers,
+ul.mod--ps-pages {
     list-style: none;
     padding: 0;
 }
 
 .mod--evaluation-question,
 .mod--evaluation-evaluator,
-.mod--evaluation-question-answer  {
+.mod--evaluation-question-answer,
+.mod--ps-page {
     display: flex;
     justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.075);
@@ -80,38 +83,44 @@ ul.mod--evaluation-question-answers {
 }
 
 .mod--evaluation-question.reordering,
-.mod--evaluation-evaluator.reordering {
+.mod--evaluation-evaluator.reordering,
+.mod--ps-page.reordering {
     opacity: 0.5;
 }
 
 .mod--evaluation-question-details,
 .mod--evaluation-evaluator-details,
-.mod--evaluation-question-answer-details {
+.mod--evaluation-question-answer-details,
+.mod--ps-page-details {
     display: flex;
     flex-direction: column;
 }
 
 .mod--evaluation-question-details,
-.mod--evaluation-evaluator-details {
+.mod--evaluation-evaluator-details,
+.mod--ps-page-details {
     text-align: center;
 }
 
 .mod--evaluation-question-text,
 .mod--evaluation-evaluator-text,
-.mod--evaluation-question-answer-text {
+.mod--evaluation-question-answer-text,
+.mod--ps-page-text{
     font-weight: 600;
 }
 
 .mod--evaluation-question-type,
 .mod--evaluation-evaluator-type,
-.mod--evaluation-question-answer-value {
+.mod--evaluation-question-answer-value,
+.mod--ps-page-order {
     font-size: small;
     color: rgba(0, 0, 0, 0.66667);
 }
 
 .mod--evaluation-question-actions,
 .mod--evaluation-evaluator-actions,
-.mod--evaluation-question-answer-actions {
+.mod--evaluation-question-answer-actions,
+.mod--ps-page-actions {
     display: flex;
     column-gap: 12px;
 }
@@ -143,7 +152,8 @@ ul.mod--evaluation-question-answers {
 }
 
 .mod--evaluation-question-reorder-handle,
-.mod--evaluation-evaluator-reorder-handle {
+.mod--evaluation-evaluator-reorder-handle,
+.mod--ps-page-reorder-handle {
     color: rgba(0, 0, 0, 0.3);
     width: 16px;
     margin-left: -8px;

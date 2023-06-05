@@ -2,6 +2,11 @@
 
 <h2 class="mb-3">{{ 'practicalSubmodule.extra.pages'|trans }}</h2>
 {% if pages is not empty %}
+    <ul id="ps_pages" class="mod--ps-pages">
+        {% for page in pages %}
+            {% include 'evaluation/_evaluate_mod_page.html.twig' %}
+        {% endfor %}
+    </ul>
 {% else %}
     <p>{{ 'practicalSubmodulePage.empty'|trans }}</p>
 {% endif %}

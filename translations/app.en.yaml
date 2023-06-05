@@ -397,6 +397,7 @@ practicalSubmoduleProcessor:
 
 practicalSubmodulePage:
     empty: There are no defined pages for this submodule.
+    delete: Are you sure you want to delete this page?
 
 practicalSubmoduleAssessment:
     message:
