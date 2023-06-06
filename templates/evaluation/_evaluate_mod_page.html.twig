@@ -15,6 +15,6 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmodulePage.delete') }}"/>
             <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
         </form>
-        <a href="#" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('cog') }}</a>
+        <a href="{{ path('practical_submodule_page_edit', {'practicalSubmodulePage': page.id}) }}" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('cog') }}</a>
     </div>
 </li>

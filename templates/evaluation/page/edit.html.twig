@@ -1,0 +1,9 @@
+{% extends 'evaluation/_base_evaluation.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block evaluationContent %}
+    {% include 'evaluation/page/_form.html.twig' %}
+    <div class="text-end">
+        <button type="submit" form="{{ form.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+    </div>
+{% endblock %}

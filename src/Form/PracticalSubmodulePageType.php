@@ -18,20 +18,21 @@ class PracticalSubmodulePageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var PracticalSubmodulePage $data */
-        $data = $builder->getData();
+        /** @var PracticalSubmodulePage $page */
+        $page = $builder->getData();
 
         $builder
             ->add('questions', EntityType::class, [
+                'mapped' => false,
                 'label' => 'form.entity.practicalSubmodulePage.label.questions',
                 'attr' => ['class' => 'form-select multiple mb-3'],
                 'class' => PracticalSubmoduleQuestion::class,
                 'multiple' => true,
-                'mapped' => false,
                 'choice_label' => 'questionText',
-                'query_builder' => $this->makeQueryBuilder($builder),
+                'query_builder' => $this->makeQueryBuilder($builder, $options['edit_mode']),
+                'data' => $page->getPracticalSubmoduleQuestions(),
                 'constraints' => [
-                    new PageAndQuestions(['submoduleToMatch' => $data->getPracticalSubmodule()])
+                    new PageAndQuestions(['submoduleToMatch' => $page->getPracticalSubmodule()])
                 ]
             ])
             ->add('title', TextType::class, [
@@ -64,22 +65,32 @@ class PracticalSubmodulePageType extends AbstractType
             'data_class' => PracticalSubmodulePage::class,
             'translation_domain' => 'app',
             'include_translatable_fields' => false,
+            'edit_mode' => false,
             'attr' => ['class' => 'd-flex flex-column', 'novalidate' => 'novalidate']
         ]);
     }
 
-    private function makeQueryBuilder(FormBuilderInterface $builder): \Closure
+    private function makeQueryBuilder(FormBuilderInterface $builder, bool $editMode): \Closure
     {
-        /** @var PracticalSubmodule $practicalSubmodule */
-        $practicalSubmodule = $builder->getData()?->getPracticalSubmodule();
+        /** @var PracticalSubmodulePage $page */
+        $page = $builder->getData();
+        $practicalSubmodule = $page?->getPracticalSubmodule();
+
         $queryBuilder = null;
         if ($practicalSubmodule !== null) {
-            $queryBuilder = function (PracticalSubmoduleQuestionRepository $practicalSubmoduleQuestionRepository) use ($practicalSubmodule) {
-                return $practicalSubmoduleQuestionRepository->createQueryBuilder('psq')
-                    ->where('psq.practicalSubmodulePage IS NULL')
-                    ->andWhere('psq.practicalSubmodule = :submodule')
+            $queryBuilder = function (PracticalSubmoduleQuestionRepository $practicalSubmoduleQuestionRepository) use ($page, $editMode, $practicalSubmodule) {
+                $qb = $practicalSubmoduleQuestionRepository->createQueryBuilder('psq')
+                    ->where('psq.practicalSubmodule = :submodule')
                     ->setParameter('submodule', $practicalSubmodule)
                     ->orderBy('psq.position', 'ASC');
+
+                if ($editMode === true) {
+                    $qb->andWhere('psq.practicalSubmodulePage IS NULL OR psq.practicalSubmodulePage = :page')->setParameter('page', $page);
+                } else {
+                    $qb->andWhere('psq.practicalSubmodulePage IS NULL');
+                }
+
+                return $qb;
             };
         }
         return $queryBuilder;
