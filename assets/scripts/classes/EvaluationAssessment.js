@@ -2,6 +2,8 @@ class EvaluationAssessment {
     #form;
     #parser;
     #eventBus;
+    #paging;
+    #pager;
 
     constructor(querySelector, assessmentData) {
         this.#parser = new DOMParser();
@@ -18,11 +20,110 @@ class EvaluationAssessment {
         this.#form = form;
     }
 
-    #initializeAssessmentFromData(assessmentData = []) {
+    #initializeAssessmentFromData(assessmentData = {}) {
+        this.#paging = assessmentData.paging ?? false;
+
+        if (this.#paging === true) {
+            this.#initializePaging(assessmentData);
+        }
+
         assessmentData.questions.forEach((questionData) => {
             const question = this.#createQuestion(questionData);
-            this.#form.appendChild(question);
+            if (this.#paging === true) {
+                const page= this.#pager.querySelector(`[data-page="${questionData.page}"]`);
+                if (page) page.appendChild(question); // DANIJEL PAUSE
+            } else {
+                this.#form.appendChild(question);
+            }
         });
+
+        if (this.#paging === true) {
+            this.#appendPageNavigation();
+        }
+    }
+
+    #initializePaging(assessmentData) {
+        const pager = document.createElement("DIV");
+        pager.classList.add('evaluation-assessment-pager');
+
+        assessmentData.pages.forEach((pageData) => {
+            const page = document.createElement("DIV");
+            page.id = `assessment-page-${pageData.number}`;
+            page.dataset.page = pageData.number;
+            page.classList.add('evaluation-assessment-page');
+
+            if (pageData.title !== null) {
+                const pageTitle = document.createElement("DIV");
+                pageTitle.classList.add("evaluation-assessment-page-title");
+                pageTitle.innerText = pageData.title;
+                page.appendChild(pageTitle);
+            }
+
+            if (pageData.description !== null) {
+                const pageDescription = document.createElement("P");
+                pageDescription.classList.add("evaluation-assessment-page-description");
+                pageDescription.innerText = pageData.description;
+                page.appendChild(pageDescription);
+            }
+
+            pager.appendChild(page);
+        });
+
+        this.#form.appendChild(pager);
+        this.#pager = pager;
+        window.pager = pager;
+    }
+
+    #appendPageNavigation() {
+        const pages = this.#pager.querySelectorAll("[data-page]");
+        for (let i = 0; i < pages.length; i++) {
+            const currPage = pages[i];
+            const nextPage = i < pages.length - 1 ? pages[i + 1] : null;
+            const prevPage = i > 0 ? pages[i - 1] : null;
+            let navigation = null;
+
+            console.log("---", currPage, nextPage, prevPage);
+
+            if (prevPage !== null && nextPage !== null) {
+                navigation = this.#parser.parseFromString(`
+                    <div class="text-center">
+                        <a class="btn btn-theme-white bg-blue" href="#${prevPage.id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
+                            </svg>
+                        </a>
+                        <a class="btn btn-theme-white bg-blue ms-3" href="#${nextPage.id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                `, "text/html").body.firstChild;
+            } else if (prevPage !== null) {
+                navigation = this.#parser.parseFromString(`
+                    <div class="text-center">
+                        <a class="btn btn-theme-white bg-blue" href="#${prevPage.id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                `, "text/html").body.firstChild;
+            } else if (nextPage !== null) {
+                navigation = this.#parser.parseFromString(`
+                    <div class="text-center">
+                        <a class="btn btn-theme-white bg-blue" href="#${nextPage.id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                `, "text/html").body.firstChild;
+            }
+
+
+            if (navigation !== null) currPage.append(navigation);
+        }
     }
 
     #createQuestion(questionData) {

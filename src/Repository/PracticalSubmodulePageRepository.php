@@ -40,6 +40,10 @@ class PracticalSubmodulePageRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param PracticalSubmodule $practicalSubmodule
+     * @return PracticalSubmodulePage[]
+     */
     public function findOrderedForSubmodule(PracticalSubmodule $practicalSubmodule)
     {
         return $this->createQueryBuilder('psp')

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\PracticalSubmoduleAssessmentAnswer;
+use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
 use App\Service\NavigationService;
@@ -31,13 +32,25 @@ class PracticalSubmoduleAssessmentController extends BaseController
 
         /** @var PracticalSubmoduleQuestion[] $practicalSubmoduleQuestions */
         $practicalSubmoduleQuestions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForSubmodule($practicalSubmodule);
-        $assessment = ['id' => $practicalSubmoduleAssessment->getId(), 'questions' => []];
+        $assessment = ['id' => $practicalSubmoduleAssessment->getId(), 'questions' => [], 'paging' => $practicalSubmodule->isPaging(), 'pages' => []];
+
+        if ($practicalSubmodule->isPaging()) {
+            foreach ($this->em->getRepository(PracticalSubmodulePage::class)->findOrderedForSubmodule($practicalSubmodule) as $practicalSubmodulePage) {
+                $assessment['pages'][] = [
+                    'title' => $practicalSubmodulePage->getTitle(),
+                    'description' => $practicalSubmodulePage->getDescription(),
+                    'number' => $practicalSubmodulePage->getPosition()
+                ];
+            }
+        }
+
         foreach ($practicalSubmoduleQuestions as $practicalSubmoduleQuestion) {
             $question = [
                 'id' => $practicalSubmoduleQuestion->getId(),
                 'type' => $practicalSubmoduleQuestion->getType(),
                 'question' => $practicalSubmoduleQuestion->getQuestionText(),
-                'answers' => []
+                'answers' => [],
+                'page' => $practicalSubmoduleQuestion->getPracticalSubmodulePage()?->getPosition()
             ];
             if ($practicalSubmoduleQuestion->getDependentPracticalSubmoduleQuestion() !== null) {
                 $question['dependency'] = [
