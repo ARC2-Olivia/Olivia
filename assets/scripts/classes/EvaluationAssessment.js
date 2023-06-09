@@ -82,8 +82,6 @@ class EvaluationAssessment {
             const prevPage = i > 0 ? pages[i - 1] : null;
             let navigation = null;
 
-            console.log("---", currPage, nextPage, prevPage);
-
             if (prevPage !== null && nextPage !== null) {
                 navigation = this.#parser.parseFromString(`
                     <div class="text-center">
