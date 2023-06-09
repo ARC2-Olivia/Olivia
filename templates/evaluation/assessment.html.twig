@@ -11,9 +11,6 @@
     >
         <input type="hidden" name="_csrf_token" value="{{ csrf_token("practicalSubmoduleAssessment.finish") }}"/>
     </form>
-    <div class="d-flex justify-content-end mt-3">
-        <button type="submit" class="btn btn-theme-white bg-green" form="evaluation_assessment">{{ 'common.submit'|trans }}</button>
-    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -22,7 +19,11 @@
     {{ encore_entry_script_tags('EvaluationAssessment') }}
     <script>
         window.addEventListener("load", () => {
-            const evaluationAssessment = new EvaluationAssessment("#evaluation_assessment", {{ assessment|json_encode|raw }});
+            const evaluationAssessment = new EvaluationAssessment(
+                "#evaluation_assessment",
+                {{ assessment|json_encode|raw }},
+                { buttonNext: "{{ 'common.next'|trans }}", buttonPrevious: "{{ 'common.previous'|trans }}", buttonSubmit: "{{ 'common.submit'|trans }}" }
+            );
         });
     </script>
 {% endblock %}

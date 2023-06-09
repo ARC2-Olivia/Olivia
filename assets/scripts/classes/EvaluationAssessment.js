@@ -4,12 +4,22 @@ class EvaluationAssessment {
     #eventBus;
     #paging;
     #pager;
+    #translation
 
-    constructor(querySelector, assessmentData) {
+    constructor(querySelector, assessmentData, translation) {
         this.#parser = new DOMParser();
         this.#eventBus = new EventBus();
+        this.#initializeTranslation(translation);
         this.#initializeForm(querySelector);
         this.#initializeAssessmentFromData(assessmentData);
+    }
+
+    #initializeTranslation(translation) {
+        this.#translation = {
+            buttonNext: translation.buttonNext || "Next",
+            buttonPrevious: translation.buttonPrevious || "Previous",
+            buttonSubmit: translation.buttonSubmit || "Submit"
+        };
     }
 
     #initializeForm(querySelector) {
@@ -22,10 +32,7 @@ class EvaluationAssessment {
 
     #initializeAssessmentFromData(assessmentData = {}) {
         this.#paging = assessmentData.paging ?? false;
-
-        if (this.#paging === true) {
-            this.#initializePaging(assessmentData);
-        }
+        if (this.#paging === true) this.#initializePaging(assessmentData);
 
         assessmentData.questions.forEach((questionData) => {
             const question = this.#createQuestion(questionData);
@@ -37,9 +44,8 @@ class EvaluationAssessment {
             }
         });
 
-        if (this.#paging === true) {
-            this.#appendPageNavigation();
-        }
+        if (this.#paging === true) this.#appendPageNavigation();
+        this.#appendSubmitButton();
     }
 
     #initializePaging(assessmentData) {
@@ -85,42 +91,38 @@ class EvaluationAssessment {
             if (prevPage !== null && nextPage !== null) {
                 navigation = this.#parser.parseFromString(`
                     <div class="text-center">
-                        <a class="btn btn-theme-white bg-blue" href="#${prevPage.id}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
-                            </svg>
-                        </a>
-                        <a class="btn btn-theme-white bg-blue ms-3" href="#${nextPage.id}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
-                            </svg>
-                        </a>
+                        <a class="btn btn-theme-white bg-blue" href="#${prevPage.id}">${this.#translation.buttonPrevious}</a>
+                        <a class="btn btn-theme-white bg-blue ms-3" href="#${nextPage.id}">${this.#translation.buttonNext}</a>
                     </div>
                 `, "text/html").body.firstChild;
             } else if (prevPage !== null) {
                 navigation = this.#parser.parseFromString(`
                     <div class="text-center">
-                        <a class="btn btn-theme-white bg-blue" href="#${prevPage.id}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
-                            </svg>
-                        </a>
+                        <a class="btn btn-theme-white bg-blue" href="#${prevPage.id}">${this.#translation.buttonPrevious}</a>
                     </div>
                 `, "text/html").body.firstChild;
             } else if (nextPage !== null) {
                 navigation = this.#parser.parseFromString(`
                     <div class="text-center">
-                        <a class="btn btn-theme-white bg-blue" href="#${nextPage.id}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
-                            </svg>
-                        </a>
+                        <a class="btn btn-theme-white bg-blue" href="#${nextPage.id}">${this.#translation.buttonNext}</a>
                     </div>
                 `, "text/html").body.firstChild;
             }
 
 
             if (navigation !== null) currPage.append(navigation);
+        }
+    }
+
+    #appendSubmitButton() {
+        let location = this.#paging === true ? this.#pager.lastChild : this.#form;
+        if (location !== null) {
+            const submitButton = this.#parser.parseFromString(`
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-theme-white bg-green">${this.#translation.buttonSubmit}</button>
+                </div>
+            `, "text/html").body.firstChild;
+            location.appendChild(submitButton);
         }
     }
 
