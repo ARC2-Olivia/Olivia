@@ -175,7 +175,7 @@ class PracticalSubmoduleService
     {
         $processorTemplatedText = $processor->getPracticalSubmoduleProcessorTemplatedText();
         $errors = $this->validator->validate($processorTemplatedText);
-        if ($errors->count() > 0) return null;
+        if ($errors->count() > 0 || !$processorTemplatedText->checkConformity($assessment)) return null;
         $processorTemplatedText->calculateResult($assessment);
         return $processorTemplatedText->getResultText();
     }

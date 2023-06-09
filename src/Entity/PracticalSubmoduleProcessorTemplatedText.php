@@ -80,7 +80,12 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
 
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
-        return true;
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($this->practicalSubmoduleQuestion->getId() === $assessmentAnswer->getPracticalSubmoduleQuestion()->getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function getId(): ?int
