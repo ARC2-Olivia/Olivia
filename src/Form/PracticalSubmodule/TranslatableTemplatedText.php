@@ -9,8 +9,8 @@ class TranslatableTemplatedText
 {
     public const PATTERN_TEXT_FIELD = '/\{\{\s*(\w+)\s*\}\}/';
 
-    private ?string $text;
-    private ?string $translatedText;
+    private ?string $text = null;
+    private ?string $translatedText = null;
 
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
