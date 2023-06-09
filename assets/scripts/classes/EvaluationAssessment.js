@@ -293,9 +293,15 @@ class EvaluationAssessment {
 
     #createTemplatedTextInputAnswer(questionData) {
         const answerData = questionData.answers[0];
-        let answerRaw = `<div style="white-space: pre">${answerData.text}</div>`;
+        let answerText = "", answerFields = [];
 
-        for (const field of answerData.fields) {
+        if (answerData) {
+            answerText = answerData.text;
+            answerFields = answerData.fields;
+        }
+
+        let answerRaw = `<div style="white-space: pre">${answerText}</div>`;
+        for (const field of answerFields) {
             const pattern = new RegExp(`{{\\s*${field}\\s*}}`);
             const inputRaw = `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal">
                 <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field}]" required/>

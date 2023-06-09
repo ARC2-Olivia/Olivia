@@ -67,6 +67,7 @@ class PracticalSubmoduleProcessorTemplatedTextType extends AbstractType
                 return $repository->createQueryBuilder('psq')
                     ->where('psq.practicalSubmodule = :submodule')
                     ->andWhere('psq.evaluable = :evaluable')
+                    ->orderBy('psq.position', 'ASC')
                     ->setParameters(['submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(), 'evaluable' => true]);
             };
         }
