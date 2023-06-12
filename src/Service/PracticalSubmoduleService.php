@@ -43,7 +43,7 @@ class PracticalSubmoduleService
         }
 
         $maxValue = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->getMaxAnswerValueForQuestion($practicalSubmoduleQuestion);
-        return $maxValue + 1;
+        return intval($maxValue) + 1;
     }
 
     public function resetAnswerValuesForMultiChoiceQuestion(PracticalSubmoduleQuestion $practicalSubmoduleQuestion): void
@@ -52,7 +52,7 @@ class PracticalSubmoduleService
             throw InvalidPracticalSubmoduleQuestionTypeException::forMultiChoiceType($practicalSubmoduleQuestion->getType());
         }
 
-        $questionAnswers = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findBy(['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion],  ['answerValue' => 'ASC']);
+        $questionAnswers = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->findBy(['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion],  ['id' => 'ASC']);
         $answerValue = 1;
         foreach ($questionAnswers as $questionAnswer) {
             $questionAnswer->setAnswerValue($answerValue++);
