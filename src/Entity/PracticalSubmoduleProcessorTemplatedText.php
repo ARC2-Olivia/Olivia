@@ -65,6 +65,30 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
                     break;
                 }
             }
+        } else if ($this->getPracticalSubmoduleQuestion()->getType() === PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE) {
+            $gatheredAnswers = [];
+            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                    $gatheredAnswers[] = $assessmentAnswer->getPracticalSubmoduleQuestionAnswer()->getAnswerText();
+                }
+            }
+            if (count($gatheredAnswers) > 0) {
+                $this->processedText = $this->resultText;
+                $pattern = '/\{\{\s*values_as_list\s*\}\}/i';
+                if (preg_match($pattern, $this->processedText)) {
+                    $gatheredAnswersAsList = $gatheredAnswers;
+                    for ($i = 0; $i < count($gatheredAnswersAsList); $i++) {
+                        $gatheredAnswersAsList[$i] = '- ' . $gatheredAnswersAsList[$i];
+                    }
+                    $gatheredAnswersAsList = implode("\n", $gatheredAnswersAsList);
+                    $this->processedText = preg_replace($pattern, $gatheredAnswersAsList, $this->processedText);
+                }
+                $pattern = '/\{\{\s*values_one_line\s*\}\}/i';
+                if (preg_match($pattern, $this->processedText)) {
+                    $gatheredAnswersOneLine = implode(', ', $gatheredAnswers);
+                    $this->processedText = preg_replace($pattern, $gatheredAnswersOneLine, $this->processedText);
+                }
+            }
         } else {
             foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
                 if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {

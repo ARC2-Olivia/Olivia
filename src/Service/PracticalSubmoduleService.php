@@ -20,7 +20,6 @@ use App\Form\PracticalSubmoduleProcessorSimpleType;
 use App\Form\PracticalSubmoduleProcessorSumAggregateType;
 use App\Form\PracticalSubmoduleProcessorTemplatedTextType;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Exception\UnexpectedValueException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PracticalSubmoduleService
@@ -131,13 +130,13 @@ class PracticalSubmoduleService
     {
         $messages = [];
 
-        $evaluators = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findBy(['practicalSubmodule' => $assessment->getPracticalSubmodule(), 'included' => true]);
-        foreach ($evaluators as $evaluator) {
-            $message = match ($evaluator->getType()) {
-                PracticalSubmoduleProcessor::TYPE_SIMPLE => $this->runSimpleProcessor($evaluator, $assessment),
-                PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => $this->runSumAggregateProcessor($evaluator, $assessment),
-                PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => $this->runProductAggregateProcessor($evaluator, $assessment),
-                PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT => $this->runTemplatedTextProcessor($evaluator, $assessment),
+        $processors = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findBy(['practicalSubmodule' => $assessment->getPracticalSubmodule(), 'included' => true], ['position' => 'ASC']);
+        foreach ($processors as $processor) {
+            $message = match ($processor->getType()) {
+                PracticalSubmoduleProcessor::TYPE_SIMPLE => $this->runSimpleProcessor($processor, $assessment),
+                PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => $this->runSumAggregateProcessor($processor, $assessment),
+                PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => $this->runProductAggregateProcessor($processor, $assessment),
+                PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT => $this->runTemplatedTextProcessor($processor, $assessment),
                 default => null
             };
 
