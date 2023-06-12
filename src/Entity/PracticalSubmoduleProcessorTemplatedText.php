@@ -23,7 +23,7 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
     private ?PracticalSubmoduleProcessor $practicalSubmoduleProcessor = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?PracticalSubmoduleQuestion $practicalSubmoduleQuestion = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -35,80 +35,37 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
-        if ($this->practicalSubmoduleQuestion === null) {
-            $context->buildViolation('error.practicalSubmoduleProcessorTemplatedText.question')->atPath('practicalSubmoduleQuestion')->addViolation();
-        }
     }
 
     public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null)
     {
-        if ($this->practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT && !$practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers()->isEmpty()) {
-            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
-                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
-                    $this->processedText = $this->resultText;
-                    $givenAnswer = json_decode($assessmentAnswer->getAnswerValue(), true);
-                    foreach ($givenAnswer as $field => $value) {
-                        $pattern = '/\{\{\s*'.$field.'\s*\}\}/';
-                        $this->processedText = preg_replace($pattern, $value, $this->processedText);
-                    }
-                    break;
-                }
-            }
-        } else if (in_array($this->practicalSubmoduleQuestion->getType(), PracticalSubmoduleQuestion::getSingleChoiceTypes())) {
-            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
-                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId() && $assessmentAnswer->getPracticalSubmoduleQuestionAnswer() !== null) {
-                    $this->processedText = $this->resultText;
-                    $questionAnswer = $assessmentAnswer->getPracticalSubmoduleQuestionAnswer();
-                    $givenAnswer = $questionAnswer->getAnswerText();
-                    $pattern = '/\{\{\s*value\s*\}\}/i';
-                    $this->processedText = preg_replace($pattern, $givenAnswer, $this->processedText);
-                    break;
-                }
-            }
-        } else if ($this->getPracticalSubmoduleQuestion()->getType() === PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE) {
-            $gatheredAnswers = [];
-            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
-                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
-                    $gatheredAnswers[] = $assessmentAnswer->getPracticalSubmoduleQuestionAnswer()->getAnswerText();
-                }
-            }
-            if (count($gatheredAnswers) > 0) {
-                $this->processedText = $this->resultText;
-                $pattern = '/\{\{\s*values_as_list\s*\}\}/i';
-                if (preg_match($pattern, $this->processedText)) {
-                    $gatheredAnswersAsList = $gatheredAnswers;
-                    for ($i = 0; $i < count($gatheredAnswersAsList); $i++) {
-                        $gatheredAnswersAsList[$i] = '- ' . $gatheredAnswersAsList[$i];
-                    }
-                    $gatheredAnswersAsList = implode("\n", $gatheredAnswersAsList);
-                    $this->processedText = preg_replace($pattern, $gatheredAnswersAsList, $this->processedText);
-                }
-                $pattern = '/\{\{\s*values_one_line\s*\}\}/i';
-                if (preg_match($pattern, $this->processedText)) {
-                    $gatheredAnswersOneLine = implode(', ', $gatheredAnswers);
-                    $this->processedText = preg_replace($pattern, $gatheredAnswersOneLine, $this->processedText);
-                }
-            }
-        } else {
-            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
-                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
-                    $this->processedText = $this->resultText;
-                    $givenAnswer = $assessmentAnswer->getAnswerValue();
-                    $pattern = '/\{\{\s*value\s*\}\}/i';
-                    $this->processedText = preg_replace($pattern, $givenAnswer, $this->processedText);
-                    break;
-                }
-            }
+        $questionType = $this->practicalSubmoduleQuestion?->getType();
+
+        if ($questionType === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT && !$practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers()->isEmpty()) {
+            $this->handleTemplatingForTemplatedTextQuestion($practicalSubmoduleAssessment);
+        } else if (in_array($questionType, PracticalSubmoduleQuestion::getSingleChoiceTypes())) {
+            $this->handleTemplatingForSingleChoiceQuestion($practicalSubmoduleAssessment);
+        } else if ($questionType === PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE) {
+            $this->handleTemplatingForMultiChoiceQuestion($practicalSubmoduleAssessment);
+        } else if ($questionType !== null) {
+            $this->handleDefaultTemplating($practicalSubmoduleAssessment);
         }
+
+        $this->handleDateTemplating();
     }
 
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
+        if ($this->practicalSubmoduleQuestion === null) {
+            return true;
+        }
+
         foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
             if ($this->practicalSubmoduleQuestion->getId() === $assessmentAnswer->getPracticalSubmoduleQuestion()->getId()) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -154,5 +111,87 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         $this->resultText = $resultText;
 
         return $this;
+    }
+
+    private function handleTemplatingForTemplatedTextQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
+    {
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                $this->processedText = $this->resultText;
+                $givenAnswer = json_decode($assessmentAnswer->getAnswerValue(), true);
+                foreach ($givenAnswer as $field => $value) {
+                    $pattern = '/\{\{\s*' . $field . '\s*\}\}/';
+                    $this->processedText = preg_replace($pattern, $value, $this->processedText);
+                }
+                break;
+            }
+        }
+    }
+
+    private function handleTemplatingForSingleChoiceQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
+    {
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId() && $assessmentAnswer->getPracticalSubmoduleQuestionAnswer() !== null) {
+                $this->processedText = $this->resultText;
+                $questionAnswer = $assessmentAnswer->getPracticalSubmoduleQuestionAnswer();
+                $givenAnswer = $questionAnswer->getAnswerText();
+                $pattern = '/\{\{\s*value\s*\}\}/i';
+                $this->processedText = preg_replace($pattern, $givenAnswer, $this->processedText);
+                break;
+            }
+        }
+    }
+
+    private function handleTemplatingForMultiChoiceQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
+    {
+        $gatheredAnswers = [];
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                $gatheredAnswers[] = $assessmentAnswer->getPracticalSubmoduleQuestionAnswer()->getAnswerText();
+            }
+        }
+        if (count($gatheredAnswers) > 0) {
+            $this->processedText = $this->resultText;
+            $pattern = '/\{\{\s*values_as_list\s*\}\}/i';
+            if (preg_match($pattern, $this->processedText)) {
+                $gatheredAnswersAsList = $gatheredAnswers;
+                for ($i = 0; $i < count($gatheredAnswersAsList); $i++) {
+                    $gatheredAnswersAsList[$i] = '- ' . $gatheredAnswersAsList[$i];
+                }
+                $gatheredAnswersAsList = implode("\n", $gatheredAnswersAsList);
+                $this->processedText = preg_replace($pattern, $gatheredAnswersAsList, $this->processedText);
+            }
+            $pattern = '/\{\{\s*values_one_line\s*\}\}/i';
+            if (preg_match($pattern, $this->processedText)) {
+                $gatheredAnswersOneLine = implode(', ', $gatheredAnswers);
+                $this->processedText = preg_replace($pattern, $gatheredAnswersOneLine, $this->processedText);
+            }
+        }
+    }
+
+    private function handleDefaultTemplating(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
+    {
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                $this->processedText = $this->resultText;
+                $givenAnswer = $assessmentAnswer->getAnswerValue();
+                $pattern = '/\{\{\s*value\s*\}\}/i';
+                $this->processedText = preg_replace($pattern, $givenAnswer, $this->processedText);
+                break;
+            }
+        }
+    }
+
+    private function handleDateTemplating(): void
+    {
+        if ($this->processedText === null) {
+            $this->processedText = $this->resultText;
+        }
+
+        $pattern = '/\{\{\s*DATE_NOW\s*\}\}/i';
+        $date = (new \DateTime())->format('d.m.Y.');
+        if (preg_match($pattern, $this->processedText)) {
+            $this->processedText = preg_replace($pattern, $date, $this->processedText);
+        }
     }
 }
