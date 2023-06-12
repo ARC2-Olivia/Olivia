@@ -59,7 +59,7 @@ class PracticalSubmoduleQuestionAnswerRepository extends ServiceEntityRepository
     public function getMaxAnswerValueForQuestion(PracticalSubmoduleQuestion $practicalSubmoduleQuestion): int
     {
         return $this->createQueryBuilder('psqa')
-            ->select('COALESCE(MAX(psqa.answerValue), 0)')
+            ->select('COALESCE(MAX(CAST(psqa.answerValue AS INTEGER)), 0)')
             ->where('psqa.practicalSubmoduleQuestion = :question')
             ->setParameter('question', $practicalSubmoduleQuestion)
             ->getQuery()->getSingleScalarResult()

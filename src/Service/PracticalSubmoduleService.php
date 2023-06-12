@@ -43,7 +43,8 @@ class PracticalSubmoduleService
         }
 
         $maxValue = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class)->getMaxAnswerValueForQuestion($practicalSubmoduleQuestion);
-        return intval($maxValue) + 1;
+        $nextValue = $maxValue + 1;
+        return $nextValue;
     }
 
     public function resetAnswerValuesForMultiChoiceQuestion(PracticalSubmoduleQuestion $practicalSubmoduleQuestion): void
