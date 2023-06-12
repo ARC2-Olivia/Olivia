@@ -21,6 +21,9 @@ doctrine:
                 alias: Gedmo
                 prefix: Gedmo\Translatable\Entity
                 dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Translatable/Entity"
+        dql:
+            string_functions:
+                cast: App\DQL\Cast
 
 when@test:
     doctrine:
