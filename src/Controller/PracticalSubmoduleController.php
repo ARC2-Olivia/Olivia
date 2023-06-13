@@ -294,6 +294,30 @@ class PracticalSubmoduleController extends BaseController
         ]);
     }
 
+    #[Route("/export/{practicalSubmodule}/results", name: "export_results")]
+    #[IsGranted("ROLE_USER")]
+    public function exportResults(PracticalSubmodule $practicalSubmodule, PracticalSubmoduleService $practicalSubmoduleService): Response
+    {
+        $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
+        $results = $practicalSubmoduleService->runProcessors($assessment);
+
+        $word = new \PhpOffice\PhpWord\PhpWord();
+        $section = $word->addSection();
+        foreach ($results as $result) {
+            foreach (explode("\n", $result) as $line) {
+                $section->addText(trim($line), ['name' => 'Arial', 'size' => 10], ['spaceAfter' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(8), 'alignment' => 'both']);
+            }
+            $section->addTextBreak(1);
+        }
+
+        $tempfile = tempnam($this->getParameter('dir.temp'), 'word-');
+        $writer = \PhpOffice\PhpWord\IOFactory::createWriter($word);
+        $writer->save($tempfile);
+
+        $filename = $practicalSubmodule->getName().'.docx';
+        return $this->file($tempfile, $filename)->deleteFileAfterSend();
+    }
+
     private function processAutomaticPracticalSubmoduleQuestionAnswerCreation(PracticalSubmoduleQuestion $evaluationQuestion)
     {
         if ($evaluationQuestion->getType() === PracticalSubmoduleQuestion::TYPE_YES_NO) {

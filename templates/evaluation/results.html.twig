@@ -3,11 +3,14 @@
 
 {% block evaluationContent %}
     <div class="evaluation-results">
-        {% for result in results %}
-            <p>{{ result|nl2br }}</p>
+        {% if results is not empty %}
+            <div class="text-center">
+                <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'button.export'|trans }}</a>
+            </div>
+            {% for result in results %}<p>{{ result|nl2br }}</p>{% endfor %}
         {% else %}
             <p>{{ 'practicalSubmodule.extra.results.empty'|trans }}</p>
-        {% endfor %}
+        {% endif %}
     </div>
     <hr>
     <div class="evaluation-assessment-data">

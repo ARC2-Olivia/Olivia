@@ -38,6 +38,7 @@ button:
     loginToEnroll: Login to enroll
     results: Results
     lessons: Lessons
+    export: Export
 
 page:
     login: Olivia | Login
