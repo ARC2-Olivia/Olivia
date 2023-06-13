@@ -18,6 +18,7 @@ use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Repository\PracticalSubmoduleRepository;
 use App\Service\PracticalSubmoduleService;
 use App\Service\NavigationService;
+use App\Service\WordService;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
@@ -296,26 +297,12 @@ class PracticalSubmoduleController extends BaseController
 
     #[Route("/export/{practicalSubmodule}/results", name: "export_results")]
     #[IsGranted("ROLE_USER")]
-    public function exportResults(PracticalSubmodule $practicalSubmodule, PracticalSubmoduleService $practicalSubmoduleService): Response
+    public function exportResults(PracticalSubmodule $practicalSubmodule, WordService $wordService): Response
     {
         $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
-        $results = $practicalSubmoduleService->runProcessors($assessment);
-
-        $word = new \PhpOffice\PhpWord\PhpWord();
-        $section = $word->addSection();
-        foreach ($results as $result) {
-            foreach (explode("\n", $result) as $line) {
-                $section->addText(trim($line), ['name' => 'Arial', 'size' => 10], ['spaceAfter' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(8), 'alignment' => 'both']);
-            }
-            $section->addTextBreak(1);
-        }
-
-        $tempfile = tempnam($this->getParameter('dir.temp'), 'word-');
-        $writer = \PhpOffice\PhpWord\IOFactory::createWriter($word);
-        $writer->save($tempfile);
-
+        $document = $wordService->generateAssessmentResultsDocument($assessment);
         $filename = $practicalSubmodule->getName().'.docx';
-        return $this->file($tempfile, $filename)->deleteFileAfterSend();
+        return $this->file($document, $filename)->deleteFileAfterSend();
     }
 
     private function processAutomaticPracticalSubmoduleQuestionAnswerCreation(PracticalSubmoduleQuestion $evaluationQuestion)
