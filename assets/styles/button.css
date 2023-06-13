@@ -66,16 +66,30 @@
     border: solid 1px #e4e5ea;
     color: #656665 !important;
     border-radius: 0;
+    position: relative;
+}
+
+.btn-nav:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -1px;
+    right: -1px;
+    height: 4px;
+    background: var(--app-color-orange);
+    visibility: hidden;
 }
 
 .btn-nav:hover, .btn-nav.active {
     background-color: white;
-    border-top-color: var(--app-color-orange);
     border-left-color: white;
     border-right-color: white;
     border-bottom-color: white;
     color: var(--app-color-orange) !important;
-    border-top-width: 4px;
+}
+
+.btn-nav:hover:before, .btn-nav.active:before {
+    visibility: visible;
 }
 
 .btn.btn-sm {
