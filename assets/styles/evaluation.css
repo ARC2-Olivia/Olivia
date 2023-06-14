@@ -266,6 +266,7 @@ ul.mod--ps-pages {
     display: flex;
     flex-direction: column;
     row-gap: 16px;
+    max-width: 100%;
 }
 
 .evaluation-assessment-page-title {

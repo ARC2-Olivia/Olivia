@@ -300,7 +300,7 @@ class EvaluationAssessment {
             answerFields = answerData.fields;
         }
 
-        let answerRaw = `<div style="white-space: pre">${answerText}</div>`;
+        let answerRaw = `<div style="white-space: pre-wrap">${answerText}</div>`;
         for (const field of answerFields) {
             const pattern = new RegExp(`{{\\s*${field}\\s*}}`);
             const inputRaw = `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal">
