@@ -19,6 +19,8 @@ use App\Form\PracticalSubmoduleProcessorProductAggregateType;
 use App\Form\PracticalSubmoduleProcessorSimpleType;
 use App\Form\PracticalSubmoduleProcessorSumAggregateType;
 use App\Form\PracticalSubmoduleProcessorTemplatedTextType;
+use App\Misc\PSExporter;
+use App\Misc\PSImporter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -31,6 +33,16 @@ class PracticalSubmoduleService
     {
         $this->em = $em;
         $this->validator = $validator;
+    }
+
+    public function export(PracticalSubmodule $practicalSubmodule): array
+    {
+        return (new PSExporter($practicalSubmodule))->export();
+    }
+
+    public function import(array $tasks): ?PracticalSubmodule
+    {
+        return (new PSImporter($tasks, $this->em))->import();
     }
 
     /**
