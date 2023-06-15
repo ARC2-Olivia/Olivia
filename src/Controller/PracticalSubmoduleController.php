@@ -23,6 +23,7 @@ use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -303,6 +304,18 @@ class PracticalSubmoduleController extends BaseController
         $document = $wordService->generateAssessmentResultsDocument($assessment);
         $filename = $practicalSubmodule->getName().'.docx';
         return $this->file($document, $filename)->deleteFileAfterSend();
+    }
+
+    #[Route("/export/{practicalSubmodule}/submodule", name: "export_submodule")]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function exportSubmodule(PracticalSubmodule $practicalSubmodule, PracticalSubmoduleService $practicalSubmoduleService): Response
+    {
+        $fs = new Filesystem();
+        $file = $fs->tempnam($this->getParameter('dir.temp'), 'ps-');
+        $tasks = $practicalSubmoduleService->export($practicalSubmodule);
+        $fs->appendToFile($file, json_encode($tasks));
+        $filename = $practicalSubmodule->getName().'.json';
+        return $this->file($file, $filename)->deleteFileAfterSend();
     }
 
     private function processAutomaticPracticalSubmoduleQuestionAnswerCreation(PracticalSubmoduleQuestion $evaluationQuestion)

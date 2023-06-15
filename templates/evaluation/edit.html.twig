@@ -12,6 +12,7 @@
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmodule.delete') }}"/>
                 <button type="submit" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</button>
             </form>
+            <a href="{{ path('practical_submodule_export_submodule', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green" download>{{ 'common.export'|trans }}</a>
             <button type="submit" form="{{ form.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
         </div>
     </div>
