@@ -6,6 +6,9 @@ use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
+use App\Exception\PSImport\ErroneousFirstTaskException;
+use App\Exception\PSImport\MissingTaskOrderKeyException;
+use App\Exception\PSImport\WrongFirstTaskTypeException;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Util\Exception;
 
@@ -24,6 +27,11 @@ class PSImporter
         $this->em = $em;
     }
 
+    /**
+     * @throws WrongFirstTaskTypeException
+     * @throws ErroneousFirstTaskException
+     * @throws MissingTaskOrderKeyException
+     */
     public function import(): ?PracticalSubmodule
     {
         $this->sortTasks();
@@ -32,13 +40,13 @@ class PSImporter
 
             if (false === $isValid) {
                 if (1 === $this->taskIndex) {
-                    throw new \Exception('First task has to create a practical submodule, and it must not be erroneous.');
+                    throw ErroneousFirstTaskException::withDefaultTranslationKey();
                 }
                 continue;
             }
 
             if (1 === $this->taskIndex && Tasks::CREATE_SUBMODULE !== $task['task_op']) {
-                throw new Exception('First task has to create a practical submodule. Was the exported file tampered in any way?');
+                throw WrongFirstTaskTypeException::withDefaultTranslationKey();
             }
 
             switch ($task['task_op']) {
@@ -55,11 +63,14 @@ class PSImporter
         return $this->practicalSubmodule;
     }
 
-    private function sortTasks()
+    private function sortTasks(): void
     {
-        usort($this->tasks, function ($t1, $t2) {
+        /**
+         * @throws MissingTaskOrderKeyException
+         */
+        usort( $this->tasks, function ($t1, $t2) {
             if (false === isset($t1['task_order'], $t2['task_order'])) {
-                throw new \Exception('Missing \'task_order\' key.');
+                throw MissingTaskOrderKeyException::withDefaultTranslationKey();
             }
             if ($t1['task_order'] === $t2['task_order']) {
                 return 0;

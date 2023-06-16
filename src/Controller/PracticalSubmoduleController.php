@@ -9,6 +9,9 @@ use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
+use App\Exception\PSImport\ErroneousFirstTaskException;
+use App\Exception\PSImport\MissingTaskOrderKeyException;
+use App\Exception\PSImport\WrongFirstTaskTypeException;
 use App\Form\BasicFileUploadType;
 use App\Form\PracticalSubmodulePageType;
 use App\Form\PracticalSubmoduleProcessorType;
@@ -76,13 +79,19 @@ class PracticalSubmoduleController extends BaseController
         $importForm = $this->createForm(BasicFileUploadType::class, null, ['mimeTypes' => 'application/json', 'extensions' => '.json']);
         $importForm->handleRequest($request);
         if ($importForm->isSubmitted() && $importForm->isValid()) {
-            /** @var UploadedFile $importFile */
-            $importFile = $importForm->get('file')->getData();
-            $tasks = file_get_contents($importFile->getPathname());
-            $tasks = json_decode($tasks, true);
-            $practicalSubmodule = $practicalSubmoduleService->import($tasks);
-            if (null !== $practicalSubmodule) {
-                return $this->redirectToRoute('practical_submodule_overview', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+            try {
+                /** @var UploadedFile $importFile */
+                $importFile = $importForm->get('file')->getData();
+                $tasks = file_get_contents($importFile->getPathname());
+                $tasks = json_decode($tasks, true);
+                $practicalSubmodule = $practicalSubmoduleService->import($tasks);
+                if (null !== $practicalSubmodule) {
+                    return $this->redirectToRoute('practical_submodule_overview', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+                }
+            } catch (ErroneousFirstTaskException | WrongFirstTaskTypeException | MissingTaskOrderKeyException $exception) {
+                $this->addFlash('error', $this->translator->trans($exception->getMessage(), [], 'message'));
+            } catch (\Exception) {
+                $this->addFlash('error', $this->translator->trans('error.practicalSubmodule.import.default', [], 'message'));
             }
         } else {
             foreach ($importForm->getErrors(true) as $error) {

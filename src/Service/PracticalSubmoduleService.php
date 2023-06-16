@@ -14,6 +14,9 @@ use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
 use App\Entity\User;
 use App\Exception\InvalidPracticalSubmoduleQuestionTypeException;
+use App\Exception\PSImport\ErroneousFirstTaskException;
+use App\Exception\PSImport\MissingTaskOrderKeyException;
+use App\Exception\PSImport\WrongFirstTaskTypeException;
 use App\Exception\UnsupportedEvaluationEvaluatorTypeException;
 use App\Form\PracticalSubmoduleProcessorProductAggregateType;
 use App\Form\PracticalSubmoduleProcessorSimpleType;
@@ -40,6 +43,11 @@ class PracticalSubmoduleService
         return (new PSExporter($practicalSubmodule))->export();
     }
 
+    /**
+     * @throws ErroneousFirstTaskException
+     * @throws WrongFirstTaskTypeException
+     * @throws MissingTaskOrderKeyException
+     */
     public function import(array $tasks): ?PracticalSubmodule
     {
         return (new PSImporter($tasks, $this->em))->import();
