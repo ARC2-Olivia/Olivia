@@ -9,6 +9,7 @@ use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
+use App\Form\BasicFileUploadType;
 use App\Form\PracticalSubmodulePageType;
 use App\Form\PracticalSubmoduleProcessorType;
 use App\Form\PracticalSubmoduleQuestionType;
@@ -51,12 +52,12 @@ class PracticalSubmoduleController extends BaseController
     }
 
     #[Route("/new", name: "new")]
-    public function new(Request $request): Response
+    public function new(Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
         $practicalSubmodule = new PracticalSubmodule();
         $practicalSubmodule->setLocale($this->getParameter('locale.default'));
-        $form = $this->createForm(PracticalSubmoduleType::class, $practicalSubmodule, ['include_translatable_fields' => true]);
 
+        $form = $this->createForm(PracticalSubmoduleType::class, $practicalSubmodule, ['include_translatable_fields' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($practicalSubmodule);
@@ -72,7 +73,24 @@ class PracticalSubmoduleController extends BaseController
             }
         }
 
-        return $this->render('evaluation/new.html.twig', ['form' => $form->createView()]);
+        $importForm = $this->createForm(BasicFileUploadType::class, null, ['mimeTypes' => 'application/json', 'extensions' => '.json']);
+        $importForm->handleRequest($request);
+        if ($importForm->isSubmitted() && $importForm->isValid()) {
+            /** @var UploadedFile $importFile */
+            $importFile = $importForm->get('file')->getData();
+            $tasks = file_get_contents($importFile->getPathname());
+            $tasks = json_decode($tasks, true);
+            $practicalSubmodule = $practicalSubmoduleService->import($tasks);
+            if (null !== $practicalSubmodule) {
+                return $this->redirectToRoute('practical_submodule_overview', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+            }
+        } else {
+            foreach ($importForm->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('evaluation/new.html.twig', ['form' => $form->createView(), 'importForm' => $importForm->createView()]);
     }
 
     #[Route("/overview/{practicalSubmodule}", name: "overview")]

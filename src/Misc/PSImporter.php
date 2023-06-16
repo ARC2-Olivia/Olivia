@@ -47,8 +47,11 @@ class PSImporter
                 case Tasks::CREATE_QUESTION_DEPENDENCY: $this->doCreateQuestionDependencyTask($task['task_props']); break;
                 case Tasks::CREATE_PAGE: $this->doCreatePageTask($task['task_props']); break;
             }
+
+            $this->taskIndex++;
         }
 
+        $this->em->flush();
         return $this->practicalSubmodule;
     }
 
@@ -107,16 +110,16 @@ class PSImporter
             return;
         }
 
-        foreach ($props['answers'] as $answer) {
-            if (false === $this->allKeysExist(['answerText', 'answerValue', 'templatedTextFields'], $answer)) {
+        foreach ($props['answers'] as $answerProps) {
+            if (false === $this->allKeysExist(['answerText', 'answerValue', 'templatedTextFields'], $answerProps)) {
                 continue;
             }
 
             $answer = (new PracticalSubmoduleQuestionAnswer())
                 ->setPracticalSubmoduleQuestion($question)
-                ->setAnswerText($props['answerText'])
-                ->setAnswerValue($props['answerValue'])
-                ->setTemplatedTextFields($props['templatedTextFields'])
+                ->setAnswerText($answerProps['answerText'])
+                ->setAnswerValue($answerProps['answerValue'])
+                ->setTemplatedTextFields($answerProps['templatedTextFields'])
             ;
             $this->em->persist($answer);
         }
@@ -133,8 +136,8 @@ class PSImporter
         }
 
         /** @var PracticalSubmoduleQuestion $question */
-        $question = $props['questionId'];
-        $dependent = $props['dependentId'];
+        $question = $this->questionMapping[$props['questionId']];
+        $dependent = $this->questionMapping[$props['dependentId']];
         $question->setDependentPracticalSubmoduleQuestion($dependent)->setDependentValue($props['dependentValue']);
         $this->em->persist($question);
     }
@@ -146,8 +149,9 @@ class PSImporter
         }
 
         $page = (new PracticalSubmodulePage())
+            ->setPracticalSubmodule($this->practicalSubmodule)
             ->setTitle($props['title'])
-            ->setDescription($props['descriptions'])
+            ->setDescription($props['description'])
             ->setPosition($props['position']);
         ;
         $this->em->persist($page);

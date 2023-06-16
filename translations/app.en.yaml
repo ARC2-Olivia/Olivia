@@ -33,6 +33,7 @@ common:
     resolve: Resolve
     import: Import
     export: Export
+    file: File
 
 button:
     details: Details

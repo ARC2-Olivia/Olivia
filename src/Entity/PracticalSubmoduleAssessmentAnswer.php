@@ -74,7 +74,7 @@ class PracticalSubmoduleAssessmentAnswer
         return $this->answerValue;
     }
 
-    public function setAnswerValue(string $answerValue): self
+    public function setAnswerValue(?string $answerValue): self
     {
         $this->answerValue = $answerValue;
 
