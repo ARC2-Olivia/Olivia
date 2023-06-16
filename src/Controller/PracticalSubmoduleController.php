@@ -136,12 +136,13 @@ class PracticalSubmoduleController extends BaseController
             $submoduleName = $practicalSubmodule->getName();
 
             foreach ($practicalSubmodule->getPracticalSubmoduleQuestions() as $question) {
-                foreach ($this->em->getRepository(PracticalSubmoduleAssessmentAnswer::class)->findBy(['practicalSubmoduleQuestion' => $question]) as $assessmentAnswer) {
-                    $this->em->remove($assessmentAnswer);
-                }
-                foreach ($question->getPracticalSubmoduleQuestionAnswers() as $questionAnswer) {
-                    $this->em->remove($questionAnswer);
-                }
+                $question->setDependentPracticalSubmoduleQuestion(null);
+            }
+            $this->em->flush();
+
+            foreach ($practicalSubmodule->getPracticalSubmoduleQuestions() as $question) {
+                foreach ($this->em->getRepository(PracticalSubmoduleAssessmentAnswer::class)->findBy(['practicalSubmoduleQuestion' => $question]) as $assessmentAnswer) $this->em->remove($assessmentAnswer);
+                foreach ($question->getPracticalSubmoduleQuestionAnswers() as $questionAnswer) $this->em->remove($questionAnswer);
                 $this->em->remove($question);
             }
 
