@@ -169,6 +169,7 @@ class PSImporter
         }
 
         $processor = (new PracticalSubmoduleProcessor())
+            ->setPracticalSubmodule($this->practicalSubmodule)
             ->setType($props['type'])
             ->setName($props['name'])
             ->setIncluded($props['included'])
