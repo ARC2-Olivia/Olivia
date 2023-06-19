@@ -15,7 +15,6 @@
                             <th>{{ 'form.entity.dataRequest.label.id'|trans }}</th>
                             <th>{{ 'form.entity.dataRequest.label.user'|trans }}</th>
                             <th>{{ 'form.entity.dataRequest.label.requestedAt'|trans }}</th>
-                            <th>{{ 'common.actions'|trans }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,7 +23,6 @@
                                 <td>{{ dr.id }}</td>
                                 <td>{{ dr.user.email }}</td>
                                 <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
-                                <td><a href="{{ path('data_request_resolve', {'dataRequest': dr.id}) }}" class="btn btn-theme-white bg-green">{{ 'common.resolve'|trans }}</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -44,7 +42,6 @@
                             <th>{{ 'form.entity.dataRequest.label.id'|trans }}</th>
                             <th>{{ 'form.entity.dataRequest.label.user'|trans }}</th>
                             <th>{{ 'form.entity.dataRequest.label.requestedAt'|trans }}</th>
-                            <th>{{ 'common.actions'|trans }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,7 +50,6 @@
                                 <td>{{ dr.id }}</td>
                                 <td>{{ dr.user.email }}</td>
                                 <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
-                                <td><a href="{{ path('data_request_resolve', {'dataRequest': dr.id}) }}" class="btn btn-theme-white bg-green">{{ 'common.resolve'|trans }}</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
