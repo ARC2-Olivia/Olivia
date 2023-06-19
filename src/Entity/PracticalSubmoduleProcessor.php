@@ -49,9 +49,14 @@ class PracticalSubmoduleProcessor
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $position = null;
 
-    public static function getSupportedEvaluationEvaluatorTypes(): array
+    public static function getSupportedProcessorTypes(): array
     {
-        return [self::TYPE_SIMPLE, self::TYPE_SUM_AGGREGATE];
+        return [self::TYPE_SIMPLE, self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE, self::TYPE_TEMPLATED_TEXT];
+    }
+
+    public static function getProcessorProcessingProcessorTypes(): array
+    {
+        return [self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE];
     }
 
     public function getId(): ?int
