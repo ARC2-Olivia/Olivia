@@ -8,6 +8,8 @@ final class Tasks
     const CREATE_QUESTION = 20;
     const CREATE_QUESTION_DEPENDENCY = 21;
     const CREATE_PROCESSOR = 30;
+    const CREATE_PROCESSOR_DEPENDENCY_ON_QUESTION = 31;
+    const CREATE_PROCESSOR_DEPENDENCY_ON_PROCESSOR = 32;
     const CREATE_PAGE = 40;
 
     public function __construct()
