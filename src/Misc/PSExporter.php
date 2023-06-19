@@ -87,9 +87,9 @@ class PSExporter
                 'task_order' => $this->orderIndex++,
                 'task_op' => Tasks::CREATE_QUESTION_DEPENDENCY,
                 'task_props' => [
-                    'questionId' => $this->questionMapping[$question->getId()],
-                    'dependentId' => $this->questionMapping[$dependentQuestionId],
-                    'dependentValue' => $question->getDependentValue()
+                    'question' => $this->questionMapping[$question->getId()],
+                    'dependent' => $this->questionMapping[$dependentQuestionId],
+                    'value' => $question->getDependentValue()
                 ]
             ];
         }

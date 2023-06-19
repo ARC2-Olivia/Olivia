@@ -138,18 +138,18 @@ class PSImporter
 
     private function doCreateQuestionDependencyTask(array $props): void
     {
-        if (false === $this->allKeysExist(['questionId', 'dependentId', 'dependentValue'], $props)) {
+        if (false === $this->allKeysExist(['question', 'dependent', 'value'], $props)) {
             return;
         }
 
-        if (false === $this->allKeysExist([$props['questionId'], $props['dependentId']], $this->questionMapping)) {
+        if (false === $this->allKeysExist([$props['question'], $props['dependent']], $this->questionMapping)) {
             return;
         }
 
         /** @var PracticalSubmoduleQuestion $question */
-        $question = $this->questionMapping[$props['questionId']];
-        $dependent = $this->questionMapping[$props['dependentId']];
-        $question->setDependentPracticalSubmoduleQuestion($dependent)->setDependentValue($props['dependentValue']);
+        $question = $this->questionMapping[$props['question']];
+        $dependent = $this->questionMapping[$props['dependent']];
+        $question->setDependentPracticalSubmoduleQuestion($dependent)->setDependentValue($props['value']);
         $this->em->persist($question);
     }
 
