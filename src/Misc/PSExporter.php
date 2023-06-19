@@ -90,7 +90,7 @@ class PSExporter
 
             $this->tasks[] = [
                 'task_order' => $this->orderIndex++,
-                'task_op' => Tasks::CREATE_QUESTION_DEPENDENCY,
+                'task_op' => Tasks::BIND_QUESTION_DEPENDENCY,
                 'task_props' => [
                     'question' => $this->questionMapping[$question->getId()],
                     'dependent' => $this->questionMapping[$dependentQuestionId],
@@ -203,7 +203,7 @@ class PSExporter
             foreach ($dependentIds as $dependentId) {
                 $this->tasks[] = [
                     'task_order' => $this->orderIndex++,
-                    'task_op' => Tasks::CREATE_PROCESSOR_DEPENDENCY_ON_QUESTION,
+                    'task_op' => Tasks::BIND_PROCESSOR_DEPENDENCY_ON_QUESTION,
                     'task_props' => [
                         'processor' => $this->processorMapping[$processor->getId()],
                         'dependent' => $dependentId
@@ -248,7 +248,7 @@ class PSExporter
             foreach ($dependentIds as $dependentId) {
                 $this->tasks[] = [
                     'task_order' => $this->orderIndex++,
-                    'task_op' => Tasks::CREATE_PROCESSOR_DEPENDENCY_ON_PROCESSOR,
+                    'task_op' => Tasks::BIND_PROCESSOR_DEPENDENCY_ON_PROCESSOR,
                     'task_props' => [
                         'processor' => $this->processorMapping[$processor->getId()],
                         'dependent' => $dependentId
