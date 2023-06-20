@@ -13,7 +13,6 @@ class PSExporter
 {
     private ?PracticalSubmodule $practicalSubmodule = null;
     private ?EntityManagerInterface $em = null;
-    private ?string $localeDefault = null;
     private ?string $localeAlternate = null;
     private array $tasks = [];
     private ?TranslationRepository $translationRepository = null;
@@ -24,11 +23,10 @@ class PSExporter
     private array $questionMapping = [];
     private array $processorMapping = [];
 
-    public function __construct(PracticalSubmodule $practicalSubmodule, EntityManagerInterface $em, string $localeDefault, string $localeAlternate)
+    public function __construct(PracticalSubmodule $practicalSubmodule, EntityManagerInterface $em, string $localeAlternate)
     {
         $this->practicalSubmodule = $practicalSubmodule;
         $this->em = $em;
-        $this->localeDefault = $localeDefault;
         $this->localeAlternate = $localeAlternate;
         $this->translationRepository = $this->em->getRepository(Translation::class);
     }
@@ -73,7 +71,6 @@ class PSExporter
         }
 
         $this->tasks[] = $task;
-        $this->practicalSubmodule = $repository->findByIdForLocale($this->practicalSubmodule->getId(), $this->localeDefault);
     }
 
     private function makeCreateQuestionTasks(): void

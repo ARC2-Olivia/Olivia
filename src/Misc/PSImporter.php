@@ -24,7 +24,6 @@ class PSImporter
     private ?PracticalSubmodule $practicalSubmodule = null;
     private ?array $tasks = null;
     private ?EntityManagerInterface $em = null;
-    private ?string $localeDefault = null;
     private ?string $localeAlternate = null;
     private ?TranslationRepository $translationRepository = null;
 
@@ -32,11 +31,10 @@ class PSImporter
     private array $questionMapping = [];
     private array $processorMapping = [];
 
-    public function __construct(array $tasks, EntityManagerInterface $em, string $localeDefault, string $localeAlternate)
+    public function __construct(array $tasks, EntityManagerInterface $em, string $localeAlternate)
     {
         $this->tasks = $tasks;
         $this->em = $em;
-        $this->localeDefault = $localeDefault;
         $this->localeAlternate = $localeAlternate;
         $this->translationRepository = $this->em->getRepository(Translation::class);
     }

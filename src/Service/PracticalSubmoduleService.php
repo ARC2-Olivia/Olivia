@@ -43,7 +43,7 @@ class PracticalSubmoduleService
 
     public function export(PracticalSubmodule $practicalSubmodule): array
     {
-        return (new PSExporter($practicalSubmodule, $this->em, $this->parameterBag->get('locale.default'), $this->parameterBag->get('locale.alternate')))->export();
+        return (new PSExporter($practicalSubmodule, $this->em, $this->parameterBag->get('locale.alternate')))->export();
     }
 
     /**
@@ -53,7 +53,7 @@ class PracticalSubmoduleService
      */
     public function import(array $tasks): ?PracticalSubmodule
     {
-        return (new PSImporter($tasks, $this->em, $this->parameterBag->get('locale.default'), $this->parameterBag->get('locale.alternate')))->import();
+        return (new PSImporter($tasks, $this->em, $this->parameterBag->get('locale.alternate')))->import();
     }
 
     /**
