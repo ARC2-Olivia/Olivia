@@ -26,6 +26,7 @@ use App\Service\WordService;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
+use Gedmo\Translatable\TranslatableListener;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -336,11 +337,27 @@ class PracticalSubmoduleController extends BaseController
 
     #[Route("/export/{practicalSubmodule}/submodule", name: "export_submodule")]
     #[IsGranted('ROLE_MODERATOR')]
-    public function exportSubmodule(PracticalSubmodule $practicalSubmodule, PracticalSubmoduleService $practicalSubmoduleService): Response
+    public function exportSubmodule(PracticalSubmodule $practicalSubmodule, PracticalSubmoduleService $practicalSubmoduleService, TranslatableListener $translatableListener): Response
     {
+        $localeDefault = $this->getParameter('locale.default');
+        $localeAlt = $this->getParameter('locale.alternate');
+        $activeLocale = $translatableListener->getListenerLocale();
+        $isActiveLocaleChanged = false;
+
+        if ($localeAlt === $activeLocale) {
+            $translatableListener->setTranslatableLocale($localeDefault);
+            $this->em->refresh($practicalSubmodule);
+            $isActiveLocaleChanged = true;
+        }
+
+        $tasks = $practicalSubmoduleService->export($practicalSubmodule);
+
+        if (true === $isActiveLocaleChanged) {
+            $translatableListener->setTranslatableLocale($activeLocale);
+        }
+
         $fs = new Filesystem();
         $file = $fs->tempnam($this->getParameter('dir.temp'), 'ps-');
-        $tasks = $practicalSubmoduleService->export($practicalSubmodule);
         $fs->appendToFile($file, json_encode($tasks));
         $filename = $practicalSubmodule->getName().'.json';
         return $this->file($file, $filename)->deleteFileAfterSend();
