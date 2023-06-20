@@ -351,16 +351,21 @@ class PSImporter
         ;
         $this->em->persist($page);
 
-        if (false === (key_exists('questions', $props) && is_array($props['questions']))) {
-            return;
+        if (true === key_exists('trans', $props)) {
+            $transTitle = $props['trans']['title'] ?? null;
+            $transDescription = $props['trans']['description'] ?? null;
+            if (null !== $transTitle) $this->translationRepository->translate($page, 'title', $this->localeAlternate, $transTitle);
+            if (null !== $transDescription) $this->translationRepository->translate($page, 'description', $this->localeAlternate, $transDescription);
         }
 
-        foreach ($props['questions'] as $questionId) {
-            /** @var PracticalSubmoduleQuestion $question */
-            $question = $this->questionMapping[$questionId] ?? null;
-            if (null !== $question) {
-                $question->setPracticalSubmodulePage($page);
-                $this->em->persist($question);
+        if (true === (key_exists('questions', $props) && is_array($props['questions']))) {
+            foreach ($props['questions'] as $questionId) {
+                /** @var PracticalSubmoduleQuestion $question */
+                $question = $this->questionMapping[$questionId] ?? null;
+                if (null !== $question) {
+                    $question->setPracticalSubmodulePage($page);
+                    $this->em->persist($question);
+                }
             }
         }
     }

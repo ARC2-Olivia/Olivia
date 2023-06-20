@@ -340,6 +340,15 @@ class PSExporter
                 }
             }
 
+            $trans = $this->translationRepository->findTranslations($page);
+            if (true === key_exists($this->localeAlternate, $trans)) {
+                $task['task_props']['trans'] = [];
+                $transTitle = $trans[$this->localeAlternate]['title'] ?? null;
+                $transDescription = $trans[$this->localeAlternate]['description'] ?? null;
+                if (null !== $transTitle) $task['task_props']['trans']['title'] = $transTitle;
+                if (null !== $transDescription) $task['task_props']['trans']['description'] = $transDescription;
+            }
+
             $this->tasks[] = $task;
         }
     }
