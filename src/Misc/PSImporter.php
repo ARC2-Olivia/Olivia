@@ -195,9 +195,12 @@ class PSImporter
             ->setIncluded($props['included'])
             ->setPosition($props['position'])
         ;
-
         $this->em->persist($processor);
         $this->processorMapping[$props['id']] = $processor;
+
+        if (true === (key_exists('trans', $props) && key_exists('name', $props['trans']))) {
+            $this->translationRepository->translate($processor, 'name', $this->localeAlternate, $props['trans']['name']);
+        }
 
         if (true === empty($props['impl'])) {
             return;
@@ -213,6 +216,10 @@ class PSImporter
                 ;
                 $processor->setPracticalSubmoduleProcessorSimple($pspSimple);
                 $this->em->persist($pspSimple);
+
+                if (true === (key_exists('trans', $implProps) && key_exists('resultText', $implProps['trans']))) {
+                    $this->translationRepository->translate($pspSimple, 'resultText', $this->localeAlternate, $implProps['trans']['resultText']);
+                }
             } break;
             case $processor::TYPE_SUM_AGGREGATE: {
                 if (false === $this->allKeysExist(['expectedValueRangeStart', 'expectedValueRangeEnd', 'resultText'], $implProps)) return;
@@ -223,6 +230,10 @@ class PSImporter
                 ;
                 $processor->setPracticalSubmoduleProcessorSumAggregate($pspSumAggregate);
                 $this->em->persist($pspSumAggregate);
+
+                if (true === (key_exists('trans', $implProps) && key_exists('resultText', $implProps['trans']))) {
+                    $this->translationRepository->translate($pspSumAggregate, 'resultText', $this->localeAlternate, $implProps['trans']['resultText']);
+                }
             } break;
             case $processor::TYPE_PRODUCT_AGGREGATE: {
                 if (false === $this->allKeysExist(['expectedValueRangeStart', 'expectedValueRangeEnd', 'resultText'], $implProps)) return;
@@ -233,12 +244,20 @@ class PSImporter
                 ;
                 $processor->setPracticalSubmoduleProcessorProductAggregate($pspProductAggregate);
                 $this->em->persist($pspProductAggregate);
+
+                if (true === (key_exists('trans', $implProps) && key_exists('resultText', $implProps['trans']))) {
+                    $this->translationRepository->translate($pspProductAggregate, 'resultText', $this->localeAlternate, $implProps['trans']['resultText']);
+                }
             } break;
             case $processor::TYPE_TEMPLATED_TEXT: {
                 if (false === key_exists('resultText', $implProps)) return;
                 $pspTemplatedText = (new PracticalSubmoduleProcessorTemplatedText())->setResultText($implProps['resultText']);
                 $processor->setPracticalSubmoduleProcessorTemplatedText($pspTemplatedText);
                 $this->em->persist($pspTemplatedText);
+
+                if (true === (key_exists('trans', $implProps) && key_exists('resultText', $implProps['trans']))) {
+                    $this->translationRepository->translate($pspTemplatedText, 'resultText', $this->localeAlternate, $implProps['trans']['resultText']);
+                }
             } break;
         }
     }

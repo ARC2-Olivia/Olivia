@@ -155,6 +155,11 @@ class PSExporter
                 ]
             ];
 
+            $trans = $this->translationRepository->findTranslations($processor);
+            if (true === key_exists($this->localeAlternate, $trans)) {
+                $task['task_props']['trans'] = ['name' => $trans[$this->localeAlternate]['name']];
+            }
+
             $implProps = [];
             switch ($processor->getType()) {
                 case $processor::TYPE_SIMPLE: {
@@ -162,6 +167,11 @@ class PSExporter
                     if (null !== $impl) {
                         $implProps['expectedValue'] = $impl->getExpectedValue();
                         $implProps['resultText'] = $impl->getResultText();
+
+                        $trans = $this->translationRepository->findTranslations($impl);
+                        if (true === key_exists($this->localeAlternate, $trans)) {
+                            $implProps['trans'] = ['resultText' => $trans[$this->localeAlternate]['resultText']];
+                        }
                     }
                 } break;
                 case $processor::TYPE_SUM_AGGREGATE: {
@@ -170,6 +180,11 @@ class PSExporter
                         $implProps['expectedValueRangeStart'] = $impl->getExpectedValueRangeStart();
                         $implProps['expectedValueRangeEnd'] = $impl->getExpectedValueRangeEnd();
                         $implProps['resultText'] = $impl->getResultText();
+
+                        $trans = $this->translationRepository->findTranslations($impl);
+                        if (true === key_exists($this->localeAlternate, $trans)) {
+                            $implProps['trans'] = ['resultText' => $trans[$this->localeAlternate]['resultText']];
+                        }
                     }
                 } break;
                 case $processor::TYPE_PRODUCT_AGGREGATE: {
@@ -178,12 +193,22 @@ class PSExporter
                         $implProps['expectedValueRangeStart'] = $impl->getExpectedValueRangeStart();
                         $implProps['expectedValueRangeEnd'] = $impl->getExpectedValueRangeEnd();
                         $implProps['resultText'] = $impl->getResultText();
+
+                        $trans = $this->translationRepository->findTranslations($impl);
+                        if (true === key_exists($this->localeAlternate, $trans)) {
+                            $implProps['trans'] = ['resultText' => $trans[$this->localeAlternate]['resultText']];
+                        }
                     }
                 } break;
                 case $processor::TYPE_TEMPLATED_TEXT: {
                     $impl = $processor->getPracticalSubmoduleProcessorTemplatedText();
                     if (null !== $impl) {
                         $implProps['resultText'] = $impl->getResultText();
+
+                        $trans = $this->translationRepository->findTranslations($impl);
+                        if (true === key_exists($this->localeAlternate, $trans)) {
+                            $implProps['trans'] = ['resultText' => $trans[$this->localeAlternate]['resultText']];
+                        }
                     }
                 } break;
             }
