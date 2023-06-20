@@ -15,6 +15,8 @@ use App\Exception\PSImport\ErroneousFirstTaskException;
 use App\Exception\PSImport\MissingTaskOrderKeyException;
 use App\Exception\PSImport\WrongFirstTaskTypeException;
 use Doctrine\ORM\EntityManagerInterface;
+use Gedmo\Translatable\Entity\Repository\TranslationRepository;
+use Gedmo\Translatable\Entity\Translation;
 use PHPUnit\Util\Exception;
 
 class PSImporter
@@ -22,15 +24,21 @@ class PSImporter
     private ?PracticalSubmodule $practicalSubmodule = null;
     private ?array $tasks = null;
     private ?EntityManagerInterface $em = null;
+    private ?string $localeDefault = null;
+    private ?string $localeAlternate = null;
+    private ?TranslationRepository $translationRepository = null;
 
     private int $taskIndex = 1;
     private array $questionMapping = [];
     private array $processorMapping = [];
 
-    public function __construct(array $tasks, EntityManagerInterface $em)
+    public function __construct(array $tasks, EntityManagerInterface $em, string $localeDefault, string $localeAlternate)
     {
         $this->tasks = $tasks;
         $this->em = $em;
+        $this->localeDefault = $localeDefault;
+        $this->localeAlternate = $localeAlternate;
+        $this->translationRepository = $this->em->getRepository(Translation::class);
     }
 
     /**
@@ -108,6 +116,12 @@ class PSImporter
             ->setTags($props['tags'] ?? [])
         ;
         $this->em->persist($this->practicalSubmodule);
+
+        if (true === (key_exists('trans', $props) && $this->allKeysExist(['name', 'description', 'tags'], $props['trans']))) {
+            $this->translationRepository->translate($this->practicalSubmodule, 'name', $this->localeAlternate, $props['trans']['name']);
+            $this->translationRepository->translate($this->practicalSubmodule, 'description', $this->localeAlternate, $props['trans']['description']);
+            $this->translationRepository->translate($this->practicalSubmodule, 'tags', $this->localeAlternate, $props['trans']['tags']);
+        }
     }
 
     private function doCreateQuestionTask(array $props): void
@@ -126,22 +140,28 @@ class PSImporter
         $this->em->persist($question);
         $this->questionMapping[$props['id']] = $question;
 
-        if (false === key_exists('answers', $props)) {
-            return;
+        if (true === (key_exists('trans', $props) && key_exists('questionText', $props['trans']))) {
+            $this->translationRepository->translate($question, 'questionText', $this->localeAlternate, $props['trans']['questionText']);
         }
 
-        foreach ($props['answers'] as $answerProps) {
-            if (false === $this->allKeysExist(['answerText', 'answerValue', 'templatedTextFields'], $answerProps)) {
-                continue;
-            }
+        if (true === key_exists('answers', $props)) {
+            foreach ($props['answers'] as $answerProps) {
+                if (false === $this->allKeysExist(['answerText', 'answerValue', 'templatedTextFields'], $answerProps)) {
+                    continue;
+                }
 
-            $answer = (new PracticalSubmoduleQuestionAnswer())
-                ->setPracticalSubmoduleQuestion($question)
-                ->setAnswerText($answerProps['answerText'])
-                ->setAnswerValue($answerProps['answerValue'])
-                ->setTemplatedTextFields($answerProps['templatedTextFields'])
-            ;
-            $this->em->persist($answer);
+                $answer = (new PracticalSubmoduleQuestionAnswer())
+                    ->setPracticalSubmoduleQuestion($question)
+                    ->setAnswerText($answerProps['answerText'])
+                    ->setAnswerValue($answerProps['answerValue'])
+                    ->setTemplatedTextFields($answerProps['templatedTextFields'])
+                ;
+                $this->em->persist($answer);
+
+                if (true === (key_exists('trans', $answerProps) && key_exists('answerText', $answerProps['trans']))) {
+                    $this->translationRepository->translate($answer, 'answerText', $this->localeAlternate, $answerProps['trans']['answerText']);
+                }
+            }
         }
     }
 

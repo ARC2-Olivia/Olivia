@@ -25,22 +25,25 @@ use App\Form\PracticalSubmoduleProcessorTemplatedTextType;
 use App\Misc\PSExporter;
 use App\Misc\PSImporter;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PracticalSubmoduleService
 {
     private ?EntityManagerInterface $em = null;
     private ?ValidatorInterface $validator = null;
+    private ?ParameterBagInterface $parameterBag = null;
 
-    public function __construct(EntityManagerInterface $em, ValidatorInterface $validator)
+    public function __construct(EntityManagerInterface $em, ValidatorInterface $validator, ParameterBagInterface $parameterBag)
     {
         $this->em = $em;
         $this->validator = $validator;
+        $this->parameterBag = $parameterBag;
     }
 
     public function export(PracticalSubmodule $practicalSubmodule): array
     {
-        return (new PSExporter($practicalSubmodule))->export();
+        return (new PSExporter($practicalSubmodule, $this->em, $this->parameterBag->get('locale.default'), $this->parameterBag->get('locale.alternate')))->export();
     }
 
     /**
@@ -50,7 +53,7 @@ class PracticalSubmoduleService
      */
     public function import(array $tasks): ?PracticalSubmodule
     {
-        return (new PSImporter($tasks, $this->em))->import();
+        return (new PSImporter($tasks, $this->em, $this->parameterBag->get('locale.default'), $this->parameterBag->get('locale.alternate')))->import();
     }
 
     /**

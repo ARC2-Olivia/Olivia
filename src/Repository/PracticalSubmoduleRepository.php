@@ -5,7 +5,10 @@ namespace App\Repository;
 use App\Entity\Course;
 use App\Entity\PracticalSubmodule;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Gedmo\Translatable\Query\TreeWalker\TranslationWalker;
+use Gedmo\Translatable\TranslatableListener;
 
 /**
  * @extends ServiceEntityRepository<PracticalSubmodule>
@@ -47,5 +50,18 @@ class PracticalSubmoduleRepository extends ServiceEntityRepository
             ->where('c = :course')
             ->setParameter('course', $course)
             ->getQuery()->getResult();
+    }
+
+    public function findByIdForLocale(int $id, string $locale): PracticalSubmodule|null
+    {
+        $query = $this->createQueryBuilder('ps')
+            ->where('ps.id = :id')
+            ->setParameter('id', $id)
+            ->setMaxResults(1)
+            ->getQuery()
+        ;
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, TranslationWalker::class);
+        $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
+        return $query->getOneOrNullResult();
     }
 }

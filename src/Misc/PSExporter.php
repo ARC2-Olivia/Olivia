@@ -5,11 +5,18 @@ namespace App\Misc;
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleQuestion;
+use Doctrine\ORM\EntityManagerInterface;
+use Gedmo\Translatable\Entity\Repository\TranslationRepository;
+use Gedmo\Translatable\Entity\Translation;
 
 class PSExporter
 {
     private ?PracticalSubmodule $practicalSubmodule = null;
+    private ?EntityManagerInterface $em = null;
+    private ?string $localeDefault = null;
+    private ?string $localeAlternate = null;
     private array $tasks = [];
+    private ?TranslationRepository $translationRepository = null;
 
     private int $orderIndex = 1;
     private int $questionIndex = 1;
@@ -17,9 +24,13 @@ class PSExporter
     private array $questionMapping = [];
     private array $processorMapping = [];
 
-    public function __construct(PracticalSubmodule $practicalSubmodule)
+    public function __construct(PracticalSubmodule $practicalSubmodule, EntityManagerInterface $em, string $localeDefault, string $localeAlternate)
     {
         $this->practicalSubmodule = $practicalSubmodule;
+        $this->em = $em;
+        $this->localeDefault = $localeDefault;
+        $this->localeAlternate = $localeAlternate;
+        $this->translationRepository = $this->em->getRepository(Translation::class);
     }
 
     public function export(): array
@@ -37,7 +48,9 @@ class PSExporter
 
     private function makeCreateSubmoduleTask(): void
     {
-        $this->tasks[] = [
+        $repository = $this->em->getRepository(PracticalSubmodule::class);
+
+        $task = [
             'task_order' => $this->orderIndex++,
             'task_op' => Tasks::CREATE_SUBMODULE,
             'task_props' => [
@@ -47,6 +60,18 @@ class PSExporter
                 'tags' => $this->practicalSubmodule->getTags()
             ]
         ];
+
+        $trans = $this->translationRepository->findTranslations($this->practicalSubmodule);
+        if (0 < count($trans)) {
+            $task['task_props']['trans'] = [
+                'name' => $trans[$this->localeAlternate]['name'],
+                'description' => $trans[$this->localeAlternate]['description'],
+                'tags' => $trans[$this->localeAlternate]['tags']
+            ];
+        }
+
+        $this->tasks[] = $task;
+        $this->practicalSubmodule = $repository->findByIdForLocale($this->practicalSubmodule->getId(), $this->localeDefault);
     }
 
     private function makeCreateQuestionTasks(): void
@@ -68,12 +93,24 @@ class PSExporter
                 ]
             ];
 
+            $trans = $this->translationRepository->findTranslations($question);
+            if (0 < count($trans)) {
+                $task['task_props']['trans'] = ['questionText' => $trans[$this->localeAlternate]['questionText']];
+            }
+
             foreach ($question->getPracticalSubmoduleQuestionAnswers() as $answer) {
-                $task['task_props']['answers'][] = [
+                $answerProps = [
                     'answerText' => $answer->getAnswerText(),
                     'answerValue' => $answer->getAnswerValue(),
                     'templatedTextFields' => $answer->getTemplatedTextFields()
                 ];
+
+                $trans = $this->translationRepository->findTranslations($answer);
+                if (0 < count($trans)) {
+                    $answerProps['trans'] = ['answerText' => $trans[$this->localeAlternate]['answerText']];
+                }
+
+                $task['task_props']['answers'][] = $answerProps;
             }
 
             $this->tasks[] = $task;
