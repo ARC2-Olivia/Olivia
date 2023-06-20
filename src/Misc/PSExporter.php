@@ -62,12 +62,14 @@ class PSExporter
         ];
 
         $trans = $this->translationRepository->findTranslations($this->practicalSubmodule);
-        if (0 < count($trans)) {
-            $task['task_props']['trans'] = [
-                'name' => $trans[$this->localeAlternate]['name'],
-                'description' => $trans[$this->localeAlternate]['description'],
-                'tags' => $trans[$this->localeAlternate]['tags']
-            ];
+        if (true === key_exists($this->localeAlternate, $trans)) {
+            $transName = $trans[$this->localeAlternate]['name'] ?? null;
+            $transDescription = $trans[$this->localeAlternate]['description'] ?? null;
+            $transTags = $trans[$this->localeAlternate]['tags'] ?? null;
+            $task['task_props']['trans'] = [];
+            if (null !== $transName) $task['task_props']['trans']['name'] = $transName;
+            if (null !== $transDescription) $task['task_props']['trans']['description'] = $transDescription;
+            if (null !== $transTags) $task['task_props']['trans']['tags'] = $transTags;
         }
 
         $this->tasks[] = $task;
@@ -94,8 +96,9 @@ class PSExporter
             ];
 
             $trans = $this->translationRepository->findTranslations($question);
-            if (0 < count($trans)) {
-                $task['task_props']['trans'] = ['questionText' => $trans[$this->localeAlternate]['questionText']];
+            if (true === key_exists($this->localeAlternate, $trans)) {
+                $transQuestionText = $trans[$this->localeAlternate]['questionText'] ?? null;
+                if (null !== $transQuestionText) $task['task_props']['trans'] = ['questionText' => $transQuestionText];
             }
 
             foreach ($question->getPracticalSubmoduleQuestionAnswers() as $answer) {
@@ -106,8 +109,9 @@ class PSExporter
                 ];
 
                 $trans = $this->translationRepository->findTranslations($answer);
-                if (0 < count($trans)) {
-                    $answerProps['trans'] = ['answerText' => $trans[$this->localeAlternate]['answerText']];
+                if (true === key_exists($this->localeAlternate, $trans)) {
+                    $transAnswerText = $trans[$this->localeAlternate]['answerText'] ?? null;
+                    if (null !== $transAnswerText) $answerProps['trans'] = ['answerText' => $transAnswerText];
                 }
 
                 $task['task_props']['answers'][] = $answerProps;
@@ -157,7 +161,8 @@ class PSExporter
 
             $trans = $this->translationRepository->findTranslations($processor);
             if (true === key_exists($this->localeAlternate, $trans)) {
-                $task['task_props']['trans'] = ['name' => $trans[$this->localeAlternate]['name']];
+                $transName = $trans[$this->localeAlternate]['name'] ?? null;
+                if (null !== $transName) $task['task_props']['trans'] = ['name' => $transName];
             }
 
             $implProps = [];
@@ -170,7 +175,8 @@ class PSExporter
 
                         $trans = $this->translationRepository->findTranslations($impl);
                         if (true === key_exists($this->localeAlternate, $trans)) {
-                            $implProps['trans'] = ['resultText' => $trans[$this->localeAlternate]['resultText']];
+                            $transResultText = $trans[$this->localeAlternate]['resultText'] ?? null;
+                            if (null !== $transResultText) $implProps['trans'] = ['resultText' => $transResultText];
                         }
                     }
                 } break;
@@ -183,7 +189,8 @@ class PSExporter
 
                         $trans = $this->translationRepository->findTranslations($impl);
                         if (true === key_exists($this->localeAlternate, $trans)) {
-                            $implProps['trans'] = ['resultText' => $trans[$this->localeAlternate]['resultText']];
+                            $transResultText = $trans[$this->localeAlternate]['resultText'] ?? null;
+                            if (null !== $transResultText) $implProps['trans'] = ['resultText' => $transResultText];
                         }
                     }
                 } break;
@@ -196,7 +203,8 @@ class PSExporter
 
                         $trans = $this->translationRepository->findTranslations($impl);
                         if (true === key_exists($this->localeAlternate, $trans)) {
-                            $implProps['trans'] = ['resultText' => $trans[$this->localeAlternate]['resultText']];
+                            $transResultText = $trans[$this->localeAlternate]['resultText'] ?? null;
+                            if (null !== $transResultText) $implProps['trans'] = ['resultText' => $transResultText];
                         }
                     }
                 } break;
@@ -207,7 +215,8 @@ class PSExporter
 
                         $trans = $this->translationRepository->findTranslations($impl);
                         if (true === key_exists($this->localeAlternate, $trans)) {
-                            $implProps['trans'] = ['resultText' => $trans[$this->localeAlternate]['resultText']];
+                            $transResultText = $trans[$this->localeAlternate]['resultText'] ?? null;
+                            if (null !== $transResultText) $implProps['trans'] = ['resultText' => $transResultText];
                         }
                     }
                 } break;
