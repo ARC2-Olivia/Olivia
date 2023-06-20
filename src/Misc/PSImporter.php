@@ -117,10 +117,13 @@ class PSImporter
         ;
         $this->em->persist($this->practicalSubmodule);
 
-        if (true === (key_exists('trans', $props) && $this->allKeysExist(['name', 'description', 'tags'], $props['trans']))) {
-            $this->translationRepository->translate($this->practicalSubmodule, 'name', $this->localeAlternate, $props['trans']['name']);
-            $this->translationRepository->translate($this->practicalSubmodule, 'description', $this->localeAlternate, $props['trans']['description']);
-            $this->translationRepository->translate($this->practicalSubmodule, 'tags', $this->localeAlternate, $props['trans']['tags']);
+        if (true === key_exists('trans', $props)) {
+            $transName = $props['trans']['name'] ?? null;
+            $transDescription = $props['trans']['description'] ?? null;
+            $transTags = $props['trans']['tags'] ?? null;
+            if (null !== $transName) $this->translationRepository->translate($this->practicalSubmodule, 'name', $this->localeAlternate, $transName);
+            if (null !== $transDescription) $this->translationRepository->translate($this->practicalSubmodule, 'description', $this->localeAlternate, $transDescription);
+            if (null !== $transTags) $this->translationRepository->translate($this->practicalSubmodule, 'tags', $this->localeAlternate, $transTags);
         }
     }
 
