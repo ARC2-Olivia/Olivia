@@ -123,7 +123,7 @@ class PSImporter
             $transTags = $props['trans']['tags'] ?? null;
             if (null !== $transName) $this->translationRepository->translate($this->practicalSubmodule, 'name', $this->localeAlternate, $transName);
             if (null !== $transDescription) $this->translationRepository->translate($this->practicalSubmodule, 'description', $this->localeAlternate, $transDescription);
-            if (null !== $transTags) $this->translationRepository->translate($this->practicalSubmodule, 'tags', $this->localeAlternate, $transTags);
+            if (null !== $transTags) $this->translationRepository->translate($this->practicalSubmodule, 'tags', $this->localeAlternate, explode(',', $transTags));
         }
     }
 
