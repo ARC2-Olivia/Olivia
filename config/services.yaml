@@ -13,6 +13,7 @@ parameters:
     dir.instructor_image:  '%kernel.project_dir%/public/uploads/instructor/image'
     dir.lesson_file: '%kernel.project_dir%/public/uploads/lesson/file'
     dir.temp: '%kernel.project_dir%/temp'
+    dir.file_repository: '%kernel.project_dir%/public/file_repo'
     edulog.enabled: false
 
 services:

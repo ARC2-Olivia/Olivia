@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Form\InstructorType;
 use App\Form\UserType;
 use App\Repository\DataRequestRepository;
+use App\Repository\FileRepository;
 use App\Repository\InstructorRepository;
 use App\Repository\UserRepository;
 use App\Traits\BasicFileManagementTrait;
@@ -135,6 +136,13 @@ class AdminController extends BaseController
             'dataDeletionRequests' => $dataDeletionRequests,
             'resolvedDataRequests' => $resolvedDataRequests
         ]);
+    }
+
+    #[Route("/file", name: "file_index")]
+    public function files(FileRepository $fileRepository): Response
+    {
+        $files = $fileRepository->findAll();
+        return $this->render('admin/file/index.html.twig', ['files' => $files]);
     }
 
     private function storeInstructorImage(?UploadedFile $image, Instructor $instructor)

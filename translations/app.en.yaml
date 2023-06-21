@@ -77,6 +77,7 @@ nav:
     language: Switch language
     termsOfService: Terms of service
     dataRequests: Data requests
+    files: Files
 
 footer:
     contact: "Contact: ???"
@@ -247,6 +248,12 @@ form:
                 type: Type
                 requestedAt: Requested at
                 resolvedAt: Resolved at
+        file:
+            label:
+                id: ID
+                originalName: Original name
+                createdAt: Created at
+                modifiedAt: Modified at
 
 profile:
     request:
@@ -445,6 +452,10 @@ dataRequest:
             typeAccess: Data access requests
             typeDelete: Data deletion requests
             resolved: Resolved data requests
+
+file:
+    title:
+        index: Files
 
 extra:
     free: Free
