@@ -166,6 +166,7 @@ class AdminController extends BaseController
 
                 $this->em->persist($file);
                 $this->em->flush();
+                $this->addFlash('success', $this->translator->trans('success.file.new', [], 'message'));
                 return $this->redirectToRoute('admin_file_index');
             }
         } else {
@@ -175,6 +176,20 @@ class AdminController extends BaseController
         }
 
         return $this->render('admin/file/new.html.twig', ['form' => $form->createView()]);
+    }
+
+    #[Route("/file/delete/{file}", name: "file_delete")]
+    public function deleteFile(File $file, Request $request): Response
+    {
+        $csrfToken = $request->request->get('_csrf_token');
+        if (null !== $csrfToken && $this->isCsrfTokenValid('file.delete', $csrfToken)) {
+            $this->removeFile($file->getPath());
+            $this->em->remove($file);
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('warning.file.delete', [], 'message'));
+        }
+
+        return $this->redirectToRoute('admin_file_index');
     }
 
     private function storeInstructorImage(?UploadedFile $image, Instructor $instructor)

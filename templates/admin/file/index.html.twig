@@ -27,9 +27,15 @@
                                 <td>{{ file.id }}</td>
                                 <td>{{ file.originalName }}</td>
                                 <td>{{ file.createdAt|date('d.m.Y. H:i') }}</td>
-                                <td>{{ file.modifiedAt|date('d.m.Y. H:i') }}</td>
+                                <td>{{ file.modifiedAt is not null ? file.modifiedAt|date('d.m.Y. H:i') : '-' }}</td>
                                 <td>
-                                    Yo...
+                                    <div class="d-flex gap-1">
+                                        <a href="#" class="btn btn-theme-white btn-sm bg-blue">{{ mdi('pencil') }}</a>
+                                        <form method="post" action="{{ path('admin_file_delete', {'file': file.id}) }}" onsubmit="return confirm('{{ 'file.message.delete'|trans }}');">
+                                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('file.delete') }}"/>
+                                            <button type="submit" class="btn btn-theme-white btn-sm bg-red">{{ mdi('trash-can-outline') }}</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         {% endfor %}

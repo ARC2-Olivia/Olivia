@@ -48,6 +48,9 @@ success:
     dataRequest:
         access: A data access request has been sent.
         delete: A data deletion request has been sent.
+    file:
+        new: New file has been uploaded.
+        edit: Existing file has been changed.
 
 warning:
     accountConfirmation:
@@ -79,6 +82,8 @@ warning:
         noQuestion: There was an error storing the answer to one of the questions.
     practicalSubmodulePage:
         delete: Page has been deleted from the submodule.
+    file:
+        delete: A file has been removed.
 
 error:
     login: Invalid credentials.
