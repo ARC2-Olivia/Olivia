@@ -184,7 +184,7 @@ class PracticalSubmoduleService
         $processorSumAggregate = $processor->getPracticalSubmoduleProcessorSumAggregate();
         $errors = $this->validator->validate($processorSumAggregate);
         if ($errors->count() > 0 || !$processorSumAggregate->checkConformity($assessment, $this->validator)) return null;
-        return new ProcessorResult($processorSumAggregate->getResultText());
+        return new ProcessorResult($processorSumAggregate->getResultText(), $processorSumAggregate->getResultFile());
     }
 
     private function runProductAggregateProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
@@ -192,7 +192,7 @@ class PracticalSubmoduleService
         $processorProductAggregate = $processor->getPracticalSubmoduleProcessorProductAggregate();
         $errors = $this->validator->validate($processorProductAggregate);
         if ($errors->count() > 0 || !$processorProductAggregate->checkConformity($assessment, $this->validator)) return null;
-        return new ProcessorResult($processorProductAggregate->getResultText());
+        return new ProcessorResult($processorProductAggregate->getResultText(), $processorProductAggregate->getResultFile());
     }
 
     private function runTemplatedTextProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult

@@ -42,6 +42,9 @@ class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity impleme
     #[Gedmo\Translatable]
     private ?string $resultText = null;
 
+    #[ORM\ManyToOne]
+    private ?File $resultFile = null;
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
@@ -209,5 +212,17 @@ class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity impleme
         if ($this->resultText === null && trim($this->resultText) === '' ) {
             $context->buildViolation('error.practicalSubmoduleProcessorSumAggregate.resultText')->atPath('resultText')->addViolation();
         }
+    }
+
+    public function getResultFile(): ?File
+    {
+        return $this->resultFile;
+    }
+
+    public function setResultFile(?File $resultFile): self
+    {
+        $this->resultFile = $resultFile;
+
+        return $this;
     }
 }
