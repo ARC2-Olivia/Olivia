@@ -11,7 +11,7 @@
             <li><a href="{{ path('admin_data_request_index') }}">{{ 'nav.dataRequests'|trans }}</a></li>
             <li><a href="{{ path('admin_file_index') }}">{{ 'nav.files'|trans }}</a></li>
         </ul>
-        <div class="flex-grow-1">
+        <div class="flex-grow-1 flex-shrink-0">
             {% block adminContent %}{% endblock %}
         </div>
     </div>

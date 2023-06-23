@@ -4,9 +4,11 @@ namespace App\Controller;
 
 
 use App\Entity\DataRequest;
+use App\Entity\File;
 use App\Entity\Instructor;
 use App\Entity\Note;
 use App\Entity\User;
+use App\Form\BasicFileUploadType;
 use App\Form\InstructorType;
 use App\Form\UserType;
 use App\Repository\DataRequestRepository;
@@ -143,6 +145,36 @@ class AdminController extends BaseController
     {
         $files = $fileRepository->findAll();
         return $this->render('admin/file/index.html.twig', ['files' => $files]);
+    }
+
+    #[Route("/file/new", name: "file_new")]
+    public function newFile(Request $request): Response
+    {
+        $form = $this->createForm(BasicFileUploadType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $upload */
+            $upload = $form->get('file')->getData();
+
+            if (null !== $upload) {
+                $file = (new File())->setCreatedAt(new \DateTimeImmutable())->setOriginalName($upload->getClientOriginalName());
+                $directory = $this->getParameter('dir.file_repository');
+                $filename = uniqid('file-', true);
+                $upload->move($directory, $filename);
+                $file->setPath($directory.'/'.$filename);
+
+                $this->em->persist($file);
+                $this->em->flush();
+                return $this->redirectToRoute('admin_file_index');
+            }
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('admin/file/new.html.twig', ['form' => $form->createView()]);
     }
 
     private function storeInstructorImage(?UploadedFile $image, Instructor $instructor)

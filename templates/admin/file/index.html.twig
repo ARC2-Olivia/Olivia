@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-title d-flex justify-content-between align-items-center">
                 <span>{{ 'file.title.index'|trans }}</span>
-                <a href="#" class="btn btn-theme-white bg-blue font-size-default">{{ 'common.new'|trans }}</a>
+                <a href="{{ path('admin_file_new') }}" class="btn btn-theme-white bg-blue font-size-default">{{ 'common.new'|trans }}</a>
             </div>
             <div class="card-text">
                 <div id="files-table-wrapper"></div>
@@ -18,6 +18,7 @@
                             <th>{{ 'form.entity.file.label.originalName'|trans }}</th>
                             <th>{{ 'form.entity.file.label.createdAt'|trans }}</th>
                             <th>{{ 'form.entity.file.label.modifiedAt'|trans }}</th>
+                            <th>{{ 'common.actions'|trans }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,6 +28,9 @@
                                 <td>{{ file.originalName }}</td>
                                 <td>{{ file.createdAt|date('d.m.Y. H:i') }}</td>
                                 <td>{{ file.modifiedAt|date('d.m.Y. H:i') }}</td>
+                                <td>
+                                    Yo...
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>

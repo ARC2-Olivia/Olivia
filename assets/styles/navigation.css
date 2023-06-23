@@ -44,6 +44,7 @@ ul.navigation-admin {
     flex-direction: column;
     background-color: var(--app-color-blue-alt);
     min-width: 10rem;
+    flex-shrink: 0;
 }
 
 .navigation-admin a {

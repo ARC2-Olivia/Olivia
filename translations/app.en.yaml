@@ -456,6 +456,7 @@ dataRequest:
 file:
     title:
         index: Files
+        new: New file upload
 
 extra:
     free: Free
