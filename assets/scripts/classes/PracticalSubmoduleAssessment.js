@@ -1,4 +1,4 @@
-class EvaluationAssessment {
+class PracticalSubmoduleAssessment {
     #form;
     #parser;
     #eventBus;
@@ -330,5 +330,5 @@ class EvaluationAssessment {
     }
 }
 
-global.EvaluationAssessment = EvaluationAssessment;
+global.PracticalSubmoduleAssessment = PracticalSubmoduleAssessment;
 

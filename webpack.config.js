@@ -43,7 +43,7 @@ Encore
     .addEntry('index.carousel', './assets/scripts/index.carousel.js')
 
     // Classes
-    .addEntry('EvaluationAssessment', './assets/scripts/classes/EvaluationAssessment.js')
+    .addEntry('PracticalSubmoduleAssessment', './assets/scripts/classes/PracticalSubmoduleAssessment.js')
     .addEntry('Reorderer', './assets/scripts/classes/Reorderer.js')
     .addEntry('EventBus', './assets/scripts/classes/EventBus.js')
 

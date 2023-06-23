@@ -20,6 +20,7 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public const TYPE_TEXT_INPUT = 'text_input';
     public const TYPE_TEMPLATED_TEXT_INPUT = 'templated_text_input';
     public const TYPE_MULTI_CHOICE = 'multi_choice';
+    public const TYPE_LIST_INPUT = 'list_input';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
