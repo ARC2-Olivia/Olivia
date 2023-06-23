@@ -192,6 +192,37 @@ class AdminController extends BaseController
         return $this->redirectToRoute('admin_file_index');
     }
 
+    #[Route("/file/replace/{file}", name: "file_replace")]
+    public function replaceFile(File $file, Request $request): Response
+    {
+        $form = $this->createForm(BasicFileUploadType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $upload */
+            $upload = $form->get('file')->getData();
+
+            if (null !== $upload) {
+                $originalName = $upload->getClientOriginalName();
+                $directory = $this->getParameter('dir.file_repository');
+                $filename = uniqid('file-', true);
+                $upload->move($directory, $filename);
+
+                $this->removeFile($file->getPath());
+                $file->setOriginalName($originalName)->setPath($directory.'/'.$filename)->setModifiedAt(new \DateTimeImmutable());
+                $this->em->flush();
+                $this->addFlash('success', $this->translator->trans('success.file.edit', [], 'message'));
+                return $this->redirectToRoute('admin_file_index');
+            }
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('admin/file/replace.html.twig', ['file' => $file, 'form' => $form->createView()]);
+    }
+
     private function storeInstructorImage(?UploadedFile $image, Instructor $instructor)
     {
         try {
