@@ -35,6 +35,7 @@
                                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('file.delete') }}"/>
                                             <button type="submit" class="btn btn-theme-white btn-sm bg-red">{{ mdi('trash-can-outline') }}</button>
                                         </form>
+                                        <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}" class="btn btn-theme-white btn-sm bg-green">{{ mdi('download') }}</a>
                                     </div>
                                 </td>
                             </tr>
