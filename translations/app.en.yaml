@@ -219,9 +219,11 @@ form:
                     start: Expected value (start of the range)
                     end: Expected value (end of the range)
                 resultText: Result text
+                resultFile: Result file
             placeholder:
                 name: Name of the processor for easier identification
                 resultText: What text will the processor return as a result?
+                resultFile: Choose a file...
                 evaluationQuestion: Choose a question...
         practicalSubmodulePage:
             label:
