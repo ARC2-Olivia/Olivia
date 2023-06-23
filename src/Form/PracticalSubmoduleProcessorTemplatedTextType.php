@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\File;
 use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleProcessorSimple;
 use App\Entity\PracticalSubmoduleProcessorTemplatedText;
@@ -41,6 +42,13 @@ class PracticalSubmoduleProcessorTemplatedTextType extends AbstractType
                     'class' => 'form-textarea mb-3',
                     'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleProcessor.placeholder.resultText', [], 'app')
                 ]
+            ])
+            ->add('resultFile', EntityType::class, [
+                'class' => File::class,
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.resultFile',
+                'choice_label' => 'originalName',
+                'attr' => ['class' => 'form-select mb-3'],
+                'placeholder' => 'form.entity.practicalSubmoduleProcessor.placeholder.resultFile'
             ])
         ;
     }

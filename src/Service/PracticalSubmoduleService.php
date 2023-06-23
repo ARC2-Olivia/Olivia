@@ -201,6 +201,6 @@ class PracticalSubmoduleService
         $errors = $this->validator->validate($processorTemplatedText);
         if ($errors->count() > 0 || !$processorTemplatedText->checkConformity($assessment)) return null;
         $processorTemplatedText->calculateResult($assessment);
-        return new ProcessorResult($processorTemplatedText->getResultText());
+        return new ProcessorResult($processorTemplatedText->getResultText(), $processorTemplatedText->getResultFile());
     }
 }

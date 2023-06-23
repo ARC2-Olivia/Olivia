@@ -32,6 +32,9 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
 
     private ?string $processedText = null;
 
+    #[ORM\ManyToOne]
+    private ?File $resultFile = null;
+
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -193,5 +196,17 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         if (preg_match($pattern, $this->processedText)) {
             $this->processedText = preg_replace($pattern, $date, $this->processedText);
         }
+    }
+
+    public function getResultFile(): ?File
+    {
+        return $this->resultFile;
+    }
+
+    public function setResultFile(?File $resultFile): self
+    {
+        $this->resultFile = $resultFile;
+
+        return $this;
     }
 }
