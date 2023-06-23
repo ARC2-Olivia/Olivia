@@ -22,6 +22,7 @@ use App\Form\PracticalSubmoduleProcessorProductAggregateType;
 use App\Form\PracticalSubmoduleProcessorSimpleType;
 use App\Form\PracticalSubmoduleProcessorSumAggregateType;
 use App\Form\PracticalSubmoduleProcessorTemplatedTextType;
+use App\Misc\ProcessorResult;
 use App\Misc\PSExporter;
 use App\Misc\PSImporter;
 use Doctrine\ORM\EntityManagerInterface;
@@ -149,14 +150,14 @@ class PracticalSubmoduleService
         return $assessment;
     }
 
-    /** @return string[] */
+    /** @return ProcessorResult[] */
     public function runProcessors(PracticalSubmoduleAssessment $assessment): array
     {
-        $messages = [];
+        $results = [];
 
         $processors = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findBy(['practicalSubmodule' => $assessment->getPracticalSubmodule(), 'included' => true], ['position' => 'ASC']);
         foreach ($processors as $processor) {
-            $message = match ($processor->getType()) {
+            $result = match ($processor->getType()) {
                 PracticalSubmoduleProcessor::TYPE_SIMPLE => $this->runSimpleProcessor($processor, $assessment),
                 PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => $this->runSumAggregateProcessor($processor, $assessment),
                 PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => $this->runProductAggregateProcessor($processor, $assessment),
@@ -164,42 +165,42 @@ class PracticalSubmoduleService
                 default => null
             };
 
-            if ($message !== null) $messages[] = $message;
+            if ($result !== null) $results[] = $result;
         }
 
-        return $messages;
+        return $results;
     }
 
-    public function runSimpleProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
+    public function runSimpleProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
     {
         $processorSimple = $processor->getPracticalSubmoduleProcessorSimple();
         $errors = $this->validator->validate($processorSimple);
         if ($errors->count() > 0 || $processorSimple->getPracticalSubmoduleQuestion() === null || !$processorSimple->checkConformity($assessment)) return null;
-        return $processorSimple->getResultText();
+        return new ProcessorResult($processorSimple->getResultText(), $processorSimple->getResultFile());
     }
 
-    private function runSumAggregateProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
+    private function runSumAggregateProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
     {
         $processorSumAggregate = $processor->getPracticalSubmoduleProcessorSumAggregate();
         $errors = $this->validator->validate($processorSumAggregate);
         if ($errors->count() > 0 || !$processorSumAggregate->checkConformity($assessment, $this->validator)) return null;
-        return $processorSumAggregate->getResultText();
+        return new ProcessorResult($processorSumAggregate->getResultText());
     }
 
-    private function runProductAggregateProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
+    private function runProductAggregateProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
     {
         $processorProductAggregate = $processor->getPracticalSubmoduleProcessorProductAggregate();
         $errors = $this->validator->validate($processorProductAggregate);
         if ($errors->count() > 0 || !$processorProductAggregate->checkConformity($assessment, $this->validator)) return null;
-        return $processorProductAggregate->getResultText();
+        return new ProcessorResult($processorProductAggregate->getResultText());
     }
 
-    private function runTemplatedTextProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?string
+    private function runTemplatedTextProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
     {
         $processorTemplatedText = $processor->getPracticalSubmoduleProcessorTemplatedText();
         $errors = $this->validator->validate($processorTemplatedText);
         if ($errors->count() > 0 || !$processorTemplatedText->checkConformity($assessment)) return null;
         $processorTemplatedText->calculateResult($assessment);
-        return $processorTemplatedText->getResultText();
+        return new ProcessorResult($processorTemplatedText->getResultText());
     }
 }

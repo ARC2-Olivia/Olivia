@@ -277,3 +277,18 @@ ul.mod--ps-pages {
 .evaluation-assessment-page-description {
     font-style: italic;
 }
+
+.evaluation-results-file {
+    background-color: #e5eefd;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.evaluation-results-file a {
+    text-decoration: none;
+}
+
+.evaluation-results-file::before {
+    content: attr(data-prefix);
+    font-weight: bold;
+}

@@ -25,7 +25,7 @@ class WordService
 
         $section = $word->addSection();
         foreach ($results as $result) {
-            foreach (explode("\n", $result) as $line) {
+            foreach (explode("\n", $result->getText()) as $line) {
                 if (str_starts_with($line, '- ')) {
                     $section->addListItem(preg_replace('/^- /', '', $line, 1));
                 } else {

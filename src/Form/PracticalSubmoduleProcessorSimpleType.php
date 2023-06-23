@@ -58,10 +58,7 @@ class PracticalSubmoduleProcessorSimpleType extends AbstractType
         $resolver->setDefaults([
             'data_class' => PracticalSubmoduleProcessorSimple::class,
             'translation_domain' => 'app',
-            'attr' => [
-                'novalidate' => 'novalidate',
-                'class' => 'd-flex flex-column'
-            ]
+            'attr' => ['novalidate' => 'novalidate', 'class' => 'd-flex flex-column']
         ]);
     }
 

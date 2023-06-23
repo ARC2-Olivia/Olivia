@@ -7,7 +7,16 @@
             <div class="text-center">
                 <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'button.export'|trans }}</a>
             </div>
-            {% for result in results %}<p>{{ result|nl2br }}</p>{% endfor %}
+            {% for result in results %}
+                {% if result.textSet %}<p>{{ result.text|nl2br }}</p>{% endif %}
+                {% if result.fileSet %}
+                    <p>
+                        <span class="evaluation-results-file" data-prefix="{{ 'common.file'|trans }}: ">
+                            <a href="{{ path('file_fetch_uploaded_file', {'file': result.file.id}) }}">{{ result.file.originalName }}</a>
+                        </span>
+                    </p>
+                {% endif %}
+            {% endfor %}
         {% else %}
             <p>{{ 'practicalSubmodule.extra.results.empty'|trans }}</p>
         {% endif %}
