@@ -48,8 +48,8 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
             $this->handleTemplatingForTemplatedTextQuestion($practicalSubmoduleAssessment);
         } else if (in_array($questionType, PracticalSubmoduleQuestion::getSingleChoiceTypes())) {
             $this->handleTemplatingForSingleChoiceQuestion($practicalSubmoduleAssessment);
-        } else if ($questionType === PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE) {
-            $this->handleTemplatingForMultiChoiceQuestion($practicalSubmoduleAssessment);
+        } else if (in_array($questionType, PracticalSubmoduleQuestion::getMultipleAnswerTypes())) {
+            $this->handleTemplatingForMultipleAnswerQuestion($practicalSubmoduleAssessment);
         } else if ($questionType !== null) {
             $this->handleDefaultTemplating($practicalSubmoduleAssessment);
         }
@@ -145,12 +145,18 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         }
     }
 
-    private function handleTemplatingForMultiChoiceQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
+    private function handleTemplatingForMultipleAnswerQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
     {
         $gatheredAnswers = [];
         foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
-            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() !== $this->practicalSubmoduleQuestion->getId()) {
+                continue;
+            }
+
+            if (PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE === $this->practicalSubmoduleQuestion->getType()) {
                 $gatheredAnswers[] = $assessmentAnswer->getPracticalSubmoduleQuestionAnswer()->getAnswerText();
+            } else if (PracticalSubmoduleQuestion::TYPE_LIST_INPUT === $this->practicalSubmoduleQuestion->getType()) {
+                $gatheredAnswers[] = $assessmentAnswer->getAnswerValue();
             }
         }
         if (count($gatheredAnswers) > 0) {
