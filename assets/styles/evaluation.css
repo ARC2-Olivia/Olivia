@@ -187,7 +187,7 @@ ul.mod--ps-pages {
     background-color: rgba(0, 0, 0, 0.075);
 }
 
-.evaluation-assessment-question-text {
+.evaluation-assessment-question-text:not(.no-bold) {
     font-weight: 600;
 }
 

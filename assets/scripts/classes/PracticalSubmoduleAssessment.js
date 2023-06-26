@@ -152,6 +152,7 @@ class PracticalSubmoduleAssessment {
             case 'templated_text_input': questionAnswers.append(this.#createTemplatedTextInputAnswer(questionData)); break;
             case 'multi_choice': this.#createMultiChoiceAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
             case 'list_input': questionAnswers.append(this.#createListInputAnswer(questionData)); break;
+            case 'static_text': questionText.classList.add('no-bold'); break;
             default: finalize = false;
         }
 
