@@ -197,10 +197,19 @@ ul.mod--ps-pages {
     row-gap: 8px;
 }
 
-.evaluation-assessment-question-answer {
+.evaluation-assessment-question-answer,
+.evaluation-assessment-question-answer\:column {
     display: flex;
-    column-gap: 8px;
+    gap: 8px;
+}
+
+.evaluation-assessment-question-answer {
     align-items: center;
+}
+
+.evaluation-assessment-question-answer\:column {
+    flex-direction: column;
+    align-items: start;
 }
 
 .evaluation-assessment-question-answer--inline {

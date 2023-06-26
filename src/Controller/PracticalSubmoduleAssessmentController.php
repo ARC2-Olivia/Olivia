@@ -119,14 +119,22 @@ class PracticalSubmoduleAssessmentController extends BaseController
 
     private function storeAnswer(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, PracticalSubmoduleQuestion $practicalSubmoduleQuestion, mixed $givenAnswer): void
     {
-        if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_YES_NO || $practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_WEIGHTED) {
-            $this->storeSingleChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
-        } else if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
-            $this->storeTemplatedTextInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
-        } else if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE) {
-            $this->storeMultiChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
-        } else {
-            $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
+        switch ($practicalSubmoduleQuestion->getType()) {
+            case PracticalSubmoduleQuestion::TYPE_YES_NO:
+            case PracticalSubmoduleQuestion::TYPE_WEIGHTED:
+                $this->storeSingleChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
+                break;
+            case PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT:
+                $this->storeTemplatedTextInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
+                break;
+            case PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE:
+                $this->storeMultiChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
+                break;
+            case PracticalSubmoduleQuestion::TYPE_LIST_INPUT:
+                $this->storeListInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
+                break;
+            default:
+                $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
         }
     }
 
@@ -149,7 +157,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
         $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, json_encode($givenAnswer));
     }
 
-    private function storeMultiChoiceAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer)
+    private function storeMultiChoiceAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
     {
         $practicalSubmoduleQuestionAnswerRepository = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class);
         foreach ($givenAnswer as $choice) {
@@ -170,6 +178,22 @@ class PracticalSubmoduleAssessmentController extends BaseController
             $this->em->persist($otherAnswer);
         }
         */
+    }
+
+    private function storeListInputAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
+    {
+        foreach ($givenAnswer as $item) {
+            $item = trim($item);
+            if ('' === $item) {
+                continue;
+            }
+
+            $answer = (new PracticalSubmoduleAssessmentAnswer())
+                ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
+                ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+                ->setAnswerValue($item);
+            $this->em->persist($answer);
+        }
     }
 
     private function storeSimpleAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void

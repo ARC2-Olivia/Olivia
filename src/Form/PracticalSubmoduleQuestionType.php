@@ -32,6 +32,7 @@ class PracticalSubmoduleQuestionType extends AbstractType
                 $this->translator->trans('practicalSubmoduleQuestion.type.textInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_TEXT_INPUT,
                 $this->translator->trans('practicalSubmoduleQuestion.type.templatedTextInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT,
                 $this->translator->trans('practicalSubmoduleQuestion.type.multipleChoice', [], 'app') => PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE,
+                $this->translator->trans('practicalSubmoduleQuestion.type.listInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_LIST_INPUT
             ];
             $builder->add('type', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmoduleQuestion.label.type',

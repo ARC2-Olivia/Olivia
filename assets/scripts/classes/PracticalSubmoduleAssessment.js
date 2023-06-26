@@ -18,7 +18,8 @@ class PracticalSubmoduleAssessment {
         this.#translation = {
             buttonNext: translation.buttonNext || "Next",
             buttonPrevious: translation.buttonPrevious || "Previous",
-            buttonSubmit: translation.buttonSubmit || "Submit"
+            buttonSubmit: translation.buttonSubmit || "Submit",
+            buttonAdd: translation.buttonAdd || "Add"
         };
     }
 
@@ -150,6 +151,7 @@ class PracticalSubmoduleAssessment {
             case 'text_input': questionAnswers.append(this.#createTextInputAnswer(questionData)); break;
             case 'templated_text_input': questionAnswers.append(this.#createTemplatedTextInputAnswer(questionData)); break;
             case 'multi_choice': this.#createMultiChoiceAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
+            case 'list_input': questionAnswers.append(this.#createListInputAnswer(questionData)); break;
             default: finalize = false;
         }
 
@@ -311,6 +313,26 @@ class PracticalSubmoduleAssessment {
 
         const answer = this.#parser.parseFromString(answerRaw, "text/html");
         return answer.body.firstChild;
+    }
+
+    #createListInputAnswer(questionData) {
+        const answer = this.#parser.parseFromString(`
+            <label class="evaluation-assessment-question-answer:column">
+                <button type="button" class="btn btn-theme-white btn-sm bg-green">
+                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>
+                    ${this.#translation.buttonAdd}
+                </button>
+            </label>
+        `, "text/html").body.firstChild;
+
+        answer.querySelector("button").addEventListener("click", () => {
+            const input = this.#parser.parseFromString(`
+                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][]"/>
+            `, "text/html").body.firstChild;
+            answer.appendChild(input);
+        });
+
+        return answer;
     }
 
     #enableQuestion(questionElement) {

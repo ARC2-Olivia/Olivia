@@ -390,6 +390,7 @@ practicalSubmoduleQuestion:
         textInput: Text input
         templatedTextInput: Templated text input
         multipleChoice: Multiple choice
+        listInput: List input
     delete: Are you sure you want to delete this question?
     empty: There are no defined questions for this submodule.
 
