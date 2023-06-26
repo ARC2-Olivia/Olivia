@@ -44,7 +44,6 @@ class PracticalSubmoduleQuestionController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.edit', [], 'message'));
-            return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmoduleQuestion->getPracticalSubmodule()->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
