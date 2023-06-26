@@ -109,8 +109,11 @@ class PracticalSubmoduleQuestionType extends AbstractType
         if ($practicalSubmoduleQuestion !== null && $practicalSubmodule !== null) {
             $queryBuilder = function (EntityRepository $repository) use ($practicalSubmoduleQuestion) {
                 $qb = $repository->createQueryBuilder('psq')
-                    ->where('psq.practicalSubmodule = :submodule')->andWhere('psq.type != :type')
-                    ->setParameters(['submodule' => $practicalSubmoduleQuestion->getPracticalSubmodule(), 'type' => PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT])
+                    ->where('psq.practicalSubmodule = :submodule')->andWhere('psq.type NOT IN (:types)')
+                    ->setParameters([
+                        'submodule' => $practicalSubmoduleQuestion->getPracticalSubmodule(),
+                        'types' => [PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT, PracticalSubmoduleQuestion::TYPE_STATIC_TEXT]
+                    ])
                 ;
 
                 if ($practicalSubmoduleQuestion->getId() !== null) {
