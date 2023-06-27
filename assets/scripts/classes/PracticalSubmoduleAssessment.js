@@ -157,10 +157,11 @@ class PracticalSubmoduleAssessment {
         }
 
         if (finalize) {
+            let shouldDisableQuestion = false;
             if (questionData.dependency) {
                 const dependency = questionData.dependency;
                 this.#eventBus.attach(question);
-                context.#enableQuestion(question);
+                shouldDisableQuestion = true;
                 question.on("answerchange", function(sender, { questionId, answer, checkType }) {
                     checkType = checkType || "equals";
                     if (dependency.questionId == questionId) {
@@ -170,14 +171,15 @@ class PracticalSubmoduleAssessment {
                             case "contains": enableQuestion = answer.includes(dependency.answer); break;
                         }
                         if (enableQuestion === true) {
-                            context.#disableQuestion(this);
-                        } else {
                             context.#enableQuestion(this);
+                        } else {
+                            context.#disableQuestion(this);
                         }
                     }
                 });
             }
             question.append(questionText, questionAnswers);
+            if (shouldDisableQuestion) this.#disableQuestion(question);
         }
         return question;
     }
@@ -187,7 +189,7 @@ class PracticalSubmoduleAssessment {
         questionData.answers.forEach((answerData) => {
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}" required/>
+                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}" data-answer-required required/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
@@ -208,7 +210,7 @@ class PracticalSubmoduleAssessment {
         questionData.answers.forEach((answerData) => {
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}" required/>
+                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}" data-answer-required required/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
@@ -238,15 +240,15 @@ class PracticalSubmoduleAssessment {
             const input = answer.body.firstChild.querySelector("input");
             inputs.push(input);
 
-            inputs.forEach((input) => {
-                this.#eventBus.attach(input);
-                input.addEventListener("click", function(event) {
-                    const checkedValues = inputs.filter(i => i.checked === true).map(i => i.dataset.value);
-                    event.target.dispatch("answerchange", { questionId: questionData.id, answer: checkedValues, checkType: 'contains' });
-                });
-            });
-
             answers.push(answer.body.firstChild);
+        });
+
+        inputs.forEach((input) => {
+            this.#eventBus.attach(input);
+            input.addEventListener("click", function(event) {
+                const checkedValues = inputs.filter(i => i.checked === true).map(i => i.dataset.value);
+                event.target.dispatch("answerchange", { questionId: questionData.id, answer: checkedValues, checkType: 'contains' });
+            });
         });
 
         /*
@@ -265,7 +267,7 @@ class PracticalSubmoduleAssessment {
     #createNumericalInputAnswer(questionData) {
         const answer = this.#parser.parseFromString(`
             <label class="evaluation-assessment-question-answer">
-                <input type="number" step="0.01" class="form-input" name="evaluation_assessment[${questionData.id}]" required/>
+                <input type="number" step="0.01" class="form-input" name="evaluation_assessment[${questionData.id}]" data-answer-required required/>
             </label>
         `, "text/html");
 
@@ -281,7 +283,7 @@ class PracticalSubmoduleAssessment {
     #createTextInputAnswer(questionData) {
         const answer = this.#parser.parseFromString(`
             <label class="evaluation-assessment-question-answer">
-                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}]" required/>
+                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}]" data-answer-required required/>
             </label>
         `, "text/html");
 
@@ -307,7 +309,7 @@ class PracticalSubmoduleAssessment {
         for (const field of answerFields) {
             const pattern = new RegExp(`{{\\s*${field}\\s*}}`);
             const inputRaw = `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal">
-                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field}]" required/>
+                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field}]" data-answer-required required/>
             </label>`;
             answerRaw = answerRaw.replace(pattern, inputRaw);
         }
@@ -336,20 +338,52 @@ class PracticalSubmoduleAssessment {
         return answer;
     }
 
-    #enableQuestion(questionElement) {
+    #disableQuestion(questionElement) {
+        const context = this;
         if (!questionElement.classList.contains("hide")) questionElement.classList.add("hide");
         questionElement.querySelectorAll("input").forEach((input) => {
-            input.required = false;
+            if ("answerRequired" in input.dataset) input.required = false;
             input.disabled = true;
+            this.#sendEmptyAnswerChangeEvent(input, questionElement);
         });
     }
 
-    #disableQuestion(questionElement) {
+    #enableQuestion(questionElement) {
         if (questionElement.classList.contains("hide")) questionElement.classList.remove("hide");
         questionElement.querySelectorAll("input").forEach((input) => {
-            input.required = true;
+            if ("answerRequired" in input.dataset) input.required = true;
             input.disabled = false;
+            this.#resendAnswerChangeEvent(input, questionElement);
         });
+    }
+
+    #sendEmptyAnswerChangeEvent(input, question) {
+        if (false === (input.hasAttribute("type") && "id" in question.dataset && "type" in question.dataset)) {
+            return;
+        }
+        switch (question.dataset.type) {
+            case "yes_no":
+            case "text_input":
+            case "numerical_input":
+            case "weighted": question.dispatch("answerchange", { questionId: question.dataset.id, answer: null, checkType: 'equals' }); break;
+            case "multi_choice": question.dispatch("answerchange", { questionId: question.dataset.id, answer: [], checkType: 'contains' }); break;
+        }
+    }
+
+    #resendAnswerChangeEvent(input, question) {
+        if (false === (input.hasAttribute("type") && "id" in question.dataset && "type" in question.dataset)) {
+            return;
+        }
+
+        if (["yes_no", "weight"].includes(question.dataset.type) && true === input.checked) {
+            question.dispatch("answerchange", { questionId: question.dataset.id, answer: input.dataset.value, checkType: 'equals' });
+        } else if (["text_input", "numerical_input"].includes(question.dataset.type)) {
+            question.dispatch("answerchange", { questionId: question.dataset.id, answer: input.value, checkType: 'equals' })
+        } else if ("multi_choice" === question.dataset.type) {
+            const inputs = question.querySelectorAll("input");
+            const checkedValues = inputs.filter(i => i.checked === true).map(i => i.dataset.value);
+            question.dispatch("answerchange", { questionId: question.dataset.id, answer: checkedValues, checkType: 'contains' });
+        }
     }
 }
 
