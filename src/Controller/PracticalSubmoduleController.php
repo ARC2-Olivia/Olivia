@@ -156,6 +156,11 @@ class PracticalSubmoduleController extends BaseController
                 $this->em->remove($question);
             }
 
+            foreach ($this->em->getRepository(PracticalSubmoduleAssessment::class)->findBy(['practicalSubmodule' => $practicalSubmodule]) as $assessment) {
+                foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) $this->em->remove($assessmentAnswer);
+                $this->em->remove($assessment);
+            }
+
             $this->em->remove($practicalSubmodule);
             $this->em->flush();
             $this->addFlash('warning', $this->translator->trans('warning.practicalSubmodule.delete', ['%evaluation%' => $submoduleName], 'message'));
