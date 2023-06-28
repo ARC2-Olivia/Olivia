@@ -51,7 +51,7 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     #[ORM\ManyToOne(targetEntity: self::class)]
     private ?self $dependentPracticalSubmoduleQuestion = null;
 
-    #[ORM\Column(length: 63, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $dependentValue = null;
 
     #[ORM\ManyToOne(inversedBy: 'practicalSubmoduleQuestions')]

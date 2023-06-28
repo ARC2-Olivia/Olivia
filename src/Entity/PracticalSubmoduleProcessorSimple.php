@@ -67,7 +67,7 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
 
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
-        return $this->calculateResult($practicalSubmoduleAssessment, $validator);
+        return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment) && $this->calculateResult($practicalSubmoduleAssessment, $validator);
     }
 
     public function getId(): ?int

@@ -220,6 +220,8 @@ form:
                     end: Expected value (end of the range)
                 resultText: Result text
                 resultFile: Result file
+                dependentQuestion: Dependent question
+                dependentValue: Dependent question value
             placeholder:
                 name: Name of the processor for easier identification
                 resultText: What text will the processor return as a result?

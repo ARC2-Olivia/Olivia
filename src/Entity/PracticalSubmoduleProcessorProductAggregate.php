@@ -82,7 +82,9 @@ class PracticalSubmoduleProcessorProductAggregate implements PracticalSubmoduleP
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
         $result = $this->calculateResult($practicalSubmoduleAssessment, $validator);
-        return $result >= $this->expectedValueRangeStart && $result < $this->expectedValueRangeEnd;
+        return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment)
+            && $result >= $this->expectedValueRangeStart
+            && $result < $this->expectedValueRangeEnd;
     }
 
     public function getId(): ?int

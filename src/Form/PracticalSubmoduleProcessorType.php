@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\PracticalSubmoduleProcessor;
+use App\Entity\PracticalSubmoduleQuestion;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,7 +36,7 @@ class PracticalSubmoduleProcessorType extends AbstractType
             $this->translator->trans('common.yes', [], 'app') => true
         ];
 
-        if ($options['edit_mode'] === false) {
+        if (false === $options['edit_mode']) {
             $builder->add('type', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmoduleProcessor.label.type',
                 'choices' => $typeChoices,
@@ -51,6 +54,18 @@ class PracticalSubmoduleProcessorType extends AbstractType
                 'choices' => $includedChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
+            ->add('dependentPracticalSubmoduleQuestion', EntityType::class, [
+                'class' => PracticalSubmoduleQuestion::class,
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.dependentQuestion',
+                'query_builder' => $this->makeDependentQuestionQueryBuilder($builder),
+                'choice_label' => 'questionText',
+                'placeholder' => 'form.entity.practicalSubmoduleProcessor.placeholder.evaluationQuestion',
+                'attr' => ['class' => 'form-select mb-3']
+            ])
+            ->add('dependentValue', TextType::class, [
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.dependentValue',
+                'attr' => ['class' => 'form-input mb-3']
+            ])
         ;
     }
 
@@ -65,5 +80,27 @@ class PracticalSubmoduleProcessorType extends AbstractType
                 'class' => 'd-flex flex-column'
             ]
         ]);
+    }
+
+    private function makeDependentQuestionQueryBuilder(FormBuilderInterface $builder)
+    {
+        /** @var PracticalSubmoduleProcessor $practicalSubmoduleProcessor */
+        $practicalSubmoduleProcessor = $builder->getData();
+        $practicalSubmodule = $practicalSubmoduleProcessor?->getPracticalSubmodule();
+
+        $queryBuilder = null;
+        if ($practicalSubmoduleProcessor !== null && $practicalSubmodule !== null) {
+            $queryBuilder = function (EntityRepository $repository) use ($practicalSubmodule) {
+                $qb = $repository->createQueryBuilder('psq')
+                    ->where('psq.practicalSubmodule = :submodule')->andWhere('psq.type NOT IN (:types)')
+                    ->setParameters([
+                        'submodule' => $practicalSubmodule,
+                        'types' => [PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT, PracticalSubmoduleQuestion::TYPE_STATIC_TEXT]
+                    ])
+                ;
+                return $qb;
+            };
+        }
+        return $queryBuilder;
     }
 }

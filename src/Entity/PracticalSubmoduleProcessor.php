@@ -46,6 +46,12 @@ class PracticalSubmoduleProcessor
     #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
     private ?PracticalSubmoduleProcessorTemplatedText $practicalSubmoduleProcessorTemplatedText = null;
 
+    #[ORM\ManyToOne]
+    private ?PracticalSubmoduleQuestion $dependentPracticalSubmoduleQuestion = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $dependentValue = null;
+
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $position = null;
 
@@ -189,6 +195,51 @@ class PracticalSubmoduleProcessor
             self::TYPE_TEMPLATED_TEXT => $this->getPracticalSubmoduleProcessorTemplatedText(),
             default => null
         };
+    }
+
+    public function getDependentPracticalSubmoduleQuestion(): ?PracticalSubmoduleQuestion
+    {
+        return $this->dependentPracticalSubmoduleQuestion;
+    }
+
+    public function setDependentPracticalSubmoduleQuestion(?PracticalSubmoduleQuestion $dependentPracticalSubmoduleQuestion): self
+    {
+        $this->dependentPracticalSubmoduleQuestion = $dependentPracticalSubmoduleQuestion;
+
+        return $this;
+    }
+
+    public function getDependentValue(): ?string
+    {
+        return $this->dependentValue;
+    }
+
+    public function setDependentValue(?string $dependentValue): self
+    {
+        $this->dependentValue = $dependentValue;
+
+        return $this;
+    }
+
+    public function isDependencyConditionSet(): bool
+    {
+        return null !== $this->dependentPracticalSubmoduleQuestion && null !== $this->dependentValue;
+    }
+
+    public function isDependencyConditionPassing(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): bool
+    {
+        if (false === $this->isDependencyConditionSet()) {
+            return true;
+        }
+
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() !== $this->dependentPracticalSubmoduleQuestion->getId()) {
+                continue;
+            }
+            return $assessmentAnswer->getAnswerValue() === $this->getDependentValue();
+        }
+
+        return false;
     }
 
     public function getPosition(): ?int

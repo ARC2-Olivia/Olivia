@@ -59,17 +59,7 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
 
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
-        if ($this->practicalSubmoduleQuestion === null) {
-            return true;
-        }
-
-        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
-            if ($this->practicalSubmoduleQuestion->getId() === $assessmentAnswer->getPracticalSubmoduleQuestion()->getId()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment) && $this->isQuestionConditionPassing($practicalSubmoduleAssessment);
     }
 
     public function getId(): ?int
@@ -114,6 +104,33 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         $this->resultText = $resultText;
 
         return $this;
+    }
+
+    public function getResultFile(): ?File
+    {
+        return $this->resultFile;
+    }
+
+    public function setResultFile(?File $resultFile): self
+    {
+        $this->resultFile = $resultFile;
+
+        return $this;
+    }
+
+    private function isQuestionConditionPassing(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): bool
+    {
+        if ($this->practicalSubmoduleQuestion === null) {
+            return true;
+        }
+
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($this->practicalSubmoduleQuestion->getId() === $assessmentAnswer->getPracticalSubmoduleQuestion()->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function handleTemplatingForTemplatedTextQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
@@ -202,17 +219,5 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         if (preg_match($pattern, $this->processedText)) {
             $this->processedText = preg_replace($pattern, $date, $this->processedText);
         }
-    }
-
-    public function getResultFile(): ?File
-    {
-        return $this->resultFile;
-    }
-
-    public function setResultFile(?File $resultFile): self
-    {
-        $this->resultFile = $resultFile;
-
-        return $this;
     }
 }
