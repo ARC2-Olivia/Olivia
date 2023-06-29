@@ -137,10 +137,12 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
     private function calculateMultiChoiceResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): bool
     {
         $result = false;
-        if ($this->expectedValue === 'ALL') {
+        if ('ALL' === strtoupper($this->expectedValue)) {
             $allQuestionAnswerIds = $this->practicalSubmoduleQuestion
                 ->getPracticalSubmoduleQuestionAnswers()
-                ->map(function (PracticalSubmoduleQuestionAnswer $psqa) { return $psqa->getId(); })
+                ->map(function (PracticalSubmoduleQuestionAnswer $psqa) {
+                    return $psqa->getId();
+                })
                 ->toArray();
 
             $selectedQuestionAnswerIds = [];
@@ -151,6 +153,16 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
             }
 
             $result = count(array_intersect($allQuestionAnswerIds, $selectedQuestionAnswerIds)) === count($allQuestionAnswerIds);
+        } else if ('NOT ALL' === strtoupper($this->expectedValue)) {
+            $allQuestionAnswerCount = $this->practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->count();
+            $selectedQuestionAnswerCount = 0;
+            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                    $selectedQuestionAnswerCount++;
+                }
+            }
+
+            $result = $selectedQuestionAnswerCount < $allQuestionAnswerCount;
         } else {
             $selectedAnswerValues = [];
             foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
