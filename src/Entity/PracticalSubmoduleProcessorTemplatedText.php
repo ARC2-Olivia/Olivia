@@ -32,9 +32,6 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
 
     private ?string $processedText = null;
 
-    #[ORM\ManyToOne]
-    private ?File $resultFile = null;
-
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -102,18 +99,6 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
     public function setResultText(?string $resultText): self
     {
         $this->resultText = $resultText;
-
-        return $this;
-    }
-
-    public function getResultFile(): ?File
-    {
-        return $this->resultFile;
-    }
-
-    public function setResultFile(?File $resultFile): self
-    {
-        $this->resultFile = $resultFile;
 
         return $this;
     }

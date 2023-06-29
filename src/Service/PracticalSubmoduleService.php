@@ -176,7 +176,7 @@ class PracticalSubmoduleService
         $processorSimple = $processor->getPracticalSubmoduleProcessorSimple();
         $errors = $this->validator->validate($processorSimple);
         if ($errors->count() > 0 || $processorSimple->getPracticalSubmoduleQuestion() === null || !$processorSimple->checkConformity($assessment)) return null;
-        return new ProcessorResult($processorSimple->getResultText(), $processorSimple->getResultFile());
+        return new ProcessorResult($processorSimple->getResultText(), $processorSimple->getPracticalSubmoduleProcessor()->getResultFiles()->toArray());
     }
 
     private function runSumAggregateProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
@@ -184,7 +184,7 @@ class PracticalSubmoduleService
         $processorSumAggregate = $processor->getPracticalSubmoduleProcessorSumAggregate();
         $errors = $this->validator->validate($processorSumAggregate);
         if ($errors->count() > 0 || !$processorSumAggregate->checkConformity($assessment, $this->validator)) return null;
-        return new ProcessorResult($processorSumAggregate->getResultText(), $processorSumAggregate->getResultFile());
+        return new ProcessorResult($processorSumAggregate->getResultText(), $processorSumAggregate->getPracticalSubmoduleProcessor()->getResultFiles()->toArray());
     }
 
     private function runProductAggregateProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
@@ -192,7 +192,7 @@ class PracticalSubmoduleService
         $processorProductAggregate = $processor->getPracticalSubmoduleProcessorProductAggregate();
         $errors = $this->validator->validate($processorProductAggregate);
         if ($errors->count() > 0 || !$processorProductAggregate->checkConformity($assessment, $this->validator)) return null;
-        return new ProcessorResult($processorProductAggregate->getResultText(), $processorProductAggregate->getResultFile());
+        return new ProcessorResult($processorProductAggregate->getResultText(), $processorProductAggregate->getPracticalSubmoduleProcessor()->getResultFiles()->toArray());
     }
 
     private function runTemplatedTextProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
@@ -201,6 +201,6 @@ class PracticalSubmoduleService
         $errors = $this->validator->validate($processorTemplatedText);
         if ($errors->count() > 0 || !$processorTemplatedText->checkConformity($assessment)) return null;
         $processorTemplatedText->calculateResult($assessment);
-        return new ProcessorResult($processorTemplatedText->getResultText(), $processorTemplatedText->getResultFile());
+        return new ProcessorResult($processorTemplatedText->getResultText(), $processorTemplatedText->getPracticalSubmoduleProcessor()->getResultFiles()->toArray());
     }
 }

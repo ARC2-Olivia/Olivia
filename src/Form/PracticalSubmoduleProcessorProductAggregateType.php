@@ -26,6 +26,9 @@ class PracticalSubmoduleProcessorProductAggregateType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var PracticalSubmoduleProcessor $practicalSubmoduleProcessor */
+        $practicalSubmoduleProcessor = $builder->getData()?->getPracticalSubmoduleProcessor();
+
         $builder
             ->add('practicalSubmoduleQuestions', EntityType::class, [
                 'class' => PracticalSubmoduleQuestion::class,
@@ -60,12 +63,15 @@ class PracticalSubmoduleProcessorProductAggregateType extends AbstractType
                     'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleProcessor.placeholder.resultText', [], 'app')
                 ]
             ])
-            ->add('resultFile', EntityType::class, [
+            ->add('resultFiles', EntityType::class, [
                 'class' => File::class,
-                'label' => 'form.entity.practicalSubmoduleProcessor.label.resultFile',
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.resultFiles',
                 'choice_label' => 'originalName',
-                'attr' => ['class' => 'form-select mb-3'],
-                'placeholder' => 'form.entity.practicalSubmoduleProcessor.placeholder.resultFile'
+                'attr' => ['class' => 'form-select multiple mb-3'],
+                'placeholder' => 'form.entity.practicalSubmoduleProcessor.placeholder.resultFile',
+                'mapped' => false,
+                'multiple' => true,
+                'data' => $practicalSubmoduleProcessor?->getResultFiles()->toArray()
             ])
         ;
     }

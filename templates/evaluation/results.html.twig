@@ -9,11 +9,14 @@
             </div>
             {% for result in results %}
                 {% if result.textSet %}<p>{{ result.text|nl2br }}</p>{% endif %}
-                {% if result.fileSet %}
+                {% if result.areFilesSet %}
                     <p>
-                        <span class="evaluation-results-file" data-prefix="{{ 'common.file'|trans }}: ">
-                            <a href="{{ path('file_fetch_uploaded_file', {'file': result.file.id}) }}">{{ result.file.originalName }}</a>
-                        </span>
+                        {% for file in result.files %}
+                            <span class="evaluation-results-file" data-prefix="{{ 'common.file'|trans }}: ">
+                                <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}">{{ file.originalName }}</a>
+                            </span>
+
+                        {% endfor %}
                     </p>
                 {% endif %}
             {% endfor %}

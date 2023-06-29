@@ -219,7 +219,7 @@ form:
                     start: Expected value (start of the range)
                     end: Expected value (end of the range)
                 resultText: Result text
-                resultFile: Result file
+                resultFiles: Result files
                 dependentQuestion: Dependent question
                 dependentValue: Dependent question value
             placeholder:

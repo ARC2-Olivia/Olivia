@@ -57,7 +57,16 @@ class PracticalSubmoduleProcessorController extends BaseController
 
         $implForm->handleRequest($request);
         if ($implForm->isSubmitted() && $implForm->isValid()) {
-            if ($processorImpl->getId() === null) $this->em->persist($processorImpl);
+            if ($processorImpl->getId() === null) {
+                $this->em->persist($processorImpl);
+            }
+
+            $files = $implForm->get('resultFiles')->getData();
+            $practicalSubmoduleProcessor->clearResultFiles();
+            foreach ($files as $file) {
+                $practicalSubmoduleProcessor->addResultFile($file);
+            }
+
             $this->em->flush();
             $updated = true;
         } else {

@@ -3,16 +3,23 @@
 namespace App\Misc;
 
 use App\Entity\File;
+use Doctrine\Common\Collections\Collection;
 
 class ProcessorResult
 {
     private ?string $text;
-    private ?File $file;
 
-    public function __construct(?string $text = null, ?File $file = null)
+    /** @var File[]|null */
+    private ?array $files;
+
+    /**
+     * @param string|null $text
+     * @param File[]|null $files
+     */
+    public function __construct(?string $text = null, ?array $files = null)
     {
         $this->text = $text;
-        $this->file = $file;
+        $this->files = $files;
     }
 
     public function getText(): ?string
@@ -20,9 +27,9 @@ class ProcessorResult
         return $this->text;
     }
 
-    public function getFile(): ?File
+    public function getFiles(): ?array
     {
-        return $this->file;
+        return $this->files;
     }
 
     public function isTextSet(): bool
@@ -30,8 +37,8 @@ class ProcessorResult
         return null !== $this->text;
     }
 
-    public function isFileSet(): bool
+    public function areFilesSet(): bool
     {
-        return null !== $this->file;
+        return null !== $this->files && count($this->files) > 0;
     }
 }

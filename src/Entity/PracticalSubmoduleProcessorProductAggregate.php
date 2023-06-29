@@ -40,9 +40,6 @@ class PracticalSubmoduleProcessorProductAggregate implements PracticalSubmoduleP
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $resultText = null;
 
-    #[ORM\ManyToOne]
-    private ?File $resultFile = null;
-
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
@@ -212,17 +209,5 @@ class PracticalSubmoduleProcessorProductAggregate implements PracticalSubmoduleP
         if ($this->resultText === null && trim($this->resultText) === '' ) {
             $context->buildViolation('error.practicalSubmoduleProcessorProductAggregate.resultText')->atPath('resultText')->addViolation();
         }
-    }
-
-    public function getResultFile(): ?File
-    {
-        return $this->resultFile;
-    }
-
-    public function setResultFile(?File $resultFile): self
-    {
-        $this->resultFile = $resultFile;
-
-        return $this;
     }
 }

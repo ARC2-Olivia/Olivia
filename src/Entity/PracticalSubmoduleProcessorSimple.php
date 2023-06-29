@@ -34,9 +34,6 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
     #[Gedmo\Translatable]
     private ?string $resultText = null;
 
-    #[ORM\ManyToOne]
-    private ?File $resultFile = null;
-
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -147,17 +144,5 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
         if ($this->resultText === null) {
             $context->buildViolation('error.practicalSubmoduleProcessorSimple.resultText')->atPath('resultText')->addViolation();
         }
-    }
-
-    public function getResultFile(): ?File
-    {
-        return $this->resultFile;
-    }
-
-    public function setResultFile(?File $resultFile): self
-    {
-        $this->resultFile = $resultFile;
-
-        return $this;
     }
 }
