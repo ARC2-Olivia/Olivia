@@ -56,7 +56,7 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
 
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
-        return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment) && $this->isQuestionConditionPassing($practicalSubmoduleAssessment);
+        return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment);
     }
 
     public function getId(): ?int
@@ -103,21 +103,6 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         return $this;
     }
 
-    private function isQuestionConditionPassing(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): bool
-    {
-        if ($this->practicalSubmoduleQuestion === null) {
-            return true;
-        }
-
-        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
-            if ($this->practicalSubmoduleQuestion->getId() === $assessmentAnswer->getPracticalSubmoduleQuestion()->getId()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private function handleTemplatingForTemplatedTextQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
     {
         foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
@@ -150,6 +135,7 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
     private function handleTemplatingForMultipleAnswerQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
     {
         $gatheredAnswers = [];
+
         foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
             if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() !== $this->practicalSubmoduleQuestion->getId()) {
                 continue;
@@ -160,22 +146,58 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
             } else if (PracticalSubmoduleQuestion::TYPE_LIST_INPUT === $this->practicalSubmoduleQuestion->getType()) {
                 $gatheredAnswers[] = $assessmentAnswer->getAnswerValue();
             }
-        }
-        if (count($gatheredAnswers) > 0) {
-            $this->processedText = $this->resultText;
-            $pattern = '/\{\{\s*values_as_list\s*\}\}/i';
-            if (preg_match($pattern, $this->processedText)) {
-                $gatheredAnswersAsList = $gatheredAnswers;
-                for ($i = 0; $i < count($gatheredAnswersAsList); $i++) {
-                    $gatheredAnswersAsList[$i] = '- ' . $gatheredAnswersAsList[$i];
-                }
-                $gatheredAnswersAsList = implode("\n", $gatheredAnswersAsList);
-                $this->processedText = preg_replace($pattern, $gatheredAnswersAsList, $this->processedText);
+    }
+
+        $this->processedText = $this->resultText;
+
+        $pattern = '/\{\{\s*values_as_list\s*\}\}/i';
+        if (preg_match($pattern, $this->processedText)) {
+            $gatheredAnswersAsList = $gatheredAnswers;
+            for ($i = 0; $i < count($gatheredAnswersAsList); $i++) {
+                $gatheredAnswersAsList[$i] = '- ' . $gatheredAnswersAsList[$i];
             }
-            $pattern = '/\{\{\s*values_one_line\s*\}\}/i';
+            $gatheredAnswersAsList = implode("\n", $gatheredAnswersAsList);
+            $this->processedText = preg_replace($pattern, $gatheredAnswersAsList, $this->processedText);
+        }
+
+        $pattern = '/\{\{\s*values_one_line\s*\}\}/i';
+        if (preg_match($pattern, $this->processedText)) {
+            $gatheredAnswersOneLine = implode(', ', $gatheredAnswers);
+            $this->processedText = preg_replace($pattern, $gatheredAnswersOneLine, $this->processedText);
+        }
+
+        if (PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE === $this->practicalSubmoduleQuestion->getType()) {
+            $pattern = '/\{\{\s*answers_count_all\s*\}\}/i';
             if (preg_match($pattern, $this->processedText)) {
-                $gatheredAnswersOneLine = implode(', ', $gatheredAnswers);
-                $this->processedText = preg_replace($pattern, $gatheredAnswersOneLine, $this->processedText);
+                $totalAnswerCount = $this->practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->count();
+                $this->processedText = preg_replace($pattern, strval($totalAnswerCount), $this->processedText);
+            }
+
+            $pattern = '/\{\{\s*answers_count_marked\s*\}\}/i';
+            if (preg_match($pattern, $this->processedText)) {
+                $markedAnswerCount = count($gatheredAnswers);
+                $this->processedText = preg_replace($pattern, strval($markedAnswerCount), $this->processedText);
+            }
+
+            $pattern = '/\{\{\s*answers_count_unmarked\s*\}\}/i';
+            if (preg_match($pattern, $this->processedText)) {
+                $unmarkedAnswerCount = $this->practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->count() - count($gatheredAnswers);
+                $this->processedText = preg_replace($pattern, strval($unmarkedAnswerCount), $this->processedText);
+            }
+
+            $pattern = '/\{\{\s*answers_percentage_marked\s*\}\}/i';
+            if (preg_match($pattern, $this->processedText)) {
+                $markedAnswerPercentage = (count($gatheredAnswers) / $this->practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->count()) * 100;
+                $markedAnswerPercentage = number_format($markedAnswerPercentage, 2, ',', '').'%';
+                $this->processedText = preg_replace($pattern, $markedAnswerPercentage, $this->processedText);
+            }
+
+            $pattern = '/\{\{\s*answers_percentage_unmarked\s*\}\}/i';
+            if (preg_match($pattern, $this->processedText)) {
+                $markedAnswerPercentage = count($gatheredAnswers) / $this->practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->count();
+                $unmarkedAnswerPercentage = (1 - $markedAnswerPercentage) * 100;
+                $unmarkedAnswerPercentage = number_format($unmarkedAnswerPercentage, 2, ',', '').'%';
+                $this->processedText = preg_replace($pattern, $unmarkedAnswerPercentage, $this->processedText);
             }
         }
     }
