@@ -45,21 +45,9 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
 
     public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
-        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
-            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
-                $givenAnswer = $assessmentAnswer->getAnswerValue();
-                $expectedAnswer = $this->getExpectedValue();
-
-                if ($this->getPracticalSubmoduleQuestion()->getType() === PracticalSubmoduleQuestion::TYPE_YES_NO) {
-                    $givenAnswer = (bool)$givenAnswer;
-                    $expectedAnswer = (bool)$expectedAnswer;
-                }
-
-                return $givenAnswer === $expectedAnswer;
-            }
-        }
-
-        return false;
+        return PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE === $this->practicalSubmoduleQuestion->getType()
+            ? $this->calculateMultiChoiceResult($practicalSubmoduleAssessment)
+            : $this->calculateDefaultResult($practicalSubmoduleAssessment);
     }
 
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
@@ -144,5 +132,60 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
         if ($this->resultText === null) {
             $context->buildViolation('error.practicalSubmoduleProcessorSimple.resultText')->atPath('resultText')->addViolation();
         }
+    }
+
+    private function calculateMultiChoiceResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): bool
+    {
+        $result = false;
+        if ($this->expectedValue === 'ALL') {
+            $allQuestionAnswerIds = $this->practicalSubmoduleQuestion
+                ->getPracticalSubmoduleQuestionAnswers()
+                ->map(function (PracticalSubmoduleQuestionAnswer $psqa) { return $psqa->getId(); })
+                ->toArray();
+
+            $selectedQuestionAnswerIds = [];
+            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                    $selectedQuestionAnswerIds[] = $assessmentAnswer->getPracticalSubmoduleQuestionAnswer()->getId();
+                }
+            }
+
+            $result = count(array_intersect($allQuestionAnswerIds, $selectedQuestionAnswerIds)) === count($allQuestionAnswerIds);
+        } else {
+            $selectedAnswerValues = [];
+            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                    $selectedAnswerValues[] = $assessmentAnswer->getPracticalSubmoduleQuestionAnswer()->getAnswerValue();
+                }
+            }
+
+            $expectedAnswerValues = explode(',', $this->getExpectedValue());
+            for ($i = 0; $i < count($expectedAnswerValues); $i++) {
+                $expectedAnswerValues[$i] = trim($expectedAnswerValues[$i]);
+            }
+
+            $result = count(array_intersect($expectedAnswerValues, $selectedAnswerValues)) === count($expectedAnswerValues);
+        }
+        return $result;
+    }
+
+    private function calculateDefaultResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): bool
+    {
+        $result = false;
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                $givenAnswer = $assessmentAnswer->getAnswerValue();
+                $expectedAnswer = $this->getExpectedValue();
+
+                if ($this->getPracticalSubmoduleQuestion()->getType() === PracticalSubmoduleQuestion::TYPE_YES_NO) {
+                    $givenAnswer = (bool)$givenAnswer;
+                    $expectedAnswer = (bool)$expectedAnswer;
+                }
+
+                $result = $givenAnswer === $expectedAnswer;
+                break;
+            }
+        }
+        return $result;
     }
 }
