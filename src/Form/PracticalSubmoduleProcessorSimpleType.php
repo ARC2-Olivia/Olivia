@@ -72,8 +72,12 @@ class PracticalSubmoduleProcessorSimpleType extends AbstractType
                 return $repository->createQueryBuilder('psq')
                     ->where('psq.practicalSubmodule = :submodule')
                     ->andWhere('psq.evaluable = :evaluable')
-                    ->andWhere('psq.type != :type')
-                    ->setParameters(['submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(), 'evaluable' => true, 'type' => PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT]);
+                    ->andWhere('psq.type NOT IN (:types)')
+                    ->setParameters([
+                        'submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(),
+                        'evaluable' => true,
+                        'types' => [PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT, PracticalSubmoduleQuestion::TYPE_STATIC_TEXT]
+                    ]);
             };
         }
         return $queryBuilder;
