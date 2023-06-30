@@ -406,6 +406,7 @@ practicalSubmoduleProcessor:
         sumAggregate: Sum aggregate
         productAggregate: Product aggregate
         templatedText: Templated text
+        html: HTML
     delete: Are you sure you want to delete this processor?
     empty: There are no defined processors for this submodule.
     heading:

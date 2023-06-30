@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\PracticalSubmoduleProcessor;
+use App\Entity\PracticalSubmoduleProcessorHtml;
 use App\Entity\PracticalSubmoduleProcessorImplementationInterface;
 use App\Entity\PracticalSubmoduleProcessorProductAggregate;
 use App\Entity\PracticalSubmoduleProcessorSimple;
@@ -18,6 +19,7 @@ use App\Exception\PSImport\ErroneousFirstTaskException;
 use App\Exception\PSImport\MissingTaskOrderKeyException;
 use App\Exception\PSImport\WrongFirstTaskTypeException;
 use App\Exception\UnsupportedEvaluationEvaluatorTypeException;
+use App\Form\PracticalSubmoduleProcessorHtmlType;
 use App\Form\PracticalSubmoduleProcessorProductAggregateType;
 use App\Form\PracticalSubmoduleProcessorSimpleType;
 use App\Form\PracticalSubmoduleProcessorSumAggregateType;
@@ -96,6 +98,12 @@ class PracticalSubmoduleService
             return $processorImpl;
         }
 
+        if ($processor->getType() === PracticalSubmoduleProcessor::TYPE_HTML) {
+            $processorImpl = $this->em->getRepository(PracticalSubmoduleProcessorHtml::class)->findOneBy(['practicalSubmoduleProcessor' => $processor]);
+            if ($processorImpl === null) $processorImpl = (new PracticalSubmoduleProcessorHtml())->setPracticalSubmoduleProcessor($processor);
+            return $processorImpl;
+        }
+
         if ($processor->getType() === PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE) {
             $processorImpl = $this->em->getRepository(PracticalSubmoduleProcessorSumAggregate::class)->findOneBy(['practicalSubmoduleProcessor' => $processor]);
             if ($processorImpl === null) $processorImpl = (new PracticalSubmoduleProcessorSumAggregate())->setPracticalSubmoduleProcessor($processor);
@@ -124,6 +132,7 @@ class PracticalSubmoduleService
     {
         $formClass = match ($processor->getType()) {
             PracticalSubmoduleProcessor::TYPE_SIMPLE => PracticalSubmoduleProcessorSimpleType::class,
+            PracticalSubmoduleProcessor::TYPE_HTML => PracticalSubmoduleProcessorHtmlType::class,
             PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => PracticalSubmoduleProcessorSumAggregateType::class,
             PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => PracticalSubmoduleProcessorProductAggregateType::class,
             PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT => PracticalSubmoduleProcessorTemplatedTextType::class,
@@ -159,6 +168,7 @@ class PracticalSubmoduleService
         foreach ($processors as $processor) {
             $result = match ($processor->getType()) {
                 PracticalSubmoduleProcessor::TYPE_SIMPLE => $this->runSimpleProcessor($processor, $assessment),
+                PracticalSubmoduleProcessor::TYPE_HTML => $this->runHtmlProcessor($processor, $assessment),
                 PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => $this->runSumAggregateProcessor($processor, $assessment),
                 PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => $this->runProductAggregateProcessor($processor, $assessment),
                 PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT => $this->runTemplatedTextProcessor($processor, $assessment),
@@ -177,6 +187,14 @@ class PracticalSubmoduleService
         $errors = $this->validator->validate($processorSimple);
         if ($errors->count() > 0 || $processorSimple->getPracticalSubmoduleQuestion() === null || !$processorSimple->checkConformity($assessment)) return null;
         return new ProcessorResult($processorSimple->getResultText(), $processorSimple->getPracticalSubmoduleProcessor()->getResultFiles()->toArray());
+    }
+
+    private function runHtmlProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
+    {
+        $processorHtml = $processor->getPracticalSubmoduleProcessorHtml();
+        $errors = $this->validator->validate($processorHtml);
+        if ($errors->count() > 0 || $processorHtml->getPracticalSubmoduleQuestion() === null || !$processorHtml->checkConformity($assessment)) return null;
+        return new ProcessorResult($processorHtml->getResultText(), $processorHtml->getPracticalSubmoduleProcessor()->getResultFiles()->toArray());
     }
 
     private function runSumAggregateProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult

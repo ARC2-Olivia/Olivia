@@ -14,6 +14,22 @@
     {{ form_end(form) }}
 {% endif %}
 
+{% if evaluationEvaluator.type == constant('TYPE_HTML', evaluationEvaluator) %}
+    {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+        {{ form_label(form.practicalSubmoduleQuestion) }}
+        {{ form_widget(form.practicalSubmoduleQuestion) }}
+
+        {{ form_label(form.expectedValue) }}
+        {{ form_widget(form.expectedValue) }}
+
+        {{ form_label(form.resultText) }}
+        <div id="processor-html-editor"></div>
+
+        {{ form_label(form.resultFiles) }}
+        {{ form_widget(form.resultFiles) }}
+    {{ form_end(form) }}
+{% endif %}
+
 {% if evaluationEvaluator.type in [constant('TYPE_SUM_AGGREGATE', evaluationEvaluator), constant('TYPE_PRODUCT_AGGREGATE', evaluationEvaluator)]  %}
     {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
         {{ form_label(form.practicalSubmoduleQuestions) }}

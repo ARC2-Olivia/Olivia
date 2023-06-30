@@ -16,6 +16,7 @@ class PracticalSubmoduleProcessor
     public const TYPE_SUM_AGGREGATE = 'sum_aggregate';
     public const TYPE_PRODUCT_AGGREGATE = 'product_aggregate';
     public const TYPE_TEMPLATED_TEXT = 'templated_text';
+    public const TYPE_HTML = 'html';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -203,6 +204,7 @@ class PracticalSubmoduleProcessor
     {
         return match ($this->type) {
             self::TYPE_SIMPLE => $this->getPracticalSubmoduleProcessorSimple(),
+            self::TYPE_HTML => $this->getPracticalSubmoduleProcessorHtml(),
             self::TYPE_SUM_AGGREGATE => $this->getPracticalSubmoduleProcessorSumAggregate(),
             self::TYPE_PRODUCT_AGGREGATE => $this->getPracticalSubmoduleProcessorProductAggregate(),
             self::TYPE_TEMPLATED_TEXT => $this->getPracticalSubmoduleProcessorTemplatedText(),

@@ -160,9 +160,9 @@ error:
         evaluationQuestion: An evaluation question has to be chosen for the processor.
         expectedValue:
             blank: An expected value has to be given to the processor.
-            notBool: For the chosen evaluation question, the expected answer must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
-            notNumeric: For the chosen evaluation question, the expected answer needs to be a number.
-        resultText: A resulting text that the processor will generate upon successful evaluation needs to be assigned.
+            notBool: For the chosen question, the expected answer must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
+            notNumeric: For the chosen question, the expected answer needs to be a number.
+        resultText: A resulting text that the processor will generate upon successful processing needs to be assigned.
     practicalSubmoduleProcessorSumAggregate:
         questionsAndProcessors: Atleast one evaluation question or processor needs to be assigned to the sum aggregate processor (if included in calculation).
         expectedValueRange:

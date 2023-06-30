@@ -16,3 +16,45 @@
         <button type="submit" form="{{ implForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
     </div>
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% if evaluationEvaluator.type == constant('App\\Entity\\PracticalSubmoduleProcessor::TYPE_HTML') %}
+        {{ encore_entry_link_tags('quill') }}
+        <style>
+            #processor-html-editor {
+                margin-bottom: 1rem;
+                height: 480px
+            }
+        </style>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if evaluationEvaluator.type == constant('App\\Entity\\PracticalSubmoduleProcessor::TYPE_HTML') %}
+        {{ encore_entry_script_tags('quill') }}
+        <script>
+            window.addEventListener("DOMContentLoaded", () => {
+                const quill = new Quill("#processor-html-editor", {
+                    theme: "snow",
+                    modules: {
+                        toolbar: [
+                            { size: [false, 'large', 'huge'] },
+                            { color: [] },
+                            'bold', 'italic', 'image'
+                        ]
+                    }
+                });
+
+                quill.root.innerHTML = '{{ implForm.vars.data.resultText|raw }}';
+
+                const form = document.querySelector("form#practical_submodule_processor_html");
+                form.onsubmit = function() {
+                    const content = this.querySelector("#practical_submodule_processor_html_resultText");
+                    content.value = quill.root.innerHTML;
+                };
+            });
+        </script>
+    {% endif %}
+{% endblock %}
