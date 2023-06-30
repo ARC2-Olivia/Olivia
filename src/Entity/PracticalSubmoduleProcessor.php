@@ -60,6 +60,9 @@ class PracticalSubmoduleProcessor
     #[ORM\ManyToMany(targetEntity: File::class)]
     private Collection $resultFiles;
 
+    #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
+    private ?PracticalSubmoduleProcessorHtml $practicalSubmoduleProcessorHtml = null;
+
     public function __construct()
     {
         $this->resultFiles = new ArrayCollection();
@@ -291,6 +294,23 @@ class PracticalSubmoduleProcessor
     public function clearResultFiles(): self
     {
         $this->resultFiles->clear();
+
+        return $this;
+    }
+
+    public function getPracticalSubmoduleProcessorHtml(): ?PracticalSubmoduleProcessorHtml
+    {
+        return $this->practicalSubmoduleProcessorHtml;
+    }
+
+    public function setPracticalSubmoduleProcessorHtml(PracticalSubmoduleProcessorHtml $practicalSubmoduleProcessorHtml): self
+    {
+        // set the owning side of the relation if necessary
+        if ($practicalSubmoduleProcessorHtml->getPracticalSubmoduleProcessor() !== $this) {
+            $practicalSubmoduleProcessorHtml->setPracticalSubmoduleProcessor($this);
+        }
+
+        $this->practicalSubmoduleProcessorHtml = $practicalSubmoduleProcessorHtml;
 
         return $this;
     }
