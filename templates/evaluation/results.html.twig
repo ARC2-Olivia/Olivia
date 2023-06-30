@@ -8,7 +8,7 @@
                 <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'button.export'|trans }}</a>
             </div>
             {% for result in results %}
-                {% if result.textSet %}<p>{{ result.text|nl2br }}</p>{% endif %}
+                {% if result.textSet %}<p>{{ result.html ? result.text|raw : result.text|nl2br }}</p>{% endif %}
                 {% if result.areFilesSet %}
                     <p>
                         {% for file in result.files %}

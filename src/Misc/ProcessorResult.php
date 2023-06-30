@@ -12,14 +12,17 @@ class ProcessorResult
     /** @var File[]|null */
     private ?array $files;
 
+    private bool $isHtml;
+
     /**
      * @param string|null $text
      * @param File[]|null $files
      */
-    public function __construct(?string $text = null, ?array $files = null)
+    public function __construct(?string $text = null, ?array $files = null, bool $isHtml = false)
     {
         $this->text = $text;
         $this->files = $files;
+        $this->isHtml = $isHtml;
     }
 
     public function getText(): ?string
@@ -30,6 +33,11 @@ class ProcessorResult
     public function getFiles(): ?array
     {
         return $this->files;
+    }
+
+    public function isHtml(): ?bool
+    {
+        return $this->isHtml;
     }
 
     public function isTextSet(): bool
