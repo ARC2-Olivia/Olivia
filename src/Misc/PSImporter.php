@@ -5,6 +5,7 @@ namespace App\Misc;
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleProcessor;
+use App\Entity\PracticalSubmoduleProcessorHtml;
 use App\Entity\PracticalSubmoduleProcessorProductAggregate;
 use App\Entity\PracticalSubmoduleProcessorSimple;
 use App\Entity\PracticalSubmoduleProcessorSumAggregate;
@@ -220,6 +221,19 @@ class PSImporter
 
                 if (true === (key_exists('trans', $implProps) && key_exists('resultText', $implProps['trans']))) {
                     $this->translationRepository->translate($pspSimple, 'resultText', $this->localeAlternate, $implProps['trans']['resultText']);
+                }
+            } break;
+            case $processor::TYPE_HTML: {
+                if (false === $this->allKeysExist(['expectedValue', 'resultText'], $implProps)) return;
+                $pspHtml = (new PracticalSubmoduleProcessorHtml())
+                    ->setExpectedValue($implProps['expectedValue'])
+                    ->setResultText($implProps['resultText'])
+                ;
+                $processor->setPracticalSubmoduleProcessorHtml($pspHtml);
+                $this->em->persist($pspHtml);
+
+                if (true === (key_exists('trans', $implProps) && key_exists('resultText', $implProps['trans']))) {
+                    $this->translationRepository->translate($pspHtml, 'resultText', $this->localeAlternate, $implProps['trans']['resultText']);
                 }
             } break;
             case $processor::TYPE_SUM_AGGREGATE: {

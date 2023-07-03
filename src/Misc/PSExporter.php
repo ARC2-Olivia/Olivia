@@ -177,6 +177,19 @@ class PSExporter
                         }
                     }
                 } break;
+                case $processor::TYPE_HTML: {
+                    $impl = $processor->getPracticalSubmoduleProcessorHtml();
+                    if (null !== $impl) {
+                        $implProps['expectedValue'] = $impl->getExpectedValue();
+                        $implProps['resultText'] = $impl->getResultText();
+
+                        $trans = $this->translationRepository->findTranslations($impl);
+                        if (true === key_exists($this->localeAlternate, $trans)) {
+                            $transResultText = $trans[$this->localeAlternate]['resultText'] ?? null;
+                            if (null !== $transResultText) $implProps['trans'] = ['resultText' => $transResultText];
+                        }
+                    }
+                } break;
                 case $processor::TYPE_SUM_AGGREGATE: {
                     $impl = $processor->getPracticalSubmoduleProcessorSumAggregate();
                     if (null !== $impl) {
