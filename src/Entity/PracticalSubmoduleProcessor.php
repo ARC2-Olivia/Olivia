@@ -71,7 +71,7 @@ class PracticalSubmoduleProcessor
 
     public static function getSupportedProcessorTypes(): array
     {
-        return [self::TYPE_SIMPLE, self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE, self::TYPE_TEMPLATED_TEXT];
+        return [self::TYPE_SIMPLE, self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE, self::TYPE_TEMPLATED_TEXT, self::TYPE_HTML];
     }
 
     public static function getProcessorProcessingProcessorTypes(): array
