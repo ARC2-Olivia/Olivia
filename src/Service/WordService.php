@@ -18,7 +18,7 @@ class WordService
 
     public function generateAssessmentResultsDocument(PracticalSubmoduleAssessment $assessment): string
     {
-        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $results = $this->practicalSubmoduleService->runProcessors($assessment, true);
 
         $word = new \PhpOffice\PhpWord\PhpWord();
         $word->setDefaultParagraphStyle(['spaceAfter' => 0, 'alignment' => 'both']);
