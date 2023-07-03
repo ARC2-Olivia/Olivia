@@ -239,6 +239,14 @@ ul.mod--ps-pages {
     row-gap: 24px;
 }
 
+.evaluation-results > .ql-editor ul {
+    padding-left: 2rem;
+}
+
+.evaluation-results > .ql-editor img {
+    max-width: 100%;
+}
+
 .evaluation-assessment-data {
     display: flex;
     flex-direction: column;
