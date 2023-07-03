@@ -79,7 +79,7 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
 
     public static function getNumericTypes(): array
     {
-        return [self::TYPE_WEIGHTED, self::TYPE_NUMERICAL_INPUT];
+        return [self::TYPE_WEIGHTED, self::TYPE_NUMERICAL_INPUT, self::TYPE_YES_NO];
     }
 
     public static function getSingleChoiceTypes(): array
