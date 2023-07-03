@@ -300,6 +300,11 @@ class PSImporter
                 $pspSimple->setPracticalSubmoduleQuestion($question);
                 $this->em->persist($pspSimple);
             } break;
+            case $processor::TYPE_HTML: {
+                $pspHtml = $processor->getPracticalSubmoduleProcessorHtml();
+                $pspHtml->setPracticalSubmoduleQuestion($question);
+                $this->em->persist($pspHtml);
+            } break;
             case $processor::TYPE_SUM_AGGREGATE: {
                 $pspSumAggregate = $processor->getPracticalSubmoduleProcessorSumAggregate();
                 $pspSumAggregate->addPracticalSubmoduleQuestion($question);

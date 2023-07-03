@@ -253,6 +253,12 @@ class PSExporter
                         $dependentIds[] = $this->questionMapping[$questionId];
                     }
                 } break;
+                case $processor::TYPE_HTML: {
+                    $questionId = $processor?->getPracticalSubmoduleProcessorHtml()?->getPracticalSubmoduleQuestion()?->getId();
+                    if (null !== $questionId && key_exists($questionId, $this->questionMapping)) {
+                        $dependentIds[] = $this->questionMapping[$questionId];
+                    }
+                } break;
                 case $processor::TYPE_SUM_AGGREGATE: {
                     $questionIds = $processor?->getPracticalSubmoduleProcessorSumAggregate()?->getPracticalSubmoduleQuestions()->map(function (PracticalSubmoduleQuestion $psq) { return $psq->getId(); });
                     if (null !== $questionIds) {
