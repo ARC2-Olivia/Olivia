@@ -18,18 +18,29 @@ class WordService
 
     public function generateAssessmentResultsDocument(PracticalSubmoduleAssessment $assessment): string
     {
-        $results = $this->practicalSubmoduleService->runProcessors($assessment, true);
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
 
         $word = new \PhpOffice\PhpWord\PhpWord();
         $word->setDefaultParagraphStyle(['spaceAfter' => 0, 'alignment' => 'both']);
 
         $section = $word->addSection();
         foreach ($results as $result) {
-            foreach (explode("\n", $result->getText()) as $line) {
-                if (str_starts_with($line, '- ')) {
-                    $section->addListItem(preg_replace('/^- /', '', $line, 1));
-                } else {
-                    $section->addText(trim($line), ['name' => 'Arial', 'size' => 10]);
+            if (false === $result->isTextSet()) {
+                continue;
+            }
+
+            if ($result->isHtml()) {
+                $html = new \DOMDocument();
+                $html->loadHTML(str_replace('<br>', '<br/>', $result->getText()));
+                $body = $html->getElementsByTagName("body")->item(0);
+                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html->saveXML($body, LIBXML_NOEMPTYTAG), true);
+            } else {
+                foreach (explode("\n", $result->getText()) as $line) {
+                    if (str_starts_with($line, '- ')) {
+                        $section->addListItem(preg_replace('/^- /', '', $line, 1));
+                    } else {
+                        $section->addText(trim($line), ['name' => 'Arial', 'size' => 10]);
+                    }
                 }
             }
             $section->addTextBreak();

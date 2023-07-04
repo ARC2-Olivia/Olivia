@@ -160,7 +160,7 @@ class PracticalSubmoduleService
     }
 
     /** @return ProcessorResult[] */
-    public function runProcessors(PracticalSubmoduleAssessment $assessment, bool $forWordExport = false): array
+    public function runProcessors(PracticalSubmoduleAssessment $assessment): array
     {
         $results = [];
 
@@ -168,7 +168,7 @@ class PracticalSubmoduleService
         foreach ($processors as $processor) {
             $result = match ($processor->getType()) {
                 PracticalSubmoduleProcessor::TYPE_SIMPLE => $this->runSimpleProcessor($processor, $assessment),
-                PracticalSubmoduleProcessor::TYPE_HTML => $forWordExport ? null : $this->runHtmlProcessor($processor, $assessment),
+                PracticalSubmoduleProcessor::TYPE_HTML => $this->runHtmlProcessor($processor, $assessment),
                 PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => $this->runSumAggregateProcessor($processor, $assessment),
                 PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => $this->runProductAggregateProcessor($processor, $assessment),
                 PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT => $this->runTemplatedTextProcessor($processor, $assessment),
