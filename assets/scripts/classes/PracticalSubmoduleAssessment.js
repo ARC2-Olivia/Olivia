@@ -253,7 +253,7 @@ class PracticalSubmoduleAssessment {
         });
 
         const otherButton = this.#parser.parseFromString(`
-            <button type="button" class="btn btn-theme-white bg-green w-fit">Add option</button>
+            <button type="button" class="btn btn-theme-white bg-green w-fit">${this.#translation.buttonAdd}</button>
         `, "text/html").body.firstChild;
         otherButton.addEventListener("click", function() {
             const otherInput = context.#parser.parseFromString(`
