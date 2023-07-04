@@ -167,7 +167,10 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
             $selectedAnswerValues = [];
             foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
                 if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
-                    $selectedAnswerValues[] = $assessmentAnswer->getPracticalSubmoduleQuestionAnswer()->getAnswerValue();
+                    $selectedAnswerValue = null !== $assessmentAnswer->getPracticalSubmoduleQuestionAnswer()
+                        ? $assessmentAnswer->getPracticalSubmoduleQuestionAnswer()->getAnswerValue()
+                        : $assessmentAnswer->getAnswerValue();
+                    $selectedAnswerValues[] = $selectedAnswerValue;
                 }
             }
 
