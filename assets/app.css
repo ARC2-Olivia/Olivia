@@ -113,6 +113,10 @@ header {
     padding: 16px;
 }
 
+.w-fit {
+    width: fit-content !important;
+}
+
 .bg-orange { background-color: var(--app-color-orange) !important; }
 .bg-green { background-color: var(--app-color-green) !important; }
 .bg-blue { background-color: var(--app-color-blue) !important; }

@@ -159,25 +159,31 @@ class PracticalSubmoduleAssessmentController extends BaseController
 
     private function storeMultiChoiceAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
     {
-        $practicalSubmoduleQuestionAnswerRepository = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class);
-        foreach ($givenAnswer as $choice) {
-            if (($qa = $practicalSubmoduleQuestionAnswerRepository->find($choice)) !== null) {
-                $choiceAnswer = (new PracticalSubmoduleAssessmentAnswer())
-                    ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
-                    ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
-                    ->setPracticalSubmoduleQuestionAnswer($qa);
-                $this->em->persist($choiceAnswer);
+        if (key_exists('choices', $givenAnswer)) {
+            $practicalSubmoduleQuestionAnswerRepository = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class);
+            foreach ($givenAnswer['choices'] as $choice) {
+                if (($qa = $practicalSubmoduleQuestionAnswerRepository->find($choice)) !== null) {
+                    $choiceAnswer = (new PracticalSubmoduleAssessmentAnswer())
+                        ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
+                        ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+                        ->setPracticalSubmoduleQuestionAnswer($qa);
+                    $this->em->persist($choiceAnswer);
+                }
             }
         }
-        /*
-        if (isset($givenAnswer['other'])) {
-            $otherAnswer = (new PracticalSubmoduleAssessmentAnswer())
-                ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
-                ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
-                ->setAnswerValue($givenAnswer['other']);
-            $this->em->persist($otherAnswer);
+
+        if (key_exists('other', $givenAnswer)) {
+            foreach ($givenAnswer['other'] as $other) {
+                $other = trim($other);
+                if (strlen($other) > 0) {
+                    $choiceAnswer = (new PracticalSubmoduleAssessmentAnswer())
+                        ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
+                        ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+                        ->setAnswerValue($other);
+                    $this->em->persist($choiceAnswer);
+                }
+            }
         }
-        */
     }
 
     private function storeListInputAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void

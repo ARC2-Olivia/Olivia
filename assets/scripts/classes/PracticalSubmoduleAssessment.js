@@ -227,12 +227,13 @@ class PracticalSubmoduleAssessment {
     }
 
     #createMultiChoiceAnswers(questionData) {
+        const context = this;
         const answers = [];
         const inputs = [];
         questionData.answers.forEach((answerData) => {
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="checkbox" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][]" data-value="${answerData.value}"/>
+                    <input type="checkbox" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][choices][]" data-value="${answerData.value}"/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
@@ -251,16 +252,19 @@ class PracticalSubmoduleAssessment {
             });
         });
 
-        /*
-        const other = this.#parser.parseFromString(`
-            <label class="evaluation-assessment-question-answer mt-3">
-                <span>Other</span>
-                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][other]"/>
-            </label>
-        `, "text/html");
-        answers.push(other.body.firstChild);
-        */
+        const otherButton = this.#parser.parseFromString(`
+            <button type="button" class="btn btn-theme-white bg-green w-fit">Add option</button>
+        `, "text/html").body.firstChild;
+        otherButton.addEventListener("click", function() {
+            const otherInput = context.#parser.parseFromString(`
+                <label>
+                    <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][other][]"/>
+                </label>
+            `, "text/html").body.firstChild;
+            this.parentElement.insertBefore(otherInput, this);
+        });
 
+        answers.push(otherButton);
         return answers;
     }
 
