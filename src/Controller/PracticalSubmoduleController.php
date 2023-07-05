@@ -119,7 +119,7 @@ class PracticalSubmoduleController extends BaseController
     {
         $form = $this->createForm(PracticalSubmoduleType::class, $practicalSubmodule);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $image = $form->get('image')->getData();
             if ($image !== null) $this->removePracticalSubmoduleImage($practicalSubmodule);

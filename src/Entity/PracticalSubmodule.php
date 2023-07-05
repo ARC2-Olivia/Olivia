@@ -54,6 +54,7 @@ class PracticalSubmodule extends TranslatableEntity
     private ?bool $paging = null;
 
     #[ORM\Column(name: 'op_mode', length: 16)]
+    #[Assert\Choice(choices: [PracticalSubmodule::MODE_OF_OPERATION_SIMPLE, PracticalSubmodule::MODE_OF_OPERATION_ADVANCED], message: 'error.practicalSubmodule.modeOfOperation')]
     private ?string $modeOfOperation = null;
 
     public function __construct()

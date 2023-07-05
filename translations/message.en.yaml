@@ -142,6 +142,7 @@ error:
             wrongFirstTaskType: First task has to create a practical submodule. Has the file been tampered with in any way after export?
             missingTaskOrderKey: Certain data important for the export is missing from the file. Has the file been tampered with in any way after export?
             default: Unexpected error occurred while importing the practical submodule.
+        modeOfOperation: Invalid mode of operation.
     practicalSubmoduleQuestion:
         dependentValue:
             notBool: For the chosen dependent question, the dependent value must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
