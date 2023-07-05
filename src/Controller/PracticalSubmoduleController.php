@@ -115,9 +115,9 @@ class PracticalSubmoduleController extends BaseController
 
     #[Route("/edit/{practicalSubmodule}", name: "edit")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function edit(PracticalSubmodule $practicalSubmodule, Request $request): Response
+    public function edit(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
-        $form = $this->createForm(PracticalSubmoduleType::class, $practicalSubmodule);
+        $form = $this->createForm(PracticalSubmoduleType::class, $practicalSubmodule, ['has_advanced_mode_features' => $practicalSubmoduleService->hasAdvancedModeFeatures($practicalSubmodule)]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();

@@ -59,6 +59,20 @@ class PracticalSubmoduleService
         return (new PSImporter($tasks, $this->em, $this->parameterBag->get('locale.alternate')))->import();
     }
 
+    public function hasAdvancedModeFeatures(PracticalSubmodule $practicalSubmodule): bool
+    {
+        foreach ($practicalSubmodule->getPracticalSubmoduleProcessors() as $processor) {
+            $impl = null;
+            if ($processor::TYPE_SUM_AGGREGATE === $processor->getType() || $processor::TYPE_PRODUCT_AGGREGATE === $processor->getType()) {
+                /** @var PracticalSubmoduleProcessorSumAggregate|PracticalSubmoduleProcessorProductAggregate $impl */
+                $impl = $processor->getEvaluationEvaluatorImplementation();
+            }
+            if (null === $impl) continue;
+            if ($impl->getPracticalSubmoduleProcessors()->count() > 0 || $impl->getPracticalSubmoduleQuestions()->count() > 1) return true;
+        }
+        return false;
+    }
+
     /**
      * @throws InvalidPracticalSubmoduleQuestionTypeException
      */

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Course;
 use App\Entity\PracticalSubmodule;
 use App\Form\Transformer\SimpleArrayToStringTransformer;
+use App\Service\PracticalSubmoduleService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -73,7 +74,8 @@ class PracticalSubmoduleType extends AbstractType
             ->add('modeOfOperation', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.modeOfOperation',
                 'choices' => $opModeChoices,
-                'attr' => ['class' => 'form-select mb-3']
+                'attr' => ['class' => 'form-select mb-3'],
+                'disabled' => true === $options['has_advanced_mode_features']
             ])
             ->add('tags', TextareaType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.tags',
@@ -129,6 +131,7 @@ class PracticalSubmoduleType extends AbstractType
             'data_class' => PracticalSubmodule::class,
             'translation_domain' => 'app',
             'include_translatable_fields' => false,
+            'has_advanced_mode_features' => false,
             'attr' => [
                 'class' => 'd-flex flex-column',
                 'novalidate' => 'novalidate'

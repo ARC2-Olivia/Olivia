@@ -255,4 +255,14 @@ class PracticalSubmodule extends TranslatableEntity
 
         return $this;
     }
+
+    public function isSimpleModeOfOperation(): bool
+    {
+        return self::MODE_OF_OPERATION_SIMPLE === $this->modeOfOperation;
+    }
+
+    public function isAdvancedModeOfOperation(): bool
+    {
+        return self::MODE_OF_OPERATION_ADVANCED === $this->modeOfOperation;
+    }
 }
