@@ -56,7 +56,7 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
 
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
     {
-        return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment);
+        return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment) && $this->isTemplatingConditionPassing($practicalSubmoduleAssessment);
     }
 
     public function getId(): ?int
@@ -226,5 +226,18 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         if (preg_match($pattern, $this->processedText)) {
             $this->processedText = preg_replace($pattern, $date, $this->processedText);
         }
+    }
+
+    private function isTemplatingConditionPassing(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): bool
+    {
+        if (null === $this->practicalSubmoduleQuestion) {
+            return true;
+        }
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($this->practicalSubmoduleQuestion->getId() === $assessmentAnswer->getPracticalSubmoduleQuestion()->getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
