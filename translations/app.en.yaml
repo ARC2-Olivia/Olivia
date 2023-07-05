@@ -182,6 +182,7 @@ form:
                 tags: Tags
                 tagsAlt: Tags (alternate language)
                 courses: Connected courses (Ctrl + Left mouse click to select multiple courses)
+                modeOfOperation: Mode of operation
             placeholder:
                 name: Name of the evaluation
                 description: Evaluation description...
@@ -371,6 +372,9 @@ practicalSubmodule:
             evaluator: New processor
             answer: New answer
             page: New page
+    modeOfOperation:
+        simple: Simple
+        advanced: Advanced
     extra:
         question: Question
         questions: Questions

@@ -31,6 +31,11 @@ class PracticalSubmoduleType extends AbstractType
             $this->translator->trans('common.yes', [], 'app') => true
         ];
 
+        $opModeChoices = [
+            $this->translator->trans('practicalSubmodule.modeOfOperation.simple', [], 'app') => PracticalSubmodule::MODE_OF_OPERATION_SIMPLE,
+            $this->translator->trans('practicalSubmodule.modeOfOperation.advanced', [], 'app') => PracticalSubmodule::MODE_OF_OPERATION_ADVANCED
+        ];
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.name',
@@ -63,6 +68,11 @@ class PracticalSubmoduleType extends AbstractType
             ->add('paging', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.paging',
                 'choices' => $pagingChoices,
+                'attr' => ['class' => 'form-select mb-3']
+            ])
+            ->add('modeOfOperation', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmodule.label.modeOfOperation',
+                'choices' => $opModeChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('tags', TextareaType::class, [

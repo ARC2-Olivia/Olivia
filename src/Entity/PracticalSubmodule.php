@@ -13,6 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: PracticalSubmoduleRepository::class)]
 class PracticalSubmodule extends TranslatableEntity
 {
+    public const MODE_OF_OPERATION_SIMPLE = 'simple';
+    public const MODE_OF_OPERATION_ADVANCED = 'advanced';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -49,6 +52,9 @@ class PracticalSubmodule extends TranslatableEntity
 
     #[ORM\Column(nullable: true)]
     private ?bool $paging = null;
+
+    #[ORM\Column(name: 'op_mode', length: 16)]
+    private ?string $modeOfOperation = null;
 
     public function __construct()
     {
@@ -233,6 +239,18 @@ class PracticalSubmodule extends TranslatableEntity
     public function setPaging(?bool $paging): self
     {
         $this->paging = $paging;
+
+        return $this;
+    }
+
+    public function getModeOfOperation(): ?string
+    {
+        return $this->modeOfOperation;
+    }
+
+    public function setModeOfOperation(string $modeOfOperation): self
+    {
+        $this->modeOfOperation = $modeOfOperation;
 
         return $this;
     }

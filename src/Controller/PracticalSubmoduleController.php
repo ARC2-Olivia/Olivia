@@ -59,6 +59,7 @@ class PracticalSubmoduleController extends BaseController
     public function new(Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
         $practicalSubmodule = new PracticalSubmodule();
+        $practicalSubmodule->setModeOfOperation($practicalSubmodule::MODE_OF_OPERATION_ADVANCED);
         $practicalSubmodule->setLocale($this->getParameter('locale.default'));
 
         $form = $this->createForm(PracticalSubmoduleType::class, $practicalSubmodule, ['include_translatable_fields' => true]);
