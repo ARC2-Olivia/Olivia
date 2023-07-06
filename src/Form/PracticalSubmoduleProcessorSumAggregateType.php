@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\File;
+use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleProcessorSumAggregate;
 use App\Entity\PracticalSubmoduleQuestion;
@@ -28,16 +29,35 @@ class PracticalSubmoduleProcessorSumAggregateType extends AbstractType
     {
         /** @var PracticalSubmoduleProcessor $practicalSubmoduleProcessor */
         $practicalSubmoduleProcessor = $builder->getData()?->getPracticalSubmoduleProcessor();
+        $modeOfOperation = $practicalSubmoduleProcessor?->getPracticalSubmodule()->getModeOfOperation();
+        $included = $practicalSubmoduleProcessor?->isIncluded();
+        $simpleMode = true === $included && PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $modeOfOperation;
 
-        $builder
-            ->add('practicalSubmoduleQuestions', EntityType::class, [
+        if (true === $simpleMode) {
+            $builder->add('question', EntityType::class, [
+                'class' => PracticalSubmoduleQuestion::class,
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.evaluationQuestion',
+                'choice_label' => 'questionText',
+                'query_builder' => $this->makePracticalSubmoduleQuestionQueryBuilder($builder),
+                'attr' => ['class' => 'form-select mb-3'],
+                'mapped' => false,
+                'data' => $practicalSubmoduleProcessor?->getPracticalSubmoduleProcessorSumAggregate()->getPracticalSubmoduleQuestions()->get(0),
+                'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleProcessor.placeholder.evaluationQuestion', [], 'app')
+            ]);
+        } else {
+            $builder->add('questions', EntityType::class, [
                 'class' => PracticalSubmoduleQuestion::class,
                 'label' => 'form.entity.practicalSubmoduleProcessor.label.evaluationQuestion',
                 'choice_label' => 'questionText',
                 'query_builder' => $this->makePracticalSubmoduleQuestionQueryBuilder($builder),
                 'attr' => ['class' => 'form-select multiple mb-3'],
-                'multiple' => true
-            ])
+                'multiple' => true,
+                'mapped' => false,
+                'data' => $practicalSubmoduleProcessor?->getPracticalSubmoduleProcessorSumAggregate()->getPracticalSubmoduleQuestions()
+            ]);
+        }
+
+        $builder
             ->add('practicalSubmoduleProcessors', EntityType::class, [
                 'class' => PracticalSubmoduleProcessor::class,
                 'label' => 'form.entity.practicalSubmoduleProcessor.label.evaluationEvaluators',

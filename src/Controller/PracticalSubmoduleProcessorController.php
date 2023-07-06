@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleProcessor;
+use App\Entity\PracticalSubmoduleProcessorProductAggregate;
+use App\Entity\PracticalSubmoduleProcessorSumAggregate;
+use App\Entity\PracticalSubmoduleQuestion;
 use App\Form\PracticalSubmoduleProcessorType;
 use App\Repository\PracticalSubmoduleProcessorRepository;
 use App\Service\PracticalSubmoduleService;
@@ -44,9 +48,18 @@ class PracticalSubmoduleProcessorController extends BaseController
         $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $practicalSubmoduleProcessor, ['edit_mode' => true]);
         $implForm = $this->createForm($practicalSubmoduleService->getProcessorImplementationFormClass($practicalSubmoduleProcessor), $processorImpl);
         $updated = false;
+        $oldIncluded = $practicalSubmoduleProcessor->isIncluded();
+        $isProcessorProcessingProcessor = in_array($practicalSubmoduleProcessor->getType(), PracticalSubmoduleProcessor::getProcessorProcessingProcessorTypes());
 
         $baseForm->handleRequest($request);
         if ($baseForm->isSubmitted() && $baseForm->isValid()) {
+            if ($oldIncluded !== $practicalSubmoduleProcessor->isIncluded()
+                && true === $isProcessorProcessingProcessor
+                && $practicalSubmoduleProcessor->getPracticalSubmodule()->isSimpleModeOfOperation()
+            ) {
+                /** @var PracticalSubmoduleProcessorSumAggregate|PracticalSubmoduleProcessorProductAggregate $processorImpl */
+                $processorImpl->getPracticalSubmoduleQuestions()->clear();
+            }
             $this->em->flush();
             $updated = true;
         } else {
@@ -67,6 +80,22 @@ class PracticalSubmoduleProcessorController extends BaseController
                 $practicalSubmoduleProcessor->addResultFile($file);
             }
 
+            if (true === $isProcessorProcessingProcessor) {
+                /** @var PracticalSubmoduleProcessorSumAggregate|PracticalSubmoduleProcessorProductAggregate $processorImpl */
+                $processorImpl->getPracticalSubmoduleQuestions()->clear();
+                $simpleMode = true === $practicalSubmoduleProcessor->isIncluded() && PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $practicalSubmoduleProcessor->getPracticalSubmodule()->getModeOfOperation();
+                $questionRepository = $this->em->getRepository(PracticalSubmoduleQuestion::class);
+                if (true === $simpleMode) {
+                    $question = $implForm->get('question')->getData();
+                    if (null !== $question) $processorImpl->getPracticalSubmoduleQuestions()->add($question);
+                } else {
+                    $questionIds = $implForm->get('questions')->getViewData();
+                    if (null !== $questionIds) {
+                        foreach ($questionIds as $questionId) $processorImpl->getPracticalSubmoduleQuestions()->add($questionRepository->find($questionId));
+                    }
+                }
+            }
+
             $this->em->flush();
             $updated = true;
         } else {
@@ -75,7 +104,10 @@ class PracticalSubmoduleProcessorController extends BaseController
             }
         }
 
-        if ($updated === true) $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleProcessor.edit', [], 'message'));
+        if ($updated === true) {
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleProcessor.edit', [], 'message'));
+            return $this->redirectToRoute('practical_submodule_processor_edit', ['practicalSubmoduleProcessor' => $practicalSubmoduleProcessor->getId()]);
+        }
         return $this->render('evaluation/evaluation_evaluator/edit.html.twig', [
             'evaluation' => $practicalSubmoduleProcessor->getPracticalSubmodule(),
             'evaluationEvaluator' => $practicalSubmoduleProcessor,
