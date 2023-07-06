@@ -2,45 +2,11 @@
 {% trans_default_domain 'app' %}
 
 {% block evaluationContent %}
-    <div class="evaluation-results">
-        {% if results is not empty %}
-            <div class="text-center">
-                <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'button.export'|trans }}</a>
-            </div>
-            {% for result in results %}
-                {% if result.textSet %}
-                    {% if result.html %}
-                        <div class="ql-editor">{{ result.text|raw }}</div>
-                    {% else %}
-                        <p>{{ result.text|nl2br }}</p>
-                    {% endif %}
-                {% endif %}
-                {% if result.areFilesSet %}
-                    <p>
-                        {% for file in result.files %}
-                            <span class="evaluation-results-file" data-prefix="{{ 'common.file'|trans }}: ">
-                                <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}">{{ file.originalName }}</a>
-                            </span>
-
-                        {% endfor %}
-                    </p>
-                {% endif %}
-            {% endfor %}
-        {% else %}
-            <p>{{ 'practicalSubmodule.extra.results.empty'|trans }}</p>
-        {% endif %}
-    </div>
-    <hr>
-    <div class="evaluation-assessment-data">
-        {% for _, answerDatum in answerData %}
-            <div class="evaluation-assessment-datum">
-                <div class="evaluation-assessment-datum-question">{{ answerDatum.question }}</div>
-                {% for answer in answerDatum.answers %}
-                    <div class="evaluation-assessment-datum-answer">{{ answer|trans|raw|nl2br }}</div>
-                {% endfor %}
-            </div>
-        {% endfor %}
-    </div>
+    {% if constant('App\\Entity\\PracticalSubmodule::MODE_OF_OPERATION_SIMPLE') == evaluation.modeOfOperation %}
+        {% include 'evaluation/_results_simple.html.twig' %}
+    {% else %}
+        {% include 'evaluation/_results_advanced.html.twig' %}
+    {% endif %}
     <hr>
     <p class="text-center">{{ 'practicalSubmodule.extra.results.final'|trans }}</p>
 {% endblock %}

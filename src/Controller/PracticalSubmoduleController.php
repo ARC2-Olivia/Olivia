@@ -313,14 +313,28 @@ class PracticalSubmoduleController extends BaseController
     {
         $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
         $results = $practicalSubmoduleService->runProcessors($assessment);
-
         $answerData = [];
-        foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
-            $questionId = $answer->getPracticalSubmoduleQuestion()->getId();
-            if (!key_exists($questionId, $answerData)) {
-                $answerData[$questionId] = ['question' => $answer->getPracticalSubmoduleQuestion()->getQuestionText(), 'answers' => []];
+
+        if (PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $practicalSubmodule->getModeOfOperation()) {
+            foreach ($results as $result) {
+                $answerDatum = ['result' => $result, 'answers' => null];
+                if ($result->isQuestionSet()) {
+                    foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
+                        if ($answer->getPracticalSubmoduleQuestion()->getId() !== $result->getQuestion()->getId()) continue;
+                        if (null === $answerDatum['answers']) $answerDatum['answers'] = [];
+                        $answerDatum['answers'][] = $answer->getDisplayableAnswer();
+                    }
+                }
+                $answerData[] = $answerDatum;
             }
-            $answerData[$questionId]['answers'][] = $answer->getDisplayableAnswer();
+        } else {
+            foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
+                $questionId = $answer->getPracticalSubmoduleQuestion()->getId();
+                if (!key_exists($questionId, $answerData)) {
+                    $answerData[$questionId] = ['question' => $answer->getPracticalSubmoduleQuestion()->getQuestionText(), 'answers' => []];
+                }
+                $answerData[$questionId]['answers'][] = $answer->getDisplayableAnswer();
+            }
         }
 
         return $this->render('evaluation/results.html.twig', [
