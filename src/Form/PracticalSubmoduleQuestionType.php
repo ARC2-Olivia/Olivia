@@ -58,7 +58,7 @@ class PracticalSubmoduleQuestionType extends AbstractType
                 'query_builder' => $this->makeDependentQuestionQueryBuilder($builder),
                 'choice_label' => 'questionText',
                 'placeholder' => 'form.entity.practicalSubmoduleQuestion.placeholder.dependentEvaluationQuestion',
-                'attr' => ['class' => 'form-select mb-3']
+                'attr' => ['class' => 'mb-3', 'data-df-select' => '']
             ])
             ->add('dependentValue', TextType::class, [
                 'label' => 'form.entity.practicalSubmoduleQuestion.label.dependentValue',

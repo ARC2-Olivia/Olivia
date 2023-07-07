@@ -35,7 +35,7 @@ class PracticalSubmoduleProcessorSimpleType extends AbstractType
                 'label' => 'form.entity.practicalSubmoduleProcessor.label.evaluationQuestion',
                 'choice_label' => 'questionText',
                 'query_builder' => $this->makeQueryBuilder($builder),
-                'attr' => ['class' => 'form-select mb-3'],
+                'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'placeholder' => 'form.entity.practicalSubmoduleProcessor.placeholder.evaluationQuestion'
             ])
             ->add('expectedValue', TextType::class, ['label' => 'form.entity.practicalSubmoduleProcessor.label.expectedValue', 'attr' => ['class' => 'form-input mb-3']])

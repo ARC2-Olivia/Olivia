@@ -25,7 +25,7 @@ class PracticalSubmodulePageType extends AbstractType
             ->add('questions', EntityType::class, [
                 'mapped' => false,
                 'label' => 'form.entity.practicalSubmodulePage.label.questions',
-                'attr' => ['class' => 'form-select multiple mb-3'],
+                'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'class' => PracticalSubmoduleQuestion::class,
                 'multiple' => true,
                 'choice_label' => 'questionText',

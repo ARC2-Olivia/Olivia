@@ -19,6 +19,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    {{ encore_entry_link_tags('df-select') }}
     {% if evaluationEvaluator.type == constant('App\\Entity\\PracticalSubmoduleProcessor::TYPE_HTML') %}
         {{ encore_entry_link_tags('quill') }}
         <style>
@@ -32,6 +33,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    {{ encore_entry_script_tags('df-select') }}
     {% if evaluationEvaluator.type == constant('App\\Entity\\PracticalSubmoduleProcessor::TYPE_HTML') %}
         {{ encore_entry_script_tags('quill') }}
         <script>

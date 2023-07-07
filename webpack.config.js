@@ -30,6 +30,7 @@ Encore
     .addEntry('axios', './assets/axios.js')
     .addEntry('gridjs', './assets/grid.js')
     .addEntry('popper.dropdown', './assets/scripts/popper.dropdown.js')
+    .addEntry('df-select', './assets/df-select.js')
 
     // Page specific
     .addEntry('lessons.sort', './assets/scripts/lessons.sort.js')

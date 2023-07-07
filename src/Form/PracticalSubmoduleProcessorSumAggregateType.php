@@ -39,7 +39,7 @@ class PracticalSubmoduleProcessorSumAggregateType extends AbstractType
                 'label' => 'form.entity.practicalSubmoduleProcessor.label.evaluationQuestion',
                 'choice_label' => 'questionText',
                 'query_builder' => $this->makePracticalSubmoduleQuestionQueryBuilder($builder),
-                'attr' => ['class' => 'form-select mb-3'],
+                'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'mapped' => false,
                 'data' => $practicalSubmoduleProcessor?->getPracticalSubmoduleProcessorSumAggregate()->getPracticalSubmoduleQuestions()->get(0),
                 'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleProcessor.placeholder.evaluationQuestion', [], 'app')
@@ -50,7 +50,7 @@ class PracticalSubmoduleProcessorSumAggregateType extends AbstractType
                 'label' => 'form.entity.practicalSubmoduleProcessor.label.evaluationQuestion',
                 'choice_label' => 'questionText',
                 'query_builder' => $this->makePracticalSubmoduleQuestionQueryBuilder($builder),
-                'attr' => ['class' => 'form-select multiple mb-3'],
+                'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'multiple' => true,
                 'mapped' => false,
                 'data' => $practicalSubmoduleProcessor?->getPracticalSubmoduleProcessorSumAggregate()->getPracticalSubmoduleQuestions()
@@ -63,7 +63,7 @@ class PracticalSubmoduleProcessorSumAggregateType extends AbstractType
                 'label' => 'form.entity.practicalSubmoduleProcessor.label.evaluationEvaluators',
                 'choice_label' => 'name',
                 'query_builder' => $this->makePracticalSubmoduleProcessorQueryBuilder($builder),
-                'attr' => ['class' => 'form-select multiple mb-3'],
+                'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'multiple' => true
             ])
             ->add('expectedValueRangeStart', NumberType::class, [
