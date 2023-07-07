@@ -69,7 +69,7 @@ class CourseType extends AbstractType
                 'class' => PracticalSubmodule::class,
                 'label' => 'form.entity.course.label.practicalSubmodules',
                 'choice_label' => 'name',
-                'attr' => ['class' => 'form-select multiple mb-3'],
+                'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'multiple' => true
             ])
         ;
