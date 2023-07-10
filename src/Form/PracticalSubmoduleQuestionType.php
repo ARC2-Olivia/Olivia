@@ -24,7 +24,7 @@ class PracticalSubmoduleQuestionType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if ($options['edit_mode'] === false) {
+        if (false === $options['edit_mode']) {
             $typeChoices = [
                 $this->translator->trans('practicalSubmoduleQuestion.type.yesNo', [], 'app') => PracticalSubmoduleQuestion::TYPE_YES_NO,
                 $this->translator->trans('practicalSubmoduleQuestion.type.weighted', [], 'app') => PracticalSubmoduleQuestion::TYPE_WEIGHTED,
@@ -42,14 +42,14 @@ class PracticalSubmoduleQuestionType extends AbstractType
             ]);
         }
 
-        $evaluableChoices = [
+        $booleanChoices = [
             $this->translator->trans('common.no', [], 'app') => false,
             $this->translator->trans('common.yes', [], 'app') => true
         ];
         $builder
             ->add('evaluable', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmoduleQuestion.label.evaluable',
-                'choices' => $evaluableChoices,
+                'choices' => $booleanChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('dependentPracticalSubmoduleQuestion', EntityType::class, [
@@ -73,7 +73,15 @@ class PracticalSubmoduleQuestionType extends AbstractType
             ])
         ;
 
-        if ($options['include_translatable_fields']) {
+        if (true === $options['include_other_field']) {
+            $builder->add('otherEnabled', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.otherEnabled',
+                'choices' => $booleanChoices,
+                'attr' => ['class' => 'form-select mb-3']
+            ]);
+        }
+
+        if (true === $options['include_translatable_fields']) {
             $builder->add('questionTextAlt', TextareaType::class, [
                 'mapped' => false,
                 'label' => 'form.entity.practicalSubmoduleQuestion.label.questionTextAlt',
@@ -92,6 +100,7 @@ class PracticalSubmoduleQuestionType extends AbstractType
             'translation_domain' => 'app',
             'include_translatable_fields' => false,
             'edit_mode' => false,
+            'include_other_field' => false,
             'attr' => [
                 'class' => 'd-flex flex-column',
                 'novalidate' => 'novalidate'

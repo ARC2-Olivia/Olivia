@@ -195,6 +195,7 @@ form:
                 evaluable: Used in assessment
                 dependentQuestion: Dependent question
                 dependentValue: Dependent question value
+                otherEnabled: Enable additional (i.e. <i>other</i>) fields
             placeholder:
                 questionText: Question text goes here...
                 dependentEvaluationQuestion: Nothing selected...

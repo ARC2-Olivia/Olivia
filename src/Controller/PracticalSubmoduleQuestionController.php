@@ -38,7 +38,7 @@ class PracticalSubmoduleQuestionController extends BaseController
     #[IsGranted("ROLE_MODERATOR")]
     public function edit(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request): Response
     {
-        $form = $this->createForm(PracticalSubmoduleQuestionType::class, $practicalSubmoduleQuestion, ['edit_mode' => true]);
+        $form = $this->createForm(PracticalSubmoduleQuestionType::class, $practicalSubmoduleQuestion, ['edit_mode' => true, 'include_other_field' => $practicalSubmoduleQuestion->getType() === $practicalSubmoduleQuestion::TYPE_MULTI_CHOICE]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

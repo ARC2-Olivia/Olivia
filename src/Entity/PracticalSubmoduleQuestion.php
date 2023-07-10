@@ -57,6 +57,9 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     #[ORM\ManyToOne(inversedBy: 'practicalSubmoduleQuestions')]
     private ?PracticalSubmodulePage $practicalSubmodulePage = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $otherEnabled = null;
+
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -224,6 +227,18 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public function setPracticalSubmodulePage(?PracticalSubmodulePage $practicalSubmodulePage): self
     {
         $this->practicalSubmodulePage = $practicalSubmodulePage;
+
+        return $this;
+    }
+
+    public function isOtherEnabled(): ?bool
+    {
+        return $this->otherEnabled;
+    }
+
+    public function setOtherEnabled(?bool $otherEnabled): self
+    {
+        $this->otherEnabled = $otherEnabled;
 
         return $this;
     }

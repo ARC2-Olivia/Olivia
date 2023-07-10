@@ -1,3 +1,9 @@
+{% trans_default_domain 'app' %}
+
+{% if isEditing is not defined %}
+    {% set isEditing = false %}
+{% endif %}
+
 {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
     {% if form.type is defined %}
         {{ form_label(form.type) }}
@@ -12,6 +18,11 @@
 
     {{ form_label(form.dependentValue) }}
     {{ form_widget(form.dependentValue) }}
+
+    {% if form.otherEnabled is defined %}
+        <label for="{{ form.otherEnabled.vars.id }}">{{ form.otherEnabled.vars.label|trans|raw }}</label>
+        {{ form_widget(form.otherEnabled) }}
+    {% endif %}
 
     {{ form_label(form.questionText) }}
     {{ form_widget(form.questionText) }}
