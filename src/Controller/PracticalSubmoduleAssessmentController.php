@@ -50,7 +50,8 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 'type' => $practicalSubmoduleQuestion->getType(),
                 'question' => $practicalSubmoduleQuestion->getQuestionText(),
                 'answers' => [],
-                'page' => $practicalSubmoduleQuestion->getPracticalSubmodulePage()?->getPosition()
+                'page' => $practicalSubmoduleQuestion->getPracticalSubmodulePage()?->getPosition(),
+                'other' => $practicalSubmoduleQuestion->isOtherEnabled()
             ];
             if ($practicalSubmoduleQuestion->getDependentPracticalSubmoduleQuestion() !== null) {
                 $question['dependency'] = [
@@ -122,17 +123,13 @@ class PracticalSubmoduleAssessmentController extends BaseController
         switch ($practicalSubmoduleQuestion->getType()) {
             case PracticalSubmoduleQuestion::TYPE_YES_NO:
             case PracticalSubmoduleQuestion::TYPE_WEIGHTED:
-                $this->storeSingleChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
-                break;
+                $this->storeSingleChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
             case PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT:
-                $this->storeTemplatedTextInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
-                break;
+                $this->storeTemplatedTextInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
             case PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE:
-                $this->storeMultiChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
-                break;
+                $this->storeMultiChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
             case PracticalSubmoduleQuestion::TYPE_LIST_INPUT:
-                $this->storeListInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
-                break;
+                $this->storeListInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
             default:
                 $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
         }

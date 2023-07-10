@@ -252,19 +252,19 @@ class PracticalSubmoduleAssessment {
             });
         });
 
-        const otherButton = this.#parser.parseFromString(`
-            <button type="button" class="btn btn-theme-white bg-green w-fit">${this.#translation.buttonAdd}</button>
-        `, "text/html").body.firstChild;
-        otherButton.addEventListener("click", function() {
-            const otherInput = context.#parser.parseFromString(`
+        if (true === questionData.other) {
+            const otherButton = this.#parser.parseFromString(`<button type="button" class="btn btn-theme-white bg-green w-fit">${this.#translation.buttonAdd}</button>`, "text/html").body.firstChild;
+            otherButton.addEventListener("click", function() {
+                const otherInput = context.#parser.parseFromString(`
                 <label>
                     <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][other][]"/>
                 </label>
-            `, "text/html").body.firstChild;
-            this.parentElement.insertBefore(otherInput, this);
-        });
+                `, "text/html").body.firstChild;
+                this.parentElement.insertBefore(otherInput, this);
+            });
+            answers.push(otherButton);
+        }
 
-        answers.push(otherButton);
         return answers;
     }
 
