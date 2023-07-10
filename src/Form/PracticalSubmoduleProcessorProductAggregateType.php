@@ -53,7 +53,7 @@ class PracticalSubmoduleProcessorProductAggregateType extends AbstractType
                 'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'multiple' => true,
                 'mapped' => false,
-                'data' => $practicalSubmoduleProcessor?->getPracticalSubmoduleProcessorProductAggregate()->getPracticalSubmoduleQuestions()
+                'data' => $practicalSubmoduleProcessor?->getPracticalSubmoduleProcessorProductAggregate()?->getPracticalSubmoduleQuestions()
             ]);
         }
 

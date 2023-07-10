@@ -53,7 +53,7 @@ class PracticalSubmoduleProcessorSumAggregateType extends AbstractType
                 'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'multiple' => true,
                 'mapped' => false,
-                'data' => $practicalSubmoduleProcessor?->getPracticalSubmoduleProcessorSumAggregate()->getPracticalSubmoduleQuestions()
+                'data' => $practicalSubmoduleProcessor?->getPracticalSubmoduleProcessorSumAggregate()?->getPracticalSubmoduleQuestions()
             ]);
         }
 
