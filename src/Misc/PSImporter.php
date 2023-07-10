@@ -108,11 +108,17 @@ class PSImporter
 
     private function doCreateSubmoduleTask(array $props): void
     {
+        $opmode = $props['opmode'];
+        if ($opmode !== PracticalSubmodule::MODE_OF_OPERATION_SIMPLE && $opmode !== PracticalSubmodule::MODE_OF_OPERATION_ADVANCED) {
+            $opmode = PracticalSubmodule::MODE_OF_OPERATION_ADVANCED;
+        }
+
         $this->practicalSubmodule = (new PracticalSubmodule())
             ->setName($props['name'] ?? '')
             ->setDescription($props['description'] ?? '')
             ->setPaging($props['paging'] ?? false)
             ->setTags($props['tags'] ?? [])
+            ->setModeOfOperation($opmode)
         ;
         $this->em->persist($this->practicalSubmodule);
 

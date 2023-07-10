@@ -55,7 +55,8 @@ class PSExporter
                 'name' => $this->practicalSubmodule->getName(),
                 'description' => $this->practicalSubmodule->getDescription(),
                 'paging' => $this->practicalSubmodule->isPaging(),
-                'tags' => $this->practicalSubmodule->getTags()
+                'tags' => $this->practicalSubmodule->getTags(),
+                'opmode' => $this->practicalSubmodule->getModeOfOperation()
             ]
         ];
 
