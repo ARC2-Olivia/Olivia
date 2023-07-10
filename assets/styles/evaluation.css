@@ -262,6 +262,7 @@ ul.mod--ps-pages {
 .evaluation-assessment-datum-question {
     font-weight: 600;
     margin-bottom: 8px;
+    white-space: pre-line;
 }
 
 .evaluation-assessment-pager {
