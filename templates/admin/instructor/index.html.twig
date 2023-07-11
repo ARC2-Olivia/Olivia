@@ -10,7 +10,8 @@
                 <a href="{{ path('admin_instructor_new') }}" class="btn btn-theme-white bg-blue font-size-default">{{ 'common.new'|trans }}</a>
             </div>
             <div class="card-text">
-                <table class="table table-cols-6">
+                <div id="instructors-table-wrapper"></div>
+                <table id="instructors-table" class="table table-cols-6">
                     <thead>
                         <tr>
                             <th>{{ 'common.id'|trans }}</th>
@@ -30,10 +31,10 @@
                                 <td>{{ instructor.email }}</td>
                                 <td>{{ instructor.institution }}</td>
                                 <td>
-                                    <a href="{{ path('admin_instructor_edit', {'instructor': instructor.id}) }}" class="btn btn-theme-white btn-sm bg-blue">{{ 'common.edit'|trans }}</a>
+                                    <a href="{{ path('admin_instructor_edit', {'instructor': instructor.id}) }}" class="btn btn-theme-white btn-sm bg-blue">{{ mdi('pencil') }}</a>
                                     <form action="{{ path('admin_instructor_delete', {'instructor': instructor.id}) }}" method="post" class="d-inline-block" onsubmit="return confirm('{{ 'instructor.delete'|trans }}')">
                                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin.instructor.delete') }}"/>
-                                        <button type="submit" class="btn btn-theme-white btn-sm bg-red">{{ 'common.delete'|trans }}</button>
+                                        <button type="submit" class="btn btn-theme-white btn-sm bg-red">{{ mdi('trash-can-outline') }}</button>
                                     </form>
                                 </td>
                             </tr>
@@ -43,4 +44,19 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('gridjs') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('gridjs') }}
+    <script>
+        window.addEventListener("load", () => {
+            new Grid({ from: document.getElementById("instructors-table"), sort: true, search: true, pagination: true }).render(document.getElementById("instructors-table-wrapper"));
+        });
+    </script>
 {% endblock %}

@@ -9,7 +9,8 @@
                 <a href="#" class="btn btn-theme-white bg-blue font-size-default">{{ 'common.new'|trans }}</a>
             </div>
             <div class="card-text">
-                <table class="table table-cols-5">
+                <div id="users-table-wrapper"></div>
+                <table id="users-table" class="table table-cols-5">
                     <thead>
                         <tr>
                             <th>{{ 'common.id'|trans }}</th>
@@ -42,4 +43,19 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('gridjs') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('gridjs') }}
+    <script>
+        window.addEventListener("load", () => {
+            new Grid({ from: document.getElementById("users-table"), sort: true, search: true, pagination: true }).render(document.getElementById("users-table-wrapper"));
+        });
+    </script>
 {% endblock %}
