@@ -23,7 +23,10 @@
         {{ form_widget(form.expectedValue) }}
 
         {{ form_label(form.resultText) }}
-        <div id="processor-html-editor"></div>
+        <div class="editor-container mb-3">
+            {% include '_partials/ql-editor-toolbar.html.twig' %}
+            <div id="editor"></div>
+        </div>
 
         {{ form_label(form.resultFiles) }}
         {{ form_widget(form.resultFiles) }}

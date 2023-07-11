@@ -1,0 +1,36 @@
+{% if editorToolbarId is not defined %}
+    {% set editorToolbarId = "editor-toolbar" %}
+{% endif %}
+
+{% if editorHtmlId is not defined %}
+    {% set editorHtmlId = "editor-html" %}
+{% endif %}
+
+<div id="{{ editorToolbarId }}">
+    <div class="ql-formats">
+        <select class="ql-header"></select>
+        <select class="ql-font"></select>
+    </div>
+    <div class="ql-formats">
+        <select class="ql-color"></select>
+        <select class="ql-background"></select>
+    </div>
+    <div class="ql-formats">
+        <button class="ql-bold"></button>
+        <button class="ql-italic"></button>
+        <button class="ql-underline"></button>
+        <button class="ql-strike"></button>
+    </div>
+    <div class="ql-formats">
+        <select class="ql-align"></select>
+        <button class="ql-list" value="ordered"></button>
+        <button class="ql-list" value="bullet"></button>
+        <button class="ql-indent" value="+1"></button>
+        <button class="ql-indent" value="-1"></button>
+    </div>
+    <div class="ql-formats">
+        <button class="ql-link"></button>
+        <button class="ql-image"></button>
+        <button type="button" id="{{ editorHtmlId }}">{{ mdi('xml') }}</button>
+    </div>
+</div>
