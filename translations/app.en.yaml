@@ -78,6 +78,7 @@ nav:
     termsOfService: Terms of service
     dataRequests: Data requests
     files: Files
+    home: Home
 
 footer:
     contact: "Contact: ???"
