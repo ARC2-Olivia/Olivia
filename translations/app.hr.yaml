@@ -1,0 +1,16 @@
+common:
+    login: Prijava
+    logout: Odjava
+    registration: Registracija
+
+nav:
+    training: Teorija
+    practice: Praksa
+    aboutUs: O nama
+    admin: Administracija
+    users: Korisnici
+    instructors: Instruktori
+    language: Jezik
+    termsOfService: Uvjeti korištenja
+    dataRequests: Podatkovni zahtjevi
+    files: Datoteke
