@@ -56,6 +56,7 @@ class CourseController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($course);
+            foreach ($course->getPracticalSubmodules() as $ps) $ps->addCourse($course);
             $this->em->flush();
             $image = $form->get('image')->getData();
             $this->storeCourseImage($image, $course);
