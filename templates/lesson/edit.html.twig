@@ -38,7 +38,7 @@
                 const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
                 const quill = new Quill("#editor", settings);
 
-                quill.root.innerHTML = '{{ lessonItem.text|raw }}';
+                quill.root.innerHTML = `{{ lessonItem.text|raw }}`;
 
                 document.getElementById("editor-html").addEventListener("click", () => {
                     const textCancel = '{{ 'common.cancel'|trans }}';

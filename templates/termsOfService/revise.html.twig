@@ -78,10 +78,10 @@
             const settingsAlt = { theme: "snow", modules: { toolbar: "#editor-toolbar-alt" } };
 
             const quill = new Quill("#editor", settings);
-            quill.root.innerHTML = '{{ content|raw }}'
+            quill.root.innerHTML = `{{ content|raw }}`;
 
             const quillAlt = new Quill("#editor-alt", settingsAlt);
-            quillAlt.root.innerHTML = '{{ contentAlt|raw }}'
+            quillAlt.root.innerHTML = `{{ contentAlt|raw }}`;
 
             assignHtmlEditingCapabilities(document.getElementById("editor-html"), quill);
             assignHtmlEditingCapabilities(document.getElementById("editor-html-alt"), quillAlt);

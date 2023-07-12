@@ -41,7 +41,7 @@
                 const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
                 const quill = new Quill("#editor", settings);
 
-                quill.root.innerHTML = '{{ implForm.vars.data.resultText|raw }}';
+                quill.root.innerHTML = `{{ implForm.vars.data.resultText|raw }}`;
 
                 document.getElementById("editor-html").addEventListener("click", () => {
                     const textCancel = '{{ 'common.cancel'|trans }}';

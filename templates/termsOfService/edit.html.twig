@@ -44,7 +44,7 @@
             };
 
             const quill = new Quill("#editor", settings);
-            quill.root.innerHTML = '{{ termsOfService.content|raw }}'
+            quill.root.innerHTML = `{{ termsOfService.content|raw }}`;
 
             document.getElementById("editor-html").addEventListener("click", () => {
                 const textCancel = '{{ 'common.cancel'|trans }}';
