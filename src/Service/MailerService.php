@@ -34,4 +34,15 @@ class MailerService
         ;
         $this->mailer->send($email);
     }
+
+    public function sendPasswordResetMail(User $user): void
+    {
+        $email = (new Email())
+            ->from($this->parameterBag->get('mail.from'))
+            ->to($user->getEmail())
+            ->subject($this->translator->trans('mail.passwordReset.subject', [], 'mail'))
+            ->text('Yo!')
+        ;
+        $this->mailer->send($email);
+    }
 }

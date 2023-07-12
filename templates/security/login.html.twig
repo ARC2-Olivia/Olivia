@@ -20,7 +20,10 @@
                     <label>{{ form_widget(form.plainPassword, {'attr': {'placeholder': form.plainPassword.vars.label}}) }}</label>
                     <button type="submit" class="btn btn-theme-white bg-black w-100 mb-3">{{ 'common.login'|trans }}</button>
                     {{ form_end(form) }}
-                    <a href="{{ path('security_registration') }}" class="btn btn-link">{{ 'common.registration'|trans }}</a>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ path('security_registration') }}" class="btn btn-link">{{ 'common.registration'|trans }}</a>
+                        <a href="{{ path('security_request_password_reset') }}" class="btn btn-link">{{ 'common.resetPassword'|trans }}</a>
+                    </div>
                 </div>
             </div>
         </div>

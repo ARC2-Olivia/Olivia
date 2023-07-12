@@ -14,6 +14,7 @@ common:
     login: Login
     logout: Logout
     registration: Registration
+    resetPassword: Reset password
     submit: Submit
     save: Save
     cancel: Cancel
@@ -47,6 +48,7 @@ page:
     login: Olivia | Login
     registration: Olivia | Registration
     confirmation: Olivia | Account confirmation
+    resetPassword: Olivia | Reset password
     course:
         index: Olivia | Courses
         new: Olivia | New course
@@ -115,6 +117,11 @@ form:
             label:
                 email: E-mail
                 password: Password
+        resetPassword:
+            label:
+                email: E-mail
+            message:
+                email: Enter the e-mail address you used to create your Olivia account. A special URL will be sent that will allow you to change your account's password. The URL has a time limit of 3 hours before it becomes invalid.
     entity:
         user:
             label:

@@ -51,6 +51,8 @@ success:
     file:
         new: New file has been uploaded.
         edit: Existing file has been changed.
+    resetPassword:
+        email: "An e-mail message has been sent to the entered e-mail address (if an account exists). Click on the URL in the e-mail message to reset your password. Be warned: the URL is valid for only 3 hours, starting with the time submitted the request for password reset."
 
 warning:
     accountConfirmation:
@@ -95,6 +97,10 @@ error:
             blank: Password fields must not be empty.
             repeated: Passwords must match!
         termsOfService: To proceed with the registration, and to be allowed to use the application, the terms of service have to be accepted.
+    resetPassword:
+        email:
+            blank: E-mail field must not be empty.
+            format: E-mail is not written in an e-mail format.
     course:
         name: Course name must not be empty.
         description: Course description must not be empty.

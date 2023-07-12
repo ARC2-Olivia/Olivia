@@ -42,6 +42,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: AcceptedTermsOfService::class, orphanRemoval: true)]
     private Collection $acceptedTermsOfServices;
 
+    #[ORM\Column(length: 32, nullable: true)]
+    private ?string $passwordResetToken = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $passwordResetUntil = null;
+
     public function __construct()
     {
         $this->acceptedTermsOfServices = new ArrayCollection();
@@ -167,6 +173,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $acceptedTermsOfService->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPasswordResetToken(): ?string
+    {
+        return $this->passwordResetToken;
+    }
+
+    public function setPasswordResetToken(?string $passwordResetToken): self
+    {
+        $this->passwordResetToken = $passwordResetToken;
+
+        return $this;
+    }
+
+    public function getPasswordResetUntil(): ?\DateTimeImmutable
+    {
+        return $this->passwordResetUntil;
+    }
+
+    public function setPasswordResetUntil(?\DateTimeImmutable $passwordResetUntil): self
+    {
+        $this->passwordResetUntil = $passwordResetUntil;
 
         return $this;
     }

@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\Security\EmailType;
 use App\Form\Security\LoginType;
 use App\Form\Security\RegistrationType;
-use App\Security\LoginData;
 use App\Security\RegistrationData;
 use App\Service\MailerService;
 use App\Service\SecurityService;
@@ -74,5 +74,26 @@ class SecurityController extends AbstractController
         $activationSuccess = $securityService->activateUserWithToken($confirmationToken, $user);
         if ($user !== null) $termsOfServiceService->userAcceptsCurrentlyActiveTermsOfService($user);
         return $this->render('security/confirmation.html.twig', ['activationSuccess' => $activationSuccess]);
+    }
+
+    #[Route("/request-password-reset", name: "request_password_reset")]
+    public function requestPasswordReset(Request $request, SecurityService $securityService, MailerService $mailerService): Response
+    {
+        $requestSent = false;
+        $form = $this->createForm(EmailType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $requestSent = true;
+            $email = $form->get('email')->getData();
+            $user = $securityService->preparePasswordReset($email);
+            if (null !== $user) $mailerService->sendPasswordResetMail($user);
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('security/requestResetPassword.html.twig', ['form' => $form->createView(), 'requestSent' => $requestSent]);
     }
 }

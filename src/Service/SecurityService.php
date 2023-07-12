@@ -48,11 +48,29 @@ class SecurityService
 
     public function userExists(string $email): bool
     {
-        return $this->em->getRepository(User::class)->findOneBy(['email' => $email]) !== null;
+        return null !== $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
     }
 
     public function confirmationTokenExists(string $confirmationToken): bool
     {
-        return $this->em->getRepository(User::class)->findOneBy(['confirmationToken' => $confirmationToken]) !== null;
+        return null !== $this->em->getRepository(User::class)->findOneBy(['confirmationToken' => $confirmationToken]);
+    }
+
+    public function passwordResetTokenExists(string $passwordResetToken): bool
+    {
+        return null !== $this->em->getRepository(User::class)->findOneBy(['passwordResetToken' => $passwordResetToken]);
+    }
+
+    public function preparePasswordReset(string $email): ?User
+    {
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+        if (null !== $user) {
+            do {
+                $passwordResetToken = bin2hex(random_bytes(16));
+            } while ($this->passwordResetTokenExists($passwordResetToken));
+            $user->setPasswordResetToken($passwordResetToken)->setPasswordResetUntil(new \DateTimeImmutable("+3 hours"));
+            $this->em->flush();
+        }
+        return $user;
     }
 }
