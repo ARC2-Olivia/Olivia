@@ -83,6 +83,7 @@ footer:
     contact: "Contact: ???"
     projectUrl: "<a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
     text: This tool is developed within ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs project funded by European Commission.
+    termsOfService: Terms of service
 
 index:
     about:
