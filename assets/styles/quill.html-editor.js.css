@@ -25,6 +25,8 @@
     resize: none;
     height: 85vh;
     outline: none;
+    font-family: 'Consolas', monospace;
+    font-size: 13px;
 }
 
 .ql-html-actions {
