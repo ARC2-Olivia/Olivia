@@ -41,7 +41,7 @@ class MailerService
             ->from($this->parameterBag->get('mail.from'))
             ->to($user->getEmail())
             ->subject($this->translator->trans('mail.passwordReset.subject', [], 'mail'))
-            ->text('Yo!')
+            ->html($this->twig->render('email/passwordReset.html.twig', ['user' => $user]))
         ;
         $this->mailer->send($email);
     }
