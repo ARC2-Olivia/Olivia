@@ -61,6 +61,14 @@ class SecurityService
         return null !== $this->em->getRepository(User::class)->findOneBy(['passwordResetToken' => $passwordResetToken]);
     }
 
+    public function passwordResetTokenExpired(string $passwordResetToken): bool
+    {
+        $user = $this->em->getRepository(User::class)->findOneBy(['passwordResetToken' => $passwordResetToken]);
+        if (null === $user) return true;
+        $now = new \DateTimeImmutable();
+        return $now > $user->getPasswordResetUntil();
+    }
+
     public function preparePasswordReset(string $email): ?User
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
@@ -72,5 +80,18 @@ class SecurityService
             $this->em->flush();
         }
         return $user;
+    }
+
+    public function changePassword(string $passwordResetToken, string $plainPassword): void
+    {
+        $user = $this->em->getRepository(User::class)->findOneBy(['passwordResetToken' => $passwordResetToken]);
+        if (null !== $user) {
+            $user
+                ->setPassword($this->passwordHasher->hashPassword($user, $plainPassword))
+                ->setPasswordResetToken(null)
+                ->setPasswordResetUntil(null)
+            ;
+            $this->em->flush();
+        }
     }
 }

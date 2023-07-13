@@ -3,17 +3,17 @@
 namespace App\Form\Security;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType as CoreEmailType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class EmailType extends AbstractType
+class RequestPasswordResetType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', CoreEmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'form.security.resetPassword.label.email',
                 'attr' => ['class' => 'form-input mb-3'],
                 'constraints' => [

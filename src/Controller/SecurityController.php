@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\Security\EmailType;
+use App\Form\Security\PasswordResetType;
+use App\Form\Security\RequestPasswordResetType;
 use App\Form\Security\LoginType;
 use App\Form\Security\RegistrationType;
 use App\Security\RegistrationData;
@@ -80,7 +81,7 @@ class SecurityController extends AbstractController
     public function requestPasswordReset(Request $request, SecurityService $securityService, MailerService $mailerService): Response
     {
         $requestSent = false;
-        $form = $this->createForm(EmailType::class);
+        $form = $this->createForm(RequestPasswordResetType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,6 +95,35 @@ class SecurityController extends AbstractController
             }
         }
 
-        return $this->render('security/requestResetPassword.html.twig', ['form' => $form->createView(), 'requestSent' => $requestSent]);
+        return $this->render('security/requestPasswordReset.html.twig', ['form' => $form->createView(), 'requestSent' => $requestSent]);
+    }
+
+    #[Route("/password-reset/{passwordResetToken}", name: "password_reset")]
+    public function passwordReset(string $passwordResetToken, Request $request, SecurityService $securityService): Response
+    {
+        if (false === $securityService->passwordResetTokenExists($passwordResetToken)) {
+            $this->addFlash('error', $this->translator->trans('error.resetPassword.token.invalid', [], 'message'));
+            return $this->redirectToRoute('security_login');
+        }
+
+        if (true === $securityService->passwordResetTokenExpired($passwordResetToken)) {
+            $this->addFlash('error', $this->translator->trans('error.resetPassword.token.expired', [], 'message'));
+            return $this->redirectToRoute('security_login');
+        }
+
+        $form = $this->createForm(PasswordResetType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('plainPassword')->getData();
+            $securityService->changePassword($passwordResetToken, $plainPassword);
+            $this->addFlash('success', $this->translator->trans('success.resetPassword.change', [], 'message'));
+            return $this->redirectToRoute('security_login');
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('security/passwordReset.html.twig', ['form' => $form->createView()]);
     }
 }

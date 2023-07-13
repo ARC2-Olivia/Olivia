@@ -120,6 +120,8 @@ form:
         resetPassword:
             label:
                 email: E-mail
+                password: New password
+                confirmPassword: Confirm new password
             message:
                 email: Enter the e-mail address you used to create your Olivia account. A special URL will be sent that will allow you to change your account's password. The URL has a time limit of 3 hours before it becomes invalid.
     entity:
