@@ -52,12 +52,12 @@
 
     <div class="index-modules mt-5">
         <div class="index-modules--upper">
-            <div class="index-modules--upper--img" style="background-image: url('{{ asset('build/images/index-module-theory.png') }}')">
+            <a class="index-modules--upper--img" style="background-image: url('{{ asset('build/images/index-module-theory.png') }}')" href="{{ path('course_index') }}">
                 <div class="index-modules--upper--tape bg-orange">{{ 'index.modules.upper.theoreticalModule'|trans }}</div>
-            </div>
-            <div class="index-modules--upper--img" style="background-image: url('{{ asset('build/images/index-module-practice.png') }}')">
+            </a>
+            <a class="index-modules--upper--img" style="background-image: url('{{ asset('build/images/index-module-practice.png') }}')" href="{{ path('practical_submodule_index') }}">
                 <div class="index-modules--upper--tape bg-blue">{{ 'index.modules.upper.practicalModule'|trans }}</div>
-            </div>
+            </a>
         </div>
         <div class="index-modules--lower">
             <div class="container">
