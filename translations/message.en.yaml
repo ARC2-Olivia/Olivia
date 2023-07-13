@@ -89,6 +89,10 @@ warning:
         delete: A file has been removed.
 
 error:
+    passwordPolicy:
+        length: Password must be at least 8 characters long.
+        number: Password must contain at least one number.
+        uppercase: Password must contain at least one uppercase letter.
     login: Invalid credentials.
     registration:
         email:

@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Validator\PasswordPolicy;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationData
@@ -11,7 +12,7 @@ class RegistrationData
     #[Assert\Email(message: 'error.registration.email.format')]
     private ?string $email = null;
 
-    #[Assert\NotBlank(message: 'error.registration.password.blank')]
+    #[PasswordPolicy]
     private ?string $plainPassword = null;
 
     #[Assert\IsTrue(message: 'error.registration.termsOfService')]

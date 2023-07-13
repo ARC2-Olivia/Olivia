@@ -2,13 +2,13 @@
 
 namespace App\Form\Security;
 
+use App\Validator\PasswordPolicy;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class PasswordResetType extends AbstractType
 {
@@ -28,7 +28,7 @@ class PasswordResetType extends AbstractType
                 'invalid_message' => 'error.resetPassword.password.repeated',
                 'first_options' => ['label' => $this->translator->trans('form.security.resetPassword.label.password', [], 'app')],
                 'second_options' => ['label' => $this->translator->trans('form.security.resetPassword.label.confirmPassword', [], 'app')],
-                'constraints' => [new Assert\NotBlank(['message' => 'error.resetPassword.password.blank'])]
+                'constraints' => [new PasswordPolicy()]
             ])
         ;
     }
