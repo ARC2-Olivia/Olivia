@@ -57,6 +57,12 @@ ul.navigation-admin {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
+.navigation-admin--wrapper {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+}
+
 @media screen and (max-width: 991px) {
     .navigation-responsive > .navigation-open {
         display: flex;
@@ -75,5 +81,13 @@ ul.navigation-admin {
 
     .navigation-responsive > .navigation-main.show {
         visibility: visible;
+    }
+
+    .navigation-admin--wrapper {
+        flex-direction: column;
+    }
+
+    .navigation-admin {
+        align-items: center;
     }
 }
