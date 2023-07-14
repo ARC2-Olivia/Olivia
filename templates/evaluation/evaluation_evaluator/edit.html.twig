@@ -37,39 +37,13 @@
     {% if evaluationEvaluator.type == constant('App\\Entity\\PracticalSubmoduleProcessor::TYPE_HTML') %}
         {{ encore_entry_script_tags('quill') }}
         <script>
+            const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
+            const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
+
             window.addEventListener("DOMContentLoaded", () => {
-                const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
                 const quill = new Quill("#editor", settings);
-
                 quill.root.innerHTML = `{{ implForm.vars.data.resultText|raw }}`;
-
-                document.getElementById("editor-html").addEventListener("click", () => {
-                    const textCancel = '{{ 'common.cancel'|trans }}';
-                    const textSubmit = '{{ 'common.submit'|trans }}';
-                    const component = parser.parseFromString(`
-                        <div class="ql-html-backdrop">
-                            <div class="ql-html-dialog">
-                                <textarea class="ql-html-editor">${quill.root.innerHTML}</textarea>
-                                <div class="ql-html-actions">
-                                    <button type="button" value="cancel" class="btn btn-theme-white bg-blue">${textCancel}</button>
-                                    <button type="button" value="submit" class="btn btn-theme-white bg-green">${textSubmit}</button>
-                                </div>
-                            </div>
-                        </div>
-                    `, "text/html").body.firstChild;
-                    const editor = component.querySelector("textarea.ql-html-editor");
-
-                    component.querySelector("button[value='cancel']")?.addEventListener("click", (evt) => {
-                        evt.target.closest(".ql-html-backdrop").remove();
-                    });
-
-                    component.querySelector("button[value='submit']")?.addEventListener("click", (evt) => {
-                        quill.root.innerHTML = editor.value;
-                        evt.target.closest(".ql-html-backdrop").remove();
-                    });
-
-                    document.body.appendChild(component);
-                });
+                QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
 
                 const form = document.querySelector("form#practical_submodule_processor_html");
                 form.onsubmit = function() {
