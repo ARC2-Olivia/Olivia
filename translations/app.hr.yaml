@@ -1,7 +1,73 @@
+app:
+    name: Olivia
+    brand: OLIVIA tool
+    brand.1: OLIVIA
+    brand.2: Tool
+    brand.short: OLIVIA
+    subtitle: Alat za usklađivanje s uredbom GDPR
+
 common:
+    id: ID
+    username: E-mail
+    password: Lozinka
+    homepage: Naslovna
     login: Prijava
     logout: Odjava
     registration: Registracija
+    resetPassword: Resetiranje lozinka
+    submit: Potvrdi
+    save: Spremi
+    cancel: Odustani
+    yes: Da
+    no: Ne
+    trueValue: 'Da'
+    falseValue: 'Ne'
+    actions: Akcije
+    edit: Uredi
+    delete: Izbriši
+    new: Novo
+    remove: Ukloni
+    next: Sljedeće
+    previous: Prethodno
+    download: Preuzmi
+    profile: Profil
+    resolve: Riješi
+    import: Uvoz
+    export: Izvoz
+    file: Datoteka
+
+button:
+    details: Detalji
+    startNow: Započni
+    loginToEnroll: Prijavite se za upis
+    results: Rezultati
+    lessons: Lekcije
+    export: Izvoz
+
+page:
+    login: Olivia | Prijava
+    registration: Olivia | Registracija
+    confirmation: Olivia | Potvrda računa
+    resetPassword: Olivia | Resetiranje lozinke
+    course:
+        index: Olivia | Tečajevi
+        new: Olivia | Novi tečaj
+        show: Olivia | Detalji tečaja
+    lesson:
+        index: Olivia | Lekcije
+        show: Olivia | Sadržaj lekcije
+    admin: Olivia | Administracija
+    evaluation:
+        index: Olivia | Praktični podmoduli
+        new: Olivia | Novi praktični podmodul
+        show: Olivia | Detalji praktičnog podmodula
+        assessment: Olivia | Provjera iz praktičnog podmodula
+    termsOfService:
+        index: Olivia | Ispis uvjeta pružanja usluge
+        new: Olivia | Novi uvjeti pružanja usluge
+        show: Olivia | Uvjeti pružanja usluge
+        edit: Olivia | Uredđivanje uvjeta pružanja usluga
+        revise: Olivia | Revizija uvjeta pružanja usluga
 
 nav:
     training: Teorija
@@ -10,7 +76,414 @@ nav:
     admin: Administracija
     users: Korisnici
     instructors: Instruktori
-    language: Jezik
-    termsOfService: Uvjeti korištenja
+    language: Promjeni jezik
+    termsOfService: Uvjeti pružanja usluge
     dataRequests: Podatkovni zahtjevi
     files: Datoteke
+    home: Naslovna
+
+footer:
+    contact: "Kontakt: ???"
+    projectUrl: "<a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
+    text: Alat je razvijen u sklopu projekta ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs financiran od strane Europske komisije.
+    termsOfService: Uvjeti pružanja usluge
+
+index:
+    about:
+        left:
+            title: O alatu
+            description: Glavni cilj web alata Olivia je pružanje praktične podrške hrvatskim i talijanskim MSP-ovima u implementaciji zakonodavstva o zaštiti podataka i načela svakodnevnih poslovnih aktivnosti.
+        right:
+            1:
+                title: Inovativno
+                text: Lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+    modules:
+        upper:
+            theoreticalModule: Teoretski modul
+            practicalModule: Praktični modul
+        lower:
+            title: Lorem ipsum
+            description: Ut congue elementum aliquet. Nulla orci mi, feugiat eu turpis vel, vestibulum hendrerit urna. Proin id mi leo. Sed finibus ultrices lorem nec accumsan. Phasellus accumsan neque augue, nec ultricies metus ultrices quis. Vestibulum facilisis placerat orci, nec pharetra mauris aliquet et. Nulla tincidunt mauris a ante accumsan vehicula.
+
+form:
+    security:
+        registration:
+            label:
+                email: E-mail
+                password: Lozinka
+                confirmPassword: Potvrdi lozinku
+                termsOfService: Prihvaćam <a href="%url%" target="_blank">Uvjete pružanja usluge</a>.
+        login:
+            label:
+                email: E-mail
+                password: Lozinka
+        resetPassword:
+            label:
+                email: E-mail
+                password: Nova lozinka
+                confirmPassword: Potvrda nove lozinke
+            message:
+                email: Unesite e-mail adresu s kojom ste stvorili svoj Olivia račun. Na tu adresu će Vam se poslati posebna e-mail poruka s poveznicom koja će Vam omogućiti promjenu lozinke. Poveznica istiće nakon 3 sata.
+    entity:
+        user:
+            label:
+                email: E-mail
+                roles: Uloge
+                activated: Aktiviran račun
+        instructor:
+            label:
+                firstName: Ime
+                lastName: Prezime
+                email: E-mail
+                institution: Institucija
+                institutionAlt: Institucija (drugi jezik)
+                image: Slika
+                biography: Biografija
+                biographyAlt: Biografija (drugi jezik)
+        course:
+            label:
+                name: Naziv
+                nameAlt: Naziv (drugi jezik)
+                description: Opis
+                descriptionAlt: Opis (drugi jezik)
+                image: Slika (maks. 5MB)
+                estimatedWorkload: Procijenjeno opterećenje
+                tags: Oznake odvojene zarezom
+                tagsAlt: Oznake odvojene zarezom (drugi jezik)
+                practicalSubmodules: Povezane procjene
+            placeholder:
+                name: Naziv tečaja
+                description: Opis tečaja...
+                workloadValue: 12 or 2.5
+                tags: GDPR,IT,Sigurnost,...
+                instructor: Odaberi instruktora...
+            choices:
+                estimatedWorkload:
+                    hours: sati
+                    days: dana
+                    weeks: tjedana
+                    months: mjeseci
+                    years: godina
+        lesson:
+            label:
+                name: Naziv
+                nameAlt: Naziv (drugi jezik)
+                description: Opis
+                descriptionAlt: Opis (drugu jezik)
+                text: Sadržaj
+                textAlt: Sadržaj (drugi jezik)
+                file: Datoteka
+                video: URL videa
+                passingPercentage: Postotak za prolaz
+        quizQuestion:
+            label:
+                text: Tekst pitanja
+                textAlt: Tekst pitanja (drugu jezik)
+                explanation: Objašnjenje
+                explanationAlt: Objašnjenje (drugi jezik)
+                correctAnswer: Točan odgovor
+        practicalSubmodule:
+            label:
+                name: Naziv
+                nameAlt: Naziv (drugi jezik)
+                image: Slika
+                description: Opis
+                descriptionAlt: Opis (drugi jezik)
+                paging: Straničenje
+                tags: Oznake odvojene zarezom
+                tagsAlt: Oznake odvojene zarezom (drugi jezik)
+                courses: Povezani tečajevi
+                modeOfOperation: Način rada
+            placeholder:
+                name: Naziv praktičnog podmodula
+                description: Opis praktičnog podmodula...
+                tags: GDPR,IT,Sigurnost
+        practicalSubmoduleQuestion:
+            label:
+                type: Vrsta pitanja
+                questionText: Tekst pitanja
+                questionTextAlt: Tekst pitanja (drugi jezik)
+                evaluable: Koristi se u procjeni
+                dependentQuestion: Ovisno pitanje
+                dependentValue: Vrijednost ovisnog pitanja
+                otherEnabled: Omogući dodatni (i.e. <i>ostali</i>) unos
+            placeholder:
+                questionText: Ovdje stavite tekst pitanja...
+                dependentEvaluationQuestion: Ništa odabrano...
+        practicalSubmoduleQuestionAnswer:
+            label:
+                weighted:
+                    answerText: Tekst odgovora
+                    answerTextAlt: Tekst odgovora (drugi jezik)
+                    answerValue: Ponder
+                templatedText:
+                    answerText: Predložak odgovora
+                    answerTextAlt: Predložak odgovora (drugi jezik)
+        practicalSubmoduleProcessor:
+            label:
+                type: Vrsta procesora
+                name: Naziv procesora
+                included: Uključiti u prikaz rezultata
+                evaluationQuestion: Pitanje
+                evaluationQuestions: Pitanja
+                evaluationEvaluators: Procesori
+                expectedValue: Očekivana vrijednost
+                expectedValueRange:
+                    start: Očekivana vrijednost (početni broj u rasponu)
+                    end: Očekivana vrijednost (završni broj u rasponu)
+                resultText: Rezultirajući tekst
+                resultFiles: Rezultirajuće datoteke
+                dependentQuestion: Ovisno pitanje
+                dependentValue: vrijednost ovisnog pitanja
+            placeholder:
+                name: Naziv procesora za lakšu identifikaciju
+                resultText: Kakav tekst će procesor vratiti kao rezultat obrade?
+                resultFile: Odaberi datoteku...
+                evaluationQuestion: Odaberi pitanje...
+        practicalSubmodulePage:
+            label:
+                title: Naslov
+                titleAlt: Naslov (drugi jezik)
+                description: Opis
+                descriptionAlt: Opis (drugi jezik)
+                questions: Pitanja
+        termsOfService:
+            label:
+                id: ID
+                title: Naslov
+                version: Verzija
+                revision: Revizija
+                startedAt: Početak
+                endedAt: Završetak
+                active: Aktivno
+                content: Sadržaj
+                contentAlt: Sadržaj (drugi jezik)
+        dataRequest:
+            label:
+                id: ID
+                user: Korisnik
+                type: Vrsta
+                requestedAt: Vrijeme zahtjeva
+                resolvedAt: Vrijeme razrješenja
+        file:
+            label:
+                id: ID
+                originalName: Originalni naziv
+                createdAt: Vrijeme stvaranja
+                modifiedAt: Vrijeme modifikacije
+
+profile:
+    request:
+        access:
+            button: Zatraži pristup podacima
+            description: "Zahtjev za pristup podacima, koje ste ili unijeli ili su se generirali na temelju Vaše aktivnosti u alatu Olivia, možete poslati bilo kada. Podaci će se poslati na Vašu registriranu e-mail adresu kao prilog u obliku sažete ZIP arhive koja sadrži nekoliko CSV datoteka. U podacima su uključeni: prijave na tečajeve u teoretskom modulu, bilješke iz lekcija u teoretskom modulu, dovršenost lekcija u teoretskom moduli, odgovori na kvizove u teoretskom modulu, rezultati kvizova u teoretskom modulu, zapisi aktivnosti u teoretskom modulu, odgovori na pitanja u praktičnom modulu, rezultati procjena u praktičnom moduku, i podaci Vašeg Olivia računa."
+            disclaimer: "NAPOMENA: Zahtjev za pristup podacima se neće odmah obraditi kada se zatraži, ali kada obrada Vašeg zahtjeva dođe na red dobiti ćete poruku na svoju registriranu e-mail adresu s podacima u prilogu."
+            confirmation: Jeste li sigurni da želite poslati zahtjev za pristup podacima?
+        delete:
+            button: Zatraži brisanje podataka
+            description: "Zahtjev za brisanje podataka, koje ste ili unijeli ili su se generirali na temelju Vaše aktivnosti u alatu Olivia, možete poslati bilo kada. Podaci koji će se obrisati su sljedeći: prijave na tečajeve u teoretskom modulu, bilješke iz lekcija u teoretskom modulu, dovršenost lekcija u teoretskom moduli, odgovori na kvizove u teoretskom modulu, rezultati kvizova u teoretskom modulu, zapisi aktivnosti u teoretskom modulu, odgovori na pitanja u praktičnom modulu, rezultati procjena u praktičnom moduku, i podaci Vašeg Olivia računa."
+            disclaimer: "NAPOMENA: Zahtjev za pristup podacima se neće odmah obraditi kada se zatraži, ali kada obrada Vašeg zahtjeva dođe na red dobiti ćete konačnu e-mail poruku na svoju registriranu e-mail adresu koja će Vas obavijestiti o završenom brisanju."
+            confirmation: Jeste li sigurni da želite poslati zahtjev za brisanjem podataka?
+
+user:
+    title:
+        index: Korisnici
+        new: Novi korisnik
+        edit: Uredi korisnika
+    dataAccess:
+        id: ID
+        email: E-mail
+        roles: Uloge
+
+instructor:
+    title:
+        index: Instruktori
+        new: Novi instruktor
+        edit: Uredi instruktora
+    delete: Jeste lis sigurni da želite obrisati ovog instruktora?
+    remove: Jeste li sigurni da želite ukloniti %instructor% kao instruktora na ovom tečaju?
+
+course:
+    title:
+        index: Teorijski modul
+        new: Novi tečaj
+    delete: Jeste li sigurni da želite izbrisati tečaj \'%course%\'?
+    nav:
+        overview: Pregled
+        instructors: Instruktori
+        lessons: Lekcije
+        edit: Uređivanje
+    extra:
+        noInstructors: Trenutno nema definiranih instruktora za ovaj tečaj.
+        lessons: lekcije
+        connectedTo: "Lekcije u ovom tečaju su povezane sa sljedećim procjenama iz praktičnog modula:"
+
+lesson:
+    type:
+        text: Čitanje
+        file: Datoteka
+        video: Video
+        quiz: Kviz
+    delete: Jeste li sigurni da želite izbrisati lekciju \'%lesson%\'?
+    edit: Uređivanje lekcije <i>%lesson%</i>
+    completion:
+        done: Završeno
+        undone: Označi završeno
+        quiz:
+            passed: Prolazno
+            notPassed: Nije prolazno
+    quiz:
+        explanation:
+            1: Kviz se sastoji od <b>%questionCount%</b> pitanja s da ili ne odgovorima.
+            2: Za prolaz je potrebno postići <b>%passingPercentage%%</b>. Rezultati će biti dostupni nakon predaje odgovora.
+            3: Kliknite na gumb <i>Pokreni kviz</i> za pokretanje kviza.
+        action: Pokreni kviz
+        yourGrade: Vaša ocjena
+        yourAnswer: Vaš odgovor
+        correctAnswer: Točan odgovor
+    extra:
+        noLessons: Trenutno nema definiranih lekcija za ovaj tečaj.
+        text: Tekst
+        file: Datoteka
+        video: Video
+        quiz: Kviz
+        moderation: Moderiranje
+        notes: Bilješke
+
+quizQuestion:
+    add: Dodaj pitanje
+    delete: Jeste li sigurni da želite izbrisati ovo pitanje?
+    edit: Uređivanje pitanja za kviz
+
+note:
+    dataAccess:
+        id: ID
+        lesson: Lesson ID
+        text: Text
+        updatedAt: Updated at
+    extra:
+        displayError: There has been an problem loading the notes widget. Refresh the page to try and load it again or, if the problem persists, report the problem to the Olivia Team.
+
+practicalSubmodule:
+    delete: Are you sure you want to delete the practical submodule \'%evaluation%\'?
+    title:
+        index: Practical module
+        new: New practical submodule
+    nav:
+        overview: Overview
+        evaluate: Assessment
+        results: Results
+        edit:
+            default: Edit
+            question: Edit question
+            evaluator: Edit processor
+            answer: Edit answer
+            page: Edit page
+        new:
+            question: New question
+            evaluator: New processor
+            answer: New answer
+            page: New page
+    modeOfOperation:
+        simple: Simple
+        advanced: Advanced
+    extra:
+        question: Question
+        questions: Questions
+        evaluator: Processor
+        evaluators: Processors
+        page: Page
+        pages: Pages
+        answer: Answer
+        results:
+            empty: Nothing to show.
+            final: This assessment is intended for educational and information purposes only.
+        connectedTo: "The assessment is connected to the following courses:"
+
+practicalSubmoduleQuestion:
+    type:
+        yesNo: Yes/No
+        weighted: Weighted
+        numericalInput: Numerical input
+        textInput: Text input
+        templatedTextInput: Templated text input
+        multipleChoice: Multiple choice
+        listInput: List input
+        staticText: Static text
+    delete: Are you sure you want to delete this question?
+    empty: There are no defined questions for this submodule.
+
+practicalSubmoduleQuestionAnswer:
+    delete: Are you sure you want to delete this question answer?
+
+practicalSubmoduleProcessor:
+    type:
+        simple: Simple
+        sumAggregate: Sum aggregate
+        productAggregate: Product aggregate
+        templatedText: Templated text
+        html: HTML
+    delete: Are you sure you want to delete this processor?
+    empty: There are no defined processors for this submodule.
+    heading:
+        basicOptions: Basic options
+        specificOptions: Processor specific options
+
+practicalSubmodulePage:
+    empty: There are no defined pages for this submodule.
+    delete: Are you sure you want to delete this page?
+
+practicalSubmoduleAssessment:
+    message:
+        1: This evaluation contains <b>%questionCount%</b> questions. Some questions will only appear if you answered one of the previous questions in a specific way.
+        2: Assessment can be retried as many times as wanted or needed.
+        3: Click on the <i>Start assessment</i> button to start the evaluation.
+    action:
+        start: Start assessment
+        results: View results
+
+termsOfService:
+    format: Ver. %version%, rev. %revision%
+    ongoing: ongoing
+    message:
+        accept: Are you sure you want to accept the terms of service?
+        rescind: Are you sure you want to rescind the terms of service?
+        rescindInactive: Rescinding inactive terms of service will not prohibit you from using the Olivia tool.
+    title:
+        index: Terms of service listing
+        new: New terms of service
+        edit: Editing <i>%termsOfService%</i>
+        revise: Revising <i>%termsOfService%</i>
+    dataAccess:
+        id: ID
+        version: Version
+        revision: Revision
+        startedAt: Started at
+        endedAt: Ended at
+        content: Content
+        active: Active
+        acceptedAt: Accepted at
+    extra:
+        revise: Revise
+        accept: Accept terms of service
+        rescind: Rescind terms of service
+
+dataRequest:
+    title:
+        index:
+            default: Data requests
+            typeAccess: Data access requests
+            typeDelete: Data deletion requests
+            resolved: Resolved data requests
+
+file:
+    title:
+        index: Files
+        new: New file upload
+        edit: Replace file <i>%filename%</i>
+    message:
+        delete: Are you sure you want to delete this file?
+
+extra:
+    free: Free
+    exitImmitation: Exit immitation
