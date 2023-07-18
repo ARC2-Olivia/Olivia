@@ -1,92 +1,92 @@
 type:
-    success: Success
-    warning: Warning
-    error: Error
+    success: Uspjeh
+    warning: Pozor
+    error: Greška
 
 success:
     user:
-        edit: User has been edited.
+        edit: Korisnik je uređen.
     accountConfirmation:
-        subject: Confirmation success!
-        text: Your Olivia Tool account has been activated! Login to access either the Training or Practice modules.
-    registration: Confirmation e-mail has been sent. Click or navigate to the URL in the e-mail to activate your account.
+        subject: Uspješna potvrda!
+        text: Vaš Olivia Tool račun je aktiviran! Prijavite se kako biste pristupili teorijskom ili praktičnom modulu.
+    registration: Poslan Vam je e-mail za potvrdu registracije. Kliknite ili navigirajte do poveznice u e-mail poruc kako biste aktivirali svoj račun.
     course:
-        new: Course <i>%courseName%</i> has been successfully created.
-        edit: Course has been successfully updated.
+        new: Stvoren je tečaj <i>%courseName%</i>.
+        edit: Tečaj je uređen.
     instructor:
-        new: You have created a new instructor.
-        add: You have added <i>%instructor%</i> as an instructor for the course <i>%course%</i>.
+        new: Stvoren je novi instruktor.
+        add: Dodan je <i>%instructor%</i> kao instruktor na tečaju <i>%course%</i>.
     lesson:
-        new: You have added a new lesson for the course <i>%course%</i>.
-        edit: Lesson has been edited.
+        new: Dodana je nova lekcija za tečaj <i>%course%</i>.
+        edit: Lekcija je uređena.
     quizQuestion:
-        new: You have added a new question to the course.
-        edit: Question has been edited.
+        new: Dodano je novo kviz pitanje.
+        edit: Pitanje je uređeno.
     practicalSubmodule:
-        new: You have created a new practical submodule.
-        edit: A practical submodule has been edited.
+        new: Stvoren je novi praktični podmodul.
+        edit: Praktični podmodul je uređen.
     practicalSubmoduleQuestion:
-        new: A new question has been added to the submodule.
-        edit: Question has been updated.
+        new: Dodano je novo pitanje u podmodul.
+        edit: Pitanje je uređeno.
     practicalSubmoduleQuestionAnswer:
-        new: A new answer has been added to the question.
-        edit: Question answer has been updated.
+        new: Novi odgovor je dodan pitanju.
+        edit: Odgovor na pitanje je uređeno.
     practicalSubmoduleProcessor:
-        new: A new processor has been created for the submodule.
-        edit: Processor has been updated.
+        new: Novi procesor je dodan u podmodul.
+        edit: Procesor je uređen.
     practicalSubmoduleAssessment:
-        finish: Your assessment has been saved. You can view the results by clicking the <i>Results</i> from the <i>Assessment</i> tab.
+        finish: Vaša procjena je spremljena. Rezultate procjene možete vidjeti klikom na gumb <i>Rezultati</i> iz kartice <i>Procjena</i>.
     practicalSubmodulePage:
-        new: A new page has been added to the submodule.
-        edit: Page has been updated
+        new: Nova stranica je dodana u podmodul.
+        edit: Stranice je uređena.
     termsOfService:
-        new: A new terms of service have been created. Users will have to accept the terms of service in order to use the application.
-        edit: Terms of service <i>%termsOfService%</i> have been edited.
-        revise: Terms of service have been revised. Users will have to accept the terms of service in order to use the application.
-        accept: Terms of service have been accepted.
-        rescind: Terms of service have been rescinded.
+        new: Stvoreni su novi Uvjeti pružanja usluge. Korisnici će trebati prihvatiti nove uvjete kako bi mogli koristiti aplikaciju.
+        edit: Uvjeti korištenja usluge <i>%termsOfService%</i> su ažurirani.
+        revise: Revidirani su Uvjeti korištenja usluge. Korisnici će trebati prihvatiti nove uvjete kako bi mogli koristiti aplikaciju.
+        accept: Prihvaćeni su Uvjeti pružanja usluge.
+        rescind: Raskinuti su prihvaćeni Uvjeti pružanja usluge.
     dataRequest:
-        access: A data access request has been sent.
-        delete: A data deletion request has been sent.
+        access: Poslan je zahtjev za pristup podacima.
+        delete: Poslan je zahtjev za brisanje podataka.
     file:
-        new: New file has been uploaded.
-        edit: Existing file has been changed.
+        new: Učitana je nova datoteka.
+        edit: Izmjenila se postojeća datoteka.
     resetPassword:
-        change: Password has been successfully changed.
-        email: "An e-mail message has been sent to the entered e-mail address (if an account exists). Click on the URL in the e-mail message to reset your password. Be warned: the URL is valid for only 3 hours, starting with the time submitted the request for password reset."
+        change: Lozinka je uspješno promijenjena.
+        email: "E-mail poruka je poslana unesenoj e-mail adresi (ako postoji račun s tom e-mail adresom). Kliknite na poveznicu u e-mail poruci kako biste promjenili svoju lozinku. Poveznica ističe nakon 3 sata, počevši od vremena kada se poslali zahtjev za resetiranje lozinke."
 
 warning:
     accountConfirmation:
-        subject: Invalid token!
-        text: The confirmation token from the supplied URL is invalid. Either the account has been already activated, or the account doesn't exist.
+        subject: Nevažeći token!
+        text: Token za potvrdu računa iz danog URL-a nije valjan. Ili je račun već aktiviran, ili račun koji treba aktivirati nije stvoren.
     registration:
-        userExists: User with that e-mail already exists.
+        userExists: Korisnik s tom e-mail adresom već postoji.
     course:
-        image.store: There was an error storing the course image. You can try to reupload it while editing the basic course information.
-        delete: Course <i>%course%</i> has been deleted.
+        image.store: Došlo je do greške prilikom spremanja slike za tečaj. Pokušajte je ponovno učitati na stranici za uređivanje tečaja.
+        delete: Izbrisan je tečaj <i>%course%</i>.
     instructor:
-        image.store: There was an error storing the instructor's image. You can try to reupload it later.
-        delete: You have deleted an instructor.
-        remove: You have removed <i>%instructor%</i> from the course <i>%course%</i>.
+        image.store: Došlo je do greške prilikom spremanja slike instruktora. Pokušajte je ponovno učitati na stranici za uređivanje instruktora.
+        delete: Izbrisan je instruktor.
+        remove: Uklonjen je instruktor <i>%instructor%</i> iz tečaja <i>%course%</i>.
     lesson:
-        delete: Lesson <i>%lesson%</i> from the course <i>%course%</i> has been deleted.
+        delete: Izbrisana je lekcija <i>%lesson%</i> tečaja <i>%course%</i>.
     quizQuestion:
-        delete: Question for the quiz <i>%lesson%</i> has been deleted.
+        delete: Izbrisano je pitanje kviza <i>%lesson%</i>.
     practicalSubmodule:
-        image.store: There was an error storing the image for the practical submodule. You can try to reupload it while editing the basic practical submodule information.
-        delete: Submodule <i>%evaluation%</i> has been deleted.
+        image.store: Došlo je do greške prilikom spremanja slike za praktični podmodul. Pokušajte je ponovno učitati na stranici za uređivanje osnovnih informacija podmodula.
+        delete: Izbrisan je podmodul <i>%evaluation%</i>.
     practicalSubmoduleQuestion:
-        delete: Question for the <i>%evaluation%</i> submodule has been deleted.
+        delete: Izbrisano je pitanje iz podmodula <i>%evaluation%</i>.
     practicalSubmoduleQuestionAnswer:
-        delete: Answer has been deleted from the question.
+        delete: Izbrisan je odgovor na pitanje.
     practicalSubmoduleProcessor:
-        delete: Processor has been deleted from the submodule.
+        delete: Izbrisan je procesor iz podmodula.
     practicalSubmoduleAssessment:
-        noQuestion: There was an error storing the answer to one of the questions.
+        noQuestion: Došlo je do greške tijekom spremanja odgovora na neka pitanja.
     practicalSubmodulePage:
-        delete: Page has been deleted from the submodule.
+        delete: Ibrisana je stranica iz podmodula.
     file:
-        delete: A file has been removed.
+        delete: Izbrisana je datoteka.
 
 error:
     passwordPolicy:
