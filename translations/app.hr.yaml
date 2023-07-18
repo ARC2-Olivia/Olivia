@@ -358,132 +358,132 @@ quizQuestion:
 note:
     dataAccess:
         id: ID
-        lesson: Lesson ID
-        text: Text
-        updatedAt: Updated at
+        lesson: ID lekcije
+        text: Tekst
+        updatedAt: Zadnja izmjena
     extra:
-        displayError: There has been an problem loading the notes widget. Refresh the page to try and load it again or, if the problem persists, report the problem to the Olivia Team.
+        displayError: Došlo je do problema kod učitavanja bilješki. Ponovno učitajte stranicu kako bi ponovno pokušali učitati bilješke. Ako se bilješke i dalje ne učitaju, prijavite problem Olivia timu.
 
 practicalSubmodule:
-    delete: Are you sure you want to delete the practical submodule \'%evaluation%\'?
+    delete: Jeste li sigurni da želite izbrisati praktični podmodul \'%evaluation%\'?
     title:
-        index: Practical module
-        new: New practical submodule
+        index: Praktični modul
+        new: Novi praktični podmodul
     nav:
-        overview: Overview
-        evaluate: Assessment
-        results: Results
+        overview: Pregled
+        evaluate: Procjena
+        results: Rezultati
         edit:
-            default: Edit
-            question: Edit question
-            evaluator: Edit processor
-            answer: Edit answer
-            page: Edit page
+            default: Uređivanje
+            question: Uređivanje pitanja
+            evaluator: Uređivanje procesora
+            answer: Uređivanje odgovora
+            page: Uredđivanje stranice
         new:
-            question: New question
-            evaluator: New processor
-            answer: New answer
-            page: New page
+            question: Novo pitanje
+            evaluator: Novi procesor
+            answer: Novi odgovor
+            page: Nova stranica
     modeOfOperation:
-        simple: Simple
-        advanced: Advanced
+        simple: Jednostavno
+        advanced: Napredno
     extra:
-        question: Question
-        questions: Questions
-        evaluator: Processor
-        evaluators: Processors
-        page: Page
-        pages: Pages
-        answer: Answer
+        question: Pitanje
+        questions: Pitanja
+        evaluator: Procesor
+        evaluators: Procesori
+        page: Stranica
+        pages: Stranice
+        answer: Odgovor
         results:
-            empty: Nothing to show.
-            final: This assessment is intended for educational and information purposes only.
-        connectedTo: "The assessment is connected to the following courses:"
+            empty: Ništa za prikazati.
+            final: Ova je procjena samo u obrazovne i informativne svrhe.
+        connectedTo: "Ova procjena je povezana sa sljedećim tečajevima:"
 
 practicalSubmoduleQuestion:
     type:
-        yesNo: Yes/No
-        weighted: Weighted
-        numericalInput: Numerical input
-        textInput: Text input
-        templatedTextInput: Templated text input
-        multipleChoice: Multiple choice
-        listInput: List input
-        staticText: Static text
-    delete: Are you sure you want to delete this question?
-    empty: There are no defined questions for this submodule.
+        yesNo: Da/Ne
+        weighted: Ponderirano
+        numericalInput: Numerički unos
+        textInput: Tekstualni unos
+        templatedTextInput: Tekstualni unos s predloškom
+        multipleChoice: Višestruki odabir
+        listInput: Unos popisa
+        staticText: Statični tekst
+    delete: Jeste li sigurni da želite obrisati ovo pitanje?
+    empty: Nema definiranih pitanja za ovaj podmodul.
 
 practicalSubmoduleQuestionAnswer:
-    delete: Are you sure you want to delete this question answer?
+    delete: Jeste li sigurni da želite obrisati odgovor na pitanje?
 
 practicalSubmoduleProcessor:
     type:
-        simple: Simple
-        sumAggregate: Sum aggregate
-        productAggregate: Product aggregate
-        templatedText: Templated text
+        simple: Jednostavni
+        sumAggregate: Agregat zbroja
+        productAggregate: Agregate produkta
+        templatedText: Predložak
         html: HTML
-    delete: Are you sure you want to delete this processor?
-    empty: There are no defined processors for this submodule.
+    delete: Jeste li sigurni da želite izbrisati ovaj procesor?
+    empty: Nema definiranih procesora za ovaj podmodul.
     heading:
-        basicOptions: Basic options
-        specificOptions: Processor specific options
+        basicOptions: Osnovne postavke
+        specificOptions: Postavke specifične za procesor
 
 practicalSubmodulePage:
-    empty: There are no defined pages for this submodule.
-    delete: Are you sure you want to delete this page?
+    empty: Nema definiranih stranica za ovaj podmodul.
+    delete: Jeste li sigurni da želite obrisati ovu stranicu?
 
 practicalSubmoduleAssessment:
     message:
-        1: This evaluation contains <b>%questionCount%</b> questions. Some questions will only appear if you answered one of the previous questions in a specific way.
-        2: Assessment can be retried as many times as wanted or needed.
-        3: Click on the <i>Start assessment</i> button to start the evaluation.
+        1: Ova procjena se sastoji od <b>%questionCount%</b> pitanja. Neka pitanja će se prikazati samo ako ste na neko prethodno pitanje odgovorili na specifičan način.
+        2: Procjenu možete beskonačno ponavljati.
+        3: Klinite na gumb <i>Započni procjenu</i> kako biste pokrenuli procjenu.
     action:
-        start: Start assessment
-        results: View results
+        start: Započni procjenu
+        results: Pregled rezultata
 
 termsOfService:
     format: Ver. %version%, rev. %revision%
-    ongoing: ongoing
+    ongoing: u tijeku
     message:
-        accept: Are you sure you want to accept the terms of service?
-        rescind: Are you sure you want to rescind the terms of service?
-        rescindInactive: Rescinding inactive terms of service will not prohibit you from using the Olivia tool.
+        accept: Jeste li sigurni da želite prihvatiti Uvjete pružanja usluge?
+        rescind: Jeste li sigurni da želite raskinuti prihvaćene Uvjete pružanja usluge?
+        rescindInactive: Raskidanje neaktivnih Uvjeta pružanja usluge Vam neće onemogućiti korištenje Olivia alata.
     title:
-        index: Terms of service listing
-        new: New terms of service
-        edit: Editing <i>%termsOfService%</i>
-        revise: Revising <i>%termsOfService%</i>
+        index: Popis Uvjeta korištenja usluge
+        new: Nova Usluga korištenja usluge
+        edit: Uređivanje <i>%termsOfService%</i>
+        revise: Revizija <i>%termsOfService%</i>
     dataAccess:
         id: ID
-        version: Version
-        revision: Revision
-        startedAt: Started at
-        endedAt: Ended at
-        content: Content
-        active: Active
-        acceptedAt: Accepted at
+        version: Verzija
+        revision: Revizija
+        startedAt: Početak
+        endedAt: Završetak
+        content: Sadrćžaj
+        active: Aktivno
+        acceptedAt: Vrijeme prihvaćanja
     extra:
-        revise: Revise
-        accept: Accept terms of service
-        rescind: Rescind terms of service
+        revise: Revizija
+        accept: Prihvati Uvjete pružanja usluge
+        rescind: Raskini prihvaćene Uvjete pružanja usluge
 
 dataRequest:
     title:
         index:
-            default: Data requests
-            typeAccess: Data access requests
-            typeDelete: Data deletion requests
-            resolved: Resolved data requests
+            default: Podatkovni zahtjevi
+            typeAccess: Zahtjevi za pristupom podacima
+            typeDelete: Zahtjevi za brisanjem podataka
+            resolved: Razriješeno podatkovni zahtjevi
 
 file:
     title:
-        index: Files
-        new: New file upload
-        edit: Replace file <i>%filename%</i>
+        index: Datoteke
+        new: Učitaj movu datoteku
+        edit: Zamjena datoteke <i>%filename%</i>
     message:
-        delete: Are you sure you want to delete this file?
+        delete: Jeste li sigurni da želite izbrisati ovu datoteku?
 
 extra:
-    free: Free
-    exitImmitation: Exit immitation
+    free: Besplatno
+    exitImmitation: Prekini imitaciju
