@@ -1,0 +1,17 @@
+mail:
+    signature: "Olivia Tool tim"
+    accountConfirmation:
+        subject: "Olivia | Potvrda računa"
+        body:
+            greeting: "Dragi novi korisniče,"
+            text: "Kliknite na sljedeću poveznicu, ili navigirajte do nje, kako biste aktivirali svoj novi Olivia Tool račun: <a href='%url%'>%url%</a>."
+            goodbye: "S poštovanjem,"
+    passwordReset:
+        subject: "Olivia | Resetiranje lozinke"
+        body:
+            greeting: "Dragi korisniče,"
+            text: "Zahtjev za resetiranje lozinke je zatražen za Olivia Tool račun koji je povezan s ovom e-mail adresom. Ako niste zatražili resetiranje lozinke, ignorirajte ovu e-mail poruku. Ako jeste, kliknite na sljedeću poveznicu kako biste promjenili lozinku svojeg Olivia Tool računa: <a href='%url%'>%url%</a>."
+            goodbye: "S poštovanjem,"
+    dataAccess:
+        subject: "Olivia | Zahtjev za pristup podacima"
+        body: "Zatraženi podaci se nalaze u priloženoj ZIP datoteci."
