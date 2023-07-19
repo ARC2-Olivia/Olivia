@@ -234,7 +234,7 @@ form:
                 resultText: Rezultirajući tekst
                 resultFiles: Rezultirajuće datoteke
                 dependentQuestion: Ovisno pitanje
-                dependentValue: vrijednost ovisnog pitanja
+                dependentValue: Vrijednost ovisnog pitanja
             placeholder:
                 name: Naziv procesora za lakšu identifikaciju
                 resultText: Kakav tekst će procesor vratiti kao rezultat obrade?
