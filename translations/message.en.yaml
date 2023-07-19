@@ -149,8 +149,8 @@ error:
         text: Question text must not be blank.
         explanation: Explanation text must not be blank.
     practicalSubmodule:
-        name: Evaluation name must not be blank.
-        description: Evaluation description must not be blank.
+        name: Name of the practical submodule must not be blank.
+        description: Description of the practical submodule must not be blank.
         image:
             maxSize: File exceeds the allowed maximum size of 5 megabytes.
             mimeType: File has to be an image.
@@ -168,28 +168,28 @@ error:
         answerText: Answer text must not be empty.
         answerValue:
             weighted: Answer weight must be a number.
-        csrf: There was an error processing answers for the evaluation question. Please, try to add them again.
-        empty: There were no answers to add to the evaluation question.
+        csrf: There was an error processing answers for the question. Please, try to add them again.
+        empty: There were no answers to add to the question.
         templatedText:
             textFields: Both default and translated answering templates need to contain same number of fields with the same names.
     practicalSubmoduleProcessor:
         name: Processor name must not be empty.
     practicalSubmoduleProcessorSimple:
-        evaluationQuestion: An evaluation question has to be chosen for the processor.
+        evaluationQuestion: A question has to be chosen for the processor.
         expectedValue:
             blank: An expected value has to be given to the processor.
             notBool: For the chosen question, the expected answer must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
             notNumeric: For the chosen question, the expected answer needs to be a number.
         resultText: A resulting text that the processor will generate upon successful processing needs to be assigned.
     practicalSubmoduleProcessorSumAggregate:
-        questionsAndProcessors: Atleast one evaluation question or processor needs to be assigned to the sum aggregate processor (if included in calculation).
+        questionsAndProcessors: Atleast one question or processor needs to be assigned to the sum aggregate processor (if included in calculation).
         expectedValueRange:
             start: Start of the expected value range needs to be a number.
             end: End of the expected value range needs to be a number.
             invalid: Start of the expected value range has to be less or equal to (≤) the end of the expected value range.
         resultText: A resulting text that the processor will generate upon successful evaluation needs to be assigned.
     practicalSubmoduleProcessorProductAggregate:
-        questionsAndProcessors: Atleast one evaluation question or processor needs to be assigned to the product aggregate processor (if included in calculation).
+        questionsAndProcessors: Atleast one question or processor needs to be assigned to the product aggregate processor (if included in calculation).
         expectedValueRange:
             start: Start of the expected value range needs to be a number.
             end: End of the expected value range needs to be a number.
@@ -198,8 +198,8 @@ error:
     practicalSubmoduleProcessorTemplatedText:
         question: A question has to be chosen for the processor.
     practicalSubmoduleAssessment:
-        start: Unable to start the evaluation. Please, try again.
-        finish: There was an error processing your evaluation. Please, take the evaluation again.
+        start: Unable to start the assessment. Please, try again.
+        finish: There was an error processing your assessment. Please, take it again.
     practicalSubmodulePage:
         questions: You have to add at least one question to the page.
         submoduleMismatch: One of the selected questions doesn't belong to the same submodule as the page.

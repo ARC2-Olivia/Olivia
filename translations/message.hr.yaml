@@ -90,122 +90,122 @@ warning:
 
 error:
     passwordPolicy:
-        length: Password must be at least 8 characters long.
-        number: Password must contain at least one number.
-        uppercase: Password must contain at least one uppercase letter.
-    login: Invalid credentials.
+        length: Lozinka mora sadržavati najmanje 8 znakova.
+        number: Lozinka mora sadržavati barem jedan broj.
+        uppercase: Lozinka mora sadržavati barem jedno veliko slovo.
+    login: Pogrešni podaci za prijavu.
     registration:
         email:
-            blank: E-mail field must not be empty.
-            format: E-mail is not written in an e-mail format.
+            blank: E-mail polje ne smije biti prazno.
+            format: E-mail nije zapisan u formatu za e-mail adrese.
         password:
-            blank: Password fields must not be empty.
-            repeated: Passwords must match!
-        termsOfService: To proceed with the registration, and to be allowed to use the application, the terms of service have to be accepted.
+            blank: Polja za lozinke ne smiju biti prazna.
+            repeated: Lozinke se moraju podudarati.
+        termsOfService: Morate prihvatiti Uvjeta pružanja usluge za nastavak registracije, i općenito kako biste smijeli koristiti aplikaciju.
     resetPassword:
         email:
-            blank: E-mail field must not be empty.
-            format: E-mail is not written in an e-mail format.
+            blank: E-mail polje ne smije biti prazno.
+            format: E-mail nije zapisan u formatu za e-mail adrese.
         password:
-            blank: Password fields must not be empty.
-            repeated: Passwords must match!
+            blank: Polja za lozinke ne smiju biti prazna.
+            repeated: Lozinke se moraju podudarati.
         token:
-            invalid: Invalid password reset request.
-            expired: The password reset request has expired.
+            invalid: Zahtjev za resetiranje lozinke nije valjan.
+            expired: Istekao je zahtjev za resetiranje lozinke.
     course:
-        name: Course name must not be empty.
-        description: Course description must not be empty.
+        name: Naziv tečaja ne smije biti prazno.
+        description: Opis tečaja ne smije biti prazno.
         image:
-            maxSize: File exceeds the allowed maximum size of 5 megabytes.
-            mimeType: File has to be an image.
+            maxSize: Datoteka premašuje maksimalnu dopuštenu veličinu od 5 megabajta.
+            mimeType: Datoteka mora biti slika.
         estimatedWorkload:
-            value: 'Estimated workload value needs to be a number: integer or a decimal number with "." as a decimal point.'
+            value: 'Vrijednot procijenjenog opterećenja mora biti broj: ili cijeli broj ili decimalni broj s decimalnom točkom.'
     instructor:
-        firstName: First name must not be blank.
-        lastName: Last name must not be blank.
-        notNull: You have to choose an instructor from the dropdown to add to the course.
-        remove: Instructor <i>%instructor%</i> is not assigned to course <i>%course%</i>.
+        firstName: Ime ne smije biti prazno.
+        lastName: Przeime ne smije biti prazno.
+        notNull: Niste odabrali instruktora.
+        remove: Instructor <i>%instructor%</i> je maknut sa tečaja course <i>%course%</i>.
     lesson:
-        name: Lesson name must not be empty.
+        name: Naziv lekcije ne smije biti prazno.
         file:
-            size: File exceeds the allowed maximum size of 20 megabytes.
-            noFile: A file has to be uploaded.
-            store: There was an error storing the uploaded file for the lesson.
+            size: Datoteka premašuje maksimalnu dopuštenu veličinu od 20 megabajta.
+            noFile: Potrebno je učitati datoteku.
+            store: Došlo je do greške tijekom spremanja učitane datoteke za lekciju.
         video:
-            blank: Video URL is required.
-            store: There was an error storing the uploaded video for the lesson.
+            blank: Potreban je video URL.
+            store: Došlo je do greške tijekom spremanja učitanog videa za lekciju.
         quiz:
-            blank: Passing percentage is required.
-            range: Passing percentage value must be between 0 and 100.
-            type: Unable to add a new question to a lesson that is not a quiz.
-            start: Unable to start the quiz. Please, try again.
-            finish: Your session expired while taking the quiz. Please, retake it again.
-            missingLessonItemQuiz: Error occurred while starting or finishing the quiz. Please, report the error to one of the moderators.
+            blank: Obavezno je postaviti postotak za prolaznost.
+            range: Vrijednost postotka za prolaznost mora biti između 0 i 100.
+            type: Nije moguće dodati novo pitanje u lekciju koja nije kviz.
+            start: Kvoz se nije uspio pokrenuti. Molimo, pokušajte ponovno.
+            finish: Vaša sesija je istekla tijekom rješavanja kviza. Molimo, riješite ga ponovno.
+            missingLessonItemQuiz: Došlo je do greške tijekom pokretanja ili završavanja kviza. Molimo, obavijestite moderatore o ovoj grešci.
             results:
-                completionData: There are no results to display because the quiz has not been taken.
-                type: Cannot display results of a non-quiz lesson.
-                missingLessonItemQuiz: Quiz results couldn't be shown due to an error. Please, report the error to one of the moderators.
+                completionData: Nema rezultata za pokazati jer kviz nije riješen.
+                type: Nemoguće je prikazati rezultate kviz ako lekcija nije namijenjena da bude kviz.
+                missingLessonItemQuiz: Rezultati kviza se ne mogu prikazati zbog greške. Molimo, obavijestite moderatore o ovoj grešci.
     quizQuestion:
-        text: Question text must not be blank.
-        explanation: Explanation text must not be blank.
+        text: Tekst pitanja ne smije biti prazan.
+        explanation: Tekst objašnjenja ne smije biti prazno.
     practicalSubmodule:
-        name: Evaluation name must not be blank.
-        description: Evaluation description must not be blank.
+        name: Naziv ne smije biti prazan.
+        description: Opis ne smije biti prazan.
         image:
-            maxSize: File exceeds the allowed maximum size of 5 megabytes.
-            mimeType: File has to be an image.
+            maxSize: Datoteka premašuje maksimalnu dopuštenu veličinu od 5 megabajta.
+            mimeType: Datoteka mora biti slika.
         import:
-            erroneousFirstTask: First task has to create a practical submodule, and it must not be erroneous.
-            wrongFirstTaskType: First task has to create a practical submodule. Has the file been tampered with in any way after export?
-            missingTaskOrderKey: Certain data important for the export is missing from the file. Has the file been tampered with in any way after export?
-            default: Unexpected error occurred while importing the practical submodule.
-        modeOfOperation: Invalid mode of operation.
+            erroneousFirstTask: Prvi zadatak u uvozu mora kreirati praktični podmodul, i ne smije imati greške.
+            wrongFirstTaskType: Prvi zadatak u uvozu mora kreirati praktični podmodul. Je li datoteka na bilo koji način mijenjana nakon izvoza?
+            missingTaskOrderKey: Nedotaju određeni podaci potreban za uvoz. Je li datoteka na bilo koji način mijenjana nakon izvoza?
+            default: Došlo je do nepredviđene greške tijekom uvoza praktičnog podmodula.
+        modeOfOperation: Nevažeća vrsta rada.
     practicalSubmoduleQuestion:
         dependentValue:
-            notBool: For the chosen dependent question, the dependent value must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
-            notNumeric: For the chosen dependent question, the dependent value needs to be a number.
+            notBool: Za odabrano ovisno pitanje, njegova ovisna vrijednost mora biti ili <b>1</b> za <b><i>da</i></b> ili <b>0</b> za <b><i>ne</i></b>.
+            notNumeric: Za odabrano ovisno pitanje, njegova ovisna vrijednost mora biti broj.
     practicalSubmoduleQuestionAnswer:
-        answerText: Answer text must not be empty.
+        answerText: Tekst odgovora ne smije biti prazan.
         answerValue:
-            weighted: Answer weight must be a number.
-        csrf: There was an error processing answers for the evaluation question. Please, try to add them again.
-        empty: There were no answers to add to the evaluation question.
+            weighted: Ponder odgovora mora biti broj.
+        csrf: Došlo je do greške u obradi odgovora za pitanje. Molimo, pokušajte ih ponovno dodati.
+        empty: Nema odgovora koje se mogu dodati pitanju.
         templatedText:
-            textFields: Both default and translated answering templates need to contain same number of fields with the same names.
+            textFields: I primarni i prevedeni prdlošci odgovora moraju sadržavati isti broj polja s istim nazivima.
     practicalSubmoduleProcessor:
-        name: Processor name must not be empty.
+        name: Naziv procesora ne smije biti prazan.
     practicalSubmoduleProcessorSimple:
-        evaluationQuestion: An evaluation question has to be chosen for the processor.
+        evaluationQuestion: Procesoru morate odabrati pitanje.
         expectedValue:
-            blank: An expected value has to be given to the processor.
-            notBool: For the chosen question, the expected answer must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
-            notNumeric: For the chosen question, the expected answer needs to be a number.
-        resultText: A resulting text that the processor will generate upon successful processing needs to be assigned.
+            blank: Procesoru morate zadati očekivanu vrijednost.
+            notBool: Za odabrano pitanje, očekivani odgovor mora biti ili <b>1</b> za <b><i>da</i></b> ili <b>0</b> za <b><i>ne</i></b>.
+            notNumeric: Za odabrano pitanje, očekivani odgovor mora biti broj.
+        resultText: Procesoru je potrebno unijeti rezultirajući tekst koji će se generirati nakon uspješne obrade.
     practicalSubmoduleProcessorSumAggregate:
-        questionsAndProcessors: Atleast one evaluation question or processor needs to be assigned to the sum aggregate processor (if included in calculation).
+        questionsAndProcessors: Barem jedno pitanje ili procesor je potrebno dodijeliti procesoru agregata zbroja (ako je uključen u ispis rezultata).
         expectedValueRange:
-            start: Start of the expected value range needs to be a number.
-            end: End of the expected value range needs to be a number.
-            invalid: Start of the expected value range has to be less or equal to (≤) the end of the expected value range.
-        resultText: A resulting text that the processor will generate upon successful evaluation needs to be assigned.
+            start: Početak očekivanog vrijednosnog raspona mora biti broj.
+            end: Kraj očekivanog vrijednosnog raspona mora biti broj.
+            invalid: Početak očekivanog vrijednosnog raspona mora biti manji ili jednak (≤) kraju očekivanog vrijednosnog raspona.
+        resultText: Procesoru je potrebno unijeti rezultirajući tekst koji će se generirati nakon uspješne obrade.
     practicalSubmoduleProcessorProductAggregate:
-        questionsAndProcessors: Atleast one evaluation question or processor needs to be assigned to the product aggregate processor (if included in calculation).
+        questionsAndProcessors: Barem jedno pitanje ili procesor je potrebno dodijeliti procesoru agregata produkta (ako je uključen u ispis rezultata).
         expectedValueRange:
-            start: Start of the expected value range needs to be a number.
-            end: End of the expected value range needs to be a number.
-            invalid: Start of the expected value range has to be less or equal to (≤) the end of the expected value range.
-        resultText: A resulting text that the processor will generate upon successful evaluation needs to be assigned.
+            start: Početak očekivanog vrijednosnog raspona mora biti broj.
+            end: Kraj očekivanog vrijednosnog raspona mora biti broj.
+            invalid: Početak očekivanog vrijednosnog raspona mora biti manji ili jednak (≤) kraju očekivanog vrijednosnog raspona.
+        resultText: Procesoru je potrebno unijeti rezultirajući tekst koji će se generirati nakon uspješne obrade.
     practicalSubmoduleProcessorTemplatedText:
-        question: A question has to be chosen for the processor.
+        question: Procesoru je potrebno odabrati pitanje.
     practicalSubmoduleAssessment:
-        start: Unable to start the evaluation. Please, try again.
-        finish: There was an error processing your evaluation. Please, take the evaluation again.
+        start: Procjena se nije mogla pokremuti. Molimo, pokušajte ponovno.
+        finish: Došlo je do greške u obradi vaše procjene. Molimo, ponovite procjenu.
     practicalSubmodulePage:
-        questions: You have to add at least one question to the page.
-        submoduleMismatch: One of the selected questions doesn't belong to the same submodule as the page.
+        questions: Potrebno je dodati barem jedno pitanje u stranicu.
+        submoduleMismatch: Jedno od odabranih pitanja ne pripada istom podmodulu kojem pripada stranica.
     termsOfService:
-        content: Content of the terms of service must not be empty.
-        contentAlt: Translation of the content of the terms of service must not be empty.
+        content: Sadržaj uvjeta pružanja usluge ne smije biti prazan.
+        contentAlt: Prijevod sadržaja uvjeta pružanja usluge ne smije biti prazan.
     dataRequest:
-        access: Unable to send data access request. Please, refresh the page and try again.
-        delete: Unable to send data deletion request. Please, refresh the page and try again.
+        access: Zahtjev za pristup podacima nije poslan. Molimo, ponovno učitajte stranicu te pokušajte ponovno.
+        delete: Zahtjev za brisanje podataka nije poslan. Molimo, ponovno učitajte stranicu te pokušajte ponovno.
