@@ -11,6 +11,7 @@ use App\Form\PracticalSubmoduleProcessorType;
 use App\Repository\PracticalSubmoduleProcessorRepository;
 use App\Service\PracticalSubmoduleService;
 use App\Service\NavigationService;
+use App\Service\SanitizerService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,16 +41,22 @@ class PracticalSubmoduleProcessorController extends BaseController
     #[IsGranted('ROLE_MODERATOR')]
     public function edit(PracticalSubmoduleProcessor $practicalSubmoduleProcessor,
                          PracticalSubmoduleService $practicalSubmoduleService,
+                         SanitizerService $sanitizerService,
                          NavigationService $navigationService,
                          Request $request,
     ): Response
     {
         $processorImpl = $practicalSubmoduleService->getProcessorImplementation($practicalSubmoduleProcessor);
-        $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $practicalSubmoduleProcessor, ['edit_mode' => true]);
-        $implForm = $this->createForm($practicalSubmoduleService->getProcessorImplementationFormClass($practicalSubmoduleProcessor), $processorImpl);
         $updated = false;
         $oldIncluded = $practicalSubmoduleProcessor->isIncluded();
         $isProcessorProcessingProcessor = in_array($practicalSubmoduleProcessor->getType(), PracticalSubmoduleProcessor::getProcessorProcessingProcessorTypes());
+
+        if (PracticalSubmoduleProcessor::TYPE_HTML !== $practicalSubmoduleProcessor->getType()) {
+            $processorImpl->setResultText($sanitizerService->unsanitizeText($processorImpl->getResultText()));
+        }
+
+        $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $practicalSubmoduleProcessor, ['edit_mode' => true]);
+        $implForm = $this->createForm($practicalSubmoduleService->getProcessorImplementationFormClass($practicalSubmoduleProcessor), $processorImpl);
 
         $baseForm->handleRequest($request);
         if ($baseForm->isSubmitted() && $baseForm->isValid()) {
@@ -70,6 +77,12 @@ class PracticalSubmoduleProcessorController extends BaseController
 
         $implForm->handleRequest($request);
         if ($implForm->isSubmitted() && $implForm->isValid()) {
+            if (PracticalSubmoduleProcessor::TYPE_HTML === $practicalSubmoduleProcessor->getType()) {
+                $processorImpl->setResultText($sanitizerService->sanitizeHtml($processorImpl->getResultText()));
+            } else {
+                $processorImpl->setResultText($sanitizerService->sanitizeText($processorImpl->getResultText()));
+            }
+
             if ($processorImpl->getId() === null) {
                 $this->em->persist($processorImpl);
             }

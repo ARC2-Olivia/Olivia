@@ -20,7 +20,7 @@
                 {% if answerDatum.result.html %}
                     <div class="ql-editor">{{ answerDatum.result.text|raw }}</div>
                 {% else %}
-                    <p>{{ answerDatum.result.text|nl2br }}</p>
+                    <p>{{ answerDatum.result.text|raw|nl2br }}</p>
                 {% endif %}
             {% endif %}
             {% if answerDatum.result.areFilesSet %}

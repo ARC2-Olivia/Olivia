@@ -12,4 +12,6 @@ interface PracticalSubmoduleProcessorImplementationInterface
     public function validate(ExecutionContextInterface $context, $payload): void;
     public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null);
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool;
+    public function getResultText(): ?string;
+    public function setResultText(?string $resultText): self;
 }
