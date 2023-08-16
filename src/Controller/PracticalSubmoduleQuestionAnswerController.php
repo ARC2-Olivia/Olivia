@@ -9,6 +9,7 @@ use App\Form\PracticalSubmodule\TranslatableTemplatedText;
 use App\Form\PracticalSubmodule\TranslatableTemplatedTextType;
 use App\Form\PracticalSubmoduleQuestionAnswerMultiChoiceType;
 use App\Form\PracticalSubmoduleQuestionAnswerWeightedType;
+use App\Misc\TemplatedTextField;
 use App\Service\NavigationService;
 use App\Service\PracticalSubmoduleService;
 use Gedmo\Translatable\Entity\Translation;
@@ -77,7 +78,9 @@ class PracticalSubmoduleQuestionAnswerController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $practicalSubmoduleQuestionAnswer->setTemplatedTextFields($ttt->getTextFields());
+            $textFields = $ttt->getTextFields();
+            $simplifiedTextFields = array_map(function (TemplatedTextField $ttf) { return $ttf->simplify(); }, $textFields);
+            $practicalSubmoduleQuestionAnswer->setTemplatedTextFields($simplifiedTextFields);
             $this->em->flush();
             $this->processTemplatedTextTranslations($practicalSubmoduleQuestionAnswer, $form);
             $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestionAnswer.edit', [], 'message'));

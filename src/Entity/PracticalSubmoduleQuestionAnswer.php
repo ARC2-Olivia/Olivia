@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Misc\TemplatedTextField;
 use App\Repository\PracticalSubmoduleQuestionAnswerRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -84,6 +85,12 @@ class PracticalSubmoduleQuestionAnswer extends TranslatableEntity
     public function getTemplatedTextFields(): array
     {
         return $this->templatedTextFields;
+    }
+
+    /** @return TemplatedTextField[] */
+    public function getDesimplifiedTemplatedTextFields(): array
+    {
+        return array_map(function (string $simplifiedField) { return TemplatedTextField::desimplifyField($simplifiedField); }, $this->templatedTextFields);
     }
 
     public function setTemplatedTextFields(?array $templatedTextFields): self

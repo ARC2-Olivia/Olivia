@@ -311,9 +311,10 @@ class PracticalSubmoduleAssessment {
 
         let answerRaw = `<div style="white-space: pre-wrap">${answerText}</div>`;
         for (const field of answerFields) {
-            const pattern = new RegExp(`{{\\s*${field}\\s*}}`);
+            const requirement = field.properties.some(prop => prop.toLowerCase() === 'optional') ? '' : ' data-answer-required required';
+            const pattern = new RegExp(`{{\\s*${field.name}[\\|\\s\\w]*\\s*}}`);
             const inputRaw = `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal">
-                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field}]" data-answer-required required/>
+                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field.name}]"${requirement}/>
             </label>`;
             answerRaw = answerRaw.replace(pattern, inputRaw);
         }

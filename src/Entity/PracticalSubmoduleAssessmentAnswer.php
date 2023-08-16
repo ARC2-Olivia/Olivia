@@ -91,7 +91,7 @@ class PracticalSubmoduleAssessmentAnswer
             $answeredFields = json_decode($this->getAnswerValue(), true);
             $displayableAnswer = $this->practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->get(0)->getAnswerText();
             foreach ($answeredFields as $field => $answer) {
-                $pattern = '/\{\{\s*'.$field.'\s*\}\}/';
+                $pattern = '/\{\{\s*'.$field.'[\|\s\w]*\s*\}\}/';
                 $replacement = '<b>'.$answer.'</b>';
                 $displayableAnswer = preg_replace($pattern, $replacement, $displayableAnswer);
             }

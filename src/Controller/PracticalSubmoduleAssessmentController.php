@@ -7,6 +7,7 @@ use App\Entity\PracticalSubmoduleAssessmentAnswer;
 use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
+use App\Misc\TemplatedTextField;
 use App\Service\NavigationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,6 +45,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
             }
         }
 
+        $templatedTextFieldsMapper = function (TemplatedTextField $ttf): array { return $ttf->asArray(); };
         foreach ($practicalSubmoduleQuestions as $practicalSubmoduleQuestion) {
             $question = [
                 'id' => $practicalSubmoduleQuestion->getId(),
@@ -67,7 +69,9 @@ class PracticalSubmoduleAssessmentController extends BaseController
                     'text' => $answerText,
                     'value' => $practicalSubmoduleQuestionAnswer->getAnswerValue()
                 ];
-                if ($question['type'] === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) $answer['fields'] = $practicalSubmoduleQuestionAnswer->getTemplatedTextFields();
+                if ($question['type'] === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
+                    $answer['fields'] = array_map($templatedTextFieldsMapper, $practicalSubmoduleQuestionAnswer->getDesimplifiedTemplatedTextFields());
+                }
                 $question['answers'][] = $answer;
             }
             $assessment['questions'][] = $question;
