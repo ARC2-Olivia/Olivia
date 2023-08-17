@@ -187,6 +187,17 @@ ul.mod--ps-pages {
     background-color: rgba(0, 0, 0, 0.075);
 }
 
+.evaluation-assessment-question.static-text {
+    background-color: #e5eefd;
+}
+
+.evaluation-assessment-question.heading {
+    background: none;
+    padding: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
 .evaluation-assessment-question-text:not(.no-bold) {
     font-weight: 600;
 }

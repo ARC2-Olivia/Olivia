@@ -140,8 +140,11 @@ class PracticalSubmoduleAssessment {
         questionText.classList.add('evaluation-assessment-question-text');
         questionText.innerText = questionData.question;
 
-        const questionAnswers = document.createElement("DIV");
-        questionAnswers.classList.add('evaluation-assessment-question-answers');
+        let questionAnswers = null;
+        if ('static_text' !== questionData.type) {
+            questionAnswers = document.createElement("DIV");
+            questionAnswers.classList.add('evaluation-assessment-question-answers');
+        }
 
         let finalize = true;
         switch (questionData.type) {
@@ -152,7 +155,10 @@ class PracticalSubmoduleAssessment {
             case 'templated_text_input': questionAnswers.append(this.#createTemplatedTextInputAnswer(questionData)); break;
             case 'multi_choice': this.#createMultiChoiceAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
             case 'list_input': questionAnswers.append(this.#createListInputAnswer(questionData)); break;
-            case 'static_text': questionText.classList.add('no-bold'); break;
+            case 'static_text': {
+                question.classList.add('static-text');
+                questionText.classList.add('no-bold');
+            } break;
             default: finalize = false;
         }
 
@@ -178,7 +184,8 @@ class PracticalSubmoduleAssessment {
                     }
                 });
             }
-            question.append(questionText, questionAnswers);
+            question.appendChild(questionText);
+            if (null !== questionAnswers) question.appendChild(questionAnswers);
             if (shouldDisableQuestion) this.#disableQuestion(question);
         }
         return question;
