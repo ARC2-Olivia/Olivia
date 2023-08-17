@@ -207,6 +207,7 @@ form:
                 dependentQuestion: Dependent question
                 dependentValue: Dependent question value
                 otherEnabled: Enable additional (i.e. <i>other</i>) fields
+                isHeading: Is heading
             placeholder:
                 questionText: Question text goes here...
                 dependentEvaluationQuestion: Nothing selected...

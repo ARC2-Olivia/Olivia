@@ -73,6 +73,17 @@
             <button type="submit" form="{{ tttForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
         </div>
 
+    {% elseif stForm is defined %}
+
+        <hr/>
+        {{ form_start(stForm, {'attr': {'id': stForm.vars.id}}) }}
+            {{ form_label(stForm.isHeading) }}
+            {{ form_widget(stForm.isHeading) }}
+        {{ form_end(stForm) }}
+        <div class="text-end">
+            <button type="submit" form="{{ stForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+
     {% endif %}
 
 {% endblock %}

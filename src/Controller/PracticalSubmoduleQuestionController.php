@@ -9,6 +9,7 @@ use App\Form\PracticalSubmodule\TranslatableTemplatedText;
 use App\Form\PracticalSubmodule\TranslatableTemplatedTextType;
 use App\Form\PracticalSubmoduleQuestionAnswerMultiChoiceType;
 use App\Form\PracticalSubmoduleQuestionAnswerWeightedType;
+use App\Form\PracticalSubmoduleQuestionStaticTextType;
 use App\Form\PracticalSubmoduleQuestionType;
 use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Service\NavigationService;
@@ -57,7 +58,19 @@ class PracticalSubmoduleQuestionController extends BaseController
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmoduleQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_QUESTION)
         ];
 
-        if ($practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
+        if (PracticalSubmoduleQuestion::TYPE_STATIC_TEXT === $practicalSubmoduleQuestion->getType()) {
+            $stForm = $this->createForm(PracticalSubmoduleQuestionStaticTextType::class, $practicalSubmoduleQuestion);
+            $stForm->handleRequest($request);
+
+            if ($stForm->isSubmitted() && $stForm->isValid()) {
+                $this->em->flush();
+                $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.edit', [], 'message'));
+            }
+
+            $params['stForm'] = $stForm->createView();
+        }
+
+        if (PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT === $practicalSubmoduleQuestion->getType()) {
             $params['tttForm'] = $this->prepareTemplatedTextAnswerForm($practicalSubmoduleQuestion, $request);
         }
 

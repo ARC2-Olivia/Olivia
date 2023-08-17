@@ -53,7 +53,8 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 'question' => $practicalSubmoduleQuestion->getQuestionText(),
                 'answers' => [],
                 'page' => $practicalSubmoduleQuestion->getPracticalSubmodulePage()?->getPosition(),
-                'other' => $practicalSubmoduleQuestion->isOtherEnabled()
+                'other' => $practicalSubmoduleQuestion->isOtherEnabled(),
+                'isHeading' => $practicalSubmoduleQuestion->getIsHeading()
             ];
             if ($practicalSubmoduleQuestion->getDependentPracticalSubmoduleQuestion() !== null) {
                 $question['dependency'] = [

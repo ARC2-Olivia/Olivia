@@ -156,7 +156,7 @@ class PracticalSubmoduleAssessment {
             case 'multi_choice': this.#createMultiChoiceAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
             case 'list_input': questionAnswers.append(this.#createListInputAnswer(questionData)); break;
             case 'static_text': {
-                question.classList.add('static-text');
+                question.classList.add(questionData.isHeading ? 'heading' : 'static-text');
                 questionText.classList.add('no-bold');
             } break;
             default: finalize = false;

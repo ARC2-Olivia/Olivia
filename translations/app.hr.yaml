@@ -207,6 +207,7 @@ form:
                 dependentQuestion: Ovisno pitanje
                 dependentValue: Vrijednost ovisnog pitanja
                 otherEnabled: Omogući dodatni (i.e. <i>ostali</i>) unos
+                isHeading: Tekst je naziv poglavlje
             placeholder:
                 questionText: Ovdje stavite tekst pitanja...
                 dependentEvaluationQuestion: Ništa odabrano...
