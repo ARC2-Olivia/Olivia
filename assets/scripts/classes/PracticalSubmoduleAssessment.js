@@ -19,7 +19,8 @@ class PracticalSubmoduleAssessment {
             buttonNext: translation.buttonNext || "Next",
             buttonPrevious: translation.buttonPrevious || "Previous",
             buttonSubmit: translation.buttonSubmit || "Submit",
-            buttonAdd: translation.buttonAdd || "Add"
+            buttonAdd: translation.buttonAdd || "Add",
+            errorDefault: translation.errorDefault || "The answer to this question is invalid"
         };
     }
 
@@ -45,7 +46,10 @@ class PracticalSubmoduleAssessment {
             }
         });
 
-        if (this.#paging === true) this.#appendPageNavigation();
+        if (this.#paging === true) {
+            this.#appendPageNavigation();
+            this.#initializePagingSuitableFormValidation();
+        }
         this.#appendSubmitButton();
     }
 
@@ -112,6 +116,25 @@ class PracticalSubmoduleAssessment {
 
 
             if (navigation !== null) currPage.append(navigation);
+        }
+    }
+
+    #initializePagingSuitableFormValidation() {
+        const context = this;
+        this.#form.setAttribute("novalidate", "novalidate");
+        this.#form.onsubmit = function(evt) {
+            const formElements = evt.target.querySelectorAll("[data-answer-required]");
+            for (const formElement of formElements) {
+                if ("validity" in formElement && !formElement.validity.valid) {
+                    evt.preventDefault();
+                    const page = formElement.closest("[data-page]");
+                    const link = document.createElement("A");
+                    link.href = `#${page.id}`;
+                    link.click();
+                    setTimeout(() => { formElement.reportValidity(); }, 750);
+                    break;
+                }
+            }
         }
     }
 

@@ -322,3 +322,11 @@ ul.mod--ps-pages {
     content: attr(data-prefix);
     font-weight: bold;
 }
+
+.evaluation-assessment-error {
+    background-color: var(--app-color-red);
+    border-radius: 4px;
+    padding: 4px 6px;
+    color: #ffffff;
+    font-size: 14px;
+}
