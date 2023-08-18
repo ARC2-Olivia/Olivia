@@ -4,7 +4,7 @@
     <div class="mod--evaluation-evaluator-status">
         <div class="mod--evaluation-evaluator-reorder-handle">{{ mdi('drag-vertical', '', '6 0 12 24') }}</div>
         <div class="mod--evaluation-evaluator-included">
-            {% if not evaluationEvaluator.evaluationEvaluatorImplementation|is_valid_evaluator %}
+            {% if not evaluationEvaluator.implementation|is_valid_evaluator %}
                 {{ mdi('text-box-remove', 'invalid') }}
             {% elseif evaluationEvaluator.included %}
                 {{ mdi('text-box-check', 'included') }}

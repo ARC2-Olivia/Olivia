@@ -8,6 +8,7 @@ use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleProcessorHtml;
 use App\Entity\PracticalSubmoduleProcessorImplementationInterface;
 use App\Entity\PracticalSubmoduleProcessorProductAggregate;
+use App\Entity\PracticalSubmoduleProcessorResultCombiner;
 use App\Entity\PracticalSubmoduleProcessorSimple;
 use App\Entity\PracticalSubmoduleProcessorSumAggregate;
 use App\Entity\PracticalSubmoduleProcessorTemplatedText;
@@ -21,6 +22,7 @@ use App\Exception\PSImport\WrongFirstTaskTypeException;
 use App\Exception\UnsupportedEvaluationEvaluatorTypeException;
 use App\Form\PracticalSubmoduleProcessorHtmlType;
 use App\Form\PracticalSubmoduleProcessorProductAggregateType;
+use App\Form\PracticalSubmoduleProcessorResultCombinerType;
 use App\Form\PracticalSubmoduleProcessorSimpleType;
 use App\Form\PracticalSubmoduleProcessorSumAggregateType;
 use App\Form\PracticalSubmoduleProcessorTemplatedTextType;
@@ -67,7 +69,7 @@ class PracticalSubmoduleService
             $impl = null;
             if ($processor::TYPE_SUM_AGGREGATE === $processor->getType() || $processor::TYPE_PRODUCT_AGGREGATE === $processor->getType()) {
                 /** @var PracticalSubmoduleProcessorSumAggregate|PracticalSubmoduleProcessorProductAggregate $impl */
-                $impl = $processor->getEvaluationEvaluatorImplementation();
+                $impl = $processor->getImplementation();
             }
 
             if (null === $impl) continue;
@@ -141,6 +143,12 @@ class PracticalSubmoduleService
             return $processorImpl;
         }
 
+        if ($processor->getType() === PracticalSubmoduleProcessor::TYPE_RESULT_COMBINER) {
+            $processorImpl = $this->em->getRepository(PracticalSubmoduleProcessorResultCombiner::class)->findOneBy(['practicalSubmoduleProcessor' => $processor]);
+            if ($processorImpl === null) $processorImpl = (new PracticalSubmoduleProcessorResultCombiner())->setPracticalSubmoduleProcessor($processor);
+            return $processorImpl;
+        }
+
         throw UnsupportedEvaluationEvaluatorTypeException::withDefaultMessage();
     }
 
@@ -155,6 +163,7 @@ class PracticalSubmoduleService
             PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => PracticalSubmoduleProcessorSumAggregateType::class,
             PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => PracticalSubmoduleProcessorProductAggregateType::class,
             PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT => PracticalSubmoduleProcessorTemplatedTextType::class,
+            PracticalSubmoduleProcessor::TYPE_RESULT_COMBINER => PracticalSubmoduleProcessorResultCombinerType::class,
             default => null
         };
         if ($formClass === null) throw UnsupportedEvaluationEvaluatorTypeException::withDefaultMessage();
@@ -191,6 +200,7 @@ class PracticalSubmoduleService
                 PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => $this->runSumAggregateProcessor($processor, $assessment),
                 PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => $this->runProductAggregateProcessor($processor, $assessment),
                 PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT => $this->runTemplatedTextProcessor($processor, $assessment),
+                PracticalSubmoduleProcessor::TYPE_RESULT_COMBINER => $this->runResultCombinerProcessor($processor, $assessment),
                 default => null
             };
 
@@ -244,5 +254,13 @@ class PracticalSubmoduleService
         $question = PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $assessment->getPracticalSubmodule()->getModeOfOperation() ? $processorTemplatedText->getPracticalSubmoduleQuestion() : null;
         $processorTemplatedText->calculateResult($assessment);
         return new ProcessorResult($processorTemplatedText->getResultText(), $processorTemplatedText->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(), false, $question);
+    }
+
+    private function runResultCombinerProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
+    {
+        $processorResultCombiner = $processor->getPracticalSubmoduleProcessorResultCombiner();
+        if (!$processorResultCombiner->checkConformity($assessment)) return null;
+        $processorResultCombiner->calculateResult($assessment, $this->validator);
+        return new ProcessorResult($processorResultCombiner->getResultText());
     }
 }

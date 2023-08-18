@@ -87,13 +87,15 @@ class PracticalSubmoduleProcessorController extends BaseController
                 $this->em->persist($processorImpl);
             }
 
-            $files = $implForm->get('resultFiles')->getData();
-            $practicalSubmoduleProcessor->clearResultFiles();
-            foreach ($files as $file) {
-                $practicalSubmoduleProcessor->addResultFile($file);
+            if ($implForm->has('resultFiles')) {
+                $files = $implForm->get('resultFiles')->getData();
+                $practicalSubmoduleProcessor->clearResultFiles();
+                foreach ($files as $file) {
+                    $practicalSubmoduleProcessor->addResultFile($file);
+                }
             }
 
-            if (true === $isProcessorProcessingProcessor) {
+            if (true === $isProcessorProcessingProcessor && $practicalSubmoduleProcessor::TYPE_RESULT_COMBINER !== $practicalSubmoduleProcessor->getType()) {
                 /** @var PracticalSubmoduleProcessorSumAggregate|PracticalSubmoduleProcessorProductAggregate $processorImpl */
                 $processorImpl->getPracticalSubmoduleQuestions()->clear();
                 $simpleMode = true === $practicalSubmoduleProcessor->isIncluded() && PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $practicalSubmoduleProcessor->getPracticalSubmodule()->getModeOfOperation();

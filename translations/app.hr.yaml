@@ -424,6 +424,7 @@ practicalSubmoduleProcessor:
         productAggregate: Agregate produkta
         templatedText: Predložak
         html: HTML
+        resultCombiner: Kombinator rezultata procesora
     delete: Jeste li sigurni da želite izbrisati ovaj procesor?
     empty: Nema definiranih procesora za ovaj podmodul.
     heading:

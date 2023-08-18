@@ -69,10 +69,10 @@ class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity impleme
                 }
             }
         }
-        foreach ($this->getPracticalSubmoduleProcessors() as $evaluationEvaluator) {
-            $evaluationEvaluatorImplementation = $evaluationEvaluator->getEvaluationEvaluatorImplementation();
-            if ($validator !== null && $validator->validate($evaluationEvaluatorImplementation)->count() === 0) {
-                $sum += $evaluationEvaluatorImplementation->calculateResult($practicalSubmoduleAssessment, $validator);
+        foreach ($this->getPracticalSubmoduleProcessors() as $processor) {
+            $processorImpl = $processor->getImplementation();
+            if ($validator !== null && $validator->validate($processorImpl)->count() === 0) {
+                $sum += $processorImpl->calculateResult($practicalSubmoduleAssessment, $validator);
             }
         }
         return $sum;

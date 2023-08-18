@@ -89,10 +89,10 @@ class OliviaRuntime implements RuntimeExtensionInterface
         return null;
     }
 
-    public function isValidEvaluator(?PracticalSubmoduleProcessorImplementationInterface $evaluationEvaluatorImplementation)
+    public function isValidEvaluator(?PracticalSubmoduleProcessorImplementationInterface $processorImpl)
     {
-        if ($evaluationEvaluatorImplementation !== null) {
-            $errors = $this->validator->validate($evaluationEvaluatorImplementation);
+        if ($processorImpl !== null) {
+            $errors = $this->validator->validate($processorImpl);
             return $errors->count() === 0;
         }
         return false;

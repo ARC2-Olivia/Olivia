@@ -17,6 +17,7 @@ class PracticalSubmoduleProcessor
     public const TYPE_PRODUCT_AGGREGATE = 'product_aggregate';
     public const TYPE_TEMPLATED_TEXT = 'templated_text';
     public const TYPE_HTML = 'html';
+    public const TYPE_RESULT_COMBINER = 'result_combiner';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -37,6 +38,15 @@ class PracticalSubmoduleProcessor
     #[ORM\Column(nullable: true)]
     private ?bool $included = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $dependentValue = null;
+
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $position = null;
+
+    #[ORM\ManyToMany(targetEntity: File::class)]
+    private Collection $resultFiles;
+
     #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
     private ?PracticalSubmoduleProcessorSimple $practicalSubmoduleProcessorSimple = null;
 
@@ -52,17 +62,11 @@ class PracticalSubmoduleProcessor
     #[ORM\ManyToOne]
     private ?PracticalSubmoduleQuestion $dependentPracticalSubmoduleQuestion = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $dependentValue = null;
-
-    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    private ?int $position = null;
-
-    #[ORM\ManyToMany(targetEntity: File::class)]
-    private Collection $resultFiles;
-
     #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
     private ?PracticalSubmoduleProcessorHtml $practicalSubmoduleProcessorHtml = null;
+
+    #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
+    private ?PracticalSubmoduleProcessorResultCombiner $practicalSubmoduleProcessorResultCombiner = null;
 
     public function __construct()
     {
@@ -71,12 +75,12 @@ class PracticalSubmoduleProcessor
 
     public static function getSupportedProcessorTypes(): array
     {
-        return [self::TYPE_SIMPLE, self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE, self::TYPE_TEMPLATED_TEXT, self::TYPE_HTML];
+        return [self::TYPE_SIMPLE, self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE, self::TYPE_TEMPLATED_TEXT, self::TYPE_HTML, self::TYPE_RESULT_COMBINER];
     }
 
     public static function getProcessorProcessingProcessorTypes(): array
     {
-        return [self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE];
+        return [self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE, self::TYPE_RESULT_COMBINER];
     }
 
     public function getId(): ?int
@@ -200,7 +204,41 @@ class PracticalSubmoduleProcessor
         return $this;
     }
 
-    public function getEvaluationEvaluatorImplementation(): ?PracticalSubmoduleProcessorImplementationInterface
+    public function getPracticalSubmoduleProcessorHtml(): ?PracticalSubmoduleProcessorHtml
+    {
+        return $this->practicalSubmoduleProcessorHtml;
+    }
+
+    public function setPracticalSubmoduleProcessorHtml(PracticalSubmoduleProcessorHtml $practicalSubmoduleProcessorHtml): self
+    {
+        // set the owning side of the relation if necessary
+        if ($practicalSubmoduleProcessorHtml->getPracticalSubmoduleProcessor() !== $this) {
+            $practicalSubmoduleProcessorHtml->setPracticalSubmoduleProcessor($this);
+        }
+
+        $this->practicalSubmoduleProcessorHtml = $practicalSubmoduleProcessorHtml;
+
+        return $this;
+    }
+
+    public function getPracticalSubmoduleProcessorResultCombiner(): ?PracticalSubmoduleProcessorResultCombiner
+    {
+        return $this->practicalSubmoduleProcessorResultCombiner;
+    }
+
+    public function setPracticalSubmoduleProcessorResultCombiner(PracticalSubmoduleProcessorResultCombiner $practicalSubmoduleProcessorResultCombiner): self
+    {
+        // set the owning side of the relation if necessary
+        if ($practicalSubmoduleProcessorResultCombiner->getPracticalSubmoduleProcessor() !== $this) {
+            $practicalSubmoduleProcessorResultCombiner->setPracticalSubmoduleProcessor($this);
+        }
+
+        $this->practicalSubmoduleProcessorResultCombiner = $practicalSubmoduleProcessorResultCombiner;
+
+        return $this;
+    }
+
+    public function getImplementation(): ?PracticalSubmoduleProcessorImplementationInterface
     {
         return match ($this->type) {
             self::TYPE_SIMPLE => $this->getPracticalSubmoduleProcessorSimple(),
@@ -208,6 +246,7 @@ class PracticalSubmoduleProcessor
             self::TYPE_SUM_AGGREGATE => $this->getPracticalSubmoduleProcessorSumAggregate(),
             self::TYPE_PRODUCT_AGGREGATE => $this->getPracticalSubmoduleProcessorProductAggregate(),
             self::TYPE_TEMPLATED_TEXT => $this->getPracticalSubmoduleProcessorTemplatedText(),
+            self::TYPE_RESULT_COMBINER => $this->getPracticalSubmoduleProcessorResultCombiner(),
             default => null
         };
     }
@@ -296,23 +335,6 @@ class PracticalSubmoduleProcessor
     public function clearResultFiles(): self
     {
         $this->resultFiles->clear();
-
-        return $this;
-    }
-
-    public function getPracticalSubmoduleProcessorHtml(): ?PracticalSubmoduleProcessorHtml
-    {
-        return $this->practicalSubmoduleProcessorHtml;
-    }
-
-    public function setPracticalSubmoduleProcessorHtml(PracticalSubmoduleProcessorHtml $practicalSubmoduleProcessorHtml): self
-    {
-        // set the owning side of the relation if necessary
-        if ($practicalSubmoduleProcessorHtml->getPracticalSubmoduleProcessor() !== $this) {
-            $practicalSubmoduleProcessorHtml->setPracticalSubmoduleProcessor($this);
-        }
-
-        $this->practicalSubmoduleProcessorHtml = $practicalSubmoduleProcessorHtml;
 
         return $this;
     }
