@@ -261,6 +261,6 @@ class PracticalSubmoduleService
         $processorResultCombiner = $processor->getPracticalSubmoduleProcessorResultCombiner();
         if (!$processorResultCombiner->checkConformity($assessment)) return null;
         $processorResultCombiner->calculateResult($assessment, $this->validator);
-        return new ProcessorResult($processorResultCombiner->getResultText());
+        return strlen($processorResultCombiner->getResultText()) > 0 ? new ProcessorResult($processorResultCombiner->getResultText()) : null;
     }
 }
