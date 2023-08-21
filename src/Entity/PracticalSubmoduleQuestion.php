@@ -63,6 +63,9 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     #[ORM\Column(nullable: true)]
     private ?bool $isHeading = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $disabled = null;
+
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -257,6 +260,21 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public function setIsHeading(?bool $isHeading): self
     {
         $this->isHeading = $isHeading;
+
+        return $this;
+    }
+
+    public function isDisabled(): ?bool
+    {
+        if (null === $this->disabled) {
+            return false;
+        }
+        return $this->disabled;
+    }
+
+    public function setDisabled(?bool $disabled): self
+    {
+        $this->disabled = $disabled;
 
         return $this;
     }

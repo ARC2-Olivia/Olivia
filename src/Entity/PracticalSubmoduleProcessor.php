@@ -47,6 +47,9 @@ class PracticalSubmoduleProcessor
     #[ORM\ManyToMany(targetEntity: File::class)]
     private Collection $resultFiles;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $disabled = null;
+
     #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
     private ?PracticalSubmoduleProcessorSimple $practicalSubmoduleProcessorSimple = null;
 
@@ -335,6 +338,21 @@ class PracticalSubmoduleProcessor
     public function clearResultFiles(): self
     {
         $this->resultFiles->clear();
+
+        return $this;
+    }
+
+    public function isDisabled(): ?bool
+    {
+        if (null === $this->disabled) {
+            return false;
+        }
+        return $this->disabled;
+    }
+
+    public function setDisabled(?bool $disabled): self
+    {
+        $this->disabled = $disabled;
 
         return $this;
     }
