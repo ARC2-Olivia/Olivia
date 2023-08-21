@@ -7,6 +7,7 @@ use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleProcessorHtml;
 use App\Entity\PracticalSubmoduleProcessorProductAggregate;
+use App\Entity\PracticalSubmoduleProcessorResultCombiner;
 use App\Entity\PracticalSubmoduleProcessorSimple;
 use App\Entity\PracticalSubmoduleProcessorSumAggregate;
 use App\Entity\PracticalSubmoduleProcessorTemplatedText;
@@ -212,7 +213,7 @@ class PSImporter
             $this->translationRepository->translate($processor, 'name', $this->localeAlternate, $props['trans']['name']);
         }
 
-        if (true === empty($props['impl'])) {
+        if ($processor::TYPE_RESULT_COMBINER !== $processor->getType() && true === empty($props['impl'])) {
             return;
         }
 
@@ -281,6 +282,11 @@ class PSImporter
                 if (true === (key_exists('trans', $implProps) && key_exists('resultText', $implProps['trans']))) {
                     $this->translationRepository->translate($pspTemplatedText, 'resultText', $this->localeAlternate, $implProps['trans']['resultText']);
                 }
+            } break;
+            case $processor::TYPE_RESULT_COMBINER: {
+                $pspResultCombiner = new PracticalSubmoduleProcessorResultCombiner();
+                $processor->setPracticalSubmoduleProcessorResultCombiner($pspResultCombiner);
+                $this->em->persist($pspResultCombiner);
             } break;
         }
     }
