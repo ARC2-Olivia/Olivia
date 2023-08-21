@@ -90,7 +90,8 @@ class PSExporter
                     'evaluable' => $question->isEvaluable(),
                     'position' => $question->getPosition(),
                     'answers' => [],
-                    'other' => $question->isOtherEnabled()
+                    'other' => $question->isOtherEnabled(),
+                    'heading' => $question->getIsHeading()
                 ]
             ];
 

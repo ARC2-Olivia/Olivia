@@ -144,7 +144,8 @@ class PSImporter
             ->setQuestionText($props['questionText'])
             ->setEvaluable($props['evaluable'])
             ->setPosition($props['position'])
-            ->setOtherEnabled($props['other']);
+            ->setOtherEnabled($props['other'])
+            ->setIsHeading($props['heading'])
         ;
         $this->em->persist($question);
         $this->questionMapping[$props['id']] = $question;
