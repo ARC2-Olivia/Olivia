@@ -208,6 +208,7 @@ form:
                 dependentValue: Vrijednost ovisnog pitanja
                 otherEnabled: Omogući dodatni (i.e. <i>ostali</i>) unos
                 isHeading: Tekst je naziv poglavlje
+                disabled: Onesposobljeno
             placeholder:
                 questionText: Ovdje stavite tekst pitanja...
                 dependentEvaluationQuestion: Ništa odabrano...
@@ -236,6 +237,7 @@ form:
                 resultFiles: Rezultirajuće datoteke
                 dependentQuestion: Ovisno pitanje
                 dependentValue: Vrijednost ovisnog pitanja
+                disabled: Onesposobljeno
             placeholder:
                 name: Naziv procesora za lakšu identifikaciju
                 resultText: Kakav tekst će procesor vratiti kao rezultat obrade?

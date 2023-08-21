@@ -6,6 +6,8 @@
         <div class="mod--evaluation-evaluator-included">
             {% if not evaluationEvaluator.implementation|is_valid_evaluator %}
                 {{ mdi('text-box-remove', 'invalid') }}
+            {% elseif evaluationEvaluator.disabled %}
+                {{ mdi('text-box-remove', 'disabled') }}
             {% elseif evaluationEvaluator.included %}
                 {{ mdi('text-box-check', 'included') }}
             {% else %}
@@ -13,7 +15,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="mod--evaluation-evaluator-details">
+    <div class="mod--evaluation-evaluator-details{% if evaluationEvaluator.disabled %} disabled{% endif %}">
         <div class="mod--evaluation-evaluator-text">{{ evaluationEvaluator.name }}</div>
         <div class="mod--evaluation-evaluator-type">{{ evaluationEvaluator.type }}</div>
     </div>

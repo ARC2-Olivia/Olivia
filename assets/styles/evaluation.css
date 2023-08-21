@@ -102,6 +102,11 @@ ul.mod--ps-pages {
     text-align: center;
 }
 
+.mod--evaluation-question-details.disabled > *,
+.mod--evaluation-evaluator-details.disabled > * {
+    color: rgba(0, 0, 0, 0.2) !important;
+}
+
 .mod--evaluation-question-text,
 .mod--evaluation-evaluator-text,
 .mod--evaluation-question-answer-text,
@@ -134,6 +139,11 @@ ul.mod--ps-pages {
 .mod--evaluation-question-evaluable svg.evaluable,
 .mod--evaluation-evaluator-included svg.included {
     color: var(--app-color-green);
+}
+
+.mod--evaluation-question-evaluable svg.disabled,
+.mod--evaluation-evaluator-included svg.disabled {
+    color: rgba(0, 0, 0, 0.2);
 }
 
 .mod--evaluation-question-evaluable svg.not-evaluable,

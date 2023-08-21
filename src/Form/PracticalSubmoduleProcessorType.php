@@ -33,7 +33,7 @@ class PracticalSubmoduleProcessorType extends AbstractType
             $this->translator->trans('practicalSubmoduleProcessor.type.resultCombiner', [], 'app') => PracticalSubmoduleProcessor::TYPE_RESULT_COMBINER
         ];
 
-        $includedChoices = [
+        $booleanChoices = [
             $this->translator->trans('common.no', [], 'app') => false,
             $this->translator->trans('common.yes', [], 'app') => true
         ];
@@ -53,7 +53,12 @@ class PracticalSubmoduleProcessorType extends AbstractType
             ])
             ->add('included', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmoduleProcessor.label.included',
-                'choices' => $includedChoices,
+                'choices' => $booleanChoices,
+                'attr' => ['class' => 'form-select mb-3']
+            ])
+            ->add('disabled', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.disabled',
+                'choices' => $booleanChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('dependentPracticalSubmoduleQuestion', EntityType::class, [

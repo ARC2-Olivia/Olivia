@@ -52,6 +52,11 @@ class PracticalSubmoduleQuestionType extends AbstractType
                 'choices' => $booleanChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
+            ->add('disabled', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.disabled',
+                'choices' => $booleanChoices,
+                'attr' => ['class' => 'form-select mb-3']
+            ])
             ->add('dependentPracticalSubmoduleQuestion', EntityType::class, [
                 'class' => PracticalSubmoduleQuestion::class,
                 'label' => 'form.entity.practicalSubmoduleQuestion.label.dependentQuestion',
