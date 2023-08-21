@@ -40,13 +40,19 @@ class PracticalSubmoduleQuestionRepository extends ServiceEntityRepository
         }
     }
 
-    public function findOrderedForSubmodule(PracticalSubmodule $practicalSubmodule)
+    public function findOrderedForSubmodule(PracticalSubmodule $practicalSubmodule, bool $ignoreDisabled = false)
     {
-        return $this->createQueryBuilder('psq')
+        $qb = $this->createQueryBuilder('psq')
             ->where('psq.practicalSubmodule = :submodule')
             ->orderBy('psq.position', 'ASC')
             ->setParameter('submodule', $practicalSubmodule)
-            ->getQuery()->getResult();
+        ;
+
+        if (true === $ignoreDisabled) {
+            $qb->andWhere('psq.disabled = :false OR psq.disabled IS NULL')->setParameter('false', false);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     public function maxPositionForSubmodule(PracticalSubmodule $practicalSubmodule): int

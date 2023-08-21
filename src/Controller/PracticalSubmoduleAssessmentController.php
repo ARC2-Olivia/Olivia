@@ -32,7 +32,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
         $practicalSubmodule = $practicalSubmoduleAssessment->getPracticalSubmodule();
 
         /** @var PracticalSubmoduleQuestion[] $practicalSubmoduleQuestions */
-        $practicalSubmoduleQuestions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForSubmodule($practicalSubmodule);
+        $practicalSubmoduleQuestions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForSubmodule($practicalSubmodule, true);
         $assessment = ['id' => $practicalSubmoduleAssessment->getId(), 'questions' => [], 'paging' => $practicalSubmodule->isPaging(), 'pages' => []];
 
         if ($practicalSubmodule->isPaging()) {

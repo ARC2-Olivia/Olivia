@@ -192,7 +192,7 @@ class PracticalSubmoduleService
     {
         $results = [];
 
-        $processors = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findBy(['practicalSubmodule' => $assessment->getPracticalSubmodule(), 'included' => true], ['position' => 'ASC']);
+        $processors = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findRunnableProcessors($assessment->getPracticalSubmodule());
         foreach ($processors as $processor) {
             $result = match ($processor->getType()) {
                 PracticalSubmoduleProcessor::TYPE_SIMPLE => $this->runSimpleProcessor($processor, $assessment),
