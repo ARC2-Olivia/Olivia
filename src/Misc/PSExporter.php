@@ -333,6 +333,17 @@ class PSExporter
                     }
                     break;
                 }
+                case $processor::TYPE_RESULT_COMBINER: {
+                    $processorIds = $processor?->getPracticalSubmoduleProcessorResultCombiner()?->getPracticalSubmoduleProcessors()->map(function (PracticalSubmoduleProcessor $psp) { return $psp->getId(); });
+                    if (null !== $processorIds) {
+                        foreach ($processorIds as $processorId) {
+                            if (true === key_exists($processorId, $this->processorMapping)) {
+                                $dependentIds[] = $this->processorMapping[$processorId];
+                            }
+                        }
+                    }
+                    break;
+                }
             }
 
             foreach ($dependentIds as $dependentId) {

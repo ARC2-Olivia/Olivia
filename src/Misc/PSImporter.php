@@ -362,6 +362,11 @@ class PSImporter
                 $pspProductAggregate->addPracticalSubmoduleProcessor($otherProcessor);
                 $this->em->persist($pspProductAggregate);
             } break;
+            case $processor::TYPE_RESULT_COMBINER: {
+                $pspResultCombiner = $processor->getPracticalSubmoduleProcessorResultCombiner();
+                $pspResultCombiner->addPracticalSubmoduleProcessor($otherProcessor);
+                $this->em->persist($pspResultCombiner);
+            } break;
         }
     }
 
