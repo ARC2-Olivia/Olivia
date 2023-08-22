@@ -33,11 +33,4 @@ class DefaultController extends AbstractController
         ];
         return $this->render('default/index.html.twig', ['testimonials' => $testimonials]);
     }
-
-    #[Route("/{_locale}/profile", name: "profile", requirements: ["_locale" => "%locale.supported%"])]
-    #[IsGranted("ROLE_USER")]
-    public function profile(): Response
-    {
-        return $this->render('default/profile.html.twig');
-    }
 }

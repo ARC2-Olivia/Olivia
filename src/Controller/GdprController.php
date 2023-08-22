@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route("/{_locale}/data-request", name: "data_request_", requirements: ["_locale" => "%locale.supported%"])]
+#[Route("/{_locale}/data-protection", name: "gdpr_", requirements: ["_locale" => "%locale.supported%"])]
 #[IsGranted('ROLE_USER')]
-class DataRequestController extends AbstractController
+class GdprController extends AbstractController
 {
     private EntityManagerInterface $em;
     private TranslatorInterface $translator;
@@ -23,6 +23,12 @@ class DataRequestController extends AbstractController
     {
         $this->em = $em;
         $this->translator = $translator;
+    }
+
+    #[Route("/", name: "index")]
+    public function index(): Response
+    {
+        return $this->render('gdpr/index.html.twig');
     }
 
     #[Route("/access", name: "access")]

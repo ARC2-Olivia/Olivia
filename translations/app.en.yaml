@@ -68,6 +68,8 @@ page:
         show: Olivia | Terms of service
         edit: Olivia | Edit terms of service
         revise: Olivia | Revise terms of service
+    gdpr:
+        index: Olivia | Data protection
 
 nav:
     training: Theory
@@ -81,6 +83,7 @@ nav:
     dataRequests: Data requests
     files: Files
     home: Home
+    gdpr: Data protection
 
 footer:
     contact: "Contact: ???"

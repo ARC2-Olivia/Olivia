@@ -68,6 +68,8 @@ page:
         show: Olivia | Uvjeti pružanja usluge
         edit: Olivia | Uredđivanje uvjeta pružanja usluga
         revise: Olivia | Revizija uvjeta pružanja usluga
+    gdpr:
+        index: Olivia | Zaštita podataka
 
 nav:
     training: Teorija
@@ -81,6 +83,7 @@ nav:
     dataRequests: Podatkovni zahtjevi
     files: Datoteke
     home: Naslovna
+    gdpr: Zaštita podataka
 
 footer:
     contact: "Kontakt: ???"
