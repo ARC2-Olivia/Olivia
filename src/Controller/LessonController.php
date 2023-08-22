@@ -37,10 +37,12 @@ class LessonController extends BaseController
     use BasicFileManagementTrait;
 
     private ?LessonService $lessonService = null;
+    private ?EnrollmentService $enrollmentService = null;
 
-    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, LessonService $lessonService)
+    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, LessonService $lessonService, EnrollmentService $enrollmentService)
     {
         $this->lessonService = $lessonService;
+        $this->enrollmentService = $enrollmentService;
         parent::__construct($em, $translator);
     }
 
@@ -69,6 +71,7 @@ class LessonController extends BaseController
             $lesson->setPosition($lessonRepository->nextPositionInCourse($course));
             $lessonRepository->save($lesson, true);
             $this->processLessonTranslation($lesson, $form);
+            $recheckCoursePassingCondition = false;
 
             if ($lesson->getType() === Lesson::TYPE_TEXT) {
                 $this->handleTextLessonType($form, $lesson);
@@ -177,10 +180,12 @@ class LessonController extends BaseController
     #[IsGranted('ROLE_MODERATOR')]
     public function delete(Lesson $lesson, Request $request): Response
     {
+        $course = $lesson->getCourse();
+
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('lesson.delete', $csrfToken)) {
-            $course = $lesson->getCourse();
             $lessonName = $lesson->getName();
+            $recheckCoursePassingCondition = false;
             switch ($lesson->getType()) {
                 case Lesson::TYPE_TEXT: {
                     $lessonItemText = $this->em->getRepository(LessonItemText::class)->findOneBy(['lesson' => $lesson]);
@@ -202,12 +207,25 @@ class LessonController extends BaseController
                 case Lesson::TYPE_QUIZ: {
                     $lessonItemQuiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
                     $this->em->remove($lessonItemQuiz);
+                    $recheckCoursePassingCondition = true;
                     break;
                 }
             }
+
+            foreach ($this->em->getRepository(LessonCompletion::class)->findBy(['lesson' => $lesson]) as $lessonCompletion) {
+                $this->em->remove($lessonCompletion);
+            }
+
             $this->em->remove($lesson);
             $this->em->flush();
             $this->addFlash('warning', $this->translator->trans('warning.lesson.delete', ['%lesson%' => $lessonName, '%course%' => $course->getName()], 'message'));
+
+            if ($recheckCoursePassingCondition) {
+                foreach ($course->getEnrollments() as $enrollment) {
+                    $this->regrade($course, $enrollment->getUser());
+                }
+            }
+
             return $this->redirectToRoute('lesson_course', ['course' => $course->getId()]);
         }
 
@@ -351,11 +369,7 @@ class LessonController extends BaseController
             if ($persistCompletion) $this->em->persist($lessonCompletion);
             $this->em->flush();
 
-            if ($enrollmentService->checkCoursePassingCondition($lesson->getCourse(), $user)) {
-                $enrollmentService->markAsPassed($lesson->getCourse(), $user);
-            } else {
-                $enrollmentService->markAsNotPassed($lesson->getCourse(), $user);
-            }
+            $this->regrade($lesson->getCourse(), $user);
         }
 
         return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
@@ -501,6 +515,10 @@ class LessonController extends BaseController
         $lessonItemQuiz->setPassingPercentage(intval($form->get('passingPercentage')->getData()));
         if ($persist) $this->em->persist($lessonItemQuiz);
         $this->em->flush();
+
+        foreach ($lesson->getCourse()->getEnrollments() as $enrollment) {
+            $this->regrade($enrollment->getCourse(), $enrollment->getUser());
+        }
     }
 
     private function processLessonTranslation(Lesson $lesson, \Symfony\Component\Form\FormInterface $form): void
@@ -571,5 +589,14 @@ class LessonController extends BaseController
             ];
         }
         return $quizData;
+    }
+
+    private function regrade(Course $course, User $user): void
+    {
+        if ($this->enrollmentService->checkCoursePassingCondition($course, $user)) {
+            $this->enrollmentService->markAsPassed($course, $user);
+        } else {
+            $this->enrollmentService->markAsNotPassed($course, $user);
+        }
     }
 }
