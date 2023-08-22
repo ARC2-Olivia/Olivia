@@ -9,7 +9,9 @@
                 <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ 'nav.training'|trans }}</a></li>
                 <li><a href="{{ path('practical_submodule_index') }}" class="btn btn-theme-white">{{ 'nav.practice'|trans }}</a></li>
                 {% if is_granted('ROLE_USER') %}
-                    <li><a href="{{ path('tos_index') }}" class="btn btn-theme-white">{{ 'nav.termsOfService'|trans }}</a></li>
+                    {% if is_granted('ROLE_MODERATOR') %}
+                        <li><a href="{{ path('tos_index') }}" class="btn btn-theme-white">{{ 'nav.termsOfService'|trans }}</a></li>
+                    {% endif %}
                     <li>
                         <button id="profile-button" class="btn btn-theme-white">{{ app.user.email }}</button>
                         <ul class="dropdown" data-dropdown data-for="#profile-button">
