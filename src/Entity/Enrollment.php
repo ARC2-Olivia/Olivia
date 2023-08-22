@@ -24,6 +24,9 @@ class Enrollment
     #[ORM\Column]
     private ?\DateTimeImmutable $enrolledAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $passed = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,21 @@ class Enrollment
     public function setEnrolledAt(?\DateTimeImmutable $enrolledAt): self
     {
         $this->enrolledAt = $enrolledAt;
+
+        return $this;
+    }
+
+    public function isPassed(): ?bool
+    {
+        if (null === $this->passed) {
+            return false;
+        }
+        return $this->passed;
+    }
+
+    public function setPassed(?bool $passed): self
+    {
+        $this->passed = $passed;
 
         return $this;
     }

@@ -27,6 +27,11 @@ class EnrollmentService
 
     public function isEnrolled(Course $course, User $user): bool
     {
-        return $this->enrollmentRepository->findOneBy(['course' => $course, 'user' => $user]) !== null;
+        return null !== $this->enrollmentRepository->findOneBy(['course' => $course, 'user' => $user]);
+    }
+
+    public function isPassed(Course $course, User $user): bool
+    {
+        return null !== $this->enrollmentRepository->findOneBy(['course' => $course, 'user' => $user, 'passed' => true]);
     }
 }

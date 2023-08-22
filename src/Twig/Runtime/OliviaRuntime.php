@@ -98,9 +98,9 @@ class OliviaRuntime implements RuntimeExtensionInterface
         return false;
     }
 
-    public function isEnrolled(Course $course,? User $user): bool
+    public function isEnrolled(Course $course, ?User $user): bool
     {
-        return $user !== null && $this->enrollmentService->isEnrolled($course, $user);
+        return null !== $user && $this->enrollmentService->isEnrolled($course, $user);
     }
 
     public function isUser(): bool
@@ -108,5 +108,10 @@ class OliviaRuntime implements RuntimeExtensionInterface
         return $this->security->isGranted('ROLE_USER')
             && !$this->security->isGranted('ROLE_MODERATOR')
             && !$this->security->isGranted('ROLE_ADMIN');
+    }
+
+    public function isPassed(Course $course, ?User $user): bool
+    {
+        return null !== $user && $this->enrollmentService->isPassed($course, $user);
     }
 }

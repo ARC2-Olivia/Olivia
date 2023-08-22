@@ -23,6 +23,7 @@ class OliviaExtension extends AbstractExtension
         return [
             new TwigFunction('is_enrolled', [OliviaRuntime::class, 'isEnrolled']),
             new TwigFunction('is_user', [OliviaRuntime::class, 'isUser']),
+            new TwigFunction('is_passed', [OliviaRuntime::class, 'isPassed'])
         ];
     }
 }
