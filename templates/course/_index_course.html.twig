@@ -2,9 +2,14 @@
 
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
     <div class="card h-100 p-0">
-        <div class="card-image ms-0 me-0 mt-0">
+        <div class="card-image position-relative ms-0 me-0 mt-0">
             {% if course.image is not null %}
                 <img src="{{ path('file_fetch_course_image', {'course': course.id}) }}" alt="Course image"/>
+            {% endif %}
+            {% if is_passed(course, app.user) %}
+                <div class="course-card-icon-passed">
+                    {{ mdi('check-decagram') }}
+                </div>
             {% endif %}
         </div>
         <div class="card-text flex-grow-1 ps-2 pe-2">

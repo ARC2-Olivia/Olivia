@@ -120,3 +120,21 @@
     max-height: 100%;
     border-radius: 50%;
 }
+
+.course-card-icon-passed {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    background-color: #FFFFFF;
+}
+
+.course-card-icon-passed > svg {
+    color: var(--app-color-orange);
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: -12px;
+    left: -12px;
+}
