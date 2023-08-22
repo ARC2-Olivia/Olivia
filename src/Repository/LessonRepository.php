@@ -82,4 +82,16 @@ class LessonRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param Course $course
+     * @return Lesson[]
+     */
+    public function findQuizLessonsForCourse(Course $course): array
+    {
+        return $this->createQueryBuilder('l')
+            ->where('l.course = :course')->andWhere('l.type = :type')
+            ->setParameters(['course' => $course, 'type' => Lesson::TYPE_QUIZ])
+            ->getQuery()->getResult();
+    }
 }

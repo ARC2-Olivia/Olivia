@@ -18,6 +18,7 @@ use App\Form\Quiz\QuizType;
 use App\Form\QuizQuestionType;
 use App\Repository\LessonCompletionRepository;
 use App\Repository\LessonRepository;
+use App\Service\EnrollmentService;
 use App\Service\LessonService;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -294,7 +295,7 @@ class LessonController extends BaseController
 
     #[Route("/finish-quiz/{lesson}", name: "quiz_finish", methods: ["POST"])]
     #[IsGranted("solve_quiz", subject: "lesson")]
-    public function finishQuiz(Lesson $lesson, Request $request): Response
+    public function finishQuiz(Lesson $lesson, Request $request, EnrollmentService $enrollmentService): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -349,6 +350,12 @@ class LessonController extends BaseController
             $lessonCompletion->setCompleted($percentage >= $lessonItemQuiz->getPassingPercentage());
             if ($persistCompletion) $this->em->persist($lessonCompletion);
             $this->em->flush();
+
+            if ($enrollmentService->checkCoursePassingCondition($lesson->getCourse(), $user)) {
+                $enrollmentService->markAsPassed($lesson->getCourse(), $user);
+            } else {
+                $enrollmentService->markAsNotPassed($lesson->getCourse(), $user);
+            }
         }
 
         return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
