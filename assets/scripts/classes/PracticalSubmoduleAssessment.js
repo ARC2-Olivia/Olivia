@@ -171,13 +171,31 @@ class PracticalSubmoduleAssessment {
 
         let finalize = true;
         switch (questionData.type) {
-            case 'yes_no': this.#createYesNoAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
-            case 'weighted': this.#createWeightedAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
-            case 'numerical_input': questionAnswers.append(this.#createNumericalInputAnswer(questionData)); break;
-            case 'text_input': questionAnswers.append(this.#createTextInputAnswer(questionData)); break;
-            case 'templated_text_input': questionAnswers.append(this.#createTemplatedTextInputAnswer(questionData)); break;
-            case 'multi_choice': this.#createMultiChoiceAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer)); break;
-            case 'list_input': questionAnswers.append(this.#createListInputAnswer(questionData)); break;
+            case 'yes_no': {
+                this.#createYesNoAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer));
+                questionText.classList.add('required');
+            } break;
+            case 'weighted': {
+                this.#createWeightedAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer));
+                questionText.classList.add('required');
+            } break;
+            case 'numerical_input': {
+                questionAnswers.append(this.#createNumericalInputAnswer(questionData));
+                questionText.classList.add('required');
+            } break;
+            case 'text_input': {
+                questionAnswers.append(this.#createTextInputAnswer(questionData));
+                questionText.classList.add('required');
+            } break;
+            case 'templated_text_input': {
+                questionAnswers.append(this.#createTemplatedTextInputAnswer(questionData));
+            } break;
+            case 'multi_choice': {
+                this.#createMultiChoiceAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer));
+            } break;
+            case 'list_input': {
+                questionAnswers.append(this.#createListInputAnswer(questionData));
+            } break;
             case 'static_text': {
                 question.classList.add(questionData.isHeading ? 'heading' : 'static-text');
                 questionText.classList.add('no-bold');
@@ -341,10 +359,15 @@ class PracticalSubmoduleAssessment {
 
         let answerRaw = `<div style="white-space: pre-wrap">${answerText}</div>`;
         for (const field of answerFields) {
-            const requirement = field.properties.some(prop => prop.toLowerCase() === 'optional') ? '' : ' data-answer-required required';
+            let requirementAttributes = '';
+            let requirementClass = '';
+            if (false === field.properties.some(prop => prop.toLowerCase() === 'optional')) {
+                requirementAttributes = ' data-answer-required required';
+                requirementClass = ' required';
+            }
             const pattern = new RegExp(`{{\\s*${field.name}[\\|\\s\\w]*\\s*}}`);
-            const inputRaw = `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal">
-                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field.name}]"${requirement}/>
+            const inputRaw = `<label class="evaluation-assessment-question-answer--inline${requirementClass}" style="white-space: normal">
+                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field.name}]"${requirementAttributes}/>
             </label>`;
             answerRaw = answerRaw.replace(pattern, inputRaw);
         }
