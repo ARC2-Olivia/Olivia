@@ -316,10 +316,15 @@ course:
         instructors: Instruktori
         lessons: Lekcije
         edit: Uređivanje
+        certificate: Potvrda
     extra:
         noInstructors: Trenutno nema definiranih instruktora za ovaj tečaj.
         lessons: lekcije
         connectedTo: "Lekcije u ovom tečaju su povezane sa sljedećim procjenama iz praktičnog modula:"
+    certificate:
+        1: Čestitamo! Položili ste tečaj <i>%course%</i>!
+        2: Kliknite na gumb <i>Preuzmite potvrdu</i> kako biste preuzeli potvrdu za položeni tečaju.
+        button: Preuzmite potvrdu
 
 lesson:
     type:

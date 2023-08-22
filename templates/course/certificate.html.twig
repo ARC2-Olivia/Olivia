@@ -1,0 +1,10 @@
+{% extends 'course/_base_course.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block courseContent %}
+    <div class="d-flex flex-column align-items-center">
+        <p class="mb-3">{{ 'course.certificate.1'|trans({'%course%': course.name})|raw }}</p>
+        <p class="mb-3">{{ 'course.certificate.2'|trans|raw }}</p>
+        <a href="{{ path('file_fetch_course_certificate', {'course': course.id}) }}" class="btn btn-theme-white bg-green">{{ 'course.certificate.button'|trans }}</a>
+    </div>
+{% endblock %}

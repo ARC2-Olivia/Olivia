@@ -316,10 +316,15 @@ course:
         instructors: Instructors
         lessons: Lessons
         edit: Edit
+        certificate: Certificate
     extra:
         noInstructors: There are currently no defined instructors for this course.
         lessons: lessons
         connectedTo: "This course's lessons are connected to the following practical assessments:"
+    certificate:
+        1: Congratulations on completing the course <i>%course%</i>!
+        2: Click on the <i>Download certificate</i> button to download the certificate of completion.
+        button: Download certificate
 
 lesson:
     type:

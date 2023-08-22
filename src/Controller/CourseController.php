@@ -191,6 +191,16 @@ class CourseController extends BaseController
         return $this->redirectToRoute('lesson_course', ['course' => $course->getId()]);
     }
 
+    #[Route("/certificate/{course}", name: "certificate")]
+    #[IsGranted("get_certificate", subject: "course")]
+    public function certificate(Course $course): Response
+    {
+        return $this->render('course/certificate.html.twig', [
+            'course' => $course,
+            'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_CERTIFICATE)
+        ]);
+    }
+
     private function storeCourseImage(?UploadedFile $image, Course $course): void
     {
         try {

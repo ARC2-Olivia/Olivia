@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Course;
 use App\Entity\PracticalSubmodule;
+use App\Entity\User;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -13,6 +14,7 @@ class NavigationService
     public const COURSE_OVERVIEW    = 0;
     public const COURSE_INSTRUCTORS = 1;
     public const COURSE_EDIT        = 2;
+    public const COURSE_CERTIFICATE = 3;
 
     public const EVALUATION_OVERVIEW             = 0;
     public const EVALUATION_EVALUATE             = 1;
@@ -30,16 +32,21 @@ class NavigationService
     private ?TranslatorInterface $translator = null;
     private ?RouterInterface $router = null;
     private ?Security $security = null;
+    private ?EnrollmentService $enrollmentService = null;
 
-    public function __construct(TranslatorInterface $translator, RouterInterface $router, Security $security)
+    public function __construct(TranslatorInterface $translator, RouterInterface $router, Security $security, EnrollmentService $enrollmentService)
     {
         $this->translator = $translator;
         $this->router = $router;
         $this->security = $security;
+        $this->enrollmentService = $enrollmentService;
     }
 
     public function forCourse(Course $course, ?int $activeNav = null): array
     {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
         $navigation = [
             [
                 'text' => $this->translator->trans('course.nav.overview', [], 'app'),
@@ -52,6 +59,14 @@ class NavigationService
                 'active' => $activeNav === self::COURSE_INSTRUCTORS
             ]
         ];
+
+        if ($this->isUser() && $this->enrollmentService->isPassed($course, $user)) {
+            $navigation[] = [
+                'text' => $this->translator->trans('course.nav.certificate', [], 'app'),
+                'path' => $this->router->generate('course_certificate', ['course' => $course->getId()]),
+                'active' => $activeNav === self::COURSE_CERTIFICATE
+            ];
+        }
 
         if ($this->security->isGranted('ROLE_MODERATOR')) {
             $navigation[] = [
@@ -104,5 +119,13 @@ class NavigationService
         }
 
         return $navigation;
+    }
+
+    private function isUser(): bool
+    {
+        return $this->security->isGranted('ROLE_USER')
+            && !$this->security->isGranted('ROLE_MODERATOR')
+            && !$this->security->isGranted('ROLE_ADMIN')
+        ;
     }
 }

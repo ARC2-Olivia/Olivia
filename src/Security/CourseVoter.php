@@ -13,6 +13,7 @@ class CourseVoter extends Voter
 {
     const ENROLL = 'enroll';
     const VIEW = 'view';
+    const GET_CERTIFICATE = 'get_certificate';
 
     private ?Security $security = null;
     private ?EnrollmentService $enrollmentService = null;
@@ -30,7 +31,7 @@ class CourseVoter extends Voter
      */
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return $subject instanceof Course && in_array($attribute, [self::ENROLL, self::VIEW]);
+        return $subject instanceof Course && in_array($attribute, [self::ENROLL, self::VIEW, self::GET_CERTIFICATE]);
     }
 
     /**
@@ -48,6 +49,7 @@ class CourseVoter extends Voter
         return match ($attribute) {
             self::ENROLL => $this->canEnroll($subject, $user),
             self::VIEW => $this->canView($subject, $user),
+            self::GET_CERTIFICATE => $this->canGetCertificate($subject, $user),
             default => false
         };
     }
@@ -65,6 +67,11 @@ class CourseVoter extends Voter
     {
         return $this->security->isGranted('ROLE_MODERATOR')
             || ($this->security->isGranted('ROLE_USER') && $this->enrollmentService->isEnrolled($course, $user));
+    }
+
+    private function canGetCertificate(Course $course, User $user)
+    {
+        return $this->enrollmentService->isPassed($course, $user);
     }
 
 }

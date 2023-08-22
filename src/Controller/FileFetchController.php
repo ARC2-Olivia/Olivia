@@ -7,8 +7,10 @@ use App\Entity\File;
 use App\Entity\Instructor;
 use App\Entity\LessonItemFile;
 use App\Entity\PracticalSubmodule;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route("/file-fetch", name: "file_fetch_")]
@@ -50,5 +52,21 @@ class FileFetchController extends AbstractController
     public function uploadedFile(File $file): Response
     {
         return $this->file($file->getPath(), $file->getOriginalName());
+    }
+
+    #[Route("/course-certificate/{course}", name: "course_certificate")]
+    #[IsGranted('get_certificate', subject: 'course')]
+    public function courseCertificate(Course $course): Response
+    {
+        return $this->makeFileResponseFromString("certificate.txt", "[PLACEHOLDER]");
+    }
+
+    private function makeFileResponseFromString(string $filename, string $content, string $contentType = 'text/plain'): Response
+    {
+        $response = new Response($content);
+        $response->headers->set('Content-Type', $contentType);
+        $response->headers->set('Content-Length', strlen($content));
+        $response->headers->set('Content-Disposition', $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename));
+        return $response;
     }
 }
