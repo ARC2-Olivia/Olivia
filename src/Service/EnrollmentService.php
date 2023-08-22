@@ -49,7 +49,7 @@ class EnrollmentService
         $lessonCompletionRepository = $this->em->getRepository(LessonCompletion::class);
         foreach ($lessons as $lesson) {
             $lessonCompletion = $lessonCompletionRepository->findOneBy(['lesson' => $lesson, 'user' => $user]);
-            if (null !== $lessonCompletion && !$lessonCompletion->isCompleted()) {
+            if (null === $lessonCompletion || !$lessonCompletion->isCompleted()) {
                 return false;
             }
         }
