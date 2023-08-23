@@ -113,6 +113,8 @@ form:
     security:
         registration:
             label:
+                firstName: First name
+                lastName: Last name
                 email: E-mail
                 password: Password
                 confirmPassword: Confirm password

@@ -21,6 +21,8 @@ class SecurityService
     public function createUnactivatedUser(RegistrationData $registration): User
     {
         $user = (new User())
+            ->setFirstName($registration->getFirstName())
+            ->setLastName($registration->getLastName())
             ->setEmail($registration->getEmail())
             ->setRoles([User::ROLE_USER])
             ->setActivated(false)

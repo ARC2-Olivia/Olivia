@@ -16,6 +16,8 @@
                 </div>
                 <div class="card-text">
                     {{ form_start(form) }}
+                    <label>{{ form_widget(form.firstName, {'attr': {'placeholder': form.firstName.vars.label}}) }}</label>
+                    <label>{{ form_widget(form.lastName, {'attr': {'placeholder': form.lastName.vars.label}}) }}</label>
                     <label>{{ form_widget(form.email, {'attr': {'placeholder': form.email.vars.label}}) }}</label>
                     <label>{{ form_widget(form.plainPassword.first, {'attr': {'placeholder': form.plainPassword.first.vars.label}}) }}</label>
                     <label>{{ form_widget(form.plainPassword.second, {'attr': {'placeholder': form.plainPassword.second.vars.label}}) }}</label>

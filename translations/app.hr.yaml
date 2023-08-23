@@ -113,6 +113,8 @@ form:
     security:
         registration:
             label:
+                firstName: Ime
+                lastName: Prezime
                 email: E-mail
                 password: Lozinka
                 confirmPassword: Potvrdi lozinku

@@ -95,6 +95,10 @@ error:
         uppercase: Password must contain at least one uppercase letter.
     login: Invalid credentials.
     registration:
+        firstName:
+            blank: First name field must not be empty
+        lastName:
+            blank: Last name field must not be empty
         email:
             blank: E-mail field must not be empty.
             format: E-mail is not written in an e-mail format.

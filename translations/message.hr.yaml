@@ -95,6 +95,10 @@ error:
         uppercase: Lozinka mora sadržavati barem jedno veliko slovo.
     login: Pogrešni podaci za prijavu.
     registration:
+        firstName:
+            blank: Polje za ime korisnika ne smije biti prazno.
+        lastName:
+            blank: Polje za prezime korisnika ne smije biti prazno.
         email:
             blank: E-mail polje ne smije biti prazno.
             format: E-mail nije zapisan u formatu za e-mail adrese.
