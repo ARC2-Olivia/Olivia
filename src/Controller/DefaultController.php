@@ -2,16 +2,14 @@
 
 namespace App\Controller;
 
+use App\Form\ProfileType;
 use Doctrine\ORM\EntityManagerInterface;
-use Gedmo\Translatable\Entity\Translation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DefaultController extends AbstractController
@@ -32,5 +30,27 @@ class DefaultController extends AbstractController
             ['title' => 'Testimonial #3', 'text' => 'Pellentesque placerat a turpis ut vehicula. In hac habitasse platea dictumst. Aenean nibh ante, eleifend vel lacinia in, pharetra quis elit.', 'image' => $package->getUrl('build/images/avatar-empty.svg'), 'personName' => 'Jane Doe', 'personJob' => 'Job name'],
         ];
         return $this->render('default/index.html.twig', ['testimonials' => $testimonials]);
+    }
+
+    #[Route("/{_locale}/profile", name: "profile", requirements: ["_locale" => "%locale.supported%"])]
+    public function profile(): Response
+    {
+        return $this->render('default/profile.html.twig');
+    }
+
+    #[Route("/{_locale}/profile/edit", name: "profile_edit", requirements: ["_locale" => "%locale.supported%"])]
+    public function profileEdit(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(ProfileType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            $this->addFlash('success', $translator->trans('success.user.edit', [], 'message'));
+            return $this->redirectToRoute('profile');
+        }
+
+        return $this->render('default/profile_edit.html.twig', ['form' => $form->createView()]);
     }
 }

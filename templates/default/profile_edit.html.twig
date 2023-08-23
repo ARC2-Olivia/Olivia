@@ -12,23 +12,26 @@
             <div class="card card-body profile">
                 <div class="d-flex justify-content-between align-items-center">
                     <h1>{{ 'common.profile'|trans }}</h1>
-                    <a href="{{ path('profile_edit') }}" class="btn btn-theme-white bg-blue btn-sm">{{ mdi('pencil') }}</a>
                 </div>
                 <hr/>
-                <div class="row g-3">
+                {{ form_start(form)  }}
                     <div class="col-12 col-md-6">
-                        <div class="profile-label">{{ 'form.entity.user.label.firstName'|trans }}</div>
-                        <div class="profile-value">{{ app.user.firstName }}</div>
+                        {{ form_label(form.firstName) }}
+                        {{ form_widget(form.firstName) }}
                     </div>
                     <div class="col-12 col-md-6">
-                        <div class="profile-label">{{ 'form.entity.user.label.lastName'|trans }}</div>
-                        <div class="profile-value">{{ app.user.lastName }}</div>
+                        {{ form_label(form.lastName) }}
+                        {{ form_widget(form.lastName) }}
                     </div>
                     <div class="col-12">
-                        <div class="profile-label">{{ 'form.entity.user.label.affiliation'|trans }}</div>
-                        <div class="profile-value">{{ app.user.affiliation }}</div>
+                        {{ form_label(form.affiliation) }}
+                        {{ form_widget(form.affiliation) }}
                     </div>
-                </div>
+                    <div class="col-12 text-end">
+                        <a href="{{ path('profile') }}" class="btn btn-link">{{ 'common.cancel'|trans }}</a>
+                        <button type="submit" class="btn btn-theme-white bg-green">{{ 'common.save'|trans }}</button>
+                    </div>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

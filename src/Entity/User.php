@@ -48,6 +48,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $passwordResetUntil = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $affiliation = null;
+
     public function __construct()
     {
         $this->acceptedTermsOfServices = new ArrayCollection();
@@ -197,6 +206,51 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPasswordResetUntil(?\DateTimeImmutable $passwordResetUntil): self
     {
         $this->passwordResetUntil = $passwordResetUntil;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        if (null === $this->firstName) {
+            return '-';
+        }
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        if (null === $this->lastName) {
+            return '-';
+        }
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getAffiliation(): ?string
+    {
+        if (null === $this->affiliation) {
+            return '-';
+        }
+        return $this->affiliation;
+    }
+
+    public function setAffiliation(?string $affiliation): self
+    {
+        $this->affiliation = $affiliation;
 
         return $this;
     }

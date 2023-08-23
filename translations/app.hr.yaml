@@ -70,6 +70,7 @@ page:
         revise: Olivia | Revizija uvjeta pružanja usluga
     gdpr:
         index: Olivia | Zaštita podataka
+    profile: Olivia | Profil
 
 nav:
     training: Teorija
@@ -133,6 +134,9 @@ form:
                 email: E-mail
                 roles: Uloge
                 activated: Aktiviran račun
+                firstName: Ime
+                lastName: Prezime
+                affiliation: Pripadnost
         instructor:
             label:
                 firstName: Ime

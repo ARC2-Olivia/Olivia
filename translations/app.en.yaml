@@ -70,6 +70,7 @@ page:
         revise: Olivia | Revise terms of service
     gdpr:
         index: Olivia | Data protection
+    profile: Olivia | Profile
 
 nav:
     training: Theory
@@ -133,6 +134,9 @@ form:
                 email: E-mail
                 roles: Roles
                 activated: Activated
+                firstName: First name
+                lastName: Last name
+                affiliation: Affiliation
         instructor:
             label:
                 firstName: First name

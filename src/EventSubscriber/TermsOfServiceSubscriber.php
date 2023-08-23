@@ -49,7 +49,7 @@ class TermsOfServiceSubscriber implements EventSubscriberInterface
 
     private function checkRoutes(?string $route): bool
     {
-        return !in_array($route, ['_wdt', '_profiler', 'tos_active', 'security_logout', 'data_protection', 'tos_accept', 'data_request_access', 'data_request_resolve']);
+        return !in_array($route, ['_wdt', '_profiler', 'tos_active', 'security_logout', 'tos_accept', 'gdpr_index', 'gdpr_access', 'gdpr_delete', 'profile']);
     }
 
     private function isException(\Symfony\Component\HttpFoundation\Request $request): bool
