@@ -84,16 +84,21 @@ class SecurityService
         return $user;
     }
 
-    public function changePassword(string $passwordResetToken, string $plainPassword): void
+    public function changePasswordWithToken(string $passwordResetToken, string $plainPassword): void
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['passwordResetToken' => $passwordResetToken]);
         if (null !== $user) {
-            $user
-                ->setPassword($this->passwordHasher->hashPassword($user, $plainPassword))
-                ->setPasswordResetToken(null)
-                ->setPasswordResetUntil(null)
-            ;
-            $this->em->flush();
+            $this->changePasswordForUser($user, $plainPassword);
         }
+    }
+
+    public function changePasswordForUser(User $user, string $plainPassword): void
+    {
+        $user
+            ->setPassword($this->passwordHasher->hashPassword($user, $plainPassword))
+            ->setPasswordResetToken(null)
+            ->setPasswordResetUntil(null)
+        ;
+        $this->em->flush();
     }
 }

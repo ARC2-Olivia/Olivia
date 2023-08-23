@@ -306,6 +306,13 @@ user:
         id: ID
         email: E-mail
         roles: Uloge
+    profile:
+        basicData:
+            show: Osnovni podaci
+            edit: Izmjena osnovnih podataka
+        password:
+            show: Lozinka
+            edit: Izmjena lozinke
 
 instructor:
     title:

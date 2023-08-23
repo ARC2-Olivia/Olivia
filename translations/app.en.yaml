@@ -306,6 +306,13 @@ user:
         id: ID
         email: E-mail
         roles: Roles
+    profile:
+        basicData:
+            show: Basic data
+            edit: Editing basic data
+        password:
+            show: Password
+            edit: Changing password
 
 instructor:
     title:

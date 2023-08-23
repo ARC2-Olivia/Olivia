@@ -5,15 +5,13 @@
 
 {% block body %}
     <div class="container">
-        <div class="row gy-2 pt-4">
+        <div class="row gap-2 pt-4 justify-content-center">
             <div class="col-12">
                 {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
             </div>
-            <div class="card card-body profile">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h1>{{ 'common.profile'|trans }}</h1>
-                    <a href="{{ path('profile_edit') }}" class="btn btn-theme-white bg-blue btn-sm">{{ mdi('pencil') }}</a>
-                </div>
+
+            <div class="col-12 card card-body profile">
+                <h2>{{ 'user.profile.basicData.show'|trans }}</h2>
                 <hr/>
                 <div class="row g-3">
                     <div class="col-12 col-md-6">
@@ -24,9 +22,17 @@
                         <div class="profile-label">{{ 'form.entity.user.label.lastName'|trans }}</div>
                         <div class="profile-value">{{ app.user.lastName is not null ? app.user.lastName : '-' }}</div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 col-md-6">
+                        <div class="profile-label">{{ 'form.entity.user.label.email'|trans }}</div>
+                        <div class="profile-value">{{ app.user.email }}</div>
+                    </div>
+                    <div class="col-12 col-md-6">
                         <div class="profile-label">{{ 'form.entity.user.label.affiliation'|trans }}</div>
                         <div class="profile-value">{{ app.user.affiliation is not null ? app.user.affiliation : '-' }}</div>
+                    </div>
+                    <div class="col-12">
+                        <a href="{{ path('profile_edit_basic_data') }}" class="btn btn-theme-white bg-blue">Edit basic data</a>
+                        <a href="{{ path('profile_edit_password') }}" class="btn btn-theme-white bg-blue">Change password</a>
                     </div>
                 </div>
             </div>

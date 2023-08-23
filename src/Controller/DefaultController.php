@@ -3,16 +3,15 @@
 namespace App\Controller;
 
 use App\Form\ProfileType;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\Security\PasswordResetType;
+use App\Service\SecurityService;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-class DefaultController extends AbstractController
+class DefaultController extends BaseController
 {
     #[Route("/", name: "index_without_locale")]
     public function indexWithoutLocale(): Response
@@ -38,19 +37,37 @@ class DefaultController extends AbstractController
         return $this->render('default/profile.html.twig');
     }
 
-    #[Route("/{_locale}/profile/edit", name: "profile_edit", requirements: ["_locale" => "%locale.supported%"])]
-    public function profileEdit(Request $request, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    #[Route("/{_locale}/profile/edit/basic-data", name: "profile_edit_basic_data", requirements: ["_locale" => "%locale.supported%"])]
+    public function profileEditBasicData(Request $request): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(ProfileType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-            $this->addFlash('success', $translator->trans('success.user.edit', [], 'message'));
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('success.user.edit', [], 'message'));
             return $this->redirectToRoute('profile');
         }
 
-        return $this->render('default/profile_edit.html.twig', ['form' => $form->createView()]);
+        return $this->render('default/edit_profile_basicData.html.twig', ['form' => $form->createView()]);
+    }
+
+    #[Route("/{_locale}/profile/edit/password", name: "profile_edit_password", requirements: ["_locale" => "%locale.supported%"])]
+    public function profileEditPassword(Request $request, SecurityService $securityService): Response
+    {
+        $form = $this->createForm(PasswordResetType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('plainPassword')->getData();
+            $securityService->changePasswordForUser($this->getUser(), $plainPassword);
+            $this->addFlash('success', $this->translator->trans('success.resetPassword.change', [], 'message'));
+            return $this->redirectToRoute('profile');
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+        return $this->render('default/edit_profile_password.html.twig', ['form' => $form->createView()]);
     }
 }
