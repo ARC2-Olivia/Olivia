@@ -212,9 +212,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getFirstName(): ?string
     {
-        if (null === $this->firstName) {
-            return '-';
-        }
         return $this->firstName;
     }
 
@@ -227,9 +224,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getLastName(): ?string
     {
-        if (null === $this->lastName) {
-            return '-';
-        }
         return $this->lastName;
     }
 
@@ -242,9 +236,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAffiliation(): ?string
     {
-        if (null === $this->affiliation) {
-            return '-';
-        }
         return $this->affiliation;
     }
 

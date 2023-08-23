@@ -18,15 +18,15 @@
                 <div class="row g-3">
                     <div class="col-12 col-md-6">
                         <div class="profile-label">{{ 'form.entity.user.label.firstName'|trans }}</div>
-                        <div class="profile-value">{{ app.user.firstName }}</div>
+                        <div class="profile-value">{{ app.user.firstName is not null ? app.user.firstName : '-' }}</div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="profile-label">{{ 'form.entity.user.label.lastName'|trans }}</div>
-                        <div class="profile-value">{{ app.user.lastName }}</div>
+                        <div class="profile-value">{{ app.user.lastName is not null ? app.user.lastName : '-' }}</div>
                     </div>
                     <div class="col-12">
                         <div class="profile-label">{{ 'form.entity.user.label.affiliation'|trans }}</div>
-                        <div class="profile-value">{{ app.user.affiliation }}</div>
+                        <div class="profile-value">{{ app.user.affiliation is not null ? app.user.affiliation : '-' }}</div>
                     </div>
                 </div>
             </div>
