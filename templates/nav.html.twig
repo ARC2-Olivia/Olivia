@@ -13,7 +13,7 @@
                         <li><a href="{{ path('tos_index') }}" class="btn btn-theme-white">{{ 'nav.termsOfService'|trans }}</a></li>
                     {% endif %}
                     <li>
-                        <button id="profile-button" class="btn btn-theme-white">{{ app.user.email }}</button>
+                        <button id="profile-button" class="btn btn-theme-white">{{ app.user.nameOrEmail }}</button>
                         <ul class="dropdown" data-dropdown data-for="#profile-button">
                             <li class="dropdown-item"><a href="{{ path('profile') }}">{{ 'common.profile'|trans }}</a></li>
                             <li class="dropdown-item"><a href="{{ path('gdpr_index') }}">{{ 'nav.gdpr'|trans }}</a></li>

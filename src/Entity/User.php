@@ -245,4 +245,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getNameOrEmail(): ?string
+    {
+        $trimmedFirstName = trim($this->firstName);
+        $trimmedLastName = trim($this->lastName);
+        if (!empty($trimmedFirstName) || !empty($trimmedLastName)) {
+            return trim("$trimmedFirstName $trimmedLastName");
+        }
+        return $this->email;
+    }
 }
