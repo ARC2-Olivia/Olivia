@@ -366,6 +366,7 @@ lesson:
         yourGrade: Vaša ocjena
         yourAnswer: Vaš odgovor
         correctAnswer: Točan odgovor
+        submit: Jeste li sigurni da želite pohraniti svoje odgovore?
     extra:
         noLessons: Trenutno nema definiranih lekcija za ovaj tečaj.
         text: Tekst
