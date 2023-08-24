@@ -158,8 +158,15 @@ class PracticalSubmoduleProcessorHtml extends TranslatableEntity implements Prac
                     $selectedQuestionAnswerCount++;
                 }
             }
-
             $result = $selectedQuestionAnswerCount < $allQuestionAnswerCount;
+        } else if ('ANY' === strtoupper($this->expectedValue)) {
+            $selectedQuestionAnswerCount = 0;
+            foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                    $selectedQuestionAnswerCount++;
+                }
+            }
+            $result = $selectedQuestionAnswerCount > 0;
         } else {
             $selectedAnswerValues = [];
             foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
