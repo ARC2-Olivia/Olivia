@@ -19,6 +19,8 @@ success:
     lesson:
         new: Dodana je nova lekcija za tečaj <i>%course%</i>.
         edit: Lekcija je uređena.
+    quiz:
+        finish: Završili ste kviz <i>%quizName%</i>.
     quizQuestion:
         new: Dodano je novo kviz pitanje.
         edit: Pitanje je uređeno.

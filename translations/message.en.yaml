@@ -19,6 +19,8 @@ success:
     lesson:
         new: You have added a new lesson for the course <i>%course%</i>.
         edit: Lesson has been edited.
+    quiz:
+        finish: You have finished the quiz <i>%quizName%</i>.
     quizQuestion:
         new: You have added a new question to the course.
         edit: Question has been edited.

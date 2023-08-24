@@ -370,6 +370,7 @@ class LessonController extends BaseController
             $this->em->flush();
 
             $this->regrade($lesson->getCourse(), $user);
+            $this->addFlash('success', $this->translator->trans('success.quiz.finish', ['%quizName%' => $lesson->getName()], 'message'));
         }
 
         return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
