@@ -35,6 +35,7 @@ common:
     import: Uvoz
     export: Izvoz
     file: Datoteka
+    add: Dodaj
 
 button:
     details: Detalji

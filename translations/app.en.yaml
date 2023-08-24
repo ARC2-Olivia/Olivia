@@ -35,6 +35,7 @@ common:
     import: Import
     export: Export
     file: File
+    add: Add
 
 button:
     details: Details

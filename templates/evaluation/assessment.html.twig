@@ -22,7 +22,12 @@
             const psa = new PracticalSubmoduleAssessment(
                 "#evaluation_assessment",
                 {{ assessment|json_encode|raw }},
-                { buttonNext: "{{ 'common.next'|trans }}", buttonPrevious: "{{ 'common.previous'|trans }}", buttonSubmit: "{{ 'common.submit'|trans }}" }
+                {
+                    buttonNext: "{{ 'common.next'|trans }}",
+                    buttonPrevious: "{{ 'common.previous'|trans }}",
+                    buttonSubmit: "{{ 'common.submit'|trans }}",
+                    buttonAdd: "{{ 'common.add'|trans }}"
+                }
             );
         });
     </script>
