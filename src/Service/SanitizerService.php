@@ -25,7 +25,7 @@ class SanitizerService
     public function sanitizeHtml(?string $string): ?string
     {
         if (null !== $string) {
-            $allowed = ['p', 'a', 'img', 'br', 'span', 'ul', 'ol', 'li', 'b', 'i', 'u', 's'];
+            $allowed = ['p', 'a', 'img', 'br', 'span', 'ul', 'ol', 'li', 'b', 'i', 'u', 's', 'em', 'strong'];
             $string = strip_tags($string, $allowed);
         }
 
