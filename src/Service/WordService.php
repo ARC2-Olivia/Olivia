@@ -94,8 +94,9 @@ class WordService
     private function handleResult(ProcessorResult $result, \PhpOffice\PhpWord\Element\Section $section): void
     {
         if (true === $result->isHtml()) {
-            $html = new \DOMDocument();
-            $html->loadHTML(str_replace('<br>', '<br/>', $result->getText()));
+            $string = str_replace('<br>', '<br/>', $result->getText());
+            $html = new \DOMDocument('1.0', 'UTF-8');
+            $html->loadHTML(mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8'));
             $body = $html->getElementsByTagName("body")->item(0);
             \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html->saveXML($body, LIBXML_NOEMPTYTAG), true);
         } else {
