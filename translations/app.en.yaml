@@ -373,7 +373,8 @@ lesson:
         video: Video
         quiz: Quiz
         moderation: Moderation
-        notes: Notes
+        notes: Private notes
+        notesVisibility: Visible only to you
 
 quizQuestion:
     add: Add question

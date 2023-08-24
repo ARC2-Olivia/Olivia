@@ -373,7 +373,8 @@ lesson:
         video: Video
         quiz: Kviz
         moderation: Moderiranje
-        notes: Bilješke
+        notes: Privatne bilješke
+        notesVisibility: Vidljive samo vama
 
 quizQuestion:
     add: Dodaj pitanje
