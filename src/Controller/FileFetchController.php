@@ -7,6 +7,7 @@ use App\Entity\File;
 use App\Entity\Instructor;
 use App\Entity\LessonItemFile;
 use App\Entity\PracticalSubmodule;
+use App\Service\WkhtmltopdfService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,11 +55,17 @@ class FileFetchController extends AbstractController
         return $this->file($file->getPath(), $file->getOriginalName());
     }
 
-    #[Route("/course-certificate/{course}", name: "course_certificate")]
+    #[Route("/course-certificate/{course}/{_locale}", name: "course_certificate", requirements: ["_locale" => "%locale.supported%"])]
     #[IsGranted('get_certificate', subject: 'course')]
-    public function courseCertificate(Course $course): Response
+    public function courseCertificate(Course $course, WkhtmltopdfService $wkhtmltopdfService): Response
     {
-        return $this->makeFileResponseFromString("certificate.txt", "[PLACEHOLDER]");
+        $html = $this->renderView('pdf/certificate.html.twig', ['course' => $course]);
+        $pdf = $wkhtmltopdfService->makeLandscapePdf($html);
+        if (null === $pdf) {
+            return $this->makeFileResponseFromString("certificate.txt", "[PLACEHOLDER]");
+        } else {
+            return $this->file($pdf, 'certificate.pdf')->deleteFileAfterSend();
+        }
     }
 
     private function makeFileResponseFromString(string $filename, string $content, string $contentType = 'text/plain'): Response

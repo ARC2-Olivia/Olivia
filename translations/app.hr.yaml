@@ -512,6 +512,12 @@ file:
     message:
         delete: Jeste li sigurni da želite izbrisati ovu datoteku?
 
+certificate:
+    title: Potvrda o završetku
+    for: tečaja
+    to: za polaznika
+    certifiedAt: Ovjereno
+
 extra:
     free: Besplatno
     exitImmitation: Prekini imitaciju
