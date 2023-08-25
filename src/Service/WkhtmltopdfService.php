@@ -35,7 +35,6 @@ class WkhtmltopdfService
         } catch (\Exception $ex) {
             if (is_string($tempHtml)) $fs->remove($tempHtml);
             if (is_string($output)) $fs->remove($output);
-            $fs->remove($output);
             return null;
         }
 
