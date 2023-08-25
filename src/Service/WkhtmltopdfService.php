@@ -33,7 +33,8 @@ class WkhtmltopdfService
 
             `$wkhtmltopdfShellPath --page-size A4 --orientation Landscape --encoding utf-8 --disable-smart-shrinking --enable-local-file-access -T 0mm -B 0mm -L 0mm -R 0mm file:///$tempHtmlShellPath $outputShellPath`;
         } catch (\Exception $ex) {
-            $fs->remove($tempHtml);
+            if (is_string($tempHtml)) $fs->remove($tempHtml);
+            if (is_string($output)) $fs->remove($output);
             $fs->remove($output);
             return null;
         }
