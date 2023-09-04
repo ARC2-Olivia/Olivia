@@ -81,31 +81,6 @@ class CourseController extends BaseController
         ]);
     }
 
-    #[Route("/instructors/{course}", name: "instructors")]
-    public function instructors(Course $course, Request $request, InstructorRepository $instructorRepository): Response
-    {
-        $selectableInstructors = $instructorRepository->findAllExcept($course->getInstructors());
-        $form = $this->createForm(CourseInstructorType::class, null, ['instructors' => $selectableInstructors]);
-
-        $form->handleRequest($request);
-        if ($this->isGranted(User::ROLE_MODERATOR) && $form->isSubmitted() && $form->isValid()) {
-            $instructor = $form->get('instructor')->getData();
-            $course->addInstructor($instructor);
-            $this->em->flush();
-            $this->addFlash('success', $this->translator->trans('success.instructor.add', ['%instructor%' => $instructor, '%course%' => $course->getName()], 'message'));
-        } else {
-            foreach ($form->getErrors(true) as $error) {
-                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
-            }
-        }
-
-        return $this->render('course/instructors.html.twig', [
-            'course' => $course,
-            'form' => $form->createView(),
-            'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_INSTRUCTORS)
-        ]);
-    }
-
     #[Route("/edit/{course}", name: "edit")]
     #[IsGranted('ROLE_MODERATOR')]
     public function edit(Course $course, Request $request): Response
