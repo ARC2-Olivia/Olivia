@@ -1,5 +1,7 @@
 {% trans_default_domain 'app' %}
 
+{# OVAJ TWIG SE BIŠE NE KORISTI, ALI OSTAJE KAKO BI SE "COPY-PASTE"-alo ZA BUDUĆE IZMJENE #}
+
 {% if is_granted('ROLE_MODERATOR') or lesson.type != constant('TYPE_QUIZ', lesson) %}
 
     <div class="lesson-section-side lesson-content{% if is_user() %} align-self-stretch{% endif %}">
@@ -11,7 +13,8 @@
                     {{ mdi('pencil') }}
                     <span>{{ 'common.edit'|trans }}</span>
                 </a>
-                <form action="{{ path('lesson_delete', {'lesson': lesson.id}) }}" method="post" onsubmit='return confirm("{{ 'lesson.delete'|trans({'%lesson%': lesson.name}) }}");'>
+                <form action="{{ path('lesson_delete', {'lesson': lesson.id}) }}" method="post"
+                      onsubmit='return confirm("{{ 'lesson.delete'|trans({'%lesson%': lesson.name}) }}");'>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('lesson.delete') }}"/>
                     <button type="submit" class="lesson-moderation-tools-item w-100">
                         {{ mdi('trash-can-outline') }}
@@ -37,7 +40,8 @@
                     <textarea id="notes">{% if note is not null %}{{ note.text|raw }}{% endif %}</textarea>
                 </label>
                 <div class="lesson-notes-actions">
-                    <button id="save-notes" type="button" class="btn btn-theme-white bg-blue w-100" data-path="{{ path('note_update') }}" data-lesson="{{ lesson.id }}" data-user="{{ app.user.id }}">
+                    <button id="save-notes" type="button" class="btn btn-theme-white bg-blue w-100" data-path="{{ path('note_update') }}" data-lesson="{{ lesson.id }}"
+                            data-user="{{ app.user.id }}">
                         {{ 'common.save'|trans }}
                     </button>
                 </div>
