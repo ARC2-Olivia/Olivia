@@ -5,7 +5,7 @@
 
     <div class="d-flex justify-content-between align-items-center">
         <h2 class="lesson-section-main-caption">{{ lesson.name }}</h2>
-        {% if lesson.type != constant('TYPE_QUIZ', lesson) %}
+        {% if is_user() and lesson.type != constant('TYPE_QUIZ', lesson) %}
             <button type="button" class="btn btn-theme-white bg-blue btn-round" data-modal-open="#notes-modal">{{ mdi('text-long') }}</button>
             <div class="modal" id="notes-modal">
                 <div class="modal-dialog">
