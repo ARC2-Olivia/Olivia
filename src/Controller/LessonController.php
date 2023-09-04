@@ -20,6 +20,7 @@ use App\Repository\LessonCompletionRepository;
 use App\Repository\LessonRepository;
 use App\Service\EnrollmentService;
 use App\Service\LessonService;
+use App\Service\NavigationService;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
@@ -38,11 +39,17 @@ class LessonController extends BaseController
 
     private ?LessonService $lessonService = null;
     private ?EnrollmentService $enrollmentService = null;
+    private ?NavigationService $navigationService = null;
 
-    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator, LessonService $lessonService, EnrollmentService $enrollmentService)
-    {
+    public function __construct(EntityManagerInterface $em,
+                                TranslatorInterface $translator,
+                                LessonService $lessonService,
+                                EnrollmentService $enrollmentService,
+                                NavigationService $navigationService
+    ) {
         $this->lessonService = $lessonService;
         $this->enrollmentService = $enrollmentService;
+        $this->navigationService = $navigationService;
         parent::__construct($em, $translator);
     }
 
@@ -51,7 +58,11 @@ class LessonController extends BaseController
     public function course(Course $course): Response
     {
         $lessonsInfo = $this->lessonService->getLessonsInfo($course, $this->getUser());
-        return $this->render('lesson/course.html.twig', ['course' => $course, 'lessonsInfo' => $lessonsInfo]);
+        return $this->render('lesson/course.html.twig', [
+            'course' => $course,
+            'lessonsInfo' => $lessonsInfo,
+            'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_LESSONS)
+        ]);
     }
 
     #[Route("/course/{course}/new/{lessonType}", name: "new", defaults: ['lessonType' => Lesson::TYPE_TEXT])]
@@ -172,7 +183,8 @@ class LessonController extends BaseController
             'previousLesson' => $previousLesson,
             'nextLesson' => $nextLesson,
             'note' => $note,
-            'quizPercentage' => !$this->isGranted('ROLE_MODERATOR') ? $this->lessonService->getQuizPercentage($lesson, $user) : null
+            'quizPercentage' => !$this->isGranted('ROLE_MODERATOR') ? $this->lessonService->getQuizPercentage($lesson, $user) : null,
+            'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)
         ]);
     }
 

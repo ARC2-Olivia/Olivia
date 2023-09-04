@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class NavigationService
 {
     public const COURSE_OVERVIEW    = 0;
-    public const COURSE_INSTRUCTORS = 1;
+    public const COURSE_LESSONS = 1;
     public const COURSE_EDIT        = 2;
     public const COURSE_CERTIFICATE = 3;
 
@@ -54,9 +54,9 @@ class NavigationService
                 'active' => $activeNav === self::COURSE_OVERVIEW
             ],
             [
-                'text' => $this->translator->trans('course.nav.instructors', [], 'app'),
-                'path' => $this->router->generate('course_instructors', ['course' => $course->getId()]),
-                'active' => $activeNav === self::COURSE_INSTRUCTORS
+                'text' => $this->translator->trans('course.nav.lessons', [], 'app'),
+                'path' => $this->router->generate('lesson_course', ['course' => $course->getId()]),
+                'active' => $activeNav === self::COURSE_LESSONS
             ]
         ];
 
