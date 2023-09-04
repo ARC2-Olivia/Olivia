@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\QuizQuestion;
+use App\Entity\QuizQuestionAnswer;
 use App\Entity\User;
 use App\Form\QuizQuestionType;
 use App\Service\LessonService;
@@ -49,6 +50,9 @@ class QuizQuestionController extends BaseController
         $lesson = $quizQuestion->getQuiz()->getLesson();
         $csrfToken = $request->request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('quiz.question.delete', $csrfToken)) {
+            foreach ($this->em->getRepository(QuizQuestionAnswer::class)->findBy(['question' => $quizQuestion]) as $quizQuestionAnswer) {
+                $this->em->remove($quizQuestionAnswer);
+            }
             $this->em->remove($quizQuestion);
             $this->em->flush();
             $this->addFlash('warning', $this->translator->trans('warning.quizQuestion.delete', ['%lesson%' => $lesson->getName()], 'message'));

@@ -139,23 +139,6 @@ class CourseController extends BaseController
         return $this->redirectToRoute('course_edit', ['course' => $course->getId()]);
     }
 
-    #[Route("/instructors/{course}/remove/{instructor}", name: "instructor_remove")]
-    #[IsGranted('ROLE_MODERATOR')]
-    public function removeInstructor(Course $course, Instructor $instructor, Request $request): Response
-    {
-        $csrfToken = $request->get('_csrf_token');
-        if ($csrfToken !== null && $this->isCsrfTokenValid('course.instructor.remove', $csrfToken)) {
-            if ($course->getInstructors()->contains($instructor)) {
-                $course->removeInstructor($instructor);
-                $this->em->flush();
-                $this->addFlash('warning', $this->translator->trans('warning.instructor.remove', ['%instructor%' => $instructor, '%course%' => $course->getName()], 'message'));
-            } else {
-                $this->addFlash('warning', $this->translator->trans('error.instructor.remove', ['%instructor%' => $instructor, '%course%' => $course->getName()], 'message'));
-            }
-        }
-        return $this->redirectToRoute('course_instructors', ['course' => $course->getId()]);
-    }
-
     #[Route("/enroll/{course}", name: "enroll")]
     #[IsGranted("enroll", subject: "course")]
     public function enroll(Course $course, EnrollmentService $enrollmentService): Response

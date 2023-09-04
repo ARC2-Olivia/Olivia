@@ -119,7 +119,7 @@ class LessonController extends BaseController
             'course' => $course,
             'form' => $form->createView(),
             'lessonType' => $lessonType,
-            'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)
+            'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_LESSONS)
         ]);
     }
 
@@ -227,6 +227,12 @@ class LessonController extends BaseController
                 }
                 case Lesson::TYPE_QUIZ: {
                     $lessonItemQuiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
+                    foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
+                        foreach ($this->em->getRepository(QuizQuestionAnswer::class)->findBy(['question' => $quizQuestion]) as $quizQuestionAnswer) {
+                            $this->em->remove($quizQuestionAnswer);
+                        }
+                        $this->em->remove($quizQuestion);
+                    }
                     $this->em->remove($lessonItemQuiz);
                     $recheckCoursePassingCondition = true;
                     break;
@@ -235,6 +241,10 @@ class LessonController extends BaseController
 
             foreach ($this->em->getRepository(LessonCompletion::class)->findBy(['lesson' => $lesson]) as $lessonCompletion) {
                 $this->em->remove($lessonCompletion);
+            }
+
+            foreach ($this->em->getRepository(Note::class)->findBy(['lesson' => $lesson]) as $note) {
+                $this->em->remove($note);
             }
 
             $this->em->remove($lesson);
