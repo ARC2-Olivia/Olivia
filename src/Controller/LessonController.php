@@ -116,7 +116,12 @@ class LessonController extends BaseController
             }
         }
 
-        return $this->render('lesson/new.html.twig', ['course' => $course, 'form' => $form->createView(), 'lessonType' => $lessonType]);
+        return $this->render('lesson/new.html.twig', [
+            'course' => $course,
+            'form' => $form->createView(),
+            'lessonType' => $lessonType,
+            'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)
+        ]);
     }
 
     #[Route("/quiz/{lesson}/new-question", name: "new_quiz_question")]
@@ -147,7 +152,12 @@ class LessonController extends BaseController
         }
 
         $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $this->getUser());
-        return $this->render('lesson/quiz/new.html.twig', ['lesson' => $lesson, 'lessonsInfo' => $lessonsInfo, 'form' => $form->createView()]);
+        return $this->render('lesson/quiz/new.html.twig', [
+            'lesson' => $lesson,
+            'lessonsInfo' => $lessonsInfo,
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)
+        ]);
     }
 
     #[Route("/show/{lesson}", name: "show")]
@@ -294,7 +304,8 @@ class LessonController extends BaseController
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
             'lessonsInfo' => $lessonsInfo,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)
         ]);
     }
 
@@ -320,7 +331,12 @@ class LessonController extends BaseController
         $quizData = $this->prepareQuizData($lessonItemQuiz);
         $form = $this->createForm(QuizType::class, $quizData, ['action' => $this->generateUrl('lesson_quiz_finish', ['lesson' => $lesson->getId()])]);
         $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $user);
-        return $this->render('lesson/quiz.html.twig', ['lesson' => $lesson, 'lessonsInfo' => $lessonsInfo, 'form' => $form->createView()]);
+        return $this->render('lesson/quiz.html.twig', [
+            'lesson' => $lesson,
+            'lessonsInfo' => $lessonsInfo,
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)
+        ]);
     }
 
     #[Route("/finish-quiz/{lesson}", name: "quiz_finish", methods: ["POST"])]
@@ -430,7 +446,8 @@ class LessonController extends BaseController
             'lessonCompletion' => $lessonCompletion,
             'lessonsInfo' => $lessonsInfo,
             'previousLesson' => $previousLesson,
-            'nextLesson' => $nextLesson
+            'nextLesson' => $nextLesson,
+            'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)
         ]);
     }
 

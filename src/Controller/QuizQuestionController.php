@@ -6,6 +6,7 @@ use App\Entity\QuizQuestion;
 use App\Entity\User;
 use App\Form\QuizQuestionType;
 use App\Service\LessonService;
+use App\Service\NavigationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ class QuizQuestionController extends BaseController
 {
     #[Route("/edit/{quizQuestion}", name: "edit")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function edit(QuizQuestion $quizQuestion, Request $request, LessonService $lessonService): Response
+    public function edit(QuizQuestion $quizQuestion, Request $request, LessonService $lessonService, NavigationService $navigationService): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -36,7 +37,8 @@ class QuizQuestionController extends BaseController
             'quizQuestion' => $quizQuestion,
             'lesson' => $quizQuestion->getQuiz()->getLesson(),
             'lessonsInfo' => $lessonService->getLessonsInfo($quizQuestion->getQuiz()->getLesson()->getCourse(), $user),
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'navigation' => $navigationService->forCourse($quizQuestion->getQuiz()->getLesson()->getCourse(), NavigationService::COURSE_LESSONS)
         ]);
     }
 
