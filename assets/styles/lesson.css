@@ -270,6 +270,7 @@ iframe.lesson-video {
     flex-direction: column;
     row-gap: 24px;
     height: 100%;
+    padding: 16px;
 }
 
 .lesson-notes-caption {
@@ -282,6 +283,9 @@ iframe.lesson-video {
 
 .lesson-notes-actions {
     flex-basis: 0;
+    display: flex;
+    justify-content: end;
+    column-gap: 8px;
 }
 
 .lesson-notes-content {
