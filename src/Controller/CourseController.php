@@ -104,7 +104,7 @@ class CourseController extends BaseController
         return $this->render('course/edit.html.twig', [
             'course' => $course,
             'form' => $form->createView(),
-            'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_EDIT)
+            'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_OVERVIEW)
         ]);
     }
 

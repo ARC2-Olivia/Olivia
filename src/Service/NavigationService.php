@@ -68,14 +68,6 @@ class NavigationService
             ];
         }
 
-        if ($this->security->isGranted('ROLE_MODERATOR')) {
-            $navigation[] = [
-                'text' => $this->translator->trans('course.nav.edit', [], 'app'),
-                'path' => $this->router->generate('course_edit', ['course' => $course->getId()]),
-                'active' => $activeNav === self::COURSE_EDIT
-            ];
-        }
-
         return $navigation;
     }
 

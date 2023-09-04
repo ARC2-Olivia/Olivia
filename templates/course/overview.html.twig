@@ -26,4 +26,10 @@
             {% endfor %}
         </div>
     {% endif %}
+
+    {% if is_granted('ROLE_MODERATOR') %}
+        <div class="text-end">
+            <a href="{{ path('course_edit', {'course': course.id}) }}" class="btn btn-theme-white bg-green">{{ 'common.edit'|trans }}</a>
+        </div>
+    {% endif %}
 {% endblock %}
