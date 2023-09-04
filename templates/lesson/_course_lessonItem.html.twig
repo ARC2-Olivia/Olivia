@@ -1,5 +1,7 @@
 {% trans_default_domain 'app' %}
 
+{% set canView = is_granted('view', course) %}
+
 <div class="lesson-item" data-id="{{ lessonInfo.lesson.id }}">
     {% if is_granted('ROLE_MODERATOR') %}
         <div class="lesson-item-reorder-handle lesson-item-reorder-handle-icon">
@@ -18,12 +20,16 @@
     {% endif %}
 
     <div class="lesson-item-name-and-description" href="#">
-        <a class="lesson-item-name" href="{{ lessonInfo.showUrl }}">{{ lessonInfo.lesson.name }}</a>
+        {% if canView %}
+            <a class="lesson-item-name" href="{{ lessonInfo.showUrl }}">{{ lessonInfo.lesson.name }}</a>
+        {% else %}
+            <div class="lesson-item-name" href="{{ lessonInfo.showUrl }}">{{ lessonInfo.lesson.name }}</div>
+        {% endif %}
         {% if lessonInfo.lesson.description is not empty %}<p class="lesson-item-description">{{ lessonInfo.lesson.description }}</p>{% endif %}
     </div>
 
     <div class="lesson-item-actions">
-        {% if is_user() %}
+        {% if canView and is_user() %}
             {% if lessonInfo.lesson.type == constant('TYPE_QUIZ', lessonInfo.lesson) %}
                 {% set completionClassAddition = lessonInfo.completed ? 'passed' : 'failed' %}
                 {% set completionText = lessonInfo.completed ? 'lesson.completion.quiz.passed'|trans : 'lesson.completion.quiz.notPassed'|trans %}

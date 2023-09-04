@@ -54,7 +54,6 @@ class LessonController extends BaseController
     }
 
     #[Route("/course/{course}", name: "course")]
-    #[IsGranted("view", subject: "course")]
     public function course(Course $course): Response
     {
         $lessonsInfo = $this->lessonService->getLessonsInfo($course, $this->getUser());
