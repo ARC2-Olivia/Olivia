@@ -13,4 +13,17 @@
         </div>
     {% endif %}
     <p>{{ course.description|nl2br }}</p>
+
+    {% if course.instructors is not empty %}
+        <div class="mt-5 p-0">
+            <h3 class="mb-3">{{ 'course.nav.instructors'|trans }}</h3>
+            {% for instructor in course.instructors %}
+                {% if loop.last %}
+                    {% include 'course/_overview_instructor.html.twig' with {'instructor': instructor, 'isLast': true} %}
+                {% else %}
+                    {% include 'course/_overview_instructor.html.twig' with {'instructor': instructor} %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

@@ -1,7 +1,9 @@
 {% trans_default_domain 'app' %}
+
 {% if isLast is not defined %}
     {% set isLast = false %}
 {% endif %}
+
 <div class="row{% if not isLast %} mb-4{% endif %}">
     <div class="course-instructor">
         <div class="course-instructor-image">
@@ -11,14 +13,5 @@
             <span>{{ instructor }}</span>
             <span>{{ instructor.institution }}</span>
         </div>
-        {% if is_granted('ROLE_MODERATOR') %}
-            <form action="{{ path('course_instructor_remove', {'course': course.id, 'instructor': instructor.id}) }}"
-                  onsubmit="return confirm('{{ 'instructor.remove'|trans({'%instructor%': instructor}) }}')"
-                  method="post"
-            >
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('course.instructor.remove') }}"/>
-                <button type="submit" class="btn btn-theme-white btn-sm bg-red">{{ 'common.remove'|trans }}</button>
-            </form>
-        {% endif %}
     </div>
 </div>
