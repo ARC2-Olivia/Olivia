@@ -310,9 +310,11 @@ user:
         roles: Roles
     profile:
         basicData:
+            action: Edit basic data
             show: Basic data
             edit: Editing basic data
         password:
+            action: Change password
             show: Password
             edit: Changing password
 

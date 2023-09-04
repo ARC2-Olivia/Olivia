@@ -31,8 +31,8 @@
                         <div class="profile-value">{{ app.user.affiliation is not null ? app.user.affiliation : '-' }}</div>
                     </div>
                     <div class="col-12">
-                        <a href="{{ path('profile_edit_basic_data') }}" class="btn btn-theme-white bg-blue">Edit basic data</a>
-                        <a href="{{ path('profile_edit_password') }}" class="btn btn-theme-white bg-blue">Change password</a>
+                        <a href="{{ path('profile_edit_basic_data') }}" class="btn btn-theme-white bg-blue">{{ 'user.profile.basicData.action'|trans }}</a>
+                        <a href="{{ path('profile_edit_password') }}" class="btn btn-theme-white bg-blue">{{ 'user.profile.password.action'|trans }}</a>
                     </div>
                 </div>
             </div>

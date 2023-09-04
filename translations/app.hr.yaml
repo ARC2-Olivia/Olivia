@@ -310,9 +310,11 @@ user:
         roles: Uloge
     profile:
         basicData:
+            action: Izmjeni osnovne podatke
             show: Osnovni podaci
             edit: Izmjena osnovnih podataka
         password:
+            action: Izmjeni lozinku
             show: Lozinka
             edit: Izmjena lozinke
 
