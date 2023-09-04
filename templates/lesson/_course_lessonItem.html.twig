@@ -46,6 +46,8 @@
                     {{ completionText }}
                 </button>
             {% endif %}
+        {% elseif is_granted('ROLE_MODERATOR') %}
+            <a href="{{ path('lesson_edit', {'lesson': lessonInfo.lesson.id}) }}" class="btn btn-theme-white bg-green btn-sm">{{ mdi('cog') }}</a>
         {% endif %}
     </div>
 </div>
