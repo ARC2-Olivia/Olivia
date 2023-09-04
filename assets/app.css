@@ -117,6 +117,10 @@ header {
     width: fit-content !important;
 }
 
+.min-h-500px {
+    min-height: 250px;
+}
+
 .bg-orange { background-color: var(--app-color-orange) !important; }
 .bg-green { background-color: var(--app-color-green) !important; }
 .bg-blue { background-color: var(--app-color-blue) !important; }

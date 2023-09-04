@@ -41,7 +41,7 @@
                 <div class="container-fluid">
                     <div class="row">{% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}</div>
                     <div class="row mb-3">{% include '_partials/tab_navigation.html.twig' %}</div>
-                    <div class="row lesson-content">
+                    <div class="row lesson-content {% block lessonContentAdditionalClasses %}{% endblock %}">
                         {% block lessonContent %}{% endblock %}
                     </div>
                 </div>

@@ -3,6 +3,8 @@
 
 {% set canView = is_granted('view', course) %}
 
+{% block lessonContentAdditionalClasses %}{% if not canView %}min-h-500px{% endif %}{% endblock %}
+
 {% block lessonContent %}
     <div id="lesson-items" class="lesson-items"{% if is_granted('ROLE_MODERATOR') %} data-path="{{ path('lesson_reorder') }}"{% endif %}>
         {% for lessonInfo in lessonsInfo %}
