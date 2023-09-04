@@ -77,11 +77,12 @@
     flex-wrap: wrap;
     column-gap: 16px;
     row-gap: 8px;
+    align-items: start;
 }
 
 .lesson-section-side {
     flex-basis: 0;
-    flex-grow: 1;
+    flex-grow: 2;
     align-self: start;
     position: sticky;
     top: 1rem;
@@ -89,7 +90,7 @@
 
 .lesson-section-main {
     flex-basis: 0;
-    flex-grow: 4;
+    flex-grow: 5;
     display: flex;
     flex-direction: column;
     row-gap: 16px;
@@ -145,6 +146,7 @@
 
 .lesson-section-main-navigation {
     clear: both;
+    margin-top: 2rem;
 }
 
 .lesson-section-main-navigation-previous {
@@ -189,7 +191,7 @@
 }
 
 iframe.lesson-video {
-    height: 100%;
+    height: 500px;
 }
 
 .lesson-section-navigation-caption {
