@@ -160,6 +160,7 @@ form:
                 estimatedWorkload: Estimated workload
                 tags: Comma separated tags
                 tagsAlt: Comma separated tags (alternate language)
+                instructors: Instructors
                 practicalSubmodules: Connected practical assessments
             placeholder:
                 name: Course name

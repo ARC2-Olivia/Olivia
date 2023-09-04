@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Course;
+use App\Entity\Instructor;
 use App\Entity\PracticalSubmodule;
 use App\Form\Custom\WorkloadType;
 use App\Form\Transformer\SimpleArrayToStringTransformer;
@@ -64,6 +65,15 @@ class CourseType extends AbstractType
             ->add('tags', TextType::class, [
                 'label' => 'form.entity.course.label.tags',
                 'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.tags', [], 'app')]
+            ])
+            ->add('instructors', EntityType::class, [
+                'class' => Instructor::class,
+                'label' => 'form.entity.course.label.instructors',
+                'choice_label' => function (Instructor $instructor) {
+                    return sprintf('%s %s (%s)', $instructor->getFirstName(), $instructor->getLastName(), $instructor->getEmail());
+                },
+                'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
+                'multiple' => true
             ])
             ->add('practicalSubmodules', EntityType::class, [
                 'class' => PracticalSubmodule::class,

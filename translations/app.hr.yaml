@@ -160,6 +160,7 @@ form:
                 estimatedWorkload: Procijenjeno opterećenje
                 tags: Oznake odvojene zarezom
                 tagsAlt: Oznake odvojene zarezom (drugi jezik)
+                instructors: Instruktori
                 practicalSubmodules: Povezane procjene
             placeholder:
                 name: Naziv tečaja
