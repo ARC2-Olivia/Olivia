@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class NavigationService
 {
     public const COURSE_OVERVIEW    = 0;
-    public const COURSE_LESSONS = 1;
+    public const COURSE_LESSONS     = 1;
     public const COURSE_EDIT        = 2;
     public const COURSE_CERTIFICATE = 3;
 
@@ -33,13 +33,15 @@ class NavigationService
     private ?RouterInterface $router = null;
     private ?Security $security = null;
     private ?EnrollmentService $enrollmentService = null;
+    private ?\Twig\Environment $twig;
 
-    public function __construct(TranslatorInterface $translator, RouterInterface $router, Security $security, EnrollmentService $enrollmentService)
+    public function __construct(TranslatorInterface $translator, RouterInterface $router, Security $security, EnrollmentService $enrollmentService, \Twig\Environment $twig)
     {
         $this->translator = $translator;
         $this->router = $router;
         $this->security = $security;
         $this->enrollmentService = $enrollmentService;
+        $this->twig = $twig;
     }
 
     public function forCourse(Course $course, ?int $activeNav = null): array
@@ -61,8 +63,12 @@ class NavigationService
         ];
 
         if ($this->isUser() && $this->enrollmentService->isEnrolled($course, $user)) {
+            $addition = '';
+            if ($this->enrollmentService->isPassed($course, $user)) {
+                $addition .= $this->twig->render('mdi/check-decagram.html.twig', ['class' => 'ms-1 fg-orange', 'viewBox' => '0 0 24 24']);
+            }
             $navigation[] = [
-                'text' => $this->translator->trans('course.nav.certificate', [], 'app'),
+                'text' => $this->translator->trans('course.nav.certificate', [], 'app') . $addition,
                 'path' => $this->router->generate('course_certificate', ['course' => $course->getId()]),
                 'active' => $activeNav === self::COURSE_CERTIFICATE
             ];

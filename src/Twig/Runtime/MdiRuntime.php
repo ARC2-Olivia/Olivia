@@ -15,7 +15,7 @@ class MdiRuntime implements RuntimeExtensionInterface
         $this->twig = $twig;
     }
 
-    public function mdi(string $mdiName, string $mdiClass = "", string $mdiViewBox = "0 0 24 24"): Markup
+    public function mdi(string $mdiName, string $mdiClass = '', string $mdiViewBox = '0 0 24 24'): Markup
     {
         try {
             return new Markup($this->twig->render('mdi/' . $mdiName . '.html.twig', ['class' => $mdiClass, 'viewBox' => $mdiViewBox]), 'UTF-8');

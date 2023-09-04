@@ -2,9 +2,9 @@
     {% for nav in navigation %}
         <li>
             {% if nav.path is defined and nav.path is not empty %}
-                <a href="{{ nav.path }}" class="btn btn-nav w-100{% if nav.active %} active{% endif %}">{{ nav.text }}</a>
+                <a href="{{ nav.path }}" class="btn btn-nav w-100{% if nav.active %} active{% endif %}">{{ nav.text|raw }}</a>
             {% else %}
-                <span class="btn btn-nav w-100{% if nav.active %} active{% endif %}">{{ nav.text }}</span>
+                <span class="btn btn-nav w-100{% if nav.active %} active{% endif %}">{{ nav.text|raw }}</span>
             {% endif %}
         </li>
     {% endfor %}
