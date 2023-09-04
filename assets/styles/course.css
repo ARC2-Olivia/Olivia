@@ -82,6 +82,7 @@
     margin: 0;
     list-style: none;
     font-weight: 500;
+    justify-content: center;
 }
 
 .course-navigation li {
