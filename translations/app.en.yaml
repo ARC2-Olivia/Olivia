@@ -343,6 +343,7 @@ course:
         1: Congratulations on completing the course <i>%course%</i>!
         2: Click on the <i>Download certificate</i> button to download the certificate of completion.
         button: Download certificate
+        notPass: To receive a certificate, you must receive passing points on all the quizzes.
 
 lesson:
     type:

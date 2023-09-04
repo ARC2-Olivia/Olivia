@@ -343,6 +343,7 @@ course:
         1: Čestitamo! Položili ste tečaj <i>%course%</i>!
         2: Kliknite na gumb <i>Preuzmite potvrdu</i> kako biste preuzeli potvrdu za položeni tečaju.
         button: Preuzmite potvrdu
+        notPass: Za dobivanje certifikata, trebate ostvariti prolazne bodove na svim kvizovima.
 
 lesson:
     type:

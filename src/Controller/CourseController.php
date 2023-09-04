@@ -150,7 +150,6 @@ class CourseController extends BaseController
     }
 
     #[Route("/certificate/{course}", name: "certificate")]
-    #[IsGranted("get_certificate", subject: "course")]
     public function certificate(Course $course): Response
     {
         return $this->render('course/certificate.html.twig', [

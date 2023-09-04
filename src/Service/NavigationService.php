@@ -60,7 +60,7 @@ class NavigationService
             ]
         ];
 
-        if ($this->isUser() && $this->enrollmentService->isPassed($course, $user)) {
+        if ($this->isUser() && $this->enrollmentService->isEnrolled($course, $user)) {
             $navigation[] = [
                 'text' => $this->translator->trans('course.nav.certificate', [], 'app'),
                 'path' => $this->router->generate('course_certificate', ['course' => $course->getId()]),

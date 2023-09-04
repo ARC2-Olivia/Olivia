@@ -3,8 +3,12 @@
 
 {% block courseContent %}
     <div class="d-flex flex-column align-items-center">
-        <p class="mb-3">{{ 'course.certificate.1'|trans({'%course%': course.name})|raw }}</p>
-        <p class="mb-3">{{ 'course.certificate.2'|trans|raw }}</p>
-        <a href="{{ path('file_fetch_course_certificate', {'course': course.id}) }}" class="btn btn-theme-white bg-green">{{ 'course.certificate.button'|trans }}</a>
+        {% if is_granted('get_certificate', course) %}
+            <p class="mb-3">{{ 'course.certificate.1'|trans({'%course%': course.name})|raw }}</p>
+            <p class="mb-3">{{ 'course.certificate.2'|trans|raw }}</p>
+            <a href="{{ path('file_fetch_course_certificate', {'course': course.id}) }}" class="btn btn-theme-white bg-green">{{ 'course.certificate.button'|trans }}</a>
+        {% else %}
+            <p>{{ 'course.certificate.notPass'|trans }}</p>
+        {% endif %}
     </div>
 {% endblock %}
