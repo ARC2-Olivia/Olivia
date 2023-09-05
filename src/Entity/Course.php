@@ -190,6 +190,28 @@ class Course extends TranslatableEntity
         return $this;
     }
 
+    public function countNonQuizLessons(): int
+    {
+        $count = 0;
+        foreach ($this->getLessons() as $lesson) {
+            if ($lesson::TYPE_QUIZ !== $lesson->getType()) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+    public function countQuizLessons(): int
+    {
+        $count = 0;
+        foreach ($this->getLessons() as $lesson) {
+            if ($lesson::TYPE_QUIZ === $lesson->getType()) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
     /**
      * @return Collection<int, Enrollment>
      */

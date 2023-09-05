@@ -339,7 +339,8 @@ course:
         certificate: Potvrda
     extra:
         noInstructors: Trenutno nema definiranih instruktora za ovaj tečaj.
-        lessons: lekcije
+        lessons: "{0,1} %count% lekcija|[2-4] %count% lekcije|[5,+Inf[ %count% lekcija"
+        quizzes: "{0} %count% kviza|{1} %count% kviz|[2,+Inf[ %count% kviza"
         connectedTo: "Lekcije u ovom tečaju su povezane sa sljedećim procjenama iz praktičnog modula:"
     certificate:
         1: Čestitamo! Položili ste tečaj <i>%course%</i>!

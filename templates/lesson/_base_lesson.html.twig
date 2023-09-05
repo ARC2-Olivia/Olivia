@@ -18,7 +18,11 @@
                     {% if lesson.course.lessons is not empty %}
                         <div class="course-header-details-item">
                             {{ mdi('book-open-page-variant-outline') }}
-                            <span>{{ lesson.course.lessons|length }} {{ 'course.extra.lessons'|trans }}</span>
+                            <span>{{ 'course.extra.lessons'|trans({'%count%': lesson.course.countNonQuizLessons}) }}</span>
+                        </div>
+                        <div class="course-header-details-item">
+                            {{ mdi('clipboard-list-outline') }}
+                            <span>{{ 'course.extra.quizzes'|trans({'%count%': lesson.course.countQuizLessons}) }}</span>
                         </div>
                     {% endif %}
                 </div>
