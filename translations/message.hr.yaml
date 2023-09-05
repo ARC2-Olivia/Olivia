@@ -72,6 +72,7 @@ warning:
         remove: Uklonjen je instruktor <i>%instructor%</i> iz tečaja <i>%course%</i>.
     lesson:
         delete: Izbrisana je lekcija <i>%lesson%</i> tečaja <i>%course%</i>.
+        worseQuizResult: Rezultati kviza se nisu spremili jer ste na prethodnom pokušaju rješavanja postigli bolji rezultat od novijeg pokušaja.
     quizQuestion:
         delete: Izbrisano je pitanje kviza <i>%lesson%</i>.
     practicalSubmodule:

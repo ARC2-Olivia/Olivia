@@ -363,6 +363,8 @@ class LessonController extends BaseController
     {
         /** @var User $user */
         $user = $this->getUser();
+        $oldPercentage = $this->lessonService->getQuizPercentage($lesson, $user);
+
 
         $csrfToken = $request->request->get('_csrf_token');
         if ($csrfToken === null || !$this->isCsrfTokenValid('quiz.finish', $csrfToken)) {
@@ -395,7 +397,6 @@ class LessonController extends BaseController
                     $this->em->persist($quizQuestionAnswer);
                 }
             }
-            $this->em->flush();
 
             $sum = 0;
             $questionCount = 0;
@@ -405,18 +406,26 @@ class LessonController extends BaseController
             }
             $percentage = $sum / $questionCount;
 
-            $lessonCompletion = $this->em->getRepository(LessonCompletion::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
-            $persistCompletion = false;
-            if ($lessonCompletion === null) {
-                $lessonCompletion = (new LessonCompletion())->setLesson($lesson)->setUser($this->getUser());
-                $persistCompletion = true;
-            }
-            $lessonCompletion->setCompleted($percentage >= $lessonItemQuiz->getPassingPercentage());
-            if ($persistCompletion) $this->em->persist($lessonCompletion);
-            $this->em->flush();
+            if ($percentage < $oldPercentage) {
+                $this->addFlash('warning', $this->translator->trans('warning.lesson.worseQuizResult', [], 'message'));
+            } else {
+                $this->em->flush();
 
-            $this->regrade($lesson->getCourse(), $user);
-            $this->addFlash('success', $this->translator->trans('success.quiz.finish', ['%quizName%' => $lesson->getName()], 'message'));
+                $lessonCompletion = $this->em->getRepository(LessonCompletion::class)->findOneBy(['lesson' => $lesson, 'user' => $this->getUser()]);
+                $persistCompletion = false;
+                if ($lessonCompletion === null) {
+                    $lessonCompletion = (new LessonCompletion())->setLesson($lesson)->setUser($this->getUser());
+                    $persistCompletion = true;
+                }
+                $lessonCompletion->setCompleted($percentage >= $lessonItemQuiz->getPassingPercentage());
+                if ($persistCompletion) {
+                    $this->em->persist($lessonCompletion);
+                    $this->em->flush();
+                }
+
+                $this->regrade($lesson->getCourse(), $user);
+                $this->addFlash('success', $this->translator->trans('success.quiz.finish', ['%quizName%' => $lesson->getName()], 'message'));
+            }
         }
 
         return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
