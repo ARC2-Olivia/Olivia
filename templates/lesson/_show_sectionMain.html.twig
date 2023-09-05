@@ -6,23 +6,38 @@
     <div class="d-flex justify-content-between align-items-center">
         <h2 class="lesson-section-main-caption">{{ lesson.name }}</h2>
         {% if is_user() and lesson.type != constant('TYPE_QUIZ', lesson) %}
-            <button type="button" class="btn btn-theme-white bg-blue btn-round" data-modal-open="#notes-modal">{{ mdi('text-long') }}</button>
-            <div class="modal" id="notes-modal">
-                <div class="modal-dialog">
-                    <div class="lesson-notes">
-                        <div>
-                            <h2 class="lesson-notes-caption">{{ 'lesson.extra.notes'|trans({'%lesson%': lesson.name}) }}</h2>
-                            <small>{{ 'lesson.extra.notesVisibility'|trans }}</small>
-                        </div>
-                        <label class="lesson-notes-content">
-                            <textarea id="notes">{% if note is not null %}{{ note.text|raw }}{% endif %}</textarea>
-                        </label>
-                        <div class="lesson-notes-actions">
-                            <button type="button" class="btn btn-link" data-modal-close="#notes-modal">{{ 'common.cancel'|trans }}</button>
-                            <button id="save-notes" type="button" class="btn btn-theme-white bg-blue" data-path="{{ path('note_update') }}" data-lesson="{{ lesson.id }}"
-                                    data-user="{{ app.user.id }}">
-                                {{ 'common.save'|trans }}
-                            </button>
+            <div class="d-flex gap-3">
+                {% if currentLessonInfo is not null %}
+                    {% set completionClassAddition = currentLessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-orange-outline' %}
+                    {% set completionText = currentLessonInfo.completed ? 'lesson.completion.done'|trans : 'lesson.completion.undone'|trans %}
+                    <button type="button"
+                            class="completion-marker-outer btn {{ completionClassAddition }}"
+                            data-path="{{ currentLessonInfo.toggleUrl }}"
+                            data-text-done="{{ 'lesson.completion.done'|trans }}"
+                            data-text-undone="{{ 'lesson.completion.undone'|trans }}"
+                    >
+                        {{ completionText }}
+                    </button>
+                {% endif %}
+
+                <button type="button" class="btn btn-theme-white bg-blue btn-round" data-modal-open="#notes-modal">{{ mdi('text-long') }}</button>
+                <div class="modal" id="notes-modal">
+                    <div class="modal-dialog">
+                        <div class="lesson-notes">
+                            <div>
+                                <h2 class="lesson-notes-caption">{{ 'lesson.extra.notes'|trans({'%lesson%': lesson.name}) }}</h2>
+                                <small>{{ 'lesson.extra.notesVisibility'|trans }}</small>
+                            </div>
+                            <label class="lesson-notes-content">
+                                <textarea id="notes">{% if note is not null %}{{ note.text|raw }}{% endif %}</textarea>
+                            </label>
+                            <div class="lesson-notes-actions">
+                                <button type="button" class="btn btn-link" data-modal-close="#notes-modal">{{ 'common.cancel'|trans }}</button>
+                                <button id="save-notes" type="button" class="btn btn-theme-white bg-blue" data-path="{{ path('note_update') }}" data-lesson="{{ lesson.id }}"
+                                        data-user="{{ app.user.id }}">
+                                    {{ 'common.save'|trans }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 window.addEventListener("load", () => {
 
-    document.querySelectorAll(".completion-marker").forEach((button) => {
+    document.querySelectorAll(".completion-marker-outer").forEach((button) => {
         button.addEventListener("click", function() {
             if ("path" in this.dataset && "textDone" in this.dataset && "textUndone" in this.dataset) {
                 sendToggleCompletionRequest(this);

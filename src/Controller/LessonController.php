@@ -184,6 +184,14 @@ class LessonController extends BaseController
         $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $user);
         $previousLesson = $lessonRepository->findPreviousLesson($lesson);
         $nextLesson = $lessonRepository->findNextLesson($lesson);
+
+        $currentLessonInfo = null;
+        foreach ($lessonsInfo as $lessonInfo) {
+            if ($lesson->getId() === $lessonInfo['lesson']->getId()) {
+                $currentLessonInfo = $lessonInfo;
+            }
+        }
+
         return $this->render('lesson/show.html.twig', [
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
@@ -191,6 +199,7 @@ class LessonController extends BaseController
             'lessonsInfo' => $lessonsInfo,
             'previousLesson' => $previousLesson,
             'nextLesson' => $nextLesson,
+            'currentLessonInfo' => $currentLessonInfo,
             'note' => $note,
             'quizPercentage' => !$this->isGranted('ROLE_MODERATOR') ? $this->lessonService->getQuizPercentage($lesson, $user) : null,
             'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)

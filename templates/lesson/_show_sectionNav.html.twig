@@ -15,7 +15,7 @@
                             {{ mdi('trophy-variant', 'lesson-section-navigation-item-completion-icon') }}
                         </div>
                     {% else %}
-                        <button class="completion-marker btn btn-round {{ lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-gray-to-green' }} flex-shrink-0"
+                        <button class="completion-marker-inner btn btn-round {{ lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-gray-to-green' }} flex-shrink-0"
                                 data-path="{{ lessonInfo.toggleUrl }}"
                         >
                             {{ mdi('check', 'lesson-section-navigation-item-completion-icon') }}
