@@ -23,7 +23,7 @@
                     {% endif %}
                 </div>
             </div>
-            {% if course.image is not empty %}
+            {% if lesson.course.image is not empty %}
                 <div class="col-12 col-md-3 d-none d-md-block">
                     <div class="course-header-image" style="background-image: url('{{ path('file_fetch_course_image', {'course': lesson.course.id}) }}')"></div>
                 </div>
