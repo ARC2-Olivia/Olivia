@@ -39,7 +39,7 @@ common:
 
 button:
     details: Detalji
-    startNow: Započni
+    startNow: Upiši
     loginToEnroll: Prijavite se za upis
     results: Rezultati
     lessons: Lekcije

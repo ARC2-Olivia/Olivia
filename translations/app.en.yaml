@@ -39,7 +39,7 @@ common:
 
 button:
     details: Details
-    startNow: Start now
+    startNow: Enroll now
     loginToEnroll: Login to enroll
     results: Results
     lessons: Lessons
