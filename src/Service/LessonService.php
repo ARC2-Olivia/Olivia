@@ -22,21 +22,32 @@ class LessonService
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function getLessonsInfo(Course $course, User $user): array
+    public function getLessonsInfo(Course $course, ?User $user = null): array
     {
-        $lessonRepository = $this->em->getRepository(Lesson::class);
-        $lessonCompletionRepository = $this->em->getRepository(LessonCompletion::class);
-        $lessons = $lessonRepository->findAllForCourseSortedByPosition($course);
         $lessonsInfo = [];
-        foreach ($lessons as $lesson) {
-            $lessonCompletion = $lessonCompletionRepository->findOneBy(['lesson' => $lesson, 'user' => $user]);
-            $lessonsInfo[] = [
-                'lesson' => $lesson,
-                'completed' => $lessonCompletion !== null ? $lessonCompletion->isCompleted() : false,
-                'showUrl' => $this->urlGenerator->generate('lesson_show', ['lesson' => $lesson->getId()]),
-                'toggleUrl' => $this->urlGenerator->generate('lesson_toggle_completed', ['lesson' => $lesson->getId()])
-            ];
+        $lessonRepository = $this->em->getRepository(Lesson::class);
+        $lessons = $lessonRepository->findAllForCourseSortedByPosition($course);
+
+        if (null !== $user) {
+            $lessonCompletionRepository = $this->em->getRepository(LessonCompletion::class);
+            foreach ($lessons as $lesson) {
+                $lessonCompletion = $lessonCompletionRepository->findOneBy(['lesson' => $lesson, 'user' => $user]);
+                $lessonsInfo[] = [
+                    'lesson' => $lesson,
+                    'completed' => $lessonCompletion !== null ? $lessonCompletion->isCompleted() : false,
+                    'showUrl' => $this->urlGenerator->generate('lesson_show', ['lesson' => $lesson->getId()]),
+                    'toggleUrl' => $this->urlGenerator->generate('lesson_toggle_completed', ['lesson' => $lesson->getId()])
+                ];
+            }
+        } else {
+            foreach ($lessons as $lesson) {
+                $lessonsInfo[] = [
+                    'lesson' => $lesson,
+                    'showUrl' => $this->urlGenerator->generate('lesson_show', ['lesson' => $lesson->getId()]),
+                ];
+            }
         }
+
         return $lessonsInfo;
     }
 
