@@ -7,7 +7,11 @@
     <div class="container">
         <div class="row gx-2">
             <div class="col-12 col-md-9 pt-5 pb-3">
-                <h1 class="course-header-name">{{ lesson.course.name }}</h1>
+                <h1 class="course-header-name">
+                    <a href="{{ path('course_index') }}">{{ 'nav.training'|trans }}</a>
+                    {{ mdi('chevron-right') }}
+                    <span>{{ lesson.course.name }}</span>
+                </h1>
                 <div class="course-header-details">
                     {% if lesson.course.estimatedWorkload is not empty %}
                         <div class="course-header-details-item">

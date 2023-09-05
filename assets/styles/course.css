@@ -44,7 +44,25 @@
     font-weight: 500;
     font-size: 2rem;
     margin-bottom: 2rem;
+    display: flex;
+    column-gap: 8px;
+    align-items: center;
 }
+
+.course-header-name > :not(:last-child) {
+    opacity: 0.4;
+    text-decoration: none;
+    color: unset;
+}
+
+.course-header-name > a:not(:last-child):hover {
+    opacity: 1;
+}
+
+.course-header-name > svg {
+    width: 2rem;
+}
+
 
 .course-header-details {
     display: flex;
