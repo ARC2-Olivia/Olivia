@@ -378,7 +378,7 @@ lesson:
         video: Video
         quiz: Kviz
         moderation: Moderiranje
-        notes: Privatne bilješke
+        notes: "Privatne bilješke za lekciju: %lesson%"
         notesVisibility: Vidljive samo vama
 
 quizQuestion:

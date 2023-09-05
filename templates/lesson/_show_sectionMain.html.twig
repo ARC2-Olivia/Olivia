@@ -11,7 +11,7 @@
                 <div class="modal-dialog">
                     <div class="lesson-notes">
                         <div>
-                            <h2 class="lesson-notes-caption">{{ 'lesson.extra.notes'|trans }}</h2>
+                            <h2 class="lesson-notes-caption">{{ 'lesson.extra.notes'|trans({'%lesson%': lesson.name}) }}</h2>
                             <small>{{ 'lesson.extra.notesVisibility'|trans }}</small>
                         </div>
                         <label class="lesson-notes-content">

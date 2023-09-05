@@ -378,7 +378,7 @@ lesson:
         video: Video
         quiz: Quiz
         moderation: Moderation
-        notes: Private notes
+        notes: "Private notes on lesson: %lesson%"
         notesVisibility: Visible only to you
 
 quizQuestion:
