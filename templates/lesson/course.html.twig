@@ -34,7 +34,7 @@
                         <p class="course-free">{{ 'extra.free'|trans }}</p>
                     </div>
                     <div class="card-actions">
-                        <a href="{{ path('course_enroll', {'course': course.id}) }}" class="btn btn-theme-white bg-orange w-100 py-4" onclick="return confirm('You sure?')">{{ 'button.startNow'|trans }}</a>
+                        <a href="{{ path('course_enroll', {'course': course.id}) }}" class="btn btn-theme-white bg-orange w-100 py-4" onclick='return confirm("{{ 'course.enroll.message'|trans({'%course%': course.name}) }}")'>{{ 'button.startNow'|trans }}</a>
                     </div>
                 {% else %}
                     <div class="card-text">

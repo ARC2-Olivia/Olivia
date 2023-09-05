@@ -347,6 +347,8 @@ course:
         2: Kliknite na gumb <i>Preuzmite potvrdu</i> kako biste preuzeli potvrdu za položeni tečaju.
         button: Preuzmite potvrdu
         notPass: Za dobivanje certifikata, trebate ostvariti prolazne bodove na svim kvizovima.
+    enroll:
+        message: Jeste li sigurni da se želite upisati na tečaj '%course%'?
 
 lesson:
     type:

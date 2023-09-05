@@ -347,6 +347,8 @@ course:
         2: Click on the <i>Download certificate</i> button to download the certificate of completion.
         button: Download certificate
         notPass: To receive a certificate, you must receive passing points on all the quizzes.
+    enroll:
+        message: Are you sure you want to enroll to course '%course%'?
 
 lesson:
     type:
