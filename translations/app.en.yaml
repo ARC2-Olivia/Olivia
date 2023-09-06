@@ -337,6 +337,7 @@ course:
         lessons: Lessons
         edit: Edit
         certificate: Certificate
+        participants: Participants
     extra:
         noInstructors: There are currently no defined instructors for this course.
         lessons: "{0} %count% lessons|{1} %count% lesson|[2,+Inf[ %count% lessons"
@@ -349,6 +350,16 @@ course:
         notPass: To receive a certificate, you must receive passing points on all the quizzes.
     enroll:
         message: Are you sure you want to enroll to course '%course%'?
+    participants:
+        label:
+            user: User
+            email: E-mail
+            enrolledAt: Enrolled at
+            completion: Completion
+            score: Score
+        completion:
+            completed: Completed
+            notCompleted: Not completed
 
 lesson:
     type:

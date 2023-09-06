@@ -168,6 +168,14 @@ class Course extends TranslatableEntity
         return new ArrayCollection($iterator->getArrayCopy());
     }
 
+    /**
+     * @return Collection<int, Lesson>
+     */
+    public function getLessonsOfType(string $lessonType): Collection
+    {
+        return $this->lessons->filter(function (Lesson $l) use ($lessonType) { return $lessonType === $l->getType(); });
+    }
+
     public function addLesson(Lesson $lesson): self
     {
         if (!$this->lessons->contains($lesson)) {

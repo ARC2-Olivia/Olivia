@@ -6,14 +6,17 @@ use App\Entity\Course;
 use App\Entity\Instructor;
 use App\Entity\Lesson;
 use App\Entity\LessonItemFile;
+use App\Entity\LessonItemQuiz;
 use App\Entity\LessonItemText;
 use App\Entity\PracticalSubmodule;
+use App\Entity\QuizQuestion;
 use App\Entity\User;
 use App\Form\CourseInstructorType;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
 use App\Repository\InstructorRepository;
 use App\Service\EnrollmentService;
+use App\Service\LessonService;
 use App\Service\NavigationService;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -155,6 +158,44 @@ class CourseController extends BaseController
         return $this->render('course/certificate.html.twig', [
             'course' => $course,
             'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_CERTIFICATE)
+        ]);
+    }
+
+    #[Route("/participants/{course}", name: "participants")]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function participants(Course $course, LessonService $lessonService): Response
+    {
+        $maxScore = 0;
+        $quizLessons = $course->getLessonsOfType(Lesson::TYPE_QUIZ);
+        $lessonItemQuizRepository = $this->em->getRepository(LessonItemQuiz::class);
+        foreach ($quizLessons as $quizLesson) {
+            /** @var LessonItemQuiz $quiz */
+            $quiz = $lessonItemQuizRepository->findOneBy(['lesson' => $quizLesson]);
+            if (null !== $quiz) {
+                $maxScore += $quiz->getQuizQuestions()->count();
+            }
+        }
+
+        $participants = [];
+        foreach ($course->getEnrollments() as $enrollment) {
+            $score = 0;
+            foreach ($quizLessons as $quizLesson) {
+                $score += $lessonService->getQuizScore($quizLesson, $enrollment->getUser());
+            }
+            $participants[] = [
+                'id' => $enrollment->getUser()->getId(),
+                'user' => $enrollment->getUser()->getFirstName().' '.$enrollment->getUser()->getLastName(),
+                'email' => $enrollment->getUser()->getEmail(),
+                'enrolledAt' => $enrollment->getEnrolledAt()->format('d.m.Y.'),
+                'completion' => $enrollment->isPassed() ? 'completed' : 'notCompleted',
+                'score' => sprintf('%d/%d', $score, $maxScore)
+            ];
+        }
+
+        return $this->render('course/participants.html.twig', [
+            'course' => $course,
+            'participants' => $participants,
+            'navigation' => $this->navigationService->forCourse($course, NavigationService::COURSE_PARTICIPANTS)
         ]);
     }
 

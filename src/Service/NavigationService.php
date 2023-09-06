@@ -11,10 +11,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NavigationService
 {
-    public const COURSE_OVERVIEW    = 0;
-    public const COURSE_LESSONS     = 1;
-    public const COURSE_EDIT        = 2;
-    public const COURSE_CERTIFICATE = 3;
+    public const COURSE_OVERVIEW     = 0;
+    public const COURSE_LESSONS      = 1;
+    public const COURSE_EDIT         = 2;
+    public const COURSE_CERTIFICATE  = 3;
+    public const COURSE_PARTICIPANTS = 4;
 
     public const EVALUATION_OVERVIEW             = 0;
     public const EVALUATION_EVALUATE             = 1;
@@ -71,6 +72,14 @@ class NavigationService
                 'text' => $this->translator->trans('course.nav.certificate', [], 'app') . $addition,
                 'path' => $this->router->generate('course_certificate', ['course' => $course->getId()]),
                 'active' => $activeNav === self::COURSE_CERTIFICATE
+            ];
+        }
+
+        if ($this->security->isGranted('ROLE_MODERATOR')) {
+            $navigation[] = [
+                'text' => $this->translator->trans('course.nav.participants', [], 'app'),
+                'path' => $this->router->generate('course_participants', ['course' => $course->getId()]),
+                'active' => $activeNav === self::COURSE_PARTICIPANTS
             ];
         }
 

@@ -76,4 +76,23 @@ class LessonService
 
         return $count > 0 ? $sum / $count : null;
     }
+
+    public function getQuizScore(Lesson $lesson, User $user): ?int
+    {
+        if ($lesson->getType() !== Lesson::TYPE_QUIZ) return null;
+
+        $lessonItemQuiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
+        if ($lessonItemQuiz === null) return null;
+
+        $quizQuestionAnswerRepository = $this->em->getRepository(QuizQuestionAnswer::class);
+        $score = 0;
+        foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
+            $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['question' => $quizQuestion, 'user' => $user]);
+            if ($quizQuestionAnswer !== null && $quizQuestionAnswer->getAnswer() === $quizQuestion->getCorrectAnswer()) {
+                $score++;
+            }
+        }
+
+        return $score;
+    }
 }

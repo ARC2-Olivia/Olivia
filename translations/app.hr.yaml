@@ -337,6 +337,7 @@ course:
         lessons: Lekcije
         edit: Uređivanje
         certificate: Potvrda
+        participants: Sudionici
     extra:
         noInstructors: Trenutno nema definiranih instruktora za ovaj tečaj.
         lessons: "{0,1} %count% lekcija|[2-4] %count% lekcije|[5,+Inf[ %count% lekcija"
@@ -349,6 +350,16 @@ course:
         notPass: Za dobivanje certifikata, trebate ostvariti prolazne bodove na svim kvizovima.
     enroll:
         message: Jeste li sigurni da se želite upisati na tečaj '%course%'?
+    participants:
+        label:
+            user: Korisnik
+            email: E-mail
+            enrolledAt: Datum upisa
+            completion: Stanje završenosti
+            score: Bodovi
+        completion:
+            completed: Završeno
+            notCompleted: Nije završeno
 
 lesson:
     type:
