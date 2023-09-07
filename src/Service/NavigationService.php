@@ -17,18 +17,20 @@ class NavigationService
     public const COURSE_CERTIFICATE  = 3;
     public const COURSE_PARTICIPANTS = 4;
 
-    public const EVALUATION_OVERVIEW             = 0;
-    public const EVALUATION_EVALUATE             = 1;
-    public const EVALUATION_EDIT                 = 2;
-    public const EVALUATION_EXTRA_RESULTS        = 3;
-    public const EVALUATION_EXTRA_NEW_QUESTION   = 4;
-    public const EVALUATION_EXTRA_EDIT_QUESTION  = 5;
-    public const EVALUATION_EXTRA_NEW_ANSWER     = 6;
-    public const EVALUATION_EXTRA_EDIT_ANSWER    = 7;
-    public const EVALUATION_EXTRA_NEW_EVALUATOR  = 8;
-    public const EVALUATION_EXTRA_EDIT_EVALUATOR = 9;
-    public const EVALUATION_EXTRA_NEW_PAGE       = 10;
-    public const EVALUATION_EXTRA_EDIT_PAGE      = 11;
+    public const EVALUATION_OVERVIEW                   = 0;
+    public const EVALUATION_EVALUATE                   = 1;
+    public const EVALUATION_EDIT                       = 2;
+    public const EVALUATION_EXTRA_RESULTS              = 3;
+    public const EVALUATION_EXTRA_NEW_QUESTION         = 4;
+    public const EVALUATION_EXTRA_EDIT_QUESTION        = 5;
+    public const EVALUATION_EXTRA_NEW_ANSWER           = 6;
+    public const EVALUATION_EXTRA_EDIT_ANSWER          = 7;
+    public const EVALUATION_EXTRA_NEW_EVALUATOR        = 8;
+    public const EVALUATION_EXTRA_EDIT_EVALUATOR       = 9;
+    public const EVALUATION_EXTRA_NEW_PAGE             = 10;
+    public const EVALUATION_EXTRA_EDIT_PAGE            = 11;
+    public const EVALUATION_EXTRA_NEW_PROCESSOR_GROUP  = 12;
+    public const EVALUATION_EXTRA_EDIT_PROCESSOR_GROUP = 13;
 
     private ?TranslatorInterface $translator = null;
     private ?RouterInterface $router = null;
@@ -114,14 +116,16 @@ class NavigationService
             ];
 
             switch ($activeNav) {
-                case self::EVALUATION_EXTRA_NEW_QUESTION:   $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.question', [], 'app'), 'active' => true];   break;
-                case self::EVALUATION_EXTRA_EDIT_QUESTION:  $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.question', [], 'app'), 'active' => true];  break;
-                case self::EVALUATION_EXTRA_NEW_ANSWER:     $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.answer', [], 'app'), 'active' => true];     break;
-                case self::EVALUATION_EXTRA_EDIT_ANSWER:    $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.answer', [], 'app'), 'active' => true];    break;
-                case self::EVALUATION_EXTRA_NEW_EVALUATOR:  $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.evaluator', [], 'app'), 'active' => true];  break;
-                case self::EVALUATION_EXTRA_EDIT_EVALUATOR: $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.evaluator', [], 'app'), 'active' => true]; break;
-                case self::EVALUATION_EXTRA_NEW_PAGE:       $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.page', [], 'app'), 'active' => true];       break;
-                case self::EVALUATION_EXTRA_EDIT_PAGE:      $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.page', [], 'app'), 'active' => true];      break;
+                case self::EVALUATION_EXTRA_NEW_QUESTION:         $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.question', [], 'app'), 'active' => true];        break;
+                case self::EVALUATION_EXTRA_EDIT_QUESTION:        $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.question', [], 'app'), 'active' => true];       break;
+                case self::EVALUATION_EXTRA_NEW_ANSWER:           $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.answer', [], 'app'), 'active' => true];          break;
+                case self::EVALUATION_EXTRA_EDIT_ANSWER:          $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.answer', [], 'app'), 'active' => true];         break;
+                case self::EVALUATION_EXTRA_NEW_EVALUATOR:        $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.evaluator', [], 'app'), 'active' => true];       break;
+                case self::EVALUATION_EXTRA_EDIT_EVALUATOR:       $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.evaluator', [], 'app'), 'active' => true];      break;
+                case self::EVALUATION_EXTRA_NEW_PAGE:             $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.page', [], 'app'), 'active' => true];            break;
+                case self::EVALUATION_EXTRA_EDIT_PAGE:            $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.page', [], 'app'), 'active' => true];           break;
+                case self::EVALUATION_EXTRA_NEW_PROCESSOR_GROUP:  $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.new.processorGroup', [], 'app'), 'active' => true];  break;
+                case self::EVALUATION_EXTRA_EDIT_PROCESSOR_GROUP: $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.edit.processorGroup', [], 'app'), 'active' => true]; break;
             }
         }
 

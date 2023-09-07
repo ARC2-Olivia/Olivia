@@ -7,9 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorGroupRepository::class)]
-class PracticalSubmoduleProcessorGroup
+class PracticalSubmoduleProcessorGroup extends TranslatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,17 +24,29 @@ class PracticalSubmoduleProcessorGroup
     private ?PracticalSubmodule $practicalSubmodule = null;
 
     #[ORM\OneToMany(mappedBy: 'practicalSubmoduleProcessorGroup', targetEntity: PracticalSubmoduleProcessor::class)]
-    private Collection $practicalSubmoduleProcessor;
+    private Collection $practicalSubmoduleProcessors;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Gedmo\Translatable]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $position = null;
 
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, $payload): void
+    {
+        foreach ($this->practicalSubmoduleProcessors as $practicalSubmoduleProcessor) {
+            if ($practicalSubmoduleProcessor->getPracticalSubmodule()->getId() !== $this->practicalSubmodule->getId()) {
+                $context->buildViolation('error.practicalSubmoduleProcessorGroup.submoduleMismatch')->atPath('practicalSubmoduleProcessors')->addViolation();
+                break;
+            }
+        }
+    }
+
     public function __construct()
     {
-        $this->practicalSubmoduleProcessor = new ArrayCollection();
+        $this->practicalSubmoduleProcessors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -54,15 +69,15 @@ class PracticalSubmoduleProcessorGroup
     /**
      * @return Collection<int, PracticalSubmoduleProcessor>
      */
-    public function getPracticalSubmoduleProcessor(): Collection
+    public function getPracticalSubmoduleProcessors(): Collection
     {
-        return $this->practicalSubmoduleProcessor;
+        return $this->practicalSubmoduleProcessors;
     }
 
     public function addPracticalSubmoduleProcessor(PracticalSubmoduleProcessor $practicalSubmoduleProcessor): self
     {
-        if (!$this->practicalSubmoduleProcessor->contains($practicalSubmoduleProcessor)) {
-            $this->practicalSubmoduleProcessor->add($practicalSubmoduleProcessor);
+        if (!$this->practicalSubmoduleProcessors->contains($practicalSubmoduleProcessor)) {
+            $this->practicalSubmoduleProcessors->add($practicalSubmoduleProcessor);
             $practicalSubmoduleProcessor->setPracticalSubmoduleProcessorGroup($this);
         }
 
@@ -71,7 +86,7 @@ class PracticalSubmoduleProcessorGroup
 
     public function removePracticalSubmoduleProcessor(PracticalSubmoduleProcessor $practicalSubmoduleProcessor): self
     {
-        if ($this->practicalSubmoduleProcessor->removeElement($practicalSubmoduleProcessor)) {
+        if ($this->practicalSubmoduleProcessors->removeElement($practicalSubmoduleProcessor)) {
             // set the owning side to null (unless already changed)
             if ($practicalSubmoduleProcessor->getPracticalSubmoduleProcessorGroup() === $this) {
                 $practicalSubmoduleProcessor->setPracticalSubmoduleProcessorGroup(null);

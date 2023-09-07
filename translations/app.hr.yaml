@@ -262,6 +262,11 @@ form:
                 description: Opis
                 descriptionAlt: Opis (drugi jezik)
                 questions: Pitanja
+        practicalSubmoduleProcessorGroup:
+            label:
+                title: Naslov
+                titleAlt: Naslov (drugi jezik)
+                processors: Procesori
         termsOfService:
             label:
                 id: ID
@@ -425,11 +430,13 @@ practicalSubmodule:
             evaluator: Uređivanje procesora
             answer: Uređivanje odgovora
             page: Uredđivanje stranice
+            processorGroup: Uređivanje procesorske grupe
         new:
             question: Novo pitanje
             evaluator: Novi procesor
             answer: Novi odgovor
             page: Nova stranica
+            processorGroup: Nova procesorska grupa
     modeOfOperation:
         simple: Jednostavno
         advanced: Napredno

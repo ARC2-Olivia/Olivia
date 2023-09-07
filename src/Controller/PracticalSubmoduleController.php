@@ -15,10 +15,12 @@ use App\Exception\PSImport\MissingTaskOrderKeyException;
 use App\Exception\PSImport\WrongFirstTaskTypeException;
 use App\Form\BasicFileUploadType;
 use App\Form\PracticalSubmodulePageType;
+use App\Form\PracticalSubmoduleProcessorGroupType;
 use App\Form\PracticalSubmoduleProcessorType;
 use App\Form\PracticalSubmoduleQuestionType;
 use App\Form\PracticalSubmoduleType;
 use App\Repository\PracticalSubmodulePageRepository;
+use App\Repository\PracticalSubmoduleProcessorGroupRepository;
 use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Repository\PracticalSubmoduleRepository;
 use App\Service\PracticalSubmoduleService;
@@ -294,6 +296,42 @@ class PracticalSubmoduleController extends BaseController
         ]);
     }
 
+    #[Route("/evaluate/{practicalSubmodule}/add-processor-group", name: "add_processor_group")]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function addProcessorGroup(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleProcessorGroupRepository $practicalSubmoduleProcessorGroupRepository): Response
+    {
+        $processorGroup = (new PracticalSubmoduleProcessorGroup())->setPracticalSubmodule($practicalSubmodule);
+        $form = $this->createForm(PracticalSubmoduleProcessorGroupType::class, $processorGroup, ['include_translatable_fields' => true]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $processorGroup->setPosition($practicalSubmoduleProcessorGroupRepository->maxPositionForSubmodule($practicalSubmodule) + 1);
+            $this->em->persist($processorGroup);
+
+            /** @var PracticalSubmoduleProcessor[] $processors */
+            $processors = $form->get('processors')->getData();
+            if (null !== $processors) {
+                foreach ($processors as $processor) {
+                    $processor->setPracticalSubmoduleProcessorGroup($processorGroup);
+                }
+            }
+
+            $this->em->flush();
+            $this->processPracticalSubmoduleProcessorGroupTranslation($processorGroup, $form);
+            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleProcessorGroup.new', [], 'message'));
+            return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
+        }
+
+        return $this->render('evaluation/processorGroup/new.html.twig', [
+            'evaluation' => $practicalSubmodule,
+            'form' => $form->createView(),
+            'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_NEW_PROCESSOR_GROUP)
+        ]);
+    }
+
     #[Route("/evaluate/{practicalSubmodule}/assessment", name: "start_assessment")]
     #[IsGranted("ROLE_USER")]
     public function startAssessment(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
@@ -453,6 +491,21 @@ class PracticalSubmoduleController extends BaseController
         $descriptionAlt = $form->get('descriptionAlt')->getData();
         if ($descriptionAlt !== null && trim($descriptionAlt) !== '') {
             $translationRepository->translate($practicalSubmodulePage, 'description', $localeAlt, trim($descriptionAlt));
+            $translated = true;
+        }
+
+        if ($translated) $this->em->flush();
+    }
+
+    private function processPracticalSubmoduleProcessorGroupTranslation(PracticalSubmoduleProcessorGroup $processorGroup, \Symfony\Component\Form\FormInterface $form)
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
+
+        $titleAlt = $form->get('titleAlt')->getData();
+        if ($titleAlt !== null && trim($titleAlt) !== '') {
+            $translationRepository->translate($processorGroup, 'title', $localeAlt, trim($titleAlt));
             $translated = true;
         }
 

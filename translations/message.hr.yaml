@@ -41,6 +41,9 @@ success:
     practicalSubmodulePage:
         new: Nova stranica je dodana u podmodul.
         edit: Stranice je uređena.
+    practicalSubmoduleProcessorGroup:
+        new: Nova procesorska grupa je dodana u podmodul.
+        edit: Procesorska grupaje uređena.
     termsOfService:
         new: Stvoreni su novi Uvjeti pružanja usluge. Korisnici će trebati prihvatiti nove uvjete kako bi mogli koristiti aplikaciju.
         edit: Uvjeti korištenja usluge <i>%termsOfService%</i> su ažurirani.
@@ -210,6 +213,9 @@ error:
     practicalSubmodulePage:
         questions: Potrebno je dodati barem jedno pitanje u stranicu.
         submoduleMismatch: Jedno od odabranih pitanja ne pripada istom podmodulu kojem pripada stranica.
+    practicalSubmoduleProcessorGroup:
+        questions: Potrebno je dodati barem jedan procesor u grupu.
+        submoduleMismatch: Jedno od odabranih procesora ne pripada istom podmodulu kojem pripada grupa.
     termsOfService:
         content: Sadržaj uvjeta pružanja usluge ne smije biti prazan.
         contentAlt: Prijevod sadržaja uvjeta pružanja usluge ne smije biti prazan.

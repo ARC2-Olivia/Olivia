@@ -41,6 +41,9 @@ success:
     practicalSubmodulePage:
         new: A new page has been added to the submodule.
         edit: Page has been updated
+    practicalSubmoduleProcessorGroup:
+        new: A new processor group has been added to the submodule.
+        edit: Processor group has been updated;
     termsOfService:
         new: A new terms of service have been created. Users will have to accept the terms of service in order to use the application.
         edit: Terms of service <i>%termsOfService%</i> have been edited.
@@ -210,6 +213,9 @@ error:
     practicalSubmodulePage:
         questions: You have to add at least one question to the page.
         submoduleMismatch: One of the selected questions doesn't belong to the same submodule as the page.
+    practicalSubmoduleProcessorGroup:
+        questions: You have to add at least one processor to the group.
+        submoduleMismatch: One of the selected processors doesn't belong to the same submodule as the group.
     termsOfService:
         content: Content of the terms of service must not be empty.
         contentAlt: Translation of the content of the terms of service must not be empty.

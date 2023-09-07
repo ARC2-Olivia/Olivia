@@ -11,5 +11,5 @@
     <p>{{ 'practicalSubmoduleProcessorGroup.empty'|trans }}</p>
 {% endif %}
 <div class="text-end">
-    <a href="#" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'practicalSubmodule.extra.processorGroup'|trans }}</a>
+    <a href="{{ path('practical_submodule_add_processor_group', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'practicalSubmodule.extra.processorGroup'|trans }}</a>
 </div>

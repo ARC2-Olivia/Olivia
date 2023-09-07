@@ -262,6 +262,11 @@ form:
                 description: Description
                 descriptionAlt: Description (alternate language)
                 questions: Questions
+        practicalSubmoduleProcessorGroup:
+            label:
+                title: Title
+                titleAlt: Title (alternate language)
+                processors: Processors
         termsOfService:
             label:
                 id: ID
@@ -425,11 +430,13 @@ practicalSubmodule:
             evaluator: Edit processor
             answer: Edit answer
             page: Edit page
+            processorGroup: Edit processor group
         new:
             question: New question
             evaluator: New processor
             answer: New answer
             page: New page
+            processorGroup: New processor group
     modeOfOperation:
         simple: Simple
         advanced: Advanced
