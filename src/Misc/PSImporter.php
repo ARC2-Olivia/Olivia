@@ -135,7 +135,7 @@ class PSImporter
 
     private function doCreateQuestionTask(array $props): void
     {
-        if (false === $this->allKeysExist(['id', 'type', 'questionText', 'evaluable', 'position'], $props)) {
+        if (false === $this->allKeysExist(['id', 'type', 'questionText', 'evaluable', 'position', 'other', 'heading', 'disabled'], $props)) {
             return;
         }
 
@@ -147,6 +147,7 @@ class PSImporter
             ->setPosition($props['position'])
             ->setOtherEnabled($props['other'])
             ->setIsHeading($props['heading'])
+            ->setDisabled($props['disabled'])
         ;
         $this->em->persist($question);
         $this->questionMapping[$props['id']] = $question;
@@ -195,7 +196,7 @@ class PSImporter
 
     private function doCreateProcessorTask(array $props): void
     {
-        if (false === $this->allKeysExist(['id', 'type', 'name', 'included', 'position', 'impl'], $props)) {
+        if (false === $this->allKeysExist(['id', 'type', 'name', 'included', 'position', 'disabled', 'impl'], $props)) {
             return;
         }
 
@@ -205,6 +206,7 @@ class PSImporter
             ->setName($props['name'])
             ->setIncluded($props['included'])
             ->setPosition($props['position'])
+            ->setDisabled($props['disabled'])
         ;
         $this->em->persist($processor);
         $this->processorMapping[$props['id']] = $processor;

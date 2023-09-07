@@ -91,7 +91,8 @@ class PSExporter
                     'position' => $question->getPosition(),
                     'answers' => [],
                     'other' => $question->isOtherEnabled(),
-                    'heading' => $question->getIsHeading()
+                    'heading' => $question->getIsHeading(),
+                    'disabled' => $question->isDisabled()
                 ]
             ];
 
@@ -155,7 +156,8 @@ class PSExporter
                     'type' => $processor->getType(),
                     'name' => $processor->getName(),
                     'included' => $processor->isIncluded(),
-                    'position' => $processor->getPosition()
+                    'position' => $processor->getPosition(),
+                    'disabled' => $processor->isDisabled()
                 ]
             ];
 
