@@ -201,6 +201,7 @@ form:
                 description: Opis
                 descriptionAlt: Opis (drugi jezik)
                 paging: Straničenje
+                processorGroupingEnabled: Omogući grupiranje procesora
                 tags: Oznake odvojene zarezom
                 tagsAlt: Oznake odvojene zarezom (drugi jezik)
                 courses: Povezani tečajevi
@@ -439,6 +440,8 @@ practicalSubmodule:
         evaluators: Procesori
         page: Stranica
         pages: Stranice
+        processorGroup: Procesorska groupa
+        processorGroups: Procesorske grupe
         answer: Odgovor
         results:
             empty: Ništa za prikazati.
@@ -478,6 +481,10 @@ practicalSubmoduleProcessor:
 practicalSubmodulePage:
     empty: Nema definiranih stranica za ovaj podmodul.
     delete: Jeste li sigurni da želite obrisati ovu stranicu?
+
+practicalSubmoduleProcessorGroup:
+    empty: Nema definiranih procesorskih grupa za ovaj podmodul.
+    delete: Jeste li sigurni da želite obrisati ovu procesorsku grupu?
 
 practicalSubmoduleAssessment:
     message:

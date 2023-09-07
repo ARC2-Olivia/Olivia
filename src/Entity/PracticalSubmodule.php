@@ -57,12 +57,19 @@ class PracticalSubmodule extends TranslatableEntity
     #[Assert\Choice(choices: [PracticalSubmodule::MODE_OF_OPERATION_SIMPLE, PracticalSubmodule::MODE_OF_OPERATION_ADVANCED], message: 'error.practicalSubmodule.modeOfOperation')]
     private ?string $modeOfOperation = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $processorGroupingEnabled = null;
+
+    #[ORM\OneToMany(mappedBy: 'practicalSubmodule', targetEntity: PracticalSubmoduleProcessorGroup::class, orphanRemoval: true)]
+    private Collection $practicalSubmoduleProcessorGroups;
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
         $this->practicalSubmoduleProcessors = new ArrayCollection();
         $this->courses = new ArrayCollection();
         $this->practicalSubmodulePages = new ArrayCollection();
+        $this->practicalSubmoduleProcessorGroups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -264,5 +271,47 @@ class PracticalSubmodule extends TranslatableEntity
     public function isAdvancedModeOfOperation(): bool
     {
         return self::MODE_OF_OPERATION_ADVANCED === $this->modeOfOperation;
+    }
+
+    public function isProcessorGroupingEnabled(): ?bool
+    {
+        return $this->processorGroupingEnabled;
+    }
+
+    public function setProcessorGroupingEnabled(?bool $processorGroupingEnabled): self
+    {
+        $this->processorGroupingEnabled = $processorGroupingEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PracticalSubmoduleProcessorGroup>
+     */
+    public function getPracticalSubmoduleProcessorGroups(): Collection
+    {
+        return $this->practicalSubmoduleProcessorGroups;
+    }
+
+    public function addPracticalSubmoduleProcessorGroup(PracticalSubmoduleProcessorGroup $practicalSubmoduleProcessorGroup): self
+    {
+        if (!$this->practicalSubmoduleProcessorGroups->contains($practicalSubmoduleProcessorGroup)) {
+            $this->practicalSubmoduleProcessorGroups->add($practicalSubmoduleProcessorGroup);
+            $practicalSubmoduleProcessorGroup->setPracticalSubmodule($this);
+        }
+
+        return $this;
+    }
+
+    public function removePracticalSubmoduleProcessorGroup(PracticalSubmoduleProcessorGroup $practicalSubmoduleProcessorGroup): self
+    {
+        if ($this->practicalSubmoduleProcessorGroups->removeElement($practicalSubmoduleProcessorGroup)) {
+            // set the owning side to null (unless already changed)
+            if ($practicalSubmoduleProcessorGroup->getPracticalSubmodule() === $this) {
+                $practicalSubmoduleProcessorGroup->setPracticalSubmodule(null);
+            }
+        }
+
+        return $this;
     }
 }

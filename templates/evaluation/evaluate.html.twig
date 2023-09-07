@@ -11,6 +11,10 @@
             <hr>
             {% include 'evaluation/_evaluate_mod_pages.html.twig' %}
         {% endif %}
+        {% if evaluation.processorGroupingEnabled %}
+            <hr>
+            {% include 'evaluation/_evaluate_mod_processorGroups.html.twig' %}
+        {% endif %}
 
     {% elseif is_user() %}
 

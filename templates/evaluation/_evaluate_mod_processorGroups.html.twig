@@ -1,0 +1,15 @@
+{% trans_default_domain 'app' %}
+
+<h2 class="mb-3">{{ 'practicalSubmodule.extra.processorGroups'|trans }}</h2>
+{% if procesorGroups is not empty %}
+    <ul id="ps_pages" class="mod--ps-pages">
+        {% for processorGroup in procesorGroups %}
+            {% include 'evaluation/_evaluate_mod_processorGroup.html.twig' %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>{{ 'practicalSubmoduleProcessorGroup.empty'|trans }}</p>
+{% endif %}
+<div class="text-end">
+    <a href="#" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'practicalSubmodule.extra.processorGroup'|trans }}</a>
+</div>

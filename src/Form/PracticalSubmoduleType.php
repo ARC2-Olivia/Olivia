@@ -27,7 +27,7 @@ class PracticalSubmoduleType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $pagingChoices = [
+        $booleanChoices = [
             $this->translator->trans('common.no', [], 'app') => false,
             $this->translator->trans('common.yes', [], 'app') => true
         ];
@@ -68,7 +68,12 @@ class PracticalSubmoduleType extends AbstractType
             ])
             ->add('paging', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.paging',
-                'choices' => $pagingChoices,
+                'choices' => $booleanChoices,
+                'attr' => ['class' => 'form-select mb-3']
+            ])
+            ->add('processorGroupingEnabled', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmodule.label.processorGroupingEnabled',
+                'choices' => $booleanChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('modeOfOperation', ChoiceType::class, [

@@ -71,6 +71,9 @@ class PracticalSubmoduleProcessor
     #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
     private ?PracticalSubmoduleProcessorResultCombiner $practicalSubmoduleProcessorResultCombiner = null;
 
+    #[ORM\ManyToOne(inversedBy: 'practicalSubmoduleProcessor')]
+    private ?PracticalSubmoduleProcessorGroup $practicalSubmoduleProcessorGroup = null;
+
     public function __construct()
     {
         $this->resultFiles = new ArrayCollection();
@@ -353,6 +356,18 @@ class PracticalSubmoduleProcessor
     public function setDisabled(?bool $disabled): self
     {
         $this->disabled = $disabled;
+
+        return $this;
+    }
+
+    public function getPracticalSubmoduleProcessorGroup(): ?PracticalSubmoduleProcessorGroup
+    {
+        return $this->practicalSubmoduleProcessorGroup;
+    }
+
+    public function setPracticalSubmoduleProcessorGroup(?PracticalSubmoduleProcessorGroup $practicalSubmoduleProcessorGroup): self
+    {
+        $this->practicalSubmoduleProcessorGroup = $practicalSubmoduleProcessorGroup;
 
         return $this;
     }

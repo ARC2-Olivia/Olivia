@@ -7,6 +7,7 @@ use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\PracticalSubmoduleAssessmentAnswer;
 use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleProcessor;
+use App\Entity\PracticalSubmoduleProcessorGroup;
 use App\Entity\PracticalSubmoduleQuestion;
 use App\Entity\PracticalSubmoduleQuestionAnswer;
 use App\Exception\PSImport\ErroneousFirstTaskException;
@@ -181,17 +182,19 @@ class PracticalSubmoduleController extends BaseController
             $assessmentCompleted = $assessment !== null && $assessment->isCompleted();
         }
 
-        $questions = $processors = $pages = null;
+        $questions = $processors = $pages = $processorGroups = null;
         if ($this->isGranted('ROLE_MODERATOR')) {
             $questions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForSubmodule($practicalSubmodule);
             $processors = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findOrderedForSubmodule($practicalSubmodule);
             $pages = $this->em->getRepository(PracticalSubmodulePage::class)->findOrderedForSubmodule($practicalSubmodule);
+            $processorGroups = $this->em->getRepository(PracticalSubmoduleProcessorGroup::class)->findOrderedForSubmodule($practicalSubmodule);
         }
         return $this->render('evaluation/evaluate.html.twig', [
             'evaluation' => $practicalSubmodule,
             'evaluationQuestions' => $questions,
             'evaluationEvaluators' => $processors,
             'pages' => $pages,
+            'procesorGroups' => $processorGroups,
             'assessmentCompleted' => $assessmentCompleted,
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE),
             'questionCount' => $this->em->getRepository(PracticalSubmoduleQuestion::class)->count(['practicalSubmodule' => $practicalSubmodule])
