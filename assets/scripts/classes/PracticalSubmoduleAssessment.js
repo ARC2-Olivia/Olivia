@@ -439,7 +439,7 @@ class PracticalSubmoduleAssessment {
             question.dispatch("answerchange", { questionId: question.dataset.id, answer: input.value, checkType: 'equals' })
         } else if ("multi_choice" === question.dataset.type) {
             const inputs = question.querySelectorAll("input");
-            const checkedValues = inputs.filter(i => i.checked === true).map(i => i.dataset.value);
+            const checkedValues = Array.from(inputs).filter(i => i.checked === true).map(i => i.dataset.value);
             question.dispatch("answerchange", { questionId: question.dataset.id, answer: checkedValues, checkType: 'contains' });
         }
     }
