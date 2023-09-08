@@ -69,8 +69,8 @@ class PracticalSubmoduleProcessorGroupType extends AbstractType
 
         return function (PracticalSubmoduleProcessorRepository $practicalSubmoduleProcessorRepository) use ($processorGroup, $editMode, $practicalSubmodule) {
             $qb = $practicalSubmoduleProcessorRepository->createQueryBuilder('psp')
-                ->where('psp.practicalSubmodule = :submodule')
-                ->setParameter('submodule', $practicalSubmodule)
+                ->where('psp.practicalSubmodule = :submodule')->andWhere('psp.included = :included')
+                ->setParameter('submodule', $practicalSubmodule)->setParameter('included', true)
                 ->orderBy('psp.position', 'ASC');
 
             if (true === $editMode) {
