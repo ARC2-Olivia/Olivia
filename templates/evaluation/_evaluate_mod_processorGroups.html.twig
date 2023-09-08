@@ -2,7 +2,7 @@
 
 <h2 class="mb-3">{{ 'practicalSubmodule.extra.processorGroups'|trans }}</h2>
 {% if procesorGroups is not empty %}
-    <ul id="ps_pages" class="mod--ps-pages">
+    <ul id="ps_processorGroups" class="mod--ps-pages" data-path="{{ path('practical_submodule_processor_group_reorder') }}">
         {% for processorGroup in procesorGroups %}
             {% include 'evaluation/_evaluate_mod_processorGroup.html.twig' %}
         {% endfor %}

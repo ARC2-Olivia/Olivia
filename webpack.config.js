@@ -42,6 +42,7 @@ Encore
     .addEntry('evaluation.questions.sort', './assets/scripts/ps.questions.sort.js')
     .addEntry('evaluation.evaluators.sort', './assets/scripts/ps.processors.sort.js')
     .addEntry('ps.pages.sort', './assets/scripts/ps.pages.sort.js')
+    .addEntry('ps.processor-groups.sort', './assets/scripts/ps.processor-groups.sort.js')
     .addEntry('index.carousel', './assets/scripts/index.carousel.js')
 
     // Classes

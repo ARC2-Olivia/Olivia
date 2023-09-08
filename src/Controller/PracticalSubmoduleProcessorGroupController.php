@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\PracticalSubmoduleProcessor;
 use App\Entity\PracticalSubmoduleProcessorGroup;
 use App\Form\PracticalSubmoduleProcessorGroupType;
+use App\Repository\PracticalSubmoduleProcessorGroupRepository;
 use App\Service\NavigationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,5 +68,22 @@ class PracticalSubmoduleProcessorGroupController extends BaseController
         }
 
         return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+    }
+
+    #[Route("/reorder", name: "reorder", methods: ["POST"])]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function reorder(Request $request, PracticalSubmoduleProcessorGroupRepository $practicalSubmoduleProcessorGroupRepository): Response
+    {
+        $data = json_decode($request->getContent());
+        if ($data !== null && !empty($data->reorders)) {
+            foreach ($data->reorders as $reorder) {
+                $practicalSubmoduleProcessorGroup = $practicalSubmoduleProcessorGroupRepository->find($reorder->id);
+                $practicalSubmoduleProcessorGroup->setPosition($reorder->position);
+            }
+            $this->em->flush();
+            return new JsonResponse(['status' => 'success']);
+        }
+
+        return new JsonResponse(['status' => 'fail']);
     }
 }

@@ -46,6 +46,7 @@
         {{ encore_entry_script_tags('evaluation.evaluators.sort') }}
         {% if evaluation.paging %}
             {{ encore_entry_script_tags('ps.pages.sort') }}
+            {{ encore_entry_script_tags('ps.processor-groups.sort') }}
         {% endif %}
     {% endif %}
 {% endblock %}
