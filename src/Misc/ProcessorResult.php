@@ -3,29 +3,34 @@
 namespace App\Misc;
 
 use App\Entity\File;
+use App\Entity\PracticalSubmoduleProcessorGroup;
 use App\Entity\PracticalSubmoduleQuestion;
 
 class ProcessorResult
 {
     private ?string $text;
-
     /** @var File[]|null */
     private ?array $files;
-
     private bool $isHtml;
-
     private ?PracticalSubmoduleQuestion $question;
+    private ?PracticalSubmoduleProcessorGroup $processorGroup;
 
     /**
      * @param string|null $text
      * @param File[]|null $files
      */
-    public function __construct(?string $text = null, ?array $files = null, bool $isHtml = false, ?PracticalSubmoduleQuestion $question = null)
+    public function __construct(?string $text = null,
+                                ?array $files = null,
+                                bool $isHtml = false,
+                                ?PracticalSubmoduleQuestion $question = null,
+                                ?PracticalSubmoduleProcessorGroup $processorGroup = null
+    )
     {
         $this->text = $text;
         $this->files = $files;
         $this->isHtml = $isHtml;
         $this->question = $question;
+        $this->processorGroup = $processorGroup;
     }
 
     public function getText(): ?string
@@ -46,6 +51,11 @@ class ProcessorResult
     public function getQuestion(): ?PracticalSubmoduleQuestion
     {
         return $this->question;
+    }
+
+    public function getProcessorGroup(): ?PracticalSubmoduleProcessorGroup
+    {
+        return $this->processorGroup;
     }
 
     public function isTextSet(): bool

@@ -5,7 +5,13 @@ namespace App\Service;
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
 use App\Misc\ProcessorResult;
+use PhpOffice\PhpWord\Element\Table;
+use PhpOffice\PhpWord\Element\Text;
+use PhpOffice\PhpWord\Element\TextBox;
+use PhpOffice\PhpWord\Element\TextRun;
+use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WordService
@@ -23,19 +29,92 @@ class WordService
 
     public function generateAssessmentResultsDocument(PracticalSubmoduleAssessment $assessment): string
     {
-        $word = new \PhpOffice\PhpWord\PhpWord();
-        $word->setDefaultParagraphStyle(['spaceAfter' => 0, 'alignment' => 'both']);
-        $modeOfOperation = $assessment->getPracticalSubmodule()->getModeOfOperation();
+        if ($assessment->getPracticalSubmodule()->isPaging()) {
+            $results = $this->practicalSubmoduleService->runProcessors($assessment);
+            usort($results, function (ProcessorResult $prA, ProcessorResult $prB) {
+                $positionA = $prA->getProcessorGroup()->getPosition();
+                $positionB = $prB->getProcessorGroup()->getPosition();
+                if ($positionA === $positionB) return 0;
+                return $positionA > $positionB ? 1 : -1;
+            });
 
-        if (PracticalSubmodule::MODE_OF_OPERATION_ADVANCED === $modeOfOperation) {
-            $this->handleForAdvancedModeOfOperation($word, $assessment);
-        } else if (PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $modeOfOperation) {
-            $this->handleForSimpleModeOfOperation($word, $assessment);
+            $groupedResults = [];
+            foreach ($results as $result) {
+                $processorGroupId = $result->getProcessorGroup()->getId();
+                if (false === key_exists($processorGroupId, $groupedResults)) {
+                    $groupedResults[$processorGroupId] = ['title' => $result->getProcessorGroup()->getTitle(), 'results' => []];
+                }
+                $groupedResults[$processorGroupId]['results'][] = $result;
+            }
+            $groupCount = count($groupedResults);
+
+            $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_template.docx');
+            $templateProcessor = new TemplateProcessor($templateFile);
+            $templateProcessor->setValue('title', $assessment->getPracticalSubmodule()->getName());
+
+            $templateProcessor->cloneBlock('block', $groupCount, true, true);
+            $i = 1;
+            foreach ($groupedResults as $_ => $groupedResult) {
+                $resultCount = count($groupedResult['results']);
+                $templateProcessor->setValue("blockTitle#$i", $groupedResult['title']);
+                $templateProcessor->cloneBlock("blockContentWrapper#$i", $resultCount, true, true);
+
+                $j = 1;
+                /** @var ProcessorResult $result */
+                foreach ($groupedResult['results'] as $result) {
+                    if ($result->isHtml()) {
+                        $string = str_replace('<br>', '<br/>', $result->getText());
+                        $html = new \DOMDocument('1.0', 'UTF-8');
+                        $html->loadHTML(mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8'));
+                        $body = $html->getElementsByTagName("body")->item(0);
+
+                        $textbox = new TextBox([]);
+                        \PhpOffice\PhpWord\Shared\Html::addHtml($textbox, $html->saveXML($body, LIBXML_NOEMPTYTAG), true);
+
+                        $elementCount = $textbox->countElements();
+                        $expandedValues = new TextRun();
+                        for ($k = 1; $k <= $elementCount; $k++) {
+                            $expandedValues->addText(sprintf('${blockContent#%d#%d#%d}', $i, $j, $k));
+                            if ($k < $elementCount) {
+                                $expandedValues->addTextBreak();
+                            }
+                        }
+                        $templateProcessor->setComplexValue("blockContent#$i#$j", $expandedValues);
+
+                        $k = 1;
+                        foreach ($textbox->getElements() as $element) {
+                            $templateProcessor->setComplexValue("blockContent#$i#$j#$k", $element);
+                            $k++;
+                        }
+                    } else {
+                        $text = str_replace("\n", '<w:br/>', $result->getText());
+                        $text = new Text($text, ['name' => 'Constantia', 'size' => 12]);
+                        $templateProcessor->setComplexValue("blockContent#$i#$j", $text);
+                    }
+                    $j++;
+                }
+
+                $i++;
+            }
+
+            $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+            $templateProcessor->saveAs($document);
+            return $document;
+        } else {
+            $word = new \PhpOffice\PhpWord\PhpWord();
+            $word->setDefaultParagraphStyle(['spaceAfter' => 0, 'alignment' => 'both']);
+            $modeOfOperation = $assessment->getPracticalSubmodule()->getModeOfOperation();
+
+            if (PracticalSubmodule::MODE_OF_OPERATION_ADVANCED === $modeOfOperation) {
+                $this->handleForAdvancedModeOfOperation($word, $assessment);
+            } else if (PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $modeOfOperation) {
+                $this->handleForSimpleModeOfOperation($word, $assessment);
+            }
+
+            $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+            $writer = \PhpOffice\PhpWord\IOFactory::createWriter($word);
+            $writer->save($document);
         }
-
-        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
-        $writer = \PhpOffice\PhpWord\IOFactory::createWriter($word);
-        $writer->save($document);
 
         return $document;
     }

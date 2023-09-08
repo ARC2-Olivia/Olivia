@@ -52,12 +52,17 @@ class PracticalSubmoduleProcessorRepository extends ServiceEntityRepository
     /** @return PracticalSubmoduleProcessor[] */
     public function findRunnableProcessors(PracticalSubmodule $practicalSubmodule)
     {
-        return $this->createQueryBuilder('psp')
+        $qb = $this->createQueryBuilder('psp')
             ->where('psp.practicalSubmodule = :submodule')
             ->andWhere('psp.included = :true')
             ->andWhere('psp.disabled = :false OR psp.disabled IS NULL')
             ->setParameters(['submodule' => $practicalSubmodule, 'true' => true, 'false' => false])
-            ->orderBy('psp.position', 'ASC')
-            ->getQuery()->getResult();
+            ->orderBy('psp.position', 'ASC');
+
+        if ($practicalSubmodule->isProcessorGroupingEnabled()) {
+            $qb->andWhere('psp.practicalSubmoduleProcessorGroup IS NOT NULL');
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }
