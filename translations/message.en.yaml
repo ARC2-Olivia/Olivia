@@ -91,6 +91,8 @@ warning:
         noQuestion: There was an error storing the answer to one of the questions.
     practicalSubmodulePage:
         delete: Page has been deleted from the submodule.
+    practicalSubmoduleProcessorGroup:
+        delete: Processor group has been deleted from the submodule
     file:
         delete: A file has been removed.
 

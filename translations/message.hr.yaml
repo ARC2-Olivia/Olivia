@@ -90,7 +90,9 @@ warning:
     practicalSubmoduleAssessment:
         noQuestion: Došlo je do greške tijekom spremanja odgovora na neka pitanja.
     practicalSubmodulePage:
-        delete: Ibrisana je stranica iz podmodula.
+        delete: Izbrisana je stranica iz podmodula.
+    practicalSubmoduleProcessorGroup:
+        delete: Izbrisana je procesorska grupa iz podmodula.
     file:
         delete: Izbrisana je datoteka.
 

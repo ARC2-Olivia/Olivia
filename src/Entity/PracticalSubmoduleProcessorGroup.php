@@ -54,6 +54,14 @@ class PracticalSubmoduleProcessorGroup extends TranslatableEntity
         return $this->id;
     }
 
+    public function removeItselfFromPracticalSubmoduleProcessors(): void
+    {
+        /** @var PracticalSubmoduleProcessor $processor */
+        foreach ($this->practicalSubmoduleProcessors as $processor) {
+            $processor->setPracticalSubmoduleProcessorGroup(null);
+        }
+    }
+
     public function getPracticalSubmodule(): ?PracticalSubmodule
     {
         return $this->practicalSubmodule;

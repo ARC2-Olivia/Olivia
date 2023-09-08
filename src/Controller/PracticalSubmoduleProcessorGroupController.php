@@ -50,4 +50,21 @@ class PracticalSubmoduleProcessorGroupController extends BaseController
             'navigation' => $navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_EDIT_PROCESSOR_GROUP)
         ]);
     }
+
+    #[Route("/delete/{practicalSubmoduleProcessorGroup}", name: "delete")]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function delete(PracticalSubmoduleProcessorGroup $practicalSubmoduleProcessorGroup, Request $request): Response
+    {
+        $practicalSubmodule = $practicalSubmoduleProcessorGroup->getPracticalSubmodule();
+
+        $csrfToken = $request->request->get('_csrf_token');
+        if (null !== $csrfToken && $this->isCsrfTokenValid('practicalSubmoduleProcessorGroup.delete', $csrfToken)) {
+            $practicalSubmoduleProcessorGroup->removeItselfFromPracticalSubmoduleProcessors();
+            $this->em->remove($practicalSubmoduleProcessorGroup);
+            $this->em->flush();
+            $this->addFlash('warning', $this->translator->trans('warning.practicalSubmoduleProcessorGroup.delete', [], 'message'));
+        }
+
+        return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+    }
 }
