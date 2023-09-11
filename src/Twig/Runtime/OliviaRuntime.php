@@ -114,4 +114,24 @@ class OliviaRuntime implements RuntimeExtensionInterface
     {
         return null !== $user && $this->enrollmentService->isPassed($course, $user);
     }
+
+    public function textToHtml(?string $text): \Twig\Markup
+    {
+        $charset = 'UTF-8';
+        if (null === $text || '' === trim($text)) {
+            return new \Twig\Markup('', $charset);
+        }
+
+        $text = explode("\n", $text);
+        foreach ($text as &$line) {
+            if (str_starts_with($line, '-')) {
+                $line = preg_replace('/^-\s*/', '', $line);
+                $line = "<p class='fake-li'>$line</p>";
+            } else {
+                $line = "<p>$line</p>";
+            }
+        }
+
+        return new \Twig\Markup(implode('', $text), $charset);
+    }
 }

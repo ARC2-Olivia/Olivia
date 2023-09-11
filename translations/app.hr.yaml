@@ -206,10 +206,13 @@ form:
                 tagsAlt: Oznake odvojene zarezom (drugi jezik)
                 courses: Povezani tečajevi
                 modeOfOperation: Način rada
+                reportComment: Komentar na kraju izvještaja
+                reportCommentAlt: Komentar na kraju izvještaja (drugi jezik)
             placeholder:
                 name: Naziv praktičnog podmodula
                 description: Opis praktičnog podmodula...
                 tags: GDPR,IT,Sigurnost
+                reportComment: Što će korisnik pročitati na kraju rezulatat/izvještaja?
         practicalSubmoduleQuestion:
             label:
                 type: Vrsta pitanja

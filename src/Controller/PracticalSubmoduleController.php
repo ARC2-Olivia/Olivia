@@ -458,6 +458,13 @@ class PracticalSubmoduleController extends BaseController
             $translated = true;
         }
 
+
+        $reportCommentAlt = $form->get('reportCommentAlt')->getData();
+        if ($reportCommentAlt !== null && trim($reportCommentAlt) !== '') {
+            $translationRepository->translate($evaluation, 'reportComment', $localeAlt, $reportCommentAlt);
+            $translated = true;
+        }
+
         if ($translated) $this->em->flush();
     }
 

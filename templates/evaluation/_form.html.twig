@@ -34,4 +34,11 @@
 
     {{ form_label(form.courses) }}
     {{ form_widget(form.courses) }}
+
+    {{ form_label(form.reportComment) }}
+    {{ form_widget(form.reportComment) }}
+    {% if form.tagsAlt is defined %}
+        {{ form_label(form.reportCommentAlt) }}
+        {{ form_widget(form.reportCommentAlt) }}
+    {% endif %}
 {{ form_end(form) }}

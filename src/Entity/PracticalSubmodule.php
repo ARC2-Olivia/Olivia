@@ -63,6 +63,10 @@ class PracticalSubmodule extends TranslatableEntity
     #[ORM\OneToMany(mappedBy: 'practicalSubmodule', targetEntity: PracticalSubmoduleProcessorGroup::class, orphanRemoval: true)]
     private Collection $practicalSubmoduleProcessorGroups;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable]
+    private ?string $reportComment = null;
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
@@ -311,6 +315,18 @@ class PracticalSubmodule extends TranslatableEntity
                 $practicalSubmoduleProcessorGroup->setPracticalSubmodule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReportComment(): ?string
+    {
+        return $this->reportComment;
+    }
+
+    public function setReportComment(?string $reportComment): self
+    {
+        $this->reportComment = $reportComment;
 
         return $this;
     }

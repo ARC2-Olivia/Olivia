@@ -7,6 +7,8 @@
     {% else %}
         {% include 'evaluation/_results_advanced.html.twig' %}
     {% endif %}
-    <hr>
-    <p class="text-center">{{ 'practicalSubmodule.extra.results.final'|trans }}</p>
+    {% if evaluation.reportComment is not empty %}
+        <hr>
+        <p>{{ evaluation.reportComment|txt2html }}</p>
+    {% endif %}
 {% endblock %}

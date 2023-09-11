@@ -82,8 +82,8 @@ class PracticalSubmoduleType extends AbstractType
                 'attr' => ['class' => 'form-select mb-3'],
                 'disabled' => true === $options['has_advanced_mode_features']
             ])
-            ->add('tags', TextareaType::class, [
-                'label' => 'form.entity.practicalSubmodule.label.tags',
+            ->add('tags', TextType::class, [
+                'label' => 'form.entity.practicalSubmodule.label.end',
                 'attr' => [
                     'class' => 'form-input mb-3',
                     'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.tags', [], 'app')
@@ -95,6 +95,13 @@ class PracticalSubmoduleType extends AbstractType
                 'choice_label' => 'name',
                 'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'multiple' => true
+            ])
+            ->add('reportComment', TextareaType::class, [
+                'label' => 'form.entity.practicalSubmodule.label.reportComment',
+                'attr' => [
+                    'class' => 'form-textarea mb-3',
+                    'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.reportComment', [], 'app')
+                ],
             ])
         ;
         $builder->get('tags')->addModelTransformer(new SimpleArrayToStringTransformer());
@@ -124,6 +131,14 @@ class PracticalSubmoduleType extends AbstractType
                         'class' => 'form-input mb-3',
                         'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.tags', [], 'app')
                     ]
+                ])
+
+                ->add('reportCommentAlt', TextareaType::class, [
+                    'label' => 'form.entity.practicalSubmodule.label.reportCommentAlt',
+                    'attr' => [
+                        'class' => 'form-textarea mb-3',
+                        'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.reportComment', [], 'app')
+                    ],
                 ])
             ;
             $builder->get('tagsAlt')->addModelTransformer(new SimpleArrayToStringTransformer());

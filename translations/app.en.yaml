@@ -206,10 +206,13 @@ form:
                 tagsAlt: Tags (alternate language)
                 courses: Connected courses
                 modeOfOperation: Mode of operation
+                reportComment: End of report comment
+                reportCommentAlt: End of report comment (alternate language)
             placeholder:
                 name: Name of the practical submodule
                 description: Practical submodule description...
                 tags: GDPR,IT,Security
+                reportComment: What will the user read at the end of results/report?
         practicalSubmoduleQuestion:
             label:
                 type: Question type
