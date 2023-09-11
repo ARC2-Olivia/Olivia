@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
 use App\Misc\ProcessorResult;
-use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Element\Text;
 use PhpOffice\PhpWord\Element\TextBox;
 use PhpOffice\PhpWord\Element\TextRun;
@@ -56,9 +55,12 @@ class WordService
 
         $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_template.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
+
+        ### Postavi naslov i opis.
         $templateProcessor->setValue('title', $assessment->getPracticalSubmodule()->getName());
         $templateProcessor->setValue('description', $assessment->getPracticalSubmodule()->getDescription());
 
+        ### Postavi sadržaj.
         $templateProcessor->cloneBlock('block', $groupCount, true, true);
         $i = 1;
         foreach ($groupedResults as $_ => $groupedResult) {
@@ -75,10 +77,10 @@ class WordService
                     $html->loadHTML(mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8'));
                     $body = $html->getElementsByTagName("body")->item(0);
 
-                    $textbox = new TextBox([]);
-                    \PhpOffice\PhpWord\Shared\Html::addHtml($textbox, $html->saveXML($body, LIBXML_NOEMPTYTAG), true);
+                    $compositeText = new TextBox([]);
+                    \PhpOffice\PhpWord\Shared\Html::addHtml($compositeText, $html->saveXML($body, LIBXML_NOEMPTYTAG), true);
 
-                    $elementCount = $textbox->countElements();
+                    $elementCount = $compositeText->countElements();
                     $expandedValues = new TextRun();
                     for ($k = 1; $k <= $elementCount; $k++) {
                         $expandedValues->addText(sprintf('${blockContent#%d#%d#%d}', $i, $j, $k));
@@ -89,7 +91,7 @@ class WordService
                     $templateProcessor->setComplexValue("blockContent#$i#$j", $expandedValues);
 
                     $k = 1;
-                    foreach ($textbox->getElements() as $element) {
+                    foreach ($compositeText->getElements() as $element) {
                         $templateProcessor->setComplexValue("blockContent#$i#$j#$k", $element);
                         $k++;
                     }
@@ -103,6 +105,29 @@ class WordService
 
             $i++;
         }
+
+        ### Postavi napomenu.
+        if (null !== $assessment->getPracticalSubmodule()->getReportComment()) {
+            $comment = str_replace("\r", '', $assessment->getPracticalSubmodule()->getReportComment());
+            $comment = explode("\n", $comment);
+            $compositeComment = [];
+            foreach ($comment as $line) {
+                $compositeComment[] = new Text($line);
+            }
+
+            $elementCount = count($compositeComment);
+            $templateProcessor->cloneBlock('commentBlock', $elementCount, true, true);
+
+            $i = 1;
+            foreach ($compositeComment as $item) {
+                $templateProcessor->setComplexValue("comment#$i", $item);
+                $i++;
+            }
+        }
+        else {
+            $templateProcessor->deleteBlock('commentBlock');
+        }
+
 
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
         $templateProcessor->saveAs($document);
