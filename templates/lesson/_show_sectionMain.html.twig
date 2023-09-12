@@ -21,7 +21,7 @@
                     </button>
                 {% endif %}
 
-                <button type="button" class="btn btn-theme-white bg-blue btn-round" data-modal-open="#notes-modal">{{ mdi('text-long') }}</button>
+                <button type="button" class="btn btn-theme-white bg-blue btn-round{% if note is not null and note.text is not empty %} lesson-notes-exist{% endif %}" data-modal-open="#notes-modal">{{ mdi('text-long') }}</button>
                 <div class="modal" id="notes-modal">
                     <div class="modal-dialog">
                         <div class="lesson-notes">

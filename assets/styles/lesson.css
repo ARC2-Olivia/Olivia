@@ -436,6 +436,21 @@ iframe.lesson-video {
     font-style: italic;
 }
 
+.lesson-notes-exist {
+    position: relative;
+}
+
+.lesson-notes-exist:after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--app-color-orange);
+    border-radius: 50%;
+}
+
 @media screen and (max-width: 1199px) {
     .lesson-section-main {
         flex-grow: 2;
