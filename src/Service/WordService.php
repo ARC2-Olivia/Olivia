@@ -125,7 +125,7 @@ class WordService
             }
         }
         else {
-            $templateProcessor->deleteBlock('commentBlock');
+            $templateProcessor->cloneBlock('commentBlock', 0);
         }
 
 
