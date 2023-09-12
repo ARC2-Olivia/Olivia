@@ -33,8 +33,14 @@
                             </label>
                             <div class="lesson-notes-actions">
                                 <button type="button" class="btn btn-link" data-modal-close="#notes-modal">{{ 'common.cancel'|trans }}</button>
-                                <button id="save-notes" type="button" class="btn btn-theme-white bg-blue" data-path="{{ path('note_update') }}" data-lesson="{{ lesson.id }}"
-                                        data-user="{{ app.user.id }}">
+                                <button id="save-notes"
+                                        type="button"
+                                        class="btn btn-theme-white bg-blue"
+                                        data-path="{{ path('note_update') }}"
+                                        data-user="{{ app.user.id }}"
+                                        data-lesson="{{ lesson.id }}"
+                                        data-modal-close="#notes-modal"
+                                >
                                     {{ 'common.save'|trans }}
                                 </button>
                             </div>
