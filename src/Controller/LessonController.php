@@ -510,7 +510,10 @@ class LessonController extends BaseController
         } catch (\Exception $ex) {
         }
 
-        if ($response['success']) $response['action'] = $lessonCompletion->isCompleted() ? 'done' : 'undone';
+        if ($response['success']) {
+            $response['action'] = $lessonCompletion->isCompleted() ? 'done' : 'undone';
+            $response['lesson'] = $lesson->getId();
+        }
         return new JsonResponse($response);
     }
 

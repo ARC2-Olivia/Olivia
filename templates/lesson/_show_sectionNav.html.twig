@@ -17,6 +17,7 @@
                     {% else %}
                         <button class="completion-marker-inner btn btn-round {{ lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-gray-to-green' }} flex-shrink-0"
                                 data-path="{{ lessonInfo.toggleUrl }}"
+                                data-completion-lesson-id="{{ lessonInfo.lesson.id }}"
                         >
                             {{ mdi('check', 'lesson-section-navigation-item-completion-icon') }}
                         </button>

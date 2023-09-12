@@ -21,10 +21,7 @@
     {% if is_user() %}
         {{ encore_entry_script_tags('axios') }}
         {{ encore_entry_script_tags('notes.update') }}
-        {{ encore_entry_script_tags('lessons.completion.inner') }}
+        {{ encore_entry_script_tags('lessons.completion') }}
         {{ encore_entry_script_tags('modal') }}
-        {% if is_granted('view', lesson.course) %}
-            {{ encore_entry_script_tags('lessons.completion.outer') }}
-        {% endif %}
     {% endif %}
 {% endblock %}

@@ -6,21 +6,32 @@ window.addEventListener("load", () => {
                 sendToggleCompletionRequest(this);
             }
         });
+        button.customMethods = {
+            markAs: function(action) {
+                if ("done" === action) {
+                    button.customMethods.markAsDone();
+                } else if ("undone" === action) {
+                    button.customMethods.markAsNotDone();
+                }
+            },
+            markAsDone: function() {
+                button.classList.remove('btn-thematic-orange-outline');
+                button.classList.add('btn-theme-white', 'bg-green');
+                button.innerText = button.dataset.textDone || 'Done';
+            },
+            markAsNotDone: function() {
+                button.classList.remove('btn-theme-white', 'bg-green');
+                button.classList.add('btn-thematic-orange-outline');
+                button.innerText = button.dataset.textUndone || 'Mark as done';
+            }
+        };
     });
 
     function sendToggleCompletionRequest(element) {
         axios({url: element.dataset.path, method: "PATCH"}).then((response) => {
             console.log(response.data);
             if (response.data.success) {
-                if (response.data.action === "done") {
-                    element.classList.remove('btn-thematic-orange-outline');
-                    element.classList.add('btn-theme-white', 'bg-green');
-                    element.innerText = element.dataset.textDone;
-                } else if (response.data.action === "undone") {
-                    element.classList.remove('btn-theme-white', 'bg-green');
-                    element.classList.add('btn-thematic-orange-outline');
-                    element.innerText = element.dataset.textUndone;
-                }
+                console.log(element.dispatchEvent(new CustomEvent("lesson-completion-update", { detail: response.data, bubbles: true })));
             }
         });
     }
