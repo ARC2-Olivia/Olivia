@@ -88,16 +88,18 @@ nav:
     gdpr: Data protection
 
 footer:
-    contact: "Contact: ???"
-    projectUrl: "<a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
+    contact: "Contact: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
     text: This tool is developed within ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs project funded by European Commission.
     termsOfService: Terms of service and privacy policy
 
 index:
     about:
         left:
-            title: About tool
-            description: The main objective of the Olivia web tool is providing practical support to Croatian and Italian SMEs in the implementation of the data protection legislation and principles of the day-to-day business activities.
+            title: About
+            description:
+                1: In today's digital world, the significance of data protection is steadily on the rise, and it is paramount for SMEs to give it the priority it deserves.
+                2: We are the ARC2 Consortium, consisting of Croatian and Italian data protection authorities, the Faculty of Organization and Informatics &ndash; University of Zagreb, Vrije University Brussels, and the University of Florence.
+                3: Our mission is to empower Croatian and Italian SMEs to achieve compliance with data protection regulations. That's why we've introduced Olivia &ndash; a tool designed to make GDPR compliance easier than ever before!
         right:
             1:
                 title: Innovative

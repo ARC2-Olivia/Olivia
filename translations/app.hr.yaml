@@ -88,16 +88,18 @@ nav:
     gdpr: Zaštita podataka
 
 footer:
-    contact: "Kontakt: ???"
-    projectUrl: "<a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
+    contact: "Kontakt: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
     text: Alat je razvijen u sklopu projekta ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs financiran od strane Europske komisije.
     termsOfService: Uvjeti pružanja usluge i politika privatnosti
 
 index:
     about:
         left:
-            title: O alatu
-            description: Glavni cilj web alata Olivia je pružanje praktične podrške hrvatskim i talijanskim MSP-ovima u implementaciji zakonodavstva o zaštiti podataka i načela svakodnevnih poslovnih aktivnosti.
+            title: O nama
+            description:
+                1: U današnjem digtalnom svijetu, značaj zaštite podataka je u stalnom porastu, te je važno da im MSP-ovi daju prioritet koji zaslužuju.
+                2: "Mi smo ARC2 Konzorcij, i sastojimo se od: hrvatskog i talijanskog tijela za zaštitu podataka, Fakulteta organizacije i informatike &ndash; Sveučilište u Zagrebu, Slobodnog sveučilišta u Bruxellesu, i Sveučilišta u Firenci."
+                3: Naša misija je pomoći hrvatskim i talijanskim MSP-ovima postignuti usklađenost s propisima o zaštiti podataka. Zato predstavljamo Oliviju &ndash; alat dizajniran da učini usklađivanje s GDPR-om lakše nego ikada prije!
         right:
             1:
                 title: Inovativno
