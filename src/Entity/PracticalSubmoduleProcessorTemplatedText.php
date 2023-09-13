@@ -166,6 +166,13 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
             $this->processedText = preg_replace($pattern, $gatheredAnswersOneLine, $this->processedText);
         }
 
+        $pattern = '/\{\{\s*values_as_paragraphs\s*\}\}/i';
+        if (preg_match($pattern, $this->processedText)) {
+            $gatheredAnswersAsParagraphs = $gatheredAnswers;
+            $gatheredAnswersAsParagraphs = implode("\n\n", $gatheredAnswersAsParagraphs);
+            $this->processedText = preg_replace($pattern, $gatheredAnswersAsParagraphs, $this->processedText);
+        }
+
         if (PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE === $this->practicalSubmoduleQuestion->getType()) {
             $pattern = '/\{\{\s*answers_count_all\s*\}\}/i';
             if (preg_match($pattern, $this->processedText)) {
