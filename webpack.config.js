@@ -32,6 +32,7 @@ Encore
     .addEntry('popper.dropdown', './assets/scripts/popper.dropdown.js')
     .addEntry('df-select', './assets/df-select.js')
     .addEntry('modal', './assets/scripts/modal.js')
+    .addEntry('quiz', './assets/quiz.js')
 
     // Page specific
     .addEntry('lessons.sort', './assets/scripts/lessons.sort.js')
