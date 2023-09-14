@@ -347,12 +347,11 @@ class LessonController extends BaseController
         }
 
         $quizData = $this->prepareQuizData($lessonItemQuiz);
-        $form = $this->createForm(QuizType::class, $quizData, ['action' => $this->generateUrl('lesson_quiz_finish', ['lesson' => $lesson->getId()])]);
         $lessonsInfo = $this->lessonService->getLessonsInfo($lesson->getCourse(), $user);
         return $this->render('lesson/quiz.html.twig', [
             'lesson' => $lesson,
             'lessonsInfo' => $lessonsInfo,
-            'form' => $form->createView(),
+            'quizData' => $quizData,
             'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)
         ]);
     }
@@ -365,34 +364,25 @@ class LessonController extends BaseController
         $user = $this->getUser();
         $oldPercentage = $this->lessonService->getQuizPercentage($lesson, $user);
 
-
-        $csrfToken = $request->request->get('_csrf_token');
-        if ($csrfToken === null || !$this->isCsrfTokenValid('quiz.finish', $csrfToken)) {
-            $this->addFlash('error', $this->translator->trans('error.lesson.quiz.finish', [], 'message'));
-            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
-        }
-
         $lessonItemQuiz = $this->em->getRepository(LessonItemQuiz::class)->findOneBy(['lesson' => $lesson]);
         if ($lessonItemQuiz === null) {
             $this->addFlash('error', $this->translator->trans('error.lesson.quiz.missingLessonItemQuiz', [], 'message'));
-            return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+            return $this->json(['redirect' => $this->generateUrl('lesson_show', ['lesson' => $lesson->getId()])]);
         }
 
-        $quizData = $this->prepareQuizData($lessonItemQuiz);
-        $form = $this->createForm(QuizType::class, $quizData);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $answers = $form->getData()['answers'];
+        $data = json_decode($request->getContent());
+        if (null !== $data && isset($data->answers)) {
+            $answers = $data->answers;
             $quizQuestionRepository = $this->em->getRepository(QuizQuestion::class);
             $quizQuestionAnswerRepository = $this->em->getRepository(QuizQuestionAnswer::class);
 
             $quizQuestionAnswers = [];
             foreach ($answers as $answer) {
-                $quizQuestion = $quizQuestionRepository->find($answer['questionId']);
+                $quizQuestion = $quizQuestionRepository->find($answer->questionId);
                 if ($quizQuestion !== null) {
                     $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['user' => $user, 'question' => $quizQuestion]);
                     if ($quizQuestionAnswer === null) $quizQuestionAnswer = new QuizQuestionAnswer();
-                    $quizQuestionAnswer->setUser($user)->setQuestion($quizQuestion)->setAnswer($answer['answer']);
+                    $quizQuestionAnswer->setUser($user)->setQuestion($quizQuestion)->setAnswer($answer->answer);
                     $quizQuestionAnswers[] = $quizQuestionAnswer;
                     $this->em->persist($quizQuestionAnswer);
                 }
@@ -428,7 +418,7 @@ class LessonController extends BaseController
             }
         }
 
-        return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
+        return $this->json(['redirect' => $this->generateUrl('lesson_show', ['lesson' => $lesson->getId()])]);
     }
 
     #[Route("/quiz-results/{lesson}", name: "quiz_results")]
@@ -640,12 +630,23 @@ class LessonController extends BaseController
 
     private function prepareQuizData(LessonItemQuiz $lessonItemQuiz): array
     {
-        $quizData = ['lesson' => $lessonItemQuiz->getLesson(), 'answers' => []];
+        $quizData = [
+            'submitUrl' => $this->generateUrl('lesson_quiz_finish', ['lesson' => $lessonItemQuiz->getLesson()->getId()]),
+            'questions' => [],
+            'ui' => [
+                'yes' => $this->translator->trans('common.yes', [], 'app'),
+                'no' => $this->translator->trans('common.no', [], 'app'),
+                'submit' => $this->translator->trans('common.submit', [], 'app'),
+                'finalText' => $this->translator->trans('course.extra.submitQuizAnswers', [], 'app')
+            ]
+        ];
         foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
-            $quizData['answers'][] = [
+            $quizData['questions'][] = [
                 'questionId' => $quizQuestion->getId(),
                 'text' => $quizQuestion->getText(),
-                'answer' => false
+                'userAnswer' => false,
+                'correctAnswer' => $quizQuestion->getCorrectAnswer(),
+                'explanation' => $quizQuestion->getExplanation()
             ];
         }
         return $quizData;

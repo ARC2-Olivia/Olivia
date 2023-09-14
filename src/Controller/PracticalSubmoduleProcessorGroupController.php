@@ -74,7 +74,7 @@ class PracticalSubmoduleProcessorGroupController extends BaseController
     #[IsGranted("ROLE_MODERATOR")]
     public function reorder(Request $request, PracticalSubmoduleProcessorGroupRepository $practicalSubmoduleProcessorGroupRepository): Response
     {
-        $data = json_decode($request->getContent());
+            $data = json_decode($request->getContent());
         if ($data !== null && !empty($data->reorders)) {
             foreach ($data->reorders as $reorder) {
                 $practicalSubmoduleProcessorGroup = $practicalSubmoduleProcessorGroupRepository->find($reorder->id);

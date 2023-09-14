@@ -1,30 +1,314 @@
-{% extends 'lesson/_base_lesson.html.twig' %}
 {% trans_default_domain 'app' %}
 
-{% block lessonContent %}
-    <div class="lesson-sections">
-        {% include 'lesson/_show_sectionNav.html.twig' %}
-        <div class="lesson-section-main lesson-content">
-            {{ form_start(form, {'attr': {'onsubmit': 'return confirm("'~'lesson.quiz.submit'|trans~'")'}}) }}
-                {% for answer in form.answers %}
-                    <div class="lesson-quiz-quiz-item">
-                        <p>{{ answer.vars.data.text }}</p>
-                        {{ form_widget(answer.answer) }}
-                    </div>
-                {% endfor %}
-                <div class="align-self-end">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('quiz.finish') }}"/>
-                    <button type="submit" class="btn btn-theme-white bg-green">{{ 'common.submit'|trans }}</button>
-                </div>
-            {{ form_end(form) }}
-        </div>
-    </div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{{ 'app.name'|trans }}{% endblock %}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+        <style>
+            body {
+                max-width: 100vw;
+                height: 100vh;
+                max-height: 100vh;
+                margin: 0;
+                padding: 0;
+                background-color: #ffffff;
+                font-family: "Source Sans Pro", sans-serif;
+            }
 
-{% block javascripts %}
-    {{ parent() }}
-    {% if is_user() %}
+            .quiz {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                width: 100%;
+            }
+
+            .quiz-upper, .quiz-lower {
+                flex-basis: 0;
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 16px;
+            }
+
+            .quiz-upper {
+                background-color: #03a9f510;
+                border-radius: 24px;
+            }
+
+            .quiz-question-text {
+                text-align: center;
+                font-size: 1.25rem;
+            }
+
+            .quiz-answers {
+                display: flex;
+                gap: 16px;
+                height: 80%;
+                align-items: stretch;
+                width: 100%;
+                flex-direction: column;
+            }
+
+            :is(.quiz-answers, .quiz-submit).hide {
+                display: none;
+            }
+
+            .quiz-answer {
+                flex-basis: 0;
+                flex-grow: 1;
+                border: none;
+                border-radius: 24px;
+                color: #ffffff;
+                font-size: 3rem;
+                cursor: pointer;
+                opacity: .33;
+            }
+
+            .quiz-answer.yes {
+                background-color: #3eaea6;
+
+            }
+
+            .quiz-answer.no {
+                background-color: #f51b38;
+            }
+
+            .quiz-answer:hover {
+                opacity: 1;
+            }
+
+            .quiz-submit {
+                flex-basis: 100%;
+                border: none;
+                border-radius: 24px;
+                color: #ffffff;
+                font-size: 3rem;
+                cursor: pointer;
+                opacity: .33;
+                background-color: #03a9f5;
+                height: 60%;
+            }
+
+            .quiz-submit:hover {
+                opacity: 1;
+            }
+
+            @media screen and (min-width: 576px) {
+                .quiz-answers {
+                    flex-direction: row;
+                    height: 60%;
+                }
+
+                .quiz-submit {
+                    height: 60%;
+                }
+            }
+
+            @media screen and (min-width: 768px) {
+                .quiz-question-text {
+                    font-size: 4vw;
+                }
+
+                .quiz-answer, .quiz-submit {
+                    font-size: 4vw;
+                }
+            }
+
+            @media screen and (min-width: 992px) {
+                .quiz-question-text {
+                    font-size: 2.5vw;
+                }
+
+                .quiz-answer, .quiz-submit {
+                    font-size: 2.5vw;
+                }
+
+                .quiz-submit {
+                    flex-basis: 50%;
+                }
+            }
+        </style>
         {{ encore_entry_script_tags('axios') }}
-        {{ encore_entry_script_tags('lessons.completion.inner') }}
-    {% endif %}
-{% endblock %}
+        <script>
+            /**
+             * @typedef Question
+             * @type {object}
+             * @property {number} questionId
+             * @property {string} text
+             * @property {boolean} userAnswer
+             * @property {boolean} correctAnswer
+             * @property {string} explanation
+             */
+
+            /**
+             * @typedef UI
+             * @type {object}
+             * @property {string} yes
+             * @property {string} no
+             * @property {string} submit
+             * @property {string} finalText
+             */
+
+            /**
+             * @typedef QuizData
+             * @type {object}
+             * @property {string} submitUrl
+             * @property {Question[]} questions
+             * @property {UI} ui
+             */
+
+            class Quiz {
+                /** @type {HTMLDivElement} */
+                #elemQuiz;
+
+                /** @type {HTMLDivElement} */
+                #elemUpper;
+
+                /** @type {HTMLDivElement} */
+                #elemLower;
+
+                /** @type {HTMLDivElement} */
+                #elemAnswers;
+
+                /** @type {HTMLButtonElement} */
+                #elemSubmit;
+
+                /** @type {number} */
+                #index = 0;
+
+                /** @type {number}*/
+                #lastIndex = 0;
+
+                /** @type {DOMParser} */
+                #parser = new DOMParser();
+
+                /** @type {QuizData} */
+                #data;
+
+                constructor(elem) {
+                    if (!(elem instanceof HTMLDivElement)) {
+                        return;
+                    }
+
+                    this.#setup(elem);
+                    this.#showQuestion();
+                }
+
+                #setup(elem) {
+                    const context = this;
+                    this.#elemQuiz = elem;
+
+                    if ("quizData" in this.#elemQuiz.dataset) {
+                        this.#data = JSON.parse(this.#elemQuiz.dataset.quizData);
+                        this.#elemQuiz.removeAttribute("data-quiz-data");
+                        this.#lastIndex = this.#data.questions.length - 1;
+                    }
+                    this.#elemUpper = this.#parse(`<div class="quiz-upper"></div>`);
+                    this.#elemLower = this.#parse(`<div class="quiz-lower"></div>`);
+                    this.#elemQuiz.append(this.#elemUpper, this.#elemLower);
+                    this.#elemQuiz.addEventListener("quiz.answer.clicked", (evt) => context.#onAnswerClicked(evt));
+                    this.#elemQuiz.addEventListener("quiz.submit", (evt) => context.#onSubmit(evt));
+
+                    this.#elemAnswers = this.#parse(`<div class="quiz-answers"></div>`);
+                    const buttonYes = this.#parse(`<button class="quiz-answer yes" type="button">${this.#data.ui.yes}</button>`);
+                    const buttonNo = this.#parse(`<button class="quiz-answer no" type="button">${this.#data.ui.no}</button>`);
+                    buttonYes.addEventListener("click", (evt) => {
+                        evt.target.dispatchEvent(new CustomEvent("quiz.answer.clicked", { detail: true, bubbles: true }));
+                    });
+                    buttonNo.addEventListener("click", (evt) => {
+                        evt.target.dispatchEvent(new CustomEvent("quiz.answer.clicked", { detail: false, bubbles: true }));
+                    });
+                    this.#elemAnswers.append(buttonYes, buttonNo);
+
+                    this.#elemSubmit = this.#parse(`<button class="quiz-submit hide" type="button">${this.#data.ui.submit}</button>`);
+                    this.#elemSubmit.addEventListener("click", (evt) => {
+                       evt.target.dispatchEvent(new CustomEvent("quiz.submit", { bubbles: true }));
+                    });
+
+                    this.#elemLower.append(this.#elemAnswers, this.#elemSubmit);
+                }
+
+                #showQuestion() {
+                    const question = this.#data.questions[this.#index];
+                    const questionText = this.#parse(`<div class="quiz-question-text">${question.text}</div>`)
+                    this.#elemUpper.appendChild(questionText);
+                }
+
+                #showFinalScreen() {
+                    const finalText = this.#parse(`<div class="quiz-question-text">${this.#data.ui.finalText}`)
+                    this.#elemUpper.appendChild(finalText);
+
+                }
+
+                #clearUpper() {
+                    while (this.#elemUpper.lastChild) this.#elemUpper.removeChild(this.#elemUpper.lastChild);
+                }
+
+                #hideAnswers() {
+                    this.#elemAnswers.classList.add('hide');
+                }
+
+                #showAnswers() {
+                    this.#elemAnswers.classList.remove('hide');
+                }
+
+                #hideSubmit() {
+                    this.#elemSubmit.classList.add('hide');
+                }
+
+                #showSubmit() {
+                    this.#elemSubmit.classList.remove('hide');
+                }
+
+                #onAnswerClicked(evt) {
+                    evt.preventDefault();
+                    this.#data.questions[this.#index].userAnswer = evt.detail;
+                    this.#clearUpper();
+                    this.#index++;
+
+                    if (this.#index <= this.#lastIndex) {
+                        this.#clearUpper();
+                        this.#showQuestion();
+                    } else {
+                        this.#hideAnswers();
+                        this.#showFinalScreen();
+                        this.#showSubmit();
+                    }
+                }
+
+                #onSubmit(evt) {
+                    evt.preventDefault();
+                    const answers = [];
+                    for (const question of this.#data.questions) {
+                        answers.push({ questionId: question.questionId, answer: question.userAnswer });
+                    }
+
+                    axios({ url: this.#data.submitUrl, method: "POST", data: { answers: answers } }).then((response) => {
+                        if (response.data.redirect) {
+                            window.location = response.data.redirect;
+                        }
+                    });
+                }
+
+                /** @return {HTMLElement}  */
+                #parse(string) {
+                    return /** @type {HTMLElement} */ (this.#parser.parseFromString(string, 'text/html').body.firstChild);
+                }
+            }
+
+            window.addEventListener("DOMContentLoaded", () => {
+                new Quiz(document.querySelector(".quiz"));
+            });
+        </script>
+    </head>
+    <body>
+        <div class="quiz" data-quiz-data='{{ quizData|json_encode }}'>
+        </div>
+    </body>
+</html>
