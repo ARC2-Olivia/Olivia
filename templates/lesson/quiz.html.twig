@@ -12,6 +12,10 @@
 
 {% block javascripts %}
     {{ parent() }}
+    {% if is_user() %}
+        {{ encore_entry_script_tags('axios') }}
+        {{ encore_entry_script_tags('lessons.completion') }}
+    {% endif %}
     {{ encore_entry_script_tags('quiz') }}
     <script>window.addEventListener("DOMContentLoaded", () => new Quiz(document.querySelector(".quiz")));</script>
 {% endblock %}
