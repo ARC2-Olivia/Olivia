@@ -429,7 +429,8 @@ practicalSubmodule:
         new: Novi praktični podmodul
     nav:
         overview: Pregled
-        evaluate: Procjena
+        assessment: Procjena
+        privacyPolicy: Politika privatnosti
         results: Rezultati
         edit:
             default: Uređivanje
@@ -505,11 +506,18 @@ practicalSubmoduleProcessorGroup:
 
 practicalSubmoduleAssessment:
     message:
-        1: Ova procjena se sastoji od <b>%questionCount%</b> pitanja. Neka pitanja će se prikazati samo ako ste na neko prethodno pitanje odgovorili na specifičan način.
-        2: Procjenu možete beskonačno ponavljati.
-        3: Klinite na gumb <i>Započni procjenu</i> kako biste pokrenuli procjenu.
+        assessment:
+            1: Ova procjena se sastoji od <b>%questionCount%</b> pitanja. Neka pitanja će se prikazati samo ako ste na neko prethodno pitanje odgovorili na specifičan način.
+            2: Procjenu možete beskonačno ponavljati.
+            3: Klinite na gumb <i>Započni procjenu</i> kako biste pokrenuli procjenu.
+        privacyPolicy:
+            1: Ovaj obrazac se sastoji od <b>%questionCount%</b> pitanja. Neka pitanja će se prikazati samo ako ste na neko prethodno pitanje odgovorili na specifičan način.
+            2: Obrazac možete beskonačno popunjavati.
+            3: Klinite na gumb <i>Popuni politiku privatnosti</i> kako biste počeli popunjavati obrazac.
     action:
-        start: Započni procjenu
+        start:
+            assessment: Započni procjenu
+            privacyPolicy: Popuni politiku privatnosti
         results: Pregled rezultata
 
 termsOfService:
