@@ -210,6 +210,7 @@ form:
                 modeOfOperation: Način rada
                 reportComment: Komentar na kraju izvještaja
                 reportCommentAlt: Komentar na kraju izvještaja (drugi jezik)
+                terminology: Terminologija
             placeholder:
                 name: Naziv praktičnog podmodula
                 description: Opis praktičnog podmodula...
@@ -446,6 +447,9 @@ practicalSubmodule:
     modeOfOperation:
         simple: Jednostavno
         advanced: Napredno
+    terminology:
+        assessment: Procjena
+        privacyPolicy: Politika privatnosti
     extra:
         question: Pitanje
         questions: Pitanja

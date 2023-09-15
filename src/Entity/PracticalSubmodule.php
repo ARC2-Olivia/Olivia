@@ -16,6 +16,9 @@ class PracticalSubmodule extends TranslatableEntity
     public const MODE_OF_OPERATION_SIMPLE = 'simple';
     public const MODE_OF_OPERATION_ADVANCED = 'advanced';
 
+    public const TERMINOLOGY_ASSESSMENT = 'assessment';
+    public const TERMINOLOGY_PRIVACY_POLICY = 'privacyPolicy';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -66,6 +69,10 @@ class PracticalSubmodule extends TranslatableEntity
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable]
     private ?string $reportComment = null;
+
+    #[ORM\Column(length: 32, nullable: true)]
+    #[Assert\Choice(choices: [PracticalSubmodule::TERMINOLOGY_ASSESSMENT, PracticalSubmodule::TERMINOLOGY_PRIVACY_POLICY], message: 'error.practicalSubmodule.terminology.invalid')]
+    private ?string $terminology = null;
 
     public function __construct()
     {
@@ -327,6 +334,21 @@ class PracticalSubmodule extends TranslatableEntity
     public function setReportComment(?string $reportComment): self
     {
         $this->reportComment = $reportComment;
+
+        return $this;
+    }
+
+    public function getTerminology(): ?string
+    {
+        if (null === $this->terminology) {
+            return self::TERMINOLOGY_ASSESSMENT;
+        }
+        return $this->terminology;
+    }
+
+    public function setTerminology(?string $terminology): self
+    {
+        $this->terminology = $terminology;
 
         return $this;
     }

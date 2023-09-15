@@ -172,6 +172,8 @@ error:
             missingTaskOrderKey: Nedotaju određeni podaci potreban za uvoz. Je li datoteka na bilo koji način mijenjana nakon izvoza?
             default: Došlo je do nepredviđene greške tijekom uvoza praktičnog podmodula.
         modeOfOperation: Nevažeća vrsta rada.
+        terminology:
+            invalid: Nevaljana terminologija.
     practicalSubmoduleQuestion:
         dependentValue:
             notBool: Za odabrano ovisno pitanje, njegova ovisna vrijednost mora biti ili <b>1</b> za <b><i>da</i></b> ili <b>0</b> za <b><i>ne</i></b>.

@@ -210,6 +210,7 @@ form:
                 modeOfOperation: Mode of operation
                 reportComment: End of report comment
                 reportCommentAlt: End of report comment (alternate language)
+                terminology: Terminology
             placeholder:
                 name: Name of the practical submodule
                 description: Practical submodule description...
@@ -446,6 +447,9 @@ practicalSubmodule:
     modeOfOperation:
         simple: Simple
         advanced: Advanced
+    terminology:
+        assessment: Assessment
+        privacyPolicy: Privacy policy
     extra:
         question: Question
         questions: Questions

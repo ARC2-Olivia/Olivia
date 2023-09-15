@@ -37,6 +37,11 @@ class PracticalSubmoduleType extends AbstractType
             $this->translator->trans('practicalSubmodule.modeOfOperation.advanced', [], 'app') => PracticalSubmodule::MODE_OF_OPERATION_ADVANCED
         ];
 
+        $terminologyChoices = [
+            $this->translator->trans('practicalSubmodule.terminology.assessment', [], 'app') => PracticalSubmodule::TERMINOLOGY_ASSESSMENT,
+            $this->translator->trans('practicalSubmodule.terminology.privacyPolicy', [], 'app') => PracticalSubmodule::TERMINOLOGY_PRIVACY_POLICY
+        ];
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.name',
@@ -65,6 +70,11 @@ class PracticalSubmoduleType extends AbstractType
                     'class' => 'form-textarea mb-3',
                     'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.description', [], 'app')
                 ]
+            ])
+            ->add('terminology', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmodule.label.terminology',
+                'choices' => $terminologyChoices,
+                'attr' => ['class' => 'form-select mb-3']
             ])
             ->add('paging', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.paging',
