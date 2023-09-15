@@ -25,6 +25,6 @@
     {{ parent() }}
     {% if is_user() %}
         {{ encore_entry_script_tags('axios') }}
-        {{ encore_entry_script_tags('lessons.completion.inner') }}
+        {{ encore_entry_script_tags('lessons.completion') }}
     {% endif %}
 {% endblock %}
