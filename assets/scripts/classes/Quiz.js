@@ -13,8 +13,8 @@ import axios from "axios";
 /**
  * @typedef UI
  * @type {object}
- * @property {string} yes
- * @property {string} no
+ * @property {string} true
+ * @property {string} false
  * @property {string} submit
  * @property {string} finalText
  */
@@ -80,8 +80,8 @@ class Quiz {
         this.#elemQuiz.addEventListener("quiz.submit", (evt) => context.#onSubmit(evt));
 
         this.#elemAnswers = this.#parse(`<div class="quiz-answers"></div>`);
-        const buttonYes = this.#parse(`<button class="quiz-answer yes" type="button">${this.#data.ui.yes}</button>`);
-        const buttonNo = this.#parse(`<button class="quiz-answer no" type="button">${this.#data.ui.no}</button>`);
+        const buttonYes = this.#parse(`<button class="quiz-answer yes" type="button">${this.#data.ui.true}</button>`);
+        const buttonNo = this.#parse(`<button class="quiz-answer no" type="button">${this.#data.ui.false}</button>`);
         buttonYes.addEventListener("click", (evt) => {
             evt.target.dispatchEvent(new CustomEvent("quiz.answer.clicked", { detail: true, bubbles: true }));
         });
@@ -100,12 +100,12 @@ class Quiz {
 
     #showQuestion() {
         const question = this.#data.questions[this.#index];
-        const questionText = this.#parse(`<div class="quiz-question-text">${question.text}</div>`)
+        const questionText = this.#parse(`<div class="quiz-text">${question.text}</div>`)
         this.#elemUpper.appendChild(questionText);
     }
 
     #showFinalScreen() {
-        const finalText = this.#parse(`<div class="quiz-question-text">${this.#data.ui.finalText}`)
+        const finalText = this.#parse(`<div class="quiz-text">${this.#data.ui.finalText}`)
         this.#elemUpper.appendChild(finalText);
 
     }

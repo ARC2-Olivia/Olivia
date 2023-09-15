@@ -634,8 +634,8 @@ class LessonController extends BaseController
             'submitUrl' => $this->generateUrl('lesson_quiz_finish', ['lesson' => $lessonItemQuiz->getLesson()->getId()]),
             'questions' => [],
             'ui' => [
-                'yes' => $this->translator->trans('common.yes', [], 'app'),
-                'no' => $this->translator->trans('common.no', [], 'app'),
+                'true' => $this->translator->trans('common.trueValue', [], 'app'),
+                'false' => $this->translator->trans('common.falseValue', [], 'app'),
                 'submit' => $this->translator->trans('common.submit', [], 'app'),
                 'finalText' => $this->translator->trans('course.extra.submitQuizAnswers', [], 'app')
             ]
