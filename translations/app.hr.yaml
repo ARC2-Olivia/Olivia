@@ -352,7 +352,7 @@ course:
         participants: Sudionici
     extra:
         noInstructors: Trenutno nema definiranih instruktora za ovaj tečaj.
-        lessons: "{0,1} %count% lekcija|[2-4] %count% lekcije|[5,+Inf[ %count% lekcija"
+        lessons: "[0-1] %count% lekcija|[2-4] %count% lekcije|[5,+Inf[ %count% lekcija"
         quizzes: "{0} %count% kviza|{1} %count% kviz|[2,+Inf[ %count% kviza"
         connectedTo: "Lekcije u ovom tečaju su povezane sa sljedećim procjenama iz praktičnog modula:"
         submitQuizAnswers: Kliknite na <i>Potvrdi</i> kako biste predali svoje odgovore, i time završili kviz.
