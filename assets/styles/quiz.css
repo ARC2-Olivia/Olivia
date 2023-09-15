@@ -5,6 +5,8 @@
     max-height: 100vh;
     width: 100%;
     justify-content: space-between;
+    position: relative;
+    overflow: hidden;
 }
 
 .quiz-upper, .quiz-lower {
@@ -80,6 +82,84 @@
 
 .quiz-submit:hover {
     opacity: 1;
+}
+
+.quiz-anim-whiteout {
+    z-index: 3000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ffffff;
+    opacity: 0;
+    animation-name: whiteout;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.quiz-anim-correct {
+    z-index: 3010;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scaleX(.4) translateY(-100%);
+    opacity: 1;
+    color: var(--app-color-green);
+    animation-name: result-success;
+    animation-duration: 1.5s;
+    animation-delay: 0.26s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.quiz-anim-wrong {
+    z-index: 3010;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scaleX(.4) translateY(-100%);
+    opacity: 1;
+    color: var(--app-color-red);
+    animation-name: result-success;
+    animation-duration: 1.5s;
+    animation-delay: 0.26s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+:is(.quiz-anim-correct, .quiz-anim-wrong) > svg {
+    width: 40%;
+}
+
+@keyframes whiteout {
+    0% { opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes result-success {
+    0% { transform: scaleX(.4) translateY(-100%); opacity: 1;}
+    20% { transform: scaleX(.4) translateY(0); opacity: 1; }
+    30% { transform: scaleX(1) scaleY(.5) translateY(25%); opacity: 1; }
+    60% { transform: scale(1) translateY(0); opacity: 1; }
+    82% { transform: scale(1) translateY(0); opacity: 1; }
+    100% { transform: scale(1) translateY(0); opacity: 0; }
 }
 
 @media screen and (min-width: 576px) {
