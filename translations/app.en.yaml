@@ -72,6 +72,11 @@ page:
     gdpr:
         index: Olivia | Data protection
     profile: Olivia | Profile
+    topic:
+        index: Olivia | Topics
+        new: Olivia | New topic
+        show: Olivia | Topic
+        edit: Olivia | Edit topic
 
 nav:
     training: Theory
@@ -574,6 +579,14 @@ file:
         edit: Replace file <i>%filename%</i>
     message:
         delete: Are you sure you want to delete this file?
+
+topic:
+    title:
+        index: Topics
+        new: New topic
+        edit: Edit topic <i>%topic%</i>
+    message:
+        delete: Are you sure you want to delete this topic?
 
 certificate:
     title: Certificate of completion

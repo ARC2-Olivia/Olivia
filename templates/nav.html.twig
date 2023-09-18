@@ -8,7 +8,7 @@
                 <li><a href="{{ path('index') }}" class="btn btn-theme-white">{{ 'nav.home'|trans }}</a></li>
                 <li><a href="{{ path('course_index') }}" class="btn btn-theme-white">{{ 'nav.training'|trans }}</a></li>
                 <li><a href="{{ path('practical_submodule_index') }}" class="btn btn-theme-white">{{ 'nav.practice'|trans }}</a></li>
-                <li><a href="#" class="btn btn-theme-white">{{ 'nav.topics'|trans }}</a></li>
+                <li><a href="{{ path('topic_index') }}" class="btn btn-theme-white">{{ 'nav.topics'|trans }}</a></li>
                 {% if is_granted('ROLE_USER') %}
                     {% if is_granted('ROLE_MODERATOR') %}
                         <li><a href="{{ path('tos_index') }}" class="btn btn-theme-white">{{ 'nav.termsOfService'|trans }}</a></li>

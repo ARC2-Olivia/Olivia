@@ -67,11 +67,16 @@ page:
         index: Olivia | Ispis uvjeta pružanja usluge
         new: Olivia | Novi uvjeti pružanja usluge
         show: Olivia | Uvjeti pružanja usluge
-        edit: Olivia | Uredđivanje uvjeta pružanja usluga
+        edit: Olivia | Uređivanje uvjeta pružanja usluga
         revise: Olivia | Revizija uvjeta pružanja usluga
     gdpr:
         index: Olivia | Zaštita podataka
     profile: Olivia | Profil
+    topic:
+        index: Olivia | Tematike
+        new: Olivia | Nova tematika
+        show: Olivia | Tematika
+        edit: Olivia | Uređivanje tematike
 
 nav:
     training: Teorija
