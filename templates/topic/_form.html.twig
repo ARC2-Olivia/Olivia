@@ -1,0 +1,14 @@
+{{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+    {{ form_label(form.title) }}
+    {{ form_widget(form.title) }}
+    {% if form.titleAlt is defined %}
+        {{ form_label(form.titleAlt) }}
+        {{ form_widget(form.titleAlt) }}
+    {% endif %}
+
+{#    {{ form_label(form.theoreticalSubmodules) }}
+    {{ form_widget(form.theoreticalSubmodules) }}
+
+    {{ form_label(form.practicalSubmodules) }}
+    {{ form_widget(form.practicalSubmodules) }}#}
+{{ form_end(form) }}

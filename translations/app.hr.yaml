@@ -314,6 +314,8 @@ form:
                 title: Naslov
                 theoreticalSubmodules: Teorijski podmoduli
                 practicalSubmodules: Praktični podmoduli
+            placeholder:
+                title: Naslov nove tematike
 
 profile:
     request:

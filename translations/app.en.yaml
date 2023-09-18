@@ -315,6 +315,8 @@ form:
                 titleAlt: Title (alternate language)
                 theoreticalSubmodules: Theoretical submodules
                 practicalSubmodules: Practical submodules
+            placeholder:
+                title: Title of the new topic
 
 profile:
     request:

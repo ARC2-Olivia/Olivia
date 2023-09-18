@@ -14,7 +14,7 @@
         {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
         <div class="row g-3">
             {% for topic in topics %}
-                {% include 'topic/_index_topic.html.twig' with {'course': course} %}
+                {% include 'topic/_index_topic.html.twig' with {'topic': topic} %}
             {% endfor %}
             {% if is_granted('ROLE_MODERATOR') %}{% include 'topic/_index_add.html.twig' %}{% endif %}
         </div>
