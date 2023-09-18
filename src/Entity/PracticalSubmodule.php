@@ -29,6 +29,10 @@ class PracticalSubmodule extends TranslatableEntity
     #[Gedmo\Translatable]
     private ?string $name = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable]
+    private ?string $publicName = null;
+
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "error.practicalSubmodule.description")]
     #[Gedmo\Translatable]
@@ -96,6 +100,18 @@ class PracticalSubmodule extends TranslatableEntity
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPublicName(): ?string
+    {
+        return $this->publicName;
+    }
+
+    public function setPublicName(?string $publicName): self
+    {
+        $this->publicName = $publicName;
 
         return $this;
     }

@@ -23,6 +23,10 @@ class Course extends TranslatableEntity
     #[Gedmo\Translatable]
     private ?string $name = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable]
+    private ?string $publicName = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
@@ -71,6 +75,18 @@ class Course extends TranslatableEntity
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPublicName(): ?string
+    {
+        return $this->publicName;
+    }
+
+    public function setPublicName(?string $publicName): self
+    {
+        $this->publicName = $publicName;
 
         return $this;
     }
