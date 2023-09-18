@@ -24,34 +24,38 @@ class TopicType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $editMode = $options['edit_mode'];
+
         $builder
             ->add('title', TextType::class, [
                 'label' => 'form.entity.topic.label.title',
                 'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.topic.placeholder.title', domain: 'app')]
             ])
-            ->add('ts', EntityType::class, [
-                'mapped' => false,
+            ->add('theoreticalSubmodules', EntityType::class, [
                 'required' => false,
                 'class' => Course::class,
                 'label' => 'form.entity.topic.label.theoreticalSubmodules',
                 'placeholder' => 'form.entity.topic.placeholder.theoreticalSubmodules',
                 'choice_label' => 'name',
                 'multiple' => true,
-                'query_builder' => function (EntityRepository $repo) {
-                    return $repo->createQueryBuilder('ts')->where('ts.topic IS NULL');
+                'query_builder' => function (EntityRepository $repo) use ($editMode) {
+                    $qb = $repo->createQueryBuilder('ts');
+                    if (false === $editMode) $qb->where('ts.topic IS NULL');
+                    return $qb;
                 },
                 'attr' => ['class' => 'mb-3', 'data-df-select' => '']
             ])
-            ->add('ps', EntityType::class, [
-                'mapped' => false,
+            ->add('practicalSubmodules', EntityType::class, [
                 'required' => false,
                 'class' => PracticalSubmodule::class,
                 'label' => 'form.entity.topic.label.practicalSubmodules',
                 'placeholder' => 'form.entity.topic.placeholder.practicalSubmodules',
                 'choice_label' => 'name',
                 'multiple' => true,
-                'query_builder' => function (EntityRepository $repo) {
-                    return $repo->createQueryBuilder('ps')->where('ps.topic IS NULL');
+                'query_builder' => function (EntityRepository $repo) use ($editMode) {
+                    $qb = $repo->createQueryBuilder('ps');
+                    if (false === $editMode) $qb->where('ps.topic IS NULL');
+                    return $qb;
                 },
                 'attr' => ['class' => 'mb-3', 'data-df-select' => '']
             ])
@@ -74,6 +78,7 @@ class TopicType extends AbstractType
             'data_class' => Topic::class,
             'translation_domain' => 'app',
             'include_translatable_fields' => false,
+            'edit_mode' => false,
             'attr' => [
                 'class' => 'd-flex flex-column',
                 'novalidate' => 'novalidate'

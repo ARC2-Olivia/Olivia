@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Course;
 use App\Entity\PracticalSubmodule;
+use App\Entity\Topic;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -50,6 +51,16 @@ class PracticalSubmoduleRepository extends ServiceEntityRepository
             ->where('c = :course')
             ->setParameter('course', $course)
             ->getQuery()->getResult();
+    }
+
+    public function findContainingTopic(Topic $topic)
+    {
+        return $this->createQueryBuilder('ps')
+            ->leftJoin('ps.topic', 't')
+            ->where('t = :topic')
+            ->setParameter('topic', $topic)
+            ->getQuery()->getResult()
+        ;
     }
 
     public function findByIdForLocale(int $id, string $locale): PracticalSubmodule|null

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.topic.edit'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <div class="row mb-5">
+            <h1 class="text-center">{{ 'topic.title.edit'|trans({'%topic%': topic.title})|raw }}</h1>
+        </div>
+        {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
+        <div class="row">
+            <div class="card">
+                <div class="card-text">
+                    {% include 'topic/_form.html.twig' %}
+                </div>
+                <div class="card-actions justify-content-end">
+                    <button type="submit" class="btn btn-theme-white bg-blue" form="{{ form.vars.id }}">{{ 'common.save'|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('df-select') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('df-select') }}
+{% endblock %}

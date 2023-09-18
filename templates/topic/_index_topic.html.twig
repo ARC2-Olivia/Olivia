@@ -10,6 +10,9 @@
         </div>
         <div class="card-actions ps-2 pe-2 pb-2 justify-content-between">
             <a href="#" class="btn btn-thematic-blue-outline">{{ 'button.show'|trans }}</a>
+            {% if is_granted('ROLE_MODERATOR') %}
+                <a href="{{ path('topic_edit', {'topic': topic.id}) }}" class="btn btn-theme-white bg-orange">{{ 'common.edit'|trans }}</a>
+            {% endif %}
         </div>
     </div>
 </div>
