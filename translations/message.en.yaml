@@ -75,7 +75,7 @@ warning:
         remove: You have removed <i>%instructor%</i> from the course <i>%course%</i>.
     lesson:
         delete: Lesson <i>%lesson%</i> from the course <i>%course%</i> has been deleted.
-        worseQuizResult: Quiz results have not been saved because you scored better results in the previous attempt than the new one.
+        worseQuizResult: Quiz results have not been saved because you scored better in the previous attempt than the new one.
     quizQuestion:
         delete: Question for the quiz <i>%lesson%</i> has been deleted.
     practicalSubmodule:
