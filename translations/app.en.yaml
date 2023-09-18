@@ -156,6 +156,8 @@ form:
             label:
                 name: Name
                 nameAlt: Name (alternate language)
+                publicName: Public name
+                publicNameAlt: Public name (alternate language)
                 description: Description
                 descriptionAlt: Description (alternate language)
                 image: Image (max. 5MB)
@@ -166,6 +168,7 @@ form:
                 practicalSubmodules: Connected practical assessments
             placeholder:
                 name: Course name
+                publicName: e.g. What is privacy policy and why is it important?
                 description: Course description...
                 workloadValue: 12 or 2.5
                 tags: GDPR,IT,Security,...
@@ -199,6 +202,8 @@ form:
             label:
                 name: Name
                 nameAlt: Name (alternate language)
+                publicName: Public name
+                publicNameAlt: Public name (alternate language)
                 image: Image
                 description: Description
                 descriptionAlt: Description (alternate language)
@@ -213,6 +218,7 @@ form:
                 terminology: Terminology
             placeholder:
                 name: Name of the practical submodule
+                publicName: e.g. Create your own privacy policy with ease!
                 description: Practical submodule description...
                 tags: GDPR,IT,Security
                 reportComment: What will the user read at the end of results/report?

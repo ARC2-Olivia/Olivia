@@ -40,6 +40,10 @@ class CourseType extends AbstractType
                 'label' => 'form.entity.course.label.name',
                 'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.name', [], 'app')]
             ])
+            ->add('publicName', TextType::class, [
+                'label' => 'form.entity.course.label.publicName',
+                'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.publicName', [], 'app')]
+            ])
             ->add('image', FileType::class,  [
                 'label' => 'form.entity.course.label.image',
                 'attr' => ['class' => 'form-input mb-3'],
@@ -91,6 +95,11 @@ class CourseType extends AbstractType
                     'mapped' => false,
                     'label' => 'form.entity.course.label.nameAlt',
                     'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.name', [], 'app')]
+                ])
+                ->add('publicNameAlt', TextType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.course.label.publicNameAlt',
+                    'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.publicName', [], 'app')]
                 ])
                 ->add('descriptionAlt', TextareaType::class, [
                     'mapped' => false,

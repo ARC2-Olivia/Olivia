@@ -154,8 +154,10 @@ form:
                 biographyAlt: Biografija (drugi jezik)
         course:
             label:
-                name: Naziv
-                nameAlt: Naziv (drugi jezik)
+                name: Naslov
+                nameAlt: Naslov (drugi jezik)
+                publicName: Javni naslov
+                publicNameAlt: Javni naslov (drugi jezik)
                 description: Opis
                 descriptionAlt: Opis (drugi jezik)
                 image: Slika (maks. 5MB)
@@ -166,6 +168,7 @@ form:
                 practicalSubmodules: Povezane procjene
             placeholder:
                 name: Naziv tečaja
+                publicName: npr. Što je politika privatnosti i zašto je morate imati?
                 description: Opis tečaja...
                 workloadValue: 12 or 2.5
                 tags: GDPR,IT,Sigurnost,...
@@ -197,8 +200,10 @@ form:
                 correctAnswer: Točan odgovor
         practicalSubmodule:
             label:
-                name: Naziv
-                nameAlt: Naziv (drugi jezik)
+                name: Naslov
+                nameAlt: Naslov (drugi jezik)
+                publicName: Javni naslov
+                publicNameAlt: Javni naslov (drugi jezik)
                 image: Slika
                 description: Opis
                 descriptionAlt: Opis (drugi jezik)
@@ -213,6 +218,7 @@ form:
                 terminology: Terminologija
             placeholder:
                 name: Naziv praktičnog podmodula
+                publicName: npr. Izradite svoju politiku privatnosti za čas posla!
                 description: Opis praktičnog podmodula...
                 tags: GDPR,IT,Sigurnost
                 reportComment: Što će korisnik pročitati na kraju rezulatat/izvještaja?

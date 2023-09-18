@@ -236,6 +236,12 @@ class CourseController extends BaseController
             $translated = true;
         }
 
+        $publicNameAlt = $form->get('publicNameAlt')->getData();
+        if ($publicNameAlt !== null && trim($publicNameAlt) !== '') {
+            $translationRepository->translate($course, 'publicName', $localeAlt, trim($publicNameAlt));
+            $translated = true;
+        }
+
         $descriptionAlt = $form->get('descriptionAlt')->getData();
         if ($descriptionAlt !== null && trim($descriptionAlt) !== '') {
             $translationRepository->translate($course, 'description', $localeAlt, trim($descriptionAlt));

@@ -445,6 +445,12 @@ class PracticalSubmoduleController extends BaseController
             $translated = true;
         }
 
+        $publicNameAlt = $form->get('publicNameAlt')->getData();
+        if ($publicNameAlt !== null && trim($publicNameAlt) !== '') {
+            $translationRepository->translate($evaluation, 'publicName', $localeAlt, trim($publicNameAlt));
+            $translated = true;
+        }
+
         $descriptionAlt = $form->get('descriptionAlt')->getData();
         if ($descriptionAlt !== null && trim($descriptionAlt) !== '') {
             $translationRepository->translate($evaluation, 'description', $localeAlt, trim($descriptionAlt));

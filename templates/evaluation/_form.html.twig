@@ -6,6 +6,13 @@
         {{ form_widget(form.nameAlt) }}
     {% endif %}
 
+    {{ form_label(form.publicName) }}
+    {{ form_widget(form.publicName) }}
+    {% if form.publicNameAlt is defined %}
+        {{ form_label(form.publicNameAlt) }}
+        {{ form_widget(form.publicNameAlt) }}
+    {% endif %}
+
     {{ form_label(form.image) }}
     {{ form_widget(form.image) }}
 
