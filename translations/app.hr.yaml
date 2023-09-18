@@ -44,6 +44,7 @@ button:
     results: Rezultati
     lessons: Lekcije
     export: Izvoz
+    show: Prikaži
 
 page:
     login: Olivia | Prijava
@@ -316,6 +317,8 @@ form:
                 practicalSubmodules: Praktični podmoduli
             placeholder:
                 title: Naslov nove tematike
+                theoreticalSubmodules: Odaberite teorijske podmodule...
+                practicalSubmodules: Odaberite praktične podmodule...
 
 profile:
     request:

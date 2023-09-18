@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Topic;
 use App\Form\TopicType;
+use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,13 +25,39 @@ class TopicController extends BaseController
     public function new(Request $request): Response
     {
         $topic = new Topic();
+        $topic->setLocale($this->getParameter('locale.default'));
         $form = $this->createForm(TopicType::class, $topic, ['include_translatable_fields' => true]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $this->em->persist($topic);
+            foreach ($topic->getTheoreticalSubmodules() as $ts) $ts->setTopic($topic);
+            foreach ($topic->getPracticalSubmodules() as $ps) $ps->setTopic($topic);
+            $this->em->flush();
+            $this->processTranslation($topic, $form);
+            $this->addFlash('success', $this->translator->trans('success.topic.new', domain: 'message'));
+            return $this->redirectToRoute('topic_index');
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
+            }
         }
 
         return $this->render('topic/new.html.twig', ['form' => $form->createView()]);
+    }
+
+    private function processTranslation(Topic $topic, \Symfony\Component\Form\FormInterface $form): void
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+        $translated = false;
+
+        $titleAlt = $form->get('titleAlt')->getData();
+        if (null !== $titleAlt && '' !== trim($titleAlt)) {
+            $translationRepository->translate($topic, 'title', $localeAlt, $titleAlt);
+            $translated = true;
+        }
+
+        if ($translated) $this->em->flush();
     }
 }

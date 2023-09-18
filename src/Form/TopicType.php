@@ -2,7 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Course;
+use App\Entity\PracticalSubmodule;
 use App\Entity\Topic;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,6 +28,32 @@ class TopicType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'form.entity.topic.label.title',
                 'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.topic.placeholder.title', domain: 'app')]
+            ])
+            ->add('ts', EntityType::class, [
+                'mapped' => false,
+                'required' => false,
+                'class' => Course::class,
+                'label' => 'form.entity.topic.label.theoreticalSubmodules',
+                'placeholder' => 'form.entity.topic.placeholder.theoreticalSubmodules',
+                'choice_label' => 'name',
+                'multiple' => true,
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('ts')->where('ts.topic IS NULL');
+                },
+                'attr' => ['class' => 'mb-3', 'data-df-select' => '']
+            ])
+            ->add('ps', EntityType::class, [
+                'mapped' => false,
+                'required' => false,
+                'class' => PracticalSubmodule::class,
+                'label' => 'form.entity.topic.label.practicalSubmodules',
+                'placeholder' => 'form.entity.topic.placeholder.practicalSubmodules',
+                'choice_label' => 'name',
+                'multiple' => true,
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('ps')->where('ps.topic IS NULL');
+                },
+                'attr' => ['class' => 'mb-3', 'data-df-select' => '']
             ])
         ;
 

@@ -44,6 +44,7 @@ button:
     results: Results
     lessons: Lessons
     export: Export
+    show: Show
 
 page:
     login: Olivia | Login
@@ -317,6 +318,8 @@ form:
                 practicalSubmodules: Practical submodules
             placeholder:
                 title: Title of the new topic
+                theoreticalSubmodules: Select theoretical submodules...
+                practicalSubmodules: Select practical submodules...
 
 profile:
     request:

@@ -59,6 +59,9 @@ success:
     resetPassword:
         change: Password has been successfully changed.
         email: "An e-mail message has been sent to the entered e-mail address (if an account exists). Click on the URL in the e-mail message to reset your password. Be warned: the URL is valid for only 3 hours, starting with the time submitted the request for password reset."
+    topic:
+        new: New topic has been created.
+        edit: Topic has been updated.
 
 warning:
     accountConfirmation:

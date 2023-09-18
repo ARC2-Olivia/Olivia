@@ -59,6 +59,9 @@ success:
     resetPassword:
         change: Lozinka je uspješno promijenjena.
         email: "E-mail poruka je poslana unesenoj e-mail adresi (ako postoji račun s tom e-mail adresom). Kliknite na poveznicu u e-mail poruci kako biste promjenili svoju lozinku. Poveznica ističe nakon 3 sata, počevši od vremena kada se poslali zahtjev za resetiranje lozinke."
+    topic:
+        new: Stvorena je nova tematika.
+        edit: Tematika je ažurirana.
 
 warning:
     accountConfirmation:
