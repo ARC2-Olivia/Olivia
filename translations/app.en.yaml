@@ -86,6 +86,7 @@ nav:
     files: Files
     home: Home
     gdpr: Data protection
+    topics: Topics
 
 footer:
     contact: "Contact: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -303,6 +304,12 @@ form:
                 originalName: Original name
                 createdAt: Created at
                 modifiedAt: Modified at
+        topic:
+            label:
+                title: Title
+                titleAlt: Title (alternate language)
+                theoreticalSubmodules: Theoretical submodules
+                practicalSubmodules: Practical submodules
 
 profile:
     request:

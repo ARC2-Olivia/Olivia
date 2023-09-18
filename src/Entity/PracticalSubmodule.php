@@ -78,6 +78,9 @@ class PracticalSubmodule extends TranslatableEntity
     #[Assert\Choice(choices: [PracticalSubmodule::TERMINOLOGY_ASSESSMENT, PracticalSubmodule::TERMINOLOGY_PRIVACY_POLICY], message: 'error.practicalSubmodule.terminology.invalid')]
     private ?string $terminology = null;
 
+    #[ORM\ManyToOne(inversedBy: 'practicalSubmodules')]
+    private ?Topic $topic = null;
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
@@ -365,6 +368,18 @@ class PracticalSubmodule extends TranslatableEntity
     public function setTerminology(?string $terminology): self
     {
         $this->terminology = $terminology;
+
+        return $this;
+    }
+
+    public function getTopic(): ?Topic
+    {
+        return $this->topic;
+    }
+
+    public function setTopic(?Topic $topic): self
+    {
+        $this->topic = $topic;
 
         return $this;
     }

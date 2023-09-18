@@ -226,3 +226,5 @@ error:
     dataRequest:
         access: Zahtjev za pristup podacima nije poslan. Molimo, ponovno učitajte stranicu te pokušajte ponovno.
         delete: Zahtjev za brisanje podataka nije poslan. Molimo, ponovno učitajte stranicu te pokušajte ponovno.
+    topic:
+        title: Naslov tematike ne smije biti prazan.

@@ -226,3 +226,5 @@ error:
     dataRequest:
         access: Unable to send data access request. Please, refresh the page and try again.
         delete: Unable to send data deletion request. Please, refresh the page and try again.
+    topic:
+        title: Topic title must not be empty.

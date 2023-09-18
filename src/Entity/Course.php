@@ -54,6 +54,9 @@ class Course extends TranslatableEntity
     #[ORM\ManyToMany(targetEntity: PracticalSubmodule::class, mappedBy: 'courses')]
     private Collection $practicalSubmodules;
 
+    #[ORM\ManyToOne(inversedBy: 'theoreticalSubmodules')]
+    private ?Topic $topic = null;
+
     public function __construct()
     {
         $this->instructors = new ArrayCollection();
@@ -289,6 +292,18 @@ class Course extends TranslatableEntity
         if ($this->practicalSubmodules->removeElement($practicalSubmodule)) {
             $practicalSubmodule->removeCourse($this);
         }
+
+        return $this;
+    }
+
+    public function getTopic(): ?Topic
+    {
+        return $this->topic;
+    }
+
+    public function setTopic(?Topic $topic): self
+    {
+        $this->topic = $topic;
 
         return $this;
     }

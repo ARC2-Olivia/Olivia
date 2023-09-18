@@ -86,6 +86,7 @@ nav:
     files: Datoteke
     home: Naslovna
     gdpr: Zaštita podataka
+    topics: Tematika
 
 footer:
     contact: "Kontakt: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -303,6 +304,11 @@ form:
                 originalName: Originalni naziv
                 createdAt: Vrijeme stvaranja
                 modifiedAt: Vrijeme modifikacije
+        topic:
+            label:
+                title: Naslov
+                theoreticalSubmodules: Teorijski podmoduli
+                practicalSubmodules: Praktični podmoduli
 
 profile:
     request:
