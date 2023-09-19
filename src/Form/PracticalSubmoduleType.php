@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -110,6 +111,11 @@ class PracticalSubmoduleType extends AbstractType
                     'class' => 'form-textarea mb-3',
                     'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.reportComment', [], 'app')
                 ],
+            ])
+            ->add('position', NumberType::class, [
+                'html5' => true,
+                'label' => 'form.entity.practicalSubmodule.label.position',
+                'attr' => ['class' => 'form-input mb-3', 'inputmode' => 'numeric']
             ])
         ;
         $builder->get('tags')->addModelTransformer(new SimpleArrayToStringTransformer());

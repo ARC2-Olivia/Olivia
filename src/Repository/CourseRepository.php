@@ -49,4 +49,23 @@ class CourseRepository extends ServiceEntityRepository
             ->getQuery()->getResult()
         ;
     }
+
+    public function findOrderedByPosition()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.position', 'ASC')
+            ->getQuery()->getResult()
+        ;
+    }
+
+    public function findContainingTopicAndOrderedByPosition(Topic $topic)
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.topic', 't')
+            ->where('t = :topic')
+            ->setParameter('topic', $topic)
+            ->orderBy('c.position', 'ASC')
+            ->getQuery()->getResult()
+        ;
+    }
 }

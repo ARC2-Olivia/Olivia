@@ -10,6 +10,7 @@ use App\Form\Transformer\SimpleArrayToStringTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -85,6 +86,11 @@ class CourseType extends AbstractType
                 'choice_label' => 'name',
                 'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'multiple' => true
+            ])
+            ->add('position', NumberType::class, [
+                'html5' => true,
+                'label' => 'form.entity.course.label.position',
+                'attr' => ['class' => 'form-input mb-3', 'inputmode' => 'numeric']
             ])
         ;
         $builder->get('tags')->addModelTransformer(new SimpleArrayToStringTransformer());

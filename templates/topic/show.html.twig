@@ -20,7 +20,7 @@
                         <a href="{{ path('course_index') }}">{{ 'nav.training'|trans }}</a>
                     </h2>
                     <div class="topic-segment-grid">
-                        {% for ts in topic.theoreticalSubmodules %}
+                        {% for ts in theoreticalSubmodules %}
                             <a href="{{ path('course_overview', {'course': ts.id}) }}" class="card">
                                 <div class="card-image">
                                     {% if ts.image is not empty %}
@@ -42,7 +42,7 @@
                         <a href="{{ path('practical_submodule_index') }}">{{ 'nav.practice'|trans }}</a>
                     </h2>
                     <div class="topic-segment-grid">
-                        {% for ps in topic.practicalSubmodules %}
+                        {% for ps in practicalSubmodules %}
                             <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': ps.id}) }}" class="card">
                                 <div class="card-image">
                                     {% if ps.image is not empty %}

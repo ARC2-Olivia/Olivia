@@ -25,7 +25,9 @@ class TopicController extends BaseController
     #[Route("/show/{topic}", name: "show")]
     public function show(Topic $topic): Response
     {
-        return $this->render('topic/show.html.twig', ['topic' => $topic]);
+        $theoreticalSubmodules = $this->em->getRepository(Course::class)->findContainingTopicAndOrderedByPosition($topic);
+        $practicalSubmodules = $this->em->getRepository(PracticalSubmodule::class)->findContainingTopicAndOrderedByPosition($topic);
+        return $this->render('topic/show.html.twig', ['topic' => $topic, 'practicalSubmodules' => $practicalSubmodules, 'theoreticalSubmodules' => $theoreticalSubmodules]);
     }
 
     #[Route("/new", name: "new")]

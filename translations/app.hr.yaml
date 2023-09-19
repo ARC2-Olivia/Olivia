@@ -173,6 +173,7 @@ form:
                 tagsAlt: Oznake odvojene zarezom (drugi jezik)
                 instructors: Instruktori
                 practicalSubmodules: Povezane procjene
+                position: Redni broj
             placeholder:
                 name: Naziv tečaja
                 publicName: npr. Što je politika privatnosti i zašto je morate imati?
@@ -223,6 +224,7 @@ form:
                 reportComment: Komentar na kraju izvještaja
                 reportCommentAlt: Komentar na kraju izvještaja (drugi jezik)
                 terminology: Terminologija
+                position: Redni broj
             placeholder:
                 name: Naziv praktičnog podmodula
                 publicName: npr. Izradite svoju politiku privatnosti za čas posla!

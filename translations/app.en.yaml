@@ -173,6 +173,7 @@ form:
                 tagsAlt: Comma separated tags (alternate language)
                 instructors: Instructors
                 practicalSubmodules: Connected practical assessments
+                position: Position
             placeholder:
                 name: Course name
                 publicName: e.g. What is privacy policy and why is it important?
@@ -223,6 +224,7 @@ form:
                 reportComment: End of report comment
                 reportCommentAlt: End of report comment (alternate language)
                 terminology: Terminology
+                position: Position
             placeholder:
                 name: Name of the practical submodule
                 publicName: e.g. Create your own privacy policy with ease!

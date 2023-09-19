@@ -45,7 +45,7 @@ class CourseController extends BaseController
     #[Route("/", name: "index")]
     public function index(CourseRepository $courseRepository): Response
     {
-        $courses = $courseRepository->findAll();
+        $courses = $courseRepository->findOrderedByPosition();
         return $this->render('course/index.html.twig', ['courses' => $courses]);
     }
 

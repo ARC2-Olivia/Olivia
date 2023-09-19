@@ -75,4 +75,23 @@ class PracticalSubmoduleRepository extends ServiceEntityRepository
         $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
         return $query->getOneOrNullResult();
     }
+
+    public function findOrderedByPosition()
+    {
+        return $this->createQueryBuilder('ps')
+            ->orderBy('ps.position', 'ASC')
+            ->getQuery()->getResult()
+        ;
+    }
+
+    public function findContainingTopicAndOrderedByPosition(Topic $topic)
+    {
+        return $this->createQueryBuilder('ps')
+            ->leftJoin('ps.topic', 't')
+            ->where('t = :topic')
+            ->setParameter('topic', $topic)
+            ->orderBy('ps.position', 'ASC')
+            ->getQuery()->getResult()
+        ;
+    }
 }

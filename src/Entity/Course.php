@@ -57,6 +57,9 @@ class Course extends TranslatableEntity
     #[ORM\ManyToOne(inversedBy: 'theoreticalSubmodules')]
     private ?Topic $topic = null;
 
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $position = null;
+
     public function __construct()
     {
         $this->instructors = new ArrayCollection();
@@ -309,6 +312,18 @@ class Course extends TranslatableEntity
     public function setTopic(?Topic $topic): self
     {
         $this->topic = $topic;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

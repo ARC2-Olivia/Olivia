@@ -81,6 +81,9 @@ class PracticalSubmodule extends TranslatableEntity
     #[ORM\ManyToOne(inversedBy: 'practicalSubmodules')]
     private ?Topic $topic = null;
 
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $position = null;
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
@@ -385,6 +388,18 @@ class PracticalSubmodule extends TranslatableEntity
     public function setTopic(?Topic $topic): self
     {
         $this->topic = $topic;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }
