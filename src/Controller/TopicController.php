@@ -71,6 +71,23 @@ class TopicController extends BaseController
         return $this->render('topic/edit.html.twig', ['topic' => $topic, 'form' => $form->createView()]);
     }
 
+    #[Route("/delete/{topic}", name: "delete", methods: ["POST"])]
+    #[IsGranted("ROLE_MODERATOR")]
+    public function delete(Topic $topic, Request $request): Response
+    {
+        $csrfToken = $request->get('_csrf_token');
+        if (null !== $csrfToken && $this->isCsrfTokenValid('topic.delete', $csrfToken)) {
+            $topicTitle = $topic->getTitle();
+            foreach ($this->em->getRepository(Course::class)->findContainingTopic($topic) as $ts) $ts->setTopic(null);
+            foreach ($this->em->getRepository(PracticalSubmodule::class)->findContainingTopic($topic) as $ps) $ps->setTopic(null);
+            $this->em->remove($topic);
+            $this->em->flush();
+            $this->addFlash('warning', $this->translator->trans('warning.topic.delete', ['%topic%' => $topicTitle], 'message'));
+            return $this->redirectToRoute('topic_index');
+        }
+        return $this->redirectToRoute('topic_edit', ['topic' => $topic->getId()]);
+    }
+
     private function processTranslation(Topic $topic, \Symfony\Component\Form\FormInterface $form): void
     {
         $translationRepository = $this->em->getRepository(Translation::class);

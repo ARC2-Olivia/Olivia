@@ -98,6 +98,8 @@ warning:
         delete: Izbrisana je procesorska grupa iz podmodula.
     file:
         delete: Izbrisana je datoteka.
+    topic:
+        delete: Izbrisala se tematika <i>%topic%</i>.
 
 error:
     passwordPolicy:

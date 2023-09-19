@@ -98,6 +98,8 @@ warning:
         delete: Processor group has been deleted from the submodule
     file:
         delete: A file has been removed.
+    topic:
+        delete: Topic <i>%topic%</i> has been deleted.
 
 error:
     passwordPolicy:

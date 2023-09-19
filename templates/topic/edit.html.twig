@@ -14,7 +14,11 @@
                 <div class="card-text">
                     {% include 'topic/_form.html.twig' %}
                 </div>
-                <div class="card-actions justify-content-end">
+                <div class="card-actions justify-content-between" onsubmit="return confirm('{{ 'topic.message.delete'|trans }}')">
+                    <form action="{{ path('topic_delete', {'topic': topic.id}) }}" method="post">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('topic.delete') }}"/>
+                        <button type="submit" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</button>
+                    </form>
                     <button type="submit" class="btn btn-theme-white bg-blue" form="{{ form.vars.id }}">{{ 'common.save'|trans }}</button>
                 </div>
             </div>
