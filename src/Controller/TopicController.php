@@ -22,6 +22,12 @@ class TopicController extends BaseController
         return $this->render('topic/index.html.twig', ['topics' => $topics]);
     }
 
+    #[Route("/show/{topic}", name: "show")]
+    public function show(Topic $topic): Response
+    {
+        return $this->render('topic/show.html.twig', ['topic' => $topic]);
+    }
+
     #[Route("/new", name: "new")]
     #[IsGranted("ROLE_MODERATOR")]
     public function new(Request $request): Response

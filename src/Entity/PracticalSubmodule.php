@@ -119,6 +119,11 @@ class PracticalSubmodule extends TranslatableEntity
         return $this;
     }
 
+    public function getNameOrPublicName(): ?string
+    {
+        return null !== $this->publicName ? $this->publicName : $this->name;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;

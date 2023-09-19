@@ -44,3 +44,7 @@
     object-fit: cover;
     object-position: center;
 }
+
+a.card {
+    text-decoration: none !important;
+}

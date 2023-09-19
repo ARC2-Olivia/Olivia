@@ -94,6 +94,11 @@ class Course extends TranslatableEntity
         return $this;
     }
 
+    public function getNameOrPublicName(): ?string
+    {
+        return null !== $this->publicName ? $this->publicName : $this->name;
+    }
+
     public function getImage(): ?string
     {
         return $this->image;

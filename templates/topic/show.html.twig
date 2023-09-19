@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.topic.show'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-module-theory.png') }}'); background-position: center 60%">
+        <div class="index-banner-wrapper">
+            <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
+            <div class="index-banner-subtitle">{{ topic.title }}</div>
+        </div>
+    </div>
+    <div class="container py-5">
+        {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
+        <div class="row g-3">
+            <div class="topic-segments">
+
+                <div class="topic-segment theory">
+                    <h2 class="topic-segment-title">
+                        <a href="{{ path('course_index') }}">{{ 'nav.training'|trans }}</a>
+                    </h2>
+                    <div class="topic-segment-grid">
+                        {% for ts in topic.theoreticalSubmodules %}
+                            <a href="{{ path('course_overview', {'course': ts.id}) }}" class="card">
+                                <div class="card-image">
+                                    {% if ts.image is not empty %}
+                                        <img src="{{ path('file_fetch_course_image', {'course': ts.id}) }}" alt="Course image"/>
+                                    {% endif %}
+                                </div>
+                                <div class="card-text flex-grow-1 centerify">
+                                    <span>{{ ts.nameOrPublicName }}</span>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="topic-segments-divider"></div>
+
+                <div class="topic-segment">
+                    <h2 class="topic-segment-title">
+                        <a href="{{ path('practical_submodule_index') }}">{{ 'nav.practice'|trans }}</a>
+                    </h2>
+                    <div class="topic-segment-grid">
+                        {% for ps in topic.practicalSubmodules %}
+                            <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': ps.id}) }}" class="card">
+                                <div class="card-image">
+                                    {% if ps.image is not empty %}
+                                        <img src="{{ path('file_fetch_practical_submodule_image', {'practicalSubmodule': ps.id}) }}" alt="Practical submodule image"/>
+                                    {% endif %}
+                                </div>
+                                <div class="card-text flex-grow-1 centerify">
+                                    <span>{{ ps.nameOrPublicName }}</span>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
