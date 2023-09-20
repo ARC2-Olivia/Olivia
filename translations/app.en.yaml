@@ -36,6 +36,7 @@ common:
     export: Export
     file: File
     add: Add
+    comingSoon: Coming soon!
 
 button:
     details: Details
@@ -83,6 +84,7 @@ nav:
     training: Theory
     practice: Practice
     aboutUs: About us
+    aboutProject: About ARC2 project
     admin: Admin
     users: Users
     instructors: Instructors

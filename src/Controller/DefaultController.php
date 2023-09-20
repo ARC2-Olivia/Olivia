@@ -70,4 +70,16 @@ class DefaultController extends BaseController
         }
         return $this->render('default/edit_profile_password.html.twig', ['form' => $form->createView()]);
     }
+
+    #[Route("/{_locale}/about-us", name: "about_us", requirements: ["_locale" => "%locale.supported%"])]
+    public function aboutUs(): Response
+    {
+        return $this->render('default/aboutUs.html.twig');
+    }
+
+    #[Route("/{_locale}/about-project", name: "about_project", requirements: ["_locale" => "%locale.supported%"])]
+    public function aboutProject(): Response
+    {
+        return $this->render('default/aboutProject.html.twig');
+    }
 }
