@@ -20,17 +20,8 @@
                         <a href="{{ path('course_index') }}">{{ 'nav.training'|trans }}</a>
                     </h2>
                     <div class="topic-segment-grid">
-                        {% for ts in theoreticalSubmodules %}
-                            <a href="{{ path('course_overview', {'course': ts.id}) }}" class="card">
-                                <div class="card-image">
-                                    {% if ts.image is not empty %}
-                                        <img src="{{ path('file_fetch_course_image', {'course': ts.id}) }}" alt="Course image"/>
-                                    {% endif %}
-                                </div>
-                                <div class="card-text flex-grow-1 centerify">
-                                    <span>{{ ts.nameOrPublicName }}</span>
-                                </div>
-                            </a>
+                        {% for course in theoreticalSubmodules %}
+                            {% include 'course/_index_course.html.twig' %}
                         {% endfor %}
                     </div>
                 </div>
@@ -42,17 +33,8 @@
                         <a href="{{ path('practical_submodule_index') }}">{{ 'nav.practice'|trans }}</a>
                     </h2>
                     <div class="topic-segment-grid">
-                        {% for ps in practicalSubmodules %}
-                            <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': ps.id}) }}" class="card">
-                                <div class="card-image">
-                                    {% if ps.image is not empty %}
-                                        <img src="{{ path('file_fetch_practical_submodule_image', {'practicalSubmodule': ps.id}) }}" alt="Practical submodule image"/>
-                                    {% endif %}
-                                </div>
-                                <div class="card-text flex-grow-1 centerify">
-                                    <span>{{ ps.nameOrPublicName }}</span>
-                                </div>
-                            </a>
+                        {% for evaluation in practicalSubmodules %}
+                            {% include 'evaluation/_index_evaluation.html.twig' %}
                         {% endfor %}
                     </div>
                 </div>
