@@ -103,7 +103,7 @@ footer:
 index:
     about:
         left:
-            title: O nama
+            title: O alatu OLIVIA
             description:
                 1: U današnjem digtalnom svijetu, značaj zaštite podataka je u stalnom porastu, te je važno da im MSP-ovi daju prioritet koji zaslužuju.
                 2: "Mi smo ARC2 Konzorcij, i sastojimo se od: hrvatskog i talijanskog tijela za zaštitu podataka, Fakulteta organizacije i informatike &ndash; Sveučilište u Zagrebu, Slobodnog sveučilišta u Bruxellesu, i Sveučilišta u Firenci."
@@ -122,12 +122,11 @@ index:
                 title: PRACTICAL
                 text: Praktična strana alata OLIVIA pomaže MSP-ovima u potpunosti implementirati GDPR.
     modules:
-        upper:
-            theoreticalModule: Teoretski modul
-            practicalModule: Praktični modul
         lower:
-            title: Lorem ipsum
-            description: Ut congue elementum aliquet. Nulla orci mi, feugiat eu turpis vel, vestibulum hendrerit urna. Proin id mi leo. Sed finibus ultrices lorem nec accumsan. Phasellus accumsan neque augue, nec ultricies metus ultrices quis. Vestibulum facilisis placerat orci, nec pharetra mauris aliquet et. Nulla tincidunt mauris a ante accumsan vehicula.
+            title: General data protection regulation virtual assistant - OLIVIA
+            description:
+                1: OLIVIA is a data-protection-related knowledge provider and promotor with the theoretical module offering know-how and helping SME owners and Data Protection Officers to learn more how and why to comply with the EU GDPR rules and principles.
+                2: On the other hand, OLIVIA is a free online tool helping institutions and individuals to have immediate, unlimited and unrestricted access to data protection assistance.
 
 form:
     security:
