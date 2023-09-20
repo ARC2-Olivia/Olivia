@@ -25,7 +25,7 @@
                     <span>{{ course|translate_workload }}</span>
                 </div>
             {% endif %}
-            <div class="course-card-name">{{ usePublicName ? course.nameOrPublicName : course.name }}</div>
+            <div class="course-card-name">{{ course.nameOrPublicName }}</div>
         </div>
         <div class="card-actions ps-2 pe-2 pb-2 justify-content-between">
             <a href="{{ path('course_overview', {'course': course.id}) }}" class="btn btn-thematic-blue-outline">{{ 'button.details'|trans }}</a>
