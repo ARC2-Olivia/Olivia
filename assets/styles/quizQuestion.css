@@ -25,10 +25,6 @@
     font-weight: 600;
 }
 
-.quiz-questions-overview .quiz-question-explanation {
-    font-style: italic;
-}
-
 .quiz-question-overview .quiz-question-side {
     flex-basis: 0;
 }

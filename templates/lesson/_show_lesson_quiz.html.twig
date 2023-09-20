@@ -11,7 +11,7 @@
                         <span style="font-weight: 600">{{ 'form.entity.quizQuestion.label.correctAnswer'|trans }}:</span>
                         {{ question.correctAnswer ? 'common.trueValue'|trans : 'common.falseValue'|trans }}
                     </div>
-                    <div class="quiz-question-explanation">{{ question.explanation }}</div>
+                    <div class="quiz-question-explanation ql-editor">{{ question.explanation|raw }}</div>
                 </div>
                 <div class="quiz-question-side align-self-end">
                     <a href="{{ path('quiz_question_edit', {'quizQuestion': question.id}) }}" class="btn btn-theme-white bg-green">{{ 'common.edit'|trans }}</a>

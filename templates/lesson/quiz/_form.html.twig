@@ -11,10 +11,18 @@
     {{ form_widget(form.correctAnswer) }}
 
     {{ form_label(form.explanation) }}
+    <div class="editor-container mb-3">
+        {% include '_partials/ql-editor-toolbar.html.twig' %}
+        <div id="explanation-editor"></div>
+    </div>
     {{ form_widget(form.explanation) }}
 
     {% if form.explanationAlt is defined %}
         {{ form_label(form.explanationAlt) }}
+        <div class="editor-container mb-3">
+            {% include '_partials/ql-editor-toolbar.html.twig' with {'editorToolbarId': 'editor-toolbar-alt', 'editorHtmlId': 'editor-html-alt'} %}
+            <div id="explanation-alt-editor"></div>
+        </div>
         {{ form_widget(form.explanationAlt) }}
     {% endif %}
 {{ form_end(form) }}

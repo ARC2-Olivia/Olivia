@@ -17,3 +17,40 @@
         </div>
     </div>
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('quill') }}
+    <style>
+        .editor-container {
+            height: 440px;
+            padding-bottom: 42px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('quill') }}
+    <script>
+        const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
+        const settingsAlt = { theme: "snow", modules: { toolbar: "#editor-toolbar-alt" } };
+        const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
+
+        window.onload = () => {
+            const quill = new Quill("#explanation-editor", settings);
+            QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
+
+            const quillAlt = new Quill("#explanation-alt-editor", settingsAlt);
+            QuillUtils.assignHtmlEditingCapabilities(quillAlt, document.getElementById("editor-html-alt"), translation)
+
+            const form = document.querySelector("form#quiz_question");
+            form.onsubmit = function(e) {
+                const content = this.querySelector("#quiz_question_explanation");
+                const contentAlt = this.querySelector("#quiz_question_explanationAlt");
+                content.value = quill.root.innerHTML;
+                contentAlt.value = quillAlt.root.innerHTML;
+            };
+        };
+    </script>
+{% endblock %}

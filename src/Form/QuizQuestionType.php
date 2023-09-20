@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\QuizQuestion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,13 +30,13 @@ class QuizQuestionType extends AbstractType
         $builder
             ->add('text', TextareaType::class, ['label' => 'form.entity.quizQuestion.label.text', 'attr' => ['class' => 'form-textarea mb-3']])
             ->add('correctAnswer', ChoiceType::class, ['label' => 'form.entity.quizQuestion.label.correctAnswer', 'choices' => $correctAnswerChoices, 'attr' => ['class' => 'form-select mb-3']])
-            ->add('explanation', TextareaType::class, ['label' => 'form.entity.quizQuestion.label.explanation', 'attr' => ['class' => 'form-textarea mb-3']])
+            ->add('explanation', HiddenType::class, ['label' => 'form.entity.quizQuestion.label.explanation', 'attr' => ['class' => 'form-textarea mb-3']])
         ;
 
         if ($options['include_translatable_field']) {
             $builder
                 ->add('textAlt', TextareaType::class, ['mapped' => false, 'label' => 'form.entity.quizQuestion.label.textAlt', 'attr' => ['class' => 'form-textarea mb-3']])
-                ->add('explanationAlt', TextareaType::class, ['mapped' => false, 'label' => 'form.entity.quizQuestion.label.explanationAlt', 'attr' => ['class' => 'form-textarea mb-3']])
+                ->add('explanationAlt', HiddenType::class, ['mapped' => false, 'label' => 'form.entity.quizQuestion.label.explanationAlt', 'attr' => ['class' => 'form-textarea mb-3']])
             ;
         }
     }
