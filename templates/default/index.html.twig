@@ -7,8 +7,9 @@
             <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
             <div class="index-banner-subtitle">{{ 'app.subtitle'|trans }}</div>
             <div class="index-banner-actions">
-                <a href="{{ path('course_index') }}" class="btn btn-theme-white bg-orange">{{ 'nav.training'|trans }}</a>
-                <a href="{{ path('practical_submodule_index') }}" class="btn btn-theme-white bg-blue ms-3">{{ 'nav.practice'|trans }}</a>
+                <a href="{{ path('topic_index') }}" class="btn btn-theme-white bg-orange">{{ 'nav.topics'|trans }}</a>
+                <a href="{{ path('about_us') }}" class="btn btn-theme-white bg-blue ms-3">{{ 'nav.aboutUs'|trans }}</a>
+                <a href="{{ path('about_project') }}" class="btn btn-theme-white bg-blue ms-3">{{ 'nav.aboutProject'|trans }}</a>
             </div>
         </div>
     </div>
@@ -48,23 +49,6 @@
                     <h3>{{ 'index.about.right.1.title'|trans }}</h3>
                     <p>{{ 'index.about.right.1.text'|trans }}</p>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="index-modules mt-5">
-        <div class="index-modules--upper">
-            <a class="index-modules--upper--img" style="background-image: url('{{ asset('build/images/index-module-theory.png') }}')" href="{{ path('course_index') }}">
-                <div class="index-modules--upper--tape bg-orange">{{ 'index.modules.upper.theoreticalModule'|trans }}</div>
-            </a>
-            <a class="index-modules--upper--img" style="background-image: url('{{ asset('build/images/index-module-practice.png') }}')" href="{{ path('practical_submodule_index') }}">
-                <div class="index-modules--upper--tape bg-blue">{{ 'index.modules.upper.practicalModule'|trans }}</div>
-            </a>
-        </div>
-        <div class="index-modules--lower">
-            <div class="container">
-                <h2>{{ 'index.modules.lower.title'|trans }}</h2>
-                <p>{{ 'index.modules.lower.description'|trans }}</p>
             </div>
         </div>
     </div>
