@@ -82,8 +82,14 @@ header, footer, .body {
 }
 
 header {
-    background-color: var(--app-color-dark-blue);
-    color: white;
+    color: var(--app-color-dark-blue);
+    background-color: white;
+}
+
+.header-logo > img {
+    height: 5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .brand {
@@ -92,7 +98,8 @@ header {
 }
 
 .nav-locale {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--app-color-dark-blue);
+    opacity: .5;
 }
 
 .exit-immitation {

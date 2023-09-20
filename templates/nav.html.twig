@@ -3,17 +3,20 @@
 {% set tosPath = is_granted('ROLE_MODERATOR') ? 'tos_index' : 'tos_active' %}
 
 <div class="container{% if wide is defined and wide == true %}-fluid{% endif %}">
-    <div class="row">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="header-logo">
+            <img src="{{ asset('build/images/header-logo.png') }}" alt="ARC2 project logo"/>
+        </div>
         <nav class="navigation-responsive">
-            <button class="navigation-open btn btn-theme-white">{{ mdi('menu') }}</button>
+            <button class="navigation-open btn btn-theme-dark-blue">{{ mdi('menu') }}</button>
             <ul class="navigation-main">
-                <li><a href="{{ path('index') }}" class="btn btn-theme-white">{{ 'nav.home'|trans }}</a></li>
-                <li><a href="{{ path('topic_index') }}" class="btn btn-theme-white">{{ 'nav.topics'|trans }}</a></li>
-                <li><a href="{{ path('about_us') }}" class="btn btn-theme-white">{{ 'nav.aboutUs'|trans }}</a></li>
-                <li><a href="{{ path('about_project') }}" class="btn btn-theme-white">{{ 'nav.aboutProject'|trans }}</a></li>
+                <li><a href="{{ path('index') }}" class="btn btn-theme-dark-blue">{{ 'nav.home'|trans }}</a></li>
+                <li><a href="{{ path('topic_index') }}" class="btn btn-theme-dark-blue">{{ 'nav.topics'|trans }}</a></li>
+                <li><a href="{{ path('about_us') }}" class="btn btn-theme-dark-blue">{{ 'nav.aboutUs'|trans }}</a></li>
+                <li><a href="{{ path('about_project') }}" class="btn btn-theme-dark-blue">{{ 'nav.aboutProject'|trans }}</a></li>
                 {% if is_granted('ROLE_USER') %}
                     <li>
-                        <button id="profile-button" class="btn btn-theme-white">{{ app.user.nameOrEmail }}</button>
+                        <button id="profile-button" class="btn btn-theme-dark-blue">{{ app.user.nameOrEmail }}</button>
                         <ul class="dropdown" data-dropdown data-for="#profile-button">
                             <li class="dropdown-item"><a href="{{ path('profile') }}">{{ 'common.profile'|trans }}</a></li>
                             <li class="dropdown-item"><a href="{{ path('gdpr_index') }}">{{ 'nav.gdpr'|trans }}</a></li>
@@ -32,7 +35,7 @@
                     <a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'common.login'|trans }}</a>
                 {% endif %}
                 <li>
-                    <button id="locale-button" class="btn btn-theme-white">
+                    <button id="locale-button" class="btn btn-theme-dark-blue">
                         {{ mdi('web', 'mt-1') }}
                         <sup class="nav-locale">{{ app.request.locale }}</sup>
                     </button>

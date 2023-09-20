@@ -63,7 +63,7 @@ ul.navigation-admin {
     align-items: stretch;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 1199px) {
     .navigation-responsive > .navigation-open {
         display: flex;
     }
@@ -76,7 +76,7 @@ ul.navigation-admin {
         bottom: 0;
         transform: translateY(100%);
         width: 100vw;
-        background-color: var(--app-color-dark-blue);
+        background-color: #ffffff;
     }
 
     .navigation-responsive > .navigation-main.show {
