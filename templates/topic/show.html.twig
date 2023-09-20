@@ -21,7 +21,7 @@
                     </h2>
                     <div class="topic-segment-grid">
                         {% for course in theoreticalSubmodules %}
-                            {% include 'course/_index_course.html.twig' %}
+                            {% include 'course/_index_course.html.twig' with {'usePublicName': true} %}
                         {% endfor %}
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                     </h2>
                     <div class="topic-segment-grid">
                         {% for evaluation in practicalSubmodules %}
-                            {% include 'evaluation/_index_evaluation.html.twig' %}
+                            {% include 'evaluation/_index_evaluation.html.twig' with {'usePublicName': true} %}
                         {% endfor %}
                     </div>
                 </div>
