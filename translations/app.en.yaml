@@ -74,10 +74,10 @@ page:
         index: Olivia | Data protection
     profile: Olivia | Profile
     topic:
-        index: Olivia | Topics
-        new: Olivia | New topic
-        show: Olivia | Topic
-        edit: Olivia | Edit topic
+        index: Olivia | GDPR topics
+        new: Olivia | New GDPR topic
+        show: Olivia | GDPR topic
+        edit: Olivia | Edit GDPR topic
 
 nav:
     training: Theory
@@ -92,7 +92,7 @@ nav:
     files: Files
     home: Home
     gdpr: Data protection
-    topics: Topics
+    topics: GDPR topics
 
 footer:
     contact: "Contact: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -320,7 +320,7 @@ form:
                 practicalSubmodules: Practical submodules
                 image: Image
             placeholder:
-                title: Title of the new topic
+                title: Title of the new GDPR topic
                 theoreticalSubmodules: Select theoretical submodules...
                 practicalSubmodules: Select practical submodules...
 
@@ -590,11 +590,11 @@ file:
 
 topic:
     title:
-        index: Topics
-        new: New topic
-        edit: Edit topic <i>%topic%</i>
+        index: GDPR topics
+        new: New GDPR topic
+        edit: Edit GDPR topic <i>%topic%</i>
     message:
-        delete: Are you sure you want to delete this topic?
+        delete: Are you sure you want to delete this GDPR topic?
 
 certificate:
     title: Certificate of completion

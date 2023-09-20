@@ -74,10 +74,10 @@ page:
         index: Olivia | Zaštita podataka
     profile: Olivia | Profil
     topic:
-        index: Olivia | Tematike
-        new: Olivia | Nova tematika
-        show: Olivia | Tematika
-        edit: Olivia | Uređivanje tematike
+        index: Olivia | GDPR tema
+        new: Olivia | Nova GDPR tema
+        show: Olivia | GDPR tema
+        edit: Olivia | Uređivanje GDPR teme
 
 nav:
     training: Teorija
@@ -92,7 +92,7 @@ nav:
     files: Datoteke
     home: Naslovna
     gdpr: Zaštita podataka
-    topics: Tematika
+    topics: GDPR teme
 
 footer:
     contact: "Kontakt: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -586,6 +586,14 @@ file:
         edit: Zamjena datoteke <i>%filename%</i>
     message:
         delete: Jeste li sigurni da želite izbrisati ovu datoteku?
+
+topic:
+    title:
+        index: GDPR teme
+        new: Nova GDPR tema
+        edit: Uredi GDPR temu <i>%topic%</i>
+    message:
+        delete: Jeste li sigurni da želite obrisati ovu GDPR temu?
 
 certificate:
     title: Potvrda o završetku
