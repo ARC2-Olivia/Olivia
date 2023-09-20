@@ -4,14 +4,16 @@
 {% block title %}{{ 'page.evaluation.show'|trans }}{% endblock %}
 
 {% block header %}
-    <div class="container">
-        <div class="row gx-2">
-            <div class="col-12 pt-5 pb-3">
-                <h1 class="course-header-name">
-                    <a href="{{ path('practical_submodule_index') }}">{{ 'nav.practice'|trans }}</a>
-                    {{ mdi('chevron-right') }}
-                    <span>{{ evaluation.name }}</span>
-                </h1>
+    <div class="container-fluid bg-dark-blue">
+        <div class="container fg-white">
+            <div class="row gx-2">
+                <div class="col-12 pt-5 pb-3">
+                    <h1 class="course-header-name">
+                        <a href="{{ path('practical_submodule_index') }}">{{ 'nav.practice'|trans }}</a>
+                        {{ mdi('chevron-right') }}
+                        <span>{{ evaluation.name }}</span>
+                    </h1>
+                </div>
             </div>
         </div>
     </div>

@@ -155,9 +155,11 @@ h2 > a {
 .bg-orange { background-color: var(--app-color-orange) !important; }
 .bg-green { background-color: var(--app-color-green) !important; }
 .bg-blue { background-color: var(--app-color-blue) !important; }
+.bg-dark-blue { background-color: var(--app-color-dark-blue) !important; }
 .bg-red { background-color: var(--app-color-red) !important; }
 
 .fg-orange { color: var(--app-color-orange) !important; }
 .fg-green { color: var(--app-color-green) !important; }
 .fg-blue { color: var(--app-color-blue) !important; }
 .fg-red { color: var(--app-color-red) !important; }
+.fg-white { color: #ffffff !important; }

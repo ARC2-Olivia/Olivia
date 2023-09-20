@@ -4,38 +4,40 @@
 {% block title %}{{ 'page.lesson.index'|trans }}{% endblock %}
 
 {% block header %}
-    <div class="container">
-        <div class="row gx-2">
-            <div class="col-12 col-md-9 pt-5 pb-3">
-                <h1 class="course-header-name">
-                    <a href="{{ path('course_index') }}">{{ 'nav.training'|trans }}</a>
-                    {{ mdi('chevron-right') }}
-                    <span>{{ course.name }}</span>
-                </h1>
-                <div class="course-header-details">
-                    {% if course.estimatedWorkload is not empty %}
-                        <div class="course-header-details-item">
-                            {{ mdi('timer-outline') }}
-                            <span>{{ course|translate_workload }}</span>
-                        </div>
-                    {% endif %}
-                    {% if course.lessons is not empty %}
-                        <div class="course-header-details-item">
-                            {{ mdi('book-open-page-variant-outline') }}
-                            <span>{{ 'course.extra.lessons'|trans({'%count%': course.countNonQuizLessons}) }}</span>
-                        </div>
-                        <div class="course-header-details-item">
-                            {{ mdi('clipboard-list-outline') }}
-                            <span>{{ 'course.extra.quizzes'|trans({'%count%': course.countQuizLessons}) }}</span>
-                        </div>
-                    {% endif %}
+    <div class="container-fluid bg-dark-blue">
+        <div class="container fg-white">
+            <div class="row gx-2">
+                <div class="col-12 col-md-9 pt-5 pb-3">
+                    <h1 class="course-header-name">
+                        <a href="{{ path('course_index') }}">{{ 'nav.training'|trans }}</a>
+                        {{ mdi('chevron-right') }}
+                        <span>{{ course.name }}</span>
+                    </h1>
+                    <div class="course-header-details">
+                        {% if course.estimatedWorkload is not empty %}
+                            <div class="course-header-details-item">
+                                {{ mdi('timer-outline') }}
+                                <span>{{ course|translate_workload }}</span>
+                            </div>
+                        {% endif %}
+                        {% if course.lessons is not empty %}
+                            <div class="course-header-details-item">
+                                {{ mdi('book-open-page-variant-outline') }}
+                                <span>{{ 'course.extra.lessons'|trans({'%count%': course.countNonQuizLessons}) }}</span>
+                            </div>
+                            <div class="course-header-details-item">
+                                {{ mdi('clipboard-list-outline') }}
+                                <span>{{ 'course.extra.quizzes'|trans({'%count%': course.countQuizLessons}) }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
+                {% if course.image is not empty %}
+                    <div class="col-12 col-md-3 d-none d-md-block">
+                        <div class="course-header-image" style="background-image: url('{{ path('file_fetch_course_image', {'course': course.id}) }}')"></div>
+                    </div>
+                {% endif %}
             </div>
-            {% if course.image is not empty %}
-                <div class="col-12 col-md-3 d-none d-md-block">
-                    <div class="course-header-image" style="background-image: url('{{ path('file_fetch_course_image', {'course': course.id}) }}')"></div>
-                </div>
-            {% endif %}
         </div>
     </div>
 {% endblock %}
