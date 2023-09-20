@@ -6,8 +6,10 @@ use App\Entity\Course;
 use App\Entity\PracticalSubmodule;
 use App\Entity\Topic;
 use App\Form\TopicType;
+use App\Traits\BasicFileManagementTrait;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route("/{_locale}/topic", name: "topic_", requirements: ["_locale" => "%locale.supported%"])]
 class TopicController extends BaseController
 {
+    use BasicFileManagementTrait;
+
     #[Route("/", name: "index")]
     public function index(): Response
     {
@@ -44,6 +48,8 @@ class TopicController extends BaseController
             foreach ($topic->getTheoreticalSubmodules() as $ts) $ts->setTopic($topic);
             foreach ($topic->getPracticalSubmodules() as $ps) $ps->setTopic($topic);
             $this->em->flush();
+            $image = $form->get('image')->getData();
+            $this->storeTopicImage($image, $topic);
             $this->processTranslation($topic, $form);
             $this->addFlash('success', $this->translator->trans('success.topic.new', domain: 'message'));
             return $this->redirectToRoute('topic_index');
@@ -69,6 +75,9 @@ class TopicController extends BaseController
             foreach ($topic->getTheoreticalSubmodules() as $ts) $ts->setTopic($topic);
             foreach ($topic->getPracticalSubmodules() as $ps) $ps->setTopic($topic);
             $this->em->flush();
+            $image = $form->get('image')->getData();
+            if (null !== $image) $this->removeTopicImage($topic);
+            $this->storeTopicImage($image, $topic);
             $this->addFlash('success', $this->translator->trans('success.topic.edit', domain: 'message'));
         } else {
             foreach ($form->getErrors(true) as $error) {
@@ -109,5 +118,30 @@ class TopicController extends BaseController
         }
 
         if ($translated) $this->em->flush();
+    }
+
+    private function storeTopicImage(?UploadedFile $image, Topic $topic): void
+    {
+        try {
+            if (null !== $image) {
+                $uploadDir = $this->getParameter('dir.topic_image');
+                $filenamePrefix = sprintf('topic-%d-', $topic->getId());
+                $filename = $this->storeFile($image, $uploadDir, $filenamePrefix);
+                $topic->setImage($filename);
+                $this->em->flush();
+            }
+        } catch (\Exception $ex) {
+            $this->addFlash('warning', $this->translator->trans('warning.topic.image.store', domain: 'message'));
+        }
+    }
+
+    private function removeTopicImage(Topic $topic): void
+    {
+        if (null !== $topic->getImage()) {
+            $uploadDir = $this->getParameter('dir.topic_image');
+            $this->removeFile($uploadDir . '/' . $topic->getImage());
+            $topic->setImage(null);
+            $this->em->flush();
+        }
     }
 }

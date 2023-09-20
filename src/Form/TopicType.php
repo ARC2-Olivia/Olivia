@@ -8,10 +8,12 @@ use App\Entity\Topic;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class TopicType extends AbstractType
 {
@@ -58,6 +60,20 @@ class TopicType extends AbstractType
                     return $qb;
                 },
                 'attr' => ['class' => 'mb-3', 'data-df-select' => '']
+            ])
+            ->add('image', FileType::class,  [
+                'label' => 'form.entity.topic.label.image',
+                'attr' => ['class' => 'form-input mb-3'],
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Assert\File([
+                        'maxSize' => '5M',
+                        'maxSizeMessage' => 'error.topic.image.maxSize',
+                        'mimeTypes' => 'image/*',
+                        'mimeTypesMessage' => 'error.topic.image.mimeType'
+                    ])
+                ]
             ])
         ;
 

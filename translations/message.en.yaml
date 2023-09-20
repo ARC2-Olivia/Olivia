@@ -100,6 +100,7 @@ warning:
         delete: A file has been removed.
     topic:
         delete: Topic <i>%topic%</i> has been deleted.
+        image.store: There was an error storing the topic image. You can try to reupload it while editing the topic.
 
 error:
     passwordPolicy:
@@ -233,3 +234,6 @@ error:
         delete: Unable to send data deletion request. Please, refresh the page and try again.
     topic:
         title: Topic title must not be empty.
+        image:
+            maxSize: File exceeds the allowed maximum size of 5 megabytes.
+            mimeType: File has to be an image.

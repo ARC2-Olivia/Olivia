@@ -7,6 +7,7 @@ use App\Entity\File;
 use App\Entity\Instructor;
 use App\Entity\LessonItemFile;
 use App\Entity\PracticalSubmodule;
+use App\Entity\Topic;
 use App\Service\WkhtmltopdfService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,6 +31,14 @@ class FileFetchController extends AbstractController
     {
         $dir = $this->getParameter('dir.practical_submodule_image');
         $filepath = $dir . '/' . $practicalSubmodule->getImage();
+        return $this->file($filepath);
+    }
+
+    #[Route("/topic-image/{topic}", name: 'topic_image')]
+    public function topicImage(Topic $topic): Response
+    {
+        $dir = $this->getParameter('dir.topic_image');
+        $filepath = $dir . '/' . $topic->getImage();
         return $this->file($filepath);
     }
 

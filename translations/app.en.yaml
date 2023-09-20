@@ -318,6 +318,7 @@ form:
                 titleAlt: Title (alternate language)
                 theoreticalSubmodules: Theoretical submodules
                 practicalSubmodules: Practical submodules
+                image: Image
             placeholder:
                 title: Title of the new topic
                 theoreticalSubmodules: Select theoretical submodules...
