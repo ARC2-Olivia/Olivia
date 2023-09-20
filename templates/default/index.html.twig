@@ -32,22 +32,22 @@
             <div class="index-about--right--item">
                 <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
                 <div class="index-about--right--item-info">
-                    <h3>{{ 'index.about.right.1.title'|trans }}</h3>
-                    <p>{{ 'index.about.right.1.text'|trans }}</p>
+                    <h3>{{ 'index.about.right.2.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.2.text'|trans }}</p>
                 </div>
             </div>
             <div class="index-about--right--item">
                 <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
                 <div class="index-about--right--item-info">
-                    <h3>{{ 'index.about.right.1.title'|trans }}</h3>
-                    <p>{{ 'index.about.right.1.text'|trans }}</p>
+                    <h3>{{ 'index.about.right.3.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.3.text'|trans }}</p>
                 </div>
             </div>
             <div class="index-about--right--item">
                 <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
                 <div class="index-about--right--item-info">
-                    <h3>{{ 'index.about.right.1.title'|trans }}</h3>
-                    <p>{{ 'index.about.right.1.text'|trans }}</p>
+                    <h3>{{ 'index.about.right.4.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.4.text'|trans }}</p>
                 </div>
             </div>
         </div>
@@ -58,16 +58,10 @@
             <div id="carousel" class="index-carousel">
                 {% for testimonial in testimonials %}
                     <div class="index-carousel-slide">
-                        <div class="index-testimonial container">
+                        <div class="index-testimonial">
+                            {{ mdi('book-open-page-variant-outline', 'index-testimonial-icon') }}
                             <h3>{{ testimonial.title }}</h3>
                             <p>{{ testimonial.text }}</p>
-                            <div class="index-testimonial-person">
-                                <img src="{{ testimonial.image }}" alt="Image of the person giving testimony"/>
-                                <div class="d-flex flex-column">
-                                    <span>{{ testimonial.personName }}</span>
-                                    <span>{{ testimonial.personJob }}</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 {% endfor %}

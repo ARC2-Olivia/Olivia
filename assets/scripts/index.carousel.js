@@ -10,4 +10,9 @@ window.addEventListener("load", function() {
             timesScrolled = 0;
         }
     }, 5000)
+
+    window.addEventListener("resize", function() {
+        carousel.scrollLeft = 0;
+        timesScrolled = 0;
+    });
 });

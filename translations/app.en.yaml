@@ -111,8 +111,17 @@ index:
                 3: Our mission is to empower Croatian and Italian SMEs to achieve compliance with data protection regulations. That's why we've introduced Olivia &ndash; a tool designed to make GDPR compliance easier than ever before!
         right:
             1:
-                title: Innovative
-                text: Lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+                title: INNOVATIVE
+                text: Created in partnership, OLIVIA is enabling innovative approach to GDPR compliance.
+            2:
+                title: FREE
+                text: OLIVIA is easy-to-use open tool freely accessible for all interested users.
+            3:
+                title: EDUCATIONAL
+                text: OLIVIA  streamlines access to knowledge framework, rules and procedures.
+            4:
+                title: PRACTICAL
+                text: OLIVIA’s practical side helps SMEs in full GDPR implementation.
     modules:
         upper:
             theoreticalModule: Theoretical module

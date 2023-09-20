@@ -110,8 +110,17 @@ index:
                 3: Naša misija je pomoći hrvatskim i talijanskim MSP-ovima postignuti usklađenost s propisima o zaštiti podataka. Zato predstavljamo Oliviju &ndash; alat dizajniran da učini usklađivanje s GDPR-om lakše nego ikada prije!
         right:
             1:
-                title: Inovativno
-                text: Lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+                title: INNOVATIVE
+                text: Stvorena u partnerstvu, OLIVIA omogućuje inovativan pristup usklađivanju s GDPR-om.
+            2:
+                title: FREE
+                text: OLIVIA je jednostavni i otvoreni alat, besplatno dostupan svim zainteresiranim korisnicima.
+            3:
+                title: EDUCATIONAL
+                text: OLIVIA pojednostavljuje pristup okviru znanja, pravilima, i procedurama.
+            4:
+                title: PRACTICAL
+                text: Praktična strana alata OLIVIA pomaže MSP-ovima u potpunosti implementirati GDPR.
     modules:
         upper:
             theoreticalModule: Teoretski modul

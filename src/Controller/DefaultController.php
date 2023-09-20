@@ -24,9 +24,10 @@ class DefaultController extends BaseController
     {
         $package = new Package(new EmptyVersionStrategy());
         $testimonials = [
-            ['title' => 'Testimonial #1', 'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 'image' => $package->getUrl('build/images/avatar-empty.svg'), 'personName' => 'John Doe', 'personJob' => 'Job name'],
-            ['title' => 'Testimonial #2', 'text' => 'Pellentesque ex sem, tristique ac auctor a, viverra ullamcorper tortor.', 'image' => $package->getUrl('build/images/avatar-empty.svg'), 'personName' => 'John Doe', 'personJob' => 'Job name'],
-            ['title' => 'Testimonial #3', 'text' => 'Pellentesque placerat a turpis ut vehicula. In hac habitasse platea dictumst. Aenean nibh ante, eleifend vel lacinia in, pharetra quis elit.', 'image' => $package->getUrl('build/images/avatar-empty.svg'), 'personName' => 'Jane Doe', 'personJob' => 'Job name'],
+            ['title' => 'GDPR Fact #1', 'text' => 'GDPR is an EU law with mandatory rules for how organizations and companies must use personal data in an integrity friendly way.'],
+            ['title' => 'GDPR Fact #2', 'text' => 'Use of personal data must be respectful to the individuals’ rights, in line with integrity friendly principles and legal.'],
+            ['title' => 'GDPR Fact #3', 'text' => 'Personal data means any information which, directly or indirectly, could identify a living person.'],
+            ['title' => 'GDPR Fact #4', 'text' => 'The GDPR provides each person with certain rights of their personal data.'],
         ];
         return $this->render('default/index.html.twig', ['testimonials' => $testimonials]);
     }
