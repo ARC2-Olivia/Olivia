@@ -43,3 +43,21 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const cards = document.querySelectorAll(".card");
+            let maxHeight = 0;
+            for (const card of cards) {
+                if (maxHeight < card.offsetHeight) {
+                    maxHeight = card.offsetHeight;
+                }
+            }
+            for (const card of cards) {
+                card.style.height = `${maxHeight}px`;
+            }
+        });
+    </script>
+{% endblock %}
