@@ -12,7 +12,7 @@
     </div>
     <div class="container py-5">
         {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
-        <div class="row g-3">
+        <div class="submodule-grid">
             {% for evaluation in evaluations %}
                 {% include 'evaluation/_index_evaluation.html.twig' with {'evaluation': evaluation} %}
             {% endfor %}

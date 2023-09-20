@@ -4,18 +4,16 @@
     {% set usePublicName = false %}
 {% endif %}
 
-<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-    <div class="card p-0" style="min-height: 320px">
-        <div class="card-image ms-0 me-0 mt-0">
-            {% if evaluation.image is not null %}
-                <img src="{{ path('file_fetch_practical_submodule_image', {'practicalSubmodule': evaluation.id}) }}" alt="Practical submodule image"/>
-            {% endif %}
-        </div>
-        <div class="card-text flex-grow-1 ps-2 pe-2">
-            <div class="text-black">{{ evaluation.nameOrPublicName }}</div>
-        </div>
-        <div class="card-actions ps-2 pe-2 pb-2">
-            <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.details'|trans }}</a>
-        </div>
+<div class="card p-0" style="min-height: 320px">
+    <div class="card-image ms-0 me-0 mt-0">
+        {% if evaluation.image is not null %}
+            <img src="{{ path('file_fetch_practical_submodule_image', {'practicalSubmodule': evaluation.id}) }}" alt="Practical submodule image"/>
+        {% endif %}
+    </div>
+    <div class="card-text flex-grow-1 ps-2 pe-2">
+        <div class="text-black">{{ evaluation.nameOrPublicName }}</div>
+    </div>
+    <div class="card-actions ps-2 pe-2 pb-2">
+        <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.details'|trans }}</a>
     </div>
 </div>

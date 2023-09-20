@@ -152,6 +152,12 @@ h2 > a {
     color: unset;
 }
 
+.submodule-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
 .bg-orange { background-color: var(--app-color-orange) !important; }
 .bg-green { background-color: var(--app-color-green) !important; }
 .bg-blue { background-color: var(--app-color-blue) !important; }
@@ -163,3 +169,21 @@ h2 > a {
 .fg-blue { color: var(--app-color-blue) !important; }
 .fg-red { color: var(--app-color-red) !important; }
 .fg-white { color: #ffffff !important; }
+
+@media screen and (max-width: 1199px) {
+    .submodule-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .submodule-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .submodule-grid {
+        grid-template-columns: 1fr;
+    }
+}
