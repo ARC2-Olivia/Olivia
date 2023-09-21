@@ -37,6 +37,8 @@ common:
     file: File
     add: Add
     comingSoon: Coming soon!
+    correct: Correct
+    incorrect: Incorrect
 
 button:
     details: Details
@@ -216,6 +218,12 @@ form:
                 explanation: Explanation
                 explanationAlt: Explanation (alternate language)
                 correctAnswer: Correct answer
+                type: Type
+        quizQuestionChoice:
+            label:
+                text: Choice text
+                textAlt: Choice text (alternate language)
+                correct: Correct
         practicalSubmodule:
             label:
                 name: Name
@@ -448,6 +456,14 @@ quizQuestion:
     add: Add question
     delete: Are you sure you want to delete this question?
     edit: Editing a quiz question
+    type:
+        trueFalse: True/False
+        singleChoice: Single choice
+
+quizQuestionChoice:
+    add: Add choice
+    delete: Are you sure you want to delete this choice?
+    edit: Editing a choice
 
 note:
     dataAccess:

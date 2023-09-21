@@ -14,6 +14,31 @@
                     <button type="submit" class="btn btn-theme-white bg-blue" form="{{ form.vars.id }}">{{ 'common.submit'|trans }}</button>
                     <a href="{{ path('lesson_show', {'lesson': lesson.id}) }}" class="btn btn-link">{{ 'common.cancel'|trans }}</a>
                 </div>
+
+                {% if constant('TYPE_SINGLE_CHOICE', quizQuestion) == quizQuestion.type %}
+                    <hr class="my-3"/>
+                    <a href="{{ path('quiz_question_add_choice', {'quizQuestion': quizQuestion.id}) }}" class="btn btn-link">{{ mdi('plus') }}{{ 'quizQuestionChoice.add'|trans }}</a>
+                    <div class="quiz-question-choices mt-3">
+                        {% for qqc in quizQuestion.quizQuestionChoices %}
+                            <div class="quiz-question-choice">
+                                <div class="quiz-question-choice-info">
+                                    <div class="quiz-question-choice-text">{{ qqc.text }}</div>
+                                    <div class="quiz-question-choice-mark">{{ ('common.'~(qqc.correct ? 'correct' : 'incorrect'))|trans }}</div>
+                                </div>
+                                <div class="quiz-question-choice-actions">
+                                    <a href="{{ path('quiz_question_choice_edit', {'qqc': qqc.id}) }}" class="btn btn-theme-white btn-sm bg-green">{{ mdi('cog') }}</a>
+                                    <form method="post"
+                                          action="{{ path('quiz_question_choice_delete', {'qqc': qqc.id}) }}"
+                                          onsubmit='return confirm("{{ 'quizQuestionChoice.delete'|trans }}")'
+                                    >
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('qqc.delete') }}"/>
+                                        <button type="submit" class="btn btn-theme-white bg-red btn-sm">{{ mdi('trash-can-outline') }}</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -24,6 +24,9 @@ success:
     quizQuestion:
         new: You have added a new question to the course.
         edit: Question has been edited.
+    quizQuestionChoice:
+        new: You have added a new choice to the question.
+        edit: Choice has been edited.
     practicalSubmodule:
         new: You have created a new practical submodule.
         edit: A practical submodule has been edited.
@@ -81,6 +84,9 @@ warning:
         worseQuizResult: Quiz results have not been saved because you scored better in the previous attempt than the new one.
     quizQuestion:
         delete: Question for the quiz <i>%lesson%</i> has been deleted.
+    quizQuestionChoice:
+        delete: Choice has been deleted.
+        correctAnswerChanged: Because the choice has been marked as the correct one, the other choices were automatically marked incorrect.
     practicalSubmodule:
         image.store: There was an error storing the image for the practical submodule. You can try to reupload it while editing the basic practical submodule information.
         delete: Submodule <i>%evaluation%</i> has been deleted.

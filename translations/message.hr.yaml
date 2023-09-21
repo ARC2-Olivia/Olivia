@@ -24,6 +24,9 @@ success:
     quizQuestion:
         new: Dodano je novo kviz pitanje.
         edit: Pitanje je uređeno.
+    quizQuestionChoice:
+        new: Dodan je novi odgovor na pitanje.
+        edit: Odgovor je uređen.
     practicalSubmodule:
         new: Stvoren je novi praktični podmodul.
         edit: Praktični podmodul je uređen.
@@ -81,6 +84,9 @@ warning:
         worseQuizResult: Rezultati kviza se nisu spremili jer ste na prethodnom pokušaju rješavanja postigli bolji rezultat od novijeg pokušaja.
     quizQuestion:
         delete: Izbrisano je pitanje kviza <i>%lesson%</i>.
+    quizQuestionChoice:
+        delete: Obrisan je odgovor na pitanje.
+        correctAnswerChanged: Zbog toga što je odgovor na pitanje označen točnim, ostali odgovori su automatski označeni kao netočni.
     practicalSubmodule:
         image.store: Došlo je do greške prilikom spremanja slike za praktični podmodul. Pokušajte je ponovno učitati na stranici za uređivanje osnovnih informacija podmodula.
         delete: Izbrisan je podmodul <i>%evaluation%</i>.

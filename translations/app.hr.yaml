@@ -36,6 +36,8 @@ common:
     export: Izvoz
     file: Datoteka
     add: Dodaj
+    correct: Točno
+    incorrect: Netočno
 
 button:
     details: Detalji
@@ -215,6 +217,12 @@ form:
                 explanation: Objašnjenje
                 explanationAlt: Objašnjenje (drugi jezik)
                 correctAnswer: Točan odgovor
+                type: Vrsta
+        quizQuestionChoice:
+            label:
+                text: Tekst odgovora
+                textAlt: Tekst odgovora (alternate language)
+                correct: Točan odgovor
         practicalSubmodule:
             label:
                 name: Naslov
@@ -446,6 +454,14 @@ quizQuestion:
     add: Dodaj pitanje
     delete: Jeste li sigurni da želite izbrisati ovo pitanje?
     edit: Uređivanje pitanja za kviz
+    type:
+        trueFalse: Da/Ne
+        singleChoice: Jedan točan odgovor
+
+quizQuestionChoice:
+    add: Dodaj odgovor
+    delete: Jeste li sigurni da želite obrisati odgovor?
+    edit: Uređivanje odgovora
 
 note:
     dataAccess:

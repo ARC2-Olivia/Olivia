@@ -1,4 +1,9 @@
 {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+    {% if form.type is defined %}
+        {{ form_label(form.type) }}
+        {{ form_widget(form.type) }}
+    {% endif %}
+
     {{ form_label(form.text) }}
     {{ form_widget(form.text) }}
 
@@ -7,8 +12,10 @@
         {{ form_widget(form.textAlt) }}
     {% endif %}
 
-    {{ form_label(form.correctAnswer) }}
-    {{ form_widget(form.correctAnswer) }}
+    {% if form.correctAnswer is defined %}
+        {{ form_label(form.correctAnswer) }}
+        {{ form_widget(form.correctAnswer) }}
+    {% endif %}
 
     {{ form_label(form.explanation) }}
     <div class="editor-container mb-3">
