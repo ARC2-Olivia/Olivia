@@ -102,6 +102,16 @@ class QuizQuestion extends TranslatableEntity
         return $this;
     }
 
+    public function getCorrectChoiceId(): ?int
+    {
+        foreach ($this->getQuizQuestionChoices() as $qqc) {
+            if ($qqc->isCorrect()) {
+                return $qqc->getId();
+            }
+        }
+        return null;
+    }
+
     public function getType(): ?string
     {
         return $this->type;

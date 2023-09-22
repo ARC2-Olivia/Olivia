@@ -21,8 +21,8 @@ class QuizQuestionAnswer
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column]
-    private ?bool $answer = null;
+    #[ORM\Column(length: 32)]
+    private ?string $answer = null;
 
     public function getId(): ?int
     {
@@ -53,12 +53,12 @@ class QuizQuestionAnswer
         return $this;
     }
 
-    public function getAnswer(): ?bool
+    public function getAnswer(): ?string
     {
         return $this->answer;
     }
 
-    public function setAnswer(bool $answer): self
+    public function setAnswer(string $answer): self
     {
         $this->answer = $answer;
 

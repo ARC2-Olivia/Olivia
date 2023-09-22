@@ -12,6 +12,7 @@ use App\Entity\LessonItemText;
 use App\Entity\Note;
 use App\Entity\QuizQuestion;
 use App\Entity\QuizQuestionAnswer;
+use App\Entity\QuizQuestionChoice;
 use App\Entity\User;
 use App\Form\LessonType;
 use App\Form\Quiz\QuizType;
@@ -391,7 +392,9 @@ class LessonController extends BaseController
             $sum = 0;
             $questionCount = 0;
             foreach ($quizQuestionAnswers as $quizQuestionAnswer) {
-                if ($quizQuestionAnswer->getAnswer() === $quizQuestionAnswer->getQuestion()->getCorrectAnswer()) $sum += 100;
+                $condition = QuizQuestion::TYPE_TRUE_FALSE === $quizQuestionAnswer->getQuestion()->getType() && ((bool)$quizQuestionAnswer->getAnswer()) === $quizQuestionAnswer->getQuestion()->getCorrectAnswer();
+                $condition = $condition || (QuizQuestion::TYPE_SINGLE_CHOICE === $quizQuestionAnswer->getQuestion()->getType() && ((int)$quizQuestionAnswer->getAnswer()) === $quizQuestionAnswer->getQuestion()->getCorrectChoiceId());
+                if (true === $condition) $sum += 100;
                 $questionCount++;
             }
             $percentage = $sum / $questionCount;
@@ -445,11 +448,22 @@ class LessonController extends BaseController
         }
 
         $quizQuestionAnswerRepository = $this->em->getRepository(QuizQuestionAnswer::class);
+        $quizQuestionChoiceRepository = $this->em->getRepository(QuizQuestionChoice::class);
         $quizResults = [];
         foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
             $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['question' => $quizQuestion, 'user' => $user]);
             if ($quizQuestionAnswer !== null) {
-                $quizResults[] = ['question' => $quizQuestion, 'correct' => $quizQuestionAnswer->getAnswer() === $quizQuestion->getCorrectAnswer(), 'answer' => $quizQuestionAnswer->getAnswer()];
+                $answer = null;
+                $correct = null;
+                if (QuizQuestion::TYPE_TRUE_FALSE === $quizQuestion->getType()) {
+                    $answer = $this->translator->trans('common.'.($quizQuestionAnswer->getAnswer() ? 'trueValue' : 'falseValue'), domain: 'app');
+                    $correct = $quizQuestion->getCorrectAnswer() === ((bool)$quizQuestionAnswer->getAnswer());
+                } else if (QuizQuestion::TYPE_SINGLE_CHOICE === $quizQuestion->getType()) {
+                    $qqc = $quizQuestionChoiceRepository->find($quizQuestionAnswer->getAnswer());
+                    $answer = $qqc->getText();
+                    $correct = $quizQuestion->getCorrectChoiceId() === $qqc->getId();
+                }
+                $quizResults[] = ['question' => $quizQuestion, 'correct' => $correct, 'answer' => $answer];
             }
         }
 
@@ -634,19 +648,36 @@ class LessonController extends BaseController
             'submitUrl' => $this->generateUrl('lesson_quiz_finish', ['lesson' => $lessonItemQuiz->getLesson()->getId()]),
             'questions' => [],
             'ui' => [
-                'true' => $this->translator->trans('common.trueValue', [], 'app'),
-                'false' => $this->translator->trans('common.falseValue', [], 'app'),
                 'submit' => $this->translator->trans('common.submit', [], 'app'),
                 'finalText' => $this->translator->trans('course.extra.submitQuizAnswers', [], 'app')
             ]
         ];
         foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
+            $choices = [];
+            $correctAnswer = null;
+
+            if (QuizQuestion::TYPE_TRUE_FALSE === $quizQuestion->getType()) {
+                $correctAnswer = $quizQuestion->getCorrectAnswer();
+                $choices[] = ['text' => $this->translator->trans('common.trueValue', domain: 'app'), 'value' => true];
+                $choices[] = ['text' => $this->translator->trans('common.falseValue', domain: 'app'), 'value' => false];
+            } else if (QuizQuestion::TYPE_SINGLE_CHOICE === $quizQuestion->getType()) {
+                $correctAnswer = $quizQuestion->getCorrectChoiceId();
+                foreach ($quizQuestion->getQuizQuestionChoices() as $qqc) {
+                    $choices[] = ['text' => $qqc->getText(), 'value' => $qqc->getId()];
+                }
+            }
+
+            if (null === $correctAnswer || 0 === count($choices)) {
+                continue;
+            }
+
             $quizData['questions'][] = [
                 'questionId' => $quizQuestion->getId(),
                 'text' => $quizQuestion->getText(),
-                'userAnswer' => false,
-                'correctAnswer' => $quizQuestion->getCorrectAnswer(),
-                'explanation' => $quizQuestion->getExplanation()
+                'userAnswer' => null,
+                'correctAnswer' => $correctAnswer,
+                'explanation' => $quizQuestion->getExplanation(),
+                'choices' => $choices,
             ];
         }
         return $quizData;

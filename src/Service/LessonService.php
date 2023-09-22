@@ -6,6 +6,7 @@ use App\Entity\Course;
 use App\Entity\Lesson;
 use App\Entity\LessonCompletion;
 use App\Entity\LessonItemQuiz;
+use App\Entity\QuizQuestion;
 use App\Entity\QuizQuestionAnswer;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,8 +69,10 @@ class LessonService
         $count = 0;
         foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
             $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['question' => $quizQuestion, 'user' => $user]);
-            if ($quizQuestionAnswer !== null && $quizQuestionAnswer->getAnswer() === $quizQuestion->getCorrectAnswer()) {
-                $sum += 100;
+            if ($quizQuestionAnswer !== null) {
+                $condition = QuizQuestion::TYPE_TRUE_FALSE === $quizQuestionAnswer->getQuestion()->getType() && ((bool)$quizQuestionAnswer->getAnswer()) === $quizQuestionAnswer->getQuestion()->getCorrectAnswer();
+                $condition = $condition || (QuizQuestion::TYPE_SINGLE_CHOICE === $quizQuestionAnswer->getQuestion()->getType() && ((int)$quizQuestionAnswer->getAnswer()) === $quizQuestionAnswer->getQuestion()->getCorrectChoiceId());
+                if (true === $condition) $sum += 100;
             }
             $count++;
         }

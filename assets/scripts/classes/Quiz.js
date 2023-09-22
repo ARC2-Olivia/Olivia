@@ -1,13 +1,21 @@
 import axios from "axios";
 
 /**
+ * @typedef Choice
+ * @type {object}
+ * @property {string} text
+ * @property {boolean|int} value
+ */
+
+/**
  * @typedef Question
  * @type {object}
  * @property {number} questionId
  * @property {string} text
- * @property {boolean} userAnswer
- * @property {boolean} correctAnswer
+ * @property {boolean|int} userAnswer
+ * @property {boolean|int} correctAnswer
  * @property {string} explanation
+ * @property {Choice[]} choices
  */
 
 /**
@@ -80,16 +88,6 @@ class Quiz {
         this.#elemQuiz.addEventListener("quiz.submit", (evt) => context.#onSubmit(evt));
 
         this.#elemAnswers = this.#parse(`<div class="quiz-answers"></div>`);
-        const buttonYes = this.#parse(`<button class="quiz-answer yes" type="button">${this.#data.ui.true}</button>`);
-        const buttonNo = this.#parse(`<button class="quiz-answer no" type="button">${this.#data.ui.false}</button>`);
-        buttonYes.addEventListener("click", (evt) => {
-            evt.target.dispatchEvent(new CustomEvent("quiz.answer.clicked", { detail: true, bubbles: true }));
-        });
-        buttonNo.addEventListener("click", (evt) => {
-            evt.target.dispatchEvent(new CustomEvent("quiz.answer.clicked", { detail: false, bubbles: true }));
-        });
-        this.#elemAnswers.append(buttonYes, buttonNo);
-
         this.#elemSubmit = this.#parse(`<button class="quiz-submit hide" type="button">${this.#data.ui.submit}</button>`);
         this.#elemSubmit.addEventListener("click", (evt) => {
             evt.target.dispatchEvent(new CustomEvent("quiz.submit", { bubbles: true }));
@@ -102,6 +100,14 @@ class Quiz {
         const question = this.#data.questions[this.#index];
         const questionText = this.#parse(`<div class="quiz-text">${question.text}</div>`)
         this.#elemUpper.appendChild(questionText);
+
+        for (const choice of question.choices) {
+            const button = this.#parse(`<button class="quiz-answer" type="button">${choice.text}</button>`);
+            button.addEventListener("click", (evt) => {
+                evt.target.dispatchEvent(new CustomEvent("quiz.answer.clicked", { detail: choice.value, bubbles: true }));
+            });
+            this.#elemAnswers.append(button);
+        }
     }
 
     #showFinalScreen() {
@@ -116,6 +122,12 @@ class Quiz {
 
     #hideAnswers() {
         this.#elemAnswers.classList.add('hide');
+    }
+
+    #clearAnswers() {
+        while (this.#elemAnswers.firstChild) {
+            this.#elemAnswers.removeChild(this.#elemAnswers.firstChild);
+        }
     }
 
     #showAnswers() {
@@ -166,6 +178,7 @@ class Quiz {
         const ctx = this;
         setTimeout(() => {
             this.#clearUpper();
+            this.#clearAnswers();
             if (ctx.#index <= ctx.#lastIndex) {
                 ctx.#showQuestion();
             } else {
