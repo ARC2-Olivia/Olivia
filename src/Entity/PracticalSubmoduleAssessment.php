@@ -110,6 +110,9 @@ class PracticalSubmoduleAssessment
 
     public function isCompleted(): ?bool
     {
+        if (null === $this->completed) {
+            return false;
+        }
         return $this->completed;
     }
 

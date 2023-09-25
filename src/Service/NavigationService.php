@@ -4,7 +4,9 @@ namespace App\Service;
 
 use App\Entity\Course;
 use App\Entity\PracticalSubmodule;
+use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -36,15 +38,23 @@ class NavigationService
     private ?RouterInterface $router = null;
     private ?Security $security = null;
     private ?EnrollmentService $enrollmentService = null;
-    private ?\Twig\Environment $twig;
+    private ?\Twig\Environment $twig = null;
+    private ?EntityManagerInterface $em = null;
 
-    public function __construct(TranslatorInterface $translator, RouterInterface $router, Security $security, EnrollmentService $enrollmentService, \Twig\Environment $twig)
+    public function __construct(TranslatorInterface $translator,
+                                RouterInterface $router,
+                                Security $security,
+                                EnrollmentService $enrollmentService,
+                                \Twig\Environment $twig,
+                                EntityManagerInterface $em
+    )
     {
         $this->translator = $translator;
         $this->router = $router;
         $this->security = $security;
         $this->enrollmentService = $enrollmentService;
         $this->twig = $twig;
+        $this->em = $em;
     }
 
     public function forCourse(Course $course, ?int $activeNav = null): array
@@ -105,7 +115,14 @@ class NavigationService
                 'active' => $activeNav === self::EVALUATION_EVALUATE
             ];
 
-            if ($activeNav === self::EVALUATION_EXTRA_RESULTS) $navigation[] = ['text' => $this->translator->trans('practicalSubmodule.nav.results', [], 'app'), 'active' => true];
+            $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->security->getUser()]);
+            if (null !== $assessment && $assessment->isCompleted()) {
+                $navigation[] = [
+                    'text' => $this->translator->trans('practicalSubmodule.nav.results', [], 'app'),
+                    'path' => $this->router->generate('practical_submodule_results', ['practicalSubmodule' => $practicalSubmodule->getId()]),
+                    'active' => $activeNav === self::EVALUATION_EXTRA_RESULTS
+                ];
+            }
         }
 
         if ($this->security->isGranted('ROLE_MODERATOR')) {

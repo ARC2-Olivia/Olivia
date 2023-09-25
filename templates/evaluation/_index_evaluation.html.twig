@@ -13,7 +13,10 @@
     <div class="card-text flex-grow-1 ps-2 pe-2">
         <div class="text-black">{{ evaluation.nameOrPublicName }}</div>
     </div>
-    <div class="card-actions ps-2 pe-2 pb-2">
+    <div class="card-actions ps-2 pe-2 pb-2 justify-content-between">
         <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.details'|trans }}</a>
+        {% if evaluation|assessment_completed %}
+            <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-red ms-3">{{ 'button.results'|trans }}</a>
+        {% endif %}
     </div>
 </div>
