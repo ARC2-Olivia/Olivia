@@ -79,20 +79,24 @@ class PracticalSubmoduleQuestionController extends BaseController
 
     #[Route("/delete/{practicalSubmoduleQuestion}", name: "delete", methods: ["POST"])]
     #[IsGranted("ROLE_MODERATOR")]
-    public function delete(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request): Response
+    public function delete(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
         $evaluation = $practicalSubmoduleQuestion->getPracticalSubmodule();
         $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleQuestion.delete', $csrfToken)) {
-            foreach ($this->em->getRepository(PracticalSubmoduleAssessmentAnswer::class)->findBy(['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion]) as $assessmentAnswer) {
-                $this->em->remove($assessmentAnswer);
+            if ($practicalSubmoduleService->isQuestionReferencedInManyToOneRelationships($practicalSubmoduleQuestion)) {
+                $this->addFlash('warning', $this->translator->trans('warning.practicalSubmoduleQuestion.manyToOne', domain: 'message'));
+            } else {
+                foreach ($this->em->getRepository(PracticalSubmoduleAssessmentAnswer::class)->findBy(['practicalSubmoduleQuestion' => $practicalSubmoduleQuestion]) as $assessmentAnswer) {
+                    $this->em->remove($assessmentAnswer);
+                }
+                foreach ($practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers() as $practicalSubmoduleQuestionAnswer) {
+                    $this->em->remove($practicalSubmoduleQuestionAnswer);
+                }
+                $this->em->remove($practicalSubmoduleQuestion);
+                $this->em->flush();
+                $this->addFlash('warning', $this->translator->trans('warning.practicalSubmoduleQuestion.delete', ['%evaluation%' => $evaluation->getName()], 'message'));
             }
-            foreach ($practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers() as $practicalSubmoduleQuestionAnswer) {
-                $this->em->remove($practicalSubmoduleQuestionAnswer);
-            }
-            $this->em->remove($practicalSubmoduleQuestion);
-            $this->em->flush();
-            $this->addFlash('warning', $this->translator->trans('warning.practicalSubmoduleQuestion.delete', ['%evaluation%' => $evaluation->getName()], 'message'));
         }
 
         return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $evaluation->getId()]);

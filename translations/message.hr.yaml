@@ -92,6 +92,7 @@ warning:
         delete: Izbrisan je podmodul <i>%evaluation%</i>.
     practicalSubmoduleQuestion:
         delete: Izbrisano je pitanje iz podmodula <i>%evaluation%</i>.
+        manyToOne: Pitanje koje ste htjeli obrisati se pojavljuje kao ovisno pitanje za prikaz drugih pitanja, ili kao obavezna komponenta jednom ili više <i>simple</i>, <i>templated_text</i>, ili <i>html</i> procesora. Uredite ili obrišite pitanja i/ili procesore koji koriste to pitanje, te ga pokušajte ponovno obrisati.
     practicalSubmoduleQuestionAnswer:
         delete: Izbrisan je odgovor na pitanje.
     practicalSubmoduleProcessor:

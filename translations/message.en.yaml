@@ -92,6 +92,7 @@ warning:
         delete: Submodule <i>%evaluation%</i> has been deleted.
     practicalSubmoduleQuestion:
         delete: Question for the <i>%evaluation%</i> submodule has been deleted.
+        manyToOne: The question you wanted to delete is being used as a dependent question for other questions, or in one or several <i>simple</i>, <i>templated_text</i>, ili <i>html</i> processors. Update or delete the questions and/or processors that are using the question, and then try deleting it again.
     practicalSubmoduleQuestionAnswer:
         delete: Answer has been deleted from the question.
     practicalSubmoduleProcessor:

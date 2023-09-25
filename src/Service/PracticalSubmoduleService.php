@@ -187,6 +187,15 @@ class PracticalSubmoduleService
         return $assessment;
     }
 
+    public function isQuestionReferencedInManyToOneRelationships(PracticalSubmoduleQuestion $question): bool
+    {
+        if ($this->em->getRepository(PracticalSubmoduleQuestion::class)->count(['dependentPracticalSubmoduleQuestion' => $question])) return true;
+        if ($this->em->getRepository(PracticalSubmoduleProcessorHtml::class)->count(['practicalSubmoduleQuestion' => $question]) > 0) return true;
+        if ($this->em->getRepository(PracticalSubmoduleProcessorSimple::class)->count(['practicalSubmoduleQuestion' => $question]) > 0) return true;
+        if ($this->em->getRepository(PracticalSubmoduleProcessorTemplatedText::class)->count(['practicalSubmoduleQuestion' => $question]) > 0) return true;
+        return false;
+    }
+
     /** @return ProcessorResult[] */
     public function runProcessors(PracticalSubmoduleAssessment $assessment): array
     {
