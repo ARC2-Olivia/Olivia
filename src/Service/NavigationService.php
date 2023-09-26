@@ -110,7 +110,7 @@ class NavigationService
 
         if ($this->security->isGranted('ROLE_USER')) {
             $navigation[] = [
-                'text' => $this->translator->trans('practicalSubmodule.nav.'.$practicalSubmodule->getTerminology(), [], 'app'),
+                'text' => $this->translator->trans('practicalSubmodule.nav.questionnaire', [], 'app'),
                 'path' => $this->router->generate('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]),
                 'active' => $activeNav === self::EVALUATION_EVALUATE
             ];

@@ -483,9 +483,8 @@ practicalSubmodule:
         new: New practical submodule
     nav:
         overview: Overview
-        assessment: Assessment
-        privacyPolicy: Privacy policy
-        results: Results
+        questionnaire: Questionnaire
+        results: Report
         edit:
             default: Edit
             question: Edit question
@@ -521,7 +520,7 @@ practicalSubmodule:
         answer: Answer
         results:
             empty: Nothing to show.
-            final: This assessment is intended for educational and information purposes only.
+            final: This questionnaire is intended for educational and information purposes only.
         connectedTo: "The assessment is connected to the following courses:"
 
 practicalSubmoduleQuestion:
@@ -564,19 +563,12 @@ practicalSubmoduleProcessorGroup:
 
 practicalSubmoduleAssessment:
     message:
-        assessment:
-            1: This evaluation contains <b>%questionCount%</b> questions. Some questions will only appear if you answered one of the previous questions in a specific way.
-            2: Assessment can be retried as many times as wanted or needed.
-            3: Click on the <i>Start assessment</i> button to start the evaluation.
-        privacyPolicy:
-            1: This form contains <b>%questionCount%</b> questions. Some questions will only appear if you answered one of the previous questions in a specific way.
-            2: The form can be filled as many times as wanted or needed.
-            3: Click on the <i>Fill privacy policy</i> button to start filling the form.
+        1: This questionnaire contains <b>%questionCount%</b> questions. Some questions will only appear if you answered one of the previous questions in a specific way.
+        2: The questionnaire can be filled as many times as wanted or needed.
+        3: Click on the <i>Fill questionnaire</i> button to start filling it.
     action:
-        start:
-            assessment: Start assessment
-            privacyPolicy: Fill privacy policy
-        results: View results
+        start: Fill questionnaire
+        results: View report
 
 termsOfService:
     format: Ver. %version%, rev. %revision%

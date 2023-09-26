@@ -75,10 +75,6 @@ class PracticalSubmodule extends TranslatableEntity
     #[Gedmo\Translatable]
     private ?string $reportComment = null;
 
-    #[ORM\Column(length: 32, nullable: true)]
-    #[Assert\Choice(choices: [PracticalSubmodule::TERMINOLOGY_ASSESSMENT, PracticalSubmodule::TERMINOLOGY_PRIVACY_POLICY], message: 'error.practicalSubmodule.terminology.invalid')]
-    private ?string $terminology = null;
-
     #[ORM\ManyToOne(inversedBy: 'practicalSubmodules')]
     private ?Topic $topic = null;
 
@@ -353,21 +349,6 @@ class PracticalSubmodule extends TranslatableEntity
     public function setReportComment(?string $reportComment): self
     {
         $this->reportComment = $reportComment;
-
-        return $this;
-    }
-
-    public function getTerminology(): ?string
-    {
-        if (null === $this->terminology) {
-            return self::TERMINOLOGY_ASSESSMENT;
-        }
-        return $this->terminology;
-    }
-
-    public function setTerminology(?string $terminology): self
-    {
-        $this->terminology = $terminology;
 
         return $this;
     }
