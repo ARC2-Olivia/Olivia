@@ -631,3 +631,7 @@ certificate:
 extra:
     free: Free
     exitImmitation: Exit immitation
+    extendSession:
+        title: Session will expire soon
+        text: Would you want to extend the session?
+        extend: Extend

@@ -83,4 +83,10 @@ class DefaultController extends BaseController
     {
         return $this->render('default/aboutProject.html.twig');
     }
+
+    #[Route("/extend-session", name: "extend_session")]
+    public function extendSession(): Response
+    {
+        return new Response('Session extended.');
+    }
 }

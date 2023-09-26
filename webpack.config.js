@@ -35,6 +35,7 @@ Encore
     .addEntry('quiz', './assets/quiz.js')
 
     // Page specific
+    .addEntry('session.extend', './assets/scripts/session.extend.js')
     .addEntry('lessons.sort', './assets/scripts/lessons.sort.js')
     .addEntry('lessons.completion', './assets/lessons.completion.js')
     .addEntry('lessons.quiz.passingPercentage', './assets/scripts/lessons.quiz.passingPercentage.js')

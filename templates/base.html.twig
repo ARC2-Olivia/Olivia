@@ -1,5 +1,12 @@
 {% trans_default_domain 'app' %}
 
+{% set extendSessionTranslations = {
+    'title': ('extra.extendSession.title'|trans),
+    'text': ('extra.extendSession.text'|trans),
+    'cancel': ('common.cancel'|trans),
+    'extend': ('extra.extendSession.extend'|trans)
+} %}
+
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
     <head>
@@ -12,13 +19,15 @@
 
         {{ encore_entry_link_tags('app') }}
         {{ encore_entry_link_tags('popper.dropdown') }}
+        {{ encore_entry_link_tags('session.extend') }}
         {% block stylesheets %}{% endblock %}
 
         {{ encore_entry_script_tags('app') }}
         {{ encore_entry_script_tags('popper.dropdown') }}
+        {{ encore_entry_script_tags('session.extend') }}
         {% block javascripts %}{% endblock %}
     </head>
-    <body>
+    <body data-extend-session-path="{{ path('extend_session') }}" data-extend-session-translations="{{ extendSessionTranslations|json_encode }}">
         <header>
             {% include 'nav.html.twig' %}
             {% block header %}{% endblock %}

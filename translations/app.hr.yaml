@@ -629,3 +629,7 @@ certificate:
 extra:
     free: Besplatno
     exitImmitation: Prekini imitaciju
+    extendSession:
+        title: Sesija uskoro istječe
+        text: Želite li produžiti sesiju?
+        extend: Produži
