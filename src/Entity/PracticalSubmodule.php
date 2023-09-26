@@ -19,6 +19,10 @@ class PracticalSubmodule extends TranslatableEntity
     public const TERMINOLOGY_ASSESSMENT = 'assessment';
     public const TERMINOLOGY_PRIVACY_POLICY = 'privacyPolicy';
 
+    public const EXPORT_TYPE_NONE = 'none';
+    public const EXPORT_TYPE_SIMPLE = 'simple';
+    public const EXPORT_TYPE_PRIVACY_POLICY = 'privacyPolicy';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -64,9 +68,6 @@ class PracticalSubmodule extends TranslatableEntity
     #[Assert\Choice(choices: [PracticalSubmodule::MODE_OF_OPERATION_SIMPLE, PracticalSubmodule::MODE_OF_OPERATION_ADVANCED], message: 'error.practicalSubmodule.modeOfOperation')]
     private ?string $modeOfOperation = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $processorGroupingEnabled = null;
-
     #[ORM\OneToMany(mappedBy: 'practicalSubmodule', targetEntity: PracticalSubmoduleProcessorGroup::class, orphanRemoval: true)]
     private Collection $practicalSubmoduleProcessorGroups;
 
@@ -83,6 +84,9 @@ class PracticalSubmodule extends TranslatableEntity
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $position = null;
+
+    #[ORM\Column(length: 32, nullable: true)]
+    private ?string $exportType = null;
 
     public function __construct()
     {
@@ -311,18 +315,6 @@ class PracticalSubmodule extends TranslatableEntity
         return self::MODE_OF_OPERATION_ADVANCED === $this->modeOfOperation;
     }
 
-    public function isProcessorGroupingEnabled(): ?bool
-    {
-        return $this->processorGroupingEnabled;
-    }
-
-    public function setProcessorGroupingEnabled(?bool $processorGroupingEnabled): self
-    {
-        $this->processorGroupingEnabled = $processorGroupingEnabled;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, PracticalSubmoduleProcessorGroup>
      */
@@ -400,6 +392,21 @@ class PracticalSubmodule extends TranslatableEntity
     public function setPosition(?int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getExportType(): ?string
+    {
+        if (null === $this->exportType) {
+            return self::EXPORT_TYPE_NONE;
+        }
+        return $this->exportType;
+    }
+
+    public function setExportType(?string $exportType): self
+    {
+        $this->exportType = $exportType;
 
         return $this;
     }

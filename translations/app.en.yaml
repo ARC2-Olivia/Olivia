@@ -47,6 +47,7 @@ button:
     results: Results
     lessons: Lessons
     export: Export
+    exportTemplate: Export template
     show: Show
 
 page:
@@ -243,6 +244,7 @@ form:
                 reportCommentAlt: End of report comment (alternate language)
                 terminology: Terminology
                 position: Position
+                exportType: Export type
             placeholder:
                 name: Name of the practical submodule
                 publicName: e.g. Create your own privacy policy with ease!
@@ -502,6 +504,10 @@ practicalSubmodule:
         advanced: Advanced
     terminology:
         assessment: Assessment
+        privacyPolicy: Privacy policy
+    exportType:
+        none: No export
+        simple: Simple export
         privacyPolicy: Privacy policy
     extra:
         question: Question

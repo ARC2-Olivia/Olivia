@@ -34,13 +34,19 @@ class PracticalSubmoduleType extends AbstractType
         ];
 
         $opModeChoices = [
-            $this->translator->trans('practicalSubmodule.modeOfOperation.simple', [], 'app') => PracticalSubmodule::MODE_OF_OPERATION_SIMPLE,
-            $this->translator->trans('practicalSubmodule.modeOfOperation.advanced', [], 'app') => PracticalSubmodule::MODE_OF_OPERATION_ADVANCED
+            $this->translator->trans('practicalSubmodule.modeOfOperation.simple', domain: 'app') => PracticalSubmodule::MODE_OF_OPERATION_SIMPLE,
+            $this->translator->trans('practicalSubmodule.modeOfOperation.advanced', domain: 'app') => PracticalSubmodule::MODE_OF_OPERATION_ADVANCED
         ];
 
         $terminologyChoices = [
-            $this->translator->trans('practicalSubmodule.terminology.assessment', [], 'app') => PracticalSubmodule::TERMINOLOGY_ASSESSMENT,
-            $this->translator->trans('practicalSubmodule.terminology.privacyPolicy', [], 'app') => PracticalSubmodule::TERMINOLOGY_PRIVACY_POLICY
+            $this->translator->trans('practicalSubmodule.terminology.assessment', domain: 'app') => PracticalSubmodule::TERMINOLOGY_ASSESSMENT,
+            $this->translator->trans('practicalSubmodule.terminology.privacyPolicy', domain: 'app') => PracticalSubmodule::TERMINOLOGY_PRIVACY_POLICY
+        ];
+
+        $exportTypeChoices = [
+            $this->translator->trans('practicalSubmodule.exportType.none', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_NONE,
+            $this->translator->trans('practicalSubmodule.exportType.simple', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_SIMPLE,
+            $this->translator->trans('practicalSubmodule.exportType.privacyPolicy', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY,
         ];
 
         $builder
@@ -75,13 +81,14 @@ class PracticalSubmoduleType extends AbstractType
                 'choices' => $terminologyChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
+            ->add('exportType', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmodule.label.exportType',
+                'choices' => $exportTypeChoices,
+                'attr' => ['class' => 'form-select mb-3'],
+                'disabled' => true === $options['has_advanced_mode_features']
+            ])
             ->add('paging', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.paging',
-                'choices' => $booleanChoices,
-                'attr' => ['class' => 'form-select mb-3']
-            ])
-            ->add('processorGroupingEnabled', ChoiceType::class, [
-                'label' => 'form.entity.practicalSubmodule.label.processorGroupingEnabled',
                 'choices' => $booleanChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])

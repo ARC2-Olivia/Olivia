@@ -2,9 +2,13 @@
 
 <div class="evaluation-results">
     {% if results is not empty %}
-        <div class="text-center">
-            <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'button.export'|trans }}</a>
-        </div>
+        {% if evaluation.exportType != constant('EXPORT_TYPE_NONE', evaluation) %}
+            <div class="text-center mb-3">
+                <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">
+                    {{ (evaluation.exportType == constant('EXPORT_TYPE_PRIVACY_POLICY', evaluation) ? 'button.exportTemplate' : 'button.export')|trans }}
+                </a>
+            </div>
+        {% endif %}
         {% for result in results %}
             {% if result.textSet %}
                 {% if result.html %}

@@ -1,9 +1,12 @@
 {% trans_default_domain 'app' %}
 
 {% if answerData is not empty %}
-    <div class="text-center mb-3">
-        <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'button.export'|trans }}</a>
-    </div>
+    {% if evaluation.exportType === constant('EXPORT_TYPE_SIMPLE', evaluation) %}
+        <div class="text-center mb-3">
+            <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'button.export'|trans }}</a>
+        </div>
+    {% endif %}
+    
     {% for answerDatum in answerData %}
         {% if answerDatum.result.questionSet %}
             <div class="evaluation-assessment-data mb-3">

@@ -11,7 +11,7 @@
             <hr>
             {% include 'evaluation/_evaluate_mod_pages.html.twig' %}
         {% endif %}
-        {% if evaluation.processorGroupingEnabled %}
+        {% if constant('EXPORT_TYPE_PRIVACY_POLICY', evaluation) == evaluation.exportType %}
             <hr>
             {% include 'evaluation/_evaluate_mod_processorGroups.html.twig' %}
         {% endif %}

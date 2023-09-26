@@ -28,7 +28,7 @@ class WordService
 
     public function generateAssessmentResultsDocument(PracticalSubmoduleAssessment $assessment): string
     {
-        return $assessment->getPracticalSubmodule()->isProcessorGroupingEnabled()
+        return PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY === $assessment->getPracticalSubmodule()->getExportType()
             ? $this->generateDocumentForSubmoduleWithProcessorGroupingEnabled($assessment)
             : $this->generateDefaultDocument($assessment);
     }

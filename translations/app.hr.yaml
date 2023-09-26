@@ -46,6 +46,7 @@ button:
     results: Rezultati
     lessons: Lekcije
     export: Izvoz
+    exportTemplate: Izvoz predloška
     show: Prikaži
 
 page:
@@ -242,6 +243,7 @@ form:
                 reportCommentAlt: Komentar na kraju izvještaja (drugi jezik)
                 terminology: Terminologija
                 position: Redni broj
+                exportType: Vrsta izvora
             placeholder:
                 name: Naziv praktičnog podmodula
                 publicName: npr. Izradite svoju politiku privatnosti za čas posla!
@@ -500,6 +502,10 @@ practicalSubmodule:
         advanced: Napredno
     terminology:
         assessment: Procjena
+        privacyPolicy: Politika privatnosti
+    exportType:
+        none: Bez izvoza
+        simple: Jednostavni izvoz
         privacyPolicy: Politika privatnosti
     extra:
         question: Pitanje

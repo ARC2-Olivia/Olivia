@@ -59,7 +59,7 @@ class PracticalSubmoduleProcessorRepository extends ServiceEntityRepository
             ->setParameters(['submodule' => $practicalSubmodule, 'true' => true, 'false' => false])
             ->orderBy('psp.position', 'ASC');
 
-        if ($practicalSubmodule->isProcessorGroupingEnabled()) {
+        if ($practicalSubmodule::EXPORT_TYPE_PRIVACY_POLICY === $practicalSubmodule->getExportType()) {
             $qb->andWhere('psp.practicalSubmoduleProcessorGroup IS NOT NULL');
         }
 
