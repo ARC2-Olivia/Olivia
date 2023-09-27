@@ -234,10 +234,12 @@ class PracticalSubmoduleAssessment {
 
     #createYesNoAnswers(questionData) {
         const answers = [];
+        const userAnswer = questionData.userAnswer || null;
         questionData.answers.forEach((answerData) => {
+            const checked = answerData.id === userAnswer ? ' checked' : '';
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}" data-answer-required required/>
+                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}"${checked} data-answer-required required/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
