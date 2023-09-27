@@ -23,7 +23,10 @@
             <p>{{ ('practicalSubmoduleAssessment.message.2')|trans|raw }}</p>
             <p>{{ ('practicalSubmoduleAssessment.message.3')|trans|raw }}</p>
             <div class="d-flex justify-content-center">
-                <form action="{{ path('practical_submodule_start_assessment', {'practicalSubmodule': evaluation.id}) }}" method="post">
+                <form action="{{ path('practical_submodule_start_assessment', {'practicalSubmodule': evaluation.id}) }}"
+                      method="post"
+                      onsubmit="return confirm(`{{ 'practicalSubmoduleAssessment.message.fillAgain'|trans }}`);"
+                >
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmoduleAssessment.start') }}"/>
                     <button type="submit" class="btn btn-theme-white bg-blue">{{ 'practicalSubmoduleAssessment.action.start'|trans }}</button>
                 </form>

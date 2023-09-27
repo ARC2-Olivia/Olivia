@@ -565,6 +565,7 @@ practicalSubmoduleAssessment:
         2: Upitnik možete beskonačno rješavati.
         3: Klinite na gumb <i>popuni upitnik</i> kako biste počeli popunjavati.
         lastSubmittedAt: Upitnik je zadnje predan %datetime%
+        fillAgain: Jeste li sigurni da želite ponovno popunjavati upitnik otpočetka? Ova akcija će na početku obrisati sve odgovore koje ste spremili u upitniku.
     action:
         start: Popuni upitnik
         results: Pregled izvještaja

@@ -567,6 +567,7 @@ practicalSubmoduleAssessment:
         2: The questionnaire can be filled as many times as wanted or needed.
         3: Click on the <i>Fill questionnaire</i> button to start filling it.
         lastSubmittedAt: Questionnaire was last submitted %datetime%
+        fillAgain: Are you sure you want to fill the questionnaire anew? This action will delete the previous answers upon starting.
     action:
         start: Fill questionnaire
         results: View report
