@@ -225,8 +225,9 @@ error:
     practicalSubmoduleProcessorTemplatedText:
         question: Procesoru je potrebno odabrati pitanje.
     practicalSubmoduleAssessment:
-        start: Procjena se nije mogla pokremuti. Molimo, pokušajte ponovno.
-        finish: Došlo je do greške u obradi vaše procjene. Molimo, ponovite procjenu.
+        start: Upitnik se nije mogla pokrenuti. Molimo, pokušajte ponovno.
+        edit: Upitnik se nije mogao učitati za uređivanje. Molimo, pokušajte ponovno.
+        finish: Došlo je do greške u obradi vašeg upitnika. Molimo, ponovno popunite upitnik.
     practicalSubmodulePage:
         questions: Potrebno je dodati barem jedno pitanje u stranicu.
         submoduleMismatch: Jedno od odabranih pitanja ne pripada istom podmodulu kojem pripada stranica.

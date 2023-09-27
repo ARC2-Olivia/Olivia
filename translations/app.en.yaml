@@ -570,6 +570,7 @@ practicalSubmoduleAssessment:
         fillAgain: Are you sure you want to fill the questionnaire anew? This action will delete the previous answers upon starting.
     action:
         start: Fill questionnaire
+        edit: Edit submitted questionnaire
         results: View report
 
 termsOfService:

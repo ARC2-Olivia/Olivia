@@ -354,6 +354,22 @@ class PracticalSubmoduleController extends BaseController
         return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
     }
 
+    #[Route("/evaluate/{practicalSubmodule}/assessment/edit", name: "edit_assessment")]
+    #[IsGranted("ROLE_USER")]
+    public function editAssessment(PracticalSubmodule $practicalSubmodule, Request $request): Response
+    {
+        $csrfToken = $request->get('_csrf_token');
+
+        if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleAssessment.edit', $csrfToken)) {
+            $request->getSession()->set('practicalSubmoduleAssessment.edit', true);
+            $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule]);
+            return $this->forward('App\Controller\PracticalSubmoduleAssessmentController::edit', ['practicalSubmoduleAssessment' => $assessment]);
+        }
+
+        $this->addFlash('error', $this->translator->trans('error.practicalSubmoduleAssessment.edit', [], 'message'));
+        return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+    }
+
     #[Route("/evaluate/{practicalSubmodule}/results", name: "results")]
     #[IsGranted("ROLE_USER")]
     public function results(PracticalSubmodule $practicalSubmodule, PracticalSubmoduleService $practicalSubmoduleService): Response

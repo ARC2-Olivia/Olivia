@@ -568,6 +568,7 @@ practicalSubmoduleAssessment:
         fillAgain: Jeste li sigurni da želite ponovno popunjavati upitnik otpočetka? Ova akcija će na početku obrisati sve odgovore koje ste spremili u upitniku.
     action:
         start: Popuni upitnik
+        edit: Izmjeni popunjeni upitnik
         results: Pregled izvještaja
 
 termsOfService:

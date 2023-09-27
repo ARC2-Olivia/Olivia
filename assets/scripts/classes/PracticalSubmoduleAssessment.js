@@ -278,10 +278,12 @@ class PracticalSubmoduleAssessment {
         const context = this;
         const answers = [];
         const inputs = [];
+        const userAnswer = questionData.userAnswer || { selected: [], added: [] };
         questionData.answers.forEach((answerData) => {
+            const checked = userAnswer.selected.includes(answerData.id) ? ' checked' : '';
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="checkbox" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][choices][]" data-value="${answerData.value}"/>
+                    <input type="checkbox" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][choices][]" data-value="${answerData.value}"${checked}/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
@@ -310,6 +312,15 @@ class PracticalSubmoduleAssessment {
                 `, "text/html").body.firstChild;
                 this.parentElement.insertBefore(otherInput, this);
             });
+
+            for (const addedAnswer of userAnswer.added) {
+                const addedAnswerElement = this.#parser.parseFromString(`
+                    <label>
+                        <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][other][]" value="${addedAnswer}"/>
+                    </label>`, "text/html").body.firstChild
+                ;
+                answers.push(addedAnswerElement);
+            }
             answers.push(otherButton);
         }
 
@@ -317,9 +328,10 @@ class PracticalSubmoduleAssessment {
     }
 
     #createNumericalInputAnswer(questionData) {
+        let userAnswer = questionData.userAnswer || '';
         const answer = this.#parser.parseFromString(`
             <label class="evaluation-assessment-question-answer">
-                <input type="number" step="0.01" class="form-input" name="evaluation_assessment[${questionData.id}]" data-answer-required required/>
+                <input type="number" step="0.01" class="form-input" name="evaluation_assessment[${questionData.id}]" value="${userAnswer}" data-answer-required required/>
             </label>
         `, "text/html");
 
@@ -333,9 +345,10 @@ class PracticalSubmoduleAssessment {
     }
 
     #createTextInputAnswer(questionData) {
+        let userAnswer = questionData.userAnswer || '';
         const answer = this.#parser.parseFromString(`
             <label class="evaluation-assessment-question-answer">
-                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}]" data-answer-required required/>
+                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}]" value="${userAnswer}" data-answer-required required/>
             </label>
         `, "text/html");
 
@@ -351,6 +364,7 @@ class PracticalSubmoduleAssessment {
     #createTemplatedTextInputAnswer(questionData) {
         const answerData = questionData.answers[0];
         let answerText = "", answerFields = [];
+        const userAnswer = questionData.userAnswer || {};
 
         if (answerData) {
             answerText = answerData.text;
@@ -366,9 +380,12 @@ class PracticalSubmoduleAssessment {
                 requirementClass = ' required';
             }
             const pattern = new RegExp(`{{\\s*${field.name}[\\|\\s\\w]*\\s*}}`);
-            const inputRaw = `<label class="evaluation-assessment-question-answer--inline${requirementClass}" style="white-space: normal">
-                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field.name}]"${requirementAttributes}/>
-            </label>`;
+            const value = field.name in userAnswer ? userAnswer[field.name] : '';
+            const inputRaw = `
+                <label class="evaluation-assessment-question-answer--inline${requirementClass}" style="white-space: normal">
+                    <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${field.name}]" value="${value}"${requirementAttributes}/>
+                </label>`.trim()
+            ;
             answerRaw = answerRaw.replace(pattern, inputRaw);
         }
 

@@ -22,7 +22,7 @@
             <p>{{ ('practicalSubmoduleAssessment.message.1')|trans({'%questionCount%': questionCount})|raw }}</p>
             <p>{{ ('practicalSubmoduleAssessment.message.2')|trans|raw }}</p>
             <p>{{ ('practicalSubmoduleAssessment.message.3')|trans|raw }}</p>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center align-items-center flex-column flex-md-row gap-3">
                 <form action="{{ path('practical_submodule_start_assessment', {'practicalSubmodule': evaluation.id}) }}"
                       method="post"
                       onsubmit="return confirm(`{{ 'practicalSubmoduleAssessment.message.fillAgain'|trans }}`);"
@@ -30,8 +30,12 @@
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmoduleAssessment.start') }}"/>
                     <button type="submit" class="btn btn-theme-white bg-blue">{{ 'practicalSubmoduleAssessment.action.start'|trans }}</button>
                 </form>
+                <form action="{{ path('practical_submodule_edit_assessment', {'practicalSubmodule': evaluation.id}) }}" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmoduleAssessment.edit') }}"/>
+                    <button type="submit" class="btn btn-theme-white bg-green">{{ 'practicalSubmoduleAssessment.action.edit'|trans }}</button>
+                </form>
                 {% if assessmentCompleted %}
-                    <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-red ms-3">{{ 'practicalSubmoduleAssessment.action.results'|trans }}</a>
+                    <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-red">{{ 'practicalSubmoduleAssessment.action.results'|trans }}</a>
                 {% endif %}
             </div>
             {% if assessmentLastSubmittedAt is not null %}

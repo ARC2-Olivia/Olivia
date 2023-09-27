@@ -225,8 +225,9 @@ error:
     practicalSubmoduleProcessorTemplatedText:
         question: A question has to be chosen for the processor.
     practicalSubmoduleAssessment:
-        start: Unable to start the assessment. Please, try again.
-        finish: There was an error processing your assessment. Please, take it again.
+        start: Unable to start the quiestionnaire. Please, try again.
+        edit: Unable to start editing the questionnaire. Please, try again.
+        finish: There was an error processing your questionnaire. Please, take it again.
     practicalSubmodulePage:
         questions: You have to add at least one question to the page.
         submoduleMismatch: One of the selected questions doesn't belong to the same submodule as the page.
