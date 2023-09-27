@@ -178,10 +178,15 @@ class PracticalSubmoduleController extends BaseController
     #[IsGranted("ROLE_USER")]
     public function evaluate(PracticalSubmodule $practicalSubmodule): Response
     {
+        $assessmentLastSubmittedAt = null;
         $assessmentCompleted = false;
         if ($this->isGranted('ROLE_USER')) {
             $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
             $assessmentCompleted = $assessment !== null && $assessment->isCompleted();
+            $assessmentLastSubmittedAt = null !== $assessment->getLastSubmittedAt()
+                ? $this->translator->trans('practicalSubmoduleAssessment.message.lastSubmittedAt', ['%datetime%' => $assessment->getLastSubmittedAt()->format('d.m.Y. H:i')],  'app')
+                : null
+            ;
         }
 
         $questions = $processors = $pages = $processorGroups = null;
@@ -197,6 +202,7 @@ class PracticalSubmoduleController extends BaseController
             'evaluationEvaluators' => $processors,
             'pages' => $pages,
             'procesorGroups' => $processorGroups,
+            'assessmentLastSubmittedAt' => $assessmentLastSubmittedAt,
             'assessmentCompleted' => $assessmentCompleted,
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE),
             'questionCount' => $this->em->getRepository(PracticalSubmoduleQuestion::class)->count(['practicalSubmodule' => $practicalSubmodule])

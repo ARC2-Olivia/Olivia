@@ -26,6 +26,9 @@ class PracticalSubmoduleAssessment
     #[ORM\Column]
     private ?\DateTimeImmutable $takenAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $lastSubmittedAt = null;
+
     #[ORM\OneToMany(mappedBy: 'practicalSubmoduleAssessment', targetEntity: PracticalSubmoduleAssessmentAnswer::class, orphanRemoval: true)]
     private Collection $practicalSubmoduleAssessmentAnswers;
 
@@ -74,6 +77,18 @@ class PracticalSubmoduleAssessment
     public function setTakenAt(\DateTimeImmutable $takenAt): self
     {
         $this->takenAt = $takenAt;
+
+        return $this;
+    }
+
+    public function getLastSubmittedAt(): ?\DateTimeImmutable
+    {
+        return $this->lastSubmittedAt;
+    }
+
+    public function setLastSubmittedAt(?\DateTimeImmutable $lastSubmittedAt): self
+    {
+        $this->lastSubmittedAt = $lastSubmittedAt;
 
         return $this;
     }

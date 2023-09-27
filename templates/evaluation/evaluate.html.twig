@@ -31,6 +31,9 @@
                     <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-red ms-3">{{ 'practicalSubmoduleAssessment.action.results'|trans }}</a>
                 {% endif %}
             </div>
+            {% if assessmentLastSubmittedAt is not null %}
+                <p><i>{{ assessmentLastSubmittedAt }}</i></p>
+            {% endif %}
         </div>
 
     {% endif %}

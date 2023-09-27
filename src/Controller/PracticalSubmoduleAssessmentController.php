@@ -96,6 +96,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
             $noQuestionError = false;
 
             $practicalSubmoduleAssessment->setCompleted(true);
+            $practicalSubmoduleAssessment->setLastSubmittedAt(new \DateTimeImmutable());
 
             foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $practicalSubmoduleAssessmentAnswer) {
                 $this->em->remove($practicalSubmoduleAssessmentAnswer);
