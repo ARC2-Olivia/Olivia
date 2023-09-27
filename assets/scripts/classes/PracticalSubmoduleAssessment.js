@@ -405,6 +405,14 @@ class PracticalSubmoduleAssessment {
             </label>
         `, "text/html").body.firstChild;
 
+        const userAnswer = questionData.userAnswer || [];
+        for (const item of userAnswer) {
+            const input = this.#parser.parseFromString(`
+                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][]" value="${item}"/>
+            `, "text/html").body.firstChild;
+            answer.appendChild(input);
+        }
+
         answer.querySelector("button").addEventListener("click", () => {
             const input = this.#parser.parseFromString(`
                 <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][]"/>

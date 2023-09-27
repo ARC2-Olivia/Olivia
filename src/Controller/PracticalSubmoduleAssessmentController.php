@@ -153,6 +153,12 @@ class PracticalSubmoduleAssessmentController extends BaseController
                         }
                         break;
                     }
+                    case PracticalSubmoduleQuestion::TYPE_LIST_INPUT: {
+                        $question['userAnswer'] = [];
+                        foreach ($assessmentAnswers as $aa) {
+                            $question['userAnswer'][] = $aa->getAnswerValue();
+                        }
+                    }
                 }
             }
 
