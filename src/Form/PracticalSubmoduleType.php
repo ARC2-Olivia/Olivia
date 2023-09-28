@@ -76,11 +76,6 @@ class PracticalSubmoduleType extends AbstractType
                 'label' => 'form.entity.practicalSubmodule.label.description',
                 'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.description', [], 'app')]
             ])
-            ->add('terminology', ChoiceType::class, [
-                'label' => 'form.entity.practicalSubmodule.label.terminology',
-                'choices' => $terminologyChoices,
-                'attr' => ['class' => 'form-select mb-3']
-            ])
             ->add('exportType', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmodule.label.exportType',
                 'choices' => $exportTypeChoices,
