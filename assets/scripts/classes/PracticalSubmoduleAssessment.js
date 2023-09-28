@@ -4,7 +4,8 @@ class PracticalSubmoduleAssessment {
     #eventBus;
     #paging;
     #pager;
-    #translation
+    #translation;
+    #handlers = [];
 
     constructor(querySelector, assessmentData, translation) {
         this.#parser = new DOMParser();
@@ -12,6 +13,9 @@ class PracticalSubmoduleAssessment {
         this.#initializeTranslation(translation);
         this.#initializeForm(querySelector);
         this.#initializeAssessmentFromData(assessmentData);
+        for (const handler of this.#handlers) {
+            handler();
+        }
     }
 
     #initializeTranslation(translation) {
@@ -250,6 +254,12 @@ class PracticalSubmoduleAssessment {
                 event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value, checkType: 'equals' })
             });
 
+            if (null !== userAnswer && '' !== checked) {
+                this.#handlers.push(function () {
+                    input.dispatch("answerchange", { questionId: questionData.id, answer: input.dataset.value, checkType: 'equals' });
+                });
+            }
+
             answers.push(answer.body.firstChild);
         });
         return answers;
@@ -257,10 +267,12 @@ class PracticalSubmoduleAssessment {
 
     #createWeightedAnswers(questionData) {
         const answers = [];
+        const userAnswer = questionData.userAnswer || null;
         questionData.answers.forEach((answerData) => {
+            const checked = answerData.id === userAnswer ? ' checked' : '';
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}" data-answer-required required/>
+                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}"${checked} data-answer-required required/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
@@ -270,6 +282,12 @@ class PracticalSubmoduleAssessment {
             input.addEventListener("click", function(event) {
                 event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value, checkType: 'equals' });
             });
+
+            if (null !== userAnswer && '' !== checked) {
+                this.#handlers.push(function () {
+                    input.dispatch("answerchange", { questionId: questionData.id, answer: input.dataset.value, checkType: 'equals' });
+                });
+            }
 
             answers.push(answer.body.firstChild);
         });
@@ -292,8 +310,13 @@ class PracticalSubmoduleAssessment {
 
             const input = answer.body.firstChild.querySelector("input");
             inputs.push(input);
-
             answers.push(answer.body.firstChild);
+
+            if ('' !== checked) {
+                this.#handlers.push(function () {
+                    input.dispatch("answerchange", { question: questionData.id, answer: input.dataset.value, checkType: 'contains' });
+                });
+            }
         });
 
         inputs.forEach((input) => {
@@ -343,6 +366,12 @@ class PracticalSubmoduleAssessment {
             event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.value, checkType: 'equals' });
         });
 
+        if ('' !== userAnswer) {
+            this.#handlers.push(function () {
+                input.dispatch("answerchange", { question: questionData.id, answer: input.value, checkType: 'equals' });
+            });
+        }
+
         return answer.body.firstChild;
     }
 
@@ -359,6 +388,12 @@ class PracticalSubmoduleAssessment {
         input.addEventListener("input", function(event) {
             event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.value, checkType: 'equals' });
         });
+
+        if ('' !== userAnswer) {
+            this.#handlers.push(function () {
+                input.dispatch("answerchange", { question: questionData.id, answer: input.value, checkType: 'equals' });
+            });
+        }
 
         return answer.body.firstChild;
     }

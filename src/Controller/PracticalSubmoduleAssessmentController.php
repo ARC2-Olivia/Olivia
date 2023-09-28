@@ -129,7 +129,8 @@ class PracticalSubmoduleAssessmentController extends BaseController
             $assessmentAnswers = $assessmentAnswerRepository->findBy(['practicalSubmoduleAssessment' => $practicalSubmoduleAssessment, 'practicalSubmoduleQuestion' => $practicalSubmoduleQuestion]);
             if (count($assessmentAnswers) > 0) {
                 switch ($practicalSubmoduleQuestion->getType()) {
-                    case PracticalSubmoduleQuestion::TYPE_YES_NO: {
+                    case PracticalSubmoduleQuestion::TYPE_YES_NO:
+                    case PracticalSubmoduleQuestion::TYPE_WEIGHTED: {
                         $question['userAnswer'] = $assessmentAnswers[0]->getPracticalSubmoduleQuestionAnswer()->getId();
                         break;
                     }
