@@ -29,59 +29,12 @@ class PracticalSubmoduleAssessmentController extends BaseController
         }
         $session->remove('practicalSubmoduleAssessment.start');
 
+        $questionnaire = $this->buildQuestionnaire($practicalSubmoduleAssessment);
         $practicalSubmodule = $practicalSubmoduleAssessment->getPracticalSubmodule();
-
-        /** @var PracticalSubmoduleQuestion[] $practicalSubmoduleQuestions */
-        $practicalSubmoduleQuestions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForSubmodule($practicalSubmodule, true);
-        $assessment = ['id' => $practicalSubmoduleAssessment->getId(), 'questions' => [], 'paging' => $practicalSubmodule->isPaging(), 'pages' => []];
-
-        if ($practicalSubmodule->isPaging()) {
-            foreach ($this->em->getRepository(PracticalSubmodulePage::class)->findOrderedForSubmodule($practicalSubmodule) as $practicalSubmodulePage) {
-                $assessment['pages'][] = [
-                    'title' => $practicalSubmodulePage->getTitle(),
-                    'description' => $practicalSubmodulePage->getDescription(),
-                    'number' => $practicalSubmodulePage->getPosition()
-                ];
-            }
-        }
-
-        $templatedTextFieldsMapper = function (TemplatedTextField $ttf): array { return $ttf->asArray(); };
-        foreach ($practicalSubmoduleQuestions as $practicalSubmoduleQuestion) {
-            $question = [
-                'id' => $practicalSubmoduleQuestion->getId(),
-                'type' => $practicalSubmoduleQuestion->getType(),
-                'question' => $practicalSubmoduleQuestion->getQuestionText(),
-                'answers' => [],
-                'page' => $practicalSubmoduleQuestion->getPracticalSubmodulePage()?->getPosition(),
-                'other' => $practicalSubmoduleQuestion->isOtherEnabled(),
-                'isHeading' => $practicalSubmoduleQuestion->getIsHeading()
-            ];
-            if ($practicalSubmoduleQuestion->getDependentPracticalSubmoduleQuestion() !== null) {
-                $question['dependency'] = [
-                    'questionId' => strval($practicalSubmoduleQuestion->getDependentPracticalSubmoduleQuestion()->getId()),
-                    'answer' => $practicalSubmoduleQuestion->getDependentValue()
-                ];
-            }
-            foreach ($practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers() as $practicalSubmoduleQuestionAnswer) {
-                $answerText = $practicalSubmoduleQuestionAnswer->getAnswerText();
-                if ($question['type'] === PracticalSubmoduleQuestion::TYPE_YES_NO) $answerText = $this->translator->trans($answerText, [], 'app');
-                $answer = [
-                    'id' => $practicalSubmoduleQuestionAnswer->getId(),
-                    'text' => $answerText,
-                    'value' => $practicalSubmoduleQuestionAnswer->getAnswerValue()
-                ];
-                if ($question['type'] === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
-                    $answer['fields'] = array_map($templatedTextFieldsMapper, $practicalSubmoduleQuestionAnswer->getDesimplifiedTemplatedTextFields());
-                }
-                $question['answers'][] = $answer;
-            }
-            $assessment['questions'][] = $question;
-        }
-
         return $this->render('evaluation/assessment.html.twig', [
             'evaluation' => $practicalSubmodule,
             'navigation' => $navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE),
-            'assessment' => $assessment
+            'assessment' => $questionnaire
         ]);
     }
     #[Route("/edit/{practicalSubmoduleAssessment}", name: "edit")]
@@ -96,102 +49,12 @@ class PracticalSubmoduleAssessmentController extends BaseController
         }
         $session->remove('practicalSubmoduleAssessment.edit');
 
+        $questionnaire = $this->buildQuestionnaire($practicalSubmoduleAssessment, true);
         $practicalSubmodule = $practicalSubmoduleAssessment->getPracticalSubmodule();
-
-        /** @var PracticalSubmoduleQuestion[] $practicalSubmoduleQuestions */
-        $practicalSubmoduleQuestions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForSubmodule($practicalSubmodule, true);
-        $assessment = ['id' => $practicalSubmoduleAssessment->getId(), 'questions' => [], 'paging' => $practicalSubmodule->isPaging(), 'pages' => []];
-
-        if ($practicalSubmodule->isPaging()) {
-            foreach ($this->em->getRepository(PracticalSubmodulePage::class)->findOrderedForSubmodule($practicalSubmodule) as $practicalSubmodulePage) {
-                $assessment['pages'][] = [
-                    'title' => $practicalSubmodulePage->getTitle(),
-                    'description' => $practicalSubmodulePage->getDescription(),
-                    'number' => $practicalSubmodulePage->getPosition()
-                ];
-            }
-        }
-
-        $templatedTextFieldsMapper = function (TemplatedTextField $ttf): array { return $ttf->asArray(); };
-        $assessmentAnswerRepository = $this->em->getRepository(PracticalSubmoduleAssessmentAnswer::class);
-        foreach ($practicalSubmoduleQuestions as $practicalSubmoduleQuestion) {
-            $question = [
-                'id' => $practicalSubmoduleQuestion->getId(),
-                'type' => $practicalSubmoduleQuestion->getType(),
-                'question' => $practicalSubmoduleQuestion->getQuestionText(),
-                'answers' => [],
-                'page' => $practicalSubmoduleQuestion->getPracticalSubmodulePage()?->getPosition(),
-                'other' => $practicalSubmoduleQuestion->isOtherEnabled(),
-                'isHeading' => $practicalSubmoduleQuestion->getIsHeading()
-            ];
-
-            # Učitavanje korisničkih odgovora
-            $assessmentAnswers = $assessmentAnswerRepository->findBy(['practicalSubmoduleAssessment' => $practicalSubmoduleAssessment, 'practicalSubmoduleQuestion' => $practicalSubmoduleQuestion]);
-            if (count($assessmentAnswers) > 0) {
-                switch ($practicalSubmoduleQuestion->getType()) {
-                    case PracticalSubmoduleQuestion::TYPE_YES_NO:
-                    case PracticalSubmoduleQuestion::TYPE_WEIGHTED: {
-                        $question['userAnswer'] = $assessmentAnswers[0]->getPracticalSubmoduleQuestionAnswer()->getId();
-                        break;
-                    }
-                    case PracticalSubmoduleQuestion::TYPE_TEXT_INPUT:
-                    case PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT: {
-                        $question['userAnswer'] = $assessmentAnswers[0]->getAnswerValue();
-                        break;
-                    }
-                    case PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT: {
-                        $question['userAnswer'] = json_decode($assessmentAnswers[0]->getAnswerValue(), true);
-                        break;
-                    }
-                    case PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE: {
-                        $question['userAnswer'] = ['selected' => [], 'added' => []];
-                        foreach ($assessmentAnswers as $aa) {
-                            if (null !== $aa->getPracticalSubmoduleQuestionAnswer()) {
-                                $question['userAnswer']['selected'][] = $aa->getPracticalSubmoduleQuestionAnswer()->getId();
-                            } else {
-                                $question['userAnswer']['added'][] = $aa->getAnswerValue();
-                            }
-                        }
-                        break;
-                    }
-                    case PracticalSubmoduleQuestion::TYPE_LIST_INPUT: {
-                        $question['userAnswer'] = [];
-                        foreach ($assessmentAnswers as $aa) {
-                            $question['userAnswer'][] = $aa->getAnswerValue();
-                        }
-                    }
-                }
-            }
-
-            if ($practicalSubmoduleQuestion->getDependentPracticalSubmoduleQuestion() !== null) {
-                $question['dependency'] = [
-                    'questionId' => strval($practicalSubmoduleQuestion->getDependentPracticalSubmoduleQuestion()->getId()),
-                    'answer' => $practicalSubmoduleQuestion->getDependentValue()
-                ];
-            }
-
-            foreach ($practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers() as $practicalSubmoduleQuestionAnswer) {
-                $answerText = $practicalSubmoduleQuestionAnswer->getAnswerText();
-                if ($question['type'] === PracticalSubmoduleQuestion::TYPE_YES_NO) $answerText = $this->translator->trans($answerText, [], 'app');
-                $answer = [
-                    'id' => $practicalSubmoduleQuestionAnswer->getId(),
-                    'text' => $answerText,
-                    'value' => $practicalSubmoduleQuestionAnswer->getAnswerValue()
-                ];
-
-                if ($question['type'] === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
-                    $answer['fields'] = array_map($templatedTextFieldsMapper, $practicalSubmoduleQuestionAnswer->getDesimplifiedTemplatedTextFields());
-                }
-
-                $question['answers'][] = $answer;
-            }
-            $assessment['questions'][] = $question;
-        }
-
         return $this->render('evaluation/assessment.html.twig', [
             'evaluation' => $practicalSubmodule,
             'navigation' => $navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE),
-            'assessment' => $assessment
+            'assessment' => $questionnaire
         ]);
     }
 
@@ -238,8 +101,9 @@ class PracticalSubmoduleAssessmentController extends BaseController
     {
         switch ($practicalSubmoduleQuestion->getType()) {
             case PracticalSubmoduleQuestion::TYPE_YES_NO:
-            case PracticalSubmoduleQuestion::TYPE_WEIGHTED:
                 $this->storeSingleChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
+            case PracticalSubmoduleQuestion::TYPE_WEIGHTED:
+                $this->storeWeightedAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
             case PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT:
                 $this->storeTemplatedTextInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
             case PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE:
@@ -265,6 +129,20 @@ class PracticalSubmoduleAssessmentController extends BaseController
         $this->em->persist($practicalSubmoduleAssessmentAnswer);
     }
 
+    private function storeWeightedAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
+    {
+        $practicalSubmoduleQuestionAnswerRepository = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class);
+        foreach ($givenAnswer as $qaId) {
+            if (null !== ($qa = $practicalSubmoduleQuestionAnswerRepository->find($qaId))) {
+                $weightAnswer = (new PracticalSubmoduleAssessmentAnswer())
+                    ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
+                    ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
+                    ->setPracticalSubmoduleQuestionAnswer($qa);
+                $this->em->persist($weightAnswer);
+            }
+        }
+    }
+
     private function storeTemplatedTextInputAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
     {
         $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, json_encode($givenAnswer));
@@ -275,7 +153,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
         if (key_exists('choices', $givenAnswer)) {
             $practicalSubmoduleQuestionAnswerRepository = $this->em->getRepository(PracticalSubmoduleQuestionAnswer::class);
             foreach ($givenAnswer['choices'] as $choice) {
-                if (($qa = $practicalSubmoduleQuestionAnswerRepository->find($choice)) !== null) {
+                if (null !== ($qa = $practicalSubmoduleQuestionAnswerRepository->find($choice))) {
                     $choiceAnswer = (new PracticalSubmoduleAssessmentAnswer())
                         ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
                         ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
@@ -322,5 +200,106 @@ class PracticalSubmoduleAssessmentController extends BaseController
             ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
             ->setAnswerValue($givenAnswer);
         $this->em->persist($practicalSubmoduleAssessmentAnswer);
+    }
+
+    private function buildQuestionnaire(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, bool $editing = false): array
+    {
+        $practicalSubmodule = $practicalSubmoduleAssessment->getPracticalSubmodule();
+
+        /** @var PracticalSubmoduleQuestion[] $practicalSubmoduleQuestions */
+        $practicalSubmoduleQuestions = $this->em->getRepository(PracticalSubmoduleQuestion::class)->findOrderedForSubmodule($practicalSubmodule, true);
+        $assessment = ['id' => $practicalSubmoduleAssessment->getId(), 'questions' => [], 'paging' => $practicalSubmodule->isPaging(), 'pages' => []];
+
+        if ($practicalSubmodule->isPaging()) {
+            foreach ($this->em->getRepository(PracticalSubmodulePage::class)->findOrderedForSubmodule($practicalSubmodule) as $practicalSubmodulePage) {
+                $assessment['pages'][] = [
+                    'title' => $practicalSubmodulePage->getTitle(),
+                    'description' => $practicalSubmodulePage->getDescription(),
+                    'number' => $practicalSubmodulePage->getPosition()
+                ];
+            }
+        }
+
+        $templatedTextFieldsMapper = function (TemplatedTextField $ttf): array { return $ttf->asArray(); };
+        if ($editing) $assessmentAnswerRepository = $this->em->getRepository(PracticalSubmoduleAssessmentAnswer::class);
+        foreach ($practicalSubmoduleQuestions as $practicalSubmoduleQuestion) {
+            $question = [
+                'id' => $practicalSubmoduleQuestion->getId(),
+                'type' => $practicalSubmoduleQuestion->getType(),
+                'question' => $practicalSubmoduleQuestion->getQuestionText(),
+                'answers' => [],
+                'page' => $practicalSubmoduleQuestion->getPracticalSubmodulePage()?->getPosition(),
+                'other' => $practicalSubmoduleQuestion->isOtherEnabled(),
+                'isHeading' => $practicalSubmoduleQuestion->getIsHeading(),
+                'multipleWeighted' => $practicalSubmoduleQuestion->isMultipleWeighted()
+            ];
+
+            if ($editing) {
+                # Učitavanje korisničkih odgovora
+                $assessmentAnswers = $assessmentAnswerRepository->findBy(['practicalSubmoduleAssessment' => $practicalSubmoduleAssessment, 'practicalSubmoduleQuestion' => $practicalSubmoduleQuestion]);
+                if (count($assessmentAnswers) > 0) {
+                    switch ($practicalSubmoduleQuestion->getType()) {
+                        case PracticalSubmoduleQuestion::TYPE_YES_NO:
+                        case PracticalSubmoduleQuestion::TYPE_WEIGHTED: {
+                            $question['userAnswer'] = [];
+                            foreach ($assessmentAnswers as $aa) {
+                                $question['userAnswer'][] = $aa->getPracticalSubmoduleQuestionAnswer()->getId();
+                            }
+                            break;
+                        }
+                        case PracticalSubmoduleQuestion::TYPE_TEXT_INPUT:
+                        case PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT: {
+                            $question['userAnswer'] = $assessmentAnswers[0]->getAnswerValue();
+                            break;
+                        }
+                        case PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT: {
+                            $question['userAnswer'] = json_decode($assessmentAnswers[0]->getAnswerValue(), true);
+                            break;
+                        }
+                        case PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE: {
+                            $question['userAnswer'] = ['selected' => [], 'added' => []];
+                            foreach ($assessmentAnswers as $aa) {
+                                if (null !== $aa->getPracticalSubmoduleQuestionAnswer()) {
+                                    $question['userAnswer']['selected'][] = $aa->getPracticalSubmoduleQuestionAnswer()->getId();
+                                } else {
+                                    $question['userAnswer']['added'][] = $aa->getAnswerValue();
+                                }
+                            }
+                            break;
+                        }
+                        case PracticalSubmoduleQuestion::TYPE_LIST_INPUT: {
+                            $question['userAnswer'] = [];
+                            foreach ($assessmentAnswers as $aa) {
+                                $question['userAnswer'][] = $aa->getAnswerValue();
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($practicalSubmoduleQuestion->getDependentPracticalSubmoduleQuestion() !== null) {
+                $question['dependency'] = [
+                    'questionId' => strval($practicalSubmoduleQuestion->getDependentPracticalSubmoduleQuestion()->getId()),
+                    'answer' => $practicalSubmoduleQuestion->getDependentValue()
+                ];
+            }
+
+            foreach ($practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers() as $practicalSubmoduleQuestionAnswer) {
+                $answerText = $practicalSubmoduleQuestionAnswer->getAnswerText();
+                if ($question['type'] === PracticalSubmoduleQuestion::TYPE_YES_NO) $answerText = $this->translator->trans($answerText, [], 'app');
+                $answer = [
+                    'id' => $practicalSubmoduleQuestionAnswer->getId(),
+                    'text' => $answerText,
+                    'value' => $practicalSubmoduleQuestionAnswer->getAnswerValue()
+                ];
+                if ($question['type'] === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
+                    $answer['fields'] = array_map($templatedTextFieldsMapper, $practicalSubmoduleQuestionAnswer->getDesimplifiedTemplatedTextFields());
+                }
+                $question['answers'][] = $answer;
+            }
+            $assessment['questions'][] = $question;
+        }
+
+        return $assessment;
     }
 }

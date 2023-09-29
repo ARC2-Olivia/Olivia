@@ -267,30 +267,45 @@ class PracticalSubmoduleAssessment {
 
     #createWeightedAnswers(questionData) {
         const answers = [];
-        const userAnswer = questionData.userAnswer || null;
+        const inputType = true === questionData.multipleWeighted ? 'checkbox' : 'radio';
+        const inputData = [];
+        const userAnswer = questionData.userAnswer || [];
         questionData.answers.forEach((answerData) => {
-            const checked = answerData.id === userAnswer ? ' checked' : '';
+            const checked = userAnswer.includes(answerData.id) ? ' checked' : '';
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="radio" value="${answerData.id}" name="evaluation_assessment[${questionData.id}]" data-value="${answerData.value}"${checked} data-answer-required required/>
+                    <input type="${inputType}" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][]" data-value="${answerData.value}"${checked} data-answer-required required/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");
 
             const input = answer.body.firstChild.querySelector("input");
             this.#eventBus.attach(input);
+            inputData.push({ input: input, userAnswered: '' !== checked });
             input.addEventListener("click", function(event) {
-                event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value, checkType: 'equals' });
+                event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.dataset.value, checkType: 'contains' });
             });
 
-            if (null !== userAnswer && '' !== checked) {
+            if ('' !== checked) {
                 this.#handlers.push(function () {
-                    input.dispatch("answerchange", { questionId: questionData.id, answer: input.dataset.value, checkType: 'equals' });
+                    input.dispatch("answerchange", { questionId: questionData.id, answer: input.dataset.value, checkType: 'contains' });
                 });
             }
 
             answers.push(answer.body.firstChild);
         });
+
+        for (const inputItem of inputData) {
+            inputItem.input.addEventListener("click", function(event) {
+                const checkedValues = inputData.filter(i => i.input.checked === true).map(i => i.input.dataset.value);
+                event.target.dispatch("answerchange", { questionId: questionData.id, answer: checkedValues, checkType: 'contains' });
+            });
+            if (true === inputItem.userAnswered) {
+                const checkedValues = inputData.filter(i => i.input.checked === true).map(i => i.input.dataset.value);
+                inputItem.input.dispatch("answerchange", { questionId: questionData.id, answer: checkedValues, checkType: 'contains' });
+            }
+        }
+
         return answers;
     }
 
