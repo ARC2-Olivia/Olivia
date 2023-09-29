@@ -27,6 +27,11 @@
         {{ form_widget(form.otherEnabled) }}
     {% endif %}
 
+    {% if form.multipleWeighted is defined %}
+        <label for="{{ form.multipleWeighted.vars.id }}">{{ form.multipleWeighted.vars.label|trans|raw }}</label>
+        {{ form_widget(form.multipleWeighted) }}
+    {% endif %}
+
     {{ form_label(form.questionText) }}
     {{ form_widget(form.questionText) }}
 

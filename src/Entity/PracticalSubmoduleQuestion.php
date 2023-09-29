@@ -66,6 +66,9 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     #[ORM\Column(nullable: true)]
     private ?bool $disabled = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $multipleWeighted = null;
+
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -275,6 +278,21 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public function setDisabled(?bool $disabled): self
     {
         $this->disabled = $disabled;
+
+        return $this;
+    }
+
+    public function isMultipleWeighted(): ?bool
+    {
+        if (null === $this->multipleWeighted) {
+            return false;
+        }
+        return $this->multipleWeighted;
+    }
+
+    public function setMultipleWeighted(?bool $multipleWeighted): self
+    {
+        $this->multipleWeighted = $multipleWeighted;
 
         return $this;
     }

@@ -260,6 +260,7 @@ form:
                 dependentQuestion: Dependent question
                 dependentValue: Dependent question value
                 otherEnabled: Enable additional (i.e. <i>other</i>) fields
+                multipleWeighted: Enable multiple selection of weights
                 isHeading: Is heading
                 disabled: Disabled
             placeholder:

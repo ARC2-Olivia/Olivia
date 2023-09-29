@@ -86,6 +86,14 @@ class PracticalSubmoduleQuestionType extends AbstractType
             ]);
         }
 
+        if (true === $options['include_multiple_weighted_field']) {
+            $builder->add('multipleWeighted', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.multipleWeighted',
+                'choices' => $booleanChoices,
+                'attr' => ['class' => 'form-select mb-3']
+            ]);
+        }
+
         if (true === $options['include_translatable_fields']) {
             $builder->add('questionTextAlt', TextareaType::class, [
                 'mapped' => false,
@@ -106,6 +114,7 @@ class PracticalSubmoduleQuestionType extends AbstractType
             'include_translatable_fields' => false,
             'edit_mode' => false,
             'include_other_field' => false,
+            'include_multiple_weighted_field' => false,
             'attr' => [
                 'class' => 'd-flex flex-column',
                 'novalidate' => 'novalidate'
