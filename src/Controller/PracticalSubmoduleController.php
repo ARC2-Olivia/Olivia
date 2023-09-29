@@ -180,13 +180,15 @@ class PracticalSubmoduleController extends BaseController
     {
         $assessmentLastSubmittedAt = null;
         $assessmentCompleted = false;
-        if ($this->isGranted('ROLE_USER')) {
+        if ($this->isGranted('ROLE_USER') && !$this->isGranted('ROLE_MODERATOR')) {
             $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
-            $assessmentCompleted = $assessment !== null && $assessment->isCompleted();
-            $assessmentLastSubmittedAt = null !== $assessment->getLastSubmittedAt()
-                ? $this->translator->trans('practicalSubmoduleAssessment.message.lastSubmittedAt', ['%datetime%' => $assessment->getLastSubmittedAt()->format('d.m.Y. H:i')],  'app')
-                : null
-            ;
+            if (null !== $assessment) {
+                $assessmentCompleted = $assessment->isCompleted();
+                $assessmentLastSubmittedAt = null !== $assessment->getLastSubmittedAt()
+                    ? $this->translator->trans('practicalSubmoduleAssessment.message.lastSubmittedAt', ['%datetime%' => $assessment->getLastSubmittedAt()->format('d.m.Y. H:i')],  'app')
+                    : null
+                ;
+            }
         }
 
         $questions = $processors = $pages = $processorGroups = null;

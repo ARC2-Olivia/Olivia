@@ -41,33 +41,39 @@ class PSExporter
         $this->makeCreateProcessorDependencyOnQuestionTasks();
         $this->makeCreateProcessorDependencyOnProcessorTasks();
         $this->makeCreatePageTasks();
+        $this->makeCreateProcessorGroupTasks();
         return $this->tasks;
     }
 
     private function makeCreateSubmoduleTask(): void
     {
-        $repository = $this->em->getRepository(PracticalSubmodule::class);
-
         $task = [
             'task_order' => $this->orderIndex++,
             'task_op' => Tasks::CREATE_SUBMODULE,
             'task_props' => [
                 'name' => $this->practicalSubmodule->getName(),
+                'public_name' => $this->practicalSubmodule->getPublicName(),
                 'description' => $this->practicalSubmodule->getDescription(),
+                'report_comment' => $this->practicalSubmodule->getReportComment(),
                 'paging' => $this->practicalSubmodule->isPaging(),
                 'tags' => $this->practicalSubmodule->getTags(),
-                'opmode' => $this->practicalSubmodule->getModeOfOperation()
+                'op_mode' => $this->practicalSubmodule->getModeOfOperation(),
+                'export_type' => $this->practicalSubmodule->getExportType()
             ]
         ];
 
         $trans = $this->translationRepository->findTranslations($this->practicalSubmodule);
         if (true === key_exists($this->localeAlternate, $trans)) {
             $transName = $trans[$this->localeAlternate]['name'] ?? null;
+            $transPublicName = $trans[$this->localeAlternate]['publicName'] ?? null;
             $transDescription = $trans[$this->localeAlternate]['description'] ?? null;
+            $transReportComment = $trans[$this->localeAlternate]['reportComment'] ?? null;
             $transTags = $trans[$this->localeAlternate]['tags'] ?? null;
             $task['task_props']['trans'] = [];
             if (null !== $transName) $task['task_props']['trans']['name'] = $transName;
+            if (null !== $transPublicName) $task['task_props']['trans']['public_name'] = $transPublicName;
             if (null !== $transDescription) $task['task_props']['trans']['description'] = $transDescription;
+            if (null !== $transReportComment) $task['task_props']['trans']['report_comment'] = $transReportComment;
             if (null !== $transTags) $task['task_props']['trans']['tags'] = $transTags;
         }
 
@@ -388,6 +394,36 @@ class PSExporter
                 $transDescription = $trans[$this->localeAlternate]['description'] ?? null;
                 if (null !== $transTitle) $task['task_props']['trans']['title'] = $transTitle;
                 if (null !== $transDescription) $task['task_props']['trans']['description'] = $transDescription;
+            }
+
+            $this->tasks[] = $task;
+        }
+    }
+
+    private function makeCreateProcessorGroupTasks()
+    {
+        foreach ($this->practicalSubmodule->getPracticalSubmoduleProcessorGroups() as $pg) {
+            $task = [
+                'task_order' => $this->orderIndex++,
+                'task_op' => Tasks::CREATE_PROCESSOR_GROUP,
+                'task_props' => [
+                    'title' => $pg->getTitle(),
+                    'position' => $pg->getPosition(),
+                    'processors' => []
+                ]
+            ];
+
+            foreach ($pg->getPracticalSubmoduleProcessors() as $processor) {
+                if (key_exists($processor->getId(), $this->processorMapping)) {
+                    $task['task_props']['processors'][] = $this->processorMapping[$processor->getId()];
+                }
+            }
+
+            $trans = $this->translationRepository->findTranslations($pg);
+            if (key_exists($this->localeAlternate, $trans)) {
+                $task['task_props']['trans'] = [];
+                $transTitle = $trans[$this->localeAlternate]['title'] ?? null;
+                if (null !== $transTitle) $task['task_props']['trans']['title'] = $transTitle;
             }
 
             $this->tasks[] = $task;

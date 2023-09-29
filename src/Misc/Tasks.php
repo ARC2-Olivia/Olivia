@@ -11,6 +11,7 @@ final class Tasks
     const BIND_PROCESSOR_DEPENDENCY_ON_QUESTION = 31;
     const BIND_PROCESSOR_DEPENDENCY_ON_PROCESSOR = 32;
     const CREATE_PAGE = 40;
+    const CREATE_PROCESSOR_GROUP = 50;
 
     public function __construct()
     {

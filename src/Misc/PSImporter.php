@@ -5,6 +5,7 @@ namespace App\Misc;
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmodulePage;
 use App\Entity\PracticalSubmoduleProcessor;
+use App\Entity\PracticalSubmoduleProcessorGroup;
 use App\Entity\PracticalSubmoduleProcessorHtml;
 use App\Entity\PracticalSubmoduleProcessorProductAggregate;
 use App\Entity\PracticalSubmoduleProcessorResultCombiner;
@@ -71,6 +72,7 @@ class PSImporter
                 case Tasks::BIND_PROCESSOR_DEPENDENCY_ON_QUESTION:  $this->doBindProcessorDependencyOnQuestionTask($task['task_props']);  break;
                 case Tasks::BIND_PROCESSOR_DEPENDENCY_ON_PROCESSOR: $this->doBindProcessorDependencyOnProcessorTask($task['task_props']); break;
                 case Tasks::CREATE_PAGE:                            $this->doCreatePageTask($task['task_props']);                         break;
+                case Tasks::CREATE_PROCESSOR_GROUP:                 $this->doCreateProcessorGroupTask($task['task_props']);               break;
             }
 
             $this->taskIndex++;
@@ -109,26 +111,33 @@ class PSImporter
 
     private function doCreateSubmoduleTask(array $props): void
     {
-        $opmode = $props['opmode'];
+        $opmode = $props['op_mode'];
         if ($opmode !== PracticalSubmodule::MODE_OF_OPERATION_SIMPLE && $opmode !== PracticalSubmodule::MODE_OF_OPERATION_ADVANCED) {
             $opmode = PracticalSubmodule::MODE_OF_OPERATION_ADVANCED;
         }
 
         $this->practicalSubmodule = (new PracticalSubmodule())
             ->setName($props['name'] ?? '')
+            ->setPublicName($props['public_name'] ?? '')
             ->setDescription($props['description'] ?? '')
+            ->setReportComment($props['report_comment'] ?? '')
             ->setPaging($props['paging'] ?? false)
             ->setTags($props['tags'] ?? [])
             ->setModeOfOperation($opmode)
+            ->setExportType($props['export_type'] ?? PracticalSubmodule::EXPORT_TYPE_NONE)
         ;
         $this->em->persist($this->practicalSubmodule);
 
         if (true === key_exists('trans', $props)) {
             $transName = $props['trans']['name'] ?? null;
+            $transPublicName = $props['trans']['public_name'] ?? null;
             $transDescription = $props['trans']['description'] ?? null;
+            $transReportComment = $props['trans']['report_comment'] ?? null;
             $transTags = $props['trans']['tags'] ?? null;
             if (null !== $transName) $this->translationRepository->translate($this->practicalSubmodule, 'name', $this->localeAlternate, $transName);
+            if (null !== $transPublicName) $this->translationRepository->translate($this->practicalSubmodule, 'publicName', $this->localeAlternate, $transPublicName);
             if (null !== $transDescription) $this->translationRepository->translate($this->practicalSubmodule, 'description', $this->localeAlternate, $transDescription);
+            if (null !== $transReportComment) $this->translationRepository->translate($this->practicalSubmodule, 'reportComment', $this->localeAlternate, $transReportComment);
             if (null !== $transTags) $this->translationRepository->translate($this->practicalSubmodule, 'tags', $this->localeAlternate, explode(',', $transTags));
         }
     }
@@ -406,6 +415,36 @@ class PSImporter
                 if (null !== $question) {
                     $question->setPracticalSubmodulePage($page);
                     $this->em->persist($question);
+                }
+            }
+        }
+    }
+
+    private function doCreateProcessorGroupTask(mixed $props)
+    {
+        if (false === $this->allKeysExist(['title', 'position'], $props)) {
+            return;
+        }
+
+        $pg = (new PracticalSubmoduleProcessorGroup())
+            ->setPracticalSubmodule($this->practicalSubmodule)
+            ->setTitle($props['title'])
+            ->setPosition($props['position'])
+        ;
+        $this->em->persist($pg);
+
+        if (true === key_exists('trans', $props)) {
+            $transTitle = $props['trans']['title'] ?? null;
+            if (null !== $transTitle) $this->translationRepository->translate($pg, 'title', $this->localeAlternate, $transTitle);
+        }
+
+        if (true === (key_exists('processors', $props) && is_array($props['processors']))) {
+            foreach ($props['processors'] as $processorId) {
+                /** @var PracticalSubmoduleProcessor $processor */
+                $processor = $this->processorMapping[$processorId] ?? null;
+                if (null !== $processor) {
+                    $processor->setPracticalSubmoduleProcessorGroup($pg);
+                    $this->em->persist($processor);
                 }
             }
         }
