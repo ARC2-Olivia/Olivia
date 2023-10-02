@@ -42,6 +42,8 @@ class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity impleme
     #[Gedmo\Translatable]
     private ?string $resultText = null;
 
+    private ?string $processedText = null;
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
@@ -60,12 +62,11 @@ class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity impleme
 
     public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): int
     {
-        $sum = 0;
-        foreach ($this->getPracticalSubmoduleQuestions() as $evaluationQuestion) {
+        $sum = 0.0;
+        foreach ($this->getPracticalSubmoduleQuestions() as $question) {
             foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
-                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $evaluationQuestion->getId()) {
+                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $question->getId()) {
                     $sum += $assessmentAnswer->getAnswerValue();
-                    break;
                 }
             }
         }
@@ -75,6 +76,13 @@ class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity impleme
                 $sum += $processorImpl->calculateResult($practicalSubmoduleAssessment, $validator);
             }
         }
+
+        $pattern = '/\{\{\s*value\s*\}\}/i';
+        if (1 === preg_match($pattern, $this->resultText)) {
+            $this->processedText = $this->resultText;
+            $this->processedText = preg_replace($pattern, number_format($sum, 2, ',', '.'), $this->processedText);
+        }
+
         return $sum;
     }
 
@@ -177,6 +185,9 @@ class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity impleme
 
     public function getResultText(): ?string
     {
+        if (null !== $this->processedText) {
+            return $this->processedText;
+        }
         return $this->resultText;
     }
 

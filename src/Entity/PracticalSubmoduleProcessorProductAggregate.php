@@ -59,11 +59,10 @@ class PracticalSubmoduleProcessorProductAggregate implements PracticalSubmoduleP
     public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null)
     {
         $product = 1;
-        foreach ($this->getPracticalSubmoduleQuestions() as $evaluationQuestion) {
+        foreach ($this->getPracticalSubmoduleQuestions() as $question) {
             foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
-                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $evaluationQuestion->getId()) {
+                if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $question->getId()) {
                     $product *= $assessmentAnswer->getAnswerValue();
-                    break;
                 }
             }
         }

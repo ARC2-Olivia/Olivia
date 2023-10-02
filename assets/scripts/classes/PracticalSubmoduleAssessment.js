@@ -268,13 +268,14 @@ class PracticalSubmoduleAssessment {
     #createWeightedAnswers(questionData) {
         const answers = [];
         const inputType = true === questionData.multipleWeighted ? 'checkbox' : 'radio';
+        const requirement = questionData.multipleWeighted ? '' : ' data-answer-required required';
         const inputData = [];
         const userAnswer = questionData.userAnswer || [];
         questionData.answers.forEach((answerData) => {
             const checked = userAnswer.includes(answerData.id) ? ' checked' : '';
             const answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
-                    <input type="${inputType}" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][]" data-value="${answerData.value}"${checked} data-answer-required required/>
+                    <input type="${inputType}" value="${answerData.id}" name="evaluation_assessment[${questionData.id}][]" data-value="${answerData.value}"${checked}${requirement}/>
                     <span>${answerData.text}</span>
                 </label>
             `, "text/html");

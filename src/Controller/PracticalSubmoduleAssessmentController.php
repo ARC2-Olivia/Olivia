@@ -137,7 +137,9 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 $weightAnswer = (new PracticalSubmoduleAssessmentAnswer())
                     ->setPracticalSubmoduleAssessment($practicalSubmoduleAssessment)
                     ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
-                    ->setPracticalSubmoduleQuestionAnswer($qa);
+                    ->setPracticalSubmoduleQuestionAnswer($qa)
+                    ->setAnswerValue($qa->getAnswerValue())
+                ;
                 $this->em->persist($weightAnswer);
             }
         }
