@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleProcessor;
+use App\Entity\PracticalSubmoduleProcessorMaxValue;
 use App\Entity\PracticalSubmoduleProcessorProductAggregate;
 use App\Entity\PracticalSubmoduleProcessorSumAggregate;
 use App\Entity\PracticalSubmoduleQuestion;
@@ -95,7 +96,10 @@ class PracticalSubmoduleProcessorController extends BaseController
                 }
             }
 
-            if (true === $isProcessorProcessingProcessor && $practicalSubmoduleProcessor::TYPE_RESULT_COMBINER !== $practicalSubmoduleProcessor->getType()) {
+            if (true === $isProcessorProcessingProcessor
+                && $practicalSubmoduleProcessor::TYPE_RESULT_COMBINER !== $practicalSubmoduleProcessor->getType()
+                && $practicalSubmoduleProcessor::TYPE_MAX_VALUE !== $practicalSubmoduleProcessor->getType()
+            ) {
                 /** @var PracticalSubmoduleProcessorSumAggregate|PracticalSubmoduleProcessorProductAggregate $processorImpl */
                 $processorImpl->getPracticalSubmoduleQuestions()->clear();
                 $simpleMode = true === $practicalSubmoduleProcessor->isIncluded() && PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $practicalSubmoduleProcessor->getPracticalSubmodule()->getModeOfOperation();

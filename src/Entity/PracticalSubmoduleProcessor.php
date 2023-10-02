@@ -12,12 +12,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorRepository::class)]
 class PracticalSubmoduleProcessor
 {
-    public const TYPE_SIMPLE = 'simple';
-    public const TYPE_SUM_AGGREGATE = 'sum_aggregate';
+    public const TYPE_HTML              = 'html';
+    public const TYPE_SIMPLE            = 'simple';
+    public const TYPE_MAX_VALUE         = 'max_value';
+    public const TYPE_SUM_AGGREGATE     = 'sum_aggregate';
+    public const TYPE_TEMPLATED_TEXT    = 'templated_text';
+    public const TYPE_RESULT_COMBINER   = 'result_combiner';
     public const TYPE_PRODUCT_AGGREGATE = 'product_aggregate';
-    public const TYPE_TEMPLATED_TEXT = 'templated_text';
-    public const TYPE_HTML = 'html';
-    public const TYPE_RESULT_COMBINER = 'result_combiner';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -74,6 +75,9 @@ class PracticalSubmoduleProcessor
     #[ORM\ManyToOne(inversedBy: 'practicalSubmoduleProcessor')]
     private ?PracticalSubmoduleProcessorGroup $practicalSubmoduleProcessorGroup = null;
 
+    #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
+    private ?PracticalSubmoduleProcessorMaxValue $practicalSubmoduleProcessorMaxValue = null;
+
     public function __construct()
     {
         $this->resultFiles = new ArrayCollection();
@@ -81,12 +85,12 @@ class PracticalSubmoduleProcessor
 
     public static function getSupportedProcessorTypes(): array
     {
-        return [self::TYPE_SIMPLE, self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE, self::TYPE_TEMPLATED_TEXT, self::TYPE_HTML, self::TYPE_RESULT_COMBINER];
+        return [self::TYPE_SIMPLE, self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE, self::TYPE_TEMPLATED_TEXT, self::TYPE_HTML, self::TYPE_RESULT_COMBINER, self::TYPE_MAX_VALUE];
     }
 
     public static function getProcessorProcessingProcessorTypes(): array
     {
-        return [self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE, self::TYPE_RESULT_COMBINER];
+        return [self::TYPE_SUM_AGGREGATE, self::TYPE_PRODUCT_AGGREGATE, self::TYPE_RESULT_COMBINER, self::TYPE_MAX_VALUE];
     }
 
     public function getId(): ?int
@@ -247,12 +251,13 @@ class PracticalSubmoduleProcessor
     public function getImplementation(): ?PracticalSubmoduleProcessorImplementationInterface
     {
         return match ($this->type) {
-            self::TYPE_SIMPLE => $this->getPracticalSubmoduleProcessorSimple(),
-            self::TYPE_HTML => $this->getPracticalSubmoduleProcessorHtml(),
-            self::TYPE_SUM_AGGREGATE => $this->getPracticalSubmoduleProcessorSumAggregate(),
+            self::TYPE_HTML              => $this->getPracticalSubmoduleProcessorHtml(),
+            self::TYPE_SIMPLE            => $this->getPracticalSubmoduleProcessorSimple(),
+            self::TYPE_MAX_VALUE         => $this->getPracticalSubmoduleProcessorMaxValue(),
+            self::TYPE_SUM_AGGREGATE     => $this->getPracticalSubmoduleProcessorSumAggregate(),
+            self::TYPE_TEMPLATED_TEXT    => $this->getPracticalSubmoduleProcessorTemplatedText(),
+            self::TYPE_RESULT_COMBINER   => $this->getPracticalSubmoduleProcessorResultCombiner(),
             self::TYPE_PRODUCT_AGGREGATE => $this->getPracticalSubmoduleProcessorProductAggregate(),
-            self::TYPE_TEMPLATED_TEXT => $this->getPracticalSubmoduleProcessorTemplatedText(),
-            self::TYPE_RESULT_COMBINER => $this->getPracticalSubmoduleProcessorResultCombiner(),
             default => null
         };
     }
@@ -368,6 +373,23 @@ class PracticalSubmoduleProcessor
     public function setPracticalSubmoduleProcessorGroup(?PracticalSubmoduleProcessorGroup $practicalSubmoduleProcessorGroup): self
     {
         $this->practicalSubmoduleProcessorGroup = $practicalSubmoduleProcessorGroup;
+
+        return $this;
+    }
+
+    public function getPracticalSubmoduleProcessorMaxValue(): ?PracticalSubmoduleProcessorMaxValue
+    {
+        return $this->practicalSubmoduleProcessorMaxValue;
+    }
+
+    public function setPracticalSubmoduleProcessorMaxValue(PracticalSubmoduleProcessorMaxValue $practicalSubmoduleProcessorMaxValue): self
+    {
+        // set the owning side of the relation if necessary
+        if ($practicalSubmoduleProcessorMaxValue->getPracticalSubmoduleProcessor() !== $this) {
+            $practicalSubmoduleProcessorMaxValue->setPracticalSubmoduleProcessor($this);
+        }
+
+        $this->practicalSubmoduleProcessorMaxValue = $practicalSubmoduleProcessorMaxValue;
 
         return $this;
     }

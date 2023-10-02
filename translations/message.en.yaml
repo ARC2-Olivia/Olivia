@@ -224,6 +224,13 @@ error:
         resultText: A resulting text that the processor will generate upon successful evaluation needs to be assigned.
     practicalSubmoduleProcessorTemplatedText:
         question: A question has to be chosen for the processor.
+    practicalSubmoduleProcessorMaxValue:
+        questionsAndProcessors: Atleast one question or processor needs to be assigned to the max value processor (if included in calculation).
+        expectedValueRange:
+            start: Start of the expected value range needs to be a number.
+            end: End of the expected value range needs to be a number.
+            invalid: Start of the expected value range has to be less or equal to (≤) the end of the expected value range.
+        resultText: A resulting text that the processor will generate upon successful evaluation needs to be assigned.
     practicalSubmoduleAssessment:
         start: Unable to start the quiestionnaire. Please, try again.
         edit: Unable to start editing the questionnaire. Please, try again.

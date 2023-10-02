@@ -30,7 +30,8 @@ class PracticalSubmoduleProcessorType extends AbstractType
             $this->translator->trans('practicalSubmoduleProcessor.type.productAggregate', [], 'app') => PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE,
             $this->translator->trans('practicalSubmoduleProcessor.type.templatedText', [], 'app') => PracticalSubmoduleProcessor::TYPE_TEMPLATED_TEXT,
             $this->translator->trans('practicalSubmoduleProcessor.type.html', [], 'app') => PracticalSubmoduleProcessor::TYPE_HTML,
-            $this->translator->trans('practicalSubmoduleProcessor.type.resultCombiner', [], 'app') => PracticalSubmoduleProcessor::TYPE_RESULT_COMBINER
+            $this->translator->trans('practicalSubmoduleProcessor.type.resultCombiner', [], 'app') => PracticalSubmoduleProcessor::TYPE_RESULT_COMBINER,
+            $this->translator->trans('practicalSubmoduleProcessor.type.maxValue', [], 'app') => PracticalSubmoduleProcessor::TYPE_MAX_VALUE
         ];
 
         $booleanChoices = [
