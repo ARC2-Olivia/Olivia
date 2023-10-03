@@ -26,14 +26,14 @@ class WordService
         $this->translator = $translator;
     }
 
-    public function generateAssessmentResultsDocument(PracticalSubmoduleAssessment $assessment): string
+    public function generateDocumentFromAssessment(PracticalSubmoduleAssessment $assessment): string
     {
         return PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY === $assessment->getPracticalSubmodule()->getExportType()
-            ? $this->generateDocumentForSubmoduleWithProcessorGroupingEnabled($assessment)
+            ? $this->generatePrivacyPolicyDocument($assessment)
             : $this->generateDefaultDocument($assessment);
     }
 
-    private function generateDocumentForSubmoduleWithProcessorGroupingEnabled(PracticalSubmoduleAssessment $assessment): string
+    private function generatePrivacyPolicyDocument(PracticalSubmoduleAssessment $assessment): string
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
         usort($results, function (ProcessorResult $prA, ProcessorResult $prB) {

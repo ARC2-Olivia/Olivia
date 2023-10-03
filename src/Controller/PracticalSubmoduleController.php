@@ -415,7 +415,7 @@ class PracticalSubmoduleController extends BaseController
     public function exportResults(PracticalSubmodule $practicalSubmodule, WordService $wordService): Response
     {
         $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
-        $document = $wordService->generateAssessmentResultsDocument($assessment);
+        $document = $wordService->generateDocumentFromAssessment($assessment);
         $filename = $practicalSubmodule->getName().'.docx';
         return $this->file($document, $filename)->deleteFileAfterSend();
     }
