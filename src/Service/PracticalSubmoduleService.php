@@ -248,7 +248,8 @@ class PracticalSubmoduleService
             text: $processorSimple->getResultText(),
             files: $processorSimple->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(),
             question: $question,
-            processorGroup: $processor->getPracticalSubmoduleProcessorGroup()
+            processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
+            exportTag: $processor->getExportTag()
         );
     }
 
@@ -260,7 +261,8 @@ class PracticalSubmoduleService
         return new ProcessorResult(
             text: $processorMaxValue->getResultText(),
             files: $processorMaxValue->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(),
-            processorGroup: $processor->getPracticalSubmoduleProcessorGroup()
+            processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
+            exportTag: $processor->getExportTag()
         );
     }
 
@@ -274,7 +276,8 @@ class PracticalSubmoduleService
             text: $processorSumAggregate->getResultText(),
             files: $processorSumAggregate->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(),
             question: $question,
-            processorGroup: $processor->getPracticalSubmoduleProcessorGroup()
+            processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
+            exportTag: $processor->getExportTag()
         );
     }
 
@@ -289,7 +292,8 @@ class PracticalSubmoduleService
             text: $processorTemplatedText->getResultText(),
             files: $processorTemplatedText->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(),
             question: $question,
-            processorGroup: $processor->getPracticalSubmoduleProcessorGroup()
+            processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
+            exportTag: $processor->getExportTag()
         );
     }
 
@@ -299,7 +303,7 @@ class PracticalSubmoduleService
         if (!$processorResultCombiner->checkConformity($assessment)) return null;
         $processorResultCombiner->calculateResult($assessment, $this->validator);
         return strlen($processorResultCombiner->getResultText()) > 0
-            ? new ProcessorResult(text: $processorResultCombiner->getResultText(), processorGroup: $processor->getPracticalSubmoduleProcessorGroup())
+            ? new ProcessorResult(text: $processorResultCombiner->getResultText(), processorGroup: $processor->getPracticalSubmoduleProcessorGroup(), exportTag: $processor->getExportTag())
             : null
         ;
     }
@@ -314,7 +318,8 @@ class PracticalSubmoduleService
             text: $processorProductAggregate->getResultText(),
             files: $processorProductAggregate->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(),
             question: $question,
-            processorGroup: $processor->getPracticalSubmoduleProcessorGroup()
+            processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
+            exportTag: $processor->getExportTag()
         );
     }
 }

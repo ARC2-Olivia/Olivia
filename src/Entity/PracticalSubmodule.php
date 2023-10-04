@@ -16,12 +16,10 @@ class PracticalSubmodule extends TranslatableEntity
     public const MODE_OF_OPERATION_SIMPLE = 'simple';
     public const MODE_OF_OPERATION_ADVANCED = 'advanced';
 
-    public const TERMINOLOGY_ASSESSMENT = 'assessment';
-    public const TERMINOLOGY_PRIVACY_POLICY = 'privacyPolicy';
-
     public const EXPORT_TYPE_NONE = 'none';
     public const EXPORT_TYPE_SIMPLE = 'simple';
     public const EXPORT_TYPE_PRIVACY_POLICY = 'privacyPolicy';
+    public const EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT = 'consentPersonalDataProcessing';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

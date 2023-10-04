@@ -292,6 +292,8 @@ form:
                 dependentQuestion: Dependent question
                 dependentValue: Dependent question value
                 disabled: Disabled
+                exportTag: Export tag
+                separateBy: Separate by
             placeholder:
                 name: Name of the processor for easier identification
                 resultText: What text will the processor return as a result?
@@ -509,6 +511,7 @@ practicalSubmodule:
         none: No export
         simple: Simple export
         privacyPolicy: Privacy policy
+        consentPersonalDataProcessing: Consent for personal data processing
     extra:
         question: Question
         questions: Questions
@@ -554,6 +557,12 @@ practicalSubmoduleProcessor:
     heading:
         basicOptions: Basic options
         specificOptions: Processor specific options
+
+    resultCombiner:
+        separateBy:
+            space: Space
+            newline: New line
+            doubleNewline: Double new line
 
 practicalSubmodulePage:
     empty: There are no defined pages for this submodule.

@@ -56,7 +56,10 @@ class PracticalSubmoduleProcessorController extends BaseController
             $processorImpl->setResultText($sanitizerService->unsanitizeText($processorImpl->getResultText()));
         }
 
-        $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $practicalSubmoduleProcessor, ['edit_mode' => true]);
+        $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $practicalSubmoduleProcessor, [
+            'edit_mode' => true,
+            'include_export_tag' => PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT === $practicalSubmoduleProcessor->getPracticalSubmodule()->getExportType()
+        ]);
         $implForm = $this->createForm($practicalSubmoduleService->getProcessorImplementationFormClass($practicalSubmoduleProcessor), $processorImpl);
 
         $baseForm->handleRequest($request);

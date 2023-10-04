@@ -26,11 +26,13 @@ class WordService
         $this->translator = $translator;
     }
 
-    public function generateDocumentFromAssessment(PracticalSubmoduleAssessment $assessment): string
+    public function generateDocumentFromAssessment(PracticalSubmoduleAssessment $assessment, string $locale): string
     {
-        return PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY === $assessment->getPracticalSubmodule()->getExportType()
-            ? $this->generatePrivacyPolicyDocument($assessment)
-            : $this->generateDefaultDocument($assessment);
+        return match ($assessment->getPracticalSubmodule()->getExportType()) {
+            PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY => $this->generatePrivacyPolicyDocument($assessment),
+            PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
+            default => $this->generateDefaultDocument($assessment)
+        };
     }
 
     private function generatePrivacyPolicyDocument(PracticalSubmoduleAssessment $assessment): string
@@ -128,6 +130,51 @@ class WordService
             $templateProcessor->cloneBlock('commentBlock', 0);
         }
 
+
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
+    }
+
+    private function generatePersonalDataProcessingConsentDocument(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_cpdp.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+        $variables = $templateProcessor->getVariables();
+
+        $callbackTrim = function (string $string) {
+            return trim($string);
+        };
+
+        $callbackIsNotEmpty = function (string $string) {
+            return strlen($string) > 0;
+        };
+
+        $templateProcessor->setValue('title', $assessment->getPracticalSubmodule()->getName());
+        foreach ($results as $result) {
+            $exportTag = $result->getExportTag();
+            if (null === $exportTag) {
+                continue;
+            }
+
+            $blockName = 'list_'.$exportTag;
+            if (in_array($blockName, $variables)) {
+                $list = explode("\n", $result->getText());
+                $list = array_map($callbackTrim, $list);
+                $list = array_filter($list, $callbackIsNotEmpty);
+                $listSize = count($list);
+                $templateProcessor->cloneBlock($blockName, $listSize, true, true);
+
+                $i = 1;
+                foreach ($list as $item) {
+                    $templateProcessor->setValue("$exportTag#$i", $item);
+                    $i++;
+                }
+            } else {
+                $templateProcessor->setValue($result->getExportTag(), str_replace("\n", '<w:br/>', $result->getText()));
+            }
+        }
 
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
         $templateProcessor->saveAs($document);

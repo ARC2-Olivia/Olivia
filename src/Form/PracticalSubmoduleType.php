@@ -38,15 +38,11 @@ class PracticalSubmoduleType extends AbstractType
             $this->translator->trans('practicalSubmodule.modeOfOperation.advanced', domain: 'app') => PracticalSubmodule::MODE_OF_OPERATION_ADVANCED
         ];
 
-        $terminologyChoices = [
-            $this->translator->trans('practicalSubmodule.terminology.assessment', domain: 'app') => PracticalSubmodule::TERMINOLOGY_ASSESSMENT,
-            $this->translator->trans('practicalSubmodule.terminology.privacyPolicy', domain: 'app') => PracticalSubmodule::TERMINOLOGY_PRIVACY_POLICY
-        ];
-
         $exportTypeChoices = [
             $this->translator->trans('practicalSubmodule.exportType.none', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_NONE,
             $this->translator->trans('practicalSubmodule.exportType.simple', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_SIMPLE,
             $this->translator->trans('practicalSubmodule.exportType.privacyPolicy', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY,
+            $this->translator->trans('practicalSubmodule.exportType.consentPersonalDataProcessing', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT,
         ];
 
         $builder
@@ -94,7 +90,7 @@ class PracticalSubmoduleType extends AbstractType
                 'disabled' => true === $options['has_advanced_mode_features']
             ])
             ->add('tags', TextType::class, [
-                'label' => 'form.entity.practicalSubmodule.label.end',
+                'label' => 'form.entity.practicalSubmodule.label.tags',
                 'attr' => [
                     'class' => 'form-input mb-3',
                     'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.tags', [], 'app')

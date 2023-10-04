@@ -5,7 +5,7 @@
         {% if evaluation.exportType != constant('EXPORT_TYPE_NONE', evaluation) %}
             <div class="text-center mb-3">
                 <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">
-                    {{ (evaluation.exportType == constant('EXPORT_TYPE_PRIVACY_POLICY', evaluation) ? 'button.exportTemplate' : 'button.export')|trans }}
+                    {{ (evaluation.exportType in [constant('EXPORT_TYPE_PRIVACY_POLICY', evaluation), constant('EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT', evaluation)] ? 'button.exportTemplate' : 'button.export')|trans }}
                 </a>
             </div>
         {% endif %}

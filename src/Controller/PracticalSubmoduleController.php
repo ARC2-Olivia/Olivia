@@ -412,10 +412,10 @@ class PracticalSubmoduleController extends BaseController
 
     #[Route("/export/{practicalSubmodule}/results", name: "export_results")]
     #[IsGranted("ROLE_USER")]
-    public function exportResults(PracticalSubmodule $practicalSubmodule, WordService $wordService): Response
+    public function exportResults(PracticalSubmodule $practicalSubmodule, WordService $wordService, Request $request): Response
     {
         $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
-        $document = $wordService->generateDocumentFromAssessment($assessment);
+        $document = $wordService->generateDocumentFromAssessment($assessment, $request->getLocale());
         $filename = $practicalSubmodule->getName().'.docx';
         return $this->file($document, $filename)->deleteFileAfterSend();
     }

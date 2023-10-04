@@ -78,6 +78,9 @@ class PracticalSubmoduleProcessor
     #[ORM\OneToOne(mappedBy: 'practicalSubmoduleProcessor', cascade: ['persist', 'remove'])]
     private ?PracticalSubmoduleProcessorMaxValue $practicalSubmoduleProcessorMaxValue = null;
 
+    #[ORM\Column(length: 127, nullable: true)]
+    private ?string $exportTag = null;
+
     public function __construct()
     {
         $this->resultFiles = new ArrayCollection();
@@ -390,6 +393,18 @@ class PracticalSubmoduleProcessor
         }
 
         $this->practicalSubmoduleProcessorMaxValue = $practicalSubmoduleProcessorMaxValue;
+
+        return $this;
+    }
+
+    public function getExportTag(): ?string
+    {
+        return $this->exportTag;
+    }
+
+    public function setExportTag(?string $exportTag): self
+    {
+        $this->exportTag = $exportTag;
 
         return $this;
     }

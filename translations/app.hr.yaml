@@ -291,6 +291,8 @@ form:
                 dependentQuestion: Ovisno pitanje
                 dependentValue: Vrijednost ovisnog pitanja
                 disabled: Onesposobljeno
+                exportTag: Oznaka za izvoz
+                separateBy: Odvoji sa
             placeholder:
                 name: Naziv procesora za lakšu identifikaciju
                 resultText: Kakav tekst će procesor vratiti kao rezultat obrade?
@@ -507,6 +509,7 @@ practicalSubmodule:
         none: Bez izvoza
         simple: Jednostavni izvoz
         privacyPolicy: Politika privatnosti
+        consentPersonalDataProcessing: Privola za obradu osobnih podataka
     extra:
         question: Pitanje
         questions: Pitanja
@@ -552,6 +555,11 @@ practicalSubmoduleProcessor:
     heading:
         basicOptions: Osnovne postavke
         specificOptions: Postavke specifične za procesor
+    resultCombiner:
+        separateBy:
+            space: Razmakom
+            newline: Novi redom
+            doubleNewline: Dvostrukom novim redom
 
 practicalSubmodulePage:
     empty: Nema definiranih stranica za ovaj podmodul.

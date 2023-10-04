@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PracticalSubmoduleProcessorResultCombinerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -13,6 +14,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorResultCombinerRepository::class)]
 class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmoduleProcessorImplementationInterface
 {
+    public const SEPARATE_BY_SPACE          = 0;
+    public const SEPARATE_BY_NEWLINE        = 1;
+    public const SEPARATE_BY_DOUBLE_NEWLINE = 2;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -27,6 +32,9 @@ class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmodulePro
     private Collection $practicalSubmoduleProcessors;
 
     private ?string $resultText = null;
+
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $separateBy = null;
 
     #[Assert\Callback] public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -48,7 +56,14 @@ class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmodulePro
                 $texts[] = $processorImpl->getResultText();
             }
         }
-        $this->setResultText(implode(' ', $texts));
+
+        $separator = match ($this->separateBy) {
+            self::SEPARATE_BY_NEWLINE => "\n",
+            self::SEPARATE_BY_DOUBLE_NEWLINE => "\n\n",
+            default => ' '
+        };
+
+        $this->setResultText(implode($separator, $texts));
     }
 
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
@@ -110,6 +125,21 @@ class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmodulePro
     public function setResultText(?string $resultText): PracticalSubmoduleProcessorImplementationInterface
     {
         $this->resultText = $resultText;
+
+        return $this;
+    }
+
+    public function getSeparateBy(): ?int
+    {
+        if (null === $this->separateBy) {
+            return self::SEPARATE_BY_SPACE;
+        }
+        return $this->separateBy;
+    }
+
+    public function setSeparateBy(?int $separateBy): self
+    {
+        $this->separateBy = $separateBy;
 
         return $this;
     }

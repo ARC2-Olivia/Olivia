@@ -1,7 +1,7 @@
 {% trans_default_domain 'app' %}
 
 {% if answerData is not empty %}
-    {% if evaluation.exportType === constant('EXPORT_TYPE_SIMPLE', evaluation) %}
+    {% if evaluation.exportType == constant('EXPORT_TYPE_SIMPLE', evaluation) %}
         <div class="text-center mb-3">
             <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'button.export'|trans }}</a>
         </div>

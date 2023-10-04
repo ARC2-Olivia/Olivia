@@ -75,6 +75,13 @@ class PracticalSubmoduleProcessorType extends AbstractType
                 'attr' => ['class' => 'form-input mb-3']
             ])
         ;
+
+        if (true === $options['include_export_tag']) {
+            $builder->add('exportTag', TextType::class, [
+                'label' => 'form.entity.practicalSubmoduleProcessor.label.exportTag',
+                'attr' => ['class' => 'form-input mb-3']
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -83,6 +90,7 @@ class PracticalSubmoduleProcessorType extends AbstractType
             'data_class' => PracticalSubmoduleProcessor::class,
             'translation_domain' => 'app',
             'edit_mode' => false,
+            'include_export_tag' => false,
             'attr' => [
                 'novalidate' => 'novalidate',
                 'class' => 'd-flex flex-column'
