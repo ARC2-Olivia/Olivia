@@ -402,10 +402,18 @@ class PracticalSubmoduleController extends BaseController
             }
         }
 
+        $cookieBanner = [];
+        if (PracticalSubmodule::EXPORT_TYPE_COOKIE_BANNER === $practicalSubmodule->getExportType()) {
+            foreach ($results as $result) {
+                $cookieBanner[$result->getExportTag()] = $result->getText();
+            }
+        }
+
         return $this->render('evaluation/results.html.twig', [
             'evaluation' => $practicalSubmodule,
             'answerData' => $answerData,
             'results' => $results,
+            'cookieBanner' => $cookieBanner,
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_RESULTS)
         ]);
     }

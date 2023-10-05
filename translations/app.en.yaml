@@ -512,6 +512,7 @@ practicalSubmodule:
         simple: Simple export
         privacyPolicy: Privacy policy
         consentPersonalDataProcessing: Consent for personal data processing
+        cookieBanner: Cookie banner
     extra:
         question: Question
         questions: Questions

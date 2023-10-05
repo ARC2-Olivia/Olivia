@@ -1,0 +1,129 @@
+<style>
+    .cookie-banner {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        border-radius: 16px;
+        padding: 16px 24px;
+        color: rgba(0, 0, 0, .8) !important;
+        font-size: 16px;
+        background-color: #FFFFFF;
+        box-shadow: 0 4px 20px #00000020;
+    }
+
+    .cookie-banner h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .cookie-banner h2 {
+        margin: 16px 0 0;
+        font-size: 20px;
+    }
+
+    .cookie-banner--cookie {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .slider {
+        width: 56px;
+        height: 32px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .slider > input {
+        display: none;
+    }
+
+    .slider > input:checked + .slide:before {
+        transform: translateX(24px);
+    }
+
+    .slider > input:checked + .slide {
+        background-color: #03a9f5;
+    }
+
+    .slider > .slide {
+        position: relative;
+        display: block;
+        height: 100%;
+        width: 100%;
+        border-radius: 16px;
+        background-color: #ededed;
+        transition: .2s;
+    }
+
+    .slider > .slide:before {
+        content: "";
+        position: absolute;
+        height: 28px;
+        width: 28px;
+        border-radius: 28px;
+        background-color: #FFFFFF;
+        left: 2px;
+        top: 2px;
+        transition: .2s;
+    }
+
+    .cookie-banner--actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+        justify-content: end;
+    }
+
+    .cookie-banner--actions > button {
+        border:  solid 1px #a0a0a0;
+        padding: 8px 24px;
+        border-radius: 25px;
+    }
+
+    .cookie-banner--actions > button:nth-child(3) {
+        margin-left: 48px;
+    }
+</style>
+<div class="cookie-banner">
+    <h1>Privola za obradu osobnih podataka putem kolačića</h1>
+    {% if cookieBanner.usage is defined %}
+        <p>{{ cookieBanner.usage }}</p>
+    {% endif %}
+
+    {% if cookieBanner.link is defined %}
+        {{ cookieBanner.link|raw }}
+    {% endif %}
+
+    {% if cookieBanner.first_party is defined %}
+        <h2>Kolačići prve strane</h2>
+        {% for item in cookieBanner.first_party|split("\n")|filter(s => s|length > 0) %}
+            <div class="cookie-banner--cookie">
+                <span>{{ item }}</span>
+                <label class="slider">
+                    <input type="checkbox"/>
+                    <span class="slide"></span>
+                </label>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if cookieBanner.third_party is defined %}
+        <h2>Kolačići treće strane</h2>
+        {% for item in cookieBanner.third_party|split("\n")|filter(s => s|length > 0) %}
+            <div class="cookie-banner--cookie">
+                <span>{{ item }}</span>
+                <label class="slider">
+                    <input type="checkbox"/>
+                    <span class="slide"></span>
+                </label>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="cookie-banner--actions">
+        <button>Ne pristajem za sve</button>
+        <button>Pristajem za sve</button>
+        <button>OK</button>
+    </div>
+</div>

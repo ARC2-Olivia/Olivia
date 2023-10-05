@@ -43,6 +43,7 @@ class PracticalSubmoduleType extends AbstractType
             $this->translator->trans('practicalSubmodule.exportType.simple', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_SIMPLE,
             $this->translator->trans('practicalSubmodule.exportType.privacyPolicy', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY,
             $this->translator->trans('practicalSubmodule.exportType.consentPersonalDataProcessing', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT,
+            $this->translator->trans('practicalSubmodule.exportType.cookieBanner', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_COOKIE_BANNER,
         ];
 
         $builder

@@ -20,6 +20,7 @@ class PracticalSubmodule extends TranslatableEntity
     public const EXPORT_TYPE_SIMPLE = 'simple';
     public const EXPORT_TYPE_PRIVACY_POLICY = 'privacyPolicy';
     public const EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT = 'consentPersonalDataProcessing';
+    public const EXPORT_TYPE_COOKIE_BANNER = 'cookieBanner';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -89,6 +90,11 @@ class PracticalSubmodule extends TranslatableEntity
         $this->courses = new ArrayCollection();
         $this->practicalSubmodulePages = new ArrayCollection();
         $this->practicalSubmoduleProcessorGroups = new ArrayCollection();
+    }
+
+    public static function getTaggableExportTypes(): array
+    {
+        return [self::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT, self::EXPORT_TYPE_COOKIE_BANNER];
     }
 
     public function getId(): ?int

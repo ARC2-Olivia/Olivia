@@ -58,7 +58,7 @@ class PracticalSubmoduleProcessorController extends BaseController
 
         $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $practicalSubmoduleProcessor, [
             'edit_mode' => true,
-            'include_export_tag' => PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT === $practicalSubmoduleProcessor->getPracticalSubmodule()->getExportType()
+            'include_export_tag' => in_array($practicalSubmoduleProcessor->getPracticalSubmodule()->getExportType(), PracticalSubmodule::getTaggableExportTypes())
         ]);
         $implForm = $this->createForm($practicalSubmoduleService->getProcessorImplementationFormClass($practicalSubmoduleProcessor), $processorImpl);
 
