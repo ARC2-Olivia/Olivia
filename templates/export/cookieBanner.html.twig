@@ -85,6 +85,17 @@
     .cookie-banner--actions > button:nth-child(3) {
         margin-left: 48px;
     }
+
+    @media screen and (max-width: 575px) {
+        .cookie-banner--actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .cookie-banner--actions > button:nth-child(3) {
+            margin-left: 0;
+        }
+    }
 </style>
 <div class="cookie-banner">
     <h1>Privola za obradu osobnih podataka putem kolačića</h1>
