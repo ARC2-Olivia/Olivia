@@ -648,3 +648,14 @@ extra:
         title: Session will expire soon
         text: Would you want to extend the session?
         extend: Extend
+
+export:
+    cookieBanner:
+        title: Consent for the processing of personal data through cookies
+        subtitles:
+            firstParty: First party cookies
+            thirdParty: Third party cookies
+        buttons:
+            declineAll: Decline all
+            acceptAll: Accept all
+            acceptSelected: Accept selected

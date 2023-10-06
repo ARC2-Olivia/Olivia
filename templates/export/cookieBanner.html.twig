@@ -1,3 +1,5 @@
+{% trans_default_domain 'app' %}
+
 <style>
     .cookie-banner {
         display: flex;
@@ -92,19 +94,30 @@
         margin-left: 48px;
     }
 
-    @media screen and (max-width: 575px) {
+    @media screen and (max-width: 767px) {
         .cookie-banner--actions {
-            flex-direction: column;
-            align-items: stretch;
+            justify-content: space-between;
+        }
+
+        .cookie-banner--actions > button{
+            flex-basis: 0;
+            flex-grow: 1;
         }
 
         .cookie-banner--actions > button:nth-child(3) {
             margin-left: 0;
         }
     }
+
+    @media screen and (max-width: 575px) {
+        .cookie-banner--actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
 </style>
 <div class="cookie-banner">
-    <h1>Privola za obradu osobnih podataka putem kolačića</h1>
+    <h1>{{ 'export.cookieBanner.title'|trans }}</h1>
     {% if cookieBanner.usage is defined %}
         <p>{{ cookieBanner.usage }}</p>
     {% endif %}
@@ -114,7 +127,7 @@
     {% endif %}
 
     {% if cookieBanner.first_party is defined %}
-        <h2>Kolačići prve strane</h2>
+        <h2>{{ 'export.cookieBanner.subtitles.firstParty'|trans }}</h2>
         {% for item in cookieBanner.first_party|split("\n")|filter(s => s|length > 0) %}
             <div class="cookie-banner--cookie">
                 <span>{{ item }}</span>
@@ -127,7 +140,7 @@
     {% endif %}
 
     {% if cookieBanner.third_party is defined %}
-        <h2>Kolačići treće strane</h2>
+        <h2>{{ 'export.cookieBanner.subtitles.thirdParty'|trans }}</h2>
         {% for item in cookieBanner.third_party|split("\n")|filter(s => s|length > 0) %}
             <div class="cookie-banner--cookie">
                 <span>{{ item }}</span>
@@ -140,8 +153,8 @@
     {% endif %}
 
     <div class="cookie-banner--actions">
-        <button>Ne pristajem za sve</button>
-        <button>Pristajem za sve</button>
-        <button>OK</button>
+        <button>{{ 'export.cookieBanner.buttons.declineAll'|trans }}</button>
+        <button>{{ 'export.cookieBanner.buttons.acceptAll'|trans }}</button>
+        <button>{{ 'export.cookieBanner.buttons.acceptSelected'|trans }}</button>
     </div>
 </div>

@@ -645,3 +645,14 @@ extra:
         title: Sesija uskoro istječe
         text: Želite li produžiti sesiju?
         extend: Produži
+
+export:
+    cookieBanner:
+        title: Privola za obradu osobnih podataka putem kolačića
+        subtitles:
+            firstParty: Kolačići prve strane
+            thirdParty: Kolačići treće strane
+        buttons:
+            declineAll: Ne pristajem za sve
+            acceptAll: Pristajem za sve
+            acceptSelected: Pristajem za odabrano
