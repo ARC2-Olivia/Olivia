@@ -52,6 +52,7 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         }
 
         $this->handleDateTemplating();
+        $this->handleQuestionTemplating();
     }
 
     public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
@@ -232,6 +233,18 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         $date = (new \DateTime())->format('d.m.Y.');
         if (preg_match($pattern, $this->processedText)) {
             $this->processedText = preg_replace($pattern, $date, $this->processedText);
+        }
+    }
+
+    private function handleQuestionTemplating(): void
+    {
+        if ($this->processedText === null) {
+            $this->processedText = $this->resultText;
+        }
+
+        $pattern = '/\{\{\s*QUESTION\s*\}\}/i';
+        if (preg_match($pattern, $this->processedText)) {
+            $this->processedText = preg_replace($pattern, $this->getPracticalSubmoduleQuestion()->getQuestionText(), $this->processedText);
         }
     }
 

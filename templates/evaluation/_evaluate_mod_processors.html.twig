@@ -2,7 +2,7 @@
 
 <h2 class="mb-3">{{ 'practicalSubmodule.extra.evaluators'|trans }}</h2>
 {% if evaluationEvaluators is not empty %}
-    <ul id="evaluation_evaluators" class="mod--evaluation-evaluators" data-path="{{ path('practical_submodule_processor_reorder') }}">
+    <ul id="_processors" class="mod--evaluation-evaluators" data-path="{{ path('practical_submodule_processor_reorder') }}">
         {% for evaluationEvaluator in evaluationEvaluators %}
             {% include 'evaluation/_evaluate_mod_evaluationEvaluator.html.twig' %}
         {% endfor %}

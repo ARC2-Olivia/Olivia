@@ -21,6 +21,7 @@ use App\Form\PracticalSubmoduleQuestionType;
 use App\Form\PracticalSubmoduleType;
 use App\Repository\PracticalSubmodulePageRepository;
 use App\Repository\PracticalSubmoduleProcessorGroupRepository;
+use App\Repository\PracticalSubmoduleProcessorRepository;
 use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Repository\PracticalSubmoduleRepository;
 use App\Service\PracticalSubmoduleService;
@@ -245,16 +246,18 @@ class PracticalSubmoduleController extends BaseController
 
     #[Route("/evaluate/{practicalSubmodule}/add-processor", name: "add_processor")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function addProcessor(PracticalSubmodule $practicalSubmodule, Request $request): Response
+    public function addProcessor(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleProcessorRepository $practicalSubmoduleProcessorRepository): Response
     {
         $processor = (new PracticalSubmoduleProcessor())->setPracticalSubmodule($practicalSubmodule)->setIncluded(true);
         $form = $this->createForm(PracticalSubmoduleProcessorType::class, $processor);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $processor->setPosition($practicalSubmoduleProcessorRepository->maxPositionForSubmodule($practicalSubmodule) + 1);
             $this->em->persist($processor);
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleProcessor.new', [], 'message'));
-            return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+            $url = $this->generateUrl('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+            return $this->redirect($url.'#_processors');
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));

@@ -1,1 +1,1 @@
-window.addEventListener("load", () => new Reorderer("evaluation_evaluators", "mod--evaluation-evaluator-reorder-handle", "reordering"));
+window.addEventListener("load", () => new Reorderer("_processors", "mod--evaluation-evaluator-reorder-handle", "reordering"));

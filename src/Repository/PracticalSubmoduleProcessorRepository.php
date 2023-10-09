@@ -65,4 +65,14 @@ class PracticalSubmoduleProcessorRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function maxPositionForSubmodule(PracticalSubmodule $practicalSubmodule): int
+    {
+        return $this->createQueryBuilder('psp')
+            ->select('COALESCE(MAX(psp.position), 0)')
+            ->where('psp.practicalSubmodule = :submodule')
+            ->setParameter('submodule', $practicalSubmodule)
+            ->getQuery()->getSingleScalarResult()
+        ;
+    }
 }
