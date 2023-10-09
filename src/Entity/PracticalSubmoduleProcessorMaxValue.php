@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorMaxValueRepository::class)]
 class PracticalSubmoduleProcessorMaxValue implements PracticalSubmoduleProcessorImplementationInterface
@@ -49,7 +50,7 @@ class PracticalSubmoduleProcessorMaxValue implements PracticalSubmoduleProcessor
         }
     }
 
-    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): int
+    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): int
     {
         $maxValue = PHP_INT_MIN;
 
@@ -63,7 +64,7 @@ class PracticalSubmoduleProcessorMaxValue implements PracticalSubmoduleProcessor
 
         foreach ($this->getPracticalSubmoduleProcessors() as $processor) {
             $value = match ($processor->getType()) {
-                PracticalSubmoduleProcessor::TYPE_MAX_VALUE => $processor->getPracticalSubmoduleProcessorMaxValue()->calculateResult($practicalSubmoduleAssessment, $validator),
+                PracticalSubmoduleProcessor::TYPE_MAX_VALUE => $processor->getPracticalSubmoduleProcessorMaxValue()->calculateResult($practicalSubmoduleAssessment, $validator, $translator),
                 PracticalSubmoduleProcessor::TYPE_SUM_AGGREGATE => $processor->getPracticalSubmoduleProcessorSumAggregate()->calculateResult($practicalSubmoduleAssessment, $validator),
                 PracticalSubmoduleProcessor::TYPE_PRODUCT_AGGREGATE => $processor->getPracticalSubmoduleProcessorProductAggregate()->calculateResult($practicalSubmoduleAssessment, $validator),
                 default => PHP_INT_MIN
@@ -76,10 +77,10 @@ class PracticalSubmoduleProcessorMaxValue implements PracticalSubmoduleProcessor
         return $maxValue;
     }
 
-    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
+    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): bool
     {
         if (null === $this->practicalSubmoduleProcessor) return false;
-        $result = $this->calculateResult($practicalSubmoduleAssessment, $validator);
+        $result = $this->calculateResult($practicalSubmoduleAssessment, $validator, $translator);
         return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment)
             && $result >= $this->expectedValueRangeStart
             && $result < $this->expectedValueRangeEnd

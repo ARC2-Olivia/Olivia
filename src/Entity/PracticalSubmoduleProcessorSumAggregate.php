@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorSumAggregateRepository::class)]
 class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity implements PracticalSubmoduleProcessorImplementationInterface
@@ -60,7 +61,7 @@ class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity impleme
         }
     }
 
-    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): int
+    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): int
     {
         $sum = 0.0;
         foreach ($this->getPracticalSubmoduleQuestions() as $question) {
@@ -86,9 +87,9 @@ class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity impleme
         return $sum;
     }
 
-    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
+    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): bool
     {
-        $result = $this->calculateResult($practicalSubmoduleAssessment, $validator);
+        $result = $this->calculateResult($practicalSubmoduleAssessment, $validator, $translator);
         return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment)
             && $result >= $this->expectedValueRangeStart
             && $result < $this->expectedValueRangeEnd;

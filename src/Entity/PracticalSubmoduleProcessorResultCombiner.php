@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorResultCombinerRepository::class)]
 class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmoduleProcessorImplementationInterface
@@ -40,13 +41,13 @@ class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmodulePro
     {
     }
 
-    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): void
+    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): void
     {
         $texts = [];
         foreach ($this->getPracticalSubmoduleProcessors() as $processor) {
             $processorImpl = $processor->getImplementation();
             if ($processor::TYPE_TEMPLATED_TEXT === $processor->getType()) {
-                $processorImpl->calculateResult($practicalSubmoduleAssessment);
+                $processorImpl->calculateResult($practicalSubmoduleAssessment, $validator, $translator);
             }
             $errors = $validator->validate($processorImpl);
             if (0 === $errors->count() && true === $processorImpl->checkConformity($practicalSubmoduleAssessment, $validator)) {
@@ -66,7 +67,7 @@ class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmodulePro
         $this->setResultText(implode($separator, $texts));
     }
 
-    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
+    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): bool
     {
         return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment);
     }

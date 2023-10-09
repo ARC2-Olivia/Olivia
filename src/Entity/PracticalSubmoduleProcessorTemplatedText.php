@@ -9,6 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorTemplatedTextRepository::class)]
 class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implements PracticalSubmoduleProcessorImplementationInterface
@@ -37,25 +38,25 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
     {
     }
 
-    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null)
+    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null)
     {
         $questionType = $this->practicalSubmoduleQuestion?->getType();
 
         if ($questionType === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT && !$practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers()->isEmpty()) {
             $this->handleTemplatingForTemplatedTextQuestion($practicalSubmoduleAssessment);
         } else if (in_array($questionType, PracticalSubmoduleQuestion::getSingleChoiceTypes())) {
-            $this->handleTemplatingForSingleChoiceQuestion($practicalSubmoduleAssessment);
+            $this->handleTemplatingForSingleChoiceQuestion($practicalSubmoduleAssessment, $translator);
         } else if (in_array($questionType, PracticalSubmoduleQuestion::getMultipleAnswerTypes())) {
             $this->handleTemplatingForMultipleAnswerQuestion($practicalSubmoduleAssessment);
         } else if ($questionType !== null) {
             $this->handleDefaultTemplating($practicalSubmoduleAssessment);
         }
 
-        $this->handleDateTemplating();
+        $this->handleDateTemplating($practicalSubmoduleAssessment);
         $this->handleQuestionTemplating();
     }
 
-    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
+    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): bool
     {
         return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment) && $this->isTemplatingConditionPassing($practicalSubmoduleAssessment);
     }
@@ -119,13 +120,16 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         }
     }
 
-    private function handleTemplatingForSingleChoiceQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
+    private function handleTemplatingForSingleChoiceQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, TranslatorInterface $translator = null): void
     {
         foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
             if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId() && $assessmentAnswer->getPracticalSubmoduleQuestionAnswer() !== null) {
                 $this->processedText = $this->resultText;
                 $questionAnswer = $assessmentAnswer->getPracticalSubmoduleQuestionAnswer();
                 $givenAnswer = $questionAnswer->getAnswerText();
+                if (null !== $translator && PracticalSubmoduleQuestion::TYPE_YES_NO === $this->practicalSubmoduleQuestion->getType()) {
+                    $givenAnswer = $translator->trans($givenAnswer, domain: 'app');
+                }
                 $pattern = '/\{\{\s*value\s*\}\}/i';
                 $this->processedText = preg_replace($pattern, $givenAnswer, $this->processedText);
                 break;
@@ -147,7 +151,7 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
             } else if (PracticalSubmoduleQuestion::TYPE_LIST_INPUT === $this->practicalSubmoduleQuestion->getType()) {
                 $gatheredAnswers[] = $assessmentAnswer->getAnswerValue();
             }
-    }
+        }
 
         $this->processedText = $this->resultText;
 
@@ -223,15 +227,21 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
         }
     }
 
-    private function handleDateTemplating(): void
+    private function handleDateTemplating(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
     {
         if ($this->processedText === null) {
             $this->processedText = $this->resultText;
         }
 
         $pattern = '/\{\{\s*DATE_NOW\s*\}\}/i';
-        $date = (new \DateTime())->format('d.m.Y.');
         if (preg_match($pattern, $this->processedText)) {
+            $date = (new \DateTime())->format('d.m.Y.');
+            $this->processedText = preg_replace($pattern, $date, $this->processedText);
+        }
+
+        $pattern = '/\{\{\s*DATE_SUBMITTED\s*\}\}/i';
+        if (preg_match($pattern, $this->processedText)) {
+            $date = null !== $practicalSubmoduleAssessment->getLastSubmittedAt() ? $practicalSubmoduleAssessment->getLastSubmittedAt()->format('d.m.Y.') : '';
             $this->processedText = preg_replace($pattern, $date, $this->processedText);
         }
     }

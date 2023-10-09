@@ -9,6 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorSimpleRepository::class)]
 class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements PracticalSubmoduleProcessorImplementationInterface
@@ -43,16 +44,16 @@ class PracticalSubmoduleProcessorSimple extends TranslatableEntity implements Pr
         }
     }
 
-    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
+    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): bool
     {
         return PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE === $this->practicalSubmoduleQuestion->getType()
             ? $this->calculateMultiChoiceResult($practicalSubmoduleAssessment)
             : $this->calculateDefaultResult($practicalSubmoduleAssessment);
     }
 
-    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
+    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): bool
     {
-        return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment) && $this->calculateResult($practicalSubmoduleAssessment, $validator);
+        return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment) && $this->calculateResult($practicalSubmoduleAssessment, $validator, $translator);
     }
 
     public function getId(): ?int

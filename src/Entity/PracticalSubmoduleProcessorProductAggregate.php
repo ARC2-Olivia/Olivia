@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[ORM\Entity(repositoryClass: PracticalSubmoduleProcessorProductAggregateRepository::class)]
 class PracticalSubmoduleProcessorProductAggregate implements PracticalSubmoduleProcessorImplementationInterface
@@ -56,7 +57,7 @@ class PracticalSubmoduleProcessorProductAggregate implements PracticalSubmoduleP
         }
     }
 
-    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null)
+    public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null)
     {
         $product = 1;
         foreach ($this->getPracticalSubmoduleQuestions() as $question) {
@@ -75,9 +76,9 @@ class PracticalSubmoduleProcessorProductAggregate implements PracticalSubmoduleP
         return $product;
     }
 
-    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null): bool
+    public function checkConformity(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): bool
     {
-        $result = $this->calculateResult($practicalSubmoduleAssessment, $validator);
+        $result = $this->calculateResult($practicalSubmoduleAssessment, $validator, $translator);
         return $this->practicalSubmoduleProcessor->isDependencyConditionPassing($practicalSubmoduleAssessment)
             && $result >= $this->expectedValueRangeStart
             && $result < $this->expectedValueRangeEnd;
