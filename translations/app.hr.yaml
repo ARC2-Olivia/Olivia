@@ -559,8 +559,8 @@ practicalSubmoduleProcessor:
     resultCombiner:
         separateBy:
             space: Razmakom
-            newline: Novi redom
-            doubleNewline: Dvostrukom novim redom
+            newline: Novim redom
+            doubleNewline: Dvostrukim novim redom
 
 practicalSubmodulePage:
     empty: Nema definiranih stranica za ovaj podmodul.
