@@ -163,7 +163,8 @@ class PSExporter
                     'name' => $processor->getName(),
                     'included' => $processor->isIncluded(),
                     'position' => $processor->getPosition(),
-                    'disabled' => $processor->isDisabled()
+                    'disabled' => $processor->isDisabled(),
+                    'exportTag' => $processor->getExportTag()
                 ]
             ];
 

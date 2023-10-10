@@ -205,7 +205,7 @@ class PSImporter
 
     private function doCreateProcessorTask(array $props): void
     {
-        if (false === $this->allKeysExist(['id', 'type', 'name', 'included', 'position', 'disabled', 'impl'], $props)) {
+        if (false === $this->allKeysExist(['id', 'type', 'name', 'included', 'position', 'disabled', 'exportTag', 'impl'], $props)) {
             return;
         }
 
@@ -216,6 +216,7 @@ class PSImporter
             ->setIncluded($props['included'])
             ->setPosition($props['position'])
             ->setDisabled($props['disabled'])
+            ->setExportTag($props['exportTag'])
         ;
         $this->em->persist($processor);
         $this->processorMapping[$props['id']] = $processor;
