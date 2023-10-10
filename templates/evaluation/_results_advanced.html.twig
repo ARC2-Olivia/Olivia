@@ -15,9 +15,9 @@
             {% for result in results %}
                 {% if result.textSet %}
                     {% if result.html %}
-                        <div class="ql-editor">{{ result.text|raw }}</div>
+                        <div class="ql-editor">{{ result.displayableText|raw }}</div>
                     {% else %}
-                        <p>{{ result.text|raw|nl2br }}</p>
+                        <p>{{ result.displayableText|raw|nl2br }}</p>
                     {% endif %}
                 {% endif %}
                 {% if result.areFilesSet %}

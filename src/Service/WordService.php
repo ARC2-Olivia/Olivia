@@ -185,14 +185,15 @@ class WordService
     private function generateLegitimateInterestAssessmentDocument(PracticalSubmoduleAssessment $assessment, string $locale)
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
-        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_lia.docx');
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_template_lia.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
 
         foreach ($results as $result) {
             $exportTag = $result->getExportTag();
-            if (null !== $exportTag) {
-                $templateProcessor->setValue($result->getExportTag(), str_replace("\n", '<w:br/>', $result->getText()));
+            if (null === $exportTag) {
+                continue;
             }
+            $this->handleTemplatingForLIA($exportTag, $templateProcessor, $result->getText());
         }
 
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
@@ -285,6 +286,23 @@ class WordService
                     $section->addText(trim($line), ['name' => 'Arial', 'size' => 10]);
                 }
             }
+        }
+    }
+
+    private function handleTemplatingForLIA(string $variable, TemplateProcessor $templateProcessor, string $text): void
+    {
+        $lines = explode("\n", str_replace("\r", '', $text));
+        $linesCount = count($lines);
+        $templateProcessor->cloneBlock("block_$variable", $linesCount, indexVariables: true);
+        $i = 1;
+        foreach ($lines as $line) {
+            $fontStyle = null;
+            if (str_ends_with($line, '|distinguish')) {
+                $fontStyle = ['color' => '4472C4', 'bold' => true];
+                $line = str_replace('|distinguish', '', $line);
+            }
+            $templateProcessor->setComplexValue("$variable#$i", new Text($line, $fontStyle));
+            $i++;
         }
     }
 }

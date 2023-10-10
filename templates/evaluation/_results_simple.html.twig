@@ -21,9 +21,9 @@
         <div class="evaluation-results">
             {% if answerDatum.result.textSet %}
                 {% if answerDatum.result.html %}
-                    <div class="ql-editor">{{ answerDatum.result.text|raw }}</div>
+                    <div class="ql-editor">{{ answerDatum.result.displayableText|raw }}</div>
                 {% else %}
-                    <p>{{ answerDatum.result.text|raw|nl2br }}</p>
+                    <p>{{ answerDatum.result.displayableText|raw|nl2br }}</p>
                 {% endif %}
             {% endif %}
             {% if answerDatum.result.areFilesSet %}

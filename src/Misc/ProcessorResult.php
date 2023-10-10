@@ -47,6 +47,14 @@ class ProcessorResult
         return $this->text;
     }
 
+    public function getDisplayableText(): ?string
+    {
+        if (null === $this->text) {
+            return null;
+        }
+        return str_replace('|distinguish', '', $this->text);
+    }
+
     public function getFiles(): ?array
     {
         return $this->files;
