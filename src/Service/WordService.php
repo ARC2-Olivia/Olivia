@@ -31,6 +31,7 @@ class WordService
         return match ($assessment->getPracticalSubmodule()->getExportType()) {
             PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY => $this->generatePrivacyPolicyDocument($assessment),
             PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_LIA => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
             default => $this->generateDefaultDocument($assessment)
         };
     }
@@ -172,6 +173,24 @@ class WordService
                     $i++;
                 }
             } else {
+                $templateProcessor->setValue($result->getExportTag(), str_replace("\n", '<w:br/>', $result->getText()));
+            }
+        }
+
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
+    }
+
+    private function generateLegitimateInterestAssessmentDocument(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_template_lia.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+
+        foreach ($results as $result) {
+            $exportTag = $result->getExportTag();
+            if (null !== $exportTag) {
                 $templateProcessor->setValue($result->getExportTag(), str_replace("\n", '<w:br/>', $result->getText()));
             }
         }

@@ -511,6 +511,7 @@ practicalSubmodule:
         privacyPolicy: Politika privatnosti
         consentPersonalDataProcessing: Privola za obradu osobnih podataka
         cookieBanner: Obavijest o kolačićima
+        lia: Procjena legitimnog interesa
     extra:
         question: Pitanje
         questions: Pitanja
