@@ -185,7 +185,7 @@ class WordService
     private function generateLegitimateInterestAssessmentDocument(PracticalSubmoduleAssessment $assessment, string $locale)
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
-        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_template_lia.docx');
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_lia.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
 
         foreach ($results as $result) {
