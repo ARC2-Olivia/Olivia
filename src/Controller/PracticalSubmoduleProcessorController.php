@@ -53,7 +53,7 @@ class PracticalSubmoduleProcessorController extends BaseController
         $isProcessorProcessingProcessor = in_array($practicalSubmoduleProcessor->getType(), PracticalSubmoduleProcessor::getProcessorProcessingProcessorTypes());
 
         if (PracticalSubmoduleProcessor::TYPE_HTML !== $practicalSubmoduleProcessor->getType()) {
-            $processorImpl->setResultText($sanitizerService->unsanitizeText($processorImpl->getResultText()));
+            $processorImpl->setResultText($processorImpl->getResultText());
         }
 
         $baseForm = $this->createForm(PracticalSubmoduleProcessorType::class, $practicalSubmoduleProcessor, [
@@ -81,11 +81,7 @@ class PracticalSubmoduleProcessorController extends BaseController
 
         $implForm->handleRequest($request);
         if ($implForm->isSubmitted() && $implForm->isValid()) {
-            if (PracticalSubmoduleProcessor::TYPE_HTML === $practicalSubmoduleProcessor->getType()) {
-                $processorImpl->setResultText($sanitizerService->sanitizeHtml($processorImpl->getResultText()));
-            } else {
-                $processorImpl->setResultText($sanitizerService->sanitizeText($processorImpl->getResultText()));
-            }
+            $processorImpl->setResultText($sanitizerService->sanitizeHtml($processorImpl->getResultText()));
 
             if ($processorImpl->getId() === null) {
                 $this->em->persist($processorImpl);
