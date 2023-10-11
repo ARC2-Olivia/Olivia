@@ -238,7 +238,10 @@ class PracticalSubmoduleAssessment {
 
     #createYesNoAnswers(questionData) {
         const answers = [];
-        const userAnswer = questionData.userAnswer[0] || null;
+        let userAnswer = null;
+        if (questionData.userAnswer) {
+            userAnswer = questionData.userAnswer[0] || null;
+        }
         questionData.answers.forEach((answerData) => {
             const checked = answerData.id === userAnswer ? ' checked' : '';
             const answer = this.#parser.parseFromString(`
