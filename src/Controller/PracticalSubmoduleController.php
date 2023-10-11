@@ -367,7 +367,7 @@ class PracticalSubmoduleController extends BaseController
 
         if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleAssessment.edit', $csrfToken)) {
             $request->getSession()->set('practicalSubmoduleAssessment.edit', true);
-            $assessment = $practicalSubmoduleService->prepareAssessment($practicalSubmodule, $this->getUser());
+            $assessment = $practicalSubmoduleService->prepareAssessment($practicalSubmodule, $this->getUser(), true);
             return $this->forward('App\Controller\PracticalSubmoduleAssessmentController::edit', ['practicalSubmoduleAssessment' => $assessment]);
         }
 
