@@ -182,7 +182,7 @@ class PracticalSubmoduleService
         return $formClass;
     }
 
-    public function prepareAssessment(PracticalSubmodule $practicalSubmodule, User $user): PracticalSubmoduleAssessment
+    public function prepareAssessment(PracticalSubmodule $practicalSubmodule, User $user, bool $editing = false): PracticalSubmoduleAssessment
     {
         $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $user]);
         $created = false;
@@ -193,7 +193,10 @@ class PracticalSubmoduleService
             $created = true;
         }
         if (!$created) {
-            $assessment->setTakenAt(new \DateTimeImmutable())->setCompleted(false);
+            $assessment->setTakenAt(new \DateTimeImmutable());
+            if (!$editing) {
+                $assessment->setCompleted(false);
+            }
             $this->em->flush();
         }
         return $assessment;

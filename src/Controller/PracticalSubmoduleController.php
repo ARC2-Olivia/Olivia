@@ -351,8 +351,8 @@ class PracticalSubmoduleController extends BaseController
 
         if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleAssessment.start', $csrfToken)) {
             $request->getSession()->set('practicalSubmoduleAssessment.start', true);
-            $practicalSubmoduleAssessment = $practicalSubmoduleService->prepareAssessment($practicalSubmodule, $this->getUser());
-            return $this->forward('App\Controller\PracticalSubmoduleAssessmentController::start', ['practicalSubmoduleAssessment' => $practicalSubmoduleAssessment]);
+            $assessment = $practicalSubmoduleService->prepareAssessment($practicalSubmodule, $this->getUser());
+            return $this->forward('App\Controller\PracticalSubmoduleAssessmentController::start', ['practicalSubmoduleAssessment' => $assessment]);
         }
 
         $this->addFlash('error', $this->translator->trans('error.practicalSubmoduleAssessment.start', [], 'message'));
@@ -361,13 +361,13 @@ class PracticalSubmoduleController extends BaseController
 
     #[Route("/evaluate/{practicalSubmodule}/assessment/edit", name: "edit_assessment")]
     #[IsGranted("ROLE_USER")]
-    public function editAssessment(PracticalSubmodule $practicalSubmodule, Request $request): Response
+    public function editAssessment(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
         $csrfToken = $request->get('_csrf_token');
 
         if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleAssessment.edit', $csrfToken)) {
             $request->getSession()->set('practicalSubmoduleAssessment.edit', true);
-            $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule]);
+            $assessment = $practicalSubmoduleService->prepareAssessment($practicalSubmodule, $this->getUser());
             return $this->forward('App\Controller\PracticalSubmoduleAssessmentController::edit', ['practicalSubmoduleAssessment' => $assessment]);
         }
 
