@@ -165,7 +165,7 @@ class PracticalSubmoduleAssessment {
 
         const questionText = document.createElement("DIV");
         questionText.classList.add('evaluation-assessment-question-text');
-        questionText.innerText = questionData.question;
+        questionText.innerHTML = questionData.question;
 
         let questionAnswers = null;
         if ('static_text' !== questionData.type) {
