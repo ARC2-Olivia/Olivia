@@ -44,7 +44,17 @@ class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmodulePro
     public function calculateResult(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, ValidatorInterface $validator = null, TranslatorInterface $translator = null): void
     {
         $texts = [];
-        foreach ($this->getPracticalSubmoduleProcessors() as $processor) {
+
+        $processorsIter = $this->getPracticalSubmoduleProcessors()->getIterator();
+        $processorsIter->uasort(function (PracticalSubmoduleProcessor $a, PracticalSubmoduleProcessor $b) {
+            if ($a->getPosition() === $b->getPosition()) {
+                return 0;
+            }
+            return $a->getPosition() > $b->getPosition() ? 1 : -1;
+        });
+        $processors = iterator_to_array($processorsIter);
+
+        foreach ($processors as $processor) {
             $processorImpl = $processor->getImplementation();
             if ($processor::TYPE_TEMPLATED_TEXT === $processor->getType()) {
                 $processorImpl->calculateResult($practicalSubmoduleAssessment, $validator, $translator);
