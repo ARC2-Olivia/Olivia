@@ -208,6 +208,10 @@ ul.mod--ps-pages {
     font-weight: 600;
 }
 
+.evaluation-assessment-question-text {
+    white-space: pre-line;
+}
+
 .evaluation-assessment-question-text:not(.no-bold) {
     font-weight: 600;
 }
