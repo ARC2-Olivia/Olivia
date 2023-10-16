@@ -1,0 +1,654 @@
+app:
+    name: Olivia
+    brand: Strumento OLIVIA
+    brand.1: OLIVIA
+    brand.2: Attrezzo
+    brand.short: OLIVIA
+    subtitle: Formatore virtuale GDPR e assistente alla conformità
+
+common:
+    id: ID
+    username: E-mail
+    password: Parola d&#39;ordine
+    homepage: Home page
+    login: Login
+    logout: Disconnettersi
+    registration: Registrazione
+    resetPassword: Resetta la password
+    submit: Invia
+    save: Salva
+    cancel: Annulla
+    'yes': VERO
+    'no': falso
+    trueValue: 'VERO'
+    falseValue: 'Falso'
+    actions: Azioni
+    edit: Modificare
+    delete: Eliminare
+    new: Nuovo
+    remove: Rimuovere
+    next: Prossimo
+    previous: Precedente
+    download: Scaricamento
+    profile: Profilo
+    resolve: Risolvere
+    import: Importare
+    export: Esportare
+    file: File
+    add: Aggiungere
+    comingSoon: Prossimamente!
+    correct: Corretto
+    incorrect: Errato
+
+button:
+    details: Dettagli
+    startNow: Iscriviti ora
+    loginToEnroll: Accedi per iscriverti
+    results: Risultati
+    lessons: Lezioni
+    export: Esportare
+    exportTemplate: Modello di esportazione
+    show: Spettacolo
+
+page:
+    login: Olivia | Login
+    registration: Olivia | Registrazione
+    confirmation: Olivia | Conferma dell&#39;account
+    resetPassword: Olivia | Resetta la password
+    course:
+        index: Olivia | Corsi
+        new: Olivia | Nuovo corso
+        show: Olivia | Dettagli del Corso
+    lesson:
+        index: Olivia | Lezioni
+        show: Olivia | Contenuto della lezione
+    admin: Olivia | Ammin
+    evaluation:
+        index: Olivia | Sottomoduli pratici
+        new: Olivia | Nuovo sottomodulo pratico
+        show: Olivia | Dettagli pratici del sottomodulo
+        assessment: Olivia | Valutazione pratica del sottomodulo
+    termsOfService:
+        index: Olivia | Elenco dei termini di servizio
+        new: Olivia | Nuovi termini di servizio
+        show: Olivia | Termini di servizio
+        edit: Olivia | Modifica i termini di servizio
+        revise: Olivia | Rivedere i termini di servizio
+    gdpr:
+        index: Olivia | Protezione dati
+    profile: Olivia | Profilo
+    topic:
+        index: Olivia | Temi GDPR
+        new: Olivia | Nuovo argomento GDPR
+        show: Olivia | Argomento GDPR
+        edit: Olivia | Modifica argomento GDPR
+
+nav:
+    training: Imparare
+    practice: Fare domanda a
+    aboutUs: Chi siamo
+    aboutProject: Informazioni sul progetto ARC2
+    admin: Ammin
+    users: Utenti
+    instructors: Istruttori
+    language: Cambia lingua
+    termsOfService: Termini di servizio
+    dataRequests: Richieste di dati
+    files: File
+    home: Casa
+    gdpr: Protezione dati
+    topics: Temi GDPR
+
+footer:
+    contact: "Contatto: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
+    text: Questo strumento è sviluppato nell&#39;ambito del progetto ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs finanziato dalla Commissione Europea.
+    termsOfService: Termini di servizio e politica sulla privacy
+
+index:
+    about:
+        left:
+            title: A proposito di OLIVIA
+            description:
+                1: Nel mondo digitale di oggi, l&#39;importanza della protezione dei dati è in costante aumento ed è fondamentale per le PMI darle la priorità che merita.
+                2: Siamo il Consorzio ARC2, composto dalle autorità croate e italiane per la protezione dei dati, dalla Facoltà di Organizzazione e Informatica – Università di Zagabria, Università Vrije di Bruxelles e Università di Firenze.
+                3: La nostra missione è consentire alle PMI croate e italiane di conformarsi alle normative sulla protezione dei dati. Ecco perché abbiamo introdotto Olivia, uno strumento progettato per rendere la conformità al GDPR più semplice che mai!
+        right:
+            1:
+                title: INNOVATIVO
+                text: Creata in collaborazione, OLIVIA consente un approccio innovativo alla conformità al GDPR.
+            2:
+                title: GRATUITO
+                text: OLIVIA è uno strumento aperto e facile da usare, liberamente accessibile a tutti gli utenti interessati.
+            3:
+                title: EDUCATIVO
+                text: OLIVIA semplifica l&#39;accesso al quadro della conoscenza, alle regole e alle procedure.
+            4:
+                title: PRATICO
+                text: Il lato pratico di OLIVIA aiuta le PMI nella piena implementazione del GDPR.
+    modules:
+        lower:
+            title: Assistente virtuale Regolamento generale sulla protezione dei dati - OLIVIA
+            description:
+                1: OLIVIA è un fornitore e promotore di conoscenze relative alla protezione dei dati con il modulo teorico che offre know-how e aiuta i proprietari di PMI e i responsabili della protezione dei dati a saperne di più su come e perché conformarsi alle regole e ai principi del GDPR dell&#39;UE.
+                2: D&#39;altro canto, OLIVIA è uno strumento online gratuito che aiuta le istituzioni e i privati ad avere accesso immediato, illimitato e senza restrizioni all&#39;assistenza in materia di protezione dei dati.
+
+form:
+    security:
+        registration:
+            label:
+                firstName: Nome di battesimo
+                lastName: Cognome
+                email: E-mail
+                password: Parola d&#39;ordine
+                confirmPassword: Conferma password
+                termsOfService: Accetto i <a href="%url%" target="_blank">Termini di servizio</a> .
+        login:
+            label:
+                email: E-mail
+                password: Parola d&#39;ordine
+        resetPassword:
+            label:
+                email: E-mail
+                password: Nuova password
+                confirmPassword: Conferma la nuova password
+            message:
+                email: Inserisci l&#39;indirizzo email che hai utilizzato per creare il tuo account Olivia. Verrà inviato un URL speciale che ti consentirà di modificare la password del tuo account. L&#39;URL ha un limite di tempo di 3 ore prima che diventi non valido.
+    entity:
+        user:
+            label:
+                email: E-mail
+                roles: Ruoli
+                activated: Attivato
+                firstName: Nome di battesimo
+                lastName: Cognome
+                affiliation: Affiliazione
+        instructor:
+            label:
+                firstName: Nome di battesimo
+                lastName: Cognome
+                email: E-mail
+                institution: Istituzione
+                institutionAlt: Istituzione (lingua alternativa)
+                image: Immagine
+                biography: Biografia
+                biographyAlt: Biografia (lingua alternativa)
+        course:
+            label:
+                name: Nome
+                nameAlt: Nome (lingua alternativa)
+                publicName: Nome pubblico
+                publicNameAlt: Nome pubblico (lingua alternativa)
+                description: Descrizione
+                descriptionAlt: Descrizione (lingua alternativa)
+                image: Immagine (massimo 5 MB)
+                estimatedWorkload: Carico di lavoro stimato
+                tags: Tag separati da virgole
+                tagsAlt: Tag separati da virgole (lingua alternativa)
+                instructors: Istruttori
+                practicalSubmodules: Valutazioni pratiche collegate
+                position: Posizione
+            placeholder:
+                name: Nome del corso
+                publicName: ad esempio, cos&#39;è la politica sulla privacy e perché è importante?
+                description: Descrizione del corso...
+                workloadValue: 12 o 2,5
+                tags: GDPR, IT, Sicurezza,...
+                instructor: Scegli un istruttore...
+            choices:
+                estimatedWorkload:
+                    hours: ore)
+                    days: giorno/i
+                    weeks: settimana/e
+                    months: mesi)
+                    years: anni)
+        lesson:
+            label:
+                name: Nome
+                nameAlt: Nome (lingua alternativa)
+                description: Descrizione
+                descriptionAlt: Descrizione (lingua alternativa)
+                text: Contenuto
+                textAlt: Contenuto (lingua alternativa)
+                file: File
+                video: URL di incorporamento del video
+                passingPercentage: Percentuale di passaggio
+        quizQuestion:
+            label:
+                text: Testo della domanda
+                textAlt: Testo della domanda (lingua alternativa)
+                explanation: Spiegazione
+                explanationAlt: Spiegazione (lingua alternativa)
+                correctAnswer: Risposta corretta
+                type: Tipo
+        quizQuestionChoice:
+            label:
+                text: Testo a scelta
+                textAlt: Testo a scelta (lingua alternativa)
+                correct: Corretto
+        practicalSubmodule:
+            label:
+                name: Nome
+                nameAlt: Nome (lingua alternativa)
+                publicName: Nome pubblico
+                publicNameAlt: Nome pubblico (lingua alternativa)
+                image: Immagine
+                description: Descrizione
+                descriptionAlt: Descrizione (lingua alternativa)
+                paging: Cercapersone
+                processorGroupingEnabled: Abilita il raggruppamento di processori
+                tags: Tag
+                tagsAlt: Tag (lingua alternativa)
+                courses: Corsi collegati
+                modeOfOperation: Modalità di funzionamento
+                reportComment: Commento alla fine del rapporto
+                reportCommentAlt: Commento alla fine del report (lingua alternativa)
+                terminology: Terminologia
+                position: Posizione
+                exportType: Tipo di esportazione
+            placeholder:
+                name: Nome del sottomodulo pratico
+                publicName: ad esempio, crea la tua politica sulla privacy con facilità!
+                description: Descrizione pratica del sottomodulo...
+                tags: GDPR,IT,Sicurezza
+                reportComment: Cosa leggerà l&#39;utente alla fine dei risultati/report?
+        practicalSubmoduleQuestion:
+            label:
+                type: Tipo di domanda
+                questionText: Testo della domanda
+                questionTextAlt: Testo della domanda (lingua alternativa)
+                evaluable: Utilizzato nella valutazione
+                dependentQuestion: Domanda dipendente
+                dependentValue: Valore della domanda dipendente
+                otherEnabled: Abilita campi aggiuntivi (ovvero <i>altri</i> ).
+                multipleWeighted: Abilita la selezione multipla di pesi
+                isHeading: Si sta dirigendo
+                disabled: Disabilitato
+            placeholder:
+                questionText: Il testo della domanda va qui...
+                dependentEvaluationQuestion: Niente selezionato...
+        practicalSubmoduleQuestionAnswer:
+            label:
+                weighted:
+                    answerText: Rispondi al testo
+                    answerTextAlt: Testo della risposta (lingua alternativa)
+                    answerValue: Peso
+                templatedText:
+                    answerText: Modello di risposta
+                    answerTextAlt: Modello di risposta (lingua alternativa)
+        practicalSubmoduleProcessor:
+            label:
+                type: Tipo di processore
+                name: Nome del processore
+                included: Includere nei risultati
+                evaluationQuestion: Domanda
+                evaluationQuestions: Domande
+                evaluationEvaluators: Processori
+                expectedValue: Valore atteso
+                expectedValueRange:
+                    start: Valore atteso (inizio dell&#39;intervallo)
+                    end: Valore atteso (fine dell&#39;intervallo)
+                resultText: Testo del risultato
+                resultFiles: File dei risultati
+                dependentQuestion: Domanda dipendente
+                dependentValue: Valore della domanda dipendente
+                disabled: Disabilitato
+                exportTag: Etichetta di esportazione
+                separateBy: Separato da
+            placeholder:
+                name: Nome del responsabile del trattamento per una più facile identificazione
+                resultText: Quale testo restituirà di conseguenza il processore?
+                resultFile: Scegli un file...
+                evaluationQuestion: Scegli una domanda...
+        practicalSubmodulePage:
+            label:
+                title: Titolo
+                titleAlt: Titolo (lingua alternativa)
+                description: Descrizione
+                descriptionAlt: Descrizione (lingua alternativa)
+                questions: Domande
+        practicalSubmoduleProcessorGroup:
+            label:
+                title: Titolo
+                titleAlt: Titolo (lingua alternativa)
+                processors: Processori
+        termsOfService:
+            label:
+                id: ID
+                title: Titolo
+                version: Versione
+                revision: Revisione
+                startedAt: Iniziato alle
+                endedAt: Finito alle
+                active: Attivo
+                content: Contenuto
+                contentAlt: Contenuto (lingua alternativa)
+        dataRequest:
+            label:
+                id: ID
+                user: Utente
+                type: Tipo
+                requestedAt: Richiesto a
+                resolvedAt: Risolto a
+        file:
+            label:
+                id: ID
+                originalName: Nome originale
+                createdAt: Creato a
+                modifiedAt: Modificato a
+        topic:
+            label:
+                title: Titolo
+                titleAlt: Titolo (lingua alternativa)
+                theoreticalSubmodules: Sottomoduli teorici
+                practicalSubmodules: Sottomoduli pratici
+                image: Immagine
+            placeholder:
+                title: Titolo del nuovo argomento GDPR
+                theoreticalSubmodules: Seleziona sottomoduli teorici...
+                practicalSubmodules: Seleziona sottomoduli pratici...
+
+profile:
+    request:
+        access:
+            button: Richiedi l&#39;accesso ai dati
+            description: "In qualsiasi momento, puoi inviare una richiesta per accedere a tutti i dati che hai inserito o che sono stati generati dalle tue attività nello strumento Olivia. I dati verranno inviati al tuo indirizzo e-mail registrato come allegato sotto forma di archivio ZIP compresso contenente più file CSV. I dati includono: iscrizioni ai corsi del modulo di formazione, appunti sulle lezioni del modulo di formazione, completamenti delle lezioni del modulo di formazione, risposte ai quiz del modulo di formazione, risultati dei quiz del modulo di formazione, registri delle attività del modulo di formazione, risposte alla valutazione del modulo di pratica, risultati della valutazione del modulo di pratica e il tuo account dello strumento Olivia dati."
+            disclaimer: "NOTA: La richiesta di accesso ai dati non verrà immediatamente evasa, ma verrà inviata una e-mail all&#39;indirizzo di posta elettronica registrato con i dati allegati."
+            confirmation: Sei sicuro di voler inviare una richiesta di accesso ai dati?
+        delete:
+            button: Richiedere la cancellazione dei dati
+            description: "In qualsiasi momento puoi inviare una richiesta di cancellazione di tutti i dati che hai inserito o che sono stati generati dalle tue attività nello strumento Olivia. I dati includono: iscrizioni ai corsi del modulo di formazione, appunti sulle lezioni del modulo di formazione, completamenti delle lezioni del modulo di formazione, risposte ai quiz del modulo di formazione, risultati dei quiz del modulo di formazione, registri delle attività del modulo di formazione, risposte alla valutazione del modulo di pratica, risultati della valutazione del modulo di pratica e il tuo account dello strumento Olivia ."
+            disclaimer: "NOTA: La richiesta di cancellazione dei dati non verrà elaborata immediatamente, ma verrà inviata un&#39;ultima e-mail al tuo indirizzo di posta elettronica registrato per avvisarti del processo terminato."
+            confirmation: Sei sicuro di voler inviare una richiesta di cancellazione dati?
+
+user:
+    title:
+        index: Utenti
+        new: Nuovo utente
+        edit: Modifica utente
+    dataAccess:
+        id: ID
+        email: E-mail
+        roles: Ruoli
+    profile:
+        basicData:
+            action: Modifica i dati di base
+            show: Dati di base
+            edit: Modifica dei dati di base
+        password:
+            action: Cambiare la password
+            show: Parola d&#39;ordine
+            edit: Modifica della password
+
+instructor:
+    title:
+        index: Istruttori
+        new: Nuovo istruttore
+        edit: Modifica istruttore
+    delete: Sei sicuro di voler eliminare questo insegnante?
+    remove: Sei sicuro di voler rimuovere %instructor% come insegnante da questo corso?
+
+course:
+    title:
+        index: Modulo teorico
+        new: Nuovo corso
+    delete: Sei sicuro di voler eliminare il corso \&#39;%course%\&#39;?
+    nav:
+        overview: Panoramica
+        instructors: Istruttori
+        lessons: Lezioni
+        edit: Modificare
+        certificate: Certificato
+        participants: Partecipanti
+    extra:
+        noInstructors: Al momento non ci sono istruttori definiti per questo corso.
+        lessons: "{0} %count% lezioni|{1} %count% lezione|[2,+Inf[ %count% lezioni"
+        quizzes: "{0} %count% quiz|{1} %count% quiz|[2,+Inf[ %count% quiz"
+        connectedTo: "Le lezioni di questo corso sono collegate alle seguenti verifiche pratiche:"
+        submitQuizAnswers: Fare clic su <i>Invia</i> per inviare le risposte e completare il quiz.
+    certificate:
+        1: Congratulazioni per aver completato il corso <i>%course%</i> !
+        2: Fare clic sul pulsante <i>Scarica certificato</i> per scaricare il certificato di completamento.
+        button: Scarica il certificato
+        notPass: Per ricevere un certificato, devi ricevere punti sufficienti su tutti i quiz.
+    enroll:
+        message: Sei sicuro di volerti iscrivere al corso &#39;%course%&#39;?
+    participants:
+        label:
+            user: Utente
+            email: E-mail
+            enrolledAt: Iscritto a
+            completion: Completamento
+            score: Punto
+        completion:
+            completed: Completato
+            notCompleted: Non completato
+
+lesson:
+    type:
+        text: Lettura
+        file: File
+        video: video
+        quiz: Quiz
+    delete: Sei sicuro di voler eliminare la lezione \&#39;%lesson%\&#39;?
+    edit: Modifica della lezione <i>%lesson%</i>
+    completion:
+        done: Fatto
+        undone: segna come fatto
+        quiz:
+            passed: Passato
+            notPassed: Non passato
+    quiz:
+        explanation:
+            1: Questo quiz contiene <b>%questionCount%</b> domande vere o false.
+            2: Per passare, devi ottenere un punteggio minimo <b>di %passingPercentage%%</b> . I risultati saranno disponibili dopo aver inviato le risposte.
+            3: Fare clic sul pulsante <i>Rispondi al quiz</i> per avviare il quiz.
+        action: Fai il quiz
+        yourGrade: Il tuo voto
+        yourAnswer: La tua risposta
+        correctAnswer: Risposta corretta
+        submit: Sei sicuro di voler inviare le tue risposte?
+    extra:
+        noLessons: Al momento non ci sono lezioni definite per questo corso.
+        text: Testo
+        file: File
+        video: video
+        quiz: Quiz
+        moderation: Moderazione
+        notes: "Note private sulla lezione: %lesson%"
+        notesVisibility: Visibile solo a te
+
+quizQuestion:
+    add: Aggiungi domanda
+    delete: Sei sicuro di voler eliminare questa domanda?
+    edit: Modificare una domanda del quiz
+    type:
+        trueFalse: Vero falso
+        singleChoice: Scelta unica
+
+quizQuestionChoice:
+    add: Aggiungi scelta
+    delete: Sei sicuro di voler eliminare questa scelta?
+    edit: Modificare una scelta
+
+note:
+    dataAccess:
+        id: ID
+        lesson: Identificativo della lezione
+        text: Testo
+        updatedAt: Aggiornato a
+    extra:
+        displayError: Si è verificato un problema durante il caricamento del widget delle note. Aggiorna la pagina per provare a caricarla nuovamente oppure, se il problema persiste, segnala il problema al Team Olivia.
+
+practicalSubmodule:
+    delete: Sei sicuro di voler eliminare il sottomodulo pratico \&#39;%evaluation%\&#39;?
+    title:
+        index: Modulo pratico
+        new: Nuovo sottomodulo pratico
+    nav:
+        overview: Panoramica
+        questionnaire: Questionario
+        results: Rapporto
+        edit:
+            default: Modificare
+            question: Modifica domanda
+            evaluator: Modifica processore
+            answer: Modifica risposta
+            page: Modifica Pagina
+            processorGroup: Modifica gruppo processore
+        new:
+            question: Nuova domanda
+            evaluator: Nuovo processore
+            answer: Nuova risposta
+            page: Nuova pagina
+            processorGroup: Nuovo gruppo di processori
+    modeOfOperation:
+        simple: Semplice
+        advanced: Avanzate
+    terminology:
+        assessment: Valutazione
+        privacyPolicy: Politica sulla riservatezza
+    exportType:
+        none: Nessuna esportazione
+        simple: Esportazione semplice
+        privacyPolicy: Politica sulla riservatezza
+        consentPersonalDataProcessing: Consenso al trattamento dei dati personali
+        cookieBanner: Bandiera dei biscotti
+        lia: Valutazione del legittimo interesse
+    extra:
+        question: Domanda
+        questions: Domande
+        evaluator: Processore
+        evaluators: Processori
+        page: Pagina
+        pages: Pagine
+        processorGroup: Gruppo processore
+        processorGroups: Gruppi di processori
+        answer: Risposta
+        results:
+            empty: Niente da mostrare.
+            final: Il presente questionario è destinato esclusivamente a scopi didattici e informativi.
+        connectedTo: "La valutazione è collegata ai seguenti corsi:"
+practicalSubmoduleQuestion:
+    type:
+        yesNo: Si No
+        weighted: Ponderato
+        numericalInput: Inserimento numerico
+        textInput: L&#39;immissione di testo
+        templatedTextInput: Inserimento di testo basato su modelli
+        multipleChoice: Scelta multipla
+        listInput: Elenco input
+        staticText: Testo statico
+    delete: Sei sicuro di voler eliminare questa domanda?
+    empty: Non ci sono domande definite per questo sottomodulo.
+practicalSubmoduleQuestionAnswer:
+    delete: Sei sicuro di voler eliminare questa risposta alla domanda?
+practicalSubmoduleProcessor:
+    type:
+        simple: Semplice
+        sumAggregate: Somma aggregata
+        productAggregate: Aggregato di prodotti
+        templatedText: Testo modellato
+        html: HTML
+        resultCombiner: Combinatore di risultati del processore
+        maxValue: Valore massimo
+    delete: Sei sicuro di voler eliminare questo processore?
+    empty: Non esistono processori definiti per questo sottomodulo.
+    heading:
+        basicOptions: Opzioni di base
+        specificOptions: Opzioni specifiche del processore
+    resultCombiner:
+        separateBy:
+            space: Spazio
+            newline: Nuova linea
+            doubleNewline: Doppia nuova linea
+practicalSubmodulePage:
+    empty: Non ci sono pagine definite per questo sottomodulo.
+    delete: Sei sicuro di voler eliminare questa pagina?
+practicalSubmoduleProcessorGroup:
+    empty: Non esistono gruppi di processori definiti per questo sottomodulo.
+    delete: Sei sicuro di voler eliminare questo gruppo di processori?
+practicalSubmoduleAssessment:
+    message:
+        1: Questo questionario contiene <b>%questionCount%</b> domande. Alcune domande appariranno solo se hai risposto in modo specifico a una delle domande precedenti.
+        2: Il questionario può essere compilato quante volte si desidera o è necessario.
+        3: Fare clic sul pulsante <i>Compila questionario</i> per iniziare a compilarlo.
+        lastSubmittedAt: Il questionario è stato inviato l&#39;ultima volta %datetime%
+        fillAgain: Sei sicuro di voler compilare nuovamente il questionario? Questa azione eliminerà le risposte precedenti all&#39;avvio.
+    action:
+        start: Compila il questionario
+        edit: Modifica il questionario inviato
+        results: Visualizza rapporto
+termsOfService:
+    format: ver. %versione%, rev. %revisione%
+    ongoing: in corso
+    message:
+        accept: Sei sicuro di voler accettare i termini di servizio?
+        rescind: Sei sicuro di voler annullare i termini di servizio?
+        rescindInactive: La revoca dei termini di servizio inattivi non ti impedirà di utilizzare lo strumento Olivia.
+    title:
+        index: Elenco dei termini di servizio
+        new: Nuovi termini di servizio
+        edit: Modifica di <i>%termsOfService%</i>
+        revise: Revisione di <i>%termsOfService%</i>
+    dataAccess:
+        id: ID
+        version: Versione
+        revision: Revisione
+        startedAt: Iniziato alle
+        endedAt: Finito alle
+        content: Contenuto
+        active: Attivo
+        acceptedAt: Accettato a
+    extra:
+        revise: Rivedere
+        accept: Accetta i termini di servizio
+        rescind: Rescindere i termini di servizio
+
+dataRequest:
+    title:
+        index:
+            default: Richieste di dati
+            typeAccess: Richieste di accesso ai dati
+            typeDelete: Richieste di cancellazione dati
+            resolved: Richieste dati risolte
+
+file:
+    title:
+        index: File
+        new: Caricamento nuovo file
+        edit: Sostituisci il file <i>%nomefile%</i>
+    message:
+        delete: Sei sicuro di voler eliminare questo file?
+
+topic:
+    title:
+        index: Temi GDPR
+        new: Nuovo argomento GDPR
+        edit: Modifica argomento GDPR <i>%topic%</i>
+    message:
+        delete: Sei sicuro di voler eliminare questo argomento GDPR?
+
+certificate:
+    title: Certificato di completamento
+    for: per
+    to: A
+    certifiedAt: Certificato a
+
+extra:
+    free: Gratuito
+    exitImmitation: Esci dall&#39;imitazione
+    extendSession:
+        title: La sessione scadrà a breve
+        text: Desideri prolungare la sessione?
+        extend: Estendere
+
+export:
+    cookieBanner:
+        title: Consenso al trattamento dei dati personali tramite cookies
+        subtitles:
+            firstParty: Cookie di prima parte
+            thirdParty: Cookie di terze parti
+        buttons:
+            declineAll: Rifiuta tutto
+            acceptAll: Accettare tutti
+            acceptSelected: Accetta selezionato
