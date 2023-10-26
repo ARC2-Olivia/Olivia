@@ -40,7 +40,7 @@ success:
         new: Per il sottomodulo è stato creato un nuovo processore.
         edit: Il processore è stato aggiornato.
     practicalSubmoduleAssessment:
-        finish: La tua valutazione è stata salvata. È possibile visualizzare i risultati facendo clic su <i>Risultati</i> nella scheda <i>Valutazione</i> .
+        finish: Il tuo questionario è stato salvato. È possibile visualizzare i risultati facendo clic su <i>Risultati</i> nella scheda <i>Questionario</i>.
     practicalSubmodulePage:
         new: Una nuova pagina è stata aggiunta al sottomodulo.
         edit: La pagina è stata aggiornata
