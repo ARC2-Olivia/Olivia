@@ -9,9 +9,15 @@
             <div class="row gx-2">
                 <div class="col-12 col-md-9 pt-5 pb-3">
                     <h1 class="course-header-name">
-                        <a href="{{ path('course_index') }}">{{ 'nav.training'|trans }}</a>
-                        {{ mdi('chevron-right') }}
-                        <span>{{ course.name }}</span>
+                        {% if course.topic is not null %}
+                            <a href="{{ path('topic_index') }}">{{ 'nav.topics'|trans }}</a>
+                            {{ mdi('chevron-right') }}
+                            <a href="{{ path('topic_show', {'topic': course.topic.id}) }}">{{ course.topic.title }}</a>
+                            {{ mdi('chevron-right') }}
+                            <span>{{ 'nav.training'|trans }}</span>
+                        {% else %}
+                            <span>{{ course.name }}</span>
+                        {% endif %}
                     </h1>
                     <div class="course-header-details">
                         {% if course.estimatedWorkload is not empty %}

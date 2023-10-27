@@ -9,9 +9,15 @@
             <div class="row gx-2">
                 <div class="col-12 pt-5 pb-3">
                     <h1 class="course-header-name">
-                        <a href="{{ path('practical_submodule_index') }}">{{ 'nav.practice'|trans }}</a>
-                        {{ mdi('chevron-right') }}
-                        <span>{{ evaluation.name }}</span>
+                        {% if evaluation.topic is not null %}
+                            <a href="{{ path('topic_index') }}">{{ 'nav.topics'|trans }}</a>
+                            {{ mdi('chevron-right') }}
+                            <a href="{{ path('topic_show', {'topic': evaluation.topic.id}) }}">{{ evaluation.topic.title }}</a>
+                            {{ mdi('chevron-right') }}
+                            <span>{{ 'nav.practice'|trans }}</span>
+                        {% else %}
+                            <span>{{ evaluation.name }}</span>
+                        {% endif %}
                     </h1>
                 </div>
             </div>
