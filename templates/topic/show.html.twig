@@ -18,11 +18,14 @@
             <div class="topic-segments">
 
                 <div class="topic-segment theory">
+                    {% set isMultipart = theoreticalSubmodules|length > 1 %}
+                    {% set offset = 0 %}
                     {% for pair in theoreticalSubmodules|make_pairs %}
                         <div class="topic-segment-row">
-                        {% for course in pair %}
-                            {% include 'course/_index_course.html.twig' with {'usePublicName': true, 'displayForTopic': true} %}
-                        {% endfor %}
+                            {% for course in pair %}
+                                {% set offset = offset + 1 %}
+                                {% include 'course/_index_course.html.twig' with {'usePublicName': true, 'displayForTopic': true} %}
+                            {% endfor %}
                         </div>
                     {% endfor %}
                 </div>
@@ -30,11 +33,14 @@
                 <div class="topic-segments-divider"></div>
 
                 <div class="topic-segment">
+                    {% set isMultipart = practicalSubmodules|length > 1 %}
+                    {% set offset = 0 %}
                     {% for pair in practicalSubmodules|make_pairs %}
                         <div class="topic-segment-row">
-                        {% for evaluation in pair %}
-                            {% include 'evaluation/_index_evaluation.html.twig' with {'usePublicName': true, 'displayForTopic': true} %}
-                        {% endfor %}
+                            {% for evaluation in pair %}
+                                {% set offset = offset + 1 %}
+                                {% include 'evaluation/_index_evaluation.html.twig' with {'usePublicName': true, 'displayForTopic': true} %}
+                            {% endfor %}
                         </div>
                     {% endfor %}
                 </div>

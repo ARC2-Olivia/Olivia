@@ -632,6 +632,7 @@ topic:
         edit: Uredi GDPR temu <i>%topic%</i>
     message:
         delete: Jeste li sigurni da želite obrisati ovu GDPR temu?
+    multipartName: "&mdash; %number%. dio"
 
 certificate:
     title: Potvrda o završetku

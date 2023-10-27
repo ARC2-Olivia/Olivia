@@ -10,8 +10,19 @@
     {% set displayForTopic = false %}
 {% endif %}
 
+{% if isMultipart is not defined %}
+    {% set isMultipart = false %}
+{% endif %}
+
 <div class="card p-0 position-relative">
-    {% if displayForTopic == true %}<span class="topic-type learn">{{ 'nav.training'|trans }}</span>{% endif %}
+    {% if displayForTopic == true %}
+        <span class="topic-type learn">
+        {{ 'nav.training'|trans }}
+            {% if isMultipart == true and loop is defined %}
+                {{ 'topic.multipartName'|trans({'%number%': offset})|raw }}
+            {% endif %}
+        </span>
+    {% endif %}
     <div class="card-image position-relative ms-0 me-0 mt-0">
         {% if course.image is not empty %}
             <img src="{{ path('file_fetch_course_image', {'course': course.id}) }}" alt="Course image"/>

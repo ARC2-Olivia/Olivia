@@ -8,8 +8,19 @@
     {% set displayForTopic = false %}
 {% endif %}
 
+{% if isMultipart is not defined %}
+    {% set isMultipart = false %}
+{% endif %}
+
 <div class="card p-0 position-relative" style="min-height: 320px">
-    {% if displayForTopic == true %}<span class="topic-type apply">{{ 'nav.practice'|trans }}</span>{% endif %}
+    {% if displayForTopic == true %}
+        <span class="topic-type apply">
+            {{ 'nav.practice'|trans }}
+            {% if isMultipart == true and loop is defined and offset is defined %}
+                {{ 'topic.multipartName'|trans({'%number%': offset})|raw }}
+            {% endif %}
+        </span>
+    {% endif %}
     <div class="card-image ms-0 me-0 mt-0">
         {% if evaluation.image is not null %}
             <img src="{{ path('file_fetch_practical_submodule_image', {'practicalSubmodule': evaluation.id}) }}" alt="Practical submodule image"/>

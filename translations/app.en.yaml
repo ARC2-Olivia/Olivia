@@ -635,6 +635,7 @@ topic:
         edit: Edit GDPR topic <i>%topic%</i>
     message:
         delete: Are you sure you want to delete this GDPR topic?
+    multipartName: "&mdash; Part %number%"
 
 certificate:
     title: Certificate of completion
