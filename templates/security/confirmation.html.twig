@@ -5,7 +5,7 @@
 
 {% block body %}
     <div class="w-100 h-100 row gx-0 justify-content-center align-items-center">
-        <div class="card col-xs-11 col-sm-9 col-md-7 col-lg-5 col-xl-3">
+        <div class="card security-form-wrapper">
             {% if activationSuccess %}
                 <div class="card-title">{{ 'success.accountConfirmation.subject'|trans({}, 'message') }}</div>
                 <div class="card-text">{{ 'success.accountConfirmation.text'|trans({}, 'message') }}</div>
