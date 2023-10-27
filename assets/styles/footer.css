@@ -24,20 +24,27 @@ footer .footer-column {
     color: rgba(255, 255, 255, 0.5);
 }
 
-footer .footer-cofinancing {
-    width: 25%;
+footer .footer-row {
+    display: flex;
+    column-gap: 4px;
+    align-items: center;
+    justify-content: center;
 }
 
-footer .footer-logos {
-    width: 75%;
+footer .footer-row > * {
+    flex-shrink: 0;
 }
 
-@media screen and (max-width: 768px) {
-    footer .footer-cofinancing {
-        width: 50%;
-    }
+.footer-logos {
+    height: 4vw;
+}
 
-    footer .footer-logos {
-        width: 90%;
+.footer-logo {
+    height: 100%;
+}
+
+@media screen and (min-width: 1920px) {
+    .footer-logos {
+        height: 5rem;
     }
 }

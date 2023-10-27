@@ -4,13 +4,13 @@
     <div class="container footer-column">
         <div>{{ 'footer.contact'|trans|raw }}</div>
         <div>{{ 'footer.text'|trans }}</div>
-        <div><a href="{{ path('tos_active') }}" target="_blank">{{ 'footer.termsOfService'|trans }}</div>
+        <div><a href="{{ path('tos_active') }}" target="_blank">{{ 'footer.termsOfService'|trans }}</a></div>
     </div>
 </div>
 
 <div class="footer-2">
-    <div class="container footer-column">
-        <img class="footer-cofinancing" src="{{ asset('build/images/footer-cofinancing.jpg') }}" alt="Logo of the European Union"/>
-        <img class="footer-logos" src="{{ asset('build/images/footer-logos.png') }}" alt="Logo of ARC II project partners"/>
+    <div class="footer-row footer-logos">
+        <img class="footer-logo" src="{{ asset('build/images/footer-logos.png') }}" alt="Logo of ARC II project partners"/>
+        <img class="footer-logo" src="{{ asset('build/images/footer-cofinancing.jpg') }}" alt="Logo of the European Union"/>
     </div>
 </div>
