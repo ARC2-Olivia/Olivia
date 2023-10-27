@@ -7,18 +7,17 @@
     <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-module-theory.png') }}'); background-position: center 60%">
         <div class="index-banner-wrapper">
             <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
-            <div class="index-banner-subtitle">{{ topic.title }}</div>
+            <div class="index-banner-subtitle">{{ 'nav.topics'|trans }}</div>
         </div>
     </div>
     <div class="container py-5">
         {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
         <div class="row g-3">
+            <div class="topic-title">{{ topic.title }}</div>
+            <img class="learn2apply-arrow" src="{{ asset('build/images/smudged-arrow.png') }}" alt="Learn to start applying"/>
             <div class="topic-segments">
 
                 <div class="topic-segment theory">
-                    <h2 class="topic-segment-title">
-                        <a href="{{ path('course_index') }}">{{ 'nav.training'|trans }}</a>
-                    </h2>
                     <div class="topic-segment-grid">
                         {% for course in theoreticalSubmodules %}
                             {% include 'course/_index_course.html.twig' with {'usePublicName': true} %}
@@ -29,9 +28,6 @@
                 <div class="topic-segments-divider"></div>
 
                 <div class="topic-segment">
-                    <h2 class="topic-segment-title">
-                        <a href="{{ path('practical_submodule_index') }}">{{ 'nav.practice'|trans }}</a>
-                    </h2>
                     <div class="topic-segment-grid">
                         {% for evaluation in practicalSubmodules %}
                             {% include 'evaluation/_index_evaluation.html.twig' with {'usePublicName': true} %}
