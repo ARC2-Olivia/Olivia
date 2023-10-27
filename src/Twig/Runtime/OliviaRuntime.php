@@ -134,4 +134,19 @@ class OliviaRuntime implements RuntimeExtensionInterface
 
         return new \Twig\Markup(implode('', $text), $charset);
     }
+
+    public function makePairs(array $array): \Iterator
+    {
+        $length = count($array);
+        $i = 0;
+        while ($i < $length) {
+            $j = $i + 1;
+            if ($j < $length) {
+                yield [$array[$i], $array[$j]];
+            } else {
+                yield [$array[$i]];
+            }
+            $i += 2;
+        }
+    }
 }

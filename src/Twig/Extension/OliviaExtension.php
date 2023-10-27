@@ -15,7 +15,8 @@ class OliviaExtension extends AbstractExtension
             new TwigFilter('translate_workload', [OliviaRuntime::class, 'translateWorkload']),
             new TwigFilter('youtube_embed_link', [OliviaRuntime::class, 'getYoutubeEmbedLink']),
             new TwigFilter('is_valid_evaluator', [OliviaRuntime::class, 'isValidEvaluator']),
-            new TwigFilter('txt2html', [OliviaRuntime::class, 'textToHtml'])
+            new TwigFilter('txt2html', [OliviaRuntime::class, 'textToHtml']),
+            new TwigFilter('make_pairs', [OliviaRuntime::class, 'makePairs'])
         ];
     }
 
@@ -26,6 +27,7 @@ class OliviaExtension extends AbstractExtension
             new TwigFunction('is_user', [OliviaRuntime::class, 'isUser']),
             new TwigFunction('is_passed', [OliviaRuntime::class, 'isPassed']),
             new TwigFunction('txt2html', [OliviaRuntime::class, 'textToHtml']),
+            new TwigFunction('make_pairs', [OliviaRuntime::class, 'makePairs'])
         ];
     }
 }
