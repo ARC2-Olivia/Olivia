@@ -6,7 +6,12 @@
     {% set usePublicName = false %}
 {% endif %}
 
-<div class="card p-0">
+{% if displayForTopic is not defined %}
+    {% set displayForTopic = false %}
+{% endif %}
+
+<div class="card p-0 position-relative">
+    {% if displayForTopic == true %}<span class="topic-type learn">{{ 'nav.training'|trans }}</span>{% endif %}
     <div class="card-image position-relative ms-0 me-0 mt-0">
         {% if course.image is not empty %}
             <img src="{{ path('file_fetch_course_image', {'course': course.id}) }}" alt="Course image"/>

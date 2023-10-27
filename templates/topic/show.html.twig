@@ -20,7 +20,7 @@
                 <div class="topic-segment theory">
                     <div class="topic-segment-grid">
                         {% for course in theoreticalSubmodules %}
-                            {% include 'course/_index_course.html.twig' with {'usePublicName': true} %}
+                            {% include 'course/_index_course.html.twig' with {'usePublicName': true, 'displayForTopic': true} %}
                         {% endfor %}
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="topic-segment">
                     <div class="topic-segment-grid">
                         {% for evaluation in practicalSubmodules %}
-                            {% include 'evaluation/_index_evaluation.html.twig' with {'usePublicName': true} %}
+                            {% include 'evaluation/_index_evaluation.html.twig' with {'usePublicName': true, 'displayForTopic': true} %}
                         {% endfor %}
                     </div>
                 </div>

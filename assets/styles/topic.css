@@ -50,6 +50,25 @@
     margin-bottom: 24px;
 }
 
+.topic-type {
+    position: absolute;
+    color: white;
+    background-color: var(--app-color-blue);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    top: 24px;
+    z-index: 1000;
+    padding: 8px 18px;
+}
+
+.topic-type.learn {
+    background-color: var(--app-color-blue);
+}
+
+.topic-type.apply {
+    background-color: var(--app-color-green);
+}
+
 @media screen and (max-width: 1199px) {
     .topic-segment-grid > * {
         flex-basis: 100%;
