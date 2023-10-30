@@ -36,7 +36,7 @@ footer .footer-row > * {
 }
 
 .footer-logos {
-    height: 4vw;
+    height: 3.25vw;
 }
 
 .footer-logo {
@@ -45,6 +45,6 @@ footer .footer-row > * {
 
 @media screen and (min-width: 1920px) {
     .footer-logos {
-        height: 5rem;
+        height: 3.25rem;
     }
 }

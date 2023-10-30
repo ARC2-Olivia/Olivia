@@ -2,82 +2,84 @@
 {% trans_default_domain 'app' %}
 
 {% block body %}
-    <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
-        <div class="index-banner-wrapper">
-            <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
-            <div class="index-banner-subtitle">{{ 'app.subtitle'|trans }}</div>
-            <div class="index-banner-actions">
-                <a href="{{ path('topic_index') }}" class="btn btn-theme-white bg-orange">{{ 'nav.topics'|trans }}</a>
-                <a href="{{ path('about_us') }}" class="btn btn-theme-white bg-blue ms-3">{{ 'nav.aboutUs'|trans }}</a>
-                <a href="{{ path('about_project') }}" class="btn btn-theme-white bg-blue ms-3">{{ 'nav.aboutProject'|trans }}</a>
+    <div class="container-fluid container-xxl p-0">
+        <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
+            <div class="index-banner-wrapper">
+                <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
+                <div class="index-banner-subtitle">{{ 'app.subtitle'|trans }}</div>
+                <div class="index-banner-actions">
+                    <a href="{{ path('topic_index') }}" class="btn btn-theme-white bg-orange">{{ 'nav.topics'|trans }}</a>
+                    <a href="{{ path('about_us') }}" class="btn btn-theme-white bg-blue ms-3">{{ 'nav.aboutUs'|trans }}</a>
+                    <a href="{{ path('about_project') }}" class="btn btn-theme-white bg-blue ms-3">{{ 'nav.aboutProject'|trans }}</a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="index-about">
-        <div class="index-about--left">
-            <h2>{{ 'index.about.left.title'|trans }}</h2>
-            <p class="mb-3">{{ 'index.about.left.description.1'|trans|raw }}</p>
-            <p class="mb-3">{{ 'index.about.left.description.2'|trans|raw }}</p>
-            <p class="mb-3">{{ 'index.about.left.description.3'|trans|raw }}</p>
-        </div>
-        <div class="index-about--right">
-            <div class="index-about--right--item">
-                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
-                <div class="index-about--right--item-info">
-                    <h3>{{ 'index.about.right.1.title'|trans }}</h3>
-                    <p>{{ 'index.about.right.1.text'|trans }}</p>
-                </div>
+        <div class="index-about">
+            <div class="index-about--left">
+                <h2>{{ 'index.about.left.title'|trans }}</h2>
+                <p class="mb-3">{{ 'index.about.left.description.1'|trans|raw }}</p>
+                <p class="mb-3">{{ 'index.about.left.description.2'|trans|raw }}</p>
+                <p class="mb-3">{{ 'index.about.left.description.3'|trans|raw }}</p>
             </div>
-            <div class="index-about--right--item">
-                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
-                <div class="index-about--right--item-info">
-                    <h3>{{ 'index.about.right.2.title'|trans }}</h3>
-                    <p>{{ 'index.about.right.2.text'|trans }}</p>
-                </div>
-            </div>
-            <div class="index-about--right--item">
-                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
-                <div class="index-about--right--item-info">
-                    <h3>{{ 'index.about.right.3.title'|trans }}</h3>
-                    <p>{{ 'index.about.right.3.text'|trans }}</p>
-                </div>
-            </div>
-            <div class="index-about--right--item">
-                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
-                <div class="index-about--right--item-info">
-                    <h3>{{ 'index.about.right.4.title'|trans }}</h3>
-                    <p>{{ 'index.about.right.4.text'|trans }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="index-modules">
-        <div class="index-modules--lower">
-            <div class="container">
-                <h2>{{ 'index.modules.lower.title'|trans }}</h2>
-                <p class="mb-2">{{ 'index.modules.lower.description.1'|trans }}</p>
-                <p>{{ 'index.modules.lower.description.2'|trans }}</p>
-            </div>
-        </div>
-    </div>
-
-    {% if testimonials is not empty %}
-        <div class="container-fluid my-5">
-            <div id="carousel" class="index-carousel">
-                {% for testimonial in testimonials %}
-                    <div class="index-carousel-slide">
-                        <div class="index-testimonial">
-                            {{ mdi('book-open-page-variant-outline', 'index-testimonial-icon') }}
-                            <h3>{{ testimonial.title }}</h3>
-                            <p>{{ testimonial.text }}</p>
-                        </div>
+            <div class="index-about--right">
+                <div class="index-about--right--item">
+                    <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                    <div class="index-about--right--item-info">
+                        <h3>{{ 'index.about.right.1.title'|trans }}</h3>
+                        <p>{{ 'index.about.right.1.text'|trans }}</p>
                     </div>
-                {% endfor %}
+                </div>
+                <div class="index-about--right--item">
+                    <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                    <div class="index-about--right--item-info">
+                        <h3>{{ 'index.about.right.2.title'|trans }}</h3>
+                        <p>{{ 'index.about.right.2.text'|trans }}</p>
+                    </div>
+                </div>
+                <div class="index-about--right--item">
+                    <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                    <div class="index-about--right--item-info">
+                        <h3>{{ 'index.about.right.3.title'|trans }}</h3>
+                        <p>{{ 'index.about.right.3.text'|trans }}</p>
+                    </div>
+                </div>
+                <div class="index-about--right--item">
+                    <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                    <div class="index-about--right--item-info">
+                        <h3>{{ 'index.about.right.4.title'|trans }}</h3>
+                        <p>{{ 'index.about.right.4.text'|trans }}</p>
+                    </div>
+                </div>
             </div>
         </div>
-    {% endif %}
+
+        <div class="index-modules">
+            <div class="index-modules--lower">
+                <div class="container">
+                    <h2>{{ 'index.modules.lower.title'|trans }}</h2>
+                    <p class="mb-2">{{ 'index.modules.lower.description.1'|trans }}</p>
+                    <p>{{ 'index.modules.lower.description.2'|trans }}</p>
+                </div>
+            </div>
+        </div>
+
+        {% if testimonials is not empty %}
+            <div class="container-fluid my-5">
+                <div id="carousel" class="index-carousel">
+                    {% for testimonial in testimonials %}
+                        <div class="index-carousel-slide">
+                            <div class="index-testimonial">
+                                {{ mdi('book-open-page-variant-outline', 'index-testimonial-icon') }}
+                                <h3>{{ testimonial.title }}</h3>
+                                <p>{{ testimonial.text }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block stylesheets %}
