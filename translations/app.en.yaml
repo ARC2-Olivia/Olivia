@@ -125,12 +125,10 @@ index:
             4:
                 title: PRACTICAL
                 text: OLIVIA’s practical side helps SMEs in full GDPR implementation.
-    modules:
-        lower:
-            title: General data protection regulation virtual assistant - OLIVIA
-            description:
-                1: OLIVIA is a data-protection-related knowledge provider and promotor with the theoretical module offering know-how and helping SME owners and Data Protection Officers to learn more how and why to comply with the EU GDPR rules and principles.
-                2: On the other hand, OLIVIA is a free online tool helping institutions and individuals to have immediate, unlimited and unrestricted access to data protection assistance.
+    topics:
+        title: GDPR topics &ndash; Learn and Apply
+        button: GDPR Topics
+        text: Being both a virtual educator and an assistant, OLIVIA includes mini online academy offering you a variety of learning modules to enhance your knowledge in the area of GDPR, as well as a practical tool assisting you in practical application of the GDPR-related necessary documents and procedures.
 
 form:
     security:

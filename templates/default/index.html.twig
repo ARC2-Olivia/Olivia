@@ -54,13 +54,12 @@
             </div>
         </div>
 
-        <div class="index-modules">
-            <div class="index-modules--lower">
-                <div class="container">
-                    <h2>{{ 'index.modules.lower.title'|trans }}</h2>
-                    <p class="mb-2">{{ 'index.modules.lower.description.1'|trans }}</p>
-                    <p>{{ 'index.modules.lower.description.2'|trans }}</p>
-                </div>
+        <div class="index-topics">
+            <div class="index-topics--l" style="background-image: url('{{ asset('build/images/index-lock.png') }}')"></div>
+            <div class="index-topics--r">
+                <h3>{{ 'index.topics.title'|trans|raw }}</h3>
+                <p>{{ 'index.topics.text'|trans|raw }}</p>
+                <div><a href="{{ path('topic_index') }}" class="btn btn-thematic-blue-outline">{{ 'index.topics.button'|trans }}</a></div>
             </div>
         </div>
 
