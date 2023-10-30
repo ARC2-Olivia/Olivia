@@ -154,11 +154,11 @@
     row-gap: 16px;
     background-color: var(--app-color-blue);
     color: #ffffff;
-    border-radius: 8px;
     padding: 1rem 10vw;
-    width: 60%;
     text-align: center;
     position: relative;
+    width: 100%;
+    min-height: 192px;
 }
 
 .index-testimonial-icon {
