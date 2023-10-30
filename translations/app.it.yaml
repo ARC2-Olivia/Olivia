@@ -527,7 +527,7 @@ practicalSubmodule:
         results:
             empty: Niente da mostrare.
             final: Il presente questionario è destinato esclusivamente a scopi didattici e informativi.
-        connectedTo: "La valutazione è collegata ai seguenti corsi:"
+        connectedTo: Moduli teorici collegati
 practicalSubmoduleQuestion:
     type:
         yesNo: Si No

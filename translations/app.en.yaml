@@ -527,7 +527,7 @@ practicalSubmodule:
         results:
             empty: Nothing to show.
             final: This questionnaire is intended for educational and information purposes only.
-        connectedTo: "The assessment is connected to the following courses:"
+        connectedTo: Connected theoretical modules
 
 practicalSubmoduleQuestion:
     type:

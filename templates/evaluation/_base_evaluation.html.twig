@@ -34,9 +34,10 @@
                         {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
                     </div>
                     <div class="row mb-3">{% include '_partials/tab_navigation.html.twig' %}</div>
-                    <div class="row evaluation-content">
+                    <div class="row evaluation-content mb-4">
                         {% block evaluationContent %}{% endblock %}
                     </div>
+                    {% block belowEvaluationContent %}{% endblock %}
                 </div>
             </div>
         </div>

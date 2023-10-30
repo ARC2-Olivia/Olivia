@@ -525,7 +525,7 @@ practicalSubmodule:
         results:
             empty: Ništa za prikazati.
             final: Ova je procjena samo u obrazovne i informativne svrhe.
-        connectedTo: "Ova procjena je povezana sa sljedećim tečajevima:"
+        connectedTo: Povezani teoretski moduli
 
 practicalSubmoduleQuestion:
     type:
