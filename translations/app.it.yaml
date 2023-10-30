@@ -403,7 +403,7 @@ course:
         noInstructors: Al momento non ci sono istruttori definiti per questo corso.
         lessons: "{0} %count% lezioni|{1} %count% lezione|[2,+Inf[ %count% lezioni"
         quizzes: "{0} %count% quiz|{1} %count% quiz|[2,+Inf[ %count% quiz"
-        connectedTo: "Le lezioni di questo corso sono collegate alle seguenti verifiche pratiche:"
+        connectedTo: Moduli pratici collegati
         submitQuizAnswers: Fare clic su <i>Invia</i> per inviare le risposte e completare il quiz.
     certificate:
         1: Congratulazioni per aver completato il corso <i>%course%</i> !

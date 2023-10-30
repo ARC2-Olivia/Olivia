@@ -403,7 +403,7 @@ course:
         noInstructors: There are currently no defined instructors for this course.
         lessons: "{0} %count% lessons|{1} %count% lesson|[2,+Inf[ %count% lessons"
         quizzes: "{0} %count% quizzes|{1} %count% quiz|[2,+Inf[ %count% quizzes"
-        connectedTo: "This course's lessons are connected to the following practical assessments:"
+        connectedTo: Connected practical modules
         submitQuizAnswers: Click <i>Submit</i> to submit your answers and finish the quiz.
     certificate:
         1: Congratulations on completing the course <i>%course%</i>!

@@ -2,16 +2,6 @@
 {% trans_default_domain 'app' %}
 
 {% block courseContent %}
-    {% if course.practicalSubmodules is not empty %}
-        <div class="panel mb-3">
-            <p class="mb-2">{{ 'course.extra.connectedTo'|trans }}</p>
-            <ul>
-                {% for ps in course.practicalSubmodules %}
-                    <li class="ms-3"><a href="{{ path('practical_submodule_overview', {'practicalSubmodule': ps.id}) }}">{{ ps.name }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
     <p>{{ course.description|nl2br }}</p>
 
     {% if course.instructors is not empty %}
@@ -30,6 +20,19 @@
     {% if is_granted('ROLE_MODERATOR') %}
         <div class="text-end">
             <a href="{{ path('course_edit', {'course': course.id}) }}" class="btn btn-theme-white bg-green">{{ 'common.edit'|trans }}</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block belowCourseContent %}
+    {% if course.practicalSubmodules is not empty %}
+        <div class="row course-content mb-4">
+            <h3 class="mb-2">{{ 'course.extra.connectedTo'|trans }}</h3>
+            <div class="course-connected-modules">
+                {% for ps in course.practicalSubmodules %}
+                    {% include 'evaluation/_index_evaluation.html.twig' with {'usePublicName': true, 'evaluation': ps} %}
+                {% endfor %}
+            </div>
         </div>
     {% endif %}
 {% endblock %}
