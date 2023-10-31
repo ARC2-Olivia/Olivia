@@ -349,6 +349,10 @@ iframe.lesson-video {
     padding: 16px;
 }
 
+.lesson-completion, .lesson-quiz-completion {
+    width: 160px;
+}
+
 .lesson-quiz-completion {
     display: inline-flex;
     justify-content: center;

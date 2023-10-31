@@ -38,7 +38,7 @@
                 {% set completionClassAddition = lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-orange-outline' %}
                 {% set completionText = lessonInfo.completed ? 'lesson.completion.done'|trans : 'lesson.completion.undone'|trans %}
                 <button type="button"
-                        class="completion-marker-outer w-100 btn {{ completionClassAddition }}"
+                        class="lesson-completion completion-marker-outer btn {{ completionClassAddition }}"
                         data-path="{{ lessonInfo.toggleUrl }}"
                         data-text-done="{{ 'lesson.completion.done'|trans }}"
                         data-text-undone="{{ 'lesson.completion.undone'|trans }}"
