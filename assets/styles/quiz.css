@@ -15,7 +15,7 @@
 
 .quiz-upper {
     align-items: center;
-    background-color: #e5eefd;
+    /* background-color: #e5eefd; */
     border-radius: 24px;
     min-height: 300px;
 }
@@ -33,9 +33,10 @@
     display: flex;
     gap: 16px;
     height: 80%;
+    justify-content: center;
     align-items: stretch;
     width: 100%;
-    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 :is(.quiz-answers, .quiz-submit).hide {
@@ -43,16 +44,25 @@
 }
 
 .quiz-answer {
-    flex-basis: 0;
-    flex-grow: 1;
+    flex-basis: calc(40% - 16px);
+    flex-shrink: 0;
     border: none;
-    border-radius: 24px;
+    border-radius: 18px;
     color: #ffffff;
     cursor: pointer;
     opacity: .33;
-    font-size: 3rem;
+    font-size: 28px;
     background-color: var(--app-color-blue);
-    height: 120px;
+    min-height: 64px;
+    padding: 16px;
+}
+
+.quiz-answer.true {
+    background-color: var(--app-color-green);
+}
+
+.quiz-answer.false {
+    background-color: var(--app-color-red);
 }
 
 .quiz-answer:hover {
@@ -60,15 +70,16 @@
 }
 
 .quiz-submit {
-    flex-basis: 100%;
+    flex-basis: calc(40% - 16px);
     border: none;
     border-radius: 24px;
     color: #ffffff;
     cursor: pointer;
     opacity: .33;
     background-color: var(--app-color-blue);
-    font-size: 3rem;
-    height: 120px;
+    font-size: 28px;
+    min-height: 64px;
+    padding: 16px;
 }
 
 .quiz-submit:hover {
@@ -160,21 +171,26 @@
     100% { transform: translateX(0) rotateZ(-360deg); opacity: 0; }
 }
 
-@media screen and (min-width: 576px) {
-    .quiz-answers {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
+@media screen and (max-width: 1400px) {
     .quiz-answer {
-        flex-grow: 0;
-        flex-basis: calc(50% - 16px);
+        flex-basis: calc(45% - 16px);
     }
 }
 
-@media screen and (min-width: 992px) {
-    .quiz-submit {
-        flex-basis: 50%;
+@media screen and (max-width: 1200px) {
+    .quiz-answer {
+        flex-basis: 100%;
+    }
+}
+
+@media screen and (max-width: 920px) {
+    .quiz-answer {
+        flex-basis: calc(50% - 8px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .quiz-answer {
+        flex-basis: 100%;
     }
 }

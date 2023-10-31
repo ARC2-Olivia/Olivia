@@ -658,12 +658,12 @@ class LessonController extends BaseController
 
             if (QuizQuestion::TYPE_TRUE_FALSE === $quizQuestion->getType()) {
                 $correctAnswer = $quizQuestion->getCorrectAnswer();
-                $choices[] = ['text' => $this->translator->trans('common.trueValue', domain: 'app'), 'value' => true];
-                $choices[] = ['text' => $this->translator->trans('common.falseValue', domain: 'app'), 'value' => false];
+                $choices[] = ['text' => $this->translator->trans('common.trueValue', domain: 'app'), 'value' => true, 'class' => 'true'];
+                $choices[] = ['text' => $this->translator->trans('common.falseValue', domain: 'app'), 'value' => false, 'class' => 'false'];
             } else if (QuizQuestion::TYPE_SINGLE_CHOICE === $quizQuestion->getType()) {
                 $correctAnswer = $quizQuestion->getCorrectChoiceId();
                 foreach ($quizQuestion->getQuizQuestionChoices() as $qqc) {
-                    $choices[] = ['text' => $qqc->getText(), 'value' => $qqc->getId()];
+                    $choices[] = ['text' => $qqc->getText(), 'value' => $qqc->getId(), 'class' => ''];
                 }
             }
 

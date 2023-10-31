@@ -102,7 +102,7 @@ class Quiz {
         this.#elemUpper.appendChild(questionText);
 
         for (const choice of question.choices) {
-            const button = this.#parse(`<button class="quiz-answer" type="button">${choice.text}</button>`);
+            const button = this.#parse(`<button class="quiz-answer ${choice.class}" type="button">${choice.text}</button>`);
             button.addEventListener("click", (evt) => {
                 evt.target.dispatchEvent(new CustomEvent("quiz.answer.clicked", { detail: choice.value, bubbles: true }));
             });
