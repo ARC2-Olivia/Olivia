@@ -455,6 +455,7 @@ lesson:
         moderation: Moderation
         notes: "Private notes on lesson: %lesson%"
         notesVisibility: Visible only to you
+        listOfLessons: List of lessons
 
 quizQuestion:
     add: Add question

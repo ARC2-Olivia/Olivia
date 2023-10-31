@@ -453,6 +453,7 @@ lesson:
         moderation: Moderiranje
         notes: "Privatne bilješke za lekciju: %lesson%"
         notesVisibility: Vidljive samo vama
+        listOfLessons: Popis lekcija
 
 quizQuestion:
     add: Dodaj pitanje

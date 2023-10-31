@@ -3,10 +3,7 @@
 <div class="lesson-section-side ">
 
     <div class="lesson-section-navigation lesson-content">
-        <a class="lesson-section-navigation-caption" href="{{ path('lesson_course', {'course': lesson.course.id}) }}">
-            {{ mdi('arrow-left-circle', 'lesson-section-navigation-back-icon') }}
-            {{ lesson.course.name }}
-        </a>
+        <div class="lesson-section-navigation-caption fg-black">{{ 'lesson.extra.listOfLessons'|trans }}</div>
         {% for lessonInfo in lessonsInfo %}
             <div class="lesson-section-navigation-item{% if lessonInfo.lesson.id == lesson.id %} active{% endif %}">
                 {% if is_user() %}

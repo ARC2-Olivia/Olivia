@@ -450,11 +450,12 @@ lesson:
         noLessons: Al momento non ci sono lezioni definite per questo corso.
         text: Testo
         file: File
-        video: video
+        video: Video
         quiz: Quiz
         moderation: Moderazione
         notes: "Note private sulla lezione: %lesson%"
         notesVisibility: Visibile solo a te
+        listOfLessons: Elenco delle lezioni
 
 quizQuestion:
     add: Aggiungi domanda

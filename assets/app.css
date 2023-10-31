@@ -174,6 +174,7 @@ h2 > a {
 .fg-blue { color: var(--app-color-blue) !important; }
 .fg-red { color: var(--app-color-red) !important; }
 .fg-white { color: #ffffff !important; }
+.fg-black { color: #000000 !important; }
 
 @media screen and (max-width: 1199px) {
     .submodule-grid {
