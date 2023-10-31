@@ -72,6 +72,18 @@
     background-color: var(--app-color-green);
 }
 
+.topic-about-title {
+    text-align: center;
+    color: var(--app-color-blue);
+    font-weight: 600;
+    font-size: 32px;
+    margin-bottom: 16px;
+}
+
+.topic-about-text {
+    text-align: center;
+}
+
 @media screen and (max-width: 1199px) {
     .topic-segment-row > * {
         flex-basis: 100%;

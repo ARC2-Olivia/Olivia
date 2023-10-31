@@ -625,6 +625,9 @@ topic:
         edit: Modifica argomento GDPR <i>%topic%</i>
     message:
         delete: Sei sicuro di voler eliminare questo argomento GDPR?
+    about:
+        title: A proposito di argomenti
+        text: Essendo sia un educatore virtuale che un assistente, OLIVIA include una mini accademia online che ti offre una varietà di moduli di apprendimento per migliorare le tue conoscenze nell'area del GDPR, oltre a uno strumento pratico che ti assiste nell'applicazione pratica dei documenti necessari e delle informazioni relative al GDPR. procedure.
 
 certificate:
     title: Certificato di completamento
