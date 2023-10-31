@@ -271,7 +271,14 @@ iframe.lesson-video {
     flex-direction: column;
     row-gap: 24px;
     height: 100%;
-    padding: 16px;
+}
+
+.lesson-notes-heading {
+    padding: 16px 16px 16px 16px;
+    background-color: var(--app-color-dark-blue);
+    color: #ffffff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .lesson-notes-caption {
@@ -287,11 +294,14 @@ iframe.lesson-video {
     display: flex;
     justify-content: end;
     column-gap: 8px;
+    padding: 0 16px 16px 16px;
 }
 
 .lesson-notes-content {
     flex-basis: 0;
     flex-grow: 1;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .lesson-notes-content > textarea {
