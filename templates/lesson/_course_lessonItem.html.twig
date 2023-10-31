@@ -2,7 +2,7 @@
 
 {% set canView = is_granted('view', course) %}
 
-<div class="lesson-item" data-id="{{ lessonInfo.lesson.id }}">
+<div class="lesson-item{% if not canView %} cannot-view{% endif %}" data-id="{{ lessonInfo.lesson.id }}">
     {% if is_granted('ROLE_MODERATOR') %}
         <div class="lesson-item-reorder-handle lesson-item-reorder-handle-icon">
             {{ mdi('drag-vertical', '', '6 0 12 24') }}

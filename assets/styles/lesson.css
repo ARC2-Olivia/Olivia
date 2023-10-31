@@ -29,6 +29,10 @@
     align-items: start;
 }
 
+.lesson-item.cannot-view {
+    opacity: 0.5;
+}
+
 .lesson-item-icon svg {
     --lesson-item-icon-size: 2rem;
     width: var(--lesson-item-icon-size);
