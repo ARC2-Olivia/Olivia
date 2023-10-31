@@ -12,6 +12,8 @@
     {% set isMultipart = false %}
 {% endif %}
 
+{% set isCompleted = evaluation|assessment_completed %}
+
 <div class="card p-0 position-relative" style="min-height: 320px">
     {% if displayForTopic == true %}
         <span class="topic-type apply">
@@ -30,9 +32,16 @@
         <div class="text-black">{{ evaluation.nameOrPublicName }}</div>
     </div>
     <div class="card-actions ps-2 pe-2 pb-2 justify-content-between">
-        <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.details'|trans }}</a>
-        {% if evaluation|assessment_completed %}
-            <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-red ms-3">{{ 'practicalSubmoduleAssessment.action.results'|trans }}</a>
+        <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-thematic-blue-outline">{{ 'button.details'|trans }}</a>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if isCompleted %}
+                <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'practicalSubmodule.nav.results'|trans }}</a>
+            {% else %}
+                <a href="{{ path('practical_submodule_evaluate', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'practicalSubmodule.nav.questionnaire'|trans }}</a>
+            {% endif %}
+        {% else %}
+            <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange">{{ 'button.loginToApply'|trans }}</a>
         {% endif %}
     </div>
 </div>

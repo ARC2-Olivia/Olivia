@@ -44,6 +44,7 @@ button:
     details: Details
     startNow: Enroll now
     loginToEnroll: Login to learn
+    loginToApply: Login to apply
     results: Results
     lessons: Lessons
     export: Export
