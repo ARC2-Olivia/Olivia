@@ -28,7 +28,7 @@
         {% block javascripts %}{% endblock %}
     </head>
     <body data-extend-session-path="{{ path('extend_session') }}" data-extend-session-translations="{{ extendSessionTranslations|json_encode }}">
-        <header>
+        <header class="bg-dark-blue">
             {% include 'nav.html.twig' %}
             {% block header %}{% endblock %}
         </header>

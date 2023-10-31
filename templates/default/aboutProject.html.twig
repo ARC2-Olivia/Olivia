@@ -2,17 +2,15 @@
 {% trans_default_domain 'app' %}
 
 {% block body %}
-    <div class="container-fluid container-xxl p-0">
-        <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
-            <div class="index-banner-wrapper">
-                <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
-                <div class="index-banner-subtitle">{{ 'nav.aboutProject'|trans }}</div>
-            </div>
+    <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
+        <div class="index-banner-wrapper">
+            <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
+            <div class="index-banner-subtitle">{{ 'nav.aboutProject'|trans }}</div>
         </div>
+    </div>
 
-        <div class="container py-5">
-            <p>{{ 'common.comingSoon'|trans }}</p>
-        </div>
+    <div class="container py-5">
+        <p>{{ 'common.comingSoon'|trans }}</p>
     </div>
 {% endblock %}
 
