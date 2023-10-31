@@ -42,7 +42,7 @@ common:
 button:
     details: Detalji
     startNow: Upiši
-    loginToEnroll: Prijavite se za upis
+    loginToEnroll: Prijavite se za učenje
     results: Rezultati
     lessons: Lekcije
     export: Izvoz

@@ -43,7 +43,7 @@ common:
 button:
     details: Details
     startNow: Enroll now
-    loginToEnroll: Login to enroll
+    loginToEnroll: Login to learn
     results: Results
     lessons: Lessons
     export: Export
