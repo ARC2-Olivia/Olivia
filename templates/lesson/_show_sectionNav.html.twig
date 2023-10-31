@@ -12,7 +12,7 @@
                 {% if is_user() %}
                     {% if lessonInfo.lesson.type == constant('TYPE_QUIZ', lessonInfo.lesson) %}
                         <div class="lesson-nav-quiz-completion {{ lessonInfo.completed ? 'passed' : 'failed' }} flex-shrink-0">
-                            {{ mdi('trophy-variant', 'lesson-section-navigation-item-completion-icon') }}
+                            {{ mdi('file-document-edit-outline', 'lesson-section-navigation-item-completion-icon') }}
                         </div>
                     {% else %}
                         <button class="completion-marker-inner btn btn-round {{ lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-gray-to-green' }} flex-shrink-0"
