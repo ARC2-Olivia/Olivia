@@ -456,6 +456,7 @@ lesson:
         notes: "Private notes on lesson: %lesson%"
         notesVisibility: Visible only to you
         listOfLessons: List of lessons
+        quizRezults: Quiz results
 
 quizQuestion:
     add: Add question
