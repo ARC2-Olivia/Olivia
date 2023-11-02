@@ -405,8 +405,8 @@ course:
         connectedTo: Connected practical modules
         submitQuizAnswers: Click <i>Submit</i> to submit your answers and finish the quiz.
     certificate:
-        1: Congratulations on completing the course <i>%course%</i>!
-        2: Click on the <i>Download certificate</i> button to download the certificate of completion.
+        1: Congratulations!
+        2: You completed the course <i>%course%</i>! Click on the <i>Download certificate</i> button to download the certificate of completion.
         button: Download certificate
         notPass: To receive a certificate, you must receive passing points on all the quizzes.
     enroll:

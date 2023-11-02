@@ -403,8 +403,8 @@ course:
         connectedTo: Povezani praktični moduli
         submitQuizAnswers: Kliknite na <i>Potvrdi</i> kako biste predali svoje odgovore, i time završili kviz.
     certificate:
-        1: Čestitamo! Položili ste tečaj <i>%course%</i>!
-        2: Kliknite na gumb <i>Preuzmite potvrdu</i> kako biste preuzeli potvrdu za položeni tečaju.
+        1: Čestitamo!
+        2: Položili ste tečaj <i>%course%</i>! Kliknite na gumb <i>Preuzmite potvrdu</i> kako biste preuzeli potvrdu za položeni tečaju.
         button: Preuzmite potvrdu
         notPass: Za dobivanje certifikata, trebate ostvariti prolazne bodove na svim kvizovima.
     enroll:

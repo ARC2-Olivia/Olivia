@@ -405,8 +405,8 @@ course:
         connectedTo: Moduli pratici collegati
         submitQuizAnswers: Fare clic su <i>Invia</i> per inviare le risposte e completare il quiz.
     certificate:
-        1: Congratulazioni per aver completato il corso <i>%course%</i> !
-        2: Fare clic sul pulsante <i>Scarica certificato</i> per scaricare il certificato di completamento.
+        1: Congratulazioni!
+        2: Hai completato il corso <i>%course%</i>! Fare clic sul pulsante <i>Scarica certificato</i> per scaricare il certificato di completamento.
         button: Scarica il certificato
         notPass: Per ricevere un certificato, devi ricevere punti sufficienti su tutti i quiz.
     enroll:
