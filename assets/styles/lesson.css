@@ -429,14 +429,20 @@ iframe.lesson-video {
     column-gap: 16px;
 }
 
+.lesson-quiz-result-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 16px;
+    bottom: 0;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
 .lesson-quiz-result-icon svg {
     height: 36px;
     width: 36px;
-    align-self: start;
-}
-
-.lesson-quiz-result-icon {
-    flex-basis: 0;
 }
 
 .lesson-quiz-result-info {

@@ -11,9 +11,10 @@
                     {% for quizResult in quizResults %}
                         <div class="lesson-quiz-result-info">
                             <div class="lesson-quiz-result-question{{ quizResult.correct ? ' correct' : ' incorrect' }}">{{ quizResult.question.text }}</div>
-                            <div>
+                            <div class="position-relative">
                                 <div>{{ 'lesson.quiz.correctAnswer'|trans }}: <b>{{ quizResult.question|display_correct_answer }}</b></div>
                                 <div>{{ 'lesson.quiz.yourAnswer'|trans }}: <b>{{ quizResult.answer }}</b></div>
+                                <div class="lesson-quiz-result-icon">{{ quizResult.correct ? mdi('check-circle-outline', 'fg-green') : mdi('close-circle-outline', 'fg-red') }}</div>
                             </div>
                             <div class="ql-editor">{{ quizResult.question.explanation|raw }}</div>
                         </div>
