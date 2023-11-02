@@ -43,8 +43,8 @@ class PracticalSubmoduleAssessment {
         assessmentData.questions.forEach((questionData) => {
             const question = this.#createQuestion(questionData);
             if (this.#paging === true) {
-                const page= this.#pager.querySelector(`[data-page="${questionData.page}"]`);
-                if (page) page.appendChild(question); // DANIJEL PAUSE
+                const page = this.#pager.querySelector(`[data-page="${questionData.page}"] > .evaluation-assessment`);
+                if (page) page.appendChild(question);
             } else {
                 this.#form.appendChild(question);
             }
@@ -80,6 +80,10 @@ class PracticalSubmoduleAssessment {
                 pageDescription.innerText = pageData.description;
                 page.appendChild(pageDescription);
             }
+
+            const wrapper = document.createElement("DIV");
+            wrapper.classList.add("evaluation-assessment");
+            page.appendChild(wrapper);
 
             pager.appendChild(page);
         });
@@ -181,6 +185,7 @@ class PracticalSubmoduleAssessment {
             } break;
             case 'weighted': {
                 this.#createWeightedAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer));
+                questionAnswers.classList.add('multichoice');
                 questionText.classList.add('required');
             } break;
             case 'numerical_input': {
@@ -196,6 +201,7 @@ class PracticalSubmoduleAssessment {
             } break;
             case 'multi_choice': {
                 this.#createMultiChoiceAnswers(questionData).forEach((answer) => questionAnswers.appendChild(answer));
+                questionAnswers.classList.add('multichoice');
             } break;
             case 'list_input': {
                 questionAnswers.append(this.#createListInputAnswer(questionData));
