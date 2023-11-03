@@ -399,9 +399,37 @@ class PracticalSubmoduleController extends BaseController
             foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
                 $questionId = $answer->getPracticalSubmoduleQuestion()->getId();
                 if (!key_exists($questionId, $answerData)) {
-                    $answerData[$questionId] = ['question' => $answer->getPracticalSubmoduleQuestion()->getQuestionText(), 'answers' => []];
+                    $answerData[$questionId] = [
+                        'question' => $answer->getPracticalSubmoduleQuestion()->getQuestionText(),
+                        'answers' => [],
+                        'dependentQuestionId' => $answer->getPracticalSubmoduleQuestion()?->getDependentPracticalSubmoduleQuestion()?->getId(),
+                        'dependees' => []
+                    ];
                 }
                 $answerData[$questionId]['answers'][] = $answer->getDisplayableAnswer();
+            }
+
+            $dependeeIds = [];
+            $dependencyGrouping = [];
+            foreach ($answerData as $questionId => $answerDatum) {
+                $dependentQuestionId = $answerDatum['dependentQuestionId'];
+                if (null !== $dependentQuestionId) {
+                    if (!key_exists($dependentQuestionId, $dependencyGrouping)) {
+                        $dependencyGrouping[$dependentQuestionId] = [];
+                    }
+                    $dependencyGrouping[$dependentQuestionId][] = $questionId;
+                    $dependeeIds[] = $questionId;
+                }
+            }
+
+            foreach ($dependencyGrouping as $dependentQuestionId => $questionIds) {
+                foreach ($questionIds as $questionId) {
+                    $answerData[$dependentQuestionId]['dependees'][] = $answerData[$questionId];
+                }
+            }
+
+            foreach ($dependeeIds as $dependeeId) {
+                unset($answerData[$dependeeId]);
             }
         }
 

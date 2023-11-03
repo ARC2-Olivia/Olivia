@@ -38,11 +38,6 @@
 <hr>
 <div class="evaluation-assessment-data">
     {% for _, answerDatum in answerData %}
-        <div class="evaluation-assessment-datum">
-            <div class="evaluation-assessment-datum-question">{{ answerDatum.question }}</div>
-            {% for answer in answerDatum.answers %}
-                <div class="evaluation-assessment-datum-answer">{{ answer|trans|raw|nl2br }}</div>
-            {% endfor %}
-        </div>
+        {% include 'evaluation/_results_advanced_assessment_data.html.twig' with {'answerDatum': answerDatum} %}
     {% endfor %}
 </div>

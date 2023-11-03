@@ -23,6 +23,7 @@
 :root {
     --app-font-default: 'Source Sans Pro', sans-serif;
     --app-color-blue: #03a9f5;
+    --app-color-light-blue: #CCE5FF;
     --app-color-dark-blue: #3a526a;
     --app-color-blue-alt: #667e98;
     --app-color-orange: #fe5722;

@@ -575,6 +575,7 @@ practicalSubmoduleAssessment:
         3: Fare clic sul pulsante <i>Compila questionario</i> per iniziare a compilarlo.
         lastSubmittedAt: Il questionario è stato inviato l&#39;ultima volta %datetime%
         fillAgain: Sei sicuro di voler compilare nuovamente il questionario? Questa azione eliminerà le risposte precedenti all&#39;avvio.
+        dependees: "A causa della tua risposta a questa domanda, sono state presentate le seguenti domande aggiuntive:"
     action:
         start: Compila il questionario
         edit: Modifica il questionario inviato
