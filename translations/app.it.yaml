@@ -576,6 +576,7 @@ practicalSubmoduleAssessment:
         lastSubmittedAt: Il questionario è stato inviato l&#39;ultima volta %datetime%
         fillAgain: Sei sicuro di voler compilare nuovamente il questionario? Questa azione eliminerà le risposte precedenti all&#39;avvio.
         dependees: "A causa della tua risposta a questa domanda, sono state presentate le seguenti domande aggiuntive:"
+        unansweredDependees: "A causa della tua risposta a questa domanda, le seguenti domande aggiuntive NON sono state presentate:"
     action:
         start: Compila il questionario
         edit: Modifica il questionario inviato

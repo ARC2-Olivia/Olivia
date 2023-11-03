@@ -338,6 +338,16 @@ ul.mod--ps-pages {
     background-color: var(--app-color-light-blue);
 }
 
+.evaluation-assessment-datum-dependee-message.unanswered {
+    background-color: var(--app-color-light-red);
+}
+
+.evaluation-assessment-datum-unanswered-dependee {
+    padding: 8px 16px;
+    border: solid 3px var(--app-color-light-red);
+    border-radius: 4px;
+}
+
 .evaluation-assessment-datum-dependee-list {
     display: flex;
     flex-direction: column;

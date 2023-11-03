@@ -63,4 +63,20 @@ class PracticalSubmoduleQuestionRepository extends ServiceEntityRepository
             ->setParameter('submodule', $practicalSubmodule)
             ->getQuery()->getSingleScalarResult();
     }
+
+    public function findDependingQuestionTexts(int $dependentQuestionId, ?array $exclusions = null): array
+    {
+        $qb = $this->createQueryBuilder('psq')
+            ->select('psq.questionText')
+            ->leftJoin('psq.dependentPracticalSubmoduleQuestion', 'dpsq')
+            ->where('dpsq.id = :dependentQuestionId')
+            ->setParameter('dependentQuestionId', $dependentQuestionId)
+        ;
+
+        if (false === empty($exclusions)) {
+            $qb->andWhere('psq.id NOT IN (:exclusions)')->setParameter('exclusions', $exclusions);
+        }
+
+        return array_map(function ($item) { return $item['questionText']; }, $qb->getQuery()->getResult());
+    }
 }

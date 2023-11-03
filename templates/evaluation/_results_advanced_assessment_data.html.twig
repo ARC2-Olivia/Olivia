@@ -15,4 +15,12 @@
             {% endfor %}
         </div>
     {% endif %}
+    {% if answerDatum.unansweredDependees|length > 0 %}
+        <div class="evaluation-assessment-datum-dependee-message unanswered">{{ 'practicalSubmoduleAssessment.message.unansweredDependees'|trans }}</div>
+        <div class="evaluation-assessment-datum-dependee-list">
+            {% for unansweredDependee in answerDatum.unansweredDependees %}
+                <div class="evaluation-assessment-datum-unanswered-dependee">{{ unansweredDependee }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
 </div>

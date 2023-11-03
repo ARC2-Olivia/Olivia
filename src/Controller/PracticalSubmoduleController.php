@@ -399,20 +399,22 @@ class PracticalSubmoduleController extends BaseController
             foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
                 $questionId = $answer->getPracticalSubmoduleQuestion()->getId();
                 if (!key_exists($questionId, $answerData)) {
-                    $answerData[$questionId] = [
-                        'question' => $answer->getPracticalSubmoduleQuestion()->getQuestionText(),
-                        'answers' => [],
-                        'dependentQuestionId' => $answer->getPracticalSubmoduleQuestion()?->getDependentPracticalSubmoduleQuestion()?->getId(),
-                        'dependees' => []
-                    ];
+                    $answerDatum = new \stdClass();
+                    $answerDatum->questionId = $questionId;
+                    $answerDatum->question = $answer->getPracticalSubmoduleQuestion()->getQuestionText();
+                    $answerDatum->answers = [];
+                    $answerDatum->dependentQuestionId = $answer->getPracticalSubmoduleQuestion()?->getDependentPracticalSubmoduleQuestion()?->getId();
+                    $answerDatum->dependees = [];
+                    $answerDatum->unansweredDependees = [];
+                    $answerData[$questionId] = $answerDatum;
                 }
-                $answerData[$questionId]['answers'][] = $answer->getDisplayableAnswer();
+                $answerData[$questionId]->answers[] = $answer->getDisplayableAnswer();
             }
 
             $dependeeIds = [];
             $dependencyGrouping = [];
             foreach ($answerData as $questionId => $answerDatum) {
-                $dependentQuestionId = $answerDatum['dependentQuestionId'];
+                $dependentQuestionId = $answerDatum->dependentQuestionId;
                 if (null !== $dependentQuestionId) {
                     if (!key_exists($dependentQuestionId, $dependencyGrouping)) {
                         $dependencyGrouping[$dependentQuestionId] = [];
@@ -424,12 +426,19 @@ class PracticalSubmoduleController extends BaseController
 
             foreach ($dependencyGrouping as $dependentQuestionId => $questionIds) {
                 foreach ($questionIds as $questionId) {
-                    $answerData[$dependentQuestionId]['dependees'][] = $answerData[$questionId];
+                    $answerData[$dependentQuestionId]->dependees[] = $answerData[$questionId];
                 }
             }
 
             foreach ($dependeeIds as $dependeeId) {
                 unset($answerData[$dependeeId]);
+            }
+
+            $practicalSubmoduleQuestionRepository = $this->em->getRepository(PracticalSubmoduleQuestion::class);
+            foreach (array_keys($answerData) as $questionId) {
+                $exclusions = array_map(function ($dependee) { return $dependee->questionId; }, $answerData[$questionId]->dependees);
+                $unansweredDependees = $practicalSubmoduleQuestionRepository->findDependingQuestionTexts($questionId, $exclusions);
+                $answerData[$questionId]->unansweredDependees = $unansweredDependees;
             }
         }
 
