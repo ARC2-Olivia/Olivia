@@ -14,7 +14,7 @@ class WkhtmltopdfService
         $this->parameterBag = $parameterBag;
     }
 
-    public function makeLandscapePdf(string $html): ?\SplFileInfo
+    public function makePdf(string $html, string $commandLineArguments = ""): ?\SplFileInfo
     {
         $fs = new Filesystem();
         $tempDir = $this->getTempDirectoryPath();
@@ -31,7 +31,7 @@ class WkhtmltopdfService
             $tempHtmlShellPath = escapeshellarg($tempHtml);
             $outputShellPath = escapeshellarg($output);
 
-            `$wkhtmltopdfShellPath --page-size A4 --orientation Landscape --encoding utf-8 --disable-smart-shrinking --enable-local-file-access -T 0mm -B 0mm -L 0mm -R 0mm file:///$tempHtmlShellPath $outputShellPath`;
+            `$wkhtmltopdfShellPath ${commandLineArguments} file:///$tempHtmlShellPath $outputShellPath`;
         } catch (\Exception $ex) {
             if (is_string($tempHtml)) $fs->remove($tempHtml);
             if (is_string($output)) $fs->remove($output);
@@ -40,6 +40,16 @@ class WkhtmltopdfService
 
         $fs->remove($tempHtml);
         return new \SplFileInfo($output);
+    }
+
+    public function makeLandscapePdf(string $html): ?\SplFileInfo
+    {
+        return $this->makePdf($html, '--page-size A4 --orientation Landscape --encoding utf-8 --disable-smart-shrinking --enable-local-file-access -T 0mm -B 0mm -L 0mm -R 0mm');
+    }
+
+    public function makePortraitPdf(string $html): ?\SplFileInfo
+    {
+        return $this->makePdf($html, '--page-size A4 --orientation Portrait --encoding utf-8 --disable-smart-shrinking --enable-local-file-access -T 0mm -B 0mm -L 0mm -R 0mm');
     }
 
     protected function getTempDirectoryPath(): string

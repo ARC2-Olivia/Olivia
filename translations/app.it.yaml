@@ -528,6 +528,9 @@ practicalSubmodule:
         results:
             empty: Niente da mostrare.
             final: Il presente questionario è destinato esclusivamente a scopi didattici e informativi.
+            report: RAPPORTO
+            template: MODELLO
+            results: RISULTATI
         connectedTo: Moduli teorici collegati
 practicalSubmoduleQuestion:
     type:
@@ -581,6 +584,7 @@ practicalSubmoduleAssessment:
         start: Compila il questionario
         edit: Modifica il questionario inviato
         results: Visualizza rapporto
+        downloadReport: Scarica il rapporto
 termsOfService:
     format: ver. %versione%, rev. %revisione%
     ongoing: in corso

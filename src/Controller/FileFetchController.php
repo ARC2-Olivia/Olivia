@@ -8,6 +8,8 @@ use App\Entity\Instructor;
 use App\Entity\LessonItemFile;
 use App\Entity\PracticalSubmodule;
 use App\Entity\Topic;
+use App\Repository\PracticalSubmoduleAssessmentRepository;
+use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Service\WkhtmltopdfService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -70,11 +72,68 @@ class FileFetchController extends AbstractController
     {
         $html = $this->renderView('pdf/certificate.html.twig', ['course' => $course]);
         $pdf = $wkhtmltopdfService->makeLandscapePdf($html);
-        if (null === $pdf) {
-            return $this->makeFileResponseFromString("certificate.txt", "[PLACEHOLDER]");
-        } else {
-            return $this->file($pdf, 'certificate.pdf')->deleteFileAfterSend();
+        if (null === $pdf) return $this->makeFileResponseFromString("certificate.txt", "Unable to process request.");
+        return $this->file($pdf, 'certificate.pdf')->deleteFileAfterSend();
+    }
+
+    #[Route("/ps-report-answers/{practicalSubmodule}/{_locale}", name: "practical_submodule_report_answers", requirements: ["_locale" => "%locale.supported%"])]
+    public function practicalSubmoduleReportAnswers(PracticalSubmodule $practicalSubmodule,
+                                                    WkhtmltopdfService $wkhtmltopdfService,
+                                                    PracticalSubmoduleQuestionRepository $practicalSubmoduleQuestionRepository,
+                                                    PracticalSubmoduleAssessmentRepository $practicalSubmoduleAssessmentRepository
+    ): Response
+    {
+        $assessment = $practicalSubmoduleAssessmentRepository->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
+        $answerData = [];
+
+        foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
+            $questionId = $answer->getPracticalSubmoduleQuestion()->getId();
+            if (!key_exists($questionId, $answerData)) {
+                $answerDatum = new \stdClass();
+                $answerDatum->questionId = $questionId;
+                $answerDatum->question = $answer->getPracticalSubmoduleQuestion()->getQuestionText();
+                $answerDatum->answers = [];
+                $answerDatum->dependentQuestionId = $answer->getPracticalSubmoduleQuestion()?->getDependentPracticalSubmoduleQuestion()?->getId();
+                $answerDatum->dependees = [];
+                $answerDatum->unansweredDependees = [];
+                $answerData[$questionId] = $answerDatum;
+            }
+            $answerData[$questionId]->answers[] = $answer->getDisplayableAnswer();
         }
+
+        $dependeeIds = [];
+        $dependencyGrouping = [];
+        foreach ($answerData as $questionId => $answerDatum) {
+            $dependentQuestionId = $answerDatum->dependentQuestionId;
+            if (null !== $dependentQuestionId) {
+                if (!key_exists($dependentQuestionId, $dependencyGrouping)) {
+                    $dependencyGrouping[$dependentQuestionId] = [];
+                }
+                $dependencyGrouping[$dependentQuestionId][] = $questionId;
+                $dependeeIds[] = $questionId;
+            }
+        }
+
+        foreach ($dependencyGrouping as $dependentQuestionId => $questionIds) {
+            foreach ($questionIds as $questionId) {
+                $answerData[$dependentQuestionId]->dependees[] = $answerData[$questionId];
+            }
+        }
+
+        foreach ($dependeeIds as $dependeeId) {
+            unset($answerData[$dependeeId]);
+        }
+
+        foreach (array_keys($answerData) as $questionId) {
+            $exclusions = array_map(function ($dependee) { return $dependee->questionId; }, $answerData[$questionId]->dependees);
+            $unansweredDependees = $practicalSubmoduleQuestionRepository->findDependingQuestionTexts($questionId, $exclusions);
+            $answerData[$questionId]->unansweredDependees = $unansweredDependees;
+        }
+
+        $html = $this->renderView('pdf/reportAnswers.html.twig', ['answerData' => $answerData]);
+        $pdf = $wkhtmltopdfService->makePortraitPdf($html);
+        if (null === $pdf) return $this->makeFileResponseFromString("report.txt", "Unable to process request.");
+        return $this->file($pdf, 'report.pdf')->deleteFileAfterSend();
     }
 
     private function makeFileResponseFromString(string $filename, string $content, string $contentType = 'text/plain'): Response

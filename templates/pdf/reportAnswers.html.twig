@@ -1,0 +1,75 @@
+<style>
+    * {
+        font-family: sans-serif;
+        font-size: 12px;
+    }
+
+    .evaluation-assessment-datum {
+        display: block;
+        margin-bottom: 32px;
+    }
+
+    .evaluation-assessment-datum > * {
+        margin-bottom: 8px;
+    }
+
+    .evaluation-assessment-datum > *:last-child {
+        margin-bottom: 0;
+    }
+
+    .evaluation-assessment-datum-question {
+        font-weight: 600;
+        white-space: pre-line;
+        background-color: #d3e6dd;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        padding: 8px 16px;
+        border: solid 1px #cdcdcd;
+    }
+
+    .evaluation-assessment-datum-answers {
+        border-left: solid 1px #cdcdcd;
+        border-right: solid 1px #cdcdcd;
+        border-bottom: solid 1px #cdcdcd;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 16px;
+        margin-top: -8px;
+    }
+
+    .evaluation-assessment-datum-dependee-message {
+        padding: 8px 16px;
+        border-radius: 4px;
+        background-color: #CCE5FF;
+    }
+
+    .evaluation-assessment-datum-dependee-message.unanswered {
+        background-color: #f8d7da;
+    }
+
+    .evaluation-assessment-datum-unanswered-dependee {
+        padding: 8px 16px;
+        border: solid 3px #f8d7da;
+        border-radius: 4px;
+    }
+
+    .evaluation-assessment-datum-dependee-list {
+        padding-left: 24px;
+    }
+
+    .evaluation-assessment-datum-dependee-list > * {
+        margin-bottom: 8px;
+    }
+
+    .evaluation-assessment-datum-dependee-list > *:last-child {
+        margin-bottom: 0;
+    }
+</style>
+<div class="evaluation-assessment-data">
+    {% for _, answerDatum in answerData %}
+        {% include 'evaluation/_results_advanced_assessment_data.html.twig' with {'answerDatum': answerDatum} %}
+    {% endfor %}
+</div>

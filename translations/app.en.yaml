@@ -528,6 +528,9 @@ practicalSubmodule:
         results:
             empty: Nothing to show.
             final: This questionnaire is intended for educational and information purposes only.
+            report: REPORT
+            template: TEMPLATE
+            results: RESULTS
         connectedTo: Connected theoretical modules
 
 practicalSubmoduleQuestion:
@@ -588,6 +591,7 @@ practicalSubmoduleAssessment:
         start: Fill questionnaire
         edit: Edit submitted questionnaire
         results: View report
+        downloadReport: Download report
 
 termsOfService:
     format: Ver. %version%, rev. %revision%

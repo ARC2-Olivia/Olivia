@@ -526,6 +526,9 @@ practicalSubmodule:
         results:
             empty: Ništa za prikazati.
             final: Ova je procjena samo u obrazovne i informativne svrhe.
+            report: IZVJEŠTAJ
+            template: PREDLOŽAK
+            results: REZULTATI
         connectedTo: Povezani teoretski moduli
 
 practicalSubmoduleQuestion:
@@ -585,6 +588,7 @@ practicalSubmoduleAssessment:
         start: Popuni upitnik
         edit: Izmjeni popunjeni upitnik
         results: Pregled izvještaja
+        downloadReport: Preuzmi izvještaj
 
 termsOfService:
     format: Ver. %version%, rev. %revision%
