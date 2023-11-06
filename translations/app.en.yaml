@@ -50,6 +50,7 @@ button:
     export: Export
     exportTemplate: Export template
     show: Show
+    downloadForm: Download form
 
 page:
     login: Olivia | Login
@@ -531,6 +532,7 @@ practicalSubmodule:
             report: REPORT
             template: TEMPLATE
             results: RESULTS
+            consentForm: CONSENT FORM
         connectedTo: Connected theoretical modules
 
 practicalSubmoduleQuestion:

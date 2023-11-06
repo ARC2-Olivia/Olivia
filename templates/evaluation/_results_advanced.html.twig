@@ -2,7 +2,12 @@
 
 <div class="evaluation-results">
     {% if results is not empty %}
-        {% if evaluation.exportType not in [constant('EXPORT_TYPE_NONE', evaluation), constant('EXPORT_TYPE_COOKIE_BANNER', evaluation)] %}
+        {% if evaluation.exportType == constant('EXPORT_TYPE_COOKIE_BANNER', evaluation) %}
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>{{ 'practicalSubmodule.extra.results.consentForm'|trans }}</h2>
+                <a href="{{ path('file_fetch_consent_form', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'button.downloadForm'|trans }}</a>
+            </div>
+        {% elseif evaluation.exportType not in [constant('EXPORT_TYPE_NONE', evaluation), constant('EXPORT_TYPE_COOKIE_BANNER', evaluation)] %}
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>{{ 'practicalSubmodule.extra.results.template'|trans }}</h2>
                 <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">

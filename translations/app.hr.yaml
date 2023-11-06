@@ -49,6 +49,7 @@ button:
     export: Izvoz
     exportTemplate: Izvoz predloška
     show: Prikaži
+    downloadForm: Preuzmi obrazac
 
 page:
     login: Olivia | Prijava
@@ -529,6 +530,7 @@ practicalSubmodule:
             report: IZVJEŠTAJ
             template: PREDLOŽAK
             results: REZULTATI
+            consentForm: OBRAZAC ZA PRISTANAK
         connectedTo: Povezani teoretski moduli
 
 practicalSubmoduleQuestion:

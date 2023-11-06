@@ -50,6 +50,7 @@ button:
     export: Esportare
     exportTemplate: Modello di esportazione
     show: Spettacolo
+    downloadForm: Scarica il modulo
 
 page:
     login: Olivia | Login
@@ -531,6 +532,7 @@ practicalSubmodule:
             report: RAPPORTO
             template: MODELLO
             results: RISULTATI
+            consentForm: MODULO DI CONSENSO
         connectedTo: Moduli teorici collegati
 practicalSubmoduleQuestion:
     type:

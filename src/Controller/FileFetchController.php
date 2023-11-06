@@ -10,6 +10,7 @@ use App\Entity\PracticalSubmodule;
 use App\Entity\Topic;
 use App\Repository\PracticalSubmoduleAssessmentRepository;
 use App\Repository\PracticalSubmoduleQuestionRepository;
+use App\Service\PracticalSubmoduleService;
 use App\Service\WkhtmltopdfService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -134,6 +135,27 @@ class FileFetchController extends AbstractController
         $pdf = $wkhtmltopdfService->makePortraitPdf($html);
         if (null === $pdf) return $this->makeFileResponseFromString("report.txt", "Unable to process request.");
         return $this->file($pdf, 'report.pdf')->deleteFileAfterSend();
+    }
+
+    #[Route("/consent-form/{practicalSubmodule}", name: "consent_form")]
+    public function consentForm(PracticalSubmodule $practicalSubmodule,
+                                \Twig\Environment $twig,
+                                PracticalSubmoduleService $practicalSubmoduleService,
+                                PracticalSubmoduleAssessmentRepository $practicalSubmoduleAssessmentRepository
+    ): Response
+    {
+        if ($practicalSubmodule::EXPORT_TYPE_COOKIE_BANNER !== $practicalSubmodule->getExportType()) {
+            return $this->makeFileResponseFromString("report.txt", "Unable to process request.");
+        }
+        $assessment = $practicalSubmoduleAssessmentRepository->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
+        $results = $practicalSubmoduleService->runProcessors($assessment);
+
+        $cookieBanner = [];
+        foreach ($results as $result) {
+            $cookieBanner[$result->getExportTag()] = $result->getText();
+        }
+        $html = $twig->render('export/cookieBanner.html.twig', ['cookieBanner' => $cookieBanner]);
+        return $this->makeFileResponseFromString('consent-form.html', $html, 'text/html');
     }
 
     private function makeFileResponseFromString(string $filename, string $content, string $contentType = 'text/plain'): Response
