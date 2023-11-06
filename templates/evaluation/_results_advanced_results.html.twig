@@ -1,0 +1,20 @@
+{% trans_default_domain 'app' %}
+
+{% for result in results %}
+    {% if result.textSet %}
+        {% if result.html %}
+            <div class="ql-editor">{{ result.displayableText|raw }}</div>
+        {% else %}
+            <div>{{ result.displayableText|raw|nl2br }}</div>
+        {% endif %}
+    {% endif %}
+    {% if result.areFilesSet %}
+        <p>
+            {% for file in result.files %}
+                <span class="evaluation-results-file" data-prefix="{{ 'common.file'|trans }}: ">
+                            <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}">{{ file.originalName }}</a>
+                        </span>
+            {% endfor %}
+        </p>
+    {% endif %}
+{% endfor %}
