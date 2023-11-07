@@ -10,6 +10,7 @@ use App\Form\Transformer\SimpleArrayToStringTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,6 +30,9 @@ class CourseType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var Course $course */
+        $course = $builder->getData();
+
         $allowedWorkloadTimes = [
             $this->translator->trans('form.entity.course.choices.estimatedWorkload.hours', [], 'app')  => 'H',
             $this->translator->trans('form.entity.course.choices.estimatedWorkload.days', [], 'app')   => 'D',
@@ -36,6 +40,7 @@ class CourseType extends AbstractType
             $this->translator->trans('form.entity.course.choices.estimatedWorkload.months', [], 'app') => 'M',
             $this->translator->trans('form.entity.course.choices.estimatedWorkload.years', [], 'app')  => 'Y',
         ];
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'form.entity.course.label.name',
@@ -92,6 +97,7 @@ class CourseType extends AbstractType
                 'label' => 'form.entity.course.label.position',
                 'attr' => ['class' => 'form-input mb-3', 'inputmode' => 'numeric']
             ])
+            ->add('learningOutcomes', HiddenType::class, ['label' => 'form.entity.course.label.learningOutcomes', 'data' => $course?->getLearningOutcomes()])
         ;
         $builder->get('tags')->addModelTransformer(new SimpleArrayToStringTransformer());
 
@@ -112,12 +118,12 @@ class CourseType extends AbstractType
                     'label' => 'form.entity.course.label.descriptionAlt',
                     'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.description', [], 'app')],
                 ])
-
                 ->add('tagsAlt', TextType::class, [
                     'mapped' => false,
                     'label' => 'form.entity.course.label.tagsAlt',
                     'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.tags', [], 'app')]
                 ])
+                ->add('learningOutcomesAlt', HiddenType::class, ['label' => 'form.entity.course.label.learningOutcomesAlt'])
             ;
             $builder->get('tagsAlt')->addModelTransformer(new SimpleArrayToStringTransformer());
         }

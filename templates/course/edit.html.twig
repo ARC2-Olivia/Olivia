@@ -20,9 +20,33 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('df-select') }}
+    {{ encore_entry_link_tags('quill') }}
+    <style>
+        .editor-container {
+            height: 440px;
+            padding-bottom: 42px;
+        }
+    </style>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('df-select') }}
+    {{ encore_entry_script_tags('quill') }}
+    <script>
+        const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
+        const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
+
+        window.onload = () => {
+            const quill = new Quill("#editor", settings);
+            quill.root.innerHTML = `{{ course.learningOutcomes|raw }}`;
+            QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
+
+            const form = document.querySelector("form#course");
+            form.onsubmit = function(e) {
+                const content = this.querySelector("#course_learningOutcomes");
+                content.value = quill.root.innerHTML;
+            };
+        };
+    </script>
 {% endblock %}

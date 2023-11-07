@@ -254,6 +254,12 @@ class CourseController extends BaseController
             $translated = true;
         }
 
+        $learningOutcomesAlt = $form->get('learningOutcomesAlt')->getData();
+        if ($learningOutcomesAlt !== null && trim($learningOutcomesAlt) !== '') {
+            $translationRepository->translate($course, 'learningOutcomes', $localeAlt, trim($learningOutcomesAlt));
+            $translated = true;
+        }
+
         if ($translated) $this->em->flush();
     }
 }

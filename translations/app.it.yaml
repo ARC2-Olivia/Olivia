@@ -187,6 +187,8 @@ form:
                 instructors: Istruttori
                 practicalSubmodules: Valutazioni pratiche collegate
                 position: Posizione
+                learningOutcomes: Risultati dell'apprendimento
+                learningOutcomesAlt: Risultati dell'apprendimento (lingua alternativa)
             placeholder:
                 name: Nome del corso
                 publicName: ad esempio, cos&#39;è la politica sulla privacy e perché è importante?

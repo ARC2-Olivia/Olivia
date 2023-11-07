@@ -186,6 +186,8 @@ form:
                 instructors: Instruktori
                 practicalSubmodules: Povezane procjene
                 position: Redni broj
+                learningOutcomes: Ishodi učenja
+                learningOutcomesAlt: Ishodi učenja (drugi jezik)
             placeholder:
                 name: Naziv tečaja
                 publicName: npr. Što je politika privatnosti i zašto je morate imati?

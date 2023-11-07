@@ -187,6 +187,8 @@ form:
                 instructors: Instructors
                 practicalSubmodules: Connected practical assessments
                 position: Position
+                learningOutcomes: Learning outcomes
+                learningOutcomesAlt: Learning outcomes (alternate language)
             placeholder:
                 name: Course name
                 publicName: e.g. What is privacy policy and why is it important?

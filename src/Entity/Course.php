@@ -60,6 +60,9 @@ class Course extends TranslatableEntity
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $position = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $learningOutcomes = null;
+
     public function __construct()
     {
         $this->instructors = new ArrayCollection();
@@ -324,6 +327,18 @@ class Course extends TranslatableEntity
     public function setPosition(?int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getLearningOutcomes(): ?string
+    {
+        return $this->learningOutcomes;
+    }
+
+    public function setLearningOutcomes(?string $learningOutcomes): self
+    {
+        $this->learningOutcomes = $learningOutcomes;
 
         return $this;
     }
