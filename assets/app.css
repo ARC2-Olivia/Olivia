@@ -170,11 +170,20 @@ h2 > a {
     margin-bottom: 16px;
 }
 
+.badge {
+    padding: 2px 8px;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
 .bg-orange { background-color: var(--app-color-orange) !important; }
 .bg-green { background-color: var(--app-color-green) !important; }
+.bg-light-green { background-color: var(--app-color-light-green) !important; }
 .bg-blue { background-color: var(--app-color-blue) !important; }
+.bg-light-blue { background-color: var(--app-color-light-blue) !important; }
 .bg-dark-blue { background-color: var(--app-color-dark-blue) !important; }
 .bg-red { background-color: var(--app-color-red) !important; }
+.bg-light-red { background-color: var(--app-color-light-red) !important; }
 
 .fg-orange { color: var(--app-color-orange) !important; }
 .fg-green { color: var(--app-color-green) !important; }
