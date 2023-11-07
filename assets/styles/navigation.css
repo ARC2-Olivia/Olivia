@@ -64,6 +64,11 @@ ul.navigation-admin {
 }
 
 @media screen and (max-width: 1199px) {
+    .header-logo {
+        margin-top: -24px !important;
+        margin-bottom: -24px !important;
+    }
+
     .navigation-responsive > .navigation-open {
         display: flex;
     }
@@ -76,7 +81,7 @@ ul.navigation-admin {
         bottom: 0;
         transform: translateY(100%);
         width: 100vw;
-        background-color: #ffffff;
+        background-color: var(--app-color-dark-blue);
     }
 
     .navigation-responsive > .navigation-main.show {

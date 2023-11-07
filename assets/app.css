@@ -90,10 +90,14 @@ header {
     background-color: white;
 }
 
+.header-logo {
+    height: 108px;
+    margin-top: -28px;
+    margin-bottom: -32px;
+}
+
 .header-logo > img {
-    height: 5rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    height: 100%;
 }
 
 .brand {
