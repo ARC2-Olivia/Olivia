@@ -46,18 +46,5 @@
     {{ form_widget(form.position) }}
 
     {{ form_label(form.learningOutcomes) }}
-    <div class="editor-container mb-3">
-        {% include '_partials/ql-editor-toolbar.html.twig' %}
-        <div id="editor"></div>
-    </div>
     {{ form_widget(form.learningOutcomes) }}
-
-    {% if form.learningOutcomesAlt is defined %}
-        {{ form_label(form.learningOutcomesAlt) }}
-            <div class="editor-container mb-3">
-                {% include '_partials/ql-editor-toolbar.html.twig' with {'editorToolbarId': 'editor-toolbar-alt', 'editorHtmlId': 'editor-html-alt'} %}
-                <div id="editor"></div>
-            </div>
-        {{ form_widget(form.learningOutcomesAlt) }}
-    {% endif %}
 {{ form_end(form) }}

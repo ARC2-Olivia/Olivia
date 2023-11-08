@@ -47,37 +47,9 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('df-select') }}
-    {{ encore_entry_link_tags('quill') }}
-    <style>
-        .editor-container {
-            height: 440px;
-            padding-bottom: 42px;
-        }
-    </style>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('df-select') }}
-    {{ encore_entry_script_tags('quill') }}
-    <script>
-        const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
-        const settingsAlt = { theme: "snow", modules: { toolbar: "#editor-toolbar-alt" } };
-        const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
-
-        window.onload = () => {
-            const quill = new Quill("#editor", settings);
-            const quillAlt = new Quill("#editor-alt", settingsAlt);
-            QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
-            QuillUtils.assignHtmlEditingCapabilities(quillAlt, document.getElementById("editor-html-alt"), translation)
-
-            const form = document.querySelector("form#course");
-            form.onsubmit = function(e) {
-                const text = this.querySelector("#course_learningOutcomes");
-                text.value = quill.root.innerHTML;
-                const textAlt = this.querySelector("#course_learningOutcomesAlt");
-                textAlt.value = quillAlt.root.innerHTML;
-            };
-        };
-    </script>
 {% endblock %}

@@ -187,7 +187,7 @@ form:
                 instructors: Istruttori
                 practicalSubmodules: Valutazioni pratiche collegate
                 position: Posizione
-                learningOutcomes: Risultati dell'apprendimento
+                learningOutcomes: Risultati dell'apprendimento (scrivi ogni risultato di apprendimento in una nuova riga)
                 learningOutcomesAlt: Risultati dell'apprendimento (lingua alternativa)
             placeholder:
                 name: Nome del corso
@@ -196,6 +196,7 @@ form:
                 workloadValue: 12 o 2,5
                 tags: GDPR, IT, Sicurezza,...
                 instructor: Scegli un istruttore...
+                learningOutcomes: Scrivi ogni risultato di apprendimento in una nuova riga.
             choices:
                 estimatedWorkload:
                     hours: ore)

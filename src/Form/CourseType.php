@@ -97,7 +97,10 @@ class CourseType extends AbstractType
                 'label' => 'form.entity.course.label.position',
                 'attr' => ['class' => 'form-input mb-3', 'inputmode' => 'numeric']
             ])
-            ->add('learningOutcomes', HiddenType::class, ['label' => 'form.entity.course.label.learningOutcomes', 'data' => $course?->getLearningOutcomes()])
+            ->add('learningOutcomes', TextareaType::class, [
+                'label' => 'form.entity.course.label.learningOutcomes',
+                'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.learningOutcomes', [], 'app')]
+            ])
         ;
         $builder->get('tags')->addModelTransformer(new SimpleArrayToStringTransformer());
 
@@ -123,7 +126,6 @@ class CourseType extends AbstractType
                     'label' => 'form.entity.course.label.tagsAlt',
                     'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.tags', [], 'app')]
                 ])
-                ->add('learningOutcomesAlt', HiddenType::class, ['label' => 'form.entity.course.label.learningOutcomesAlt'])
             ;
             $builder->get('tagsAlt')->addModelTransformer(new SimpleArrayToStringTransformer());
         }

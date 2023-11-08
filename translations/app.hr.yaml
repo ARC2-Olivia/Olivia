@@ -186,7 +186,7 @@ form:
                 instructors: Instruktori
                 practicalSubmodules: Povezane procjene
                 position: Redni broj
-                learningOutcomes: Ishodi učenja
+                learningOutcomes: Ishodi učenja (svaki ishod učenja stavite u zasebni red.)
                 learningOutcomesAlt: Ishodi učenja (drugi jezik)
             placeholder:
                 name: Naziv tečaja
@@ -195,6 +195,7 @@ form:
                 workloadValue: 12 or 2.5
                 tags: GDPR,IT,Sigurnost,...
                 instructor: Odaberi instruktora...
+                learningOutcomes: Svaki ishod učenja stavite u zasebni red.
             choices:
                 estimatedWorkload:
                     hours: sati
