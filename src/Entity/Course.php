@@ -336,6 +336,15 @@ class Course extends TranslatableEntity
         return $this->learningOutcomes;
     }
 
+    public function getLearningOutcomesAsArray(): array
+    {
+        $trimmedLearningOutcomes = trim($this->learningOutcomes);
+        if (null === trim($trimmedLearningOutcomes)) {
+            return [];
+        }
+        return explode("\n", str_replace("\r", '', $this->learningOutcomes));
+    }
+
     public function setLearningOutcomes(?string $learningOutcomes): self
     {
         $this->learningOutcomes = $learningOutcomes;

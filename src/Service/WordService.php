@@ -7,6 +7,7 @@ use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\User;
 use App\Misc\ProcessorResult;
+use PhpOffice\PhpWord\Element\ListItem;
 use PhpOffice\PhpWord\Element\Text;
 use PhpOffice\PhpWord\Element\TextBox;
 use PhpOffice\PhpWord\Element\TextRun;
@@ -57,7 +58,14 @@ class WordService
         $templateProcessor->setValue('workload', $this->translateCourseWorkload($course));
 
         // Postavi ishode učenja
-
+        $learningOutcomes = $course->getLearningOutcomesAsArray();
+        $learningOutcomesCount = count($learningOutcomes);
+        $templateProcessor->cloneBlock('block_learningOutcomes', $learningOutcomesCount, indexVariables: true);
+        $i = 1;
+        foreach ($learningOutcomes as $learningOutcome) {
+            $templateProcessor->setValue("learningOutcome#$i", $learningOutcome);
+            $i++;
+        }
 
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
         $templateProcessor->saveAs($document);
