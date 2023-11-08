@@ -2,8 +2,10 @@
 
 namespace App\Service;
 
+use App\Entity\Course;
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
+use App\Entity\User;
 use App\Misc\ProcessorResult;
 use PhpOffice\PhpWord\Element\Text;
 use PhpOffice\PhpWord\Element\TextBox;
@@ -11,6 +13,8 @@ use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Path;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WordService
@@ -18,12 +22,14 @@ class WordService
     private ?PracticalSubmoduleService $practicalSubmoduleService = null;
     private ?ParameterBagInterface $parameterBag = null;
     private ?TranslatorInterface $translator = null;
+    private ?RouterInterface $router = null;
 
-    public function __construct(PracticalSubmoduleService $practicalSubmoduleService, ParameterBagInterface $parameterBag, TranslatorInterface $translator)
+    public function __construct(PracticalSubmoduleService $practicalSubmoduleService, ParameterBagInterface $parameterBag, TranslatorInterface $translator, RouterInterface $router)
     {
         $this->practicalSubmoduleService = $practicalSubmoduleService;
         $this->parameterBag = $parameterBag;
         $this->translator = $translator;
+        $this->router = $router;
     }
 
     public function generateDocumentFromAssessment(PracticalSubmoduleAssessment $assessment, string $locale): string
@@ -34,6 +40,28 @@ class WordService
             PracticalSubmodule::EXPORT_TYPE_LIA => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
             default => $this->generateDefaultDocument($assessment)
         };
+    }
+
+    public function generateCourseCertificateForUser(Course $course, User $user): string
+    {
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'certificate.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+        $courseUrl = str_replace(['http://', 'https://'], '', $this->router->generate('course_overview', ['course' => $course->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
+        $now = new \DateTime();
+
+        // Postavi jednostavne podatke
+        $templateProcessor->setValue('person', $user->getNameOrEmail());
+        $templateProcessor->setValue('module', $course->getName());
+        $templateProcessor->setValue('url', $courseUrl);
+        $templateProcessor->setValue('date', $now->format('d/m/Y'));
+        $templateProcessor->setValue('workload', $this->translateCourseWorkload($course));
+
+        // Postavi ishode učenja
+
+
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
     }
 
     private function generatePrivacyPolicyDocument(PracticalSubmoduleAssessment $assessment): string
@@ -304,5 +332,22 @@ class WordService
             $templateProcessor->setComplexValue("$variable#$i", new Text($line, $fontStyle));
             $i++;
         }
+    }
+
+    private function translateCourseWorkload(Course $course): string
+    {
+        $workload = $course->getEstimatedWorkload();
+        if (!empty($workload)) {
+            list($value, $time) = explode(' ', $workload);
+            return match ($time) {
+                'H' => $value . ' ' . $this->translator->trans('form.entity.course.choices.estimatedWorkload.hours', [], 'app', $this->parameterBag->get('locale.default')),
+                'D' => $value . ' ' . $this->translator->trans('form.entity.course.choices.estimatedWorkload.days', [], 'app', $this->parameterBag->get('locale.default')),
+                'W' => $value . ' ' . $this->translator->trans('form.entity.course.choices.estimatedWorkload.weeks', [], 'app', $this->parameterBag->get('locale.default')),
+                'M' => $value . ' ' . $this->translator->trans('form.entity.course.choices.estimatedWorkload.months', [], 'app', $this->parameterBag->get('locale.default')),
+                'Y' => $value . ' ' . $this->translator->trans('form.entity.course.choices.estimatedWorkload.years', [], 'app', $this->parameterBag->get('locale.default')),
+                default => $value
+            };
+        }
+        return '';
     }
 }
