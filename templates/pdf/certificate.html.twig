@@ -5,106 +5,102 @@
     <head>
         <style>
             html, body {
-                margin: 0;
                 padding: 0;
-                font-family: 'Source Sans 3', sans-serif;
+                margin: 0;
             }
 
-            .top {
-                width: 100%;
-                height: 825px;
+            body {
+                font-family: 'Raleway', 'Source Sans 3', sans-serif;
+                font-size: 2cm;
+                position: relative;
+                height: 210mm;
+            }
+
+            .section-1, .section-2, .section-3 {
+                position: relative;
+                height: 100%;
+                float: left;
+            }
+
+            .section-1 {
                 background-color: #3a526a;
-                position: relative;
-                display: -webkit-box;
-                -webkit-box-align: center;
-                -webkit-box-pack: center;
-                justify-items: center;
-                align-items: center;
+                width: 35%;
             }
 
-            .top-logo {
-                color: rgba(255, 255, 255, 0.2);
-                font-size: 196px;
+            .section-1:before, .section-1:after {
+                content: "";
                 position: absolute;
-                bottom: -50px;
-                right: 15px;
-            }
-
-            .bold {
-                font-weight: bold;
-            }
-
-            .top-content {
-                margin: 0 auto;
-                text-align: center;
-                color: #FFFFFF;
-                font-size: 32px;
-            }
-
-            .top-title {
-                color: #fe5722;
-                font-size: 96px;
-                font-weight: bold;
-            }
-
-            .top-data {
-                font-weight: bold;
-                font-size: 56px;
-            }
-
-            .top-mb {
-                margin-bottom: 3mm;
-            }
-
-            .top-link {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                padding: 8px 12px;
+                left: 25%;
+                right: 37%;
                 background-color: #fe5722;
-                color: #ffffff;
-                font-size: 20px;
+                height: 8mm;
             }
 
-            .bottom {
-                width: 100%;
-                height: 190px;
-                position: relative;
+            .section-1:before {
+                top: 0;
             }
 
-            .bottom-link {
-                position: absolute;
-                font-size: 18px;
+            .section-1:after {
                 bottom: 0;
-                left: 15px;
             }
 
-            .bottom-cert-data {
+            .section-2 {
+                width: 62%;
+            }
+
+            .section-3 {
+                background-color: #3a526a;
+                width: 3%;
+            }
+
+            .section-3:before {
+                content: "";
                 position: absolute;
-                font-size: 20px;
-                bottom: 0;
-                right: 15px;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 50%;
+                background-color: #fe5722;
+            }
+
+            .title-wrapper {
+                position: absolute;
+                font-weight: bold;
+                top: 10mm;
+                left: 25%;
+                right: 0;
+                bottom: 10mm;
+                text-align: center;
+            }
+
+            .title {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                font-size: 2.7cm;
+                color: white;
+                -webkit-transform: translateY(-50%) rotate(-90deg) translateY(-78mm);
+            }
+
+            .subtitle {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                font-size: 1.25cm;
+                color: white;
+                white-space: nowrap;
+                -webkit-transform: translateY(-50%) rotate(-90deg) translateY(-20mm);
             }
         </style>
     </head>
     <body>
-        <div class="top">
-            <div class="top-logo">
-                <span class="bold">OLIVIA</span>
-                <span>Tool</span>
-            </div>
-            <div class="top-link">{{ app_hostname }}</div>
-            <div class="top-content">
-                <div class="top-title top-mb">{{ 'certificate.title'|trans }}</div>
-                <div class="top-mb">{{ 'certificate.for'|trans }}</div>
-                <div class="top-data top-mb">{{ course.name }}</div>
-                <div class="top-mb">{{ 'certificate.to'|trans }}</div>
-                <div class="top-data">{{ app.user.nameOrEmail }}</div>
+        <div class="section-1">
+            <div class="title-wrapper">
+                <div class="title">CERTIFICATE</div>
+                <div class="subtitle">OF COMPLETION</div>
             </div>
         </div>
-        <div class="bottom">
-            <div class="bottom-link">{{ url('course_overview', {'course': course.id}) }}</div>
-            <div class="bottom-cert-data">{{ 'certificate.certifiedAt'|trans }} {{ 'now'|date('d.m.Y.') }}</div>
-        </div>
+        <div class="section-2"></div>
+        <div class="section-3"></div>
     </body>
 </html>
