@@ -25,7 +25,9 @@
                 {% include 'evaluation/_results_advanced_results.html.twig' %}
             </div>
         {% else %}
-            {% include 'evaluation/_results_advanced_results.html.twig' %}
+            <div class="evaluation-results bordered">
+                {% include 'evaluation/_results_advanced_results.html.twig' %}
+            </div>
         {% endif %}
     {% else %}
         <p>{{ 'practicalSubmodule.extra.results.empty'|trans }}</p>
