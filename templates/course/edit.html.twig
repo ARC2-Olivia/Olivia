@@ -39,12 +39,12 @@
 
         window.onload = () => {
             const quill = new Quill("#editor", settings);
-            quill.root.innerHTML = `{{ course.learningOutcomes|raw }}`;
+            quill.root.innerHTML = `{{ course.description|raw }}`;
             QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
 
             const form = document.querySelector("form#course");
             form.onsubmit = function(e) {
-                const content = this.querySelector("#course_learningOutcomes");
+                const content = this.querySelector("#course_description");
                 content.value = quill.root.innerHTML;
             };
         };

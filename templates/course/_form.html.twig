@@ -17,9 +17,17 @@
     {{ form_widget(form.image) }}
 
     {{ form_label(form.description) }}
+    <div class="editor-container mb-3">
+        {% include '_partials/ql-editor-toolbar.html.twig' %}
+        <div id="editor"></div>
+    </div>
     {{ form_widget(form.description) }}
     {% if form.descriptionAlt is defined %}
         {{ form_label(form.descriptionAlt) }}
+        <div class="editor-container mb-3">
+            {% include '_partials/ql-editor-toolbar.html.twig' with {'editorToolbarId': 'editor-toolbar-alt', 'editorHtmlId': 'editor-html-alt'} %}
+            <div id="editor-alt"></div>
+        </div>
         {{ form_widget(form.descriptionAlt) }}
     {% endif %}
 

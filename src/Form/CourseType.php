@@ -64,10 +64,7 @@ class CourseType extends AbstractType
                     ])
                 ]
             ])
-            ->add('description', TextareaType::class, [
-                'label' => 'form.entity.course.label.description',
-                'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.description', [], 'app')],
-            ])
+            ->add('description', HiddenType::class, ['label' => 'form.entity.course.label.description'])
             ->add('estimatedWorkload', WorkloadType::class, [
                 'label' => 'form.entity.course.label.estimatedWorkload',
                 'allowed_workload_times' => $allowedWorkloadTimes,
@@ -116,11 +113,7 @@ class CourseType extends AbstractType
                     'label' => 'form.entity.course.label.publicNameAlt',
                     'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.publicName', [], 'app')]
                 ])
-                ->add('descriptionAlt', TextareaType::class, [
-                    'mapped' => false,
-                    'label' => 'form.entity.course.label.descriptionAlt',
-                    'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.description', [], 'app')],
-                ])
+                ->add('descriptionAlt', HiddenType::class, ['mapped' => false, 'label' => 'form.entity.course.label.descriptionAlt'])
                 ->add('tagsAlt', TextType::class, [
                     'mapped' => false,
                     'label' => 'form.entity.course.label.tagsAlt',

@@ -2,7 +2,8 @@
 {% trans_default_domain 'app' %}
 
 {% block courseContent %}
-    <p>{{ course.description|nl2br }}</p>
+    <h2 class="text-center mb-3">{{ course.nameOrPublicName }}</h2>
+    <div class="ql-editor">{{ course.description|raw }}</div>
 
     {% if course.instructors is not empty %}
         <div class="mt-5 p-0">
