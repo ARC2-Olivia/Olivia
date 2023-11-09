@@ -538,6 +538,8 @@ practicalSubmodule:
             results: RISULTATI
             consentForm: MODULO DI CONSENSO
         connectedTo: Moduli teorici collegati
+        reportTitle: Rapporto - %practicalSubmodule%
+
 practicalSubmoduleQuestion:
     type:
         yesNo: Si No

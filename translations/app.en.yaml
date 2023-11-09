@@ -538,6 +538,7 @@ practicalSubmodule:
             results: RESULTS
             consentForm: CONSENT FORM
         connectedTo: Connected theoretical modules
+        reportTitle: Report - %practicalSubmodule%
 
 practicalSubmoduleQuestion:
     type:

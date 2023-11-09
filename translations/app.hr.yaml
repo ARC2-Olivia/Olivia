@@ -536,6 +536,7 @@ practicalSubmodule:
             results: REZULTATI
             consentForm: OBRAZAC ZA PRISTANAK
         connectedTo: Povezani teoretski moduli
+        reportTitle: Izvještaj - %practicalSubmodule%
 
 practicalSubmoduleQuestion:
     type:

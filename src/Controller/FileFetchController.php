@@ -131,7 +131,7 @@ class FileFetchController extends AbstractController
             $answerData[$questionId]->unansweredDependees = $unansweredDependees;
         }
 
-        $html = $this->renderView('pdf/reportAnswers.html.twig', ['answerData' => $answerData]);
+        $html = $this->renderView('pdf/reportAnswers.html.twig', ['answerData' => $answerData, 'practicalSubmodule' => $practicalSubmodule]);
         $pdf = $wkhtmltopdfService->makePortraitPdf($html);
         if (null === $pdf) return $this->makeFileResponseFromString("report.txt", "Unable to process request.");
         return $this->file($pdf, 'report.pdf')->deleteFileAfterSend();

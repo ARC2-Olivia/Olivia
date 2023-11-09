@@ -1,7 +1,14 @@
+{% trans_default_domain 'app' %}
 <style>
     * {
         font-family: sans-serif;
         font-size: 12px;
+    }
+
+    h1 {
+        font-size: 18px;
+        padding-top: 16px;
+        margin-bottom: 16px;
     }
 
     .evaluation-assessment-datum {
@@ -68,6 +75,7 @@
         margin-bottom: 0;
     }
 </style>
+<h1>{{ 'practicalSubmodule.extra.reportTitle'|trans({'%practicalSubmodule%': practicalSubmodule.name}) }}</h1>
 <div class="evaluation-assessment-data">
     {% for _, answerDatum in answerData %}
         {% include 'evaluation/_results_advanced_assessment_data.html.twig' with {'answerDatum': answerDatum} %}
