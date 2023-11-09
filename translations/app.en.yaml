@@ -408,6 +408,7 @@ course:
         quizzes: "{0} %count% quizzes|{1} %count% quiz|[2,+Inf[ %count% quizzes"
         connectedTo: Connected practical modules
         submitQuizAnswers: Click <i>Submit</i> to submit your answers and finish the quiz.
+        notSubmitted: Not yet submitted
     certificate:
         1: Congratulations!
         2: You completed the course <i>%course%</i>! Click on the <i>Download certificate</i> button to download the certificate of completion.
@@ -442,9 +443,9 @@ lesson:
             notPassed: Not passed
     quiz:
         explanation:
-            1: This quiz contains <b>%questionCount%</b> true or false questions.
-            2: To pass, you must score atleast <b>%passingPercentage%%</b>. Results will be available to you after submitting your answers.
-            3: Click on the <i>Take quiz</i> button to start the quiz.
+            1: This quiz contains <b>%questionCount%</b> questions.
+            2: Please note that the passing score is <b>%passingPercentage%%</b> and that the results are available immediately after quiz submission. The number of submissions is not limited and the <i>Results</i> will display only your best score.
+            3: To start the quiz, please click the <i>Take quiz</i> button below.
         action: Take quiz
         yourGrade: Your grade
         yourAnswer: Your answer

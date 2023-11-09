@@ -86,6 +86,11 @@
     opacity: 1;
 }
 
+.quiz-trophy {
+    height: 36px;
+    color: var(--app-color-orange)
+}
+
 .quiz-anim-whiteout {
     z-index: 3000;
     position: absolute;

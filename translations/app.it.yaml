@@ -408,6 +408,7 @@ course:
         quizzes: "{0} %count% quiz|{1} %count% quiz|[2,+Inf[ %count% quiz"
         connectedTo: Moduli pratici collegati
         submitQuizAnswers: Fare clic su <i>Invia</i> per inviare le risposte e completare il quiz.
+        notSubmitted: Non ancora presentato
     certificate:
         1: Congratulazioni!
         2: Hai completato il corso <i>%course%</i>! Fare clic sul pulsante <i>Scarica certificato</i> per scaricare il certificato di completamento.
@@ -442,9 +443,9 @@ lesson:
             notPassed: Non passato
     quiz:
         explanation:
-            1: Questo quiz contiene <b>%questionCount%</b> domande vere o false.
-            2: Per passare, devi ottenere un punteggio minimo <b>di %passingPercentage%%</b> . I risultati saranno disponibili dopo aver inviato le risposte.
-            3: Fare clic sul pulsante <i>Rispondi al quiz</i> per avviare il quiz.
+            1: Questo quiz contiene <b>%questionCount%</b> domande.
+            2: Tieni presente che il punteggio minimo è <b>%passingPercentage%%</b> e che i risultati sono disponibili immediatamente dopo l'invio del quiz. Il numero di invii non è limitato e i <i>Risultati</i> mostreranno solo il tuo punteggio migliore.
+            3: Per avviare il quiz, fare clic sul pulsante <i>Rispondi al quiz</i> in basso.
         action: Fai il quiz
         yourGrade: Il tuo voto
         yourAnswer: La tua risposta

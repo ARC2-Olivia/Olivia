@@ -28,13 +28,16 @@
 {% elseif is_user() %}
     <div class="lesson-quiz-intro">
         <p>{{ 'lesson.quiz.explanation.1'|trans({'%questionCount%': lessonItem.quizQuestions|length})|raw }}</p>
-        <p>{{ 'lesson.quiz.explanation.2'|trans({'%passingPercentage%': lessonItem.passingPercentage})|raw }}</p>
+        <p class="text-center">{{ 'lesson.quiz.explanation.2'|trans({'%passingPercentage%': lessonItem.passingPercentage})|raw }}</p>
         <p>{{ 'lesson.quiz.explanation.3'|trans|raw }}</p>
-        {% if lessonCompletion is not null %}
-            <hr class="w-75 mb-3">
-            <p>{{ 'lesson.quiz.yourGrade'|trans }}: <b>{{ quizPercentage }}%</b></p>
-            <hr class="w-75 mt-3">
-        {% endif %}
+
+        <hr class="w-75 mb-3">
+        <div class="d-flex gap-2 w-100 justify-content-center align-items-center">
+            {{ lessonCompletion is not null and lessonCompletion.completed ? mdi('trophy-variant', 'quiz-trophy') : mdi('trophy-variant-outline', 'quiz-trophy') }}
+            <p>{{ 'lesson.quiz.yourGrade'|trans }}: <b>{% if lessonCompletion is not null %}{{ quizPercentage }}%{% else %}{{ 'course.extra.notSubmitted'|trans }}{% endif %}</b></p>
+        </div>
+        <hr class="w-75 mt-3">
+
         <div class="d-flex justify-content-center">
             <form method="post" action="{{ path('lesson_quiz', {'lesson': lessonItem.lesson.id}) }}">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('quiz.start') }}"/>

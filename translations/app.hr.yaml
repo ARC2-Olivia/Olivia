@@ -406,6 +406,7 @@ course:
         quizzes: "{0} %count% kviza|{1} %count% kviz|[2,+Inf[ %count% kviza"
         connectedTo: Povezani praktični moduli
         submitQuizAnswers: Kliknite na <i>Potvrdi</i> kako biste predali svoje odgovore, i time završili kviz.
+        notSubmitted: Još nije predano
     certificate:
         1: Čestitamo!
         2: Položili ste tečaj <i>%course%</i>! Kliknite na gumb <i>Preuzmite potvrdu</i> kako biste preuzeli potvrdu za položeni tečaju.
@@ -440,10 +441,10 @@ lesson:
             notPassed: Nije prolazno
     quiz:
         explanation:
-            1: Kviz se sastoji od <b>%questionCount%</b> pitanja s da ili ne odgovorima.
-            2: Za prolaz je potrebno postići <b>%passingPercentage%%</b>. Rezultati će biti dostupni nakon predaje odgovora.
-            3: Kliknite na gumb <i>Pokreni kviz</i> za pokretanje kviza.
-        action: Pokreni kviz
+            1: Ovaj kviz sadrži <b>%questionCount%</b> pitanja.
+            2: Za prolaz je potrebno riješiti <b>%passingPercentage%%</b> kviza, a rezultati su dostupni odmah nakon rješavanja. Broj rješavanja kviza nije ograničen, a u vašim se <i>Rezultatima</i> prikazuje samo najbolji.
+            3: Da biste počeli kviz, kliknite ispid na gumb <i>Riješi kviz</i>.
+        action: Riješi kviz
         yourGrade: Vaša ocjena
         yourAnswer: Vaš odgovor
         correctAnswer: Točan odgovor
