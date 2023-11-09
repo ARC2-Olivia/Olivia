@@ -8,6 +8,7 @@ use App\Entity\Instructor;
 use App\Entity\LessonItemFile;
 use App\Entity\PracticalSubmodule;
 use App\Entity\Topic;
+use App\Entity\User;
 use App\Repository\PracticalSubmoduleAssessmentRepository;
 use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Service\PracticalSubmoduleService;
@@ -17,6 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 #[Route("/file-fetch", name: "file_fetch_")]
 class FileFetchController extends AbstractController
@@ -69,11 +72,12 @@ class FileFetchController extends AbstractController
 
     #[Route("/course-certificate/{course}/{_locale}", name: "course_certificate", requirements: ["_locale" => "%locale.supported%"])]
     #[IsGranted('get_certificate', subject: 'course')]
-    public function courseCertificate(Course $course, WkhtmltopdfService $wkhtmltopdfService, \Twig\Environment $twig): Response
+    public function courseCertificate(Course $course, WkhtmltopdfService $wkhtmltopdfService, \Twig\Environment $twig, RouterInterface $router): Response
     {
-        $html = $twig->render('pdf/certificate.html.twig');
+        /** @var User $user */ $user = $this->getUser();
+        $courseUrl = str_replace(['http://', 'https://'], '', $router->generate('course_overview', ['course' => $course->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
+        $html = $twig->render('pdf/certificate.html.twig', ['user' => $user, 'course' => $course, 'link' => $courseUrl]);
         $pdf = $wkhtmltopdfService->makeLandscapePdf($html);
-
         return $this->file($pdf, 'certificate.pdf')->deleteFileAfterSend();
     }
 
