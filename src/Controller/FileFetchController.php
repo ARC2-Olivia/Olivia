@@ -76,7 +76,8 @@ class FileFetchController extends AbstractController
     {
         /** @var User $user */ $user = $this->getUser();
         $courseUrl = str_replace(['http://', 'https://'], '', $router->generate('course_overview', ['course' => $course->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
-        $html = $twig->render('pdf/certificate.html.twig', ['user' => $user, 'course' => $course, 'link' => $courseUrl]);
+        $projectDir = $this->getParameter('kernel.project_dir');
+        $html = $twig->render('pdf/certificate.html.twig', ['user' => $user, 'course' => $course, 'link' => $courseUrl, 'projectDir' => $projectDir]);
         $pdf = $wkhtmltopdfService->makeLandscapePdf($html);
         return $this->file($pdf, 'certificate.pdf')->deleteFileAfterSend();
     }

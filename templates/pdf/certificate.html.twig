@@ -10,10 +10,10 @@
             }
 
             body {
-                font-family: 'Raleway', 'Source Sans 3', sans-serif;
+                font-family: 'Raleway', sans-serif;
                 font-size: 2cm;
                 position: relative;
-                height: 210mm;
+                height: 273.1mm;
             }
 
             .section-1, .section-2, .section-3 {
@@ -46,20 +46,20 @@
 
             .section-1-divider-bottom {
                 width: 1px;
-                height: 30mm;
+                height: 45mm;
                 background-color: #ffffff;
                 position: absolute;
-                bottom: 18mm;
-                right: 46.5mm;
+                bottom: 16mm;
+                right: 58mm;
             }
 
             .section-1-divider-top {
                 width: 1px;
-                height: 30mm;
+                height: 45mm;
                 background-color: #ffffff;
                 position: absolute;
-                top: 18mm;
-                right: 46.5mm;
+                top: 16mm;
+                right: 58mm;
             }
 
             .section-2 {
@@ -73,7 +73,7 @@
                 left: 5mm;
                 right: 5mm;
                 bottom: 5mm;
-                font-size: 6mm;
+                font-size: 7mm;
             }
 
             .section-2-divider {
@@ -82,7 +82,7 @@
                 background-color: #000000;
                 position: absolute;
                 bottom: -5mm;
-                right: 40mm;
+                right: 48mm;
             }
 
             .section-3 {
@@ -104,7 +104,7 @@
                 position: absolute;
                 font-weight: bold;
                 top: 10mm;
-                left: 25%;
+                left: 4%;
                 right: 0;
                 bottom: 10mm;
                 text-align: center;
@@ -114,7 +114,7 @@
                 position: absolute;
                 top: 50%;
                 left: 0;
-                font-size: 2.7cm;
+                font-size: 3.9cm;
                 color: white;
                 -webkit-transform: translateY(-50%) rotate(-90deg) translateY(-78mm);
             }
@@ -122,8 +122,8 @@
             .subtitle {
                 position: absolute;
                 top: 50%;
-                left: 0;
-                font-size: 1.25cm;
+                left: 21mm;
+                font-size: 1.75cm;
                 color: white;
                 white-space: nowrap;
                 -webkit-transform: translateY(-50%) rotate(-90deg) translateY(-20mm);
@@ -131,7 +131,7 @@
 
             .certificant, .course, .for {
                 text-align: center;
-                font-size: 8mm;
+                font-size: 10mm;
                 margin-bottom: 2mm;
                 padding-left: 22mm;
             }
@@ -173,7 +173,7 @@
             .certified-by {
                 position: absolute;
                 bottom: 0;
-                right: 50mm;
+                right: 60mm;
                 text-align: right;
             }
 
@@ -220,7 +220,7 @@
             <div class="section-1-divider-bottom"></div>
             <div class="ribbon">
                 <div class="ribbon-logo">
-                    <img src="{{ absolute_url(asset('build/images/header-logo.png')) }}"/>
+                    <img src="{{ projectDir ~ '/public' ~ asset('build/images/header-logo.png') }}"/>
                 </div>
                 <div class="ribbon-website">olivia-gdpr-arc.eu</div>
             </div>
