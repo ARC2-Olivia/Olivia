@@ -5,106 +5,250 @@
     <head>
         <style>
             html, body {
-                margin: 0;
                 padding: 0;
-                font-family: 'Source Sans 3', sans-serif;
+                margin: 0;
             }
 
-            .top {
-                width: 100%;
-                height: 825px;
-                background-color: #3a526a;
+            body {
+                font-family: 'Raleway', 'Source Sans 3', sans-serif;
+                font-size: 2cm;
                 position: relative;
-                display: -webkit-box;
-                -webkit-box-align: center;
-                -webkit-box-pack: center;
-                justify-items: center;
-                align-items: center;
+                height: 210mm;
             }
 
-            .top-logo {
-                color: rgba(255, 255, 255, 0.2);
-                font-size: 196px;
+            .section-1, .section-2, .section-3 {
+                position: relative;
+                height: 100%;
+                float: left;
+            }
+
+            .section-1 {
+                background-color: #3a526a;
+                width: 35%;
+            }
+
+            .section-1:before, .section-1:after {
+                content: "";
                 position: absolute;
-                bottom: -50px;
-                right: 15px;
+                left: 25%;
+                right: 37%;
+                background-color: #fe5722;
+                height: 8mm;
             }
 
-            .bold {
+            .section-1:before {
+                top: 0;
+            }
+
+            .section-1:after {
+                bottom: 0;
+            }
+
+            .section-1-divider-bottom {
+                width: 1px;
+                height: 30mm;
+                background-color: #ffffff;
+                position: absolute;
+                bottom: 18mm;
+                right: 46.5mm;
+            }
+
+            .section-1-divider-top {
+                width: 1px;
+                height: 30mm;
+                background-color: #ffffff;
+                position: absolute;
+                top: 18mm;
+                right: 46.5mm;
+            }
+
+            .section-2 {
+                position: relative;
+                width: 62%;
+            }
+
+            .section-2-inner {
+                position: absolute;
+                top: 10mm;
+                left: 5mm;
+                right: 5mm;
+                bottom: 5mm;
+                font-size: 6mm;
+            }
+
+            .section-2-divider {
+                width: 1px;
+                height: 25mm;
+                background-color: #000000;
+                position: absolute;
+                bottom: -5mm;
+                right: 40mm;
+            }
+
+            .section-3 {
+                background-color: #3a526a;
+                width: 3%;
+            }
+
+            .section-3:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 50%;
+                background-color: #fe5722;
+            }
+
+            .title-wrapper {
+                position: absolute;
                 font-weight: bold;
-            }
-
-            .top-content {
-                margin: 0 auto;
+                top: 10mm;
+                left: 25%;
+                right: 0;
+                bottom: 10mm;
                 text-align: center;
-                color: #FFFFFF;
-                font-size: 32px;
             }
 
-            .top-title {
+            .title {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                font-size: 2.7cm;
+                color: white;
+                -webkit-transform: translateY(-50%) rotate(-90deg) translateY(-78mm);
+            }
+
+            .subtitle {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                font-size: 1.25cm;
+                color: white;
+                white-space: nowrap;
+                -webkit-transform: translateY(-50%) rotate(-90deg) translateY(-20mm);
+            }
+
+            .certificant, .course, .for {
+                text-align: center;
+                font-size: 8mm;
+                margin-bottom: 2mm;
+                padding-left: 22mm;
+            }
+
+            .certificant, .course {
+                font-weight: bold;
                 color: #fe5722;
-                font-size: 96px;
-                font-weight: bold;
             }
 
-            .top-data {
-                font-weight: bold;
-                font-size: 56px;
+            .course {
+                margin-bottom: 20mm;
             }
 
-            .top-mb {
+            .mb-cert {
+                margin-bottom: 7mm;
+            }
+
+            ul {
+                margin: 0;
+                padding-left: 6.1mm;
+            }
+
+            li {
+                margin-top: 2mm;
+            }
+
+            .issue-date {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                text-align: left;
+            }
+
+            .issue-date-label {
+                color: #fe5722;
                 margin-bottom: 3mm;
             }
 
-            .top-link {
+            .certified-by {
                 position: absolute;
-                top: 15px;
-                right: 15px;
-                padding: 8px 12px;
-                background-color: #fe5722;
-                color: #ffffff;
-                font-size: 20px;
-            }
-
-            .bottom {
-                width: 100%;
-                height: 190px;
-                position: relative;
-            }
-
-            .bottom-link {
-                position: absolute;
-                font-size: 18px;
                 bottom: 0;
-                left: 15px;
+                right: 50mm;
+                text-align: right;
             }
 
-            .bottom-cert-data {
+            .certified-by-label {
+                color: #fe5722;
+                margin-bottom: 3mm;
+            }
+
+            .ribbon {
                 position: absolute;
-                font-size: 20px;
-                bottom: 0;
-                right: 15px;
+                height: 45mm;
+                width: 45mm;
+                border-radius: 50%;
+                background-color: #ffffff;
+                border: solid 2mm #fe5722;
+                right: -24.5mm;
+                top: 5mm;
+            }
+
+            .ribbon-logo {
+                margin-top: 7mm;
+                text-align: center;
+            }
+
+            .ribbon-logo > img {
+                width: 38mm;
+            }
+
+            .ribbon-website {
+                text-align: center;
+                white-space: nowrap;
+                font-size: 4mm;
+                font-weight: bold;
             }
         </style>
     </head>
     <body>
-        <div class="top">
-            <div class="top-logo">
-                <span class="bold">OLIVIA</span>
-                <span>Tool</span>
+        <div class="section-1">
+            <div class="title-wrapper">
+                <div class="title">CERTIFICATE</div>
+                <div class="subtitle">OF COMPLETION</div>
             </div>
-            <div class="top-link">{{ app_hostname }}</div>
-            <div class="top-content">
-                <div class="top-title top-mb">{{ 'certificate.title'|trans }}</div>
-                <div class="top-mb">{{ 'certificate.for'|trans }}</div>
-                <div class="top-data top-mb">{{ course.name }}</div>
-                <div class="top-mb">{{ 'certificate.to'|trans }}</div>
-                <div class="top-data">{{ app.user.nameOrEmail }}</div>
+            <div class="section-1-divider-top"></div>
+            <div class="section-1-divider-bottom"></div>
+            <div class="ribbon">
+                <div class="ribbon-logo">
+                    <img src="{{ absolute_url(asset('build/images/header-logo.png')) }}"/>
+                </div>
+                <div class="ribbon-website">olivia-gdpr-arc.eu</div>
             </div>
         </div>
-        <div class="bottom">
-            <div class="bottom-link">{{ url('course_overview', {'course': course.id}) }}</div>
-            <div class="bottom-cert-data">{{ 'certificate.certifiedAt'|trans }} {{ 'now'|date('d.m.Y.') }}</div>
+        <div class="section-2">
+            <div class="section-2-inner">
+                <div class="certificant">{{ user.nameOrEmail }}</div>
+                <div class="for">for</div>
+                <div class="course">{{ course.name }}</div>
+                <div class="mb-cert"><b>Workload:</b> {{ course|translate_workload(true) }}</div>
+                <div><b>Learning outcomes:</b></div>
+                <ul class="mb-cert">
+                    {% for lo in course.learningOutcomesAsArray %}
+                        <li>{{ lo }}</li>
+                    {% endfor %}
+                </ul>
+                <div><b>Link:</b> {{ link }}</div>
+                <div class="issue-date">
+                    <div class="issue-date-label">Issue date</div>
+                    <div>{{ 'now'|date('d/m/Y') }}</div>
+                </div>
+                <div class="certified-by">
+                    <div class="certified-by-label">Certified by</div>
+                    <div>ARC II project</div>
+                </div>
+                <div class="section-2-divider"></div>
+            </div>
         </div>
+        <div class="section-3"></div>
     </body>
 </html>

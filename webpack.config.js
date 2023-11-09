@@ -51,10 +51,7 @@ Encore
     .addEntry('Reorderer', './assets/scripts/classes/Reorderer.js')
     .addEntry('EventBus', './assets/scripts/classes/EventBus.js')
 
-    .copyFiles({
-        from: './assets/images',
-        to: 'images/[path][name].[ext]'
-    })
+    .copyFiles({ from: './assets/images', to: 'images/[path][name].[ext]' })
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     //.enableStimulusBridge('./assets/controllers.json')
