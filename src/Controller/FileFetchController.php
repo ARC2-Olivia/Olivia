@@ -7,6 +7,7 @@ use App\Entity\File;
 use App\Entity\Instructor;
 use App\Entity\LessonItemFile;
 use App\Entity\PracticalSubmodule;
+use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\Topic;
 use App\Entity\User;
 use App\Repository\PracticalSubmoduleAssessmentRepository;
@@ -86,58 +87,80 @@ class FileFetchController extends AbstractController
     public function practicalSubmoduleReportAnswers(PracticalSubmodule $practicalSubmodule,
                                                     WkhtmltopdfService $wkhtmltopdfService,
                                                     PracticalSubmoduleQuestionRepository $practicalSubmoduleQuestionRepository,
-                                                    PracticalSubmoduleAssessmentRepository $practicalSubmoduleAssessmentRepository
+                                                    PracticalSubmoduleAssessmentRepository $practicalSubmoduleAssessmentRepository,
+                                                    PracticalSubmoduleService $practicalSubmoduleService
     ): Response
     {
         $assessment = $practicalSubmoduleAssessmentRepository->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
         $answerData = [];
+        $pdf = null;
 
-        foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
-            $questionId = $answer->getPracticalSubmoduleQuestion()->getId();
-            if (!key_exists($questionId, $answerData)) {
-                $answerDatum = new \stdClass();
-                $answerDatum->questionId = $questionId;
-                $answerDatum->question = $answer->getPracticalSubmoduleQuestion()->getQuestionText();
-                $answerDatum->answers = [];
-                $answerDatum->dependentQuestionId = $answer->getPracticalSubmoduleQuestion()?->getDependentPracticalSubmoduleQuestion()?->getId();
-                $answerDatum->dependees = [];
-                $answerDatum->unansweredDependees = [];
-                $answerData[$questionId] = $answerDatum;
-            }
-            $answerData[$questionId]->answers[] = $answer->getDisplayableAnswer();
-        }
-
-        $dependeeIds = [];
-        $dependencyGrouping = [];
-        foreach ($answerData as $questionId => $answerDatum) {
-            $dependentQuestionId = $answerDatum->dependentQuestionId;
-            if (null !== $dependentQuestionId) {
-                if (!key_exists($dependentQuestionId, $dependencyGrouping)) {
-                    $dependencyGrouping[$dependentQuestionId] = [];
+        if (PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $practicalSubmodule->getModeOfOperation()) {
+            $results = $practicalSubmoduleService->runProcessors($assessment);
+            foreach ($results as $result) {
+                $answerDatum = ['result' => $result, 'answers' => null];
+                if ($result->isQuestionSet()) {
+                    foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
+                        if ($answer->getPracticalSubmoduleQuestion()->getId() !== $result->getQuestion()->getId()) continue;
+                        if (null === $answerDatum['answers']) $answerDatum['answers'] = [];
+                        $answerDatum['answers'][] = $answer->getDisplayableAnswer();
+                    }
                 }
-                $dependencyGrouping[$dependentQuestionId][] = $questionId;
-                $dependeeIds[] = $questionId;
+                $answerData[] = $answerDatum;
             }
-        }
 
-        foreach ($dependencyGrouping as $dependentQuestionId => $questionIds) {
-            foreach ($questionIds as $questionId) {
-                $answerData[$dependentQuestionId]->dependees[] = $answerData[$questionId];
+            $html = $this->renderView('pdf/reportAnswers_simple.html.twig', ['answerData' => $answerData, 'practicalSubmodule' => $practicalSubmodule]);
+            $pdf = $wkhtmltopdfService->makeLandscapePdf($html);
+        } else {
+            foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
+                $questionId = $answer->getPracticalSubmoduleQuestion()->getId();
+                if (!key_exists($questionId, $answerData)) {
+                    $answerDatum = new \stdClass();
+                    $answerDatum->questionId = $questionId;
+                    $answerDatum->question = $answer->getPracticalSubmoduleQuestion()->getQuestionText();
+                    $answerDatum->answers = [];
+                    $answerDatum->dependentQuestionId = $answer->getPracticalSubmoduleQuestion()?->getDependentPracticalSubmoduleQuestion()?->getId();
+                    $answerDatum->dependees = [];
+                    $answerDatum->unansweredDependees = [];
+                    $answerData[$questionId] = $answerDatum;
+                }
+                $answerData[$questionId]->answers[] = $answer->getDisplayableAnswer();
             }
+
+            $dependeeIds = [];
+            $dependencyGrouping = [];
+            foreach ($answerData as $questionId => $answerDatum) {
+                $dependentQuestionId = $answerDatum->dependentQuestionId;
+                if (null !== $dependentQuestionId) {
+                    if (!key_exists($dependentQuestionId, $dependencyGrouping)) {
+                        $dependencyGrouping[$dependentQuestionId] = [];
+                    }
+                    $dependencyGrouping[$dependentQuestionId][] = $questionId;
+                    $dependeeIds[] = $questionId;
+                }
+            }
+
+            foreach ($dependencyGrouping as $dependentQuestionId => $questionIds) {
+                foreach ($questionIds as $questionId) {
+                    $answerData[$dependentQuestionId]->dependees[] = $answerData[$questionId];
+                }
+            }
+
+            foreach ($dependeeIds as $dependeeId) {
+                unset($answerData[$dependeeId]);
+            }
+
+            foreach (array_keys($answerData) as $questionId) {
+                $exclusions = array_map(function ($dependee) { return $dependee->questionId; }, $answerData[$questionId]->dependees);
+                $unansweredDependees = $practicalSubmoduleQuestionRepository->findDependingQuestionTexts($questionId, $exclusions);
+                $answerData[$questionId]->unansweredDependees = $unansweredDependees;
+            }
+
+            $html = $this->renderView('pdf/reportAnswers.html.twig', ['answerData' => $answerData, 'practicalSubmodule' => $practicalSubmodule]);
+            $pdf = $wkhtmltopdfService->makePortraitPdf($html);
         }
 
-        foreach ($dependeeIds as $dependeeId) {
-            unset($answerData[$dependeeId]);
-        }
 
-        foreach (array_keys($answerData) as $questionId) {
-            $exclusions = array_map(function ($dependee) { return $dependee->questionId; }, $answerData[$questionId]->dependees);
-            $unansweredDependees = $practicalSubmoduleQuestionRepository->findDependingQuestionTexts($questionId, $exclusions);
-            $answerData[$questionId]->unansweredDependees = $unansweredDependees;
-        }
-
-        $html = $this->renderView('pdf/reportAnswers.html.twig', ['answerData' => $answerData, 'practicalSubmodule' => $practicalSubmodule]);
-        $pdf = $wkhtmltopdfService->makePortraitPdf($html);
         if (null === $pdf) return $this->makeFileResponseFromString("report.txt", "Unable to process request.");
         return $this->file($pdf, 'report.pdf')->deleteFileAfterSend();
     }
