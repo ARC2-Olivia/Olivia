@@ -186,6 +186,29 @@
     flex-basis: calc(25% - 16px);
 }
 
+.course-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.course-details-item {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.course-details-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.course-details-item-icon {
+    width: 32px;
+    color: var(--app-color-yellow);
+}
+
 @media screen and (max-width: 1199px) {
     .course-connected-modules > * {
         flex-basis: calc(33.33% - 16px);

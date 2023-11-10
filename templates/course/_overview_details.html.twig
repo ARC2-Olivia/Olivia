@@ -1,0 +1,54 @@
+{% trans_default_domain 'app' %}
+
+<div class="col-12 col-lg-3 course-details">
+    <h3>{{ 'common.details'|trans }}:</h3>
+    <div class="course-details-item">
+        {{ mdi('translate-variant', 'course-details-item-icon') }}
+        <div class="course-details-item-info">
+            <b>{{ 'course.details.label.language'|trans }}:</b>
+            <span>{{ 'course.details.value.language'|trans }}</span>
+        </div>
+    </div>
+    <div class="course-details-item">
+        {{ mdi('timer-outline', 'course-details-item-icon') }}
+        <div class="course-details-item-info">
+            <b>{{ 'course.details.label.expectedWorkload'|trans }}:</b>
+            <span>{{ course|translate_workload }}</span>
+        </div>
+    </div>
+    <div class="course-details-item">
+        {{ mdi('cog', 'course-details-item-icon') }}
+        <div class="course-details-item-info">
+            <b>{{ 'course.details.label.type'|trans }}:</b>
+            <span>{{ 'course.details.value.type'|trans }}</span>
+        </div>
+    </div>
+    <div class="course-details-item">
+        {{ mdi('decagram', 'course-details-item-icon') }}
+        <div class="course-details-item-info">
+            <b>{{ 'course.details.label.certification'|trans }}:</b>
+            <span>{{ 'course.details.value.certification'|trans }}</span>
+        </div>
+    </div>
+    <div class="course-details-item">
+        {{ mdi('lock-open', 'course-details-item-icon fg-orange') }}
+        <div class="course-details-item-info">
+            <b>{{ 'course.details.label.enrollment'|trans }}:</b>
+            <span>{{ 'course.details.value.enrollment'|trans }}</span>
+        </div>
+    </div>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if not is_enrolled(course, app.user) %}
+            <div class="text-center mt-5">
+                <a href="{{ path('course_enroll', {'course': course.id}) }}"
+                   class="btn btn-theme-white bg-orange"
+                   onclick="return confirm(`{{ 'course.enroll.message'|trans({'%course%': course.name}) }}`);"
+                >
+                    {{ 'button.startNow'|trans }}
+                </a>
+            </div>
+        {% endif %}
+    {% else %}
+        <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange">{{ 'button.loginToEnroll'|trans }}</a>
+    {% endif %}
+</div>

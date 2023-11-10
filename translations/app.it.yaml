@@ -39,6 +39,7 @@ common:
     comingSoon: Prossimamente!
     correct: Corretto
     incorrect: Errato
+    details: Dettagli
 
 button:
     details: Dettagli
@@ -426,6 +427,18 @@ course:
         completion:
             completed: Completato
             notCompleted: Non completato
+    details:
+        label:
+            language: Lingua
+            expectedWorkload: Carico di lavoro previsto
+            type: Tipo
+            certification: Certificazione
+            enrollment: Iscrizione
+        value:
+            language: Italiana
+            type: Corso online di autoapprendimento
+            certification: Certificato al termine
+            enrollment: Accesso libero, senza chiave di registrazione
 
 lesson:
     type:

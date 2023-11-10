@@ -13,25 +13,14 @@
             {% endfor %}
         </div>
     {% else %}
-        <div id="lesson-items" class="lesson-items col-12 col-lg-10"{% if is_granted('ROLE_MODERATOR') %} data-path="{{ path('lesson_reorder') }}"{% endif %}>
+        <div id="lesson-items" class="lesson-items col-12 col-lg-9 mb-5 mb-lg-0"{% if is_granted('ROLE_MODERATOR') %} data-path="{{ path('lesson_reorder') }}"{% endif %}>
             {% for lessonInfo in lessonsInfo %}
                 {% include 'lesson/_course_lessonItem.html.twig' with {'lessonInfo': lessonInfo} %}
             {% else %}
                 <div>{{ 'lesson.extra.noLessons'|trans }}</div>
             {% endfor %}
         </div>
-        <div class="col-12 col-lg-2 text-end mt-3 mt-lg-0">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a href="{{ path('course_enroll', {'course': course.id}) }}"
-                   class="btn btn-theme-white bg-orange"
-                   onclick="return confirm(`{{ 'course.enroll.message'|trans({'%course%': course.name}) }}`);"
-                >
-                    {{ 'button.startNow'|trans }}
-                </a>
-            {% else %}
-                <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange">{{ 'button.loginToEnroll'|trans }}</a>
-            {% endif %}
-        </div>
+        {% include 'course/_overview_details.html.twig' %}
     {% endif %}
 
     {% if is_granted('ROLE_MODERATOR') %}

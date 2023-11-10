@@ -39,6 +39,7 @@ common:
     comingSoon: Coming soon!
     correct: Correct
     incorrect: Incorrect
+    details: Details
 
 button:
     details: Details
@@ -426,6 +427,18 @@ course:
         completion:
             completed: Completed
             notCompleted: Not completed
+    details:
+        label:
+            language: Language
+            expectedWorkload: Expected workload
+            type: Type
+            certification: Certification
+            enrollment: Enrollment
+        value:
+            language: English
+            type: Self-paced online course
+            certification: Certificate on completion
+            enrollment: Free access, without enrollment key
 
 lesson:
     type:

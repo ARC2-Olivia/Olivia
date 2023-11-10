@@ -38,6 +38,7 @@ common:
     add: Dodaj
     correct: Točno
     incorrect: Netočno
+    details: Detalji
 
 button:
     details: Detalji
@@ -424,6 +425,18 @@ course:
         completion:
             completed: Završeno
             notCompleted: Nije završeno
+    details:
+        label:
+            language: Jezik
+            expectedWorkload: Očekivano radno opterećenje
+            type: Vrsta
+            certification: Certifikacija
+            enrollment: Upisi
+        value:
+            language: Hrvatski
+            type: Internetski tečaj s vlastitim tempom
+            certification: Certifikat po završetku
+            enrollment: Slobodan pristup, bez ključa za upis
 
 lesson:
     type:

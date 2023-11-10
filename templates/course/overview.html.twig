@@ -3,7 +3,10 @@
 
 {% block courseContent %}
     <h2 class="text-center mb-3">{{ course.nameOrPublicName }}</h2>
-    <div class="ql-editor">{{ course.description|raw }}</div>
+    <div class="row g-4">
+        <div class="ql-editor col-12 col-lg-9">{{ course.description|raw }}</div>
+        {% include 'course/_overview_details.html.twig' %}
+    </div>
 
     {% if course.instructors is not empty %}
         <div class="mt-5 p-0">
