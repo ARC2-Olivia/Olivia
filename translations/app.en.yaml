@@ -605,8 +605,8 @@ practicalSubmoduleAssessment:
         3: Click on the <i>Fill questionnaire</i> button to start filling it.
         lastSubmittedAt: Questionnaire was last submitted %datetime%
         fillAgain: Are you sure you want to fill the questionnaire anew? This action will delete the previous answers upon starting.
-        dependees: "Because of your answer to this question, the following additional questions were presented:"
-        unansweredDependees: "Because of your answer to this question, the following additional questions were NOT presented:"
+        dependees: "Based on your answer to this question, the following further questions were displayed:"
+        unansweredDependees: "Based on your answer to this question, the following futher questions were not displayed:"
     action:
         start: Fill questionnaire
         edit: Edit submitted questionnaire
