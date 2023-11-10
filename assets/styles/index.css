@@ -111,14 +111,15 @@
     text-align: end;
     background-size: contain;
     background-position-x: right;
+    background-position-y: center;
 }
 
 .index-topics--r {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding-top: 48px;
-    padding-bottom: 48px;
+    padding-top: 96px;
+    padding-bottom: 96px;
 }
 
 .index-topics--r > * {
@@ -228,6 +229,11 @@
 @media screen and (max-width: 627px) {
     .index-topics--l {
         display: none;
+    }
+
+    .index-topics--r {
+        padding-top: 24px;
+        padding-bottom: 24px;
     }
 }
 
