@@ -49,6 +49,8 @@
             </div>
         {% endif %}
     {% else %}
-        <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange">{{ 'button.loginToEnroll'|trans }}</a>
+        <div class="text-center mt-5">
+            <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange">{{ 'button.loginToEnroll'|trans }}</a>
+        </div>
     {% endif %}
 </div>
