@@ -3,13 +3,13 @@
 
 {% block courseContent %}
     <div class="d-flex flex-column align-items-center">
+        <img class="certificate-awarded" src="{{ asset('build/images/certificate-awarded.png') }}" alt="Image for a certificate being atawrded."/>
         {% if is_granted('get_certificate', course) %}
-            <img class="certificate-awarded" src="{{ asset('build/images/certificate-awarded.png') }}" alt="Image for a certificate being atawrded."/>
-            <b class="mb-2" style="font-size: 24px">{{ 'course.certificate.1'|trans }}</b>
-            <p class="mb-3">{{ 'course.certificate.2'|trans({'%course%': course.name})|raw }}</p>
+            <b class="mb-2" style="font-size: 24px">{{ 'course.certificate.congratulations'|trans({'%user%': app.user.nameOrEmail}) }}</b>
+            <p class="mb-3">{{ certificate_received_text() }}</p>
             <a href="{{ path('file_fetch_course_certificate', {'course': course.id}) }}" class="btn btn-theme-white bg-green">{{ 'course.certificate.button'|trans }}</a>
         {% else %}
-            <p>{{ 'course.certificate.notPass'|trans }}</p>
+            <b style="font-size: 24px">{{ certificate_not_received_text() }}</b>
         {% endif %}
     </div>
 {% endblock %}

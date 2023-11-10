@@ -411,10 +411,14 @@ course:
         submitQuizAnswers: Click <i>Submit</i> to submit your answers and finish the quiz.
         notSubmitted: Not yet submitted
     certificate:
-        1: Congratulations!
-        2: You completed the course <i>%course%</i>! Click on the <i>Download certificate</i> button to download the certificate of completion.
+        congratulations: Congratulations, %user%!
         button: Download certificate
-        notPass: To receive a certificate, you must receive passing points on all the quizzes.
+        received:
+            1: You did a great job and therefore you are rewarded with a well-deserved certificate!
+            2: This is the way to make it happen! Your efforts haven’t gone unnoticed. Your certificate is ready!
+        notReceived:
+            1: Maybe this is empty at the moment but soon it will be packed with your certificate!
+            2: Just keep up the good work, take the quizzes and pridefully receive your certificate!
     enroll:
         message: Are you sure you want to enroll to course '%course%'?
     participants:

@@ -411,10 +411,14 @@ course:
         submitQuizAnswers: Fare clic su <i>Invia</i> per inviare le risposte e completare il quiz.
         notSubmitted: Non ancora presentato
     certificate:
-        1: Congratulazioni!
-        2: Hai completato il corso <i>%course%</i>! Fare clic sul pulsante <i>Scarica certificato</i> per scaricare il certificato di completamento.
+        congratulations: Congratulazioni, %user%!
         button: Scarica il certificato
-        notPass: Per ricevere un certificato, devi ricevere punti sufficienti su tutti i quiz.
+        received:
+            1: Hai fatto un ottimo lavoro e quindi sei stato premiato con un meritato certificato!
+            2: Questo è il modo per realizzarlo! I tuoi sforzi non sono passati inosservati. Il tuo certificato è pronto!
+        notReceived:
+            1: Forse al momento è vuoto ma presto sarà pieno del tuo certificato!
+            2: Continua così, rispondi ai quiz e ricevi con orgoglio il tuo certificato!
     enroll:
         message: Sei sicuro di volerti iscrivere al corso &#39;%course%&#39;?
     participants:

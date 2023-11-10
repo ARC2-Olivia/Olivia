@@ -409,10 +409,14 @@ course:
         submitQuizAnswers: Kliknite na <i>Potvrdi</i> kako biste predali svoje odgovore, i time završili kviz.
         notSubmitted: Još nije predano
     certificate:
-        1: Čestitamo!
-        2: Položili ste tečaj <i>%course%</i>! Kliknite na gumb <i>Preuzmite potvrdu</i> kako biste preuzeli potvrdu za položeni tečaju.
-        button: Preuzmite potvrdu
-        notPass: Za dobivanje certifikata, trebate ostvariti prolazne bodove na svim kvizovima.
+        congratulations: Čestitke, %user%!
+        button: Preuzmite certifikat
+        received:
+            1: Odradili ste sjajan posao i stoga ste nagrađeni dobro zasluženim certifikatom!
+            2: Ovako se ciljevi ostvaruju! Vaši napori nisu prošli nezapaženo. Vaš certifikat je spreman!
+        notReceived:
+            1: Možda je ovo trenutno prazno, ali uskoro će biti spakirano s vašim certifikatom!
+            2: Samo nastavite radno, rješavajte kvizove i s ponosom primite svoj certifikat!
     enroll:
         message: Jeste li sigurni da se želite upisati na tečaj '%course%'?
     participants:
