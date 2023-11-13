@@ -12,6 +12,10 @@
     border-radius: 4px;
 }
 
+.dropdown.max-200px {
+    max-width: 200px;
+}
+
 ul.dropdown {
     margin-left: 0;
     list-style: none;
