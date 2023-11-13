@@ -72,11 +72,11 @@ page:
         show: Olivia | Practical submodule details
         assessment: Olivia | Practical submodule assessment
     termsOfService:
-        index: Olivia | Elenco dei Termini di servizio e dell'Informativa sulla privacy
-        new: Olivia | Nuovi Termini di servizio e Informativa sulla privacy
-        show: Olivia | Termini di servizio e Informativa sulla privacy
-        edit: Olivia | Modifica i Termini di servizio e l'Informativa sulla privacy
-        revise: Olivia | Revisionare i Termini di servizio e l'Informativa sulla privacy
+        index: Olivia | Terms of service and Privacy policy listing
+        new: Olivia | New Terms of service and Privacy Policy
+        show: Olivia | Terms of service and Privacy Policy
+        edit: Olivia | Edit Terms of service and Privacy Policy
+        revise: Olivia | Revise Terms of service and Privacy Policy
     gdpr:
         index: Olivia | Data protection
     profile: Olivia | Profile
@@ -326,6 +326,8 @@ form:
                 active: Active
                 termsOfService: Terms of service
                 termsOfServiceAlt: Terms of service (alternate language)
+                privacyPolicy: Privacy policy
+                privacyPolicyAlt: Privacy policy (alternate language)
         dataRequest:
             label:
                 id: ID

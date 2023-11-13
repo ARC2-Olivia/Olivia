@@ -244,6 +244,8 @@ error:
     termsOfService:
         termsOfService: Il contenuto dei termini di servizio non deve essere vuoto.
         termsOfServiceAlt: La traduzione del contenuto dei termini di servizio non deve essere vuota.
+        privacyPolicy: Il contenuto dell'informativa sulla privacy non deve essere vuoto.
+        privacyPolicyAlt: La traduzione del contenuto dell'informativa sulla privacy non deve essere vuota.
     dataRequest:
         access: Impossibile inviare la richiesta di accesso ai dati. Perfavore ricarica la pagina e riprova.
         delete: Impossibile inviare la richiesta di cancellazione dei dati. Perfavore ricarica la pagina e riprova.

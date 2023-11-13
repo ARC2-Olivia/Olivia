@@ -31,6 +31,10 @@ class Gdpr extends TranslatableEntity
     #[Gedmo\Translatable]
     private ?string $termsOfService = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable]
+    private ?string $privacyPolicy = null;
+
     #[ORM\Column(nullable: true)]
     private ?bool $active = null;
 
@@ -95,6 +99,18 @@ class Gdpr extends TranslatableEntity
     public function setTermsOfService(?string $termsOfService): self
     {
         $this->termsOfService = $termsOfService;
+
+        return $this;
+    }
+
+    public function getPrivacyPolicy(): ?string
+    {
+        return $this->privacyPolicy;
+    }
+
+    public function setPrivacyPolicy(?string $privacyPolicy): self
+    {
+        $this->privacyPolicy = $privacyPolicy;
 
         return $this;
     }

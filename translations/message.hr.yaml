@@ -244,6 +244,8 @@ error:
     termsOfService:
         termsOfService: Sadržaj uvjeta pružanja usluge ne smije biti prazan.
         termsOfServiceAlt: Prijevod sadržaja uvjeta pružanja usluge ne smije biti prazan.
+        privacyPolicy: Sadržaj politike privatnosti ne smije biti prazan.
+        privacyPolicyAlt: Prijevod sadržaja politike privatnosti ne smije biti prazan.
     dataRequest:
         access: Zahtjev za pristup podacima nije poslan. Molimo, ponovno učitajte stranicu te pokušajte ponovno.
         delete: Zahtjev za brisanje podataka nije poslan. Molimo, ponovno učitajte stranicu te pokušajte ponovno.

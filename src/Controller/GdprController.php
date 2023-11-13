@@ -106,7 +106,7 @@ class GdprController extends AbstractController
     #[IsGranted(GdprVoter::EDIT, subject: "gdpr")]
     public function revise(Gdpr $gdpr, GdprService $gdprService, Request $request): Response
     {
-        list($termsOfService, $termsOfServiceAlt) = $this->extractDefaultAndTranslatedContent($gdpr, $request);
+        list($termsOfService, $termsOfServiceAlt, $privacyPolicy, $privacyPolicyAlt) = $this->extractDefaultAndTranslatedContent($gdpr, $request);
 
         $revisedGdpr = new Gdpr();
         $form = $this->createForm(GdprType::class, $revisedGdpr);
@@ -123,7 +123,9 @@ class GdprController extends AbstractController
             'gdpr' => $gdpr,
             'form' => $form->createView(),
             'termsOfService' => $termsOfService,
-            'termsOfServiceAlt' => $termsOfServiceAlt
+            'termsOfServiceAlt' => $termsOfServiceAlt,
+            'privacyPolicy' => $privacyPolicy,
+            'privacyPolicyAlt' => $privacyPolicyAlt
         ]);
     }
 
@@ -231,8 +233,13 @@ class GdprController extends AbstractController
     {
         $translationRepository = $this->em->getRepository(Translation::class);
         $localeAlt = $this->getParameter('locale.alternate');
+
         $termsOfServiceAlt = $form->get('termsOfServiceAlt')->getData();
         $translationRepository->translate($gdpr, 'termsOfService', $localeAlt, $termsOfServiceAlt);
+
+        $privacyPolicyAlt = $form->get('privacyPolicyAlt')->getData();
+        $translationRepository->translate($gdpr, 'privacyPolicy', $localeAlt, $privacyPolicyAlt);
+
         $this->em->flush();
     }
 
@@ -242,16 +249,20 @@ class GdprController extends AbstractController
         $defaultLocale = $this->getParameter('locale.default');
         $alternateLocale = $this->getParameter('locale.alternate');
 
-        $termsOfService = $termsOfServiceAlt = null;
+        $termsOfService = $termsOfServiceAlt = $privacyPolicy = $privacyPolicyAlt = null;
         if ($request->getLocale() === $defaultLocale) {
             $termsOfService = $gdpr->getTermsOfService();
+            $privacyPolicy = $gdpr->getPrivacyPolicy();
             $gdpr = $gdprRepository->findByIdForLocale($gdpr->getId(), $alternateLocale);
             $termsOfServiceAlt = $gdpr->getTermsOfService();
+            $privacyPolicyAlt = $gdpr->getPrivacyPolicy();
         } else if ($request->getLocale() === $alternateLocale) {
             $termsOfServiceAlt = $gdpr->getTermsOfService();
+            $privacyPolicyAlt = $gdpr->getPrivacyPolicy();
             $gdpr = $gdprRepository->findByIdForLocale($gdpr->getId(), $defaultLocale);
             $termsOfService = $gdpr->getTermsOfService();
+            $privacyPolicy = $gdpr->getPrivacyPolicy();
         }
-        return array($termsOfService, $termsOfServiceAlt);
+        return array($termsOfService, $termsOfServiceAlt, $privacyPolicy, $privacyPolicyAlt);
     }
 }
