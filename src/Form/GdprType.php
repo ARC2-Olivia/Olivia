@@ -2,30 +2,30 @@
 
 namespace App\Form;
 
-use App\Entity\TermsOfService;
+use App\Entity\Gdpr;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class TermsOfServiceType extends AbstractType
+class GdprType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('content', HiddenType::class, [
-            'label' => 'form.entity.termsOfService.label.content',
+        $builder->add('termsOfService', HiddenType::class, [
+            'label' => 'form.entity.termsOfService.label.termsOfService',
             'constraints' => [
-                new Assert\NotBlank(['message' => 'error.termsOfService.content'])
+                new Assert\NotBlank(['message' => 'error.termsOfService.termsOfService'])
             ]
         ]);
 
         if ($options['is_edit'] !== true) {
-            $builder->add('contentAlt', HiddenType::class, [
-                'label' => 'form.entity.termsOfService.label.contentAlt',
+            $builder->add('termsOfServiceAlt', HiddenType::class, [
+                'label' => 'form.entity.termsOfService.label.termsOfServiceAlt',
                 'mapped' => false,
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'error.termsOfService.contentAlt'])
+                    new Assert\NotBlank(['message' => 'error.termsOfService.termsOfServiceAlt'])
                 ]
             ]);
         }
@@ -34,7 +34,7 @@ class TermsOfServiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => TermsOfService::class,
+            'data_class' => Gdpr::class,
             'translation_domain' => 'app',
             'attr' => ['novalidate' => 'novalidate'],
             'is_edit' => false

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\TermsOfService;
+use App\Entity\Gdpr;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
@@ -12,21 +12,21 @@ use Gedmo\Translatable\Query\TreeWalker\TranslationWalker;
 use Gedmo\Translatable\TranslatableListener;
 
 /**
- * @extends ServiceEntityRepository<TermsOfService>
+ * @extends ServiceEntityRepository<Gdpr>
  *
- * @method TermsOfService|null find($id, $lockMode = null, $lockVersion = null)
- * @method TermsOfService|null findOneBy(array $criteria, array $orderBy = null)
- * @method TermsOfService[]    findAll()
- * @method TermsOfService[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Gdpr|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Gdpr|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Gdpr[]    findAll()
+ * @method Gdpr[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TermsOfServiceRepository extends ServiceEntityRepository
+class GdprRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TermsOfService::class);
+        parent::__construct($registry, Gdpr::class);
     }
 
-    public function save(TermsOfService $entity, bool $flush = false): void
+    public function save(Gdpr $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -35,7 +35,7 @@ class TermsOfServiceRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(TermsOfService $entity, bool $flush = false): void
+    public function remove(Gdpr $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -44,7 +44,7 @@ class TermsOfServiceRepository extends ServiceEntityRepository
         }
     }
 
-    public function findCurrentlyActive(bool $single = true): TermsOfService|array|null
+    public function findCurrentlyActive(bool $single = true): Gdpr|array|null
     {
         $qb = $this->createQueryBuilder('tos')
             ->where('tos.active = :true')
@@ -73,7 +73,7 @@ class TermsOfServiceRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByIdForLocale(int $id, string $locale): TermsOfService|null
+    public function findByIdForLocale(int $id, string $locale): Gdpr|null
     {
         $query = $this->createQueryBuilder('tos')
             ->where('tos.id = :id')

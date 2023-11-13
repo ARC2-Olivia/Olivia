@@ -242,8 +242,8 @@ error:
         questions: You have to add at least one processor to the group.
         submoduleMismatch: One of the selected processors doesn't belong to the same submodule as the group.
     termsOfService:
-        content: Content of the terms of service must not be empty.
-        contentAlt: Translation of the content of the terms of service must not be empty.
+        termsOfService: Content of the terms of service must not be empty.
+        termsOfServiceAlt: Translation of the content of the terms of service must not be empty.
     dataRequest:
         access: Unable to send data access request. Please, refresh the page and try again.
         delete: Unable to send data deletion request. Please, refresh the page and try again.

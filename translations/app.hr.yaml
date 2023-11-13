@@ -71,11 +71,11 @@ page:
         show: Olivia | Detalji praktičnog podmodula
         assessment: Olivia | Provjera iz praktičnog podmodula
     termsOfService:
-        index: Olivia | Ispis uvjeta pružanja usluge
-        new: Olivia | Novi uvjeti pružanja usluge
-        show: Olivia | Uvjeti pružanja usluge
-        edit: Olivia | Uređivanje uvjeta pružanja usluga
-        revise: Olivia | Revizija uvjeta pružanja usluga
+        index: Olivia | Ispis uvjeta pružanja usluge i politika privatnosti
+        new: Olivia | Novi uvjeti pružanja usluge i politika privatnosti
+        show: Olivia | Uvjeti pružanja usluge i politika privatnosti
+        edit: Olivia | Uređivanje uvjeta pružanja usluga i politike privatnosti
+        revise: Olivia | Revizija uvjeta pružanja usluga i politike privatnosti
     gdpr:
         index: Olivia | Zaštita podataka
     profile: Olivia | Profil
@@ -94,7 +94,7 @@ nav:
     users: Korisnici
     instructors: Instruktori
     language: Promjeni jezik
-    termsOfService: Uvjeti pružanja usluge
+    termsOfService: Uvjeti pružanja usluge i Politika privatnosti
     dataRequests: Podatkovni zahtjevi
     files: Datoteke
     home: Naslovna
@@ -323,8 +323,8 @@ form:
                 startedAt: Početak
                 endedAt: Završetak
                 active: Aktivno
-                content: Sadržaj
-                contentAlt: Sadržaj (drugi jezik)
+                termsOfService: Uvjeti korištenja
+                termsOfServiceAlt: Uvjeti korištenja (drugi jezik)
         dataRequest:
             label:
                 id: ID

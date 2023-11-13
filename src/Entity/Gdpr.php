@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TermsOfServiceRepository;
+use App\Repository\GdprRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-#[ORM\Entity(repositoryClass: TermsOfServiceRepository::class)]
-class TermsOfService extends TranslatableEntity
+#[ORM\Entity(repositoryClass: GdprRepository::class)]
+class Gdpr extends TranslatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,7 +29,7 @@ class TermsOfService extends TranslatableEntity
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable]
-    private ?string $content = null;
+    private ?string $termsOfService = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $active = null;
@@ -87,14 +87,14 @@ class TermsOfService extends TranslatableEntity
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getTermsOfService(): ?string
     {
-        return $this->content;
+        return $this->termsOfService;
     }
 
-    public function setContent(?string $content): self
+    public function setTermsOfService(?string $termsOfService): self
     {
-        $this->content = $content;
+        $this->termsOfService = $termsOfService;
 
         return $this;
     }

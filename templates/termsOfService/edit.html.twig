@@ -1,19 +1,19 @@
 {% extends 'termsOfService/_base_tos.html.twig' %}
 {% trans_default_domain 'app' %}
-{% set tosTitle = 'termsOfService.format'|trans({'%version%': termsOfService.version, '%revision%': termsOfService.revision}) %}
+{% set gdprTitle = 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) %}
 
 {% block title %}{{ 'page.termsOfService.edit'|trans }}{% endblock %}
 
 {% block tosContent %}
     <div class="card card-body">
-        <h1 class="card-title">{{ 'termsOfService.title.edit'|trans({'%termsOfService%': tosTitle})|raw }}</h1>
+        <h1 class="card-title">{{ 'termsOfService.title.edit'|trans({'%termsOfService%': gdprTitle})|raw }}</h1>
         {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
-        {{ form_label(form.content) }}
+        {{ form_label(form.termsOfService) }}
         <div class="editor-container mb-3">
             {% include '_partials/ql-editor-toolbar.html.twig' %}
             <div id="editor"></div>
         </div>
-        {{ form_widget(form.content) }}
+        {{ form_widget(form.termsOfService) }}
 
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
@@ -42,13 +42,13 @@
 
         window.addEventListener("load", () => {
             const quill = new Quill("#editor", settings);
-            quill.root.innerHTML = `{{ termsOfService.content|raw }}`;
+            quill.root.innerHTML = `{{ gdpr.termsOfService|raw }}`;
 
             QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
 
-            const form = document.querySelector('form#terms_of_service');
+            const form = document.querySelector('form#gdpr');
             form.onsubmit = function (e) {
-                const content = this.querySelector("#terms_of_service_content");
+                const content = this.querySelector("#gdpr_termsOfService");
                 content.value = quill.root.innerHTML;
             }
         });

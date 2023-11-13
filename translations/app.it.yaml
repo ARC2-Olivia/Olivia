@@ -95,7 +95,7 @@ nav:
     users: Utenti
     instructors: Istruttori
     language: Cambia lingua
-    termsOfService: Termini di servizio
+    termsOfService: Termini di servizio e Informativa sulla privacy
     dataRequests: Richieste di dati
     files: File
     home: Casa
@@ -324,8 +324,8 @@ form:
                 startedAt: Iniziato alle
                 endedAt: Finito alle
                 active: Attivo
-                content: Contenuto
-                contentAlt: Contenuto (lingua alternativa)
+                termsOfService: Termini di servizio
+                termsOfServiceAlt: Termini di servizio (lingua alternativa)
         dataRequest:
             label:
                 id: ID

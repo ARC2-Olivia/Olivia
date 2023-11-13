@@ -242,8 +242,8 @@ error:
         questions: Potrebno je dodati barem jedan procesor u grupu.
         submoduleMismatch: Jedno od odabranih procesora ne pripada istom podmodulu kojem pripada grupa.
     termsOfService:
-        content: Sadržaj uvjeta pružanja usluge ne smije biti prazan.
-        contentAlt: Prijevod sadržaja uvjeta pružanja usluge ne smije biti prazan.
+        termsOfService: Sadržaj uvjeta pružanja usluge ne smije biti prazan.
+        termsOfServiceAlt: Prijevod sadržaja uvjeta pružanja usluge ne smije biti prazan.
     dataRequest:
         access: Zahtjev za pristup podacima nije poslan. Molimo, ponovno učitajte stranicu te pokušajte ponovno.
         delete: Zahtjev za brisanje podataka nije poslan. Molimo, ponovno učitajte stranicu te pokušajte ponovno.

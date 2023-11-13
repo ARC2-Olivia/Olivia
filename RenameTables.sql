@@ -1,3 +1,4 @@
+/* PHASE 1 */
 RENAME TABLE evaluation TO practical_submodule;
 
 RENAME TABLE evaluation_question TO practical_submodule_question;
@@ -31,3 +32,10 @@ ALTER TABLE practical_submodule_assessment_answer RENAME COLUMN evaluation_quest
 
 ALTER TABLE practical_submodule_processor_simple RENAME COLUMN evaluation_evaluator_id TO practical_submodule_processor_id;
 ALTER TABLE practical_submodule_processor_simple RENAME COLUMN evaluation_question_id TO practical_submodule_question_id;
+
+
+/* PHASE 2 */
+RENAME TABLE terms_of_service TO gdpr;
+RENAME TABLE accepted_terms_of_service TO accepted_gdpr;
+ALTER TABLE gdpr RENAME COLUMN content TO terms_of_service;
+ALTER TABLE accepted_gdpr RENAME COLUMN terms_of_service_id TO gdpr_id;

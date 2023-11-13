@@ -2,37 +2,37 @@
 
 namespace App\Security;
 
-use App\Entity\TermsOfService;
+use App\Entity\Gdpr;
 use App\Entity\User;
-use App\Service\TermsOfServiceService;
+use App\Service\GdprService;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class TermsOfServiceVoter extends Voter
+class GdprVoter extends Voter
 {
-    public const EDIT = 'tos_edit';
-    public const ACCEPT = 'tos_accept';
-    public const RESCIND = 'tos_rescind';
+    public const EDIT = 'gdpr_edit';
+    public const ACCEPT = 'gdpr_accept';
+    public const RESCIND = 'gdpr_rescind';
 
     private ?Security $security = null;
-    private ?TermsOfServiceService $termsOfServiceService = null;
+    private ?GdprService $gdprService = null;
 
-    public function __construct(Security $security, TermsOfServiceService $termsOfServiceService)
+    public function __construct(Security $security, GdprService $gdprService)
     {
         $this->security = $security;
-        $this->termsOfServiceService = $termsOfServiceService;
+        $this->gdprService = $gdprService;
     }
 
     protected function supports(string $attribute, $subject): bool
     {
-        return $subject instanceof TermsOfService && in_array($attribute, [self::EDIT, self::ACCEPT, self::RESCIND]);
+        return $subject instanceof Gdpr && in_array($attribute, [self::EDIT, self::ACCEPT, self::RESCIND]);
     }
 
     /**
      * @param string $attribute
-     * @param TermsOfService $subject
+     * @param Gdpr $subject
      * @param TokenInterface $token
      * @return bool
      */
@@ -51,22 +51,22 @@ class TermsOfServiceVoter extends Voter
         return false;
     }
 
-    private function canEdit(TermsOfService $termsOfService)
+    private function canEdit(Gdpr $gdpr): bool
     {
-        return $this->security->isGranted(User::ROLE_USER) && $termsOfService->isActive();
+        return $this->security->isGranted(User::ROLE_USER) && $gdpr->isActive();
     }
 
-    private function canAccept(TermsOfService $termsOfService, User $user)
+    private function canAccept(Gdpr $gdpr, User $user): bool
     {
-        return $this->isRegularUser() && $termsOfService->isActive() && !$this->termsOfServiceService->userAcceptedTermsOfService($user, $termsOfService);
+        return $this->isRegularUser() && $gdpr->isActive() && !$this->gdprService->userAcceptedGdpr($user, $gdpr);
     }
 
-    private function canRescind(TermsOfService $termsOfService, User $user)
+    private function canRescind(Gdpr $gdpr, User $user): bool
     {
-        return $this->isRegularUser() && $this->termsOfServiceService->userAcceptedTermsOfService($user, $termsOfService);
+        return $this->isRegularUser() && $this->gdprService->userAcceptedGdpr($user, $gdpr);
     }
 
-    private function isRegularUser()
+    private function isRegularUser(): bool
     {
         return $this->security->isGranted(User::ROLE_USER) && !$this->security->isGranted('ROLE_ADMIN') && !$this->security->isGranted('ROLE_MODERATOR');
     }

@@ -1,26 +1,26 @@
 {% extends 'termsOfService/_base_tos.html.twig' %}
 {% trans_default_domain 'app' %}
-{% set tosTitle = 'termsOfService.format'|trans({'%version%': termsOfService.version, '%revision%': termsOfService.revision}) %}
+{% set gdprTitle = 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) %}
 
 {% block title %}{{ 'page.termsOfService.edit'|trans }}{% endblock %}
 
 {% block tosContent %}
     <div class="card card-body">
-        <h1 class="card-title">{{ 'termsOfService.title.revise'|trans({'%termsOfService%': tosTitle})|raw }}</h1>
+        <h1 class="card-title">{{ 'termsOfService.title.revise'|trans({'%termsOfService%': gdprTitle})|raw }}</h1>
         {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
-        {{ form_label(form.content) }}
+        {{ form_label(form.termsOfService) }}
         <div class="editor-container mb-3">
             {% include '_partials/ql-editor-toolbar.html.twig' %}
             <div id="editor"></div>
         </div>
-        {{ form_widget(form.content) }}
+        {{ form_widget(form.termsOfService) }}
 
-        {{ form_label(form.contentAlt) }}
+        {{ form_label(form.termsOfServiceAlt) }}
         <div class="editor-container mb-3">
             {% include '_partials/ql-editor-toolbar.html.twig' with {'editorToolbarId': 'editor-toolbar-alt', 'editorHtmlId': 'editor-html-alt'} %}
             <div id="editor-alt"></div>
         </div>
-        {{ form_widget(form.contentAlt) }}
+        {{ form_widget(form.termsOfServiceAlt) }}
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
         </div>
@@ -49,19 +49,19 @@
 
         window.addEventListener("load", () => {
             const quill = new Quill("#editor", settings);
-            quill.root.innerHTML = `{{ content|raw }}`;
+            quill.root.innerHTML = `{{ termsOfService|raw }}`;
 
             const quillAlt = new Quill("#editor-alt", settingsAlt);
-            quillAlt.root.innerHTML = `{{ contentAlt|raw }}`;
+            quillAlt.root.innerHTML = `{{ termsOfServiceAlt|raw }}`;
 
             QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
             QuillUtils.assignHtmlEditingCapabilities(quillAlt, document.getElementById("editor-html-alt"), translation)
 
-            const form = document.querySelector('form#terms_of_service');
+            const form = document.querySelector('form#gdpr');
             form.onsubmit = function (e) {
-                const content = this.querySelector("#terms_of_service_content");
+                const content = this.querySelector("#gdpr_termsOfService");
                 content.value = quill.root.innerHTML;
-                const contentAlt = this.querySelector("#terms_of_service_contentAlt");
+                const contentAlt = this.querySelector("#gdpr_termsOfServiceAlt");
                 contentAlt.value = quillAlt.root.innerHTML;
             }
         });

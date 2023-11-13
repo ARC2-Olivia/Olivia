@@ -8,7 +8,7 @@
         <div class="d-flex justify-content-between align-items-center flex-wrap">
             <h1 class="card-title">{{ 'termsOfService.title.index'|trans }}</h1>
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('tos_new') }}" class="btn btn-theme-white bg-blue btn-sm">{{ mdi('plus') }}</a>
+                <a href="{{ path('gdpr_new') }}" class="btn btn-theme-white bg-blue btn-sm">{{ mdi('plus') }}</a>
             {% endif %}
         </div>
         <div id="tos-table-wrapper"></div>
@@ -23,13 +23,13 @@
                 </tr>
             </thead>
             <tbody>
-                {% for tos in tosList %}
+                {% for gdpr in gdprs %}
                     <tr>
-                        <td>{{ tos.id }}</td>
-                        <td><a href="{{ path('tos_show', {'termsOfService': tos.id}) }}">{{ 'termsOfService.format'|trans({'%version%': tos.version, '%revision%': tos.revision}) }}</a></td>
-                        <td>{{ tos.startedAt|date('d.m.Y.') }}</td>
-                        <td>{{ tos.endedAt is not null ? tos.endedAt|date('d.m.Y.') : '&mdash;' }}</td>
-                        <td>{{ tos.active ? 'common.yes'|trans : 'common.no'|trans }}</td>
+                        <td>{{ gdpr.id }}</td>
+                        <td><a href="{{ path('gdpr_show', {'gdpr': gdpr.id}) }}">{{ 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) }}</a></td>
+                        <td>{{ gdpr.startedAt|date('d.m.Y.') }}</td>
+                        <td>{{ gdpr.endedAt is not null ? gdpr.endedAt|date('d.m.Y.') : '&mdash;' }}</td>
+                        <td>{{ gdpr.active ? 'common.yes'|trans : 'common.no'|trans }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -39,8 +39,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $activated = null;
 
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: AcceptedTermsOfService::class, orphanRemoval: true)]
-    private Collection $acceptedTermsOfServices;
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: AcceptedGdpr::class, orphanRemoval: true)]
+    private Collection $acceptedGdprs;
 
     #[ORM\Column(length: 32, nullable: true)]
     private ?string $passwordResetToken = null;
@@ -59,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->acceptedTermsOfServices = new ArrayCollection();
+        $this->acceptedGdprs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,26 +157,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, AcceptedTermsOfService>
+     * @return Collection<int, AcceptedGdpr>
      */
-    public function getAcceptedTermsOfServices(): Collection
+    public function getAcceptedGdprs(): Collection
     {
-        return $this->acceptedTermsOfServices;
+        return $this->acceptedGdprs;
     }
 
-    public function addAcceptedTermsOfService(AcceptedTermsOfService $acceptedTermsOfService): self
+    public function addAcceptedTermsOfService(AcceptedGdpr $acceptedTermsOfService): self
     {
-        if (!$this->acceptedTermsOfServices->contains($acceptedTermsOfService)) {
-            $this->acceptedTermsOfServices->add($acceptedTermsOfService);
+        if (!$this->acceptedGdprs->contains($acceptedTermsOfService)) {
+            $this->acceptedGdprs->add($acceptedTermsOfService);
             $acceptedTermsOfService->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeAcceptedTermsOfService(AcceptedTermsOfService $acceptedTermsOfService): self
+    public function removeAcceptedTermsOfService(AcceptedGdpr $acceptedTermsOfService): self
     {
-        if ($this->acceptedTermsOfServices->removeElement($acceptedTermsOfService)) {
+        if ($this->acceptedGdprs->removeElement($acceptedTermsOfService)) {
             // set the owning side to null (unless already changed)
             if ($acceptedTermsOfService->getUser() === $this) {
                 $acceptedTermsOfService->setUser(null);

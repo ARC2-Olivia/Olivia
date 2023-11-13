@@ -10,7 +10,7 @@ use App\Form\Security\RegistrationType;
 use App\Security\RegistrationData;
 use App\Service\MailerService;
 use App\Service\SecurityService;
-use App\Service\TermsOfServiceService;
+use App\Service\GdprService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +46,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route("/registration", name: "registration")]
-    public function registration(Request $request, SecurityService $securityService, MailerService $mailerService, TermsOfServiceService $termsOfServiceService): Response
+    public function registration(Request $request, SecurityService $securityService, MailerService $mailerService, GdprService $termsOfServiceService): Response
     {
         if ($this->isGranted(User::ROLE_USER)) return $this->redirectToRoute('index');
         $registration = new RegistrationData();
@@ -69,11 +69,11 @@ class SecurityController extends AbstractController
     }
 
     #[Route("/confirmation/{confirmationToken}", name: "confirmation")]
-    public function confirmation(string $confirmationToken, SecurityService $securityService, TermsOfServiceService $termsOfServiceService): Response
+    public function confirmation(string $confirmationToken, SecurityService $securityService, GdprService $termsOfServiceService): Response
     {
         $user = null;
         $activationSuccess = $securityService->activateUserWithToken($confirmationToken, $user);
-        if ($user !== null) $termsOfServiceService->userAcceptsCurrentlyActiveTermsOfService($user);
+        if ($user !== null) $termsOfServiceService->userAcceptsCurrentlyActiveGdpr($user);
         return $this->render('security/confirmation.html.twig', ['activationSuccess' => $activationSuccess]);
     }
 

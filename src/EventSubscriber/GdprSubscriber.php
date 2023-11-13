@@ -3,7 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\User;
-use App\Service\TermsOfServiceService;
+use App\Service\GdprService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -11,13 +11,13 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 
-class TermsOfServiceSubscriber implements EventSubscriberInterface
+class GdprSubscriber implements EventSubscriberInterface
 {
     private Security $security;
-    private TermsOfServiceService $termsOfServiceService;
+    private GdprService $termsOfServiceService;
     private RouterInterface $router;
 
-    public function __construct(Security $security, TermsOfServiceService $termsOfServiceService, RouterInterface $router)
+    public function __construct(Security $security, GdprService $termsOfServiceService, RouterInterface $router)
     {
         $this->security = $security;
         $this->termsOfServiceService = $termsOfServiceService;
@@ -30,9 +30,9 @@ class TermsOfServiceSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         $route = $event->getRequest()->attributes->get('_route');
 
-        if (!$this->isException($event->getRequest()) && $this->checkRoutes($route) && $this->isRegularUser() && !$this->termsOfServiceService->userAcceptedCurrentlyActiveTermsOfService($user)) {
+        if (!$this->isException($event->getRequest()) && $this->checkRoutes($route) && $this->isRegularUser() && !$this->termsOfServiceService->userAcceptedCurrentlyActiveGdpr($user)) {
             $event->setController(function () {
-                return new RedirectResponse($this->router->generate('tos_active'));
+                return new RedirectResponse($this->router->generate('gdpr_active'));
             });
         }
     }
@@ -49,7 +49,7 @@ class TermsOfServiceSubscriber implements EventSubscriberInterface
 
     private function checkRoutes(?string $route): bool
     {
-        return !in_array($route, ['_wdt', '_profiler', 'tos_active', 'security_logout', 'tos_accept', 'gdpr_index', 'gdpr_access', 'gdpr_delete', 'profile', 'profile_edit_basic_data', 'profile_edit_password']);
+        return !in_array($route, ['_wdt', '_profiler', 'gdpr_active', 'security_logout', 'gdpr_accept', 'gdpr_data_protection', 'gdpr_data_protection_access', 'gdpr_data_protection_delete', 'profile', 'profile_edit_basic_data', 'profile_edit_password']);
     }
 
     private function isException(\Symfony\Component\HttpFoundation\Request $request): bool

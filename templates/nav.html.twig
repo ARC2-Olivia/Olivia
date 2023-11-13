@@ -1,6 +1,6 @@
 {% trans_default_domain 'app' %}
 
-{% set tosPath = is_granted('ROLE_MODERATOR') ? 'tos_index' : 'tos_active' %}
+{% set tosPath = is_granted('ROLE_MODERATOR') ? 'gdpr_index' : 'gdpr_active' %}
 
 <div class="container{% if wide is defined and wide == true %}-fluid{% endif %}">
     <div class="d-flex justify-content-between align-items-center">
@@ -19,7 +19,7 @@
                         <button id="profile-button" class="btn btn-theme-white">{{ app.user.nameOrEmail }}</button>
                         <ul class="dropdown" data-dropdown data-for="#profile-button">
                             <li class="dropdown-item"><a href="{{ path('profile') }}">{{ 'common.profile'|trans }}</a></li>
-                            <li class="dropdown-item"><a href="{{ path('gdpr_index') }}">{{ 'nav.gdpr'|trans }}</a></li>
+                            <li class="dropdown-item"><a href="{{ path('gdpr_data_protection') }}">{{ 'nav.gdpr'|trans }}</a></li>
                             <li class="dropdown-item"><a href="{{ path(tosPath) }}">{{ 'nav.termsOfService'|trans }}</a></li>
                             <li class="dropdown-divider"></li>
                             <li class="dropdown-item"><a href="{{ path('course_index') }}">{{ 'nav.training'|trans }}</a></li>

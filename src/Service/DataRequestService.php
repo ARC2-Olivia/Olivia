@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Entity\DataRequest;
 use App\Entity\Note;
-use App\Entity\TermsOfService;
+use App\Entity\Gdpr;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -149,7 +149,7 @@ class DataRequestService
             ];
             fputcsv($stream, $header, ';');
 
-            $dumpedTermsOfServices = $this->em->getRepository(TermsOfService::class)->dumpForDataAccess($dataRequest->getUser());
+            $dumpedTermsOfServices = $this->em->getRepository(Gdpr::class)->dumpForDataAccess($dataRequest->getUser());
             foreach ($dumpedTermsOfServices as $item) {
                 $row = [$item['id'], $item['version'], $item['revision'], $item['started_at'], $item['ended_at'], $item['content'], $item['active'], $item['accepted_at']];
                 fputcsv($stream, $row, ';');

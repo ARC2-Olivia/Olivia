@@ -17,7 +17,7 @@
                         <p class="mb-3">{{ 'profile.request.access.description'|trans }}</p>
                         <p>{{ 'profile.request.access.disclaimer'|trans }}</p>
                     </div>
-                    <form class="action text-end" action="{{ path('gdpr_access') }}" method="post" onsubmit="return confirm('{{ 'profile.request.access.confirmation'|trans }}')">
+                    <form class="action text-end" action="{{ path('gdpr_data_protection_access') }}" method="post" onsubmit="return confirm('{{ 'profile.request.access.confirmation'|trans }}')">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('data.request.access') }}"/>
                         <button type="submit" class="btn btn-theme-white bg-green">{{ 'profile.request.access.button'|trans }}</button>
                     </form>
@@ -28,7 +28,7 @@
                         <p class="mb-3">{{ 'profile.request.delete.description'|trans }}</p>
                         <p>{{ 'profile.request.delete.disclaimer'|trans }}</p>
                     </div>
-                    <form class="action text-end" action="{{ path('gdpr_delete') }}" method="post" onsubmit="return confirm('{{ 'profile.request.delete.confirmation'|trans }}')">
+                    <form class="action text-end" action="{{ path('gdpr_data_protection_delete') }}" method="post" onsubmit="return confirm('{{ 'profile.request.delete.confirmation'|trans }}')">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('data.request.delete') }}"/>
                         <button type="submit" class="btn btn-theme-white bg-red">{{ 'profile.request.delete.button'|trans }}</button>
                     </form>

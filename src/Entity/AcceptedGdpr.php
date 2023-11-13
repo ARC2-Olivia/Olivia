@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\AcceptedTermsOfServiceRepository;
+use App\Repository\AcceptedGdprRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AcceptedTermsOfServiceRepository::class)]
-class AcceptedTermsOfService
+#[ORM\Entity(repositoryClass: AcceptedGdprRepository::class)]
+class AcceptedGdpr
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,9 +15,9 @@ class AcceptedTermsOfService
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?TermsOfService $termsOfService = null;
+    private ?Gdpr $gdpr = null;
 
-    #[ORM\ManyToOne(inversedBy: 'acceptedTermsOfServices')]
+    #[ORM\ManyToOne(inversedBy: 'acceptedGdpr')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
@@ -29,14 +29,14 @@ class AcceptedTermsOfService
         return $this->id;
     }
 
-    public function getTermsOfService(): ?TermsOfService
+    public function getGdpr(): ?Gdpr
     {
-        return $this->termsOfService;
+        return $this->gdpr;
     }
 
-    public function setTermsOfService(?TermsOfService $termsOfService): self
+    public function setGdpr(?Gdpr $gdpr): self
     {
-        $this->termsOfService = $termsOfService;
+        $this->gdpr = $gdpr;
 
         return $this;
     }

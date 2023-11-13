@@ -242,8 +242,8 @@ error:
         questions: Devi aggiungere almeno un processore al gruppo.
         submoduleMismatch: Uno dei processori selezionati non appartiene allo stesso sottomodulo del gruppo.
     termsOfService:
-        content: Il contenuto dei termini di servizio non deve essere vuoto.
-        contentAlt: La traduzione del contenuto dei termini di servizio non deve essere vuota.
+        termsOfService: Il contenuto dei termini di servizio non deve essere vuoto.
+        termsOfServiceAlt: La traduzione del contenuto dei termini di servizio non deve essere vuota.
     dataRequest:
         access: Impossibile inviare la richiesta di accesso ai dati. Perfavore ricarica la pagina e riprova.
         delete: Impossibile inviare la richiesta di cancellazione dei dati. Perfavore ricarica la pagina e riprova.
