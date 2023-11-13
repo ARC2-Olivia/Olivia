@@ -53,12 +53,14 @@
         </div>
     </div>
 
-    <div class="index-topics">
-        <div class="index-topics--l" style="background-image: url('{{ asset('build/images/index-lock.png') }}')"></div>
-        <div class="index-topics--r">
-            <h3>{{ 'index.topics.title'|trans|raw }}</h3>
-            <p>{{ 'index.topics.text'|trans|raw }}</p>
-            <div><a href="{{ path('topic_index') }}" class="btn btn-thematic-blue-outline">{{ 'index.topics.button'|trans }}</a></div>
+    <div class="container">
+        <div class="index-topics">
+            <div class="index-topics--l" style="background-image: url('{{ asset('build/images/index-lock.png') }}')"></div>
+            <div class="index-topics--r">
+                <h3>{{ 'index.topics.title'|trans|raw }}</h3>
+                <p>{{ 'index.topics.text'|trans|raw }}</p>
+                <div><a href="{{ path('topic_index') }}" class="btn btn-thematic-blue-outline">{{ 'index.topics.button'|trans }}</a></div>
+            </div>
         </div>
     </div>
 
