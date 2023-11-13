@@ -19,6 +19,6 @@ monolog:
             from_email: 'noreply.olivia@foi.hr'
             to_email: 'dfilipovi@foi.unizg.hr'
             subject: 'Olivia Error! %%message%%'
-            level: debug
+            level: critical
             formatter: monolog.formatter.html
             content_type: text/html
