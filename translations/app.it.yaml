@@ -558,6 +558,7 @@ practicalSubmodule:
             consentForm: MODULO DI CONSENSO
         connectedTo: Moduli teorici collegati
         reportTitle: Rapporto - %practicalSubmodule%
+        questionCount: "%number% domande"
 
 practicalSubmoduleQuestion:
     type:

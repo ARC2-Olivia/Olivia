@@ -558,6 +558,7 @@ practicalSubmodule:
             consentForm: CONSENT FORM
         connectedTo: Connected theoretical modules
         reportTitle: Report - %practicalSubmodule%
+        questionCount: "%number% questions"
 
 practicalSubmoduleQuestion:
     type:

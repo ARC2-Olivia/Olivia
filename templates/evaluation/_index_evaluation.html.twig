@@ -29,7 +29,11 @@
         {% endif %}
     </div>
     <div class="card-text flex-grow-1 ps-2 pe-2">
-        <div class="text-black">{{ evaluation.nameOrPublicName }}</div>
+        <div class="d-flex align-items-center course-card-details mb-3">
+            {{ mdi('clipboard-list-outline', 'course-card-details-icon') }}
+            <span>{{ evaluation|total_questions_statistic }}</span>
+        </div>
+        <div class="course-card-name">{{ evaluation.nameOrPublicName }}</div>
     </div>
     <div class="card-actions ps-2 pe-2 pb-2 justify-content-between">
         <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.details'|trans }}</a>
