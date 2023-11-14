@@ -672,10 +672,13 @@ topic:
         text: Being both a virtual educator and an assistant, OLIVIA includes mini online academy offering you a variety of learning modules to enhance your knowledge in the area of GDPR, as well as a practical tool assisting you in practical application of the GDPR-related necessary documents and procedures.
 
 certificate:
-    title: Potvrda o završetku
-    for: tečaja
-    to: za polaznika
-    certifiedAt: Ovjereno
+    title: POTVRDA
+    subtitle: O ZAVRŠETKU
+    for: za
+    workload: Radno opterećenje
+    learningOutcomes: Ishodi učenja
+    issueDate: Datum izdavanja
+    certifiedBy: Ovjerio
 
 extra:
     free: Besplatno

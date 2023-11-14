@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/file-fetch", name: "file_fetch_")]
 class FileFetchController extends AbstractController
@@ -80,13 +81,38 @@ class FileFetchController extends AbstractController
                                       WkhtmltopdfService $wkhtmltopdfService,
                                       \Twig\Environment $twig,
                                       RouterInterface $router,
+                                      TranslatorInterface $translator,
                                       Request $request
     ): Response
     {
+        $defaultLocale = $this->getParameter('locale.default');
+        $alternateLocale = $this->getParameter('locale.alternate');
+
         /** @var User $user */ $user = $this->getUser();
         $courseUrl = str_replace(['http://', 'https://'], '', $router->generate('course_overview', ['course' => $course->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
         $projectDir = $this->getParameter('kernel.project_dir');
-        $html = $twig->render('pdf/certificate.html.twig', ['user' => $user, 'course' => $course, 'link' => $courseUrl, 'projectDir' => $projectDir]);
+        $ui = [];
+        foreach ([$defaultLocale, $alternateLocale] as $locale) {
+            $ui[$locale] = [
+                'title' => $translator->trans('certificate.title', domain: 'app', locale: $locale),
+                'subtitle' => $translator->trans('certificate.subtitle', domain: 'app', locale: $locale),
+                'for' => $translator->trans('certificate.for', domain: 'app', locale: $locale),
+                'workload' => $translator->trans('certificate.workload', domain: 'app', locale: $locale),
+                'learningOutcomes' => $translator->trans('certificate.learningOutcomes', domain: 'app', locale: $locale),
+                'issueDate' => $translator->trans('certificate.issueDate', domain: 'app', locale: $locale),
+                'certifiedBy' => $translator->trans('certificate.certifiedBy', domain: 'app', locale: $locale)
+            ];
+        }
+
+        $html = $twig->render('pdf/certificate.html.twig', [
+            'user' => $user,
+            'course' => $course,
+            'link' => $courseUrl,
+            'projectDir' => $projectDir,
+            'defaultLocale' => $defaultLocale,
+            'alternateLocale' => $alternateLocale,
+            'ui' => $ui
+        ]);
         $pdf = $wkhtmltopdfService->makeLandscapePdf($html);
 
         if ($request->getLocale() !== $this->getParameter('locale.default')) {
