@@ -1,0 +1,37 @@
+<div class="section-1">
+    <div class="title-wrapper">
+        <div class="title">{{ ui.title }}</div>
+        <div class="subtitle">{{ ui.subtitle }}</div>
+    </div>
+    <div class="section-1-divider-top"></div>
+    <div class="section-1-divider-bottom"></div>
+    <div class="ribbon">
+        <div class="ribbon-logo"><img src="{{ projectDir ~ '/public' ~ asset('build/images/header-logo.png') }}"/></div>
+        <div class="ribbon-website">olivia-gdpr-arc.eu</div>
+    </div>
+</div>
+<div class="section-2">
+    <div class="section-2-inner">
+        <div class="certificant">{{ user.nameOrEmail }}</div>
+        <div class="for">{{ ui.for }}</div>
+        <div class="course">{{ course.name }}</div>
+        <div class="mb-cert"><b>{{ ui.workload }}:</b> {{ course|translate_workload(true) }}</div>
+        <div><b>{{ ui.learningOutcomes }}:</b></div>
+        <ul class="mb-cert">
+            {% for lo in course.learningOutcomesAsArray %}
+                <li>{{ lo }}</li>
+            {% endfor %}
+        </ul>
+        <div><b>Link:</b> {{ link }}</div>
+        <div class="issue-date">
+            <div class="issue-date-label">{{ ui.issueDate }}</div>
+            <div>{{ 'now'|date('d/m/Y') }}</div>
+        </div>
+        <div class="certified-by">
+            <div class="certified-by-label">{{ ui.certifiedBy }}</div>
+            <div>ARC II project</div>
+        </div>
+        <div class="section-2-divider"></div>
+    </div>
+</div>
+<div class="section-3"></div>
