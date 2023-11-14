@@ -32,7 +32,7 @@
         <div class="text-black">{{ evaluation.nameOrPublicName }}</div>
     </div>
     <div class="card-actions ps-2 pe-2 pb-2 justify-content-between">
-        <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': evaluation.id}) }}" class="btn {% if displayForTopic %}btn-theme-white bg-blue{% else %}btn-thematic-blue-outline{% endif %}">{{ 'button.details'|trans }}</a>
+        <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.details'|trans }}</a>
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {% if isCompleted %}
