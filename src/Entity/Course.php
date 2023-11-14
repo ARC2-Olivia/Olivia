@@ -61,6 +61,7 @@ class Course extends TranslatableEntity
     private ?int $position = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable]
     private ?string $learningOutcomes = null;
 
     public function __construct()
