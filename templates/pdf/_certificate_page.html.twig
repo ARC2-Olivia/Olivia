@@ -17,11 +17,11 @@
     <div class="section-2-inner">
         <div class="certificant">{{ user.nameOrEmail }}</div>
         <div class="for">{{ strings.for }}</div>
-        <div class="course">{{ course.name }}</div>
-        <div class="mb-cert"><b>{{ strings.workload }}:</b> {{ course|translate_workload(true) }}</div>
+        <div class="course">{{ strings.course.name }}</div>
+        <div class="mb-cert"><b>{{ strings.workload }}:</b> {{ strings.course.workload }}</div>
         <div><b>{{ strings.learningOutcomes }}:</b></div>
         <ul class="mb-cert">
-            {% for lo in course.learningOutcomesAsArray %}
+            {% for lo in strings.course.learningOutcomes %}
                 <li>{{ lo }}</li>
             {% endfor %}
         </ul>
