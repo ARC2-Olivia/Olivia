@@ -6,6 +6,9 @@ use App\Entity\Course;
 use App\Entity\Topic;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
+use Gedmo\Translatable\Query\TreeWalker\TranslationWalker;
+use Gedmo\Translatable\TranslatableListener;
 
 /**
  * @extends ServiceEntityRepository<Course>
@@ -67,5 +70,18 @@ class CourseRepository extends ServiceEntityRepository
             ->orderBy('c.position', 'ASC')
             ->getQuery()->getResult()
         ;
+    }
+
+    public function findByIdForLocale(int $id, string $locale): Course|null
+    {
+        $query = $this->createQueryBuilder('c')
+            ->where('c.id = :id')
+            ->setParameter('id', $id)
+            ->setMaxResults(1)
+            ->getQuery()
+        ;
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, TranslationWalker::class);
+        $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
+        return $query->getOneOrNullResult();
     }
 }
