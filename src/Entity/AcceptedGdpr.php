@@ -17,7 +17,7 @@ class AcceptedGdpr
     #[ORM\JoinColumn(nullable: false)]
     private ?Gdpr $gdpr = null;
 
-    #[ORM\ManyToOne(inversedBy: 'acceptedGdpr')]
+    #[ORM\ManyToOne(inversedBy: 'acceptedGdprs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

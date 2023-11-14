@@ -39,7 +39,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $activated = null;
 
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: AcceptedGdpr::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: AcceptedGdpr::class, orphanRemoval: true)]
     private Collection $acceptedGdprs;
 
     #[ORM\Column(length: 32, nullable: true)]
