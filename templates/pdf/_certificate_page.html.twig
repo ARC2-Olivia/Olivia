@@ -1,7 +1,10 @@
+{% if isAlt is not defined %}
+    {% set isAlt = false %}
+{% endif %}
 <div class="section-1">
-    <div class="title-wrapper">
-        <div class="title">{{ ui.title }}</div>
-        <div class="subtitle">{{ ui.subtitle }}</div>
+    <div class="title-wrapper{% if isAlt %} alt{% endif %}">
+        <div class="title">{{ strings.title }}</div>
+        <div class="subtitle">{{ strings.subtitle }}</div>
     </div>
     <div class="section-1-divider-top"></div>
     <div class="section-1-divider-bottom"></div>
@@ -13,25 +16,25 @@
 <div class="section-2">
     <div class="section-2-inner">
         <div class="certificant">{{ user.nameOrEmail }}</div>
-        <div class="for">{{ ui.for }}</div>
+        <div class="for">{{ strings.for }}</div>
         <div class="course">{{ course.name }}</div>
-        <div class="mb-cert"><b>{{ ui.workload }}:</b> {{ course|translate_workload(true) }}</div>
-        <div><b>{{ ui.learningOutcomes }}:</b></div>
+        <div class="mb-cert"><b>{{ strings.workload }}:</b> {{ course|translate_workload(true) }}</div>
+        <div><b>{{ strings.learningOutcomes }}:</b></div>
         <ul class="mb-cert">
             {% for lo in course.learningOutcomesAsArray %}
                 <li>{{ lo }}</li>
             {% endfor %}
         </ul>
         <div><b>Link:</b> {{ link }}</div>
-        <div class="issue-date">
-            <div class="issue-date-label">{{ ui.issueDate }}</div>
+        <div class="issue-date{% if isAlt %} alt{% endif %}">
+            <div class="issue-date-label">{{ strings.issueDate }}</div>
             <div>{{ 'now'|date('d/m/Y') }}</div>
         </div>
-        <div class="certified-by">
-            <div class="certified-by-label">{{ ui.certifiedBy }}</div>
+        <div class="certified-by{% if isAlt %} alt{% endif %}">
+            <div class="certified-by-label">{{ strings.certifiedBy }}</div>
             <div>ARC II project</div>
         </div>
-        <div class="section-2-divider"></div>
+        <div class="section-2-divider{% if isAlt %} alt{% endif %}"></div>
     </div>
 </div>
 <div class="section-3"></div>

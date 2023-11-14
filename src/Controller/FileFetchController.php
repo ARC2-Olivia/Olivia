@@ -87,32 +87,31 @@ class FileFetchController extends AbstractController
     {
         $defaultLocale = $this->getParameter('locale.default');
         $alternateLocale = $this->getParameter('locale.alternate');
+        $locales = [$defaultLocale, $alternateLocale];
 
         /** @var User $user */ $user = $this->getUser();
-        $courseUrl = str_replace(['http://', 'https://'], '', $router->generate('course_overview', ['course' => $course->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
         $projectDir = $this->getParameter('kernel.project_dir');
-        $ui = [];
-        foreach ([$defaultLocale, $alternateLocale] as $locale) {
-            $ui[$locale] = [
+        $strings = [];
+        foreach ($locales as $locale) {
+            $course = $courseRepository->findByIdForLocale($course->getId(), $locale);
+            $strings[$locale] = [
                 'title' => $translator->trans('certificate.title', domain: 'app', locale: $locale),
                 'subtitle' => $translator->trans('certificate.subtitle', domain: 'app', locale: $locale),
                 'for' => $translator->trans('certificate.for', domain: 'app', locale: $locale),
                 'workload' => $translator->trans('certificate.workload', domain: 'app', locale: $locale),
                 'learningOutcomes' => $translator->trans('certificate.learningOutcomes', domain: 'app', locale: $locale),
                 'issueDate' => $translator->trans('certificate.issueDate', domain: 'app', locale: $locale),
-                'certifiedBy' => $translator->trans('certificate.certifiedBy', domain: 'app', locale: $locale)
+                'certifiedBy' => $translator->trans('certificate.certifiedBy', domain: 'app', locale: $locale),
+                'course' => [
+                    'name' => $course->getName(),
+                    'workload' => $this->translateWorkload($course, $translator, $locale),
+                    'learningOutcomes' => $course->getLearningOutcomesAsArray(),
+                    'link' => str_replace(['http://', 'https://'], '', $router->generate('course_overview', ['course' => $course->getId(), '_locale' => $locale], UrlGeneratorInterface::ABSOLUTE_URL))
+                ]
             ];
         }
 
-        $html = $twig->render('pdf/certificate.html.twig', [
-            'user' => $user,
-            'course' => $course,
-            'link' => $courseUrl,
-            'projectDir' => $projectDir,
-            'defaultLocale' => $defaultLocale,
-            'alternateLocale' => $alternateLocale,
-            'ui' => $ui
-        ]);
+        $html = $twig->render('pdf/certificate.html.twig', ['user' => $user, 'projectDir' => $projectDir, 'defaultLocale' => $defaultLocale, 'alternateLocale' => $alternateLocale, 'strings' => $strings]);
         $pdf = $wkhtmltopdfService->makeLandscapePdf($html);
 
         if ($request->getLocale() !== $this->getParameter('locale.default')) {
@@ -233,5 +232,21 @@ class FileFetchController extends AbstractController
         $response->headers->set('Content-Length', strlen($content));
         $response->headers->set('Content-Disposition', $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename));
         return $response;
+    }
+
+    private function translateWorkload(Course $course, TranslatorInterface $translator, $locale): string
+    {
+        $workload = $course->getEstimatedWorkload();
+        if (!empty($workload)) {
+            list($value, $time) = explode(' ', $workload);
+                switch ($time) {
+                    case 'H': return $value . ' ' . $translator->trans('form.entity.course.choices.estimatedWorkload.hours', [], 'app', $locale);
+                    case 'D': return $value . ' ' . $translator->trans('form.entity.course.choices.estimatedWorkload.days', [], 'app', $locale);
+                    case 'W': return $value . ' ' . $translator->trans('form.entity.course.choices.estimatedWorkload.weeks', [], 'app', $locale);
+                    case 'M': return $value . ' ' . $translator->trans('form.entity.course.choices.estimatedWorkload.months', [], 'app', $locale);
+                    case 'Y': return $value . ' ' . $translator->trans('form.entity.course.choices.estimatedWorkload.years', [], 'app', $locale);
+                }
+        }
+        return '';
     }
 }

@@ -216,10 +216,10 @@
     </head>
     <body>
         <div class="page">
-            {% include 'pdf/_certificate_ui.html.twig' with {'ui': ui[defaultLocale]} %}
+            {% include 'pdf/_certificate_page.html.twig' with {'strings': strings[defaultLocale]} %}
         </div>
         <div class="page">
-            {% include 'pdf/_certificate_ui.html.twig' with {'ui': ui[alternateLocale]} %}
+            {% include 'pdf/_certificate_page.html.twig' with {'strings': strings[alternateLocale], 'isAlt' => true} %}
         </div>
     </body>
 </html>
