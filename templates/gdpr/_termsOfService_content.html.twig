@@ -8,4 +8,4 @@
     <a href="{{ isActive ? path('gdpr_active_privacy_policy') : path('gdpr_privacy_policy', {'gdpr': gdpr.id}) }}" class="btn btn-nav">{{ 'form.entity.termsOfService.label.privacyPolicy'|trans }}</a>
     <button class="btn btn-nav active">{{ 'form.entity.termsOfService.label.termsOfService'|trans }}</button>
 </div>
-<div class="ql-editor">{{ gdpr.termsOfService|raw }}</div>>
+<div class="ql-editor">{{ gdpr.termsOfService|raw }}</div>

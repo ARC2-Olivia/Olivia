@@ -1,6 +1,6 @@
 {% trans_default_domain 'app' %}
 
-{% set tosPath = is_granted('ROLE_MODERATOR') ? 'gdpr_index' : 'gdpr_active' %}
+{% set tosPath = is_granted('ROLE_MODERATOR') ? 'gdpr_index' : 'gdpr_active_privacy_policy' %}
 
 <div class="container{% if wide is defined and wide == true %}-fluid{% endif %}">
     <div class="d-flex justify-content-between align-items-center">
