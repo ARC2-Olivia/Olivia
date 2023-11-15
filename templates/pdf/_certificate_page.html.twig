@@ -6,8 +6,8 @@
         <div class="title">{{ strings.title }}</div>
         <div class="subtitle">{{ strings.subtitle }}</div>
     </div>
-    <div class="section-1-divider-top"></div>
-    <div class="section-1-divider-bottom"></div>
+    <div class="section-1-divider-top{% if isAlt %} alt{% endif %}"></div>
+    <div class="section-1-divider-bottom{% if isAlt %} alt{% endif %}"></div>
     <div class="ribbon">
         <div class="ribbon-logo"><img src="{{ projectDir ~ '/public' ~ asset('build/images/header-logo.png') }}"/></div>
         <div class="ribbon-website">olivia-gdpr-arc.eu</div>
