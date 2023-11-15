@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,22 +66,32 @@ class GdprController extends AbstractController
         return $this->render('termsOfService/new.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route("/show/{gdpr}", name: "show")]
-    #[IsGranted('ROLE_USER')]
-    public function show(Gdpr $gdpr, Request $request): Response
-    {
-        $tab = $request->query->get('tab', '1');
-        if ('1' !== $tab && '2' !== $tab) $tab = '1';
-        return $this->render('termsOfService/show.html.twig', ['gdpr' => $gdpr, 'tab' => $tab]);
-    }
-
-    #[Route("/active", name: "active")]
-    public function active(Request $request): Response
+    #[Route("/privacy-policy/active", name: "active_privacy_policy")]
+    public function activePrivacyPolicy(): Response
     {
         $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
-        $tab = $request->query->get('tab', '1');
-        if ('1' !== $tab && '2' !== $tab) $tab = '1';
-        return $this->render('termsOfService/active.html.twig', ['gdpr' => $gdpr, 'tab' => $tab]);
+        return $this->render('gdpr/activePrivacyPolicy.html.twig', ['gdpr' => $gdpr]);
+    }
+
+    #[Route("/privacy-policy/{gdpr}", name: "privacy_policy")]
+    #[IsGranted('ROLE_USER')]
+    public function privacyPolicy(Gdpr $gdpr): Response
+    {
+        return $this->render('gdpr/privacyPolicy.html.twig', ['gdpr' => $gdpr]);
+    }
+
+    #[Route("/terms-of-service/active", name: "active_terms_of_service")]
+    public function activeTermsOfService(): Response
+    {
+        $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
+        return $this->render('gdpr/activeTermsOfService.html.twig', ['gdpr' => $gdpr]);
+    }
+
+    #[Route("/terms-of-service/{gdpr}", name: "terms_of_service")]
+    #[IsGranted('ROLE_USER')]
+    public function termsOfService(Gdpr $gdpr): Response
+    {
+        return $this->render('gdpr/termsOfService.html.twig', ['gdpr' => $gdpr]);
     }
 
     #[Route("/edit/{gdpr}", name: "edit")]
@@ -96,7 +105,7 @@ class GdprController extends AbstractController
             $this->em->flush();
             $gdprTitle = $this->translator->trans('termsOfService.format', ['%version%' => $gdpr->getVersion(), '%revision%' => $gdpr->getRevision()], 'app');
             $this->addFlash('success', $this->translator->trans('success.termsOfService.edit', ['%termsOfService%' => $gdprTitle], 'message'));
-            return $this->redirectToRoute('gdpr_show', ['gdpr' => $gdpr->getId()]);
+            return $this->redirectToRoute('gdpr_privacy_policy', ['gdpr' => $gdpr->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
@@ -144,7 +153,7 @@ class GdprController extends AbstractController
             $gdprService->userAcceptsGdpr($user, $gdpr);
             $this->addFlash('success', $this->translator->trans('success.termsOfService.accept', [], 'message'));
         }
-        return $this->redirectToRoute('gdpr_show', ['gdpr' => $gdpr->getId()]);
+        return $this->redirectToRoute('gdpr_privacy_policy', ['gdpr' => $gdpr->getId()]);
     }
 
     #[Route("/rescind/{gdpr}", name: "rescind")]
@@ -158,7 +167,7 @@ class GdprController extends AbstractController
             $gdprService->userRescindsGdpr($user, $gdpr);
             $this->addFlash('success', $this->translator->trans('success.termsOfService.rescind', [], 'message'));
         }
-        return $this->redirectToRoute('gdpr_active');
+        return $this->redirectToRoute('gdpr_active_privacy_policy');
     }
 
     #[Route("/data-protection", name: "data_protection")]
@@ -220,7 +229,7 @@ class GdprController extends AbstractController
         /** @var Gdpr $gdpr */
         foreach ($this->em->getRepository(Gdpr::class)->findBy([], ['id' => 'DESC']) as $gdpr) {
             $tosTitle = $this->translator->trans('termsOfService.format', ['%version%' => $gdpr->getVersion(), '%revision%' => $gdpr->getRevision()], 'app');
-            $tosUrl = $this->generateUrl('gdpr_show', ['gdpr' => $gdpr->getId()]);
+            $tosUrl = $this->generateUrl('gdpr_privacy_policy', ['gdpr' => $gdpr->getId()]);
             $data[] = [
                 $this->translator->trans('form.entity.termsOfService.label.id', [], 'app') => $gdpr->getId(),
                 $this->translator->trans('form.entity.termsOfService.label.title', [], 'app') => "<a href='$tosUrl'>$tosTitle</a>",

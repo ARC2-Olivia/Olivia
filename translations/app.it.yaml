@@ -191,6 +191,8 @@ form:
                 position: Posizione
                 learningOutcomes: Risultati dell'apprendimento (scrivi ogni risultato di apprendimento in una nuova riga)
                 learningOutcomesAlt: Risultati dell'apprendimento (lingua alternativa)
+                certificateInfo: Informazioni sul certificato
+                certificateInfoAlt: Informazioni sul certificato (lingua alternativa)
             placeholder:
                 name: Nome del corso
                 publicName: ad esempio, cos&#39;è la politica sulla privacy e perché è importante?
@@ -199,6 +201,7 @@ form:
                 tags: GDPR, IT, Sicurezza,...
                 instructor: Scegli un istruttore...
                 learningOutcomes: Scrivi ogni risultato di apprendimento in una nuova riga.
+                certificateInfo: Scrivere le informazioni relative al certificato.
             choices:
                 estimatedWorkload:
                     hours: ore)
@@ -446,6 +449,10 @@ course:
             type: Corso online di autoapprendimento
             certification: Certificato al termine
             enrollment: Accesso libero, senza chiave di registrazione
+    overview:
+        aboutTopic: Informazioni sull'argomento
+        learningOutcomes: Risultati dell'apprendimento
+        certificateInfo: Informazioni sulla certificazione
 
 lesson:
     type:
@@ -637,8 +644,8 @@ termsOfService:
         acceptedAt: Accettato a
     extra:
         revise: Rivedere
-        accept: Accetta i termini di servizio
-        rescind: Rescindere i termini di servizio
+        accept: Accetta
+        rescind: Rescindere
 
 dataRequest:
     title:

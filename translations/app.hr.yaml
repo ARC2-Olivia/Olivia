@@ -190,6 +190,8 @@ form:
                 position: Redni broj
                 learningOutcomes: Ishodi učenja (svaki ishod učenja stavite u zasebni red.)
                 learningOutcomesAlt: Ishodi učenja (drugi jezik)
+                certificateInfo: Informacije o certifikatu
+                certificateInfoAlt: Informacije o certifikatu (drugi jezik)
             placeholder:
                 name: Naziv tečaja
                 publicName: npr. Što je politika privatnosti i zašto je morate imati?
@@ -198,6 +200,7 @@ form:
                 tags: GDPR,IT,Sigurnost,...
                 instructor: Odaberi instruktora...
                 learningOutcomes: Svaki ishod učenja stavite u zasebni red.
+                certificateInfo: Unesite informacije vezane uz certifikat.
             choices:
                 estimatedWorkload:
                     hours: sati
@@ -444,6 +447,10 @@ course:
             type: Internetski tečaj s vlastitim tempom
             certification: Certifikat po završetku
             enrollment: Slobodan pristup, bez ključa za upis
+    overview:
+        aboutTopic: O temi
+        learningOutcomes: Ishodi učenja
+        certificateInfo: Informacije o certifikaciji
 
 lesson:
     type:
@@ -641,8 +648,8 @@ termsOfService:
         acceptedAt: Vrijeme prihvaćanja
     extra:
         revise: Revizija
-        accept: Prihvati Uvjete pružanja usluge
-        rescind: Raskini prihvaćene Uvjete pružanja usluge
+        accept: Prihvati
+        rescind: Raskini
 
 dataRequest:
     title:

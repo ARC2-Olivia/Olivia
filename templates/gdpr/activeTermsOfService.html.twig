@@ -29,11 +29,6 @@
                 <a href="{{ path('gdpr_data_protection') }}" class="btn btn-theme-white bg-blue">{{ 'nav.gdpr'|trans }}</a>
             {% endif %}
         </div>
-        {% include 'termsOfService/_show_content.html.twig' %}
+        {% include 'gdpr/_termsOfService_content.html.twig' with {'isActive': true} %}
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('tabs.simple') }}
 {% endblock %}
