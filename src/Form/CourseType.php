@@ -64,7 +64,18 @@ class CourseType extends AbstractType
                     ])
                 ]
             ])
-            ->add('description', HiddenType::class, ['label' => 'form.entity.course.label.description'])
+            ->add('description', TextareaType::class, [
+                'label' => 'form.entity.course.label.description',
+                'attr' => ['class' => 'form-textarea mb-3']
+            ])
+            ->add('learningOutcomes', TextareaType::class, [
+                'label' => 'form.entity.course.label.learningOutcomes',
+                'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.learningOutcomes', [], 'app')]
+            ])
+            ->add('certificateInfo', TextareaType::class, [
+                'label' => 'form.entity.course.label.certificateInfo',
+                'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.certificateInfo', [], 'app')]
+            ])
             ->add('estimatedWorkload', WorkloadType::class, [
                 'label' => 'form.entity.course.label.estimatedWorkload',
                 'allowed_workload_times' => $allowedWorkloadTimes,
@@ -94,10 +105,6 @@ class CourseType extends AbstractType
                 'label' => 'form.entity.course.label.position',
                 'attr' => ['class' => 'form-input mb-3', 'inputmode' => 'numeric']
             ])
-            ->add('learningOutcomes', TextareaType::class, [
-                'label' => 'form.entity.course.label.learningOutcomes',
-                'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.learningOutcomes', [], 'app')]
-            ])
         ;
         $builder->get('tags')->addModelTransformer(new SimpleArrayToStringTransformer());
 
@@ -113,7 +120,21 @@ class CourseType extends AbstractType
                     'label' => 'form.entity.course.label.publicNameAlt',
                     'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.publicName', [], 'app')]
                 ])
-                ->add('descriptionAlt', HiddenType::class, ['mapped' => false, 'label' => 'form.entity.course.label.descriptionAlt'])
+                ->add('descriptionAlt', TextareaType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.course.label.descriptionAlt',
+                    'attr' => ['class' => 'form-textarea mb-3']
+                ])
+                ->add('learningOutcomesAlt', TextareaType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.course.label.learningOutcomesAlt',
+                    'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.learningOutcomes', [], 'app')]
+                ])
+                ->add('certificateInfoAlt', TextareaType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.course.label.certificateInfoAlt',
+                    'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.certificateInfo', [], 'app')]
+                ])
                 ->add('tagsAlt', TextType::class, [
                     'mapped' => false,
                     'label' => 'form.entity.course.label.tagsAlt',

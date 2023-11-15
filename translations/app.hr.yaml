@@ -190,6 +190,8 @@ form:
                 position: Redni broj
                 learningOutcomes: Ishodi učenja (svaki ishod učenja stavite u zasebni red.)
                 learningOutcomesAlt: Ishodi učenja (drugi jezik)
+                certificateInfo: Informacije o certifikatu
+                certificateInfoAlt: Informacije o certifikatu (drugi jezik)
             placeholder:
                 name: Naziv tečaja
                 publicName: npr. Što je politika privatnosti i zašto je morate imati?
@@ -198,6 +200,7 @@ form:
                 tags: GDPR,IT,Sigurnost,...
                 instructor: Odaberi instruktora...
                 learningOutcomes: Svaki ishod učenja stavite u zasebni red.
+                certificateInfo: Unesite informacije vezane uz certifikat.
             choices:
                 estimatedWorkload:
                     hours: sati

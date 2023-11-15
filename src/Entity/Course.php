@@ -64,6 +64,10 @@ class Course extends TranslatableEntity
     #[Gedmo\Translatable]
     private ?string $learningOutcomes = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable]
+    private ?string $certificateInfo = null;
+
     public function __construct()
     {
         $this->instructors = new ArrayCollection();
@@ -349,6 +353,18 @@ class Course extends TranslatableEntity
     public function setLearningOutcomes(?string $learningOutcomes): self
     {
         $this->learningOutcomes = $learningOutcomes;
+
+        return $this;
+    }
+
+    public function getCertificateInfo(): ?string
+    {
+        return $this->certificateInfo;
+    }
+
+    public function setCertificateInfo(?string $certificateInfo): self
+    {
+        $this->certificateInfo = $certificateInfo;
 
         return $this;
     }

@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -106,7 +105,7 @@ class GdprController extends AbstractController
             $this->em->flush();
             $gdprTitle = $this->translator->trans('termsOfService.format', ['%version%' => $gdpr->getVersion(), '%revision%' => $gdpr->getRevision()], 'app');
             $this->addFlash('success', $this->translator->trans('success.termsOfService.edit', ['%termsOfService%' => $gdprTitle], 'message'));
-            return $this->redirectToRoute('gdpr_show', ['gdpr' => $gdpr->getId()]);
+            return $this->redirectToRoute('gdpr_privacy_policy', ['gdpr' => $gdpr->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
@@ -230,7 +229,7 @@ class GdprController extends AbstractController
         /** @var Gdpr $gdpr */
         foreach ($this->em->getRepository(Gdpr::class)->findBy([], ['id' => 'DESC']) as $gdpr) {
             $tosTitle = $this->translator->trans('termsOfService.format', ['%version%' => $gdpr->getVersion(), '%revision%' => $gdpr->getRevision()], 'app');
-            $tosUrl = $this->generateUrl('gdpr_show', ['gdpr' => $gdpr->getId()]);
+            $tosUrl = $this->generateUrl('gdpr_privacy_policy', ['gdpr' => $gdpr->getId()]);
             $data[] = [
                 $this->translator->trans('form.entity.termsOfService.label.id', [], 'app') => $gdpr->getId(),
                 $this->translator->trans('form.entity.termsOfService.label.title', [], 'app') => "<a href='$tosUrl'>$tosTitle</a>",

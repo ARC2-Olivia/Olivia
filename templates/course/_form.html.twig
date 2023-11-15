@@ -17,18 +17,24 @@
     {{ form_widget(form.image) }}
 
     {{ form_label(form.description) }}
-    <div class="editor-container mb-3">
-        {% include '_partials/ql-editor-toolbar.html.twig' %}
-        <div id="editor"></div>
-    </div>
     {{ form_widget(form.description) }}
     {% if form.descriptionAlt is defined %}
         {{ form_label(form.descriptionAlt) }}
-        <div class="editor-container mb-3">
-            {% include '_partials/ql-editor-toolbar.html.twig' with {'editorToolbarId': 'editor-toolbar-alt', 'editorHtmlId': 'editor-html-alt'} %}
-            <div id="editor-alt"></div>
-        </div>
         {{ form_widget(form.descriptionAlt) }}
+    {% endif %}
+
+    {{ form_label(form.learningOutcomes) }}
+    {{ form_widget(form.learningOutcomes) }}
+    {% if form.learningOutcomesAlt is defined %}
+        {{ form_label(form.learningOutcomesAlt) }}
+        {{ form_widget(form.learningOutcomesAlt) }}
+    {% endif %}
+
+    {{ form_label(form.certificateInfo) }}
+    {{ form_widget(form.certificateInfo) }}
+    {% if form.certificateInfoAlt is defined %}
+        {{ form_label(form.certificateInfoAlt) }}
+        {{ form_widget(form.certificateInfoAlt) }}
     {% endif %}
 
     {{ form_label(form.estimatedWorkload) }}
@@ -52,7 +58,4 @@
 
     {{ form_label(form.position) }}
     {{ form_widget(form.position) }}
-
-    {{ form_label(form.learningOutcomes) }}
-    {{ form_widget(form.learningOutcomes) }}
 {{ form_end(form) }}

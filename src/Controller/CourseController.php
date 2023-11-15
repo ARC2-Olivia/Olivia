@@ -248,6 +248,18 @@ class CourseController extends BaseController
             $translated = true;
         }
 
+        $learningOutcomesAlt = $form->get('learningOutcomesAlt')->getData();
+        if ($learningOutcomesAlt !== null && trim($learningOutcomesAlt) !== '') {
+            $translationRepository->translate($course, 'learningOutcomes', $localeAlt, trim($learningOutcomesAlt));
+            $translated = true;
+        }
+
+        $certificateInfoAlt = $form->get('certificateInfoAlt')->getData();
+        if ($certificateInfoAlt !== null && trim($certificateInfoAlt) !== '') {
+            $translationRepository->translate($course, 'certificateInfo', $localeAlt, trim($certificateInfoAlt));
+            $translated = true;
+        }
+
         $tagsAlt = $form->get('tagsAlt')->getData();
         if ($tagsAlt !== null && count($tagsAlt) > 0) {
             $translationRepository->translate($course, 'tags', $localeAlt, $tagsAlt);

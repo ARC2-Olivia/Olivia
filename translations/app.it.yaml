@@ -191,6 +191,8 @@ form:
                 position: Posizione
                 learningOutcomes: Risultati dell'apprendimento (scrivi ogni risultato di apprendimento in una nuova riga)
                 learningOutcomesAlt: Risultati dell'apprendimento (lingua alternativa)
+                certificateInfo: Informazioni sul certificato
+                certificateInfoAlt: Informazioni sul certificato (lingua alternativa)
             placeholder:
                 name: Nome del corso
                 publicName: ad esempio, cos&#39;è la politica sulla privacy e perché è importante?
@@ -199,6 +201,7 @@ form:
                 tags: GDPR, IT, Sicurezza,...
                 instructor: Scegli un istruttore...
                 learningOutcomes: Scrivi ogni risultato di apprendimento in una nuova riga.
+                certificateInfo: Scrivere le informazioni relative al certificato.
             choices:
                 estimatedWorkload:
                     hours: ore)

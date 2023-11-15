@@ -191,6 +191,8 @@ form:
                 position: Position
                 learningOutcomes: Learning outcomes (write each learning outcome in a new line)
                 learningOutcomesAlt: Learning outcomes (alternate language)
+                certificateInfo: Certificate information
+                certificateInfoAlt: Certificate information (alternate language)
             placeholder:
                 name: Course name
                 publicName: e.g. What is privacy policy and why is it important?
@@ -199,6 +201,7 @@ form:
                 tags: GDPR,IT,Security,...
                 instructor: Choose an instructor...
                 learningOutcomes: Write each learning outcome in a new line.
+                certificateInfo: Write information regarding the certificate.
             choices:
                 estimatedWorkload:
                     hours: hour(s)
