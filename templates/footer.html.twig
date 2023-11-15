@@ -4,7 +4,7 @@
     <div class="container footer-column">
         <div>{{ 'footer.contact'|trans|raw }}</div>
         <div>{{ 'footer.text'|trans }}</div>
-        <div><a href="{{ path('gdpr_active') }}" target="_blank">{{ 'footer.termsOfService'|trans }}</a></div>
+        <div>{{ 'footer.gdpr'|trans({'%privacyPolicyUrl%': path('gdpr_active'), '%termsOfServiceUrl%': path('gdpr_active', {'tab': '2'})})|raw }}</div>
     </div>
 </div>
 
