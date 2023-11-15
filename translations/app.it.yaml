@@ -449,6 +449,10 @@ course:
             type: Corso online di autoapprendimento
             certification: Certificato al termine
             enrollment: Accesso libero, senza chiave di registrazione
+    overview:
+        aboutTopic: Informazioni sull'argomento
+        learningOutcomes: Risultati dell'apprendimento
+        certificateInfo: Informazioni sulla certificazione
 
 lesson:
     type:

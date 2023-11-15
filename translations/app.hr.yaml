@@ -447,6 +447,10 @@ course:
             type: Internetski tečaj s vlastitim tempom
             certification: Certifikat po završetku
             enrollment: Slobodan pristup, bez ključa za upis
+    overview:
+        aboutTopic: O temi
+        learningOutcomes: Ishodi učenja
+        certificateInfo: Informacije o certifikaciji
 
 lesson:
     type:

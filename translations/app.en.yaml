@@ -449,6 +449,10 @@ course:
             type: Self-paced online course
             certification: Certificate on completion
             enrollment: Free access, without enrollment key
+    overview:
+        aboutTopic: About topic
+        learningOutcomes: Learning outcomes
+        certificateInfo: Certification information
 
 lesson:
     type:
