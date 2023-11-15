@@ -40,6 +40,7 @@ common:
     correct: Corretto
     incorrect: Errato
     details: Dettagli
+    description: Descrizione
 
 button:
     details: Dettagli

@@ -39,6 +39,7 @@ common:
     correct: Točno
     incorrect: Netočno
     details: Detalji
+    description: Opis
 
 button:
     details: Detalji

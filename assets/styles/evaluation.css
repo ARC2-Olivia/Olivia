@@ -340,6 +340,16 @@ ul.mod--ps-pages {
     margin-top: -8px;
 }
 
+.evaluation-assessment-datum-answers.simple-style-pt1 {
+    border-bottom-color: var(--app-color-light-red);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0
+}
+
+.evaluation-assessment-datum-answers.simple-style-pt2 {
+    border-color: var(--app-color-light-red);
+}
+
 .evaluation-assessment-datum-dependee-message {
     padding: 8px 16px;
     border-radius: 4px;
