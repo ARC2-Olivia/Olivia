@@ -71,8 +71,8 @@ class GdprController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function show(Gdpr $gdpr, Request $request): Response
     {
-        $tab = $request->query->get('tab', 1);
-        if (1 !== $tab && 2 !== $tab) $tab = 1;
+        $tab = $request->query->get('tab', '1');
+        if ('1' !== $tab && '2' !== $tab) $tab = '1';
         return $this->render('termsOfService/show.html.twig', ['gdpr' => $gdpr, 'tab' => $tab]);
     }
 
