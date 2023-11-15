@@ -1,0 +1,8 @@
+{% trans_default_domain 'app' %}
+
+<div class="d-flex justify-content-center align-items-center my-3">
+    <button class="btn btn-nav{% if tab == 1 %} active{% endif %}" data-tab-trigger="#content-pp">{{ 'form.entity.termsOfService.label.privacyPolicy'|trans }}</button>
+    <button class="btn btn-nav{% if tab == 2 %} active{% endif %}" data-tab-trigger="#content-tos">{{ 'form.entity.termsOfService.label.termsOfService'|trans }}</button>
+</div>
+<div id="content-pp" class="ql-editor{% if tab != 1 %} hide{% endif %}" data-tab>{{ gdpr.privacyPolicy|raw }}</div>
+<div id="content-tos" class="ql-editor{% if tab != 2 %} hide{% endif %}" data-tab>{{ gdpr.termsOfService|raw }}</div>

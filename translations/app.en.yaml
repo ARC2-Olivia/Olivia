@@ -95,7 +95,7 @@ nav:
     users: Users
     instructors: Instructors
     language: Switch language
-    termsOfService: Terms of service and Privacy policy
+    termsOfService: Privacy policy and Terms of service
     dataRequests: Data requests
     files: Files
     home: Home
@@ -105,7 +105,7 @@ nav:
 footer:
     contact: "Contact: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
     text: This tool is developed within ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs project funded by European Commission.
-    termsOfService: Terms of service and privacy policy
+    gdpr: "<a href='%privacyPolicyUrl%'>Privacy policy</a> and <a href='%termsOfServiceUrl%'>Terms of service</a>"
 
 index:
     about:

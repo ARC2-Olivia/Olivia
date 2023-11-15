@@ -69,16 +69,20 @@ class GdprController extends AbstractController
 
     #[Route("/show/{gdpr}", name: "show")]
     #[IsGranted('ROLE_USER')]
-    public function show(Gdpr $gdpr): Response
+    public function show(Gdpr $gdpr, Request $request): Response
     {
-        return $this->render('termsOfService/show.html.twig', ['gdpr' => $gdpr]);
+        $tab = $request->query->get('tab', 1);
+        if (1 !== $tab && 2 !== $tab) $tab = 1;
+        return $this->render('termsOfService/show.html.twig', ['gdpr' => $gdpr, 'tab' => $tab]);
     }
 
     #[Route("/active", name: "active")]
-    public function active(): Response
+    public function active(Request $request): Response
     {
         $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
-        return $this->render('termsOfService/active.html.twig', ['gdpr' => $gdpr]);
+        $tab = $request->query->get('tab', '1');
+        if ('1' !== $tab && '2' !== $tab) $tab = '1';
+        return $this->render('termsOfService/active.html.twig', ['gdpr' => $gdpr, 'tab' => $tab]);
     }
 
     #[Route("/edit/{gdpr}", name: "edit")]

@@ -94,7 +94,7 @@ nav:
     users: Korisnici
     instructors: Instruktori
     language: Promjeni jezik
-    termsOfService: Uvjeti pružanja usluge i Politika privatnosti
+    termsOfService: Politika priovatnosti i Uvjeti pružanja usluge
     dataRequests: Podatkovni zahtjevi
     files: Datoteke
     home: Naslovna
@@ -104,7 +104,7 @@ nav:
 footer:
     contact: "Kontakt: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
     text: Alat je razvijen u sklopu projekta ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs financiran od strane Europske komisije.
-    termsOfService: Uvjeti pružanja usluge i politika privatnosti
+    gdpr: "<a href='%privacyPolicyUrl%'>Politika privatnosti</a> i <a href='%termsOfServiceUrl%'>Uvjeti pružanja usluge</a>"
 
 index:
     about:

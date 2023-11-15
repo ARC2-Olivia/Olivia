@@ -29,12 +29,7 @@
                 <a href="{{ path('gdpr_data_protection') }}" class="btn btn-theme-white bg-blue">{{ 'nav.gdpr'|trans }}</a>
             {% endif %}
         </div>
-        <div class="d-flex justify-content-center align-items-center my-3">
-            <button class="btn btn-nav active" data-tab-trigger="#content-tos">{{ 'form.entity.termsOfService.label.termsOfService'|trans }}</button>
-            <button class="btn btn-nav" data-tab-trigger="#content-pp">{{ 'form.entity.termsOfService.label.privacyPolicy'|trans }}</button>
-        </div>
-        <div id="content-tos" class="ql-editor" data-tab>{{ gdpr.termsOfService|raw }}</div>
-        <div id="content-pp" class="ql-editor hide" data-tab>{{ gdpr.privacyPolicy|raw }}</div>
+        {% include 'termsOfService/_show_content.html.twig' %}
     </div>
 {% endblock %}
 
