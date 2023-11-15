@@ -641,8 +641,8 @@ termsOfService:
         acceptedAt: Vrijeme prihvaćanja
     extra:
         revise: Revizija
-        accept: Prihvati Uvjete pružanja usluge
-        rescind: Raskini prihvaćene Uvjete pružanja usluge
+        accept: Prihvati
+        rescind: Raskini
 
 dataRequest:
     title:

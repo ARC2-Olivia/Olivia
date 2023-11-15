@@ -644,8 +644,8 @@ termsOfService:
         acceptedAt: Accepted at
     extra:
         revise: Revise
-        accept: Accept terms of service
-        rescind: Rescind terms of service
+        accept: Accept
+        rescind: Rescind
 
 dataRequest:
     title:

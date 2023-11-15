@@ -1,0 +1,11 @@
+{% trans_default_domain 'app' %}
+
+{% if isActive is not defined %}
+    {% set isActive = false %}
+{% endif %}
+
+<div class="d-flex justify-content-center align-items-center my-3">
+    <button class="btn btn-nav active">{{ 'form.entity.termsOfService.label.privacyPolicy'|trans }}</button>
+    <a href="{{ isActive ? path('gdpr_active_terms_of_service') : path('gdpr_terms_of_service', {'gdpr': gdpr.id}) }}" class="btn btn-nav">{{ 'form.entity.termsOfService.label.termsOfService'|trans }}</a>
+</div>
+<div class="ql-editor">{{ gdpr.privacyPolicy|raw }}</div>

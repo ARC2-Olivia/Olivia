@@ -637,8 +637,8 @@ termsOfService:
         acceptedAt: Accettato a
     extra:
         revise: Rivedere
-        accept: Accetta i termini di servizio
-        rescind: Rescindere i termini di servizio
+        accept: Accetta
+        rescind: Rescindere
 
 dataRequest:
     title:
