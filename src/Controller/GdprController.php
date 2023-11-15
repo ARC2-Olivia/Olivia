@@ -154,7 +154,7 @@ class GdprController extends AbstractController
             $gdprService->userAcceptsGdpr($user, $gdpr);
             $this->addFlash('success', $this->translator->trans('success.termsOfService.accept', [], 'message'));
         }
-        return $this->redirectToRoute('gdpr_show', ['gdpr' => $gdpr->getId()]);
+        return $this->redirectToRoute('gdpr_privacy_policy', ['gdpr' => $gdpr->getId()]);
     }
 
     #[Route("/rescind/{gdpr}", name: "rescind")]
@@ -168,7 +168,7 @@ class GdprController extends AbstractController
             $gdprService->userRescindsGdpr($user, $gdpr);
             $this->addFlash('success', $this->translator->trans('success.termsOfService.rescind', [], 'message'));
         }
-        return $this->redirectToRoute('gdpr_active');
+        return $this->redirectToRoute('gdpr_active_privacy_policy');
     }
 
     #[Route("/data-protection", name: "data_protection")]
