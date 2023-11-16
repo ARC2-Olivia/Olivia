@@ -47,8 +47,8 @@ class RegistrationType extends AbstractType
                 'first_options' => ['label' => $this->translator->trans('form.security.registration.label.password', [], 'app')],
                 'second_options' => ['label' => $this->translator->trans('form.security.registration.label.confirmPassword', [], 'app')]
             ])
-            ->add('acceptedTermsOfService', CheckboxType::class, [
-                'label' => $this->translator->trans('form.security.registration.label.termsOfService', ['%url%' => $this->router->generate('gdpr_active')], 'app')
+            ->add('acceptedGdpr', CheckboxType::class, [
+                'label' => $this->translator->trans('form.security.registration.label.termsOfService', ['%url%' => $this->router->generate('gdpr_active_privacy_policy')], 'app')
             ])
         ;
     }
