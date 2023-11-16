@@ -21,7 +21,7 @@ class RegistrationData
     private ?string $plainPassword = null;
 
     #[Assert\IsTrue(message: 'error.registration.termsOfService')]
-    private ?bool $acceptedTermsOfService = null;
+    private ?bool $acceptedGdpr = null;
 
     public function getFirstName(): ?string
     {
@@ -67,14 +67,14 @@ class RegistrationData
         return $this;
     }
 
-    public function getAcceptedTermsOfService(): ?bool
+    public function getAcceptedGdpr(): ?bool
     {
-        return $this->acceptedTermsOfService;
+        return $this->acceptedGdpr;
     }
 
-    public function setAcceptedTermsOfService(?bool $acceptedTermsOfService): self
+    public function setAcceptedGdpr(?bool $acceptedGdpr): self
     {
-        $this->acceptedTermsOfService = $acceptedTermsOfService;
+        $this->acceptedGdpr = $acceptedGdpr;
         return $this;
     }
 }
