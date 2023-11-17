@@ -233,7 +233,7 @@ error:
             invalid: Početak očekivanog vrijednosnog raspona mora biti manji ili jednak (≤) kraju očekivanog vrijednosnog raspona.
         resultText: Procesoru je potrebno unijeti rezultirajući tekst koji će se generirati nakon uspješne obrade.
     practicalSubmoduleAssessment:
-        start: Upitnik se nije mogla pokrenuti. Molimo, pokušajte ponovno.
+        start: Upitnik se nije mogao pokrenuti. Molimo, pokušajte ponovno.
         edit: Upitnik se nije mogao učitati za uređivanje. Molimo, pokušajte ponovno.
         finish: Došlo je do greške u obradi vašeg upitnika. Molimo, ponovno popunite upitnik.
     practicalSubmodulePage:
