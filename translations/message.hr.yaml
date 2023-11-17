@@ -40,7 +40,7 @@ success:
         new: Novi procesor je dodan u podmodul.
         edit: Procesor je uređen.
     practicalSubmoduleAssessment:
-        finish: Vaš upitnik je spremljen. Rezultate upitnika možete vidjeti klikom na gumb <i>Rezultati</i> u kartici <i>Upitnik</i>.
+        finish: Vaš upitnik je spremljen. Rezultate upitnika možete vidjeti klikom na gumb <i>Pregled izvještaja</i> u kartici <i>Upitnik</i>.
     practicalSubmodulePage:
         new: Nova stranica je dodana u podmodul.
         edit: Stranice je uređena.

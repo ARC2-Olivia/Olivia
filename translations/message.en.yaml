@@ -40,7 +40,7 @@ success:
         new: A new processor has been created for the submodule.
         edit: Processor has been updated.
     practicalSubmoduleAssessment:
-        finish: Your questionnaire has been saved. You can view the results by clicking the <i>Results</i> button from the <i>Questionnaire</i> tab.
+        finish: Your questionnaire has been saved. You can view the results by clicking the <i>View report</i> button from the <i>Questionnaire</i> tab.
     practicalSubmodulePage:
         new: A new page has been added to the submodule.
         edit: Page has been updated
