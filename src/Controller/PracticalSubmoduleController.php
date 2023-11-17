@@ -208,7 +208,7 @@ class PracticalSubmoduleController extends BaseController
             'assessmentLastSubmittedAt' => $assessmentLastSubmittedAt,
             'assessmentCompleted' => $assessmentCompleted,
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE),
-            'questionCount' => $this->em->getRepository(PracticalSubmoduleQuestion::class)->count(['practicalSubmodule' => $practicalSubmodule])
+            'questionCount' => $this->em->getRepository(PracticalSubmoduleQuestion::class)->countActualQuestions($practicalSubmodule)
         ]);
     }
 

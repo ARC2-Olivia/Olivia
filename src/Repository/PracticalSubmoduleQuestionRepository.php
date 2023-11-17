@@ -79,4 +79,16 @@ class PracticalSubmoduleQuestionRepository extends ServiceEntityRepository
 
         return array_map(function ($item) { return $item['questionText']; }, $qb->getQuery()->getResult());
     }
+
+    public function countActualQuestions(PracticalSubmodule $practicalSubmodule): int
+    {
+        return $this->createQueryBuilder('psq')
+            ->select('COUNT(psq.id)')
+            ->where('psq.type != :type')
+            ->andWhere('psq.practicalSubmodule = :submodule')
+            ->setParameter('type', PracticalSubmoduleQuestion::TYPE_STATIC_TEXT)
+            ->setParameter('submodule', $practicalSubmodule)
+            ->getQuery()->getSingleScalarResult()
+        ;
+    }
 }
