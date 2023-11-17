@@ -119,14 +119,8 @@
 {% if showBanner %}
     <div class="cookie-banner">
         <h1>{% trans into 'hr' %}export.cookieBanner.title{% endtrans %}</h1>
-        {% if cookieBanner.usage is defined %}
-            <p>{{ cookieBanner.usage }}</p>
-        {% endif %}
-
-        {% if cookieBanner.link is defined %}
-            {{ cookieBanner.link|raw }}
-        {% endif %}
-
+        {% if cookieBanner.usage is defined %}<p>{{ cookieBanner.usage }}</p>{% endif %}
+        {% if cookieBanner.link is defined %}<p>{{ cookieBanner.link|raw }}</p>{% endif %}
         {% if cookieBanner.first_party is defined %}
             <h2>{% trans into 'hr' %}export.cookieBanner.subtitles.firstParty{% endtrans %}</h2>
             {% for item in cookieBanner.first_party|split("\n")|filter(s => s|length > 0) %}
