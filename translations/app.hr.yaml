@@ -268,7 +268,7 @@ form:
                 dependentValue: Vrijednost ovisnog pitanja
                 otherEnabled: Omogući dodatni (i.e. <i>ostali</i>) unos
                 multipleWeighted: Omogući višestruki odabir pondera
-                isHeading: Tekst je naziv poglavlje
+                isHeading: Tekst je naziv poglavlja
                 disabled: Onesposobljeno
             placeholder:
                 questionText: Ovdje stavite tekst pitanja...
