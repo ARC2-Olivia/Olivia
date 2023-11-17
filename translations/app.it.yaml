@@ -564,7 +564,7 @@ practicalSubmodule:
             template: MODELLO
             results: RISULTATI
             consentForm: MODULO DI CONSENSO
-        connectedTo: Moduli teorici collegati
+        connectedTo: Corsi correlati
         reportTitle: Rapporto - %practicalSubmodule%
         questionCount: "%number% domande"
 

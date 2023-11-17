@@ -564,7 +564,7 @@ practicalSubmodule:
             template: TEMPLATE
             results: RESULTS
             consentForm: CONSENT FORM
-        connectedTo: Connected theoretical modules
+        connectedTo: Connected courses
         reportTitle: Report - %practicalSubmodule%
         questionCount: "%number% questions"
 

@@ -562,7 +562,7 @@ practicalSubmodule:
             template: PREDLOŽAK
             results: REZULTATI
             consentForm: OBRAZAC ZA PRISTANAK
-        connectedTo: Povezani teoretski moduli
+        connectedTo: Povezani tečajevi
         reportTitle: Izvještaj - %practicalSubmodule%
         questionCount: "%number% pitanja"
 
