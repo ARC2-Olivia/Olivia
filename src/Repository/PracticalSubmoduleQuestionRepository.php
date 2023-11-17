@@ -70,7 +70,9 @@ class PracticalSubmoduleQuestionRepository extends ServiceEntityRepository
             ->select('psq.questionText')
             ->leftJoin('psq.dependentPracticalSubmoduleQuestion', 'dpsq')
             ->where('dpsq.id = :dependentQuestionId')
+            ->andWhere('psq.type != :type')
             ->setParameter('dependentQuestionId', $dependentQuestionId)
+            ->setParameter('type', PracticalSubmoduleQuestion::TYPE_STATIC_TEXT)
         ;
 
         if (false === empty($exclusions)) {
