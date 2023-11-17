@@ -460,6 +460,7 @@ class PracticalSubmoduleController extends BaseController
             'results' => $results,
             'cookieBanner' => $cookieBanner,
             'showBanner' => $showBanner,
+            'showReportMessage' => true,
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_RESULTS)
         ]);
     }

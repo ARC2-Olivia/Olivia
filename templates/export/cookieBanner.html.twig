@@ -1,5 +1,9 @@
 {% trans_default_domain 'app' %}
 
+{% if showReportMessage is not defined %}
+    {% set showReportMessage = false %}
+{% endif %}
+
 <style>
     .cookie-banner {
         display: flex;
@@ -111,10 +115,10 @@
         }
     }
 </style>
-{% if cookieBanner.message is defined %}<p>{{ cookieBanner.message|raw }}</p>{% endif %}
+{% if cookieBanner.message is defined and showReportMessage == true %}<p>{{ cookieBanner.message|raw }}</p>{% endif %}
 {% if showBanner %}
     <div class="cookie-banner">
-        <h1>{{ 'export.cookieBanner.title'|trans }}</h1>
+        <h1>{% trans into 'hr' %}export.cookieBanner.title{% endtrans %}</h1>
         {% if cookieBanner.usage is defined %}
             <p>{{ cookieBanner.usage }}</p>
         {% endif %}
@@ -124,7 +128,7 @@
         {% endif %}
 
         {% if cookieBanner.first_party is defined %}
-            <h2>{{ 'export.cookieBanner.subtitles.firstParty'|trans }}</h2>
+            <h2>{% trans into 'hr' %}export.cookieBanner.subtitles.firstParty{% endtrans %}</h2>
             {% for item in cookieBanner.first_party|split("\n")|filter(s => s|length > 0) %}
                 <div class="cookie-banner--cookie">
                     <span>{{ item }}</span>
@@ -137,7 +141,7 @@
         {% endif %}
 
         {% if cookieBanner.third_party is defined %}
-            <h2>{{ 'export.cookieBanner.subtitles.thirdParty'|trans }}</h2>
+            <h2>{% trans into 'hr' %}export.cookieBanner.subtitles.thirdParty{% endtrans %}</h2>
             {% for item in cookieBanner.third_party|split("\n")|filter(s => s|length > 0) %}
                 <div class="cookie-banner--cookie">
                     <span>{{ item }}</span>
@@ -150,9 +154,9 @@
         {% endif %}
 
         <div class="cookie-banner--actions">
-            <button class="btn-cookie">{{ 'export.cookieBanner.buttons.declineAll'|trans }}</button>
-            <button class="btn-cookie">{{ 'export.cookieBanner.buttons.acceptAll'|trans }}</button>
-            <button class="btn-cookie">{{ 'export.cookieBanner.buttons.acceptSelected'|trans }}</button>
+            <button class="btn-cookie">{% trans into 'hr' %}export.cookieBanner.buttons.declineAll{% endtrans %}</button>
+            <button class="btn-cookie">{% trans into 'hr' %}export.cookieBanner.buttons.acceptAll{% endtrans %}</button>
+            <button class="btn-cookie">{% trans into 'hr' %}export.cookieBanner.buttons.acceptSelected{% endtrans %}</button>
         </div>
     </div>
 {% endif %}

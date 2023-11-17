@@ -221,7 +221,13 @@ class FileFetchController extends AbstractController
         foreach ($results as $result) {
             $cookieBanner[$result->getExportTag()] = $result->getText();
         }
-        $html = $twig->render('export/cookieBanner.html.twig', ['cookieBanner' => $cookieBanner]);
+
+        $showBanner = key_exists('usage', $cookieBanner)
+            && key_exists('link', $cookieBanner)
+            && key_exists('first_party', $cookieBanner)
+        ;
+
+        $html = $twig->render('export/cookieBanner.html.twig', ['cookieBanner' => $cookieBanner, 'showBanner' => $showBanner]);
         return $this->makeFileResponseFromString('consent-form.html', $html, 'text/html');
     }
 
