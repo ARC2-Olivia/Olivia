@@ -188,6 +188,7 @@ error:
         terminology:
             invalid: Nevaljana terminologija.
     practicalSubmoduleQuestion:
+        questionText: Tekst pitanja ne smije biti prazan.
         dependentValue:
             notBool: Za odabrano ovisno pitanje, njegova ovisna vrijednost mora biti ili <b>1</b> za <b><i>da</i></b> ili <b>0</b> za <b><i>ne</i></b>.
             notNumeric: Za odabrano ovisno pitanje, njegova ovisna vrijednost mora biti broj.

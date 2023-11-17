@@ -188,6 +188,7 @@ error:
         terminology:
             invalid: Invalid terminology.
     practicalSubmoduleQuestion:
+        questionText: The question text must not be empty.
         dependentValue:
             notBool: For the chosen dependent question, the dependent value must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
             notNumeric: For the chosen dependent question, the dependent value needs to be a number.

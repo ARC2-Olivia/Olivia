@@ -188,6 +188,7 @@ error:
         terminology:
             invalid: Terminologia non valida.
     practicalSubmoduleQuestion:
+        questionText: Il testo della domanda non deve essere vuoto.
         dependentValue:
             notBool: Per la domanda dipendente scelta, il valore dipendente deve essere <b>1</b> per <b><i>sì</i></b> o <b>0</b> per <b><i>no</i></b> .
             notNumeric: Per la domanda dipendente scelta, il valore dipendente deve essere un numero.

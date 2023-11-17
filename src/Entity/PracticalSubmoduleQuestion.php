@@ -36,6 +36,7 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     private ?string $type = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotNull(message: 'error.practicalSubmoduleQuestion.questionText')]
     #[Gedmo\Translatable]
     private ?string $questionText = null;
 
@@ -143,7 +144,7 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
         return $this->questionText;
     }
 
-    public function setQuestionText(string $questionText): self
+    public function setQuestionText(?string $questionText): self
     {
         $this->questionText = $questionText;
 
