@@ -79,49 +79,18 @@
         justify-content: end;
     }
 
-    .btn-red {
-        padding: 8px 24px;
+    .btn-cookie {
+        background-color: black;
+        border: solid 1px black;
         border-radius: 4px;
-        transition: .2s;
-        border: solid 1px #f51b38;
-        background-color: #f51b38;
-        color: #ffffff;
+        color: white;
+        padding: 8px 24px;
         cursor: pointer;
     }
 
-    .btn-red:hover {
-        background-color: #ffffff;
-        color: #f51b38;
-    }
-
-    .btn-blue {
-        padding: 8px 24px;
-        border-radius: 4px;
-        transition: .2s;
-        border: solid 1px #03a9f5;
-        background-color: #03a9f5;
-        color: #ffffff;
-        cursor: pointer;
-    }
-
-    .btn-blue:hover {
-        background-color: #ffffff;
-        color: #03a9f5;
-    }
-
-    .btn-green {
-        padding: 8px 24px;
-        border-radius: 4px;
-        transition: .2s;
-        border: solid 1px #3eaea6;
-        background-color: #3eaea6;
-        color: #ffffff;
-        cursor: pointer;
-    }
-
-    .btn-green:hover {
-        background-color: #ffffff;
-        color: #3eaea6;
+    .btn-cookie:hover {
+        background-color: white;
+        color: black;
     }
 
     @media screen and (max-width: 767px) {
@@ -142,45 +111,48 @@
         }
     }
 </style>
-<div class="cookie-banner">
-    <h1>{{ 'export.cookieBanner.title'|trans }}</h1>
-    {% if cookieBanner.usage is defined %}
-        <p>{{ cookieBanner.usage }}</p>
-    {% endif %}
+{% if cookieBanner.message is defined %}<p>{{ cookieBanner.message|raw }}</p>{% endif %}
+{% if showBanner %}
+    <div class="cookie-banner">
+        <h1>{{ 'export.cookieBanner.title'|trans }}</h1>
+        {% if cookieBanner.usage is defined %}
+            <p>{{ cookieBanner.usage }}</p>
+        {% endif %}
 
-    {% if cookieBanner.link is defined %}
-        {{ cookieBanner.link|raw }}
-    {% endif %}
+        {% if cookieBanner.link is defined %}
+            {{ cookieBanner.link|raw }}
+        {% endif %}
 
-    {% if cookieBanner.first_party is defined %}
-        <h2>{{ 'export.cookieBanner.subtitles.firstParty'|trans }}</h2>
-        {% for item in cookieBanner.first_party|split("\n")|filter(s => s|length > 0) %}
-            <div class="cookie-banner--cookie">
-                <span>{{ item }}</span>
-                <label class="slider">
-                    <input type="checkbox"/>
-                    <span class="slide"></span>
-                </label>
-            </div>
-        {% endfor %}
-    {% endif %}
+        {% if cookieBanner.first_party is defined %}
+            <h2>{{ 'export.cookieBanner.subtitles.firstParty'|trans }}</h2>
+            {% for item in cookieBanner.first_party|split("\n")|filter(s => s|length > 0) %}
+                <div class="cookie-banner--cookie">
+                    <span>{{ item }}</span>
+                    <label class="slider">
+                        <input type="checkbox"/>
+                        <span class="slide"></span>
+                    </label>
+                </div>
+            {% endfor %}
+        {% endif %}
 
-    {% if cookieBanner.third_party is defined %}
-        <h2>{{ 'export.cookieBanner.subtitles.thirdParty'|trans }}</h2>
-        {% for item in cookieBanner.third_party|split("\n")|filter(s => s|length > 0) %}
-            <div class="cookie-banner--cookie">
-                <span>{{ item }}</span>
-                <label class="slider">
-                    <input type="checkbox"/>
-                    <span class="slide"></span>
-                </label>
-            </div>
-        {% endfor %}
-    {% endif %}
+        {% if cookieBanner.third_party is defined %}
+            <h2>{{ 'export.cookieBanner.subtitles.thirdParty'|trans }}</h2>
+            {% for item in cookieBanner.third_party|split("\n")|filter(s => s|length > 0) %}
+                <div class="cookie-banner--cookie">
+                    <span>{{ item }}</span>
+                    <label class="slider">
+                        <input type="checkbox"/>
+                        <span class="slide"></span>
+                    </label>
+                </div>
+            {% endfor %}
+        {% endif %}
 
-    <div class="cookie-banner--actions">
-        <button class="btn-red">{{ 'export.cookieBanner.buttons.declineAll'|trans }}</button>
-        <button class="btn-green">{{ 'export.cookieBanner.buttons.acceptAll'|trans }}</button>
-        <button class="btn-blue">{{ 'export.cookieBanner.buttons.acceptSelected'|trans }}</button>
+        <div class="cookie-banner--actions">
+            <button class="btn-cookie">{{ 'export.cookieBanner.buttons.declineAll'|trans }}</button>
+            <button class="btn-cookie">{{ 'export.cookieBanner.buttons.acceptAll'|trans }}</button>
+            <button class="btn-cookie">{{ 'export.cookieBanner.buttons.acceptSelected'|trans }}</button>
+        </div>
     </div>
-</div>
+{% endif %}

@@ -449,11 +449,17 @@ class PracticalSubmoduleController extends BaseController
             }
         }
 
+        $showBanner = key_exists('usage', $cookieBanner)
+            && key_exists('link', $cookieBanner)
+            && key_exists('first_party', $cookieBanner)
+        ;
+
         return $this->render('evaluation/results.html.twig', [
             'evaluation' => $practicalSubmodule,
             'answerData' => $answerData,
             'results' => $results,
             'cookieBanner' => $cookieBanner,
+            'showBanner' => $showBanner,
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EXTRA_RESULTS)
         ]);
     }
