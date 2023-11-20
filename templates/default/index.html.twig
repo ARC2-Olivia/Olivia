@@ -2,14 +2,14 @@
 {% trans_default_domain 'app' %}
 
 {% block body %}
-    <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
-        <div class="container index-banner-wrapper">
+    <div class="index-banner homepage" style="background-image: url('{{ asset('build/images/bg-index-2.png') }}')">
+        <div class="container-fluid container-xl index-banner-wrapper">
             <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
             <div class="index-banner-subtitle">{{ 'app.subtitle'|trans }}</div>
             <div class="index-banner-actions">
                 <a href="{{ path('topic_index') }}" class="btn btn-theme-white bg-orange">{{ 'nav.topics'|trans }}</a>
-                <a href="{{ path('about_us') }}" class="btn btn-theme-white bg-blue ms-3">{{ 'nav.aboutUs'|trans }}</a>
-                <a href="{{ path('about_project') }}" class="btn btn-theme-white bg-blue ms-3">{{ 'nav.aboutProject'|trans }}</a>
+                <a href="{{ path('about_us') }}" class="btn btn-theme-white bg-blue">{{ 'nav.aboutUs'|trans }}</a>
+                <a href="{{ path('about_project') }}" class="btn btn-theme-white bg-blue">{{ 'nav.aboutProject'|trans }}</a>
             </div>
         </div>
     </div>

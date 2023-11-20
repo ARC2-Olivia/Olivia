@@ -8,14 +8,11 @@
             <div class="index-banner-subtitle">{{ 'nav.aboutUs'|trans }}</div>
         </div>
     </div>
-
     <div class="container py-5">
-        <p>{{ 'common.comingSoon'|trans }}</p>
+        {% if texts.aboutUs is not empty %}
+            <div class="ql-editor">{{ texts.aboutUs|raw }}</div>
+        {% else %}
+            <p>{{ 'common.comingSoon'|trans }}</p>
+        {% endif %}
     </div>
-{% endblock %}
-
-{% block stylesheets %}
-    <style>
-        .body { background-color: white; }
-    </style>
 {% endblock %}

@@ -40,7 +40,7 @@ success:
         new: Novi procesor je dodan u podmodul.
         edit: Procesor je uređen.
     practicalSubmoduleAssessment:
-        finish: Vaš upitnik je spremljen. Rezultate upitnika možete vidjeti klikom na gumb <i>Rezultati</i> u kartici <i>Upitnik</i>.
+        finish: Vaš upitnik je spremljen. Rezultate upitnika možete vidjeti klikom na gumb <i>Pregled izvještaja</i> u kartici <i>Upitnik</i>.
     practicalSubmodulePage:
         new: Nova stranica je dodana u podmodul.
         edit: Stranice je uređena.
@@ -188,6 +188,7 @@ error:
         terminology:
             invalid: Nevaljana terminologija.
     practicalSubmoduleQuestion:
+        questionText: Tekst pitanja ne smije biti prazan.
         dependentValue:
             notBool: Za odabrano ovisno pitanje, njegova ovisna vrijednost mora biti ili <b>1</b> za <b><i>da</i></b> ili <b>0</b> za <b><i>ne</i></b>.
             notNumeric: Za odabrano ovisno pitanje, njegova ovisna vrijednost mora biti broj.
@@ -232,7 +233,7 @@ error:
             invalid: Početak očekivanog vrijednosnog raspona mora biti manji ili jednak (≤) kraju očekivanog vrijednosnog raspona.
         resultText: Procesoru je potrebno unijeti rezultirajući tekst koji će se generirati nakon uspješne obrade.
     practicalSubmoduleAssessment:
-        start: Upitnik se nije mogla pokrenuti. Molimo, pokušajte ponovno.
+        start: Upitnik se nije mogao pokrenuti. Molimo, pokušajte ponovno.
         edit: Upitnik se nije mogao učitati za uređivanje. Molimo, pokušajte ponovno.
         finish: Došlo je do greške u obradi vašeg upitnika. Molimo, ponovno popunite upitnik.
     practicalSubmodulePage:

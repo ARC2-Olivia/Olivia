@@ -7,7 +7,10 @@ use App\Entity\DataRequest;
 use App\Entity\File;
 use App\Entity\Instructor;
 use App\Entity\Note;
+use App\Entity\Texts;
 use App\Entity\User;
+use App\Form\AboutProjectTextType;
+use App\Form\AboutUsTextType;
 use App\Form\BasicFileUploadType;
 use App\Form\InstructorType;
 use App\Form\UserType;
@@ -221,6 +224,34 @@ class AdminController extends BaseController
         }
 
         return $this->render('admin/file/replace.html.twig', ['file' => $file, 'form' => $form->createView()]);
+    }
+
+    #[Route('/texts/about-us', name: "texts_about_us")]
+    public function editAboutUs(Request $request): Response
+    {
+        $texts = $this->em->getRepository(Texts::class)->get();
+        $form = $this->createForm(AboutUsTextType::class, $texts);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+        }
+
+        return $this->render('admin/texts/aboutUs.html.twig', ['texts' => $texts, 'form' => $form->createView()]);
+    }
+
+    #[Route('/texts/about-project', name: "texts_about_project")]
+    public function editAboutProject(Request $request): Response
+    {
+        $texts = $this->em->getRepository(Texts::class)->get();
+        $form = $this->createForm(AboutProjectTextType::class, $texts);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+        }
+
+        return $this->render('admin/texts/aboutProject.html.twig', ['texts' => $texts, 'form' => $form->createView()]);
     }
 
     private function storeInstructorImage(?UploadedFile $image, Instructor $instructor)

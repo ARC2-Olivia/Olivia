@@ -4,12 +4,11 @@
 {% block courseContent %}
     <div class="row g-4 p-0" style="margin-top: 0 !important;">
         <div class="col-12 col-lg-9">
-            <div class="mb-4">
-                <h2 class="text-start">{{ course.nameOrPublicName }}</h2>
-                {% if is_granted('ROLE_MODERATOR') %}
+            {% if is_granted('ROLE_MODERATOR') %}
+                <div class="mb-4">
                     <a href="{{ path('course_edit', {'course': course.id}) }}" class="btn btn-theme-white bg-green">{{ 'common.edit'|trans }}</a>
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
             {% if course.description is not empty %}
                 <h3>{{ 'course.overview.aboutTopic'|trans }}</h3>
                 <p>{{ course.description }}</p>

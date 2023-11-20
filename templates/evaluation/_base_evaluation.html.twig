@@ -8,17 +8,16 @@
         <div class="container fg-white">
             <div class="row gx-2">
                 <div class="col-12 pt-5 pb-3">
-                    <h1 class="course-header-name">
-                        {% if evaluation.topic is not null %}
+                    {% if evaluation.topic is not null %}
+                        <div class="course-header-breadcrumbs">
                             <a href="{{ path('topic_index') }}">{{ 'nav.topics'|trans }}</a>
                             {{ mdi('chevron-right') }}
                             <a href="{{ path('topic_show', {'topic': evaluation.topic.id}) }}">{{ evaluation.topic.title }}</a>
                             {{ mdi('chevron-right') }}
                             <span>{{ 'nav.practice'|trans }}</span>
-                        {% else %}
-                            <span>{{ evaluation.name }}</span>
-                        {% endif %}
-                    </h1>
+                        </div>
+                    {% endif %}
+                    <h1 class="course-header-name">{{ evaluation.nameOrPublicName }}</h1>
                 </div>
             </div>
         </div>

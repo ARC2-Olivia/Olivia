@@ -67,16 +67,30 @@ class PracticalSubmoduleQuestionRepository extends ServiceEntityRepository
     public function findDependingQuestionTexts(int $dependentQuestionId, ?array $exclusions = null): array
     {
         $qb = $this->createQueryBuilder('psq')
-            ->select('psq.questionText')
             ->leftJoin('psq.dependentPracticalSubmoduleQuestion', 'dpsq')
             ->where('dpsq.id = :dependentQuestionId')
+            ->andWhere('psq.type != :type')
             ->setParameter('dependentQuestionId', $dependentQuestionId)
+            ->setParameter('type', PracticalSubmoduleQuestion::TYPE_STATIC_TEXT)
         ;
 
         if (false === empty($exclusions)) {
             $qb->andWhere('psq.id NOT IN (:exclusions)')->setParameter('exclusions', $exclusions);
         }
 
-        return array_map(function ($item) { return $item['questionText']; }, $qb->getQuery()->getResult());
+        $result = $qb->getQuery()->getResult();
+        return array_map(function (PracticalSubmoduleQuestion $item) { return $item->getQuestionText(); }, $result);
+    }
+
+    public function countActualQuestions(PracticalSubmodule $practicalSubmodule): int
+    {
+        return $this->createQueryBuilder('psq')
+            ->select('COUNT(psq.id)')
+            ->where('psq.type != :type')
+            ->andWhere('psq.practicalSubmodule = :submodule')
+            ->setParameter('type', PracticalSubmoduleQuestion::TYPE_STATIC_TEXT)
+            ->setParameter('submodule', $practicalSubmodule)
+            ->getQuery()->getSingleScalarResult()
+        ;
     }
 }

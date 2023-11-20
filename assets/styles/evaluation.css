@@ -211,6 +211,11 @@ ul.mod--ps-pages {
     border-radius: 4px;
 }
 
+.evaluation-assessment-question.static-text .evaluation-assessment-question-text {
+    background: none;
+    padding: 0;
+}
+
 .evaluation-assessment-question-text:not(.no-bold) {
     font-weight: 600;
 }

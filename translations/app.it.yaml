@@ -106,7 +106,7 @@ nav:
 footer:
     contact: "Contatto: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
     text: Questo strumento è sviluppato nell&#39;ambito del progetto ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs finanziato dalla Commissione Europea.
-    gdpr: "<a href='%privacyPolicyUrl%'>Politica sulla privacy</a> e <a href='%termsOfServiceUrl%'>Termini di servizio</a>"
+    gdpr: "<a href='%privacyPolicyUrl%'>Politica sulla privacy</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href='%termsOfServiceUrl%'>Termini di servizio</a>"
 
 index:
     about:
@@ -356,6 +356,12 @@ form:
                 title: Titolo del nuovo argomento GDPR
                 theoreticalSubmodules: Seleziona sottomoduli teorici...
                 practicalSubmodules: Seleziona sottomoduli pratici...
+        texts:
+            label:
+                aboutUs: "Contenuto della pagina <i>Chi siamo</i>"
+                aboutUsAlt: "Contenuto della pagina <i>Chi siamo</i> (lingua alternativa)"
+                aboutProject: "<i>Informazioni sul progetto ARC2</i> contenuto della pagina"
+                aboutProjectAlt: "<i>Informazioni sul progetto ARC2</i> contenuto della pagina (lingua alternativa)"
 
 profile:
     request:
@@ -564,7 +570,7 @@ practicalSubmodule:
             template: MODELLO
             results: RISULTATI
             consentForm: MODULO DI CONSENSO
-        connectedTo: Moduli teorici collegati
+        connectedTo: Corsi correlati
         reportTitle: Rapporto - %practicalSubmodule%
         questionCount: "%number% domande"
 

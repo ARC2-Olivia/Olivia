@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Texts;
 use App\Form\ProfileType;
 use App\Form\Security\PasswordResetType;
 use App\Service\SecurityService;
@@ -75,13 +76,15 @@ class DefaultController extends BaseController
     #[Route("/{_locale}/about-us", name: "about_us", requirements: ["_locale" => "%locale.supported%"])]
     public function aboutUs(): Response
     {
-        return $this->render('default/aboutUs.html.twig');
+        $texts = $this->em->getRepository(Texts::class)->get();
+        return $this->render('default/aboutUs.html.twig', ['texts' => $texts]);
     }
 
     #[Route("/{_locale}/about-project", name: "about_project", requirements: ["_locale" => "%locale.supported%"])]
     public function aboutProject(): Response
     {
-        return $this->render('default/aboutProject.html.twig');
+        $texts = $this->em->getRepository(Texts::class)->get();
+        return $this->render('default/aboutProject.html.twig', ['texts' => $texts]);
     }
 
     #[Route("/extend-session", name: "extend_session")]

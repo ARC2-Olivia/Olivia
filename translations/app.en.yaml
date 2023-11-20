@@ -106,7 +106,7 @@ nav:
 footer:
     contact: "Contact: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
     text: This tool is developed within ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs project funded by European Commission.
-    gdpr: "<a href='%privacyPolicyUrl%'>Privacy policy</a> and <a href='%termsOfServiceUrl%'>Terms of service</a>"
+    gdpr: "<a href='%privacyPolicyUrl%'>Privacy policy</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href='%termsOfServiceUrl%'>Terms of service</a>"
 
 index:
     about:
@@ -356,6 +356,12 @@ form:
                 title: Title of the new GDPR topic
                 theoreticalSubmodules: Select theoretical submodules...
                 practicalSubmodules: Select practical submodules...
+        texts:
+            label:
+                aboutUs: "<i>About us</i> page content"
+                aboutUsAlt: "<i>About us</i> page content (alternate language)"
+                aboutProject: "<i>About ARC2 project</i> page content"
+                aboutProjectAlt: "<i>About ARC2 project</i> page content (alternate language)"
 
 profile:
     request:
@@ -564,7 +570,7 @@ practicalSubmodule:
             template: TEMPLATE
             results: RESULTS
             consentForm: CONSENT FORM
-        connectedTo: Connected theoretical modules
+        connectedTo: Connected courses
         reportTitle: Report - %practicalSubmodule%
         questionCount: "%number% questions"
 
