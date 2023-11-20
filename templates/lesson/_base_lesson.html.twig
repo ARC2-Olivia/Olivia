@@ -8,18 +8,16 @@
         <div class="container fg-white">
             <div class="row gx-2">
                 <div class="col-12 col-md-9 pt-5 pb-3">
-                    <div class="course-header-breadcrumbs">
-                        {% if lesson.course.topic is not null %}
+                    {% if lesson.course.topic is not null %}
+                        <div class="course-header-breadcrumbs">
                             <a href="{{ path('topic_index') }}">{{ 'nav.topics'|trans }}</a>
                             {{ mdi('chevron-right') }}
                             <a href="{{ path('topic_show', {'topic': lesson.course.topic.id}) }}">{{ lesson.course.topic.title }}</a>
                             {{ mdi('chevron-right') }}
                             <span>{{ 'nav.training'|trans }}</span>
-                        {% else %}
-                            <span>{{ lesson.course.name }}</span>
-                        {% endif %}
-                    </div>
-                    <h1 class="course-header-name">{{ lesson.course.name }}</h1>
+                        </div>
+                    {% endif %}
+                    <h1 class="course-header-name">{{ lesson.course.nameOrPublicName }}</h1>
                     <div class="course-header-details">
                         {% if lesson.course.estimatedWorkload is not empty %}
                             <div class="course-header-details-item">
