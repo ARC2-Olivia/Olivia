@@ -356,6 +356,12 @@ form:
                 title: Titolo del nuovo argomento GDPR
                 theoreticalSubmodules: Seleziona sottomoduli teorici...
                 practicalSubmodules: Seleziona sottomoduli pratici...
+        texts:
+            label:
+                aboutUs: "Contenuto della pagina <i>Chi siamo</i>"
+                aboutUsAlt: "Contenuto della pagina <i>Chi siamo</i> (lingua alternativa)"
+                aboutProject: "<i>Informazioni sul progetto ARC2</i> contenuto della pagina"
+                aboutProjectAlt: "<i>Informazioni sul progetto ARC2</i> contenuto della pagina (lingua alternativa)"
 
 profile:
     request:
