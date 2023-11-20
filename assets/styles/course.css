@@ -40,29 +40,33 @@
     max-height: 8rem;
 }
 
-.course-header-name {
+.course-header-breadcrumbs {
     font-weight: 500;
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: 20px;
     display: flex;
     column-gap: 8px;
     align-items: center;
 }
 
-.course-header-name > :not(:last-child) {
+.course-header-breadcrumbs > :not(:last-child) {
     opacity: 0.4;
     text-decoration: none;
     color: unset;
 }
 
-.course-header-name > a:not(:last-child):hover {
+.course-header-breadcrumbs > a:not(:last-child):hover {
     opacity: 1;
 }
 
-.course-header-name > svg {
-    width: 2rem;
+.course-header-breadcrumbs > svg {
+    width: 20px;
 }
 
+.course-header-name {
+    font-weight: 600 !important;
+    font-size: 32px !important;
+    margin-bottom: 2rem;
+}
 
 .course-header-details {
     display: flex;
