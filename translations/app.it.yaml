@@ -106,7 +106,7 @@ nav:
 footer:
     contact: "Contatto: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
     text: Questo strumento è sviluppato nell&#39;ambito del progetto ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs finanziato dalla Commissione Europea.
-    gdpr: "<a href='%privacyPolicyUrl%'>Politica sulla privacy</a> e <a href='%termsOfServiceUrl%'>Termini di servizio</a>"
+    gdpr: "<a href='%privacyPolicyUrl%'>Politica sulla privacy</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href='%termsOfServiceUrl%'>Termini di servizio</a>"
 
 index:
     about:
