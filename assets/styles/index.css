@@ -1,4 +1,10 @@
 .index-banner {
+    background-size: cover;
+    background-position: 50% 50%;
+    padding: 128px 0 96px 20px;
+}
+
+.index-banner.homepage {
     background-size: contain;
     background-position: right center;
     padding: 224px 0 224px 20px;
