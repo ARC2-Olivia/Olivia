@@ -95,7 +95,8 @@ nav:
     users: Korisnici
     instructors: Instruktori
     language: Promjeni jezik
-    termsOfService: Politika priovatnosti i Uvjeti pružanja usluge
+    privacyPolicy: Politika privatnosti
+    termsOfService: Uvjeti pružanja usluge
     dataRequests: Podatkovni zahtjevi
     files: Datoteke
     home: Naslovna

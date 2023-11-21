@@ -1,9 +1,9 @@
-{% extends 'termsOfService/_base_tos.html.twig' %}
+{% extends 'gdpr/_base_gdpr.html.twig' %}
 {% trans_default_domain 'app' %}
 
 {% block title %}{{ 'page.termsOfService.show'|trans }}{% endblock %}
 
-{% block tosContent %}
+{% block gdprContent %}
     <div class="card card-body">
         <div class="text-center">
             <h1>{{ 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) }}</h1>
@@ -22,9 +22,8 @@
                         <br><small>{{ 'termsOfService.message.rescindInactive'|trans }}</small>
                     {% endif %}
                 </form>
-                <a href="{{ path('gdpr_data_protection') }}" class="btn btn-theme-white bg-blue">{{ 'nav.gdpr'|trans }}</a>
             {% endif %}
         </div>
-        {% include 'gdpr/_termsOfService_content.html.twig' %}
+        <div class="ql-editor">{{ gdpr.termsOfService|raw }}</div>
     </div>
 {% endblock %}

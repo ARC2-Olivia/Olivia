@@ -66,31 +66,27 @@ class GdprController extends AbstractController
         return $this->render('termsOfService/new.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route("/privacy-policy/active", name: "active_privacy_policy")]
-    public function activePrivacyPolicy(): Response
+    #[Route("/privacy-policy", name: "privacy_policy")]
+    public function privacyPolicy(): Response
     {
         $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
-        return $this->render('gdpr/activePrivacyPolicy.html.twig', ['gdpr' => $gdpr]);
-    }
-
-    #[Route("/privacy-policy/{gdpr}", name: "privacy_policy")]
-    #[IsGranted('ROLE_USER')]
-    public function privacyPolicy(Gdpr $gdpr): Response
-    {
-        return $this->render('gdpr/privacyPolicy.html.twig', ['gdpr' => $gdpr]);
+        return $this->render('gdpr/privacyPolicy.html.twig', ['gdpr' => $gdpr, 'tab' => 'privacyPolicy']);
     }
 
     #[Route("/terms-of-service/active", name: "active_terms_of_service")]
     public function activeTermsOfService(): Response
     {
         $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
-        return $this->render('gdpr/activeTermsOfService.html.twig', ['gdpr' => $gdpr]);
+        return $this->render('gdpr/activeTermsOfService.html.twig', ['gdpr' => $gdpr, 'tab' => 'termsOfService']);
     }
 
     #[Route("/terms-of-service/{gdpr}", name: "terms_of_service")]
     #[IsGranted('ROLE_USER')]
     public function termsOfService(Gdpr $gdpr): Response
     {
+        if ($gdpr->isActive()) {
+            return $this->redirectToRoute('gdpr_active_terms_of_service');
+        }
         return $this->render('gdpr/termsOfService.html.twig', ['gdpr' => $gdpr]);
     }
 
@@ -167,7 +163,7 @@ class GdprController extends AbstractController
             $gdprService->userRescindsGdpr($user, $gdpr);
             $this->addFlash('success', $this->translator->trans('success.termsOfService.rescind', [], 'message'));
         }
-        return $this->redirectToRoute('gdpr_active_privacy_policy');
+        return $this->redirectToRoute('gdpr_active_terms_of_service');
     }
 
     #[Route("/data-protection", name: "data_protection")]
