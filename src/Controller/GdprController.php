@@ -174,7 +174,7 @@ class GdprController extends BaseController
             $gdprService->userAcceptsGdpr($user, $gdpr);
             $this->addFlash('success', $this->translator->trans('success.termsOfService.accept', [], 'message'));
         }
-        return $this->redirectToRoute('gdpr_privacy_policy', ['gdpr' => $gdpr->getId()]);
+        return $this->redirectToRoute('gdpr_active_terms_of_service', ['gdpr' => $gdpr->getId()]);
     }
 
     #[Route("/rescind/{gdpr}", name: "rescind")]
