@@ -652,14 +652,15 @@ class LessonController extends BaseController
                 'finalText' => $this->translator->trans('course.extra.submitQuizAnswers', [], 'app')
             ]
         ];
+
         foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
             $choices = [];
             $correctAnswer = null;
 
             if (QuizQuestion::TYPE_TRUE_FALSE === $quizQuestion->getType()) {
                 $correctAnswer = $quizQuestion->getCorrectAnswer();
-                $choices[] = ['text' => $this->translator->trans('common.trueValue', domain: 'app'), 'value' => true, 'class' => 'true'];
-                $choices[] = ['text' => $this->translator->trans('common.falseValue', domain: 'app'), 'value' => false, 'class' => 'false'];
+                $choices[] = ['text' => $this->translator->trans('lesson.quiz.answer.correct', domain: 'app'), 'value' => true, 'class' => 'true'];
+                $choices[] = ['text' => $this->translator->trans('lesson.quiz.answer.incorrect', domain: 'app'), 'value' => false, 'class' => 'false'];
             } else if (QuizQuestion::TYPE_SINGLE_CHOICE === $quizQuestion->getType()) {
                 $correctAnswer = $quizQuestion->getCorrectChoiceId();
                 foreach ($quizQuestion->getQuizQuestionChoices() as $qqc) {

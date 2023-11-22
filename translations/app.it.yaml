@@ -486,6 +486,9 @@ lesson:
         yourAnswer: La tua risposta
         correctAnswer: Risposta corretta
         submit: Sei sicuro di voler inviare le tue risposte?
+        answer:
+            correct: Vero
+            incorrect: Falso
     extra:
         noLessons: Al momento non ci sono lezioni definite per questo corso.
         text: Testo

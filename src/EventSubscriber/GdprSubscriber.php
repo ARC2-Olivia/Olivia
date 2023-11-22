@@ -32,7 +32,7 @@ class GdprSubscriber implements EventSubscriberInterface
 
         if (!$this->isException($event->getRequest()) && $this->checkRoutes($route) && $this->isRegularUser() && !$this->termsOfServiceService->userAcceptedCurrentlyActiveGdpr($user)) {
             $event->setController(function () {
-                return new RedirectResponse($this->router->generate('gdpr_active'));
+                return new RedirectResponse($this->router->generate('gdpr_active_terms_of_service'));
             });
         }
     }
@@ -49,7 +49,7 @@ class GdprSubscriber implements EventSubscriberInterface
 
     private function checkRoutes(?string $route): bool
     {
-        return !in_array($route, ['_wdt', '_profiler', 'gdpr_active', 'security_logout', 'gdpr_accept', 'gdpr_data_protection', 'gdpr_data_protection_access', 'gdpr_data_protection_delete', 'profile', 'profile_edit_basic_data', 'profile_edit_password']);
+        return !in_array($route, ['_wdt', '_profiler', 'gdpr_active_terms_of_service', 'gdpr_privacy_policy', 'security_logout', 'gdpr_accept', 'gdpr_data_protection', 'gdpr_data_protection_access', 'gdpr_data_protection_delete', 'profile', 'profile_edit_basic_data', 'profile_edit_password']);
     }
 
     private function isException(\Symfony\Component\HttpFoundation\Request $request): bool

@@ -486,6 +486,9 @@ lesson:
         yourAnswer: Your answer
         correctAnswer: Correct answer
         submit: Are you sure you want to submit your answers?
+        answer:
+            correct: "True"
+            incorrect: "False"
     extra:
         noLessons: There are currently no defined lessons for this course.
         text: Text
