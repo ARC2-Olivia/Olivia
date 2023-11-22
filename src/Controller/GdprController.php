@@ -5,7 +5,8 @@ namespace App\Controller;
 use App\Entity\DataRequest;
 use App\Entity\Gdpr;
 use App\Entity\User;
-use App\Form\GdprType;
+use App\Form\GdprPrivacyPolicyType;
+use App\Form\GdprTermsOfServiceType;
 use App\Security\GdprVoter;
 use App\Service\DataRequestService;
 use App\Service\GdprService;
@@ -20,19 +21,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route("/{_locale}/gdpr", name: "gdpr_", requirements: ["_locale" => "%locale.supported%"])]
-class GdprController extends AbstractController
+class GdprController extends BaseController
 {
     private const AJAX_STATUS_FAIL = 'fail';
     private const AJAX_STATUS_SUCCESS = 'success';
-
-    private ?EntityManagerInterface $em = null;
-    private ?TranslatorInterface $translator = null;
-
-    public function __construct(EntityManagerInterface $em, TranslatorInterface $translator)
-    {
-        $this->em = $em;
-        $this->translator = $translator;
-    }
 
     #[Route("/", name: "index")]
     #[IsGranted('ROLE_USER')]
@@ -44,102 +36,131 @@ class GdprController extends AbstractController
     }
 
     #[Route("/new", name: "new")]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_MODERATOR')]
     public function new(Request $request, GdprService $gdprService): Response
     {
         $gdpr = new Gdpr();
-        $form = $this->createForm(GdprType::class, $gdpr);
+        $form = $this->createForm(GdprTermsOfServiceType::class, $gdpr);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $activeGdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
+            list($privacyPolicy, $privacyPolicyAlt) = $this->extractDefaultAndTranslatedPrivacyPolicy($activeGdpr, $request);
+            $gdpr->setPrivacyPolicy($privacyPolicy);
             $gdprService->deactivateCurrentlyActive();
             $gdprService->create($gdpr);
-            $this->processTranslation($gdpr, $form);
+            $this->processTermsOfServiceTranslation($gdpr, $form);
+            $this->processPrivacyPolicyTranslation([$gdpr], $privacyPolicyAlt);
             $this->addFlash('success', $this->translator->trans('success.termsOfService.new', [], 'message'));
             return $this->redirectToRoute('gdpr_index');
         } else {
-            foreach ($form->getErrors(true) as $error) {
-                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
-            }
+            $this->showFormErrorsAsFlashes($form);
         }
 
-        return $this->render('termsOfService/new.html.twig', ['form' => $form->createView()]);
+        return $this->render('gdpr/newTermsOfService.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route("/privacy-policy/active", name: "active_privacy_policy")]
-    public function activePrivacyPolicy(): Response
+    #[Route("/terms-of-service/edit", name: "edit_terms_of_service")]
+    public function editTermsOfService(Request $request): Response
     {
         $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
-        return $this->render('gdpr/activePrivacyPolicy.html.twig', ['gdpr' => $gdpr]);
+        $this->denyAccessUnlessGranted(GdprVoter::EDIT, $gdpr);
+
+        $form = $this->createForm(GdprTermsOfServiceType::class, $gdpr, ['is_edit' => true]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $gdprTitle = $this->translator->trans('termsOfService.format', ['%version%' => $gdpr->getVersion(), '%revision%' => $gdpr->getRevision()], 'app');
+            $this->addFlash('success', $this->translator->trans('success.termsOfService.edit', ['%termsOfService%' => $gdprTitle], 'message'));
+            return $this->redirectToRoute('gdpr_active_terms_of_service', ['gdpr' => $gdpr->getId()]);
+        } else {
+            $this->showFormErrorsAsFlashes($form);
+        }
+
+        return $this->render('gdpr/editTermsOfService.htnl.twig', ['gdpr' => $gdpr, 'form' => $form->createView()]);
     }
 
-    #[Route("/privacy-policy/{gdpr}", name: "privacy_policy")]
-    #[IsGranted('ROLE_USER')]
-    public function privacyPolicy(Gdpr $gdpr): Response
+    #[Route("/terms-of-service/revise", name: "revise_terms_of_service")]
+    public function reviseTermsOfService(GdprService $gdprService, Request $request): Response
     {
-        return $this->render('gdpr/privacyPolicy.html.twig', ['gdpr' => $gdpr]);
+        $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
+        $this->denyAccessUnlessGranted(GdprVoter::EDIT, $gdpr);
+
+        list($termsOfService, $termsOfServiceAlt, $privacyPolicy, $privacyPolicyAlt) = $this->extractDefaultAndTranslatedContent($gdpr, $request);
+        $revisedGdpr = new Gdpr();
+
+        $form = $this->createForm(GdprTermsOfServiceType::class, $revisedGdpr);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $revisedGdpr->setPrivacyPolicy($privacyPolicy);
+            $gdprService->deactivateCurrentlyActive();
+            $gdprService->revise($revisedGdpr);
+            $this->processTermsOfServiceTranslation($revisedGdpr, $form);
+            $this->processPrivacyPolicyTranslation([$revisedGdpr], $privacyPolicyAlt);
+            $this->addFlash('success', $this->translator->trans('success.termsOfService.revise', [], 'message'));
+            return $this->redirectToRoute('gdpr_active_terms_of_service');
+        } else {
+            $this->showFormErrorsAsFlashes($form);
+        }
+
+        return $this->render('gdpr/reviseTermsOfService.html.twig', [
+            'gdpr' => $gdpr,
+            'form' => $form->createView(),
+            'termsOfService' => $termsOfService,
+            'termsOfServiceAlt' => $termsOfServiceAlt
+        ]);
     }
 
     #[Route("/terms-of-service/active", name: "active_terms_of_service")]
     public function activeTermsOfService(): Response
     {
         $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
-        return $this->render('gdpr/activeTermsOfService.html.twig', ['gdpr' => $gdpr]);
+        return $this->render('gdpr/activeTermsOfService.html.twig', ['gdpr' => $gdpr, 'tab' => 'termsOfService']);
     }
 
     #[Route("/terms-of-service/{gdpr}", name: "terms_of_service")]
     #[IsGranted('ROLE_USER')]
     public function termsOfService(Gdpr $gdpr): Response
     {
+        if ($gdpr->isActive()) {
+            return $this->redirectToRoute('gdpr_active_terms_of_service');
+        }
         return $this->render('gdpr/termsOfService.html.twig', ['gdpr' => $gdpr]);
     }
 
-    #[Route("/edit/{gdpr}", name: "edit")]
-    #[IsGranted(GdprVoter::EDIT, subject: "gdpr")]
-    public function edit(Gdpr $gdpr, Request $request): Response
+    #[Route("/privacy-policy", name: "privacy_policy")]
+    public function privacyPolicy(): Response
     {
-        $form = $this->createForm(GdprType::class, $gdpr, ['is_edit' => true]);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->flush();
-            $gdprTitle = $this->translator->trans('termsOfService.format', ['%version%' => $gdpr->getVersion(), '%revision%' => $gdpr->getRevision()], 'app');
-            $this->addFlash('success', $this->translator->trans('success.termsOfService.edit', ['%termsOfService%' => $gdprTitle], 'message'));
-            return $this->redirectToRoute('gdpr_privacy_policy', ['gdpr' => $gdpr->getId()]);
-        } else {
-            foreach ($form->getErrors(true) as $error) {
-                $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
-            }
-        }
-
-        return $this->render('termsOfService/edit.html.twig', ['gdpr' => $gdpr, 'form' => $form->createView()]);
+        $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
+        return $this->render('gdpr/privacyPolicy.html.twig', ['gdpr' => $gdpr, 'tab' => 'privacyPolicy']);
     }
 
-    #[Route("/revise/{gdpr}", name: "revise")]
-    #[IsGranted(GdprVoter::EDIT, subject: "gdpr")]
-    public function revise(Gdpr $gdpr, GdprService $gdprService, Request $request): Response
+    #[Route("/privacy-policy/edit", name: "edit_privacy_policy")]
+    public function editPrivacyPolicy(Request $request): Response
     {
-        list($termsOfService, $termsOfServiceAlt, $privacyPolicy, $privacyPolicyAlt) = $this->extractDefaultAndTranslatedContent($gdpr, $request);
+        $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
+        $this->denyAccessUnlessGranted(GdprVoter::EDIT, $gdpr);
 
-        $revisedGdpr = new Gdpr();
-        $form = $this->createForm(GdprType::class, $revisedGdpr);
+        list($privacyPolicy, $privacyPolicyAlt) = $this->extractDefaultAndTranslatedPrivacyPolicy($gdpr, $request);
+        $formData = new \stdClass();
+        $formData->privacyPolicy = $privacyPolicy;
+        $formData->privacyPolicyAlt = $privacyPolicyAlt;
+
+        $form = $this->createForm(GdprPrivacyPolicyType::class, $formData);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $gdprService->deactivateCurrentlyActive();
-            $gdprService->revise($revisedGdpr);
-            $this->processTranslation($revisedGdpr, $form);
-            $this->addFlash('success', $this->translator->trans('success.termsOfService.revise', [], 'message'));
-            return $this->redirectToRoute('gdpr_index');
+            $gdprs = $this->em->getRepository(Gdpr::class)->findAll();
+            foreach ($gdprs as $gdpr) {
+                $gdpr->setPrivacyPolicy($formData->privacyPolicy);
+            }
+            $this->em->flush();
+            $this->processPrivacyPolicyTranslation($gdprs, $formData->privacyPolicyAlt);
+            $this->addFlash('success', 'Yay');
+        } else {
+            $this->showFormErrorsAsFlashes($form);
         }
 
-        return $this->render('termsOfService/revise.html.twig', [
-            'gdpr' => $gdpr,
-            'form' => $form->createView(),
-            'termsOfService' => $termsOfService,
-            'termsOfServiceAlt' => $termsOfServiceAlt,
-            'privacyPolicy' => $privacyPolicy,
-            'privacyPolicyAlt' => $privacyPolicyAlt
-        ]);
+        return $this->render('gdpr/editPrivacyPolicy.html.twig', ['gdpr' => $gdpr, 'form' => $form->createView(), 'formData' => $formData]);
     }
 
     #[Route("/accept/{gdpr}", name: "accept")]
@@ -167,7 +188,7 @@ class GdprController extends AbstractController
             $gdprService->userRescindsGdpr($user, $gdpr);
             $this->addFlash('success', $this->translator->trans('success.termsOfService.rescind', [], 'message'));
         }
-        return $this->redirectToRoute('gdpr_active_privacy_policy');
+        return $this->redirectToRoute('gdpr_active_terms_of_service');
     }
 
     #[Route("/data-protection", name: "data_protection")]
@@ -242,7 +263,7 @@ class GdprController extends AbstractController
         return new JsonResponse(['status' => self::AJAX_STATUS_SUCCESS, 'data' => $data]);
     }
 
-    private function processTranslation(Gdpr $gdpr, \Symfony\Component\Form\FormInterface $form)
+    private function processTermsOfServiceTranslation(Gdpr $gdpr, \Symfony\Component\Form\FormInterface $form): void
     {
         $translationRepository = $this->em->getRepository(Translation::class);
         $localeAlt = $this->getParameter('locale.alternate');
@@ -250,10 +271,64 @@ class GdprController extends AbstractController
         $termsOfServiceAlt = $form->get('termsOfServiceAlt')->getData();
         $translationRepository->translate($gdpr, 'termsOfService', $localeAlt, $termsOfServiceAlt);
 
-        $privacyPolicyAlt = $form->get('privacyPolicyAlt')->getData();
-        $translationRepository->translate($gdpr, 'privacyPolicy', $localeAlt, $privacyPolicyAlt);
+        $this->em->flush();
+    }
+
+    /**
+     * @param Gdpr[] $gdprs
+     * @param string $privacyPolicyAlt
+     * @return void
+     */
+    private function processPrivacyPolicyTranslation(array $gdprs, string $privacyPolicyAlt): void
+    {
+        $translationRepository = $this->em->getRepository(Translation::class);
+        $localeAlt = $this->getParameter('locale.alternate');
+
+        foreach ($gdprs as $gdpr) {
+            $translationRepository->translate($gdpr, 'privacyPolicy', $localeAlt, $privacyPolicyAlt);
+        }
 
         $this->em->flush();
+    }
+
+    private function extractDefaultAndTranslatedTermsOfService(Gdpr $gdpr, Request $request): array
+    {
+        $gdprRepository = $this->em->getRepository(Gdpr::class);
+        $defaultLocale = $this->getParameter('locale.default');
+        $alternateLocale = $this->getParameter('locale.alternate');
+
+        $termsOfService = $termsOfServiceAlt = null;
+        if ($request->getLocale() === $defaultLocale) {
+            $termsOfService = $gdpr->getTermsOfService();
+            $gdpr = $gdprRepository->findByIdForLocale($gdpr->getId(), $alternateLocale);
+            $termsOfServiceAlt = $gdpr->getTermsOfService();
+        } else if ($request->getLocale() === $alternateLocale) {
+            $termsOfServiceAlt = $gdpr->getTermsOfService();
+            $gdpr = $gdprRepository->findByIdForLocale($gdpr->getId(), $defaultLocale);
+            $termsOfService = $gdpr->getTermsOfService();
+        }
+
+        return [$termsOfService, $termsOfServiceAlt];
+    }
+
+    private function extractDefaultAndTranslatedPrivacyPolicy(Gdpr $gdpr, Request $request): array
+    {
+        $gdprRepository = $this->em->getRepository(Gdpr::class);
+        $defaultLocale = $this->getParameter('locale.default');
+        $alternateLocale = $this->getParameter('locale.alternate');
+
+        $privacyPolicy = $privacyPolicyAlt = null;
+        if ($request->getLocale() === $defaultLocale) {
+            $privacyPolicy = $gdpr->getPrivacyPolicy();
+            $gdpr = $gdprRepository->findByIdForLocale($gdpr->getId(), $alternateLocale);
+            $privacyPolicyAlt = $gdpr->getPrivacyPolicy();
+        } else if ($request->getLocale() === $alternateLocale) {
+            $privacyPolicyAlt = $gdpr->getPrivacyPolicy();
+            $gdpr = $gdprRepository->findByIdForLocale($gdpr->getId(), $defaultLocale);
+            $privacyPolicy = $gdpr->getPrivacyPolicy();
+        }
+
+        return [$privacyPolicy, $privacyPolicyAlt];
     }
 
     private function extractDefaultAndTranslatedContent(Gdpr $gdpr, Request $request): array
@@ -276,6 +351,7 @@ class GdprController extends AbstractController
             $termsOfService = $gdpr->getTermsOfService();
             $privacyPolicy = $gdpr->getPrivacyPolicy();
         }
-        return array($termsOfService, $termsOfServiceAlt, $privacyPolicy, $privacyPolicyAlt);
+
+        return [$termsOfService, $termsOfServiceAlt, $privacyPolicy, $privacyPolicyAlt];
     }
 }

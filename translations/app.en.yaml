@@ -41,6 +41,7 @@ common:
     incorrect: Incorrect
     details: Details
     description: Description
+    list: List
 
 button:
     details: Details
@@ -96,7 +97,8 @@ nav:
     users: Users
     instructors: Instructors
     language: Switch language
-    termsOfService: Privacy policy and Terms of service
+    privacyPolicy: Privacy policy
+    termsOfService: Terms of service
     dataRequests: Data requests
     files: Files
     home: Home
@@ -659,6 +661,10 @@ termsOfService:
         revise: Revise
         accept: Accept
         rescind: Rescind
+
+privacyPolicy:
+    title:
+        edit: Editing privacy policy
 
 dataRequest:
     title:

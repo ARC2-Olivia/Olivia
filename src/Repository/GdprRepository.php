@@ -73,6 +73,17 @@ class GdprRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getPrivacyPolicy(): ?string
+    {
+        return $this->createQueryBuilder('gdpr')
+            ->select('gdpr.privacyPolicy')
+            ->where('gdpr.privacyPolicy IS NOT NULL')
+            ->setMaxResults(1)
+            ->orderBy('gdpr.id', 'DESC')
+            ->getQuery()->getSingleScalarResult()
+        ;
+    }
+
     public function findByIdForLocale(int $id, string $locale): Gdpr|null
     {
         $query = $this->createQueryBuilder('tos')

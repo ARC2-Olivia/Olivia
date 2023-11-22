@@ -41,6 +41,7 @@ common:
     incorrect: Errato
     details: Dettagli
     description: Descrizione
+    list: Elenco
 
 button:
     details: Dettagli
@@ -96,7 +97,8 @@ nav:
     users: Utenti
     instructors: Istruttori
     language: Cambia lingua
-    termsOfService: Politica sulla privacy e Termini di servizio
+    privacyPolicy: Politica sulla privacy
+    termsOfService: Termini di servizio
     dataRequests: Richieste di dati
     files: File
     home: Casa
@@ -627,6 +629,7 @@ practicalSubmoduleAssessment:
         edit: Modifica il questionario inviato
         results: Visualizza rapporto
         downloadReport: Scarica il rapporto
+
 termsOfService:
     format: ver. %versione%, rev. %revisione%
     ongoing: in corso

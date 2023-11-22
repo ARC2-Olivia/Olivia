@@ -1,0 +1,70 @@
+{% extends 'gdpr/_base_gdpr.html.twig' %}
+{% trans_default_domain 'app' %}
+{% set gdprTitle = 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) %}
+
+{% block title %}{{ 'page.termsOfService.edit'|trans }}{% endblock %}
+
+{% block gdprContent %}
+    <div class="card card-body">
+        <h1 class="card-title">{{ 'privacyPolicy.title.edit'|trans }}</h1>
+        {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+            {{ form_label(form.privacyPolicy) }}
+            <div class="editor-container mb-3">
+                {% include '_partials/ql-editor-toolbar.html.twig' %}
+                <div id="editor"></div>
+            </div>
+            {{ form_widget(form.privacyPolicy) }}
+
+            {{ form_label(form.privacyPolicyAlt) }}
+            <div class="editor-container mb-3">
+                {% include '_partials/ql-editor-toolbar.html.twig' with {'editorToolbarId': 'editor-toolbar-alt', 'editorHtmlId': 'editor-html-alt'} %}
+                <div id="editor-alt"></div>
+            </div>
+            {{ form_widget(form.privacyPolicyAlt) }}
+
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('quill') }}
+    <style>
+        .editor-container {
+            height: 440px;
+            padding-bottom: 42px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('quill') }}
+    <script>
+        const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
+        const settingsAlt = { theme: "snow", modules: { toolbar: "#editor-toolbar-alt" } };
+        const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
+
+        window.addEventListener("load", () => {
+            const quill = new Quill("#editor", settings);
+            quill.root.innerHTML = `{{ formData.privacyPolicy|raw }}`;
+
+            const quillAlt = new Quill("#editor-alt", settingsAlt);
+            quillAlt.root.innerHTML = `{{ formData.privacyPolicyAlt|raw }}`;
+
+            QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
+            QuillUtils.assignHtmlEditingCapabilities(quillAlt, document.getElementById("editor-html-alt"), translation)
+
+            const form = document.querySelector('form#{{ form.vars.id }}');
+            form.onsubmit = function () {
+                const privacyPolicy = this.querySelector("#{{ form.privacyPolicy.vars.id }}");
+                privacyPolicy.value = quill.root.innerHTML;
+                const privacyPolicyAlt = this.querySelector("#{{ form.privacyPolicyAlt.vars.id }}");
+                privacyPolicyAlt.value = quillAlt.root.innerHTML;
+            }
+        });
+    </script>
+{% endblock %}

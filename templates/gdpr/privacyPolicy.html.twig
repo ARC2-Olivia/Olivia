@@ -1,30 +1,16 @@
-{% extends 'termsOfService/_base_tos.html.twig' %}
+{% extends 'gdpr/_base_gdpr.html.twig' %}
 {% trans_default_domain 'app' %}
 
 {% block title %}{{ 'page.termsOfService.show'|trans }}{% endblock %}
 
-{% block tosContent %}
+{% block gdprContent %}
     <div class="card card-body">
         <div class="text-center">
-            <h1>{{ 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) }}</h1>
-            <p>{{ gdpr.startedAt|date('d.m.Y.') }} &mdash; {{ gdpr.endedAt is not null ? gdpr.endedAt|date('d.m.Y.') : 'termsOfService.ongoing'|trans }}</p>
-            {% if is_granted('ROLE_ADMIN') and gdpr.active %}
-                <div class="mt-3">
-                    <a href="{{ path('gdpr_edit', {'gdpr': gdpr.id}) }}" class="btn btn-theme-white bg-blue">{{ 'common.edit'|trans }}</a>
-                    <a href="{{ path('gdpr_revise', {'gdpr': gdpr.id}) }}" class="btn btn-theme-white bg-green me-1">{{ 'termsOfService.extra.revise'|trans }}</a>
-                </div>
-            {% endif %}
-            {% if is_user() and gdpr_accepted(gdpr) %}
-                <form class="mt-3 d-inline-block" method="post" action="{{ path('gdpr_rescind', {'gdpr': gdpr.id}) }}" onsubmit="return confirm('{{ 'termsOfService.message.rescind'|trans }}')">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('tos.rescind') }}"/>
-                    <button type="submit" class="btn btn-theme-white bg-red">{{ 'termsOfService.extra.rescind'|trans }}</button>
-                    {% if not gdpr.active %}
-                        <br><small>{{ 'termsOfService.message.rescindInactive'|trans }}</small>
-                    {% endif %}
-                </form>
-                <a href="{{ path('gdpr_data_protection') }}" class="btn btn-theme-white bg-blue">{{ 'nav.gdpr'|trans }}</a>
+            <h1>{{ 'nav.privacyPolicy'|trans }}</h1>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path("gdpr_edit_privacy_policy") }}" class="btn btn-theme-white bg-blue mt-3">{{ 'common.edit'|trans }}</a>
             {% endif %}
         </div>
-        {% include 'gdpr/_privacyPolicy_content.html.twig' %}
+        <div class="ql-editor">{{ gdpr.privacyPolicy|raw }}</div>
     </div>
 {% endblock %}

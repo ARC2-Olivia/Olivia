@@ -181,6 +181,17 @@ h2 > a {
     border-radius: 4px;
 }
 
+.highlight {
+    background-color: var(--app-color-dark-blue);
+    border-radius: 5px;
+    padding: 10px;
+    color: #fff
+}
+
+.big {
+    font-size: 20px;
+}
+
 .bg-orange { background-color: var(--app-color-orange) !important; }
 .bg-green { background-color: var(--app-color-green) !important; }
 .bg-light-green { background-color: var(--app-color-light-green) !important; }
@@ -219,6 +230,12 @@ h2 > a {
 @media screen and (max-width: 575px) {
     .submodule-grid {
         grid-template-columns: 1fr;
+    }
+
+    .h1-login {
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
     }
 }
 

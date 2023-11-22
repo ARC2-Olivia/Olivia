@@ -26,7 +26,7 @@
                 {% for gdpr in gdprs %}
                     <tr>
                         <td>{{ gdpr.id }}</td>
-                        <td><a href="{{ path('gdpr_privacy_policy', {'gdpr': gdpr.id}) }}">{{ 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) }}</a></td>
+                        <td><a href="{{ path('gdpr_terms_of_service', {'gdpr': gdpr.id}) }}">{{ 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) }}</a></td>
                         <td>{{ gdpr.startedAt|date('d.m.Y.') }}</td>
                         <td>{{ gdpr.endedAt is not null ? gdpr.endedAt|date('d.m.Y.') : '&mdash;' }}</td>
                         <td>{{ gdpr.active ? 'common.yes'|trans : 'common.no'|trans }}</td>
