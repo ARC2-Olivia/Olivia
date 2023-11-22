@@ -231,6 +231,12 @@ h2 > a {
     .submodule-grid {
         grid-template-columns: 1fr;
     }
+
+    .h1-login {
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
+    }
 }
 
 .security-form-wrapper {
