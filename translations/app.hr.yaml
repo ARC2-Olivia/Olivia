@@ -4,7 +4,7 @@ app:
     brand.1: OLIVIA
     brand.2: Tool
     brand.short: OLIVIA
-    subtitle: Virtualni podučavatelj o GDPR-u i pomoćnik za usklađenost
+    subtitle: Virtualna asistentica za usklađivanje s GDPR-om
 
 common:
     id: ID
@@ -131,9 +131,9 @@ index:
                 title: PRACTICAL
                 text: Praktična strana alata OLIVIA pomaže MSP-ovima u potpunosti implementirati GDPR.
     topics:
-        title: GDPR teme &ndash; Naučite i primijenit
+        title: GDPR teme &ndash; Naučite i primijenite
         button: GDPR teme
-        text: "OLIVIA je istovremeno i virtualni učitelj i pomoćnik. Ona sadrži malu <i>online</i> akademiju koja Vam nudi niz modula za učenje kako biste poboljšali svoje znanje u području GDPR-a, te također služi kao praktičan alat koji Vam pomaže u generiranju potrebnih dokumenata i primjeni postupaka povezanih s GDPR-om."
+        text: "Olivia je istodobno virtualna učiteljica i asistentica. Olivia sadrži malu <i>online</i> akademiju koja Vam nudi niz modula za učenje kako biste poboljšali svoje znanje u području zaštite osobnih podataka, a služi i kao praktičan alat za pomoć pri izradi internih akata kojima možete dokazati svoju usklađenost i pouzdanost."
 
 form:
     security:
