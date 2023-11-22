@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class GdprType extends AbstractType
+class GdprTermsOfServiceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -18,12 +18,6 @@ class GdprType extends AbstractType
                 'label' => 'form.entity.termsOfService.label.termsOfService',
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'error.termsOfService.termsOfService'])
-                ]
-            ])
-            ->add('privacyPolicy', HiddenType::class, [
-                'label' => 'form.entity.termsOfService.label.privacyPolicy',
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'error.termsOfService.privacyPolicy'])
                 ]
             ])
         ;
@@ -35,13 +29,6 @@ class GdprType extends AbstractType
                     'mapped' => false,
                     'constraints' => [
                         new Assert\NotBlank(['message' => 'error.termsOfService.termsOfServiceAlt'])
-                    ]
-                ])
-                ->add('privacyPolicyAlt', HiddenType::class, [
-                    'label' => 'form.entity.termsOfService.label.privacyPolicyAlt',
-                    'mapped' => false,
-                    'constraints' => [
-                        new Assert\NotBlank(['message' => 'error.termsOfService.privacyPolicyAlt'])
                     ]
                 ])
             ;

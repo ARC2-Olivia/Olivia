@@ -7,8 +7,8 @@
     <div class="card card-body">
         <div class="text-center">
             <h1>{{ 'nav.privacyPolicy'|trans }}</h1>
-            {% if is_granted('ROLE_ADMIN') and gdpr.active %}
-                <a href="{{ path('gdpr_edit', {'gdpr': gdpr.id}) }}" class="btn btn-theme-white bg-blue mt-3">{{ 'common.edit'|trans }}</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path("gdpr_edit_privacy_policy") }}" class="btn btn-theme-white bg-blue mt-3">{{ 'common.edit'|trans }}</a>
             {% endif %}
         </div>
         <div class="ql-editor">{{ gdpr.privacyPolicy|raw }}</div>

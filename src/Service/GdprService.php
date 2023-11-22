@@ -19,8 +19,14 @@ class GdprService
 
     public function create(Gdpr $gdpr): Gdpr
     {
-        $version = $this->em->getRepository(Gdpr::class)->getLatestVersionNumber() + 1;
-        $gdpr->setVersion($version)->setRevision(0)->setStartedAt(new \DateTimeImmutable())->setActive(true);
+        $gdprRepository = $this->em->getRepository(Gdpr::class);
+        $version = $gdprRepository->getLatestVersionNumber() + 1;
+        $gdpr
+            ->setVersion($version)
+            ->setRevision(0)
+            ->setStartedAt(new \DateTimeImmutable())
+            ->setActive(true)
+        ;
         $this->em->persist($gdpr);
         $this->em->flush();
         return $gdpr;
@@ -31,7 +37,12 @@ class GdprService
         $gdprRepository = $this->em->getRepository(Gdpr::class);
         $version = $gdprRepository->getLatestVersionNumber();
         $revision = $gdprRepository->getLatestRevisionNumberForVersion($version) + 1;
-        $revisedGdpr->setVersion($version)->setRevision($revision)->setStartedAt(new \DateTimeImmutable())->setActive(true);
+        $revisedGdpr
+            ->setVersion($version)
+            ->setRevision($revision)
+            ->setStartedAt(new \DateTimeImmutable())
+            ->setActive(true)
+        ;
         $this->em->persist($revisedGdpr);
         return $revisedGdpr;
     }

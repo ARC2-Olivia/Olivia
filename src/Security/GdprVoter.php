@@ -53,7 +53,7 @@ class GdprVoter extends Voter
 
     private function canEdit(Gdpr $gdpr): bool
     {
-        return $this->security->isGranted(User::ROLE_USER) && $gdpr->isActive();
+        return $this->security->isGranted(User::ROLE_MODERATOR) && $gdpr->isActive();
     }
 
     private function canAccept(Gdpr $gdpr, User $user): bool

@@ -41,6 +41,7 @@ common:
     incorrect: Errato
     details: Dettagli
     description: Descrizione
+    list: Elenco
 
 button:
     details: Dettagli
@@ -628,6 +629,7 @@ practicalSubmoduleAssessment:
         edit: Modifica il questionario inviato
         results: Visualizza rapporto
         downloadReport: Scarica il rapporto
+
 termsOfService:
     format: ver. %versione%, rev. %revisione%
     ongoing: in corso

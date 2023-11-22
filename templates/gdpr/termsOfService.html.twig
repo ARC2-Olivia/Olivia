@@ -8,10 +8,9 @@
         <div class="text-center">
             <h1>{{ 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) }}</h1>
             <p>{{ gdpr.startedAt|date('d.m.Y.') }} &mdash; {{ gdpr.endedAt is not null ? gdpr.endedAt|date('d.m.Y.') : 'termsOfService.ongoing'|trans }}</p>
-            {% if is_granted('ROLE_ADMIN') and gdpr.active %}
+            {% if is_granted('ROLE_ADMIN') %}
                 <div class="mt-3">
-                    <a href="{{ path('gdpr_edit', {'gdpr': gdpr.id}) }}" class="btn btn-theme-white bg-blue">{{ 'common.edit'|trans }}</a>
-                    <a href="{{ path('gdpr_revise', {'gdpr': gdpr.id}) }}" class="btn btn-theme-white bg-green me-1">{{ 'termsOfService.extra.revise'|trans }}</a>
+                    <a href="{{ path('gdpr_index') }}" class="btn btn-theme-white bg-orange me-1">{{ 'common.list'|trans }}</a>
                 </div>
             {% endif %}
             {% if is_user() and gdpr_accepted(gdpr) %}
