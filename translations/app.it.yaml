@@ -4,7 +4,7 @@ app:
     brand.1: OLIVIA
     brand.2: Attrezzo
     brand.short: OLIVIA
-    subtitle: Formatore virtuale GDPR e assistente alla conformità
+    subtitle: Assistente virtuale per la conformità GDPR
 
 common:
     id: ID
@@ -134,7 +134,7 @@ index:
     topics:
         title: Temi GDPR &ndash; Impara e applica
         button: Temi GDPR
-        text: Essendo sia un educatore virtuale che un assistente, OLIVIA include una mini accademia online che ti offre una varietà di moduli di apprendimento per migliorare le tue conoscenze nell'area del GDPR, oltre a uno strumento pratico che ti assiste nell'applicazione pratica dei documenti necessari e delle informazioni relative al GDPR procedure.
+        text: Olivia è un'insegnante virtuale e un'assistente allo stesso tempo. Olivia contiene una piccola accademia online che ti offre una serie di moduli di apprendimento per migliorare le tue conoscenze nel campo della protezione dei dati personali e funge anche da strumento pratico per aiutarti a creare documenti interni per dimostrare la tua conformità e affidabilità.
 
 form:
     security:
