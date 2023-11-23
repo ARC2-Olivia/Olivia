@@ -45,7 +45,7 @@ common:
 
 button:
     details: Details
-    startNow: Enroll now
+    startNow: Start learning
     loginToEnroll: Login to learn
     loginToApply: Login to apply
     results: Results

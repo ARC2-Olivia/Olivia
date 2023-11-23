@@ -37,20 +37,4 @@
             <span>{{ 'course.details.value.enrollment'|trans }}</span>
         </div>
     </div>
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {% if not is_enrolled(course, app.user) %}
-            <div class="text-center mt-5">
-                <a href="{{ path('course_enroll', {'course': course.id}) }}"
-                   class="btn btn-theme-white bg-orange"
-                   onclick="return confirm(`{{ 'course.enroll.message'|trans({'%course%': course.name}) }}`);"
-                >
-                    {{ 'button.startNow'|trans }}
-                </a>
-            </div>
-        {% endif %}
-    {% else %}
-        <div class="text-center mt-5">
-            <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange">{{ 'button.loginToEnroll'|trans }}</a>
-        </div>
-    {% endif %}
 </div>

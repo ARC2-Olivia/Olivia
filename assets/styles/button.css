@@ -102,6 +102,12 @@
     height: 28px;
 }
 
+.btn.btn-lg {
+    padding: 0 16px;
+    font-size: 24px;
+    height: 48px;
+}
+
 .btn.btn-thematic-orange-outline {
     color: var(--app-color-orange);
     border: solid 1px var(--app-color-orange);

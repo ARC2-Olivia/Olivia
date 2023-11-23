@@ -44,7 +44,7 @@ common:
 
 button:
     details: Detalji
-    startNow: Upiši
+    startNow: Započni učenje
     loginToEnroll: Prijavite se za učenje
     loginToApply: Prijavite se za primjenu
     results: Rezultati

@@ -13,6 +13,7 @@
                 <h3>{{ 'course.overview.aboutTopic'|trans }}</h3>
                 <div class="ql-editor">{{ course.description|raw }}</div>
             {% endif %}
+            {% include 'course/_button_enrollment.html.twig' %}
             {% if course.learningOutcomesAsArray is not empty %}
                 <h3 class="mt-4">{{ 'course.overview.learningOutcomes'|trans }}</h3>
                 <ul class="ps-3">
