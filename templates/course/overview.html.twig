@@ -11,7 +11,7 @@
             {% endif %}
             {% if course.description is not empty %}
                 <h3>{{ 'course.overview.aboutTopic'|trans }}</h3>
-                <p>{{ course.description }}</p>
+                <div class="ql-editor">{{ course.description|raw }}</div>
             {% endif %}
             {% if course.learningOutcomesAsArray is not empty %}
                 <h3 class="mt-4">{{ 'course.overview.learningOutcomes'|trans }}</h3>
