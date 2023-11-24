@@ -44,10 +44,10 @@
             quill.root.innerHTML = `{{ gdpr.termsOfService|raw }}`;
 
             QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
-
             const form = document.querySelector('form#{{ form.vars.id }}');
+
             form.onsubmit = function () {
-                const termsOfService = this.querySelector("#gdpr_{{ form.termsOfService.vars.id }}");
+                const termsOfService = this.querySelector("#{{ form.termsOfService.vars.id }}");
                 termsOfService.value = quill.root.innerHTML;
             }
         });
