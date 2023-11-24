@@ -241,16 +241,21 @@
 
 @media screen and (max-width: 576px) {
     .course-header-breadcrumbs {
-        --breadcrumb-size: 14px;
+        --breadcrumb-size: 16px;
         overflow-x: hidden;
     }
 
-    .course-header-breadcrumbs > :not(svg) {
-        flex-basis: calc(28% - 8px);
+    .course-header-breadcrumbs > :not(:nth-child(2), :nth-child(3)) {
+        display: none;
+    }
+
+    .course-header-breadcrumbs > :nth-child(3) {
+        flex-basis: 0;
+        flex-grow: 1;
     }
 
     .course-header-breadcrumbs > svg {
-        flex-basis: calc(8% - 8px);
+        transform: rotate(180deg);
     }
 
     .course-navigation {
