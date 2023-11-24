@@ -49,7 +49,8 @@
 
 {% block body %}
     <div class="container pt-4">
-        <div class="row mb-3">{% include '_partials/tab_navigation.html.twig' %}</div>
+        <div>{% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}</div>
+        <div class="mb-3">{% include '_partials/tab_navigation.html.twig' %}</div>
         <div class="row mb-3 h-100">
             {% block lessonContent %}{% endblock %}
         </div>

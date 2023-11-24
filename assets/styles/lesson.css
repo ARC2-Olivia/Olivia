@@ -516,3 +516,27 @@ iframe.lesson-video {
         flex-grow: 0;
     }
 }
+
+@media screen and (max-width: 576px) {
+    .lesson-content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .lesson-items {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .lesson-item-actions {
+        display: none;
+    }
+
+    .completion-marker-outer {
+        display: none;
+    }
+
+    .lesson-notes {
+        height: 100vh;
+    }
+}

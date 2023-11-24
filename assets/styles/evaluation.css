@@ -464,3 +464,15 @@ ul.mod--ps-pages {
         flex-basis: 100%;
     }
 }
+
+@media screen and (max-width: 576px) {
+    .evaluation-content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .evaluation-assessment {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

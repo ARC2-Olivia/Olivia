@@ -70,5 +70,6 @@ dialog.modal-dialog {
 
     .modal .modal-dialog {
         width: 100vw;
+        margin: 0;
     }
 }
