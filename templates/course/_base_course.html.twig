@@ -54,6 +54,7 @@
                 <div class="container-fluid">
                     <div class="row">{% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}</div>
                     <div class="row mb-3">{% include '_partials/tab_navigation.html.twig' %}</div>
+                    {% if is_user() or not is_granted('IS_AUTHENTICATED') %}{% include 'course/_button_enrollment.html.twig' %}{% endif %}
                     <div class="row course-content mb-4">
                         {% block courseContent %}{% endblock %}
                     </div>
