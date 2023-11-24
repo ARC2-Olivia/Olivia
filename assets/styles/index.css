@@ -208,6 +208,14 @@
 }
 
 @media screen and (max-width: 1399px) {
+    .index-banner.homepage {
+        height: calc(100vh - 68px);
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .index-banner.homepage .index-banner-wrapper {
         background-color: #00000044;
         backdrop-filter: blur(5px);
@@ -230,6 +238,7 @@
 
     .index-banner.homepage {
         padding-left: 0;
+        height: calc(100vh - 60px);
     }
 }
 
