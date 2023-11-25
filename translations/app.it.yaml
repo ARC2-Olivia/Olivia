@@ -557,6 +557,7 @@ practicalSubmodule:
         privacyPolicy: Politica sulla riservatezza
         consentPersonalDataProcessing: Consenso al trattamento dei dati personali
         cookieBanner: Bandiera dei biscotti
+        cookiePolicy: Gestione dei Cookie
         lia: Valutazione del legittimo interesse
     extra:
         question: Domanda

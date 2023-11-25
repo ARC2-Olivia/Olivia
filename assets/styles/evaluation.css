@@ -325,7 +325,8 @@ ul.mod--ps-pages {
 .evaluation-assessment-datum-question {
     font-weight: 600;
     white-space: pre-line;
-    background-color: var(--app-color-light-green);
+    color: #ffffff;
+    background-color: var(--app-color-dark-blue);
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     padding: 8px 16px;

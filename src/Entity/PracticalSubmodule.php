@@ -21,6 +21,7 @@ class PracticalSubmodule extends TranslatableEntity
     public const EXPORT_TYPE_PRIVACY_POLICY = 'privacyPolicy';
     public const EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT = 'consentPersonalDataProcessing';
     public const EXPORT_TYPE_COOKIE_BANNER = 'cookieBanner';
+    public const EXPORT_TYPE_COOKIE_POLICY = 'cookiePolicy';
     public const EXPORT_TYPE_LIA = 'lia';
 
     #[ORM\Id]
