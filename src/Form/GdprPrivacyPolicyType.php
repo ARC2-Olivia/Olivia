@@ -20,18 +20,13 @@ class GdprPrivacyPolicyType extends AbstractType
                     new Assert\NotBlank(['message' => 'error.termsOfService.privacyPolicy'])
                 ]
             ])
-            ->add('privacyPolicyAlt', HiddenType::class, [
-                'label' => 'form.entity.termsOfService.label.privacyPolicyAlt',
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'error.termsOfService.privacyPolicyAlt'])
-                ]
-            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'data_class' => Gdpr::class,
             'translation_domain' => 'app',
             'attr' => ['novalidate' => 'novalidate'],
         ]);

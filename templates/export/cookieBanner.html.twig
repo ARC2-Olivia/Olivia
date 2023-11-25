@@ -5,7 +5,7 @@
 {% endif %}
 
 <style>
-    .cookie-banner {
+    .kookie-banner {
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -18,12 +18,12 @@
         font-family: 'Source Sans 3', 'Helvetica', 'Calibri', 'Arial', sans-serif;
     }
 
-    .cookie-banner h1 {
+    .kookie-banner h1 {
         margin: 0;
         font-size: 24px;
     }
 
-    .cookie-banner h2 {
+    .kookie-banner h2 {
         margin: 16px 0 0;
         font-size: 20px;
     }
@@ -117,7 +117,7 @@
 </style>
 {% if cookieBanner.message is defined and showReportMessage == true %}<p>{{ cookieBanner.message|raw }}</p>{% endif %}
 {% if showBanner %}
-    <div class="cookie-banner">
+    <div class="kookie-banner">
         <h1>{% trans into 'hr' %}export.cookieBanner.title{% endtrans %}</h1>
         {% if cookieBanner.usage is defined %}<p>{{ cookieBanner.usage }}</p>{% endif %}
         {% if cookieBanner.link is defined %}<p>{{ cookieBanner.link|raw }}</p>{% endif %}
