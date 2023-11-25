@@ -138,29 +138,26 @@ class GdprController extends BaseController
     #[Route("/privacy-policy/edit", name: "edit_privacy_policy")]
     public function editPrivacyPolicy(Request $request): Response
     {
-        $gdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
-        $this->denyAccessUnlessGranted(GdprVoter::EDIT, $gdpr);
+        $activeGdpr = $this->em->getRepository(Gdpr::class)->findCurrentlyActive();
+        $this->denyAccessUnlessGranted(GdprVoter::EDIT, $activeGdpr);
 
-        list($privacyPolicy, $privacyPolicyAlt) = $this->extractDefaultAndTranslatedPrivacyPolicy($gdpr, $request);
-        $formData = new \stdClass();
-        $formData->privacyPolicy = $privacyPolicy;
-        $formData->privacyPolicyAlt = $privacyPolicyAlt;
-
-        $form = $this->createForm(GdprPrivacyPolicyType::class, $formData);
+        $form = $this->createForm(GdprPrivacyPolicyType::class, $activeGdpr);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
             $gdprs = $this->em->getRepository(Gdpr::class)->findAll();
             foreach ($gdprs as $gdpr) {
-                $gdpr->setPrivacyPolicy($formData->privacyPolicy);
+                if ($gdpr->getId() !== $activeGdpr->getId()) {
+                    $gdpr->setPrivacyPolicy($activeGdpr->getPrivacyPolicy());
+                }
             }
             $this->em->flush();
-            $this->processPrivacyPolicyTranslation($gdprs, $formData->privacyPolicyAlt);
             $this->addFlash('success', 'Yay');
         } else {
             $this->showFormErrorsAsFlashes($form);
         }
 
-        return $this->render('gdpr/editPrivacyPolicy.html.twig', ['gdpr' => $gdpr, 'form' => $form->createView(), 'formData' => $formData]);
+        return $this->render('gdpr/editPrivacyPolicy.html.twig', ['gdpr' => $activeGdpr, 'form' => $form->createView()]);
     }
 
     #[Route("/accept/{gdpr}", name: "accept")]
