@@ -554,7 +554,8 @@ practicalSubmodule:
         simple: Jednostavni izvoz
         privacyPolicy: Politika privatnosti
         consentPersonalDataProcessing: Privola za obradu osobnih podataka
-        cookieBanner: Obavijest o kolačićima
+        cookieBanner: Traka ili skočni prozor o privoli za obradu osobnih podataka putem kolačića
+        cookiePolicy: Politika kolačića
         lia: Procjena legitimnog interesa
     extra:
         question: Pitanje

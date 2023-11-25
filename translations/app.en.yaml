@@ -557,6 +557,7 @@ practicalSubmodule:
         privacyPolicy: Privacy policy
         consentPersonalDataProcessing: Consent for personal data processing
         cookieBanner: Cookie banner
+        cookiePolicy: Cookie policy
         lia: Legitimate interest assessment
     extra:
         question: Question

@@ -39,6 +39,7 @@ class WordService
             PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY => $this->generatePrivacyPolicyDocument($assessment),
             PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_LIA => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY => $this->generateCookiePolicyDocument($assessment, $locale),
             default => $this->generateDefaultDocument($assessment)
         };
     }
@@ -230,6 +231,36 @@ class WordService
                 continue;
             }
             $this->handleTemplatingForLIA($exportTag, $templateProcessor, $result->getText());
+        }
+
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
+    }
+
+    private function generateCookiePolicyDocument(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $lines = explode("\n", str_replace("\r", '', $results[0]->getText()));
+        $linesData = [];
+        foreach ($lines as $line) {
+            $lineData = ['text' => strip_tags($line), 'fontStyle' => []];
+            if (str_starts_with($line, '<h') || str_starts_with($line, '<b')) {
+                $lineData['fontStyle']['bold'] = true;
+            }
+            $linesData[] = $lineData;
+        }
+        $lineCount = count($lines);
+
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_cookie_policy.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+        $templateProcessor->cloneBlock('blockContentWrapper', $lineCount, true, true);
+
+        $i = 1;
+        foreach ($linesData as $lineData) {
+            $text = new Text($lineData['text'], $lineData['fontStyle']);
+            $templateProcessor->setComplexValue("blockContent#$i", $text);
+            $i++;
         }
 
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
