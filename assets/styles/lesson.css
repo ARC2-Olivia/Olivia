@@ -498,6 +498,202 @@ iframe.lesson-video {
     border-radius: 50%;
 }
 
+.trophy-anim-background {
+    z-index: 3000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    animation-name: trophy-background;
+    animation-duration: 4s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.trophy-anim-trophy {
+    z-index: 3020;
+    position: fixed;
+    height: 30vw;
+    width: 30vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation-name: trophy-trophy;
+    animation-duration: 4s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.trophy-anim-shine {
+    z-index: 3010;
+    position: fixed;
+    height: 33vw;
+    width: 33vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation-name: trophy-shine;
+    animation-duration: 4s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.trophy-anim-trophy > svg {
+    height: 100%;
+    width: 100%;
+    color: var(--app-color-orange);
+}
+
+.trophy-anim-shine > svg {
+    height: 100%;
+    width: 100%;
+    color: rgba(255, 255, 255, .5);
+}
+
+@keyframes trophy-background {
+    0% { opacity: 0; z-index: 3000; }
+    5% { opacity: 1; z-index: 3000; }
+    95% { opacity: 1; z-index: 3000; }
+    99% { opacity: 0; z-index: 3000; }
+    100% { opacity: 0; z-index: -3000; }
+}
+
+@keyframes trophy-trophy {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+        z-index: 3020;
+    }
+    5% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+        z-index: 3020;
+    }
+    20% {
+        transform: translate(-50%, -50%) scale(1.2) rotate(380deg);
+        opacity: 1;
+        z-index: 3020;
+    }
+    25% {
+        transform: translate(-50%, -50%) scale(1) rotate(360deg);
+        opacity: 1;
+        z-index: 3020;
+    }
+    95% {
+        transform: translate(-50%, -50%) scale(1) rotate(360deg);
+        opacity: 1;
+        z-index: 3020;
+    }
+    99% {
+        transform: translate(-50%, -50%) scale(1) rotate(360deg);
+        opacity: 0;
+        z-index: 3020;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(360deg);
+        opacity: 0;
+        z-index: -3020;
+    }
+}
+
+@keyframes trophy-shine {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+        z-index: 3010;
+    }
+    25% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+        z-index: 3010;
+    }
+    30% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        z-index: 3010;
+    }
+    35% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+        z-index: 3010;
+    }
+    40% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        z-index: 3010;
+    }
+    45% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+        z-index: 3010;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        z-index: 3010;
+    }
+    55% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+        z-index: 3010;
+    }
+    60% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        z-index: 3010;
+    }
+    65% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+        z-index: 3010;
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        z-index: 3010;
+    }
+    75% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+        z-index: 3010;
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        z-index: 3010;
+    }
+    85% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+        z-index: 3010;
+    }
+    90% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        z-index: 3010;
+    }
+    95% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+        z-index: 3010;
+    }
+    99% {
+        transform: translate(-50%, -50%) scale(1.05);
+        opacity: 0;
+        z-index: 3010;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+        z-index: -3010;
+    }
+}
+
 @media screen and (max-width: 1199px) {
     .lesson-section-main {
         flex-grow: 2;
@@ -538,5 +734,15 @@ iframe.lesson-video {
 
     .lesson-notes {
         height: 100vh;
+    }
+
+    .trophy-anim-trophy {
+        height: 50vw;
+        width: 50vw;
+    }
+
+    .trophy-anim-shine {
+        height: 55vw;
+        width: 55vw;
     }
 }

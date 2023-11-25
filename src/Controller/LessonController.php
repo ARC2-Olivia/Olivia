@@ -38,6 +38,8 @@ class LessonController extends BaseController
 {
     use BasicFileManagementTrait;
 
+    private const PLAY_TROPHY_ANIMATION = 'play_trophy_animation';
+
     private ?LessonService $lessonService = null;
     private ?EnrollmentService $enrollmentService = null;
     private ?NavigationService $navigationService = null;
@@ -162,7 +164,7 @@ class LessonController extends BaseController
 
     #[Route("/show/{lesson}", name: "show")]
     #[IsGranted("view", subject: "lesson")]
-    public function show(Lesson $lesson, LessonRepository $lessonRepository): Response
+    public function show(Lesson $lesson, LessonRepository $lessonRepository, Request $request): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -193,6 +195,8 @@ class LessonController extends BaseController
             }
         }
 
+        $playTrophyAnimation = Lesson::TYPE_QUIZ === $lesson->getType() && $request->getSession()->get(self::PLAY_TROPHY_ANIMATION, false);
+        $request->getSession()->remove(self::PLAY_TROPHY_ANIMATION);
         return $this->render('lesson/show.html.twig', [
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
@@ -203,6 +207,7 @@ class LessonController extends BaseController
             'currentLessonInfo' => $currentLessonInfo,
             'note' => $note,
             'quizPercentage' => !$this->isGranted('ROLE_MODERATOR') ? $this->lessonService->getQuizPercentage($lesson, $user) : null,
+            'playTrophyAnimation' => $playTrophyAnimation,
             'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)
         ]);
     }
@@ -414,6 +419,9 @@ class LessonController extends BaseController
                 if ($persistCompletion) {
                     $this->em->persist($lessonCompletion);
                     $this->em->flush();
+                }
+                if ($lessonCompletion->isCompleted()) {
+                    $request->getSession()->set(self::PLAY_TROPHY_ANIMATION, true);
                 }
 
                 $this->regrade($lesson->getCourse(), $user);
