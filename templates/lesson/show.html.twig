@@ -6,6 +6,15 @@
         {% include 'lesson/_show_sectionNav.html.twig' %}
         {% include 'lesson/_show_sectionMain.html.twig' %}
     </div>
+    {% if playTrophyAnimation == true %}
+        <div class="trophy-anim-background"></div>
+        <div class="trophy-anim-trophy">
+            {{ mdi('trophy-variant') }}
+        </div>
+        <div class="trophy-anim-shine">
+            {{ mdi('decagram') }}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block stylesheets %}
