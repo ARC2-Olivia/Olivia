@@ -51,7 +51,7 @@ class PracticalSubmoduleProcessorProductAggregate implements PracticalSubmoduleP
     public function validate(ExecutionContextInterface $context, $payload): void
     {
         if ($this->practicalSubmoduleProcessor !== null && $this->practicalSubmoduleProcessor->isIncluded()) {
-            $this->validatePracticalSubmoduleQuestionsAndProcessors($context);
+            //$this->validatePracticalSubmoduleQuestionsAndProcessors($context);
             $this->validateExpectedValueRanges($context);
             $this->validateResultText($context);
         }
