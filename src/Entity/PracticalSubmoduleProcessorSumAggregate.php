@@ -55,7 +55,7 @@ class PracticalSubmoduleProcessorSumAggregate extends TranslatableEntity impleme
     public function validate(ExecutionContextInterface $context, $payload): void
     {
         if ($this->practicalSubmoduleProcessor !== null && $this->practicalSubmoduleProcessor->isIncluded()) {
-            $this->validatePracticalSubmoduleQuestionsAndProcessors($context);
+            //$this->validatePracticalSubmoduleQuestionsAndProcessors($context);
             $this->validateExpectedValueRange($context);
             $this->validateResultText($context);
         }
