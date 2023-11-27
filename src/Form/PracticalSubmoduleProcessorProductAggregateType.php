@@ -41,7 +41,7 @@ class PracticalSubmoduleProcessorProductAggregateType extends AbstractType
                 'query_builder' => $this->makePracticalSubmoduleQuestionQueryBuilder($builder),
                 'attr' => ['class' => 'mb-3', 'data-df-select' => ''],
                 'mapped' => false,
-                'data' => $practicalSubmoduleProcessor?->getPracticalSubmoduleProcessorProductAggregate()->getPracticalSubmoduleQuestions()->get(0),
+                'data' => $practicalSubmoduleProcessor?->getPracticalSubmoduleProcessorProductAggregate()?->getPracticalSubmoduleQuestions()?->get(0),
                 'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleProcessor.placeholder.evaluationQuestion', [], 'app')
             ]);
         } else {
