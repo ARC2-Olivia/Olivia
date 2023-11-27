@@ -404,11 +404,11 @@ class PracticalSubmoduleAssessment {
         let userAnswer = questionData.userAnswer || '';
         const answer = this.#parser.parseFromString(`
             <label class="evaluation-assessment-question-answer">
-                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}]" value="${userAnswer}" data-answer-required required/>
+                <textarea class="form-textarea" name="evaluation_assessment[${questionData.id}]" data-answer-required required>${userAnswer}</textarea>
             </label>
         `, "text/html");
 
-        const input = answer.body.firstChild.querySelector("input");
+        const input = answer.body.firstChild.querySelector("textarea");
         this.#eventBus.attach(input);
         input.addEventListener("input", function(event) {
             event.target.dispatch("answerchange", { questionId: questionData.id, answer: event.target.value, checkType: 'equals' });
