@@ -273,6 +273,7 @@ form:
                 multipleWeighted: Enable multiple selection of weights
                 isHeading: Is heading
                 disabled: Disabled
+                largeText: Display input for large text
             placeholder:
                 questionText: Question text goes here...
                 dependentEvaluationQuestion: Nothing selected...

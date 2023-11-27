@@ -273,6 +273,7 @@ form:
                 multipleWeighted: Abilita la selezione multipla di pesi
                 isHeading: Si sta dirigendo
                 disabled: Disabilitato
+                largeText: Visualizza input per testo di grandi dimensioni
             placeholder:
                 questionText: Il testo della domanda va qui...
                 dependentEvaluationQuestion: Niente selezionato...

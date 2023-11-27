@@ -272,6 +272,7 @@ form:
                 multipleWeighted: Omogući višestruki odabir pondera
                 isHeading: Tekst je naziv poglavlja
                 disabled: Onesposobljeno
+                largeText: Omogući prikaz za unos većeg teksta
             placeholder:
                 questionText: Ovdje stavite tekst pitanja...
                 dependentEvaluationQuestion: Ništa odabrano...

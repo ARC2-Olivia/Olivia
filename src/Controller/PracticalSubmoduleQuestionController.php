@@ -42,7 +42,8 @@ class PracticalSubmoduleQuestionController extends BaseController
         $form = $this->createForm(PracticalSubmoduleQuestionType::class, $practicalSubmoduleQuestion, [
             'edit_mode' => true,
             'include_other_field' => $practicalSubmoduleQuestion::TYPE_MULTI_CHOICE === $practicalSubmoduleQuestion->getType(),
-            'include_multiple_weighted_field' => $practicalSubmoduleQuestion::TYPE_WEIGHTED === $practicalSubmoduleQuestion->getType()
+            'include_multiple_weighted_field' => $practicalSubmoduleQuestion::TYPE_WEIGHTED === $practicalSubmoduleQuestion->getType(),
+            'include_large_text_field' => $practicalSubmoduleQuestion::TYPE_TEXT_INPUT === $practicalSubmoduleQuestion->getType()
         ]);
         $form->handleRequest($request);
 

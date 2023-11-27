@@ -70,6 +70,9 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     #[ORM\Column(nullable: true)]
     private ?bool $multipleWeighted = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $largeText = null;
+
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -294,6 +297,18 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public function setMultipleWeighted(?bool $multipleWeighted): self
     {
         $this->multipleWeighted = $multipleWeighted;
+
+        return $this;
+    }
+
+    public function isLargeText(): ?bool
+    {
+        return $this->largeText;
+    }
+
+    public function setLargeText(?bool $largeText): self
+    {
+        $this->largeText = $largeText;
 
         return $this;
     }

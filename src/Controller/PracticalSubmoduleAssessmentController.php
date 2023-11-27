@@ -233,7 +233,8 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 'page' => $practicalSubmoduleQuestion->getPracticalSubmodulePage()?->getPosition(),
                 'other' => $practicalSubmoduleQuestion->isOtherEnabled(),
                 'isHeading' => $practicalSubmoduleQuestion->getIsHeading(),
-                'multipleWeighted' => $practicalSubmoduleQuestion->isMultipleWeighted()
+                'multipleWeighted' => $practicalSubmoduleQuestion->isMultipleWeighted(),
+                'largeText' => $practicalSubmoduleQuestion->isLargeText()
             ];
 
             if ($editing) {
