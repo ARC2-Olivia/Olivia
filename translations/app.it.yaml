@@ -135,6 +135,19 @@ index:
         title: Temi GDPR &ndash; Impara e applica
         button: Temi GDPR
         text: Olivia è un'insegnante virtuale e un'assistente allo stesso tempo. Olivia contiene una piccola accademia online che ti offre una serie di moduli di apprendimento per migliorare le tue conoscenze nel campo della protezione dei dati personali e funge anche da strumento pratico per aiutarti a creare documenti interni per dimostrare la tua conformità e affidabilità.
+    facts:
+        1:
+            title: "Fatto n. 1 del GDPR"
+            text: Il GDPR è una legge dell’UE con norme obbligatorie su come le organizzazioni e le aziende devono utilizzare i dati personali in modo rispettoso dell’integrità.
+        2:
+            title: "Fatto n. 2 del GDPR"
+            text: L’utilizzo dei dati personali deve essere rispettoso dei diritti delle persone, in linea con i principi legali e di integrità.
+        3:
+            title: "Fatto n. 3 del GDPR"
+            text: Per dato personale si intende qualsiasi informazione che, direttamente o indirettamente, possa identificare una persona vivente.
+        4:
+            title: "Fatto n. 4 del GDPR"
+            text: Il GDPR garantisce a ogni persona determinati diritti sui propri dati personali.
 
 form:
     security:

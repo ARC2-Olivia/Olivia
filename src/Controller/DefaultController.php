@@ -23,21 +23,12 @@ class DefaultController extends BaseController
     #[Route("/{_locale}", name: "index", requirements: ["_locale" => "%locale.supported%"])]
     public function index(Request $request): Response
     {
-        if ('hr' === $request->getLocale()) {
-            $testimonials = [
-                ['title' => 'GDPR činjenica br. 1', 'text' => 'GDPR je zakon donesen u EU koji sadrži obvezna pravila kako organizacije i tvrtke moraju koristiti osobne podatke na način koji se štiti njihov integritet.'],
-                ['title' => 'GDPR činjenica br. 2', 'text' => 'Korištenje osobnih podataka mora poštovati prava pojedinaca, u skladu s načelima integriteta i zakona.'],
-                ['title' => 'GDPR činjenica br. 3', 'text' => 'Osobni podatak je svaka informacija koja bi, izravno ili neizravno, mogla identificirati živu osobu.'],
-                ['title' => 'GDPR činjenica br. 4', 'text' => 'GDPR svakoj osobi daje određena prava na njezine osobne podatke.'],
-            ];
-        } else {
-            $testimonials = [
-                ['title' => 'GDPR Fact #1', 'text' => 'GDPR is an EU law with mandatory rules for how organizations and companies must use personal data in an integrity friendly way.'],
-                ['title' => 'GDPR Fact #2', 'text' => 'Use of personal data must be respectful to the individuals’ rights, in line with integrity friendly principles and legal.'],
-                ['title' => 'GDPR Fact #3', 'text' => 'Personal data means any information which, directly or indirectly, could identify a living person.'],
-                ['title' => 'GDPR Fact #4', 'text' => 'The GDPR provides each person with certain rights of their personal data.'],
-            ];
-        }
+        $testimonials = [
+            ['title' => $this->translator->trans('index.facts.1.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.1.text', domain: 'app')],
+            ['title' => $this->translator->trans('index.facts.2.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.2.text', domain: 'app')],
+            ['title' => $this->translator->trans('index.facts.3.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.3.text', domain: 'app')],
+            ['title' => $this->translator->trans('index.facts.4.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.4.text', domain: 'app')]
+        ];
         return $this->render('default/index.html.twig', ['testimonials' => $testimonials]);
     }
 
