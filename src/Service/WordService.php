@@ -363,9 +363,9 @@ class WordService
         $templateProcessor->cloneBlock("block_$variable", $linesCount, indexVariables: true);
         $i = 1;
         foreach ($lines as $line) {
-            $fontStyle = null;
+            $fontStyle = [];
             if (str_ends_with($line, '|distinguish')) {
-                $fontStyle = ['color' => '4472C4', 'bold' => true];
+                $fontStyle['bold'] = true;
                 $line = str_replace('|distinguish', '', $line);
             }
             $templateProcessor->setComplexValue("$variable#$i", new Text($line, $fontStyle));
