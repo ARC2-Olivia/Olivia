@@ -6,8 +6,6 @@ use App\Entity\Texts;
 use App\Form\ProfileType;
 use App\Form\Security\PasswordResetType;
 use App\Service\SecurityService;
-use Symfony\Component\Asset\Package;
-use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +15,7 @@ class DefaultController extends BaseController
     #[Route("/", name: "index_without_locale")]
     public function indexWithoutLocale(): Response
     {
-        return $this->redirectToRoute('index', ['_locale' => $this->getParameter('locale.default')]);
+        return $this->redirectToRoute('index', ['_locale' => $this->getParameter('locale.alternate')]);
     }
 
     #[Route("/{_locale}", name: "index", requirements: ["_locale" => "%locale.supported%"])]
