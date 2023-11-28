@@ -32,6 +32,11 @@
         {{ form_widget(form.multipleWeighted) }}
     {% endif %}
 
+    {% if form.largeText is defined %}
+        <label for="{{ form.largeText.vars.id }}">{{ form.largeText.vars.label|trans|raw }}</label>
+        {{ form_widget(form.largeText) }}
+    {% endif %}
+
     {{ form_label(form.questionText) }}
     {{ form_widget(form.questionText) }}
 

@@ -94,6 +94,14 @@ class PracticalSubmoduleQuestionType extends AbstractType
             ]);
         }
 
+        if (true === $options['include_large_text_field']) {
+            $builder->add('largeText', ChoiceType::class, [
+               'label' => 'form.entity.practicalSubmoduleQuestion.label.largeText',
+               'choices' => $booleanChoices,
+               'attr' => ['class' => 'form-select mb-3']
+            ]);
+        }
+
         if (true === $options['include_translatable_fields']) {
             $builder->add('questionTextAlt', TextareaType::class, [
                 'mapped' => false,
@@ -115,6 +123,7 @@ class PracticalSubmoduleQuestionType extends AbstractType
             'edit_mode' => false,
             'include_other_field' => false,
             'include_multiple_weighted_field' => false,
+            'include_large_text_field' => false,
             'attr' => [
                 'class' => 'd-flex flex-column',
                 'novalidate' => 'novalidate'

@@ -135,6 +135,19 @@ index:
         title: GDPR topics &ndash; Learn and Apply
         button: GDPR Topics
         text: Olivia is a virtual teacher and assistant at the same time. Olivia contains a small online academy that offers you a series of learning modules to improve your knowledge in the field of personal data protection, and also serves as a practical tool to help you create internal documents to prove your compliance and reliability.
+    facts:
+        1:
+            title: "GDPR Fact #1"
+            text: GDPR is an EU law with mandatory rules for how organizations and companies must use personal data in an integrity friendly way.
+        2:
+            title: "GDPR Fact #2"
+            text: Use of personal data must be respectful to the individuals’ rights, in line with integrity friendly principles and legal.
+        3:
+            title: "GDPR Fact #3"
+            text: Personal data means any information which, directly or indirectly, could identify a living person.
+        4:
+            title: "GDPR Fact #4"
+            text: The GDPR provides each person with certain rights of their personal data.
 
 form:
     security:
@@ -273,6 +286,7 @@ form:
                 multipleWeighted: Enable multiple selection of weights
                 isHeading: Is heading
                 disabled: Disabled
+                largeText: Display input for large text
             placeholder:
                 questionText: Question text goes here...
                 dependentEvaluationQuestion: Nothing selected...

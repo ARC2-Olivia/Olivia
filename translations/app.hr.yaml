@@ -114,8 +114,8 @@ index:
         left:
             title: O alatu OLIVIA
             description:
-                1: U današnjem digtalnom svijetu, značaj zaštite podataka je u stalnom porastu, te je važno da im MSP-ovi daju prioritet koji zaslužuju.
-                2: "Mi smo ARC2 Konzorcij, i sastojimo se od: hrvatskog i talijanskog tijela za zaštitu podataka, Fakulteta organizacije i informatike &ndash; Sveučilište u Zagrebu, Slobodnog sveučilišta u Bruxellesu, i Sveučilišta u Firenci."
+                1: U današnjem digtalnom svijetu zaštita osobnih podataka je važnija nego ikad prije. Upravo iz tog razloga predstavljamo Oliviu. Njezina misija je pomoći poduzetnicima da se usklade s propisima o zaštiti osobnih podataka.
+                2: "Mi smo ARC2 Konzorcij. Sastojimo se od: Agencije za zaštitu osobnih podataka (AZOP), talijanskog tijela za zaštitu podataka (Garante Privacy), Fakulteta organizacije i informatike &ndash; Sveučilište u Zagrebu, Sveučilišta Vrije i Sveučilišta u Firenci."
                 3: Naša misija je pomoći hrvatskim i talijanskim MSP-ovima postignuti usklađenost s propisima o zaštiti podataka. Zato predstavljamo Oliviju &ndash; alat dizajniran da učini usklađivanje s GDPR-om lakše nego ikada prije!
         right:
             1:
@@ -134,6 +134,19 @@ index:
         title: GDPR teme &ndash; Naučite i primijenite
         button: GDPR teme
         text: "Olivia je istodobno virtualna učiteljica i asistentica. Olivia sadrži malu <i>online</i> akademiju koja Vam nudi niz modula za učenje kako biste poboljšali svoje znanje u području zaštite osobnih podataka, a služi i kao praktičan alat za pomoć pri izradi internih akata kojima možete dokazati svoju usklađenost i pouzdanost."
+    facts:
+        1:
+            title: "GDPR činjenica br. 1"
+            text: GDPR je zakon donesen u EU koji sadrži obvezna pravila kako organizacije i tvrtke moraju koristiti osobne podatke na način koji se štiti njihov integritet.
+        2:
+            title: "GDPR činjenica br. 2"
+            text: Korištenje osobnih podataka mora poštovati prava pojedinaca, u skladu s načelima integriteta i zakona.
+        3:
+            title: "GDPR činjenica br. 3"
+            text: Osobni podatak je svaka informacija koja bi, izravno ili neizravno, mogla identificirati živu osobu.
+        4:
+            title: "GDPR činjenica br. 4"
+            text: GDPR svakoj osobi daje određena prava na njezine osobne podatke.
 
 form:
     security:
@@ -272,6 +285,7 @@ form:
                 multipleWeighted: Omogući višestruki odabir pondera
                 isHeading: Tekst je naziv poglavlja
                 disabled: Onesposobljeno
+                largeText: Omogući prikaz za unos većeg teksta
             placeholder:
                 questionText: Ovdje stavite tekst pitanja...
                 dependentEvaluationQuestion: Ništa odabrano...

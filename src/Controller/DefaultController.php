@@ -6,8 +6,6 @@ use App\Entity\Texts;
 use App\Form\ProfileType;
 use App\Form\Security\PasswordResetType;
 use App\Service\SecurityService;
-use Symfony\Component\Asset\Package;
-use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,18 +15,17 @@ class DefaultController extends BaseController
     #[Route("/", name: "index_without_locale")]
     public function indexWithoutLocale(): Response
     {
-        return $this->redirectToRoute('index', ['_locale' => $this->getParameter('locale.default')]);
+        return $this->redirectToRoute('index', ['_locale' => $this->getParameter('locale.alternate')]);
     }
 
     #[Route("/{_locale}", name: "index", requirements: ["_locale" => "%locale.supported%"])]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $package = new Package(new EmptyVersionStrategy());
         $testimonials = [
-            ['title' => 'GDPR Fact #1', 'text' => 'GDPR is an EU law with mandatory rules for how organizations and companies must use personal data in an integrity friendly way.'],
-            ['title' => 'GDPR Fact #2', 'text' => 'Use of personal data must be respectful to the individuals’ rights, in line with integrity friendly principles and legal.'],
-            ['title' => 'GDPR Fact #3', 'text' => 'Personal data means any information which, directly or indirectly, could identify a living person.'],
-            ['title' => 'GDPR Fact #4', 'text' => 'The GDPR provides each person with certain rights of their personal data.'],
+            ['title' => $this->translator->trans('index.facts.1.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.1.text', domain: 'app')],
+            ['title' => $this->translator->trans('index.facts.2.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.2.text', domain: 'app')],
+            ['title' => $this->translator->trans('index.facts.3.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.3.text', domain: 'app')],
+            ['title' => $this->translator->trans('index.facts.4.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.4.text', domain: 'app')]
         ];
         return $this->render('default/index.html.twig', ['testimonials' => $testimonials]);
     }
