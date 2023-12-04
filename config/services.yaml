@@ -7,7 +7,7 @@ parameters:
     locale.default: 'en'
     locale.alternate: '%env(LOCALE_ALT)%'
     locale.supported: '%locale.default%|%locale.alternate%'
-    mail.from: noreply.olivia@foi.hr
+    mail.from: '%env(MAIL_FROM)%'
     dir.course_image: '%kernel.project_dir%/public/uploads/course/image'
     dir.practical_submodule_image: '%kernel.project_dir%/public/uploads/practical_submodule/image'
     dir.instructor_image: '%kernel.project_dir%/public/uploads/instructor/image'
@@ -17,7 +17,7 @@ parameters:
     dir.file_repository: '%kernel.project_dir%/public/file_repo'
     edulog.enabled: false
     wkhtmltopdf: '%env(WKHTMLTOPDF)%'
-    app.hostname: '%env(APP_HOSTNAME)%'
+    maintenance.mode: '%env(MAINTENANCE_MODE)%'
 
 services:
     # default configuration for services in *this* file
