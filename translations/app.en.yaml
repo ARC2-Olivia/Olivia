@@ -87,6 +87,7 @@ page:
         new: Olivia | New GDPR topic
         show: Olivia | GDPR topic
         edit: Olivia | Edit GDPR topic
+    maintenance: Olivia | Site maintenance
 
 nav:
     training: Learn
@@ -739,3 +740,7 @@ export:
             declineAll: Decline all
             acceptAll: Accept all
             acceptSelected: Accept selected
+
+maintenance:
+    1: The OLIVIA tool is undergoing maintenance.
+    2: Please, be patient.

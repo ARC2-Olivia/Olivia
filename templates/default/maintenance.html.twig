@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.maintenance'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="maintenance-bg" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
+        <div class="maintenance-message">
+            <p class="maintenance-message-1">{{ 'maintenance.1'|trans }}</p>
+            <p class="maintenance-message-2">{{ 'maintenance.2'|trans }}</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .maintenance-bg {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position-x: center;
+        }
+
+        .maintenance-message {
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(0, 0, 0, .5);
+            border-radius: 4px;
+            color: #ffffff;
+            padding: 16px 24px;
+            max-width: 100%;
+            text-align: center;
+            row-gap: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .maintenance-message-1 {
+            font-weight: 600;
+            font-size: 2rem;
+        }
+
+        .maintenance-message-2 {
+            font-size: 1.5rem;
+        }
+
+        @media screen and (max-width: 767px) {
+            .maintenance-bg {
+                height: 100vh;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .maintenance-message-1 {
+                font-size: 1.5rem;
+            }
+
+            .maintenance-message-2 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+{% endblock %}
