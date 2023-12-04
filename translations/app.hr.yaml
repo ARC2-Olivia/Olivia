@@ -86,7 +86,7 @@ page:
         new: Olivia | Nova GDPR tema
         show: Olivia | GDPR tema
         edit: Olivia | Uređivanje GDPR teme
-
+    maintetance: Olivia | Radovi na aplikaciji
 nav:
     training: Nauči
     practice: Primijeni
@@ -732,3 +732,7 @@ export:
             declineAll: Ne pristajem za sve
             acceptAll: Pristajem za sve
             acceptSelected: Pristajem za odabrano
+
+maintenance:
+    1: Provode se radovi nad alatom OLIVIA.
+    2: Molimo strpljenje.

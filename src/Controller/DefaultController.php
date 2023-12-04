@@ -87,7 +87,7 @@ class DefaultController extends BaseController
     #[Route("/{_locale}/maintenance", name: "maintenance", requirements: ["_locale" => "%locale.supported%"])]
     public function maintenance(): Response
     {
-        return new Response('Maintenance.');
+        return $this->render('default/maintenance.html.twig');
     }
 
     #[Route("/extend-session", name: "extend_session")]
