@@ -7,6 +7,10 @@
     'extend': ('extra.extendSession.extend'|trans)
 } %}
 
+{% if hideHeader is not defined %}
+    {% set hideHeader = false %}
+{% endif %}
+
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
     <head>
@@ -28,10 +32,12 @@
         {% block javascripts %}{% endblock %}
     </head>
     <body data-extend-session-path="{{ path('extend_session') }}" data-extend-session-translations="{{ extendSessionTranslations|json_encode }}">
-        <header class="bg-dark-blue">
-            {% include 'nav.html.twig' %}
-            {% block header %}{% endblock %}
-        </header>
+        {% if hideHeader != true %}
+            <header class="bg-dark-blue">
+                {% include 'nav.html.twig' %}
+                {% block header %}{% endblock %}
+            </header>
+        {% endif %}
         <div class="body">
             {% block body %}{% endblock %}
         </div>
