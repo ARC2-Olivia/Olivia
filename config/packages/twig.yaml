@@ -3,7 +3,6 @@ twig:
     globals:
         locale_default: '%locale.default%'
         locale_alternate: '%locale.alternate%'
-        app_hostname: '%app.hostname%'
 
 when@test:
     twig:
