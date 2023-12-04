@@ -17,7 +17,7 @@ parameters:
     dir.file_repository: '%kernel.project_dir%/public/file_repo'
     edulog.enabled: false
     wkhtmltopdf: '%env(WKHTMLTOPDF)%'
-    maintenance.mode: '%env(MAINTENANCE_MODE)%'
+    maintenance.mode: '%env(bool:MAINTENANCE_MODE)%'
 
 services:
     # default configuration for services in *this* file
