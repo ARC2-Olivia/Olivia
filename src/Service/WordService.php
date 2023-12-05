@@ -44,35 +44,6 @@ class WordService
         };
     }
 
-    public function generateCourseCertificateForUser(Course $course, User $user): string
-    {
-        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'certificate.docx');
-        $templateProcessor = new TemplateProcessor($templateFile);
-        $courseUrl = str_replace(['http://', 'https://'], '', $this->router->generate('course_overview', ['course' => $course->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
-        $now = new \DateTime();
-
-        // Postavi jednostavne podatke
-        $templateProcessor->setValue('person', $user->getNameOrEmail());
-        $templateProcessor->setValue('module', $course->getName());
-        $templateProcessor->setValue('url', $courseUrl);
-        $templateProcessor->setValue('date', $now->format('d/m/Y'));
-        $templateProcessor->setValue('workload', $this->translateCourseWorkload($course));
-
-        // Postavi ishode učenja
-        $learningOutcomes = $course->getLearningOutcomesAsArray();
-        $learningOutcomesCount = count($learningOutcomes);
-        $templateProcessor->cloneBlock('block_learningOutcomes', $learningOutcomesCount, indexVariables: true);
-        $i = 1;
-        foreach ($learningOutcomes as $learningOutcome) {
-            $templateProcessor->setValue("learningOutcome#$i", $learningOutcome);
-            $i++;
-        }
-
-        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
-        $templateProcessor->saveAs($document);
-        return $document;
-    }
-
     private function generatePrivacyPolicyDocument(PracticalSubmoduleAssessment $assessment): string
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
