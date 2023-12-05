@@ -36,7 +36,7 @@ class WordService
     public function generateDocumentFromAssessment(PracticalSubmoduleAssessment $assessment, string $locale): string
     {
         return match ($assessment->getPracticalSubmodule()->getExportType()) {
-            PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY => $this->generatePrivacyPolicyDocument($assessment),
+            PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY => $this->generatePrivacyPolicyDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_LIA => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY => $this->generateCookiePolicyDocument($assessment, $locale),
@@ -44,7 +44,7 @@ class WordService
         };
     }
 
-    private function generatePrivacyPolicyDocument(PracticalSubmoduleAssessment $assessment): string
+    private function generatePrivacyPolicyDocument(PracticalSubmoduleAssessment $assessment, string $locale): string
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
         usort($results, function (ProcessorResult $prA, ProcessorResult $prB) {
@@ -64,7 +64,7 @@ class WordService
         }
         $groupCount = count($groupedResults);
 
-        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_template.docx');
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_pp.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
 
         ### Postavi naslov i opis.
