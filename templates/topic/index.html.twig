@@ -15,7 +15,7 @@
         {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
         <div class="row pb-5">
             <div class="topic-about-title">{{ 'index.topics.title'|trans|raw }}</div>
-            <div class="topic-about-text">{{ 'index.topics.text'|trans }}</div>
+            <div class="topic-about-text">{{ 'index.topics.text'|trans|raw }}</div>
         </div>
         <div class="row g-3">
             {% for topic in topics %}
