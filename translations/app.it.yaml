@@ -18,9 +18,9 @@ common:
     submit: Invia
     save: Salva
     cancel: Annulla
-    'yes': VERO
-    'no': falso
-    trueValue: 'VERO'
+    'yes': Sì
+    'no': No
+    trueValue: 'Vero'
     falseValue: 'Falso'
     actions: Azioni
     edit: Modificare
