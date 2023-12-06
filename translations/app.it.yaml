@@ -9,7 +9,7 @@ app:
 common:
     id: ID
     username: E-mail
-    password: Parola d&#39;ordine
+    password: Parola d'ordine
     homepage: Home page
     login: Login
     logout: Disconnettersi
@@ -58,7 +58,7 @@ button:
 page:
     login: Olivia | Login
     registration: Olivia | Registrazione
-    confirmation: Olivia | Conferma dell&#39;account
+    confirmation: Olivia | Conferma dell'account
     resetPassword: Olivia | Resetta la password
     course:
         index: Olivia | Corsi
@@ -108,7 +108,7 @@ nav:
 
 footer:
     contact: "Contatto: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
-    text: Questo strumento è sviluppato nell&#39;ambito del progetto ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs finanziato dalla Commissione Europea.
+    text: Questo strumento è sviluppato nell'ambito del progetto ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs finanziato dalla Commissione Europea.
     gdpr: "<a href='%privacyPolicyUrl%'>Politica sulla privacy</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href='%termsOfServiceUrl%'>Termini di servizio</a>"
 
 index:
@@ -116,7 +116,7 @@ index:
         left:
             title: A proposito di OLIVIA
             description:
-                1: Nel mondo digitale di oggi, l&#39;importanza della protezione dei dati è in costante aumento ed è fondamentale per le PMI darle la priorità che merita.
+                1: Nel mondo digitale di oggi, l'importanza della protezione dei dati è in costante aumento ed è fondamentale per le PMI darle la priorità che merita.
                 2: Siamo il Consorzio ARC2, composto dalle autorità croate e italiane per la protezione dei dati, dalla Facoltà di Organizzazione e Informatica – Università di Zagabria, Università Vrije di Bruxelles e Università di Firenze.
                 3: La nostra missione è consentire alle PMI croate e italiane di conformarsi alle normative sulla protezione dei dati. Ecco perché abbiamo introdotto Olivia, uno strumento progettato per rendere la conformità al GDPR più semplice che mai!
         right:
@@ -128,7 +128,7 @@ index:
                 text: OLIVIA è uno strumento aperto e facile da usare, liberamente accessibile a tutti gli utenti interessati.
             3:
                 title: EDUCATIVO
-                text: OLIVIA semplifica l&#39;accesso al quadro della conoscenza, alle regole e alle procedure.
+                text: OLIVIA semplifica l'accesso al quadro della conoscenza, alle regole e alle procedure.
             4:
                 title: PRATICO
                 text: Il lato pratico di OLIVIA aiuta le PMI nella piena implementazione del GDPR.
@@ -157,20 +157,20 @@ form:
                 firstName: Nome di battesimo
                 lastName: Cognome
                 email: E-mail
-                password: Parola d&#39;ordine
+                password: Parola d'ordine
                 confirmPassword: Conferma password
                 termsOfService: Accetto i <a href="%url%" target="_blank">Termini di servizio</a> .
         login:
             label:
                 email: E-mail
-                password: Parola d&#39;ordine
+                password: Parola d'ordine
         resetPassword:
             label:
                 email: E-mail
                 password: Nuova password
                 confirmPassword: Conferma la nuova password
             message:
-                email: Inserisci l&#39;indirizzo email che hai utilizzato per creare il tuo account Olivia. Verrà inviato un URL speciale che ti consentirà di modificare la password del tuo account. L&#39;URL ha un limite di tempo di 3 ore prima che diventi non valido.
+                email: Inserisci l'indirizzo email che hai utilizzato per creare il tuo account Olivia. Verrà inviato un URL speciale che ti consentirà di modificare la password del tuo account. L'URL ha un limite di tempo di 3 ore prima che diventi non valido.
     entity:
         user:
             label:
@@ -211,7 +211,7 @@ form:
                 certificateInfoAlt: Informazioni sul certificato (lingua alternativa)
             placeholder:
                 name: Nome del corso
-                publicName: ad esempio, cos&#39;è la politica sulla privacy e perché è importante?
+                publicName: ad esempio, cos'è la politica sulla privacy e perché è importante?
                 description: Descrizione del corso...
                 workloadValue: 12 o 2,5
                 tags: GDPR, IT, Sicurezza,...
@@ -274,7 +274,7 @@ form:
                 publicName: ad esempio, crea la tua politica sulla privacy con facilità!
                 description: Descrizione pratica del sottomodulo...
                 tags: GDPR,IT,Sicurezza
-                reportComment: Cosa leggerà l&#39;utente alla fine dei risultati/report?
+                reportComment: Cosa leggerà l'utente alla fine dei risultati/report?
         practicalSubmoduleQuestion:
             label:
                 type: Tipo di domanda
@@ -310,8 +310,8 @@ form:
                 evaluationEvaluators: Processori
                 expectedValue: Valore atteso
                 expectedValueRange:
-                    start: Valore atteso (inizio dell&#39;intervallo)
-                    end: Valore atteso (fine dell&#39;intervallo)
+                    start: Valore atteso (inizio dell'intervallo)
+                    end: Valore atteso (fine dell'intervallo)
                 resultText: Testo del risultato
                 resultFiles: File dei risultati
                 dependentQuestion: Domanda dipendente
@@ -383,14 +383,14 @@ form:
 profile:
     request:
         access:
-            button: Richiedi l&#39;accesso ai dati
+            button: Richiedi l'accesso ai dati
             description: "In qualsiasi momento, puoi inviare una richiesta per accedere a tutti i dati che hai inserito o che sono stati generati dalle tue attività nello strumento Olivia. I dati verranno inviati al tuo indirizzo e-mail registrato come allegato sotto forma di archivio ZIP compresso contenente più file CSV. I dati includono: iscrizioni ai corsi del modulo di formazione, appunti sulle lezioni del modulo di formazione, completamenti delle lezioni del modulo di formazione, risposte ai quiz del modulo di formazione, risultati dei quiz del modulo di formazione, registri delle attività del modulo di formazione, risposte alla valutazione del modulo di pratica, risultati della valutazione del modulo di pratica e il tuo account dello strumento Olivia dati."
-            disclaimer: "NOTA: La richiesta di accesso ai dati non verrà immediatamente evasa, ma verrà inviata una e-mail all&#39;indirizzo di posta elettronica registrato con i dati allegati."
+            disclaimer: "NOTA: La richiesta di accesso ai dati non verrà immediatamente evasa, ma verrà inviata una e-mail all'indirizzo di posta elettronica registrato con i dati allegati."
             confirmation: Sei sicuro di voler inviare una richiesta di accesso ai dati?
         delete:
             button: Richiedere la cancellazione dei dati
             description: "In qualsiasi momento puoi inviare una richiesta di cancellazione di tutti i dati che hai inserito o che sono stati generati dalle tue attività nello strumento Olivia. I dati includono: iscrizioni ai corsi del modulo di formazione, appunti sulle lezioni del modulo di formazione, completamenti delle lezioni del modulo di formazione, risposte ai quiz del modulo di formazione, risultati dei quiz del modulo di formazione, registri delle attività del modulo di formazione, risposte alla valutazione del modulo di pratica, risultati della valutazione del modulo di pratica e il tuo account dello strumento Olivia ."
-            disclaimer: "NOTA: La richiesta di cancellazione dei dati non verrà elaborata immediatamente, ma verrà inviata un&#39;ultima e-mail al tuo indirizzo di posta elettronica registrato per avvisarti del processo terminato."
+            disclaimer: "NOTA: La richiesta di cancellazione dei dati non verrà elaborata immediatamente, ma verrà inviata un'ultima e-mail al tuo indirizzo di posta elettronica registrato per avvisarti del processo terminato."
             confirmation: Sei sicuro di voler inviare una richiesta di cancellazione dati?
 
 user:
@@ -409,7 +409,7 @@ user:
             edit: Modifica dei dati di base
         password:
             action: Cambiare la password
-            show: Parola d&#39;ordine
+            show: Parola d'ordine
             edit: Modifica della password
 
 instructor:
@@ -424,7 +424,7 @@ course:
     title:
         index: Modulo teorico
         new: Nuovo corso
-    delete: Sei sicuro di voler eliminare il corso \&#39;%course%\&#39;?
+    delete: Sei sicuro di voler eliminare il corso \'%course%\'?
     nav:
         overview: Panoramica
         instructors: Istruttori
@@ -449,7 +449,7 @@ course:
             1: Forse al momento è vuoto ma presto sarà pieno del tuo certificato!
             2: Continua così, rispondi ai quiz e ricevi con orgoglio il tuo certificato!
     enroll:
-        message: Sei sicuro di volerti iscrivere al corso &#39;%course%&#39;?
+        message: Sei sicuro di volerti iscrivere al corso '%course%'?
     participants:
         label:
             user: Utente
@@ -483,7 +483,7 @@ lesson:
         file: File
         video: video
         quiz: Quiz
-    delete: Sei sicuro di voler eliminare la lezione \&#39;%lesson%\&#39;?
+    delete: Sei sicuro di voler eliminare la lezione \'%lesson%\'?
     edit: Modifica della lezione <i>%lesson%</i>
     completion:
         done: Fatto
@@ -539,7 +539,7 @@ note:
         displayError: Si è verificato un problema durante il caricamento del widget delle note. Aggiorna la pagina per provare a caricarla nuovamente oppure, se il problema persiste, segnala il problema al Team Olivia.
 
 practicalSubmodule:
-    delete: Sei sicuro di voler eliminare il sottomodulo pratico \&#39;%evaluation%\&#39;?
+    delete: Sei sicuro di voler eliminare il sottomodulo pratico \'%evaluation%\'?
     title:
         index: Modulo pratico
         new: Nuovo sottomodulo pratico
@@ -600,7 +600,7 @@ practicalSubmoduleQuestion:
         yesNo: Si No
         weighted: Ponderato
         numericalInput: Inserimento numerico
-        textInput: L&#39;immissione di testo
+        textInput: L'immissione di testo
         templatedTextInput: Inserimento di testo basato su modelli
         multipleChoice: Scelta multipla
         listInput: Elenco input
@@ -639,8 +639,8 @@ practicalSubmoduleAssessment:
         1: Questo questionario contiene <b>%questionCount%</b> domande. Alcune domande appariranno solo se hai risposto in modo specifico a una delle domande precedenti.
         2: Il questionario può essere compilato quante volte si desidera o è necessario.
         3: Fare clic sul pulsante <i>Compila questionario</i> per iniziare a compilarlo.
-        lastSubmittedAt: Il questionario è stato inviato l&#39;ultima volta %datetime%
-        fillAgain: Sei sicuro di voler compilare nuovamente il questionario? Questa azione eliminerà le risposte precedenti all&#39;avvio.
+        lastSubmittedAt: Il questionario è stato inviato l'ultima volta %datetime%
+        fillAgain: Sei sicuro di voler compilare nuovamente il questionario? Questa azione eliminerà le risposte precedenti all'avvio.
         dependees: "A causa della tua risposta a questa domanda, sono state presentate le seguenti domande aggiuntive:"
         unansweredDependees: "A causa della tua risposta a questa domanda, le seguenti domande aggiuntive NON sono state presentate:"
     action:
@@ -713,7 +713,7 @@ certificate:
 
 extra:
     free: Gratuito
-    exitImmitation: Esci dall&#39;imitazione
+    exitImmitation: Esci dall'imitazione
     extendSession:
         title: La sessione scadrà a breve
         text: Desideri prolungare la sessione?
