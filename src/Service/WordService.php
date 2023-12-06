@@ -36,7 +36,7 @@ class WordService
     public function generateDocumentFromAssessment(PracticalSubmoduleAssessment $assessment, string $locale): string
     {
         return match ($assessment->getPracticalSubmodule()->getExportType()) {
-            PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY => $this->generatePrivacyPolicyDocument($assessment),
+            PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY => $this->generatePrivacyPolicyDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_LIA => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY => $this->generateCookiePolicyDocument($assessment, $locale),
@@ -44,36 +44,7 @@ class WordService
         };
     }
 
-    public function generateCourseCertificateForUser(Course $course, User $user): string
-    {
-        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'certificate.docx');
-        $templateProcessor = new TemplateProcessor($templateFile);
-        $courseUrl = str_replace(['http://', 'https://'], '', $this->router->generate('course_overview', ['course' => $course->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
-        $now = new \DateTime();
-
-        // Postavi jednostavne podatke
-        $templateProcessor->setValue('person', $user->getNameOrEmail());
-        $templateProcessor->setValue('module', $course->getName());
-        $templateProcessor->setValue('url', $courseUrl);
-        $templateProcessor->setValue('date', $now->format('d/m/Y'));
-        $templateProcessor->setValue('workload', $this->translateCourseWorkload($course));
-
-        // Postavi ishode učenja
-        $learningOutcomes = $course->getLearningOutcomesAsArray();
-        $learningOutcomesCount = count($learningOutcomes);
-        $templateProcessor->cloneBlock('block_learningOutcomes', $learningOutcomesCount, indexVariables: true);
-        $i = 1;
-        foreach ($learningOutcomes as $learningOutcome) {
-            $templateProcessor->setValue("learningOutcome#$i", $learningOutcome);
-            $i++;
-        }
-
-        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
-        $templateProcessor->saveAs($document);
-        return $document;
-    }
-
-    private function generatePrivacyPolicyDocument(PracticalSubmoduleAssessment $assessment): string
+    private function generatePrivacyPolicyDocument(PracticalSubmoduleAssessment $assessment, string $locale): string
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
         usort($results, function (ProcessorResult $prA, ProcessorResult $prB) {
@@ -93,7 +64,7 @@ class WordService
         }
         $groupCount = count($groupedResults);
 
-        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_template.docx');
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_pp.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
 
         ### Postavi naslov i opis.
