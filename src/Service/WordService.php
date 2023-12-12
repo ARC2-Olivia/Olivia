@@ -196,6 +196,7 @@ class WordService
         $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_lia.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
 
+        $templateProcessor->setValue('date', (new \DateTime())->format('d.m.Y.'));
         foreach ($results as $result) {
             $exportTag = $result->getExportTag();
             if (null === $exportTag) {
