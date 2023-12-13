@@ -1,8 +1,8 @@
 app:
     name: Olivia
-    brand: Strumento OLIVIA
+    brand: OLIVIA Tool
     brand.1: OLIVIA
-    brand.2: Attrezzo
+    brand.2: Tool
     brand.short: OLIVIA
     subtitle: Assistente virtuale per la conformità GDPR
 
@@ -52,7 +52,7 @@ button:
     lessons: Lezioni
     export: Esportare
     exportTemplate: Modello di esportazione
-    show: Spettacolo
+    show: Mostra
     downloadForm: Scarica il modulo
 
 page:
