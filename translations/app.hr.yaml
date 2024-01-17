@@ -570,7 +570,8 @@ practicalSubmodule:
         consentPersonalDataProcessing: Privola za obradu osobnih podataka
         cookieBanner: Traka ili skočni prozor o privoli za obradu osobnih podataka putem kolačića
         cookiePolicy: Politika kolačića
-        lia: Procjena legitimnog interesa
+        lia: Procjena legitimnog interesa (LIA)
+        dpia: Procjena učinka na zaštitu podataka (DPIA)
     extra:
         question: Pitanje
         questions: Pitanja

@@ -573,7 +573,8 @@ practicalSubmodule:
         consentPersonalDataProcessing: Consenso al trattamento dei dati personali
         cookieBanner: Bandiera dei biscotti
         cookiePolicy: Gestione dei Cookie
-        lia: Valutazione del legittimo interesse
+        lia: Valutazione del legittimo interesse (LIA)
+        dpia: Valutazione dell'impatto sulla protezione dei dati (DPIA)
     extra:
         question: Domanda
         questions: Domande

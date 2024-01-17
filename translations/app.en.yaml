@@ -573,7 +573,8 @@ practicalSubmodule:
         consentPersonalDataProcessing: Consent for personal data processing
         cookieBanner: Cookie banner
         cookiePolicy: Cookie policy
-        lia: Legitimate interest assessment
+        lia: Legitimate interest assessment (LIA)
+        dpia: Data protection impact assessment (DPIA)
     extra:
         question: Question
         questions: Questions
