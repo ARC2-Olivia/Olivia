@@ -111,7 +111,7 @@ class PracticalSubmoduleController extends BaseController
     }
 
     #[Route("/overview/{practicalSubmodule}", name: "overview")]
-    public function overview(PracticalSubmodule $practicalSubmodule, Request $request): Response
+    public function overview(PracticalSubmodule $practicalSubmodule): Response
     {
         return $this->render('evaluation/overview.html.twig', [
             'evaluation' => $practicalSubmodule,

@@ -188,6 +188,11 @@ class PracticalSubmodule extends TranslatableEntity
         return $this;
     }
 
+    public function canRunAssessment(): bool
+    {
+        return true === $this->paging ? !$this->practicalSubmodulePages->isEmpty() : !$this->practicalSubmoduleQuestions->isEmpty();
+    }
+
     /**
      * @return Collection<int, PracticalSubmoduleProcessor>
      */
