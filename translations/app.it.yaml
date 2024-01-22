@@ -369,6 +369,7 @@ form:
                 theoreticalSubmodules: Sottomoduli teorici
                 practicalSubmodules: Sottomoduli pratici
                 image: Immagine
+                position: Posizione
             placeholder:
                 title: Titolo del nuovo argomento GDPR
                 theoreticalSubmodules: Seleziona sottomoduli teorici...

@@ -366,6 +366,7 @@ form:
                 theoreticalSubmodules: Teorijski podmoduli
                 practicalSubmodules: Praktični podmoduli
                 image: Slika
+                position: Redni broj
             placeholder:
                 title: Naslov nove tematike
                 theoreticalSubmodules: Odaberite teorijske podmodule...
