@@ -30,7 +30,7 @@ class EmptyPracticalModuleSubscriber implements EventSubscriberInterface
 
     public function onKernelController(ControllerEvent $event): void
     {
-        if (!$this->security->isGranted(User::ROLE_USER)) {
+        if (!$this->checkCondition()) {
             return;
         }
 
@@ -54,6 +54,13 @@ class EmptyPracticalModuleSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [KernelEvents::CONTROLLER => 'onKernelController'];
+    }
+
+    private function checkCondition(): bool
+    {
+        return $this->security->isGranted('ROLE_USER')
+            && !$this->security->isGranted('ROLE_MODERATOR')
+            && !$this->security->isGranted('ROLE_ADMIN');
     }
 
     private function handlePracticalSubmodule(ControllerEvent $event, $action, $psId): void
