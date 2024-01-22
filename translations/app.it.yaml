@@ -244,6 +244,10 @@ form:
                 explanationAlt: Spiegazione (lingua alternativa)
                 correctAnswer: Risposta corretta
                 type: Tipo
+                choices: Risposte
+            info:
+                unmappedCorrectAnswer: Potrai impostare la risposta corretta in seguito.
+                unmappedChoices: Ogni risposta deve essere su una riga separata. Verrà aggiunto il nome della singola risposta sia per la lingua principale che per quella alternativa. Le risposte possono essere aggiunte in seguito.
         quizQuestionChoice:
             label:
                 text: Testo a scelta

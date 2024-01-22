@@ -37,6 +37,16 @@
         const settingsAlt = { theme: "snow", modules: { toolbar: "#editor-toolbar-alt" } };
         const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
 
+        function toggleAdditionalInputs(selectQuizQuestionType) {
+            if ("true_false" === selectQuizQuestionType.value) {
+                document.querySelector("[data-unmapped='correctAnswer']").style.display = "block";
+                document.querySelector("[data-unmapped='choices']").style.display = "none";
+            } else if ("single_choice" === selectQuizQuestionType.value) {
+                document.querySelector("[data-unmapped='correctAnswer']").style.display = "none";
+                document.querySelector("[data-unmapped='choices']").style.display = "block";
+            }
+        }
+
         window.onload = () => {
             const quill = new Quill("#explanation-editor", settings);
             QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
@@ -51,6 +61,10 @@
                 content.value = quill.root.innerHTML;
                 contentAlt.value = quillAlt.root.innerHTML;
             };
+
+            const selectQuizQuestionType = document.getElementById("quiz_question_type");
+            selectQuizQuestionType.addEventListener("change", function (evt) { toggleAdditionalInputs(evt.target) });
+            toggleAdditionalInputs(selectQuizQuestionType);
         };
     </script>
 {% endblock %}

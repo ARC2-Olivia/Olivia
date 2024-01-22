@@ -244,6 +244,10 @@ form:
                 explanationAlt: Explanation (alternate language)
                 correctAnswer: Correct answer
                 type: Type
+                choices: Choices
+            info:
+                unmappedCorrectAnswer: Correct answer can be set later.
+                unmappedChoices: Each choice has to be in its own line. Same choice name will be added for both the main and the alternate language. Choices can be added later.
         quizQuestionChoice:
             label:
                 text: Choice text

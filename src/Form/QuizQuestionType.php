@@ -26,27 +26,43 @@ class QuizQuestionType extends AbstractType
         $quizQuestion = $builder->getData();
         $editMode = $options['edit_mode'];
 
+        $correctAnswerChoices = [
+            $this->translator->trans('common.falseValue', [], 'app') => false,
+            $this->translator->trans('common.trueValue', [], 'app') => true
+        ];
+
         $builder
             ->add('text', TextareaType::class, ['label' => 'form.entity.quizQuestion.label.text', 'attr' => ['class' => 'form-textarea mb-3']])
             ->add('explanation', HiddenType::class, ['label' => 'form.entity.quizQuestion.label.explanation', 'attr' => ['class' => 'form-textarea mb-3']])
         ;
 
         if (false === $editMode) {
-            $builder->add('type', ChoiceType::class, [
-                'label' => 'form.entity.quizQuestion.label.type',
-                'choices' => [
-                    $this->translator->trans('quizQuestion.type.trueFalse', domain: 'app') => QuizQuestion::TYPE_TRUE_FALSE,
-                    $this->translator->trans('quizQuestion.type.singleChoice', domain: 'app') => QuizQuestion::TYPE_SINGLE_CHOICE
-                ],
-                'attr' => ['class' => 'form-select mb-3']
-            ]);
+            $builder
+                ->add('type', ChoiceType::class, [
+                    'label' => 'form.entity.quizQuestion.label.type',
+                    'choices' => [
+                        $this->translator->trans('quizQuestion.type.trueFalse', domain: 'app') => QuizQuestion::TYPE_TRUE_FALSE,
+                        $this->translator->trans('quizQuestion.type.singleChoice', domain: 'app') => QuizQuestion::TYPE_SINGLE_CHOICE
+                    ],
+                    'attr' => ['class' => 'form-select mb-3']
+                ])
+                ->add('unmappedCorrectAnswer', ChoiceType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.quizQuestion.label.correctAnswer',
+                    'choices' => $correctAnswerChoices,
+                    'attr' => ['class' => 'form-select mb-3']
+                ])
+                ->add('unmappedChoices', TextareaType::class, [
+                    'mapped' => false,
+                    'required' => false,
+                    'label' => 'form.entity.quizQuestion.label.choices',
+                    'attr' => ['class' => 'form-textarea mb-3']
+                ])
+            ;
         } else if (true === $editMode && QuizQuestion::TYPE_TRUE_FALSE === $quizQuestion->getType()) {
             $builder->add('correctAnswer', ChoiceType::class, [
                 'label' => 'form.entity.quizQuestion.label.correctAnswer',
-                'choices' => [
-                    $this->translator->trans('common.falseValue', [], 'app') => false,
-                    $this->translator->trans('common.trueValue', [], 'app') => true
-                ],
+                'choices' => $correctAnswerChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ]);
         }

@@ -242,6 +242,10 @@ form:
                 explanationAlt: Objašnjenje (drugi jezik)
                 correctAnswer: Točan odgovor
                 type: Vrsta
+                choices: Odgovori
+            info:
+                unmappedCorrectAnswer: Točan odgovor možete naknadno postaviti.
+                unmappedChoices: Svaki odgovor mora biti u svom redu. Ime pojedinog odgovora bit će dodan i za glavni i za zamjenski jezik. Odgovori se mogu naknadno dodati.
         quizQuestionChoice:
             label:
                 text: Tekst odgovora
