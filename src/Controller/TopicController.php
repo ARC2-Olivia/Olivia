@@ -22,7 +22,7 @@ class TopicController extends BaseController
     #[Route("/", name: "index")]
     public function index(): Response
     {
-        $topics = $this->em->getRepository(Topic::class)->findAll();
+        $topics = $this->em->getRepository(Topic::class)->findAllSortedByPosition();
         return $this->render('topic/index.html.twig', ['topics' => $topics]);
     }
 

@@ -38,4 +38,12 @@ class TopicRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    /** @return Topic[] */
+    public function findAllSortedByPosition(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.position', 'ASC')
+            ->getQuery()->getResult();
+    }
 }
