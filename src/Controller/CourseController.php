@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Course;
 use App\Entity\Instructor;
 use App\Entity\Lesson;
+use App\Entity\LessonCompletion;
 use App\Entity\LessonItemFile;
 use App\Entity\LessonItemQuiz;
 use App\Entity\LessonItemText;
 use App\Entity\PracticalSubmodule;
 use App\Entity\QuizQuestion;
+use App\Entity\QuizQuestionAnswer;
 use App\Entity\User;
 use App\Form\CourseInstructorType;
 use App\Form\CourseType;
@@ -123,13 +125,35 @@ class CourseController extends BaseController
             $lessonRepository = $this->em->getRepository(Lesson::class);
             $lessonItemTextRepository = $this->em->getRepository(LessonItemText::class);
             $lessonItemFileRepository = $this->em->getRepository(LessonItemFile::class);
+            $lessonItemQuizRepository = $this->em->getRepository(LessonItemQuiz::class);
+            $quizQuestionAnswerRepository = $this->em->getRepository(QuizQuestionAnswer::class);
+            $lessonCompletionRepository = $this->em->getRepository(LessonCompletion::class);
 
             foreach ($lessonRepository->findBy(['course' => $course]) as $lesson) {
-                if ($lesson->getType() === Lesson::TYPE_TEXT) {
+                if (Lesson::TYPE_TEXT === $lesson->getType()) {
                     $this->em->remove($lessonItemTextRepository->findOneBy(['lesson' => $lesson]));
-                } elseif ($lesson->getType() === Lesson::TYPE_FILE || $lesson->getType() === Lesson::TYPE_VIDEO) {
+                } else if (Lesson::TYPE_FILE === $lesson->getType() || Lesson::TYPE_VIDEO === $lesson->getType()) {
                     $this->em->remove($lessonItemFileRepository->findOneBy(['lesson' => $lesson]));
+                } else if (Lesson::TYPE_QUIZ === $lesson->getType()) {
+                    $lessonItemQuiz = $lessonItemQuizRepository->findOneBy(['lesson' => $lesson]);
+                    foreach ($lessonItemQuiz->getQuizQuestions() as $qq) {
+                        if (QuizQuestion::TYPE_SINGLE_CHOICE === $qq->getType()) {
+                            foreach ($qq->getQuizQuestionChoices() as $qqc) {
+                                $this->em->remove($qqc);
+                            }
+                        }
+                        foreach ($quizQuestionAnswerRepository->findBy(['question' => $qq]) as $qqa) {
+                            $this->em->remove($qqa);
+                        }
+                        $this->em->remove($qq);
+                    }
+                    $this->em->remove($lessonItemQuiz);
                 }
+
+                foreach ($lessonCompletionRepository->findBy(['lesson' => $lesson]) as $lc) {
+                    $this->em->remove($lc);
+                }
+
                 $this->em->remove($lesson);
             }
 
