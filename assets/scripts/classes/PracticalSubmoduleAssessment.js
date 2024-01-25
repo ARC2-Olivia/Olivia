@@ -403,7 +403,6 @@ class PracticalSubmoduleAssessment {
     #createTextInputAnswer(questionData) {
         let userAnswer = questionData.userAnswer || '';
         let answer, input;
-        console.log(questionData);
         if (true === questionData.largeText) {
             answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
@@ -496,7 +495,7 @@ class PracticalSubmoduleAssessment {
     #disableQuestion(questionElement) {
         const context = this;
         if (!questionElement.classList.contains("hide")) questionElement.classList.add("hide");
-        questionElement.querySelectorAll("input").forEach((input) => {
+        questionElement.querySelectorAll("input, textarea").forEach((input) => {
             if ("answerRequired" in input.dataset) input.required = false;
             input.disabled = true;
             this.#sendEmptyAnswerChangeEvent(input, questionElement);
@@ -505,7 +504,7 @@ class PracticalSubmoduleAssessment {
 
     #enableQuestion(questionElement) {
         if (questionElement.classList.contains("hide")) questionElement.classList.remove("hide");
-        questionElement.querySelectorAll("input").forEach((input) => {
+        questionElement.querySelectorAll("input, textarea").forEach((input) => {
             if ("answerRequired" in input.dataset) input.required = true;
             input.disabled = false;
             this.#resendAnswerChangeEvent(input, questionElement);
