@@ -16,7 +16,7 @@ monolog:
             handler: symfony_mailer
         symfony_mailer:
             type: symfony_mailer
-            from_email: 'noreply.olivia@foi.hr'
+            from_email: 'noreply@olivia-gdpr-arc.eu'
             to_email: 'dfilipovi@foi.unizg.hr'
             subject: 'Olivia Error! %%message%%'
             level: critical
