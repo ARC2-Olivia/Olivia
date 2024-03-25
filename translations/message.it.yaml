@@ -114,7 +114,9 @@ error:
         length: La password deve contenere almeno 8 caratteri.
         number: La password deve contenere almeno un numero.
         uppercase: La password deve contenere almeno una lettera maiuscola.
-    login: Credenziali non valide.
+    login:
+        notFound: Credenziali non valide.
+        notActivated: "L'account utente non è attivato."
     registration:
         firstName:
             blank: Il campo del nome non deve essere vuoto
