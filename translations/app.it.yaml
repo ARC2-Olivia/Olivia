@@ -36,6 +36,7 @@ common:
     export: Esportare
     file: File
     add: Aggiungere
+    saveForLater: Salva per dopo
     comingSoon: Prossimamente!
     correct: Corretto
     incorrect: Errato

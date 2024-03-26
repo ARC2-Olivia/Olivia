@@ -183,11 +183,10 @@ class PracticalSubmoduleController extends BaseController
     public function evaluate(PracticalSubmodule $practicalSubmodule): Response
     {
         $assessmentLastSubmittedAt = null;
-        $assessmentCompleted = false;
+        $assessment = null;
         if ($this->isGranted('ROLE_USER') && !$this->isGranted('ROLE_MODERATOR')) {
             $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
             if (null !== $assessment) {
-                $assessmentCompleted = $assessment->isCompleted();
                 $assessmentLastSubmittedAt = null !== $assessment->getLastSubmittedAt()
                     ? $this->translator->trans('practicalSubmoduleAssessment.message.lastSubmittedAt', ['%datetime%' => $assessment->getLastSubmittedAt()->format('d.m.Y. H:i')],  'app')
                     : null
@@ -202,14 +201,15 @@ class PracticalSubmoduleController extends BaseController
             $pages = $this->em->getRepository(PracticalSubmodulePage::class)->findOrderedForSubmodule($practicalSubmodule);
             $processorGroups = $this->em->getRepository(PracticalSubmoduleProcessorGroup::class)->findOrderedForSubmodule($practicalSubmodule);
         }
+
         return $this->render('evaluation/evaluate.html.twig', [
             'evaluation' => $practicalSubmodule,
             'evaluationQuestions' => $questions,
             'evaluationEvaluators' => $processors,
             'pages' => $pages,
             'procesorGroups' => $processorGroups,
+            'assessment' => $assessment,
             'assessmentLastSubmittedAt' => $assessmentLastSubmittedAt,
-            'assessmentCompleted' => $assessmentCompleted,
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE),
             'questionCount' => $this->em->getRepository(PracticalSubmoduleQuestion::class)->countActualQuestions($practicalSubmodule)
         ]);

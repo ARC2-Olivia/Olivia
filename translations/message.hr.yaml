@@ -41,6 +41,7 @@ success:
         edit: Procesor je uređen.
     practicalSubmoduleAssessment:
         finish: Vaš upitnik je spremljen. Rezultate upitnika možete vidjeti klikom na gumb <i>Pregled izvještaja</i> u kartici <i>Upitnik</i>.
+        save: Vaš upitnik je spremljen za kasnije ispunjavanje.
     practicalSubmodulePage:
         new: Nova stranica je dodana u podmodul.
         edit: Stranice je uređena.

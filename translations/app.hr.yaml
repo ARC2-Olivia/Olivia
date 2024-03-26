@@ -36,6 +36,7 @@ common:
     export: Izvoz
     file: Datoteka
     add: Dodaj
+    saveForLater: Spremi za kasnije
     correct: Točno
     incorrect: Netočno
     details: Detalji

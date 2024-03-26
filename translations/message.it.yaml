@@ -41,6 +41,7 @@ success:
         edit: Il processore è stato aggiornato.
     practicalSubmoduleAssessment:
         finish: Il tuo questionario è stato salvato. È possibile visualizzare i risultati facendo clic su <i>Visualizza rapporto</i> nella scheda <i>Questionario</i>.
+        save: Il tuo questionario è stato salvato per essere completato successivamente.
     practicalSubmodulePage:
         new: Una nuova pagina è stata aggiunta al sottomodulo.
         edit: La pagina è stata aggiornata

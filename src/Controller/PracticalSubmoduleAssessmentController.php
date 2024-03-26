@@ -37,6 +37,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
             'assessment' => $questionnaire
         ]);
     }
+
     #[Route("/edit/{practicalSubmoduleAssessment}", name: "edit")]
     #[IsGranted("ROLE_USER")]
     public function edit(PracticalSubmoduleAssessment $practicalSubmoduleAssessment, Request $request, NavigationService $navigationService): Response
@@ -65,10 +66,11 @@ class PracticalSubmoduleAssessmentController extends BaseController
         $csrfToken = $request->request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleAssessment.finish', $csrfToken)) {
             $assessmentData = $request->request->all('evaluation_assessment');
+            $assessmentAction = $request->request->get('_assessment_action');
             $evaluationQuestionRepository = $this->em->getRepository(PracticalSubmoduleQuestion::class);
             $noQuestionError = false;
 
-            $practicalSubmoduleAssessment->setCompleted(true);
+            $practicalSubmoduleAssessment->setCompleted('submit' === $assessmentAction);
             $practicalSubmoduleAssessment->setLastSubmittedAt(new \DateTimeImmutable());
 
             foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $practicalSubmoduleAssessmentAnswer) {
@@ -89,7 +91,8 @@ class PracticalSubmoduleAssessmentController extends BaseController
             }
 
             $this->em->flush();
-            $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleAssessment.finish', [], 'message'));
+            $stringKey = $practicalSubmoduleAssessment->isCompleted() ? 'success.practicalSubmoduleAssessment.finish' : 'success.practicalSubmoduleAssessment.save';
+            $this->addFlash('success', $this->translator->trans($stringKey, [], 'message'));
         } else {
             $this->addFlash('error', $this->translator->trans('error.practicalSubmoduleAssessment.finish', [], 'message'));
         }

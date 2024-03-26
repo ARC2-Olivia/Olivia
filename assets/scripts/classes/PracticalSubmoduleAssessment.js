@@ -24,6 +24,7 @@ class PracticalSubmoduleAssessment {
             buttonPrevious: translation.buttonPrevious || "Previous",
             buttonSubmit: translation.buttonSubmit || "Submit",
             buttonAdd: translation.buttonAdd || "Add",
+            buttonSaveForLater: translation.buttonSaveForLater || "Save for later",
             errorDefault: translation.errorDefault || "The answer to this question is invalid"
         };
     }
@@ -94,6 +95,7 @@ class PracticalSubmoduleAssessment {
     }
 
     #appendPageNavigation() {
+        const context = this;
         const pages = this.#pager.querySelectorAll("[data-page]");
         for (let i = 0; i < pages.length; i++) {
             const currPage = pages[i];
@@ -122,8 +124,7 @@ class PracticalSubmoduleAssessment {
                 `, "text/html").body.firstChild;
             }
 
-
-            if (navigation !== null) currPage.append(navigation);
+            if (navigation !== null) currPage.append(navigation, this.#createSaveForLaterButton());
         }
     }
 
@@ -131,6 +132,8 @@ class PracticalSubmoduleAssessment {
         const context = this;
         this.#form.setAttribute("novalidate", "novalidate");
         this.#form.onsubmit = function(evt) {
+            if ("sfl" === evt.submitter.value) return;
+
             const formElements = evt.target.querySelectorAll("[data-answer-required]");
             for (const formElement of formElements) {
                 if ("validity" in formElement && !formElement.validity.valid) {
@@ -151,11 +154,19 @@ class PracticalSubmoduleAssessment {
         if (location !== null) {
             const submitButton = this.#parser.parseFromString(`
                 <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-theme-white bg-green">${this.#translation.buttonSubmit}</button>
+                    <button type="submit" class="btn btn-theme-white bg-green" name="_assessment_action" value="submit">${this.#translation.buttonSubmit}</button>
                 </div>
             `, "text/html").body.firstChild;
             location.appendChild(submitButton);
         }
+    }
+
+    #createSaveForLaterButton() {
+        return this.#parser.parseFromString(`
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-theme-white bg-dark-blue" name="_assessment_action" value="sfl">${this.#translation.buttonSaveForLater}</button>
+            </div>
+        `, "text/html").body.firstChild;
     }
 
     #createQuestion(questionData) {
