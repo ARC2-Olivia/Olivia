@@ -6,6 +6,7 @@ class PracticalSubmoduleAssessment {
     #pager;
     #translation;
     #handlers = [];
+    #backgroundSavingEnabled = true;
 
     constructor(querySelector, assessmentData, translation) {
         this.#parser = new DOMParser();
@@ -16,6 +17,7 @@ class PracticalSubmoduleAssessment {
         for (const handler of this.#handlers) {
             handler();
         }
+        this.#initializeBackgroundSavingProcess();
     }
 
     #initializeTranslation(translation) {
@@ -147,6 +149,27 @@ class PracticalSubmoduleAssessment {
                 }
             }
         }
+    }
+
+    #initializeBackgroundSavingProcess() {
+        const context = this;
+        const path = context.#form.getAttribute("action");
+        setInterval(() => {
+            if (false === context.#backgroundSavingEnabled) {
+                return;
+            }
+
+            const formData = new FormData(context.#form);
+            formData.append("_assessement_action", "sfl-bg");
+            context.#backgroundSavingEnabled = false;
+
+            fetch(path, {
+                method: "POST",
+                body: formData
+            }).then((response) => {
+                context.#backgroundSavingEnabled = true;
+            })
+        }, 30000);
     }
 
     #appendSubmitButton() {

@@ -654,7 +654,7 @@ practicalSubmoduleAssessment:
         unansweredDependees: "Zbog vašeg odgovora na ovo pitanje, sljedeća pitanja NISU prikazana:"
     action:
         start: Popuni upitnik
-        edit: Izmjeni popunjeni upitnik
+        edit: Izmjeni upitnik
         results: Pregled izvještaja
         downloadReport: Preuzmi izvještaj
 

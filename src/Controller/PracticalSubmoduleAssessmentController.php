@@ -86,11 +86,15 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 }
             }
 
+            $this->em->flush();
+            if ('sfl-bg' === $assessmentAction) {
+                return new Response('OK');
+            }
+
             if ($noQuestionError) {
                 $this->addFlash('warning', $this->translator->trans('warning.practicalSubmoduleAssessment.noQuestion', [], 'message'));
             }
 
-            $this->em->flush();
             $stringKey = $practicalSubmoduleAssessment->isCompleted() ? 'success.practicalSubmoduleAssessment.finish' : 'success.practicalSubmoduleAssessment.save';
             $this->addFlash('success', $this->translator->trans($stringKey, [], 'message'));
         } else {

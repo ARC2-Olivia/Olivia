@@ -658,7 +658,7 @@ practicalSubmoduleAssessment:
         unansweredDependees: "Based on your answer to this question, the following futher questions were not displayed:"
     action:
         start: Fill questionnaire
-        edit: Edit submitted questionnaire
+        edit: Edit questionnaire
         results: View report
         downloadReport: Download report
 

@@ -652,7 +652,7 @@ practicalSubmoduleAssessment:
         unansweredDependees: "A causa della tua risposta a questa domanda, le seguenti domande aggiuntive NON sono state presentate:"
     action:
         start: Compila il questionario
-        edit: Modifica il questionario inviato
+        edit: Modifica il questionario
         results: Visualizza rapporto
         downloadReport: Scarica il rapporto
 
