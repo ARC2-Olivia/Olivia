@@ -45,9 +45,6 @@ class PracticalSubmoduleProcessor
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $position = null;
 
-    #[ORM\ManyToMany(targetEntity: File::class)]
-    private Collection $resultFiles;
-
     #[ORM\Column(nullable: true)]
     private ?bool $disabled = null;
 
@@ -83,7 +80,6 @@ class PracticalSubmoduleProcessor
 
     public function __construct()
     {
-        $this->resultFiles = new ArrayCollection();
     }
 
     public static function getSupportedProcessorTypes(): array
@@ -318,37 +314,6 @@ class PracticalSubmoduleProcessor
     public function setPosition(?int $position): self
     {
         $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, File>
-     */
-    public function getResultFiles(): Collection
-    {
-        return $this->resultFiles;
-    }
-
-    public function addResultFile(File $resultFile): self
-    {
-        if (!$this->resultFiles->contains($resultFile)) {
-            $this->resultFiles->add($resultFile);
-        }
-
-        return $this;
-    }
-
-    public function removeResultFile(File $resultFile): self
-    {
-        $this->resultFiles->removeElement($resultFile);
-
-        return $this;
-    }
-
-    public function clearResultFiles(): self
-    {
-        $this->resultFiles->clear();
 
         return $this;
     }
