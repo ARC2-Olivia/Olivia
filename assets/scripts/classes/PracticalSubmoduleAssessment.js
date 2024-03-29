@@ -6,6 +6,7 @@ class PracticalSubmoduleAssessment {
     #pager;
     #translation;
     #handlers = [];
+    #backgroundSavingEnabled = true;
 
     constructor(querySelector, assessmentData, translation) {
         this.#parser = new DOMParser();
@@ -16,6 +17,7 @@ class PracticalSubmoduleAssessment {
         for (const handler of this.#handlers) {
             handler();
         }
+        this.#initializeBackgroundSavingProcess();
     }
 
     #initializeTranslation(translation) {
@@ -24,6 +26,7 @@ class PracticalSubmoduleAssessment {
             buttonPrevious: translation.buttonPrevious || "Previous",
             buttonSubmit: translation.buttonSubmit || "Submit",
             buttonAdd: translation.buttonAdd || "Add",
+            buttonSaveForLater: translation.buttonSaveForLater || "Save for later",
             errorDefault: translation.errorDefault || "The answer to this question is invalid"
         };
     }
@@ -94,6 +97,7 @@ class PracticalSubmoduleAssessment {
     }
 
     #appendPageNavigation() {
+        const context = this;
         const pages = this.#pager.querySelectorAll("[data-page]");
         for (let i = 0; i < pages.length; i++) {
             const currPage = pages[i];
@@ -122,8 +126,7 @@ class PracticalSubmoduleAssessment {
                 `, "text/html").body.firstChild;
             }
 
-
-            if (navigation !== null) currPage.append(navigation);
+            if (navigation !== null) currPage.append(navigation, this.#createSaveForLaterButton());
         }
     }
 
@@ -131,6 +134,8 @@ class PracticalSubmoduleAssessment {
         const context = this;
         this.#form.setAttribute("novalidate", "novalidate");
         this.#form.onsubmit = function(evt) {
+            if ("sfl" === evt.submitter.value) return;
+
             const formElements = evt.target.querySelectorAll("[data-answer-required]");
             for (const formElement of formElements) {
                 if ("validity" in formElement && !formElement.validity.valid) {
@@ -146,16 +151,45 @@ class PracticalSubmoduleAssessment {
         }
     }
 
+    #initializeBackgroundSavingProcess() {
+        const context = this;
+        const path = context.#form.getAttribute("action");
+        setInterval(() => {
+            if (false === context.#backgroundSavingEnabled) {
+                return;
+            }
+
+            const formData = new FormData(context.#form);
+            formData.append("_assessement_action", "sfl-bg");
+            context.#backgroundSavingEnabled = false;
+
+            fetch(path, {
+                method: "POST",
+                body: formData
+            }).then((response) => {
+                context.#backgroundSavingEnabled = true;
+            })
+        }, 30000);
+    }
+
     #appendSubmitButton() {
         let location = this.#paging === true ? this.#pager.lastChild : this.#form;
         if (location !== null) {
             const submitButton = this.#parser.parseFromString(`
                 <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-theme-white bg-green">${this.#translation.buttonSubmit}</button>
+                    <button type="submit" class="btn btn-theme-white bg-green" name="_assessment_action" value="submit">${this.#translation.buttonSubmit}</button>
                 </div>
             `, "text/html").body.firstChild;
             location.appendChild(submitButton);
         }
+    }
+
+    #createSaveForLaterButton() {
+        return this.#parser.parseFromString(`
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-theme-white bg-dark-blue" name="_assessment_action" value="sfl">${this.#translation.buttonSaveForLater}</button>
+            </div>
+        `, "text/html").body.firstChild;
     }
 
     #createQuestion(questionData) {
@@ -403,7 +437,6 @@ class PracticalSubmoduleAssessment {
     #createTextInputAnswer(questionData) {
         let userAnswer = questionData.userAnswer || '';
         let answer, input;
-        console.log(questionData);
         if (true === questionData.largeText) {
             answer = this.#parser.parseFromString(`
                 <label class="evaluation-assessment-question-answer">
@@ -496,7 +529,7 @@ class PracticalSubmoduleAssessment {
     #disableQuestion(questionElement) {
         const context = this;
         if (!questionElement.classList.contains("hide")) questionElement.classList.add("hide");
-        questionElement.querySelectorAll("input").forEach((input) => {
+        questionElement.querySelectorAll("input, textarea").forEach((input) => {
             if ("answerRequired" in input.dataset) input.required = false;
             input.disabled = true;
             this.#sendEmptyAnswerChangeEvent(input, questionElement);
@@ -505,7 +538,7 @@ class PracticalSubmoduleAssessment {
 
     #enableQuestion(questionElement) {
         if (questionElement.classList.contains("hide")) questionElement.classList.remove("hide");
-        questionElement.querySelectorAll("input").forEach((input) => {
+        questionElement.querySelectorAll("input, textarea").forEach((input) => {
             if ("answerRequired" in input.dataset) input.required = true;
             input.disabled = false;
             this.#resendAnswerChangeEvent(input, questionElement);

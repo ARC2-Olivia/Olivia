@@ -1,7 +1,7 @@
 mail:
     signature: "Il team di Olivia Tool"
     accountConfirmation:
-        subject: "Olivia | Conferma dell&#39;account"
+        subject: "Olivia | Conferma dell'account"
         body:
             greeting: "Caro nuovo utente,"
             text: "Fai clic sul seguente URL o raggiungilo per attivare il tuo nuovo account Olivia Tool: <a href='%url%'>%url%</a> ."
@@ -10,7 +10,7 @@ mail:
         subject: "Olivia | Resetta la password"
         body:
             greeting: "Caro utente,"
-            text: "È stata richiesta la reimpostazione della password per l&#39;account Olivia Tool collegato a questa e-mail. Se non sei stato tu a inviare questa richiesta, ignora questa email. Se eri tu, fai clic sul seguente URL per modificare la password del tuo account Olivia Tool: <a href='%url%'>%url%</a> ."
+            text: "È stata richiesta la reimpostazione della password per l'account Olivia Tool collegato a questa e-mail. Se non sei stato tu a inviare questa richiesta, ignora questa email. Se eri tu, fai clic sul seguente URL per modificare la password del tuo account Olivia Tool: <a href='%url%'>%url%</a> ."
             goodbye: "Distinti saluti,"
     dataAccess:
         subject: "Olivia | Dati dalla richiesta di accesso ai dati"

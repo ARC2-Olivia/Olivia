@@ -41,6 +41,7 @@ success:
         edit: Procesor je uređen.
     practicalSubmoduleAssessment:
         finish: Vaš upitnik je spremljen. Rezultate upitnika možete vidjeti klikom na gumb <i>Pregled izvještaja</i> u kartici <i>Upitnik</i>.
+        save: Vaš upitnik je spremljen za kasnije ispunjavanje.
     practicalSubmodulePage:
         new: Nova stranica je dodana u podmodul.
         edit: Stranice je uređena.
@@ -114,7 +115,9 @@ error:
         length: Lozinka mora sadržavati najmanje 8 znakova.
         number: Lozinka mora sadržavati barem jedan broj.
         uppercase: Lozinka mora sadržavati barem jedno veliko slovo.
-    login: Pogrešni podaci za prijavu.
+    login:
+        notFound: Pogrešni podaci za prijavu.
+        notActivated: Korisnički račun nije aktiviran.
     registration:
         firstName:
             blank: Polje za ime korisnika ne smije biti prazno.

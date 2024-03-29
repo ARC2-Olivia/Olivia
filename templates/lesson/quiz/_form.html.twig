@@ -1,3 +1,4 @@
+{% trans_default_domain 'app' %}
 {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
     {% if form.type is defined %}
         {{ form_label(form.type) }}
@@ -31,5 +32,21 @@
             <div id="explanation-alt-editor"></div>
         </div>
         {{ form_widget(form.explanationAlt) }}
+    {% endif %}
+
+    {% if form.unmappedCorrectAnswer is defined %}
+        <div data-unmapped="correctAnswer">
+            {{ form_label(form.unmappedCorrectAnswer) }}
+            <p><small>{{ 'form.entity.quizQuestion.info.unmappedCorrectAnswer'|trans }}</small></p>
+            {{ form_widget(form.unmappedCorrectAnswer) }}
+        </div>
+    {% endif %}
+
+    {% if form.unmappedChoices is defined %}
+        <div data-unmapped="choices">
+            {{ form_label(form.unmappedChoices) }}
+            <p><small>{{ 'form.entity.quizQuestion.info.unmappedChoices'|trans }}</small></p>
+            {{ form_widget(form.unmappedChoices) }}
+        </div>
     {% endif %}
 {{ form_end(form) }}

@@ -108,7 +108,7 @@ class NavigationService
             ]
         ];
 
-        if ($this->security->isGranted('ROLE_USER')) {
+        if ($this->isUser() && $practicalSubmodule->canRunAssessment()) {
             $navigation[] = [
                 'text' => $this->translator->trans('practicalSubmodule.nav.questionnaire', [], 'app'),
                 'path' => $this->router->generate('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]),
@@ -126,6 +126,11 @@ class NavigationService
         }
 
         if ($this->security->isGranted('ROLE_MODERATOR')) {
+            $navigation[] = [
+                'text' => $this->translator->trans('practicalSubmodule.nav.questionnaire', [], 'app'),
+                'path' => $this->router->generate('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]),
+                'active' => $activeNav === self::EVALUATION_EVALUATE
+            ];
             $navigation[] = [
                 'text' => $this->translator->trans('practicalSubmodule.nav.edit.default', [], 'app'),
                 'path' => $this->router->generate('practical_submodule_edit', ['practicalSubmodule' => $practicalSubmodule->getId()]),

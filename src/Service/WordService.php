@@ -39,7 +39,8 @@ class WordService
             PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY => $this->generatePrivacyPolicyDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_LIA => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
-            PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY => $this->generateCookiePolicyDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY => $this->generateCookiePolicyDocument($assessment),
+            PracticalSubmodule::EXPORT_TYPE_DPIA => $this->generateDataProtectionImpactAssessment($assessment, $locale),
             default => $this->generateDefaultDocument($assessment)
         };
     }
@@ -210,7 +211,7 @@ class WordService
         return $document;
     }
 
-    private function generateCookiePolicyDocument(PracticalSubmoduleAssessment $assessment, string $locale)
+    private function generateCookiePolicyDocument(PracticalSubmoduleAssessment $assessment)
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
         $lines = explode("\n", str_replace("\r", '', $results[0]->getText()));
@@ -233,6 +234,29 @@ class WordService
             $text = new Text($lineData['text'], $lineData['fontStyle']);
             $templateProcessor->setComplexValue("blockContent#$i", $text);
             $i++;
+        }
+
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
+    }
+
+    private function generateDataProtectionImpactAssessment(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_dpia.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+        $fontStyle = ['name' => 'Bell MT', 'size' => 12];
+
+        foreach ($results as $result) {
+            $lines = explode("\n", str_replace("\r", '', $result->getText()));
+            $textRun = new TextRun();
+            $textRun->addText(array_shift($lines), $fontStyle);
+            foreach ($lines as $line) {
+                $textRun->addTextBreak();
+                $textRun->addText($line, $fontStyle);
+            }
+            $templateProcessor->setComplexValue($result->getExportTag(), $textRun);
         }
 
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');

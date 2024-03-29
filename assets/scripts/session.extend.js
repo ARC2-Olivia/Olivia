@@ -1,6 +1,6 @@
 import '../styles/modal.css';
 
-const minutes = 110;
+const minutes = 15;
 const delay = minutes * 60 * 1000;
 
 function extendSession(path, trans)

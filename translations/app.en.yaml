@@ -36,6 +36,7 @@ common:
     export: Export
     file: File
     add: Add
+    saveForLater: Save for later
     comingSoon: Coming soon!
     correct: Correct
     incorrect: Incorrect
@@ -244,6 +245,10 @@ form:
                 explanationAlt: Explanation (alternate language)
                 correctAnswer: Correct answer
                 type: Type
+                choices: Choices
+            info:
+                unmappedCorrectAnswer: Correct answer can be set later.
+                unmappedChoices: Each choice has to be in its own line. Same choice name will be added for both the main and the alternate language. Choices can be added later.
         quizQuestionChoice:
             label:
                 text: Choice text
@@ -369,6 +374,7 @@ form:
                 theoreticalSubmodules: Theoretical submodules
                 practicalSubmodules: Practical submodules
                 image: Image
+                position: Position
             placeholder:
                 title: Title of the new GDPR topic
                 theoreticalSubmodules: Select theoretical submodules...
@@ -573,7 +579,8 @@ practicalSubmodule:
         consentPersonalDataProcessing: Consent for personal data processing
         cookieBanner: Cookie banner
         cookiePolicy: Cookie policy
-        lia: Legitimate interest assessment
+        lia: Legitimate interest assessment (LIA)
+        dpia: Data protection impact assessment (DPIA)
     extra:
         question: Question
         questions: Questions
@@ -651,7 +658,7 @@ practicalSubmoduleAssessment:
         unansweredDependees: "Based on your answer to this question, the following futher questions were not displayed:"
     action:
         start: Fill questionnaire
-        edit: Edit submitted questionnaire
+        edit: Edit questionnaire
         results: View report
         downloadReport: Download report
 

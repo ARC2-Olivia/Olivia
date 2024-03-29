@@ -33,7 +33,7 @@ class SecurityController extends AbstractController
     {
         if ($this->isGranted(User::ROLE_USER)) return $this->redirectToRoute('index');
         $error = $authenticationUtils->getLastAuthenticationError();
-        if ($error) $this->addFlash('error', $this->translator->trans('error.login', [], 'message'));
+        if ($error) $this->addFlash('error', $this->translator->trans($error->getMessageKey(), [], 'message'));
         return $this->render('security/login.html.twig', [
             'form' => $this->createForm(LoginType::class)->createView()
         ]);

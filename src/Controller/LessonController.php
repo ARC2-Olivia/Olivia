@@ -137,10 +137,32 @@ class LessonController extends BaseController
         if ($quiz !== null) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
+                $addedQuizQuestionChoices = [];
                 $quizQuestion->setQuiz($quiz);
+
+                if ($form->has('unmappedCorrectAnswer') && QuizQuestion::TYPE_TRUE_FALSE === $quizQuestion->getType()) {
+                    $quizQuestion->setCorrectAnswer(true === $form->get('unmappedCorrectAnswer')->getData());
+                }
+
                 $this->em->persist($quizQuestion);
                 $this->em->flush();
-                $this->processQuizQuestionTranslation($form, $quizQuestion);
+
+                if ($form->has('unmappedChoices') && QuizQuestion::TYPE_SINGLE_CHOICE === $quizQuestion->getType()) {
+                    $choices = trim($form->get('unmappedChoices')->getData());
+                    $choices = str_replace("\r", '', $choices);
+                    $choices = explode("\n", $choices);
+                    foreach ($choices as $choice) {
+                        if (strlen($choice) === 0) {
+                            continue;
+                        }
+                        $qqc = (new QuizQuestionChoice())->setQuizQuestion($quizQuestion)->setText($choice)->setCorrect(false);
+                        $addedQuizQuestionChoices[] = $qqc;
+                        $this->em->persist($qqc);
+                    }
+                    $this->em->flush();
+                }
+
+                $this->processQuizQuestionTranslation($form, $quizQuestion, $addedQuizQuestionChoices);
                 $this->addFlash('success', $this->translator->trans('success.quizQuestion.new', [], 'message'));
                 return $this->redirectToRoute('lesson_show', ['lesson' => $lesson->getId()]);
             } else {
@@ -629,7 +651,12 @@ class LessonController extends BaseController
         if ($translated) $this->em->flush();
     }
 
-    private function processQuizQuestionTranslation(\Symfony\Component\Form\FormInterface $form, QuizQuestion $quizQuestion)
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param QuizQuestion $quizQuestion
+     * @param QuizQuestionChoice[] $quizQuestionChoices
+     */
+    private function processQuizQuestionTranslation(\Symfony\Component\Form\FormInterface $form, QuizQuestion $quizQuestion, array $quizQuestionChoices = []): void
     {
         $translationRepository = $this->em->getRepository(Translation::class);
         $localeAlt = $this->getParameter('locale.alternate');
@@ -644,6 +671,11 @@ class LessonController extends BaseController
         $explanationAlt = $form->get('explanationAlt')->getData();
         if ($explanationAlt !== null && trim($explanationAlt) !== '') {
             $translationRepository->translate($quizQuestion, 'explanation', $localeAlt, $explanationAlt);
+            $translated = true;
+        }
+
+        foreach ($quizQuestionChoices as $qqc) {
+            $translationRepository->translate($qqc, 'text', $localeAlt, $qqc->getText());
             $translated = true;
         }
 

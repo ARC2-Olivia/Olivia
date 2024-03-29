@@ -36,6 +36,7 @@ common:
     export: Izvoz
     file: Datoteka
     add: Dodaj
+    saveForLater: Spremi za kasnije
     correct: Točno
     incorrect: Netočno
     details: Detalji
@@ -242,6 +243,10 @@ form:
                 explanationAlt: Objašnjenje (drugi jezik)
                 correctAnswer: Točan odgovor
                 type: Vrsta
+                choices: Odgovori
+            info:
+                unmappedCorrectAnswer: Točan odgovor možete naknadno postaviti.
+                unmappedChoices: Svaki odgovor mora biti u svom redu. Ime pojedinog odgovora bit će dodan i za glavni i za zamjenski jezik. Odgovori se mogu naknadno dodati.
         quizQuestionChoice:
             label:
                 text: Tekst odgovora
@@ -366,6 +371,7 @@ form:
                 theoreticalSubmodules: Teorijski podmoduli
                 practicalSubmodules: Praktični podmoduli
                 image: Slika
+                position: Redni broj
             placeholder:
                 title: Naslov nove tematike
                 theoreticalSubmodules: Odaberite teorijske podmodule...
@@ -570,7 +576,8 @@ practicalSubmodule:
         consentPersonalDataProcessing: Privola za obradu osobnih podataka
         cookieBanner: Traka ili skočni prozor o privoli za obradu osobnih podataka putem kolačića
         cookiePolicy: Politika kolačića
-        lia: Procjena legitimnog interesa
+        lia: Procjena legitimnog interesa (LIA)
+        dpia: Procjena učinka na zaštitu podataka (DPIA)
     extra:
         question: Pitanje
         questions: Pitanja
@@ -647,7 +654,7 @@ practicalSubmoduleAssessment:
         unansweredDependees: "Zbog vašeg odgovora na ovo pitanje, sljedeća pitanja NISU prikazana:"
     action:
         start: Popuni upitnik
-        edit: Izmjeni popunjeni upitnik
+        edit: Izmjeni upitnik
         results: Pregled izvještaja
         downloadReport: Preuzmi izvještaj
 

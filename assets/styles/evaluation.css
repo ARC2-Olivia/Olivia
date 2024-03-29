@@ -202,6 +202,7 @@ ul.mod--ps-pages {
 .evaluation-assessment-question.heading {
     font-size: 18px;
     font-weight: 600;
+    margin-bottom: -24px;
 }
 
 .evaluation-assessment-question-text {
@@ -214,6 +215,10 @@ ul.mod--ps-pages {
 .evaluation-assessment-question.static-text .evaluation-assessment-question-text {
     background: none;
     padding: 0;
+}
+
+.evaluation-assessment-question.heading .evaluation-assessment-question-text {
+    background: none;
 }
 
 .evaluation-assessment-question-text:not(.no-bold) {

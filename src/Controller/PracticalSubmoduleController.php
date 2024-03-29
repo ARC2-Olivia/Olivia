@@ -26,6 +26,7 @@ use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Repository\PracticalSubmoduleRepository;
 use App\Service\PracticalSubmoduleService;
 use App\Service\NavigationService;
+use App\Service\SanitizerService;
 use App\Service\WordService;
 use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -60,7 +61,7 @@ class PracticalSubmoduleController extends BaseController
     }
 
     #[Route("/new", name: "new")]
-    public function new(Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
+    public function new(Request $request, PracticalSubmoduleService $practicalSubmoduleService, SanitizerService $sanitizerService): Response
     {
         $practicalSubmodule = new PracticalSubmodule();
         $practicalSubmodule->setModeOfOperation($practicalSubmodule::MODE_OF_OPERATION_ADVANCED);
@@ -69,6 +70,7 @@ class PracticalSubmoduleController extends BaseController
         $form = $this->createForm(PracticalSubmoduleType::class, $practicalSubmodule, ['include_translatable_fields' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $practicalSubmodule->setDescription($sanitizerService->sanitizeHtml($practicalSubmodule->getDescription()));
             $this->em->persist($practicalSubmodule);
             $this->em->flush();
             $image = $form->get('image')->getData();
@@ -109,7 +111,7 @@ class PracticalSubmoduleController extends BaseController
     }
 
     #[Route("/overview/{practicalSubmodule}", name: "overview")]
-    public function overview(PracticalSubmodule $practicalSubmodule, Request $request): Response
+    public function overview(PracticalSubmodule $practicalSubmodule): Response
     {
         return $this->render('evaluation/overview.html.twig', [
             'evaluation' => $practicalSubmodule,
@@ -119,11 +121,12 @@ class PracticalSubmoduleController extends BaseController
 
     #[Route("/edit/{practicalSubmodule}", name: "edit")]
     #[IsGranted("ROLE_MODERATOR")]
-    public function edit(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
+    public function edit(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleService $practicalSubmoduleService, SanitizerService $sanitizerService): Response
     {
         $form = $this->createForm(PracticalSubmoduleType::class, $practicalSubmodule, ['has_advanced_mode_features' => $practicalSubmoduleService->hasAdvancedModeFeatures($practicalSubmodule)]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $practicalSubmodule->setDescription($sanitizerService->sanitizeHtml($practicalSubmodule->getDescription()));
             $this->em->flush();
             $image = $form->get('image')->getData();
             if ($image !== null) $this->removePracticalSubmoduleImage($practicalSubmodule);
@@ -180,11 +183,10 @@ class PracticalSubmoduleController extends BaseController
     public function evaluate(PracticalSubmodule $practicalSubmodule): Response
     {
         $assessmentLastSubmittedAt = null;
-        $assessmentCompleted = false;
+        $assessment = null;
         if ($this->isGranted('ROLE_USER') && !$this->isGranted('ROLE_MODERATOR')) {
             $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
             if (null !== $assessment) {
-                $assessmentCompleted = $assessment->isCompleted();
                 $assessmentLastSubmittedAt = null !== $assessment->getLastSubmittedAt()
                     ? $this->translator->trans('practicalSubmoduleAssessment.message.lastSubmittedAt', ['%datetime%' => $assessment->getLastSubmittedAt()->format('d.m.Y. H:i')],  'app')
                     : null
@@ -199,14 +201,15 @@ class PracticalSubmoduleController extends BaseController
             $pages = $this->em->getRepository(PracticalSubmodulePage::class)->findOrderedForSubmodule($practicalSubmodule);
             $processorGroups = $this->em->getRepository(PracticalSubmoduleProcessorGroup::class)->findOrderedForSubmodule($practicalSubmodule);
         }
+
         return $this->render('evaluation/evaluate.html.twig', [
             'evaluation' => $practicalSubmodule,
             'evaluationQuestions' => $questions,
             'evaluationEvaluators' => $processors,
             'pages' => $pages,
             'procesorGroups' => $processorGroups,
+            'assessment' => $assessment,
             'assessmentLastSubmittedAt' => $assessmentLastSubmittedAt,
-            'assessmentCompleted' => $assessmentCompleted,
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmodule, NavigationService::EVALUATION_EVALUATE),
             'questionCount' => $this->em->getRepository(PracticalSubmoduleQuestion::class)->countActualQuestions($practicalSubmodule)
         ]);

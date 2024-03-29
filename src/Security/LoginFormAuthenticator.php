@@ -2,9 +2,10 @@
 
 namespace App\Security;
 
+use App\Exception\UserNotActivatedException;
+use App\Exception\UserNotFoundException;
 use App\Form\Security\LoginType;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\UserNotFoundException;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
@@ -62,7 +61,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $userBadge = new UserBadge($loginData->getEmail() ?? '', function ($identifier) {
             $user = $this->userRepository->findOneBy(['email' => $identifier]);
-            if ($user === null) throw new UserNotFoundException();
+            if (null === $user) throw new UserNotFoundException();
+            if (!$user->isActivated()) throw new UserNotActivatedException();
             return $user;
         });
         $credentials = new PasswordCredentials($loginData->getPlainPassword() ?? '');

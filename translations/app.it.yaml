@@ -36,6 +36,7 @@ common:
     export: Esportare
     file: File
     add: Aggiungere
+    saveForLater: Salva per dopo
     comingSoon: Prossimamente!
     correct: Corretto
     incorrect: Errato
@@ -244,6 +245,10 @@ form:
                 explanationAlt: Spiegazione (lingua alternativa)
                 correctAnswer: Risposta corretta
                 type: Tipo
+                choices: Risposte
+            info:
+                unmappedCorrectAnswer: Potrai impostare la risposta corretta in seguito.
+                unmappedChoices: Ogni risposta deve essere su una riga separata. Verrà aggiunto il nome della singola risposta sia per la lingua principale che per quella alternativa. Le risposte possono essere aggiunte in seguito.
         quizQuestionChoice:
             label:
                 text: Testo a scelta
@@ -369,6 +374,7 @@ form:
                 theoreticalSubmodules: Sottomoduli teorici
                 practicalSubmodules: Sottomoduli pratici
                 image: Immagine
+                position: Posizione
             placeholder:
                 title: Titolo del nuovo argomento GDPR
                 theoreticalSubmodules: Seleziona sottomoduli teorici...
@@ -573,7 +579,8 @@ practicalSubmodule:
         consentPersonalDataProcessing: Consenso al trattamento dei dati personali
         cookieBanner: Bandiera dei biscotti
         cookiePolicy: Gestione dei Cookie
-        lia: Valutazione del legittimo interesse
+        lia: Valutazione del legittimo interesse (LIA)
+        dpia: Valutazione dell'impatto sulla protezione dei dati (DPIA)
     extra:
         question: Domanda
         questions: Domande
@@ -645,7 +652,7 @@ practicalSubmoduleAssessment:
         unansweredDependees: "A causa della tua risposta a questa domanda, le seguenti domande aggiuntive NON sono state presentate:"
     action:
         start: Compila il questionario
-        edit: Modifica il questionario inviato
+        edit: Modifica il questionario
         results: Visualizza rapporto
         downloadReport: Scarica il rapporto
 
