@@ -16,9 +16,3 @@ framework:
     #fragments: true
     php_errors:
         log: true
-
-when@prod:
-    framework:
-        assets:
-            base-urls:
-                - 'https://olivia-gdpr-arc.eu/italian'
