@@ -47,57 +47,6 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('modal') }}
-    <style>
-        .file-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            font-size: 20px;
-        }
-
-        ul.file-list {
-            padding-left: 0;
-            list-style: none;
-        }
-
-        .file-list-item {
-            background-color: var(--app-color-light-blue);
-            border-radius: 4px;
-            padding: 8px 12px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .file-list-item:hover {
-            background-color: var(--app-color-blue);
-            color: #ffffff;
-        }
-
-        .file-list-item:hover > button {
-            color: #ffffff;
-        }
-
-        .file-list-item > :is(a, button) {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            column-gap: 8px;
-        }
-
-        .file-list-item > a {
-            text-decoration: none;
-            color: unset;
-        }
-
-        .file-list-item > button {
-            width: 100%;
-        }
-
-        .file-list-item-icon {
-            width: 28px;
-            opacity: 33.33334%;
-        }
-    </style>
 {% endblock %}
 
 {% block javascripts %}

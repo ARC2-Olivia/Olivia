@@ -20,6 +20,7 @@
 @import "./styles/profile.css";
 @import "./styles/quiz.css";
 @import "./styles/maintenance.css";
+@import "./styles/files.css";
 
 :root {
     --app-font-default: 'Source Sans Pro', sans-serif;
