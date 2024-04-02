@@ -9,10 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 class File
 {
+    public const TYPE_FILE = 'file';
+    public const TYPE_VIDEO = 'video';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(length: 16, nullable: true)]
+    private ?string $type = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $path = null;
@@ -29,6 +35,21 @@ class File
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getType(): ?string
+    {
+        if (null === $this->type) {
+            return self::TYPE_FILE;
+        }
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
     public function getPath(): ?string

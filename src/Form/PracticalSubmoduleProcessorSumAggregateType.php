@@ -83,16 +83,6 @@ class PracticalSubmoduleProcessorSumAggregateType extends AbstractType
                     'placeholder' => $this->translator->trans('form.entity.practicalSubmoduleProcessor.placeholder.resultText', [], 'app')
                 ]
             ])
-            ->add('resultFiles', EntityType::class, [
-                'class' => File::class,
-                'label' => 'form.entity.practicalSubmoduleProcessor.label.resultFiles',
-                'choice_label' => 'originalName',
-                'attr' => ['class' => 'form-select multiple mb-3'],
-                'placeholder' => 'form.entity.practicalSubmoduleProcessor.placeholder.resultFile',
-                'mapped' => false,
-                'multiple' => true,
-                'data' => $practicalSubmoduleProcessor?->getResultFiles()->toArray()
-            ])
         ;
     }
 

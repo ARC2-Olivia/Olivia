@@ -364,6 +364,7 @@ form:
         file:
             label:
                 id: ID
+                type: Type
                 originalName: Original name
                 createdAt: Created at
                 modifiedAt: Modified at
@@ -707,6 +708,9 @@ file:
         edit: Replace file <i>%filename%</i>
     message:
         delete: Are you sure you want to delete this file?
+    type:
+        file: File
+        video: Video
 
 topic:
     title:

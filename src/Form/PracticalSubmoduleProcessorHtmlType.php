@@ -40,16 +40,6 @@ class PracticalSubmoduleProcessorHtmlType extends AbstractType
             ])
             ->add('expectedValue', TextType::class, ['label' => 'form.entity.practicalSubmoduleProcessor.label.expectedValue', 'attr' => ['class' => 'form-input mb-3']])
             ->add('resultText', HiddenType::class, ['label' => 'form.entity.practicalSubmoduleProcessor.label.resultText'])
-            ->add('resultFiles', EntityType::class, [
-                'class' => File::class,
-                'label' => 'form.entity.practicalSubmoduleProcessor.label.resultFiles',
-                'choice_label' => 'originalName',
-                'attr' => ['class' => 'form-select multiple mb-3'],
-                'placeholder' => 'form.entity.practicalSubmoduleProcessor.placeholder.resultFile',
-                'mapped' => false,
-                'multiple' => true,
-                'data' => $practicalSubmoduleProcessor?->getResultFiles()->toArray()
-            ])
         ;
     }
 

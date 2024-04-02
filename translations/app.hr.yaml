@@ -362,6 +362,7 @@ form:
         file:
             label:
                 id: ID
+                type: Vrsta
                 originalName: Originalni naziv
                 createdAt: Vrijeme stvaranja
                 modifiedAt: Vrijeme modifikacije
@@ -699,6 +700,9 @@ file:
         edit: Zamjena datoteke <i>%filename%</i>
     message:
         delete: Jeste li sigurni da želite izbrisati ovu datoteku?
+    type:
+        file: Datoteka
+        video: Video
 
 topic:
     title:

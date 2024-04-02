@@ -57,7 +57,7 @@ class PracticalSubmoduleController extends BaseController
     public function index(PracticalSubmoduleRepository $practicalSubmoduleRepository): Response
     {
         $submodules = $practicalSubmoduleRepository->findOrderedByPosition();
-        return $this->render("evaluation/index.html.twig", ['evaluations' => $submodules]);
+        return $this->render('evaluation/index.html.twig', ['evaluations' => $submodules]);
     }
 
     #[Route("/new", name: "new")]

@@ -87,14 +87,6 @@ class PracticalSubmoduleProcessorController extends BaseController
                 $this->em->persist($processorImpl);
             }
 
-            if ($implForm->has('resultFiles')) {
-                $files = $implForm->get('resultFiles')->getData();
-                $practicalSubmoduleProcessor->clearResultFiles();
-                foreach ($files as $file) {
-                    $practicalSubmoduleProcessor->addResultFile($file);
-                }
-            }
-
             if (true === $isProcessorProcessingProcessor
                 && $practicalSubmoduleProcessor::TYPE_RESULT_COMBINER !== $practicalSubmoduleProcessor->getType()
                 && $practicalSubmoduleProcessor::TYPE_MAX_VALUE !== $practicalSubmoduleProcessor->getType()

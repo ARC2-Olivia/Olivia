@@ -30,6 +30,10 @@ dialog.modal-dialog {
     border-radius: 8px;
 }
 
+.modal-dialog.wider {
+    width: 960px;
+}
+
 .modal-dialog .modal-dialog-heading {
     padding: 16px;
     border-bottom: solid 1px rgba(33, 33, 33, 0.1);
@@ -63,7 +67,13 @@ dialog.modal-dialog {
     max-width: 100%;
 }
 
-@media (max-width: 659px) {
+@media screen and (max-width: 991px) {
+    .modal-dialog.wider {
+        width: 100vw;
+    }
+}
+
+@media screen and (max-width: 659px) {
     .modal {
         align-items: start;
     }

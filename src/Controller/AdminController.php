@@ -153,7 +153,7 @@ class AdminController extends BaseController
     #[Route("/file/new", name: "file_new")]
     public function newFile(Request $request): Response
     {
-        $form = $this->createForm(BasicFileUploadType::class);
+        $form = $this->createForm(BasicFileUploadType::class, null, ['selectType' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -169,6 +169,7 @@ class AdminController extends BaseController
 
                 $this->em->persist($file);
                 $this->em->flush();
+                $file->setType($form->get('type')->getData());
                 $this->addFlash('success', $this->translator->trans('success.file.new', [], 'message'));
                 return $this->redirectToRoute('admin_file_index');
             }
@@ -198,7 +199,7 @@ class AdminController extends BaseController
     #[Route("/file/replace/{file}", name: "file_replace")]
     public function replaceFile(File $file, Request $request): Response
     {
-        $form = $this->createForm(BasicFileUploadType::class);
+        $form = $this->createForm(BasicFileUploadType::class, ['type' => $file->getType()], ['selectType' => true, 'requiredFile' => false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -212,11 +213,13 @@ class AdminController extends BaseController
                 $upload->move($directory, $filename);
 
                 $this->removeFile($file->getPath());
-                $file->setOriginalName($originalName)->setPath($directory.'/'.$filename)->setModifiedAt(new \DateTimeImmutable());
-                $this->em->flush();
-                $this->addFlash('success', $this->translator->trans('success.file.edit', [], 'message'));
-                return $this->redirectToRoute('admin_file_index');
+                $file->setOriginalName($originalName)->setPath($directory.'/'.$filename);
             }
+
+            $file->setType($form->get('type')->getData())->setModifiedAt(new \DateTimeImmutable());
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('success.file.edit', [], 'message'));
+            return $this->redirectToRoute('admin_file_index');
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
