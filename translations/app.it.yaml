@@ -366,6 +366,7 @@ form:
                 id: ID
                 type: Tipo
                 originalName: Nome originale
+                displayText: Testo da visualizzare
                 createdAt: Creato a
                 modifiedAt: Modificato a
         topic:

@@ -26,11 +26,22 @@ class File
     #[ORM\Column(type: Types::TEXT)]
     private ?string $originalName = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $displayText = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $modifiedAt = null;
+
+    public function __toString(): string
+    {
+        if (null !== $this->displayText) {
+            return $this->displayText;
+        }
+        return $this->originalName;
+    }
 
     public function getId(): ?int
     {
@@ -72,6 +83,18 @@ class File
     public function setOriginalName(string $originalName): self
     {
         $this->originalName = $originalName;
+
+        return $this;
+    }
+
+    public function getDisplayText(): ?string
+    {
+        return $this->displayText;
+    }
+
+    public function setDisplayText(?string $displayText): self
+    {
+        $this->displayText = $displayText;
 
         return $this;
     }

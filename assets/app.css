@@ -202,6 +202,10 @@ h2 > a {
     max-width: 100%;
 }
 
+.text-align-left {
+    text-align: left;
+}
+
 .bg-orange { background-color: var(--app-color-orange) !important; }
 .bg-green { background-color: var(--app-color-green) !important; }
 .bg-light-green { background-color: var(--app-color-light-green) !important; }

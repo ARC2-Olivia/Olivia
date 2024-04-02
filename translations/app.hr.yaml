@@ -364,6 +364,7 @@ form:
                 id: ID
                 type: Vrsta
                 originalName: Originalni naziv
+                displayText: Tekst za prikaz
                 createdAt: Vrijeme stvaranja
                 modifiedAt: Vrijeme modifikacije
         topic:
@@ -696,7 +697,7 @@ dataRequest:
 file:
     title:
         index: Datoteke
-        new: Učitaj movu datoteku
+        new: Učitaj novu datoteku
         edit: Zamjena datoteke <i>%filename%</i>
     message:
         delete: Jeste li sigurni da želite izbrisati ovu datoteku?

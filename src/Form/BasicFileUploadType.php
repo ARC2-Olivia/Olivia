@@ -6,6 +6,7 @@ use App\Entity\File;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -38,9 +39,12 @@ class BasicFileUploadType extends AbstractType
         }
 
         $builder->add('file', FileType::class, $fileOptions);
-        if (true === $options['selectType']) {
+        if (true === $options['complexMode']) {
             $typeChoices = [$this->translator->trans('file.type.file', [], 'app') => File::TYPE_FILE, $this->translator->trans('file.type.video', [], 'app') => File::TYPE_VIDEO];
-            $builder->add('type', ChoiceType::class, ['choices' => $typeChoices, 'attr' => ['class' => 'form-select'], 'label' => 'form.entity.file.label.type']);
+            $builder
+                ->add('type', ChoiceType::class, ['label' => 'form.entity.file.label.type', 'choices' => $typeChoices, 'attr' => ['class' => 'form-select mb-3']])
+                ->add('displayText', TextareaType::class, ['label' => 'form.entity.file.label.displayText', 'attr' => ['class' => 'form-textarea']])
+            ;
         }
     }
 
@@ -51,7 +55,7 @@ class BasicFileUploadType extends AbstractType
             'attr' => ['class' => 'd-flex flex-column'],
             'mimeTypes' => null,
             'extensions' => null,
-            'selectType' => false,
+            'complexMode' => false,
             'requiredFile' => true
         ]);
     }
