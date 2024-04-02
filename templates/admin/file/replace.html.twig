@@ -9,6 +9,8 @@
             <div class="card-text">
                 {{ form_label(form.file) }}
                 {{ form_widget(form.file) }}
+                {{ form_label(form.type) }}
+                {{ form_widget(form.type) }}
             </div>
             <div class="card-actions">
                 <button type="submit" class="btn btn-theme-white bg-blue">{{ 'common.submit'|trans }}</button>

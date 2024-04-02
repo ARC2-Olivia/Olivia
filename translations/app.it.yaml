@@ -364,6 +364,7 @@ form:
         file:
             label:
                 id: ID
+                type: Tipo
                 originalName: Nome originale
                 createdAt: Creato a
                 modifiedAt: Modificato a
@@ -697,6 +698,9 @@ file:
         edit: Sostituisci il file <i>%nomefile%</i>
     message:
         delete: Sei sicuro di voler eliminare questo file?
+    type:
+        file: File
+        video: Video
 
 topic:
     title:
