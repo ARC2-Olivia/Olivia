@@ -4,17 +4,6 @@
 {% block adminContent %}
     <div class="container-fluid p-5">
         {% include '_partials/toasts.html.twig' %}
-        {{ form_start(form, {'attr': {'class': 'card'}}) }}
-            <div class="card-title">{{ 'file.title.new'|trans }}</div>
-            <div class="card-text">
-                {{ form_label(form.file) }}
-                {{ form_widget(form.file) }}
-                {{ form_label(form.type) }}
-                {{ form_widget(form.type) }}
-            </div>
-            <div class="card-actions">
-                <button type="submit" class="btn btn-theme-white bg-blue">{{ 'common.submit'|trans }}</button>
-            </div>
-        {{ form_end(form) }}
+        {% include 'admin/file/_form.html.twig' with {'title': ('file.title.new'|trans|raw)} %}
     </div>
 {% endblock %}

@@ -153,7 +153,7 @@ class AdminController extends BaseController
     #[Route("/file/new", name: "file_new")]
     public function newFile(Request $request): Response
     {
-        $form = $this->createForm(BasicFileUploadType::class, null, ['selectType' => true]);
+        $form = $this->createForm(BasicFileUploadType::class, null, ['complexMode' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -161,7 +161,12 @@ class AdminController extends BaseController
             $upload = $form->get('file')->getData();
 
             if (null !== $upload) {
-                $file = (new File())->setCreatedAt(new \DateTimeImmutable())->setOriginalName($upload->getClientOriginalName());
+                $file = (new File())
+                    ->setType($form->get('type')->getData())
+                    ->setOriginalName($upload->getClientOriginalName())
+                    ->setDisplayText($form->get('displayText')->getData())
+                    ->setCreatedAt(new \DateTimeImmutable())
+                ;
                 $directory = $this->getParameter('dir.file_repository');
                 $filename = uniqid('file-', true);
                 $upload->move($directory, $filename);
@@ -169,7 +174,6 @@ class AdminController extends BaseController
 
                 $this->em->persist($file);
                 $this->em->flush();
-                $file->setType($form->get('type')->getData());
                 $this->addFlash('success', $this->translator->trans('success.file.new', [], 'message'));
                 return $this->redirectToRoute('admin_file_index');
             }
@@ -199,7 +203,7 @@ class AdminController extends BaseController
     #[Route("/file/replace/{file}", name: "file_replace")]
     public function replaceFile(File $file, Request $request): Response
     {
-        $form = $this->createForm(BasicFileUploadType::class, ['type' => $file->getType()], ['selectType' => true, 'requiredFile' => false]);
+        $form = $this->createForm(BasicFileUploadType::class, ['type' => $file->getType()], ['complexMode' => true, 'requiredFile' => false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -216,7 +220,11 @@ class AdminController extends BaseController
                 $file->setOriginalName($originalName)->setPath($directory.'/'.$filename);
             }
 
-            $file->setType($form->get('type')->getData())->setModifiedAt(new \DateTimeImmutable());
+            $file
+                ->setType($form->get('type')->getData())
+                ->setDisplayText($form->get('displayText')->getData())
+                ->setModifiedAt(new \DateTimeImmutable())
+            ;
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.file.edit', [], 'message'));
             return $this->redirectToRoute('admin_file_index');
