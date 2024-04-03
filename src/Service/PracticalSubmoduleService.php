@@ -241,7 +241,7 @@ class PracticalSubmoduleService
         $errors = $this->validator->validate($processorHtml);
         if ($errors->count() > 0 || $processorHtml->getPracticalSubmoduleQuestion() === null || !$processorHtml->checkConformity($assessment, translator: $this->translator)) return null;
         $question = PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $assessment->getPracticalSubmodule()->getModeOfOperation() ? $processorHtml->getPracticalSubmoduleQuestion() : null;
-        return new ProcessorResult($processorHtml->getResultText(), $processorHtml->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(), true, $question, $processor->getPracticalSubmoduleProcessorGroup());
+        return new ProcessorResult($processorHtml->getResultText(),true, $question, $processor->getPracticalSubmoduleProcessorGroup());
     }
 
     private function runSimpleProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
@@ -252,7 +252,6 @@ class PracticalSubmoduleService
         $question = PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $assessment->getPracticalSubmodule()->getModeOfOperation() ? $processorSimple->getPracticalSubmoduleQuestion() : null;
         return new ProcessorResult(
             text: $processorSimple->getResultText(),
-            files: $processorSimple->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(),
             question: $question,
             processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
             exportTag: $processor->getExportTag()
@@ -266,7 +265,6 @@ class PracticalSubmoduleService
         if ($errors->count() > 0 || $processorMaxValue->getPracticalSubmoduleProcessor() === null || !$processorMaxValue->checkConformity($assessment, translator: $this->translator)) return null;
         return new ProcessorResult(
             text: $processorMaxValue->getResultText(),
-            files: $processorMaxValue->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(),
             processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
             exportTag: $processor->getExportTag()
         );
@@ -280,7 +278,6 @@ class PracticalSubmoduleService
         $question = PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $assessment->getPracticalSubmodule()->getModeOfOperation() ? $processorSumAggregate->getPracticalSubmoduleQuestions()->get(0) : null;
         return new ProcessorResult(
             text: $processorSumAggregate->getResultText(),
-            files: $processorSumAggregate->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(),
             question: $question,
             processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
             exportTag: $processor->getExportTag()
@@ -296,7 +293,6 @@ class PracticalSubmoduleService
         $processorTemplatedText->calculateResult($assessment, translator: $this->translator);
         return new ProcessorResult(
             text: $processorTemplatedText->getResultText(),
-            files: $processorTemplatedText->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(),
             question: $question,
             processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
             exportTag: $processor->getExportTag()
@@ -322,7 +318,6 @@ class PracticalSubmoduleService
         $question = PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $assessment->getPracticalSubmodule()->getModeOfOperation() ? $processorProductAggregate->getPracticalSubmoduleQuestions()->get(0) : null;
         return new ProcessorResult(
             text: $processorProductAggregate->getResultText(),
-            files: $processorProductAggregate->getPracticalSubmoduleProcessor()->getResultFiles()->toArray(),
             question: $question,
             processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
             exportTag: $processor->getExportTag()

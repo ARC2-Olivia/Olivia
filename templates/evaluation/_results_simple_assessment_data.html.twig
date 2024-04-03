@@ -27,15 +27,6 @@
                     <div>{{ answerDatum.result.displayableText|raw|nl2br }}</div>
                 {% endif %}
             {% endif %}
-            {% if answerDatum.result.areFilesSet and forReport == false %}
-                <div class="my-3">
-                    {% for file in answerDatum.result.files %}
-                        <span class="evaluation-results-file" data-prefix="{{ 'common.file'|trans }}: ">
-                            <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}">{{ file.originalName }}</a>
-                        </span>
-                    {% endfor %}
-                </div>
-            {% endif %}
         </div>
     </div>
 {% endfor %}
