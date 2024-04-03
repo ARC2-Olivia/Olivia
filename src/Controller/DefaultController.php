@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\File;
 use App\Entity\Texts;
 use App\Form\ProfileType;
 use App\Form\Security\PasswordResetType;
@@ -82,6 +83,13 @@ class DefaultController extends BaseController
     {
         $texts = $this->em->getRepository(Texts::class)->get();
         return $this->render('default/aboutProject.html.twig', ['texts' => $texts]);
+    }
+
+    #[Route("/{_locale}/seminars", name: "seminars", requirements: ["_locale" => "%locale.supported%"])]
+    public function seminars(): Response
+    {
+        $files = $this->em->getRepository(File::class)->findBy(['seminar' => true]);
+        return $this->render('default/seminars.html.twig', ['files' => $files]);
     }
 
     #[Route("/{_locale}/maintenance", name: "maintenance", requirements: ["_locale" => "%locale.supported%"])]

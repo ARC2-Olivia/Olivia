@@ -40,10 +40,12 @@ class BasicFileUploadType extends AbstractType
 
         $builder->add('file', FileType::class, $fileOptions);
         if (true === $options['complexMode']) {
-            $typeChoices = [$this->translator->trans('file.type.file', [], 'app') => File::TYPE_FILE, $this->translator->trans('file.type.video', [], 'app') => File::TYPE_VIDEO];
+            $typeChoices = [$this->translator->trans('file.type.file', domain: 'app') => File::TYPE_FILE, $this->translator->trans('file.type.video', domain: 'app') => File::TYPE_VIDEO];
+            $booleanChoices = [$this->translator->trans('common.no', domain: 'app') => false, $this->translator->trans('common.yes', domain: 'app') => true];
             $builder
                 ->add('type', ChoiceType::class, ['label' => 'form.entity.file.label.type', 'choices' => $typeChoices, 'attr' => ['class' => 'form-select mb-3']])
-                ->add('displayText', TextareaType::class, ['label' => 'form.entity.file.label.displayText', 'attr' => ['class' => 'form-textarea']])
+                ->add('seminar', ChoiceType::class, ['label' => 'form.entity.file.label.seminar', 'choices' => $booleanChoices, 'attr' => ['class' => 'form-select mb-3']])
+                ->add('displayText', TextareaType::class, ['label' => 'form.entity.file.label.displayText', 'required' => false, 'attr' => ['class' => 'form-textarea']])
             ;
         }
     }

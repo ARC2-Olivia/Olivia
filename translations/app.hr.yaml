@@ -101,6 +101,7 @@ nav:
     termsOfService: Uvjeti pružanja usluge
     dataRequests: Podatkovni zahtjevi
     files: Datoteke
+    seminars: Seminari
     home: Naslovna
     gdpr: Zaštita podataka
     topics: GDPR teme
@@ -365,6 +366,7 @@ form:
                 type: Vrsta
                 originalName: Originalni naziv
                 displayText: Tekst za prikaz
+                seminar: Seminar
                 createdAt: Vrijeme stvaranja
                 modifiedAt: Vrijeme modifikacije
         topic:

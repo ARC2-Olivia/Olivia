@@ -29,6 +29,9 @@ class File
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $displayText = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $seminar = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -95,6 +98,21 @@ class File
     public function setDisplayText(?string $displayText): self
     {
         $this->displayText = $displayText;
+
+        return $this;
+    }
+
+    public function isSeminar(): ?bool
+    {
+        if (null === $this->seminar) {
+            return false;
+        }
+        return $this->seminar;
+    }
+
+    public function setSeminar(?bool $seminar): self
+    {
+        $this->seminar = $seminar;
 
         return $this;
     }

@@ -103,6 +103,7 @@ nav:
     termsOfService: Terms of service
     dataRequests: Data requests
     files: Files
+    seminars: Seminars
     home: Home
     gdpr: Data protection
     topics: GDPR topics
@@ -367,6 +368,7 @@ form:
                 type: Type
                 originalName: Original name
                 displayText: Text to display
+                seminar: Seminar
                 createdAt: Created at
                 modifiedAt: Modified at
         topic:
