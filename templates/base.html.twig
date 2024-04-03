@@ -1,5 +1,7 @@
 {% trans_default_domain 'app' %}
 
+{% set isAuthenticated = is_granted('IS_AUTHENTICATED_FULLY') %}
+
 {% set extendSessionTranslations = {
     'title': ('extra.extendSession.title'|trans),
     'text': ('extra.extendSession.text'|trans),
@@ -23,12 +25,12 @@
 
         {{ encore_entry_link_tags('app') }}
         {{ encore_entry_link_tags('popper.dropdown') }}
-        {{ encore_entry_link_tags('session.extend') }}
+        {% if isAuthenticated %}{{ encore_entry_link_tags('session.extend') }}{% endif %}
         {% block stylesheets %}{% endblock %}
 
         {{ encore_entry_script_tags('app') }}
         {{ encore_entry_script_tags('popper.dropdown') }}
-        {{ encore_entry_script_tags('session.extend') }}
+        {% if isAuthenticated %}{{ encore_entry_script_tags('session.extend') }}{% endif %}
         {% block javascripts %}{% endblock %}
     </head>
     <body data-extend-session-path="{{ path('extend_session') }}" data-extend-session-translations="{{ extendSessionTranslations|json_encode }}">
