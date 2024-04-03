@@ -9,7 +9,6 @@ use App\Entity\PracticalSubmoduleQuestion;
 class ProcessorResult
 {
     private ?string $text;
-    /** @var File[]|null */ private ?array $files;
     private bool $isHtml;
     private ?PracticalSubmoduleQuestion $question;
     private ?PracticalSubmoduleProcessorGroup $processorGroup;
@@ -25,7 +24,6 @@ class ProcessorResult
      * @param string|null $exportTag
      */
     public function __construct(?string $text = null,
-                                ?array $files = null,
                                 bool $isHtml = false,
                                 ?PracticalSubmoduleQuestion $question = null,
                                 ?PracticalSubmoduleProcessorGroup $processorGroup = null,
@@ -34,7 +32,6 @@ class ProcessorResult
     )
     {
         $this->text = $text;
-        $this->files = $files;
         $this->isHtml = $isHtml;
         $this->question = $question;
         $this->processorGroup = $processorGroup;
@@ -53,11 +50,6 @@ class ProcessorResult
             return null;
         }
         return str_replace('|distinguish', '', $this->text);
-    }
-
-    public function getFiles(): ?array
-    {
-        return $this->files;
     }
 
     public function isHtml(): ?bool
@@ -88,11 +80,6 @@ class ProcessorResult
     public function isTextSet(): bool
     {
         return null !== $this->text;
-    }
-
-    public function areFilesSet(): bool
-    {
-        return null !== $this->files && count($this->files) > 0;
     }
 
     public function isQuestionSet(): bool
