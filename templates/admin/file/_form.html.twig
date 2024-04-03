@@ -1,11 +1,13 @@
 {% trans_default_domain 'app' %}
 {{ form_start(form, {'attr': {'class': 'card'}}) }}
-    <div class="card-title">{{ title }}</div>
+    <div class="card-title">{{ title|raw }}</div>
     <div class="card-text">
         {{ form_label(form.file) }}
         {{ form_widget(form.file) }}
         {{ form_label(form.type) }}
         {{ form_widget(form.type) }}
+        {{ form_label(form.seminar) }}
+        {{ form_widget(form.seminar) }}
         {{ form_label(form.displayText) }}
         {{ form_widget(form.displayText) }}
     </div>
