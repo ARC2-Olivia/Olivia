@@ -17,6 +17,7 @@
                             <th>{{ 'form.entity.file.label.id'|trans }}</th>
                             <th>{{ 'form.entity.file.label.type'|trans }}</th>
                             <th>{{ 'form.entity.file.label.originalName'|trans }}</th>
+                            <th>{{ 'form.entity.file.label.seminar'|trans }}</th>
                             <th>{{ 'form.entity.file.label.createdAt'|trans }}</th>
                             <th>{{ 'form.entity.file.label.modifiedAt'|trans }}</th>
                             <th>{{ 'common.actions'|trans }}</th>
@@ -28,6 +29,7 @@
                                 <td>{{ file.id }}</td>
                                 <td>{{ ('file.type.'~file.type)|trans }}</td>
                                 <td>{{ file.originalName }}</td>
+                                <td>{{ (file.seminar ? 'common.yes' : 'common.no')|trans }}</td>
                                 <td>{{ file.createdAt|date('d.m.Y. H:i') }}</td>
                                 <td>{{ file.modifiedAt is not null ? file.modifiedAt|date('d.m.Y. H:i') : '-' }}</td>
                                 <td>
