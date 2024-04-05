@@ -259,6 +259,11 @@ class WordService
             $templateProcessor->setComplexValue($result->getExportTag(), $textRun);
         }
 
+        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
+        foreach ($processors as $processor) {
+            $templateProcessor->setValue($processor->getExportTag(), '');
+        }
+
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
         $templateProcessor->saveAs($document);
         return $document;
