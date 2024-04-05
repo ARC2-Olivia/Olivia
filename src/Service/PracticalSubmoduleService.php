@@ -211,12 +211,21 @@ class PracticalSubmoduleService
         return false;
     }
 
+    /**
+     * @param PracticalSubmodule $practicalSubmodule
+     * @return PracticalSubmoduleProcessor[]
+     */
+    public function findRunnableProcessors(PracticalSubmodule $practicalSubmodule): array
+    {
+        return $this->em->getRepository(PracticalSubmoduleProcessor::class)->findRunnableProcessors($practicalSubmodule);
+    }
+
     /** @return ProcessorResult[] */
     public function runProcessors(PracticalSubmoduleAssessment $assessment): array
     {
         $results = [];
 
-        $processors = $this->em->getRepository(PracticalSubmoduleProcessor::class)->findRunnableProcessors($assessment->getPracticalSubmodule());
+        $processors = $this->findRunnableProcessors($assessment->getPracticalSubmodule());
         foreach ($processors as $processor) {
             $result = match ($processor->getType()) {
                 PracticalSubmoduleProcessor::TYPE_HTML              => $this->runHtmlProcessor($processor, $assessment),
