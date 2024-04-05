@@ -244,7 +244,7 @@ class WordService
     private function generateDataProtectionImpactAssessment(PracticalSubmoduleAssessment $assessment, string $locale)
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
-        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_dpia.docx');
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_dpia.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
         $fontStyle = ['name' => 'Bell MT', 'size' => 12];
 
