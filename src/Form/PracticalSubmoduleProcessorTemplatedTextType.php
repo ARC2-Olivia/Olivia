@@ -54,10 +54,7 @@ class PracticalSubmoduleProcessorTemplatedTextType extends AbstractType
         $resolver->setDefaults([
             'data_class' => PracticalSubmoduleProcessorTemplatedText::class,
             'translation_domain' => 'app',
-            'attr' => [
-                'novalidate' => 'novalidate',
-                'class' => 'd-flex flex-column'
-            ]
+            'attr' => ['novalidate' => 'novalidate', 'class' => 'd-flex flex-column']
         ]);
     }
 

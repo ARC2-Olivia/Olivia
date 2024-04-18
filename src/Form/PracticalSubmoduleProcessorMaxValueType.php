@@ -35,6 +35,7 @@ class PracticalSubmoduleProcessorMaxValueType extends AbstractType
                 ->andWhere('psq.evaluable = :evaluable')
                 ->andWhere('psq.type IN (:types)')
                 ->setParameters(['submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(), 'evaluable' => true, 'types' => PracticalSubmoduleQuestion::getNumericTypes()])
+                ->orderBy('psq.position', 'ASC')
             ;
         };
 
@@ -43,6 +44,7 @@ class PracticalSubmoduleProcessorMaxValueType extends AbstractType
                 ->where('psp != :processor')
                 ->andWhere('psp.practicalSubmodule = :submodule')
                 ->setParameters(['processor' => $practicalSubmoduleProcessor, 'submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule()])
+                ->orderBy('psp.position', 'ASC')
             ;
         };
 

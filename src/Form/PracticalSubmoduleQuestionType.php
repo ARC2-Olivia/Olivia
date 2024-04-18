@@ -146,6 +146,7 @@ class PracticalSubmoduleQuestionType extends AbstractType
                         'submodule' => $practicalSubmoduleQuestion->getPracticalSubmodule(),
                         'types' => [PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT, PracticalSubmoduleQuestion::TYPE_STATIC_TEXT]
                     ])
+                    ->orderBy('psq.position', 'ASC')
                 ;
 
                 if ($practicalSubmoduleQuestion->getId() !== null) {

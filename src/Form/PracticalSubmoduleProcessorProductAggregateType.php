@@ -109,7 +109,9 @@ class PracticalSubmoduleProcessorProductAggregateType extends AbstractType
                     ->where('psq.practicalSubmodule = :submodule')
                     ->andWhere('psq.evaluable = :evaluable')
                     ->andWhere('psq.type IN (:types)')
-                    ->setParameters(['submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(), 'evaluable' => true, 'types' => PracticalSubmoduleQuestion::getNumericTypes()]);
+                    ->setParameters(['submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(), 'evaluable' => true, 'types' => PracticalSubmoduleQuestion::getNumericTypes()])
+                    ->orderBy('psq.position', 'ASC')
+                ;
             };
         }
         return $evaluationQuestionQueryBuilder;
@@ -125,7 +127,9 @@ class PracticalSubmoduleProcessorProductAggregateType extends AbstractType
                 return $repository->createQueryBuilder('psp')
                     ->where('psp != :processor')
                     ->andWhere('psp.practicalSubmodule = :submodule')
-                    ->setParameters(['processor' => $practicalSubmoduleProcessor, 'submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule()]);
+                    ->setParameters(['processor' => $practicalSubmoduleProcessor, 'submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule()])
+                    ->orderBy('psp.position', 'ASC')
+                ;
             };
         }
         return $evaluationEvaluatorQueryBuilder;
