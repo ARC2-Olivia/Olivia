@@ -261,7 +261,7 @@ class PracticalSubmoduleAssessment {
                             case "equals": enableQuestion = answer == dependency.answer; break;
                             case "contains": enableQuestion = answer.includes(dependency.answer); break;
                         }
-                        if (enableQuestion === true) {
+                        if (enableQuestion) {
                             context.#enableQuestion(this);
                         } else {
                             context.#disableQuestion(this);
@@ -314,6 +314,7 @@ class PracticalSubmoduleAssessment {
         const requirement = questionData.multipleWeighted ? '' : ' data-answer-required required';
         const inputData = [];
         const userAnswer = questionData.userAnswer || [];
+        let hasPrecheckedValues = false;
         questionData.answers.forEach((answerData) => {
             const checked = userAnswer.includes(answerData.id) ? ' checked' : '';
             const answer = this.#parser.parseFromString(`
@@ -331,9 +332,7 @@ class PracticalSubmoduleAssessment {
             });
 
             if ('' !== checked) {
-                this.#handlers.push(function () {
-                    input.dispatch("answerchange", { questionId: questionData.id, answer: input.dataset.value, checkType: 'contains' });
-                });
+                hasPrecheckedValues = true;
             }
 
             answers.push(answer.body.firstChild);
@@ -350,6 +349,13 @@ class PracticalSubmoduleAssessment {
             }
         }
 
+        if (hasPrecheckedValues) {
+            this.#handlers.push(function () {
+                const checkedValues = inputs.filter(i => i.checked === true).map(i => i.dataset.value);
+                context.#eventBus.notifyListeners("answerchange", null, { questionId: questionData.id, answer: checkedValues, checkType: 'contains' })
+            })
+        }
+
         return answers;
     }
 
@@ -358,6 +364,7 @@ class PracticalSubmoduleAssessment {
         const answers = [];
         const inputs = [];
         const userAnswer = questionData.userAnswer || { selected: [], added: [] };
+        let hasPrecheckedValues = false;
         questionData.answers.forEach((answerData) => {
             const checked = userAnswer.selected.includes(answerData.id) ? ' checked' : '';
             const answer = this.#parser.parseFromString(`
@@ -372,9 +379,7 @@ class PracticalSubmoduleAssessment {
             answers.push(answer.body.firstChild);
 
             if ('' !== checked) {
-                this.#handlers.push(function () {
-                    input.dispatch("answerchange", { question: questionData.id, answer: input.dataset.value, checkType: 'contains' });
-                });
+                hasPrecheckedValues = true;
             }
         });
 
@@ -390,9 +395,9 @@ class PracticalSubmoduleAssessment {
             const otherButton = this.#parser.parseFromString(`<button type="button" class="btn btn-theme-white bg-green w-fit">${this.#translation.buttonAdd}</button>`, "text/html").body.firstChild;
             otherButton.addEventListener("click", function() {
                 const otherInput = context.#parser.parseFromString(`
-                <label>
-                    <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][other][]"/>
-                </label>
+                    <label>
+                        <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][other][]"/>
+                    </label>
                 `, "text/html").body.firstChild;
                 this.parentElement.insertBefore(otherInput, this);
             });
@@ -406,6 +411,13 @@ class PracticalSubmoduleAssessment {
                 answers.push(addedAnswerElement);
             }
             answers.push(otherButton);
+        }
+
+        if (hasPrecheckedValues) {
+            this.#handlers.push(function () {
+                const checkedValues = inputs.filter(i => i.checked === true).map(i => i.dataset.value);
+                context.#eventBus.notifyListeners("answerchange", null, { questionId: questionData.id, answer: checkedValues, checkType: 'contains' })
+            })
         }
 
         return answers;
