@@ -64,7 +64,10 @@ class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmodulePro
                 if (null === $this->resultText) {
                     $this->resultText = '';
                 }
-                $texts[] = $processorImpl->getResultText();
+                $currResultText = $processorImpl->getResultText();
+                if (null !== $currResultText && '' !== trim($currResultText)) {
+                    $texts[] = $currResultText;
+                }
             }
         }
 
