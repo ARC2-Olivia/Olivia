@@ -56,9 +56,7 @@ class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmodulePro
 
         foreach ($processors as $processor) {
             $processorImpl = $processor->getImplementation();
-            if ($processor::TYPE_TEMPLATED_TEXT === $processor->getType()) {
-                $processorImpl->calculateResult($practicalSubmoduleAssessment, $validator, $translator);
-            }
+            $processorImpl->calculateResult($practicalSubmoduleAssessment, $validator, $translator);
             $errors = $validator->validate($processorImpl);
             if (0 === $errors->count() && true === $processorImpl->checkConformity($practicalSubmoduleAssessment, $validator)) {
                 if (null === $this->resultText) {
