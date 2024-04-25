@@ -21,4 +21,4 @@ when@prod:
     framework:
         assets:
             base-urls:
-                - 'https://olivia-gdpr-arc.eu/italian'
+                - 'https://olivia-gdpr-arc.eu'
