@@ -125,9 +125,7 @@ class OliviaRuntime implements RuntimeExtensionInterface
 
     public function isUser(): bool
     {
-        return $this->security->isGranted('ROLE_USER')
-            && !$this->security->isGranted('ROLE_MODERATOR')
-            && !$this->security->isGranted('ROLE_ADMIN');
+        return $this->security->isGranted('ROLE_USER') && !$this->security->isGranted('ROLE_MODERATOR');
     }
 
     public function isPassed(Course $course, ?User $user): bool

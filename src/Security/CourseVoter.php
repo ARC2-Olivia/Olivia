@@ -58,7 +58,6 @@ class CourseVoter extends Voter
     {
         return $this->security->isGranted('ROLE_USER')
             && !$this->security->isGranted('ROLE_MODERATOR')
-            && !$this->security->isGranted('ROLE_ADMIN')
             && !$this->enrollmentService->isEnrolled($course, $user)
         ;
     }

@@ -58,9 +58,7 @@ class EmptyPracticalModuleSubscriber implements EventSubscriberInterface
 
     private function checkCondition(): bool
     {
-        return $this->security->isGranted('ROLE_USER')
-            && !$this->security->isGranted('ROLE_MODERATOR')
-            && !$this->security->isGranted('ROLE_ADMIN');
+        return $this->security->isGranted('ROLE_USER') && !$this->security->isGranted('ROLE_MODERATOR');
     }
 
     private function handlePracticalSubmodule(ControllerEvent $event, $action, $psId): void

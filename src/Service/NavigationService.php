@@ -108,7 +108,7 @@ class NavigationService
             ]
         ];
 
-        if ($this->isUser() && $practicalSubmodule->canRunAssessment()) {
+        if ($this->isUser() && $practicalSubmodule->canRunAssessment() && (!$practicalSubmodule->isRevisionMode() || $this->security->isGranted('ROLE_TESTER'))) {
             $navigation[] = [
                 'text' => $this->translator->trans('practicalSubmodule.nav.questionnaire', [], 'app'),
                 'path' => $this->router->generate('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]),
@@ -156,9 +156,6 @@ class NavigationService
 
     private function isUser(): bool
     {
-        return $this->security->isGranted('ROLE_USER')
-            && !$this->security->isGranted('ROLE_MODERATOR')
-            && !$this->security->isGranted('ROLE_ADMIN')
-        ;
+        return $this->security->isGranted('ROLE_USER') && !$this->security->isGranted('ROLE_MODERATOR');
     }
 }

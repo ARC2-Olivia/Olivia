@@ -273,6 +273,7 @@ form:
                 terminology: Terminologija
                 position: Redni broj
                 exportType: Vrsta izvoza
+                revisionMode: Način revizije (preporučeno postaviti u slučajevima kada se rade veće izmjene)
             placeholder:
                 name: Naziv praktičnog podmodula
                 publicName: npr. Izradite svoju politiku privatnosti za čas posla!
@@ -602,6 +603,9 @@ practicalSubmodule:
         connectedTo: Povezani tečajevi
         reportTitle: Izvještaj - %practicalSubmodule%
         questionCount: "%number% pitanja"
+        revisionMode:
+            1: Upitnik je privremeno nedostupan zbog revizije.
+            2: Molimo Vas za strpljenje.
 
 practicalSubmoduleQuestion:
     type:

@@ -36,9 +36,7 @@ class EduLogSubscriber implements EventSubscriberInterface
     {
         if (!$this->enabled || $this->security->getUser() === null) return;
 
-        $isUser = $this->security->isGranted('ROLE_USER')
-            && !$this->security->isGranted('ROLE_MODERATOR')
-            && !$this->security->isGranted('ROLE_ADMIN');
+        $isUser = $this->security->isGranted('ROLE_USER') && !$this->security->isGranted('ROLE_MODERATOR');
 
         if ($isUser) {
             $this->handleUserEduLogging($event->getRequest());

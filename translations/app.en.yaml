@@ -275,6 +275,7 @@ form:
                 terminology: Terminology
                 position: Position
                 exportType: Export type
+                revisionMode: Revision mode (recommended to be set in cases where major changes are to be made)
             placeholder:
                 name: Name of the practical submodule
                 publicName: e.g. Create your own privacy policy with ease!
@@ -605,6 +606,9 @@ practicalSubmodule:
         connectedTo: Connected courses
         reportTitle: Report - %practicalSubmodule%
         questionCount: "%number% questions"
+        revisionMode:
+            1: The questionnaire is temporarily unavailable due to revision.
+            2: Please be patient.
 
 practicalSubmoduleQuestion:
     type:

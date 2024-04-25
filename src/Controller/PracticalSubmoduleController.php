@@ -61,6 +61,7 @@ class PracticalSubmoduleController extends BaseController
     }
 
     #[Route("/new", name: "new")]
+    #[IsGranted("ROLE_MODERATOR")]
     public function new(Request $request, PracticalSubmoduleService $practicalSubmoduleService, SanitizerService $sanitizerService): Response
     {
         $practicalSubmodule = new PracticalSubmodule();
@@ -182,6 +183,10 @@ class PracticalSubmoduleController extends BaseController
     #[IsGranted("ROLE_USER")]
     public function evaluate(PracticalSubmodule $practicalSubmodule): Response
     {
+        if ($practicalSubmodule->isRevisionMode() && !$this->isGranted('ROLE_TESTER')) {
+            return $this->redirectToRoute('practical_submodule_overview', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+        }
+
         $assessmentLastSubmittedAt = null;
         $assessment = null;
         if ($this->isGranted('ROLE_USER') && !$this->isGranted('ROLE_MODERATOR')) {
@@ -350,8 +355,11 @@ class PracticalSubmoduleController extends BaseController
     #[IsGranted("ROLE_USER")]
     public function startAssessment(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
-        $csrfToken = $request->get('_csrf_token');
+        if ($practicalSubmodule->isRevisionMode() && !$this->isGranted('ROLE_TESTER')) {
+            return $this->redirectToRoute('practical_submodule_overview', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+        }
 
+        $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleAssessment.start', $csrfToken)) {
             $request->getSession()->set('practicalSubmoduleAssessment.start', true);
             $assessment = $practicalSubmoduleService->prepareAssessment($practicalSubmodule, $this->getUser());
@@ -366,8 +374,11 @@ class PracticalSubmoduleController extends BaseController
     #[IsGranted("ROLE_USER")]
     public function editAssessment(PracticalSubmodule $practicalSubmodule, Request $request, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
-        $csrfToken = $request->get('_csrf_token');
+        if ($practicalSubmodule->isRevisionMode() && !$this->isGranted('ROLE_TESTER')) {
+            return $this->redirectToRoute('practical_submodule_overview', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+        }
 
+        $csrfToken = $request->get('_csrf_token');
         if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleAssessment.edit', $csrfToken)) {
             $request->getSession()->set('practicalSubmoduleAssessment.edit', true);
             $assessment = $practicalSubmoduleService->prepareAssessment($practicalSubmodule, $this->getUser(), true);
@@ -382,6 +393,10 @@ class PracticalSubmoduleController extends BaseController
     #[IsGranted("ROLE_USER")]
     public function results(PracticalSubmodule $practicalSubmodule, PracticalSubmoduleService $practicalSubmoduleService): Response
     {
+        if ($practicalSubmodule->isRevisionMode() && !$this->isGranted('ROLE_TESTER')) {
+            return $this->redirectToRoute('practical_submodule_overview', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+        }
+
         $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
         $results = $practicalSubmoduleService->runProcessors($assessment);
         $answerData = [];

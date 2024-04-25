@@ -275,6 +275,7 @@ form:
                 terminology: Terminologia
                 position: Posizione
                 exportType: Tipo di esportazione
+                revisionMode: Modalità di revisione (consigliata da impostare nei casi in cui si debbano apportare modifiche importanti)
             placeholder:
                 name: Nome del sottomodulo pratico
                 publicName: ad esempio, crea la tua politica sulla privacy con facilità!
@@ -605,6 +606,9 @@ practicalSubmodule:
         connectedTo: Corsi correlati
         reportTitle: Rapporto - %practicalSubmodule%
         questionCount: "%number% domande"
+        revisionMode:
+            1: Il questionario è temporaneamente non disponibile a causa di revisione.
+            2: Per favore sii paziente.
 
 practicalSubmoduleQuestion:
     type:

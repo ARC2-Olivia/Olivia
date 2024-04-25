@@ -44,7 +44,7 @@ class GdprSubscriber implements EventSubscriberInterface
 
     private function isRegularUser(): bool
     {
-        return $this->security->isGranted(User::ROLE_USER) && !$this->security->isGranted(User::ROLE_ADMIN) && !$this->security->isGranted(User::ROLE_MODERATOR);
+        return $this->security->isGranted(User::ROLE_USER) && !$this->security->isGranted(User::ROLE_MODERATOR);
     }
 
     private function checkRoutes(?string $route): bool
