@@ -250,7 +250,7 @@ class PracticalSubmoduleService
         $errors = $this->validator->validate($processorHtml);
         if ($errors->count() > 0 || $processorHtml->getPracticalSubmoduleQuestion() === null || !$processorHtml->checkConformity($assessment, translator: $this->translator)) return null;
         $question = PracticalSubmodule::MODE_OF_OPERATION_SIMPLE === $assessment->getPracticalSubmodule()->getModeOfOperation() ? $processorHtml->getPracticalSubmoduleQuestion() : null;
-        return new ProcessorResult($processorHtml->getResultText(),true, $question, $processor->getPracticalSubmoduleProcessorGroup());
+        return new ProcessorResult($processorHtml->getResultText(),true, $question);
     }
 
     private function runSimpleProcessor(PracticalSubmoduleProcessor $processor, PracticalSubmoduleAssessment $assessment): ?ProcessorResult
@@ -262,7 +262,6 @@ class PracticalSubmoduleService
         return new ProcessorResult(
             text: $processorSimple->getResultText(),
             question: $question,
-            processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
             exportTag: $processor->getExportTag()
         );
     }
@@ -274,7 +273,6 @@ class PracticalSubmoduleService
         if ($errors->count() > 0 || $processorMaxValue->getPracticalSubmoduleProcessor() === null || !$processorMaxValue->checkConformity($assessment, translator: $this->translator)) return null;
         return new ProcessorResult(
             text: $processorMaxValue->getResultText(),
-            processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
             exportTag: $processor->getExportTag()
         );
     }
@@ -288,7 +286,6 @@ class PracticalSubmoduleService
         return new ProcessorResult(
             text: $processorSumAggregate->getResultText(),
             question: $question,
-            processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
             exportTag: $processor->getExportTag()
         );
     }
@@ -303,7 +300,6 @@ class PracticalSubmoduleService
         return new ProcessorResult(
             text: $processorTemplatedText->getResultText(),
             question: $question,
-            processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
             exportTag: $processor->getExportTag()
         );
     }
@@ -314,7 +310,7 @@ class PracticalSubmoduleService
         if (!$processorResultCombiner->checkConformity($assessment, translator: $this->translator)) return null;
         $processorResultCombiner->calculateResult($assessment, $this->validator, $this->translator);
         return strlen($processorResultCombiner->getResultText()) > 0
-            ? new ProcessorResult(text: $processorResultCombiner->getResultText(), processorGroup: $processor->getPracticalSubmoduleProcessorGroup(), exportTag: $processor->getExportTag())
+            ? new ProcessorResult(text: $processorResultCombiner->getResultText(), exportTag: $processor->getExportTag())
             : null
         ;
     }
@@ -328,7 +324,6 @@ class PracticalSubmoduleService
         return new ProcessorResult(
             text: $processorProductAggregate->getResultText(),
             question: $question,
-            processorGroup: $processor->getPracticalSubmoduleProcessorGroup(),
             exportTag: $processor->getExportTag()
         );
     }

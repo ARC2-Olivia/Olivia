@@ -11,7 +11,6 @@ class ProcessorResult
     private ?string $text;
     private bool $isHtml;
     private ?PracticalSubmoduleQuestion $question;
-    private ?PracticalSubmoduleProcessorGroup $processorGroup;
     private ?string $exportTag;
     private ?bool $isMultiValueProcessor;
 
@@ -20,13 +19,11 @@ class ProcessorResult
      * @param File[]|null $files
      * @param bool $isHtml
      * @param PracticalSubmoduleQuestion|null $question
-     * @param PracticalSubmoduleProcessorGroup|null $processorGroup
      * @param string|null $exportTag
      */
     public function __construct(?string $text = null,
                                 bool $isHtml = false,
                                 ?PracticalSubmoduleQuestion $question = null,
-                                ?PracticalSubmoduleProcessorGroup $processorGroup = null,
                                 ?string $exportTag = null,
                                 bool $isMultiValueProcessor = false
     )
@@ -34,7 +31,6 @@ class ProcessorResult
         $this->text = $text;
         $this->isHtml = $isHtml;
         $this->question = $question;
-        $this->processorGroup = $processorGroup;
         $this->exportTag = $exportTag;
         $this->isMultiValueProcessor = $isMultiValueProcessor;
     }
@@ -60,11 +56,6 @@ class ProcessorResult
     public function getQuestion(): ?PracticalSubmoduleQuestion
     {
         return $this->question;
-    }
-
-    public function getProcessorGroup(): ?PracticalSubmoduleProcessorGroup
-    {
-        return $this->processorGroup;
     }
 
     public function getExportTag(): ?string
