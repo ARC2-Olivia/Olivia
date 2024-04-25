@@ -48,98 +48,37 @@ class WordService
     private function generatePrivacyPolicyDocument(PracticalSubmoduleAssessment $assessment, string $locale): string
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
-        usort($results, function (ProcessorResult $prA, ProcessorResult $prB) {
-            $positionA = $prA->getProcessorGroup()->getPosition();
-            $positionB = $prB->getProcessorGroup()->getPosition();
-            if ($positionA === $positionB) return 0;
-            return $positionA > $positionB ? 1 : -1;
-        });
-
-        $groupedResults = [];
-        foreach ($results as $result) {
-            $processorGroupId = $result->getProcessorGroup()->getId();
-            if (false === key_exists($processorGroupId, $groupedResults)) {
-                $groupedResults[$processorGroupId] = ['title' => $result->getProcessorGroup()->getTitle(), 'results' => []];
-            }
-            $groupedResults[$processorGroupId]['results'][] = $result;
-        }
-        $groupCount = count($groupedResults);
-
         $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_pp.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
+        $fontStyle = ['name' => 'Constantia', 'size' => 12];
+        $boldFontStyle = ['name' => 'Constantia', 'size' => 12, 'bold' => true];
 
-        ### Postavi naslov i opis.
-        $templateProcessor->setValue('title', $assessment->getPracticalSubmodule()->getName());
-        $templateProcessor->setValue('description', $assessment->getPracticalSubmodule()->getDescription());
+        foreach ($results as $result) {
+            $text = $result->getText();
+            $text = str_replace('</p><p>', "\n", $text);
+            $text = str_replace('</strong>', '|bold', $text);
+            $text = strip_tags($text);
+            $text = str_replace("\r", '', $text);
+            $text = html_entity_decode($text);
 
-        ### Postavi sadržaj.
-        $templateProcessor->cloneBlock('block', $groupCount, true, true);
-        $i = 1;
-        foreach ($groupedResults as $_ => $groupedResult) {
-            $resultCount = count($groupedResult['results']);
-            $templateProcessor->setValue("blockTitle#$i", $groupedResult['title']);
-            $templateProcessor->cloneBlock("blockContentWrapper#$i", $resultCount, true, true);
-
-            $j = 1;
-            /** @var ProcessorResult $result */
-            foreach ($groupedResult['results'] as $result) {
-                if ($result->isHtml()) {
-                    $string = str_replace('<br>', '<br/>', $result->getText());
-                    $html = new \DOMDocument('1.0', 'UTF-8');
-                    $html->loadHTML(mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8'));
-                    $body = $html->getElementsByTagName("body")->item(0);
-
-                    $compositeText = new TextBox([]);
-                    \PhpOffice\PhpWord\Shared\Html::addHtml($compositeText, $html->saveXML($body, LIBXML_NOEMPTYTAG), true);
-
-                    $elementCount = $compositeText->countElements();
-                    $expandedValues = new TextRun();
-                    for ($k = 1; $k <= $elementCount; $k++) {
-                        $expandedValues->addText(sprintf('${blockContent#%d#%d#%d}', $i, $j, $k));
-                        if ($k < $elementCount) {
-                            $expandedValues->addTextBreak();
-                        }
-                    }
-                    $templateProcessor->setComplexValue("blockContent#$i#$j", $expandedValues);
-
-                    $k = 1;
-                    foreach ($compositeText->getElements() as $element) {
-                        $templateProcessor->setComplexValue("blockContent#$i#$j#$k", $element);
-                        $k++;
-                    }
+            $lines = explode("\n", $text);
+            $textRun = new TextRun();
+            foreach ($lines as $line) {
+                if (str_ends_with($line, '|bold')) {
+                    $line = str_replace('|bold', '', $line);
+                    $textRun->addText($line, $boldFontStyle);
                 } else {
-                    $text = str_replace("\n", '<w:br/>', $result->getText());
-                    $text = new Text($text, ['name' => 'Constantia', 'size' => 12]);
-                    $templateProcessor->setComplexValue("blockContent#$i#$j", $text);
+                    $textRun->addText($line, $fontStyle);
                 }
-                $j++;
+                $textRun->addTextBreak();
             }
-
-            $i++;
+            $templateProcessor->setComplexValue($result->getExportTag(), $textRun);
         }
 
-        ### Postavi napomenu.
-        if (null !== $assessment->getPracticalSubmodule()->getReportComment()) {
-            $comment = str_replace("\r", '', $assessment->getPracticalSubmodule()->getReportComment());
-            $comment = explode("\n", $comment);
-            $compositeComment = [];
-            foreach ($comment as $line) {
-                $compositeComment[] = new Text($line);
-            }
-
-            $elementCount = count($compositeComment);
-            $templateProcessor->cloneBlock('commentBlock', $elementCount, true, true);
-
-            $i = 1;
-            foreach ($compositeComment as $item) {
-                $templateProcessor->setComplexValue("comment#$i", $item);
-                $i++;
-            }
+        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
+        foreach ($processors as $processor) {
+            $templateProcessor->setValue($processor->getExportTag(), '');
         }
-        else {
-            $templateProcessor->cloneBlock('commentBlock', 0);
-        }
-
 
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
         $templateProcessor->saveAs($document);

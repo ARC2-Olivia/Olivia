@@ -57,11 +57,8 @@ class PracticalSubmoduleProcessorRepository extends ServiceEntityRepository
             ->andWhere('psp.included = :true')
             ->andWhere('psp.disabled = :false OR psp.disabled IS NULL')
             ->setParameters(['submodule' => $practicalSubmodule, 'true' => true, 'false' => false])
-            ->orderBy('psp.position', 'ASC');
-
-        if ($practicalSubmodule::EXPORT_TYPE_PRIVACY_POLICY === $practicalSubmodule->getExportType()) {
-            $qb->andWhere('psp.practicalSubmoduleProcessorGroup IS NOT NULL');
-        }
+            ->orderBy('psp.position', 'ASC')
+        ;
 
         return $qb->getQuery()->getResult();
     }

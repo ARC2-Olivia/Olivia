@@ -144,7 +144,7 @@ class PSImporter
 
     private function doCreateQuestionTask(array $props): void
     {
-        if (false === $this->allKeysExist(['id', 'type', 'questionText', 'evaluable', 'position', 'other', 'heading', 'disabled'], $props)) {
+        if (false === $this->allKeysExist(['id', 'type', 'questionText', 'evaluable', 'position', 'other', 'heading', 'disabled', 'multipleWeighted', 'largeText'], $props)) {
             return;
         }
 
@@ -157,6 +157,8 @@ class PSImporter
             ->setOtherEnabled($props['other'])
             ->setIsHeading($props['heading'])
             ->setDisabled($props['disabled'])
+            ->setMultipleWeighted($props['multipleWeighted'])
+            ->setLargeText($props['largeText'])
         ;
         $this->em->persist($question);
         $this->questionMapping[$props['id']] = $question;

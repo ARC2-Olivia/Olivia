@@ -97,7 +97,7 @@ class PracticalSubmodule extends TranslatableEntity
 
     public static function getTaggableExportTypes(): array
     {
-        return [self::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT, self::EXPORT_TYPE_COOKIE_BANNER, self::EXPORT_TYPE_LIA, self::EXPORT_TYPE_DPIA];
+        return [self::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT, self::EXPORT_TYPE_COOKIE_BANNER, self::EXPORT_TYPE_LIA, self::EXPORT_TYPE_DPIA, self::EXPORT_TYPE_PRIVACY_POLICY];
     }
 
     public function getId(): ?int

@@ -67,7 +67,9 @@ class PracticalSubmoduleProcessorHtmlType extends AbstractType
                         'submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(),
                         'evaluable' => true,
                         'types' => [PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT, PracticalSubmoduleQuestion::TYPE_STATIC_TEXT]
-                    ]);
+                    ])
+                    ->orderBy('psq.position', 'ASC')
+                ;
             };
         }
         return $queryBuilder;

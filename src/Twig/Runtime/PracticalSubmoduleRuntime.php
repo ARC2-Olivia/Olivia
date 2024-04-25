@@ -4,6 +4,7 @@ namespace App\Twig\Runtime;
 
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
+use App\Entity\PracticalSubmoduleQuestion;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -31,6 +32,6 @@ class PracticalSubmoduleRuntime implements RuntimeExtensionInterface
 
     public function getTotalQuestionsStatistic(PracticalSubmodule $practicalSubmodule): string
     {
-        return $this->translator->trans('practicalSubmodule.extra.questionCount', ['%number%' => $practicalSubmodule->getPracticalSubmoduleQuestions()->count()], 'app');
+        return $this->translator->trans('practicalSubmodule.extra.questionCount', ['%number%' => $this->em->getRepository(PracticalSubmoduleQuestion::class)->countActualQuestions($practicalSubmodule)], 'app');
     }
 }

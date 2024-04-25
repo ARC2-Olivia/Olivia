@@ -69,7 +69,9 @@ class PracticalSubmoduleProcessorResultCombinerType extends AbstractType
                     ->where('psp != :processor')
                     ->andWhere('psp.practicalSubmodule = :submodule')
                     ->andWhere('psp.included = :included')
-                    ->setParameters(['processor' => $practicalSubmoduleProcessor, 'submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(), 'included' => false]);
+                    ->setParameters(['processor' => $practicalSubmoduleProcessor, 'submodule' => $practicalSubmoduleProcessor->getPracticalSubmodule(), 'included' => false])
+                    ->orderBy('psp.position', 'ASC')
+                ;
             };
         }
         return $queryBuilder;
