@@ -2,7 +2,12 @@
 {% trans_default_domain 'app' %}
 
 {% block evaluationContent %}
-    <div>{{ evaluation.description|raw|nl2br }}</div>
+    {% if evaluation.revisionMode %}
+        <p class="evaluation-revision-mode-1">{{ 'practicalSubmodule.extra.revisionMode.1'|trans }}</p>
+        <p class="evaluation-revision-mode-2">{{ 'practicalSubmodule.extra.revisionMode.2'|trans }}</p>
+    {% else %}
+        <div>{{ evaluation.description|raw|nl2br }}</div>
+    {% endif %}
 {% endblock %}
 
 {% block belowEvaluationContent %}

@@ -21,7 +21,13 @@ class UserType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $roleChoices = [User::ROLE_USER => User::ROLE_USER, User::ROLE_MODERATOR => User::ROLE_MODERATOR, User::ROLE_ADMIN => User::ROLE_ADMIN];
+        $roleChoices = [
+            User::ROLE_USER => User::ROLE_USER,
+            User::ROLE_TESTER => User::ROLE_TESTER,
+            User::ROLE_MODERATOR => User::ROLE_MODERATOR,
+            User::ROLE_ADMIN => User::ROLE_ADMIN
+        ]
+        ;
         $activatedChoices = [$this->translator->trans('common.yes', [], 'app') => true, $this->translator->trans('common.no', [], 'app') => false];
 
         $builder

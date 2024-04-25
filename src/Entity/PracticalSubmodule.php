@@ -86,6 +86,9 @@ class PracticalSubmodule extends TranslatableEntity
     #[ORM\Column(length: 32, nullable: true)]
     private ?string $exportType = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $revisionMode = null;
+
     public function __construct()
     {
         $this->practicalSubmoduleQuestions = new ArrayCollection();
@@ -400,6 +403,21 @@ class PracticalSubmodule extends TranslatableEntity
     public function setExportType(?string $exportType): self
     {
         $this->exportType = $exportType;
+
+        return $this;
+    }
+
+    public function isRevisionMode(): ?bool
+    {
+        if (null === $this->revisionMode) {
+            return false;
+        }
+        return $this->revisionMode;
+    }
+
+    public function setRevisionMode(?bool $revisionMode): self
+    {
+        $this->revisionMode = $revisionMode;
 
         return $this;
     }

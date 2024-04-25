@@ -201,7 +201,7 @@ class LessonController extends BaseController
         };
 
         $note = null;
-        if ($this->isGranted('ROLE_USER') && !$this->isGranted('ROLE_MODERATOR') && !$this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_USER') && !$this->isGranted('ROLE_MODERATOR')) {
             $note = $this->em->getRepository(Note::class)->findOneBy(['lesson' => $lesson, 'user' => $user]);
         }
 

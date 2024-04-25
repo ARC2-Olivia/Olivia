@@ -114,6 +114,11 @@ class PracticalSubmoduleType extends AbstractType
                     'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.reportComment', [], 'app')
                 ],
             ])
+            ->add('revisionMode', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmodule.label.revisionMode',
+                'choices' => $booleanChoices,
+                'attr' => ['class' => 'form-select mb-3']
+            ])
             ->add('position', NumberType::class, [
                 'html5' => true,
                 'label' => 'form.entity.practicalSubmodule.label.position',
