@@ -1,7 +1,7 @@
 {% trans_default_domain 'app' %}
 
 <div class="evaluation-assessment-datum">
-    <div class="evaluation-assessment-datum-question">{{ answerDatum.question }}</div>
+    <div class="evaluation-assessment-datum-question">{{ answerDatum.question|raw|nl2br }}</div>
     <div class="evaluation-assessment-datum-answers">
         {% for answer in answerDatum.answers %}
             <div class="evaluation-assessment-datum-answer">{{ answer|trans|raw|nl2br }}</div>
