@@ -7,6 +7,7 @@ use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\User;
 use App\Misc\ProcessorResult;
+use PhpOffice\PhpWord\Element\Link;
 use PhpOffice\PhpWord\Element\ListItem;
 use PhpOffice\PhpWord\Element\Text;
 use PhpOffice\PhpWord\Element\TextBox;
@@ -41,6 +42,7 @@ class WordService
             PracticalSubmodule::EXPORT_TYPE_LIA => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY => $this->generateCookiePolicyDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_DPIA => $this->generateDataProtectionImpactAssessment($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_RESPONDENTS_RIGHTS => $this->generateRespondentsRightsDocument($assessment, $locale),
             default => $this->generateDefaultDocument($assessment)
         };
     }
@@ -196,6 +198,58 @@ class WordService
                 $textRun->addText($line, $fontStyle);
             }
             $templateProcessor->setComplexValue($result->getExportTag(), $textRun);
+        }
+
+        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
+        foreach ($processors as $processor) {
+            $templateProcessor->setValue($processor->getExportTag(), '');
+        }
+
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
+    }
+
+    private function generateRespondentsRightsDocument(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_rr.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+        $fontStyle = ['name' => 'Open Sans', 'size' => 11];
+
+        $rr02Processed = false;
+        $rr03Processed = false;
+
+        foreach ($results as $result) {
+            $exportTag = strtolower($result->getExportTag());
+            switch ($exportTag) {
+                case 'rr_02': {
+                    $items = explode("\n", str_replace(['- ', "\r"], '', $result->getText()));
+                    $itemCount = count($items);
+                    $templateProcessor->cloneBlock('rr_02', $itemCount, indexVariables: true);
+                    for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++) {
+                        $templateProcessor->setValue("rr_02_item#$j", $items[$i]);
+                    }
+                    $rr02Processed = true;
+                    break;
+                }
+                case 'rr_03': {
+                    $templateProcessor->cloneBlock('rr_03');
+                    $rr03Processed = true;
+                    break;
+                }
+                default: {
+                    $templateProcessor->setValue($result->getExportTag(), $result->getText());
+                }
+            }
+        }
+
+        if (!$rr02Processed) {
+            $templateProcessor->cloneBlock('rr_02', 0);
+        }
+
+        if (!$rr03Processed) {
+            $templateProcessor->cloneBlock('rr_03', 0);
         }
 
         $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());

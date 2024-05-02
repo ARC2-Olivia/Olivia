@@ -586,6 +586,7 @@ practicalSubmodule:
         cookiePolicy: Cookie policy
         lia: Legitimate interest assessment (LIA)
         dpia: Data protection impact assessment (DPIA)
+        respondentsRight: Respondents' rights
     extra:
         question: Question
         questions: Questions
