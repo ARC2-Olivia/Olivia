@@ -24,6 +24,7 @@ class PracticalSubmodule extends TranslatableEntity
     public const EXPORT_TYPE_COOKIE_POLICY = 'cookiePolicy';
     public const EXPORT_TYPE_LIA = 'lia';
     public const EXPORT_TYPE_DPIA = 'dpia';
+    public const EXPORT_TYPE_RESPONDENTS_RIGHTS = 'respondentsRights';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -100,7 +101,7 @@ class PracticalSubmodule extends TranslatableEntity
 
     public static function getTaggableExportTypes(): array
     {
-        return [self::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT, self::EXPORT_TYPE_COOKIE_BANNER, self::EXPORT_TYPE_LIA, self::EXPORT_TYPE_DPIA, self::EXPORT_TYPE_PRIVACY_POLICY];
+        return [self::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT, self::EXPORT_TYPE_COOKIE_BANNER, self::EXPORT_TYPE_LIA, self::EXPORT_TYPE_DPIA, self::EXPORT_TYPE_PRIVACY_POLICY, self::EXPORT_TYPE_RESPONDENTS_RIGHTS];
     }
 
     public function getId(): ?int

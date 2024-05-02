@@ -47,6 +47,7 @@ class PracticalSubmoduleType extends AbstractType
             $this->translator->trans('practicalSubmodule.exportType.cookiePolicy', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY,
             $this->translator->trans('practicalSubmodule.exportType.lia', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_LIA,
             $this->translator->trans('practicalSubmodule.exportType.dpia', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_DPIA,
+            $this->translator->trans('practicalSubmodule.exportType.respondentsRight', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_RESPONDENTS_RIGHTS,
         ];
 
         $builder

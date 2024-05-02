@@ -586,6 +586,7 @@ practicalSubmodule:
         cookiePolicy: Gestione dei Cookie
         lia: Valutazione del legittimo interesse (LIA)
         dpia: Valutazione dell'impatto sulla protezione dei dati (DPIA)
+        respondentsRight: Diritti degli intervistati
     extra:
         question: Domanda
         questions: Domande
