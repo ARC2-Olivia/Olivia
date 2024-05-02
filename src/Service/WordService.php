@@ -39,7 +39,7 @@ class WordService
             PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY => $this->generatePrivacyPolicyDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_LIA => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
-            PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY => $this->generateCookiePolicyDocument($assessment),
+            PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY => $this->generateCookiePolicyDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_DPIA => $this->generateDataProtectionImpactAssessment($assessment, $locale),
             default => $this->generateDefaultDocument($assessment)
         };
@@ -150,7 +150,7 @@ class WordService
         return $document;
     }
 
-    private function generateCookiePolicyDocument(PracticalSubmoduleAssessment $assessment)
+    private function generateCookiePolicyDocument(PracticalSubmoduleAssessment $assessment, string $locale)
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
         $lines = explode("\n", str_replace("\r", '', $results[0]->getText()));
@@ -164,7 +164,7 @@ class WordService
         }
         $lineCount = count($lines);
 
-        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'ps_export_cookie_policy.docx');
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_cp.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
         $templateProcessor->cloneBlock('blockContentWrapper', $lineCount, true, true);
 
