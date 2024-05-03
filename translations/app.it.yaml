@@ -587,6 +587,7 @@ practicalSubmodule:
         lia: Valutazione del legittimo interesse (LIA)
         dpia: Valutazione dell'impatto sulla protezione dei dati (DPIA)
         respondentsRight: Diritti degli intervistati
+        rulebookOnISS: Regolamento sulla sicurezza dei sistemi informativi
     extra:
         question: Domanda
         questions: Domande

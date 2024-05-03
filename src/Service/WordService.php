@@ -37,13 +37,14 @@ class WordService
     public function generateDocumentFromAssessment(PracticalSubmoduleAssessment $assessment, string $locale): string
     {
         return match ($assessment->getPracticalSubmodule()->getExportType()) {
-            PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY => $this->generatePrivacyPolicyDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_LIA                              => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_DPIA                             => $this->generateDataProtectionImpactAssessment($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY                    => $this->generateCookiePolicyDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY                   => $this->generatePrivacyPolicyDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_RULEBOOK_ON_ISS                  => $this->generateRulebookOnISS($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_RESPONDENTS_RIGHTS               => $this->generateRespondentsRightsDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
-            PracticalSubmodule::EXPORT_TYPE_LIA => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
-            PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY => $this->generateCookiePolicyDocument($assessment, $locale),
-            PracticalSubmodule::EXPORT_TYPE_DPIA => $this->generateDataProtectionImpactAssessment($assessment, $locale),
-            PracticalSubmodule::EXPORT_TYPE_RESPONDENTS_RIGHTS => $this->generateRespondentsRightsDocument($assessment, $locale),
-            default => $this->generateDefaultDocument($assessment)
+            default                                                          => $this->generateDefaultDocument($assessment)
         };
     }
 
@@ -215,7 +216,6 @@ class WordService
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
         $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_rr.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
-        $fontStyle = ['name' => 'Open Sans', 'size' => 11];
 
         $rr02Processed = false;
         $rr03Processed = false;
@@ -244,12 +244,44 @@ class WordService
             }
         }
 
-        if (!$rr02Processed) {
-            $templateProcessor->cloneBlock('rr_02', 0);
+        if (!$rr02Processed) $templateProcessor->cloneBlock('rr_02', 0);
+        if (!$rr03Processed) $templateProcessor->cloneBlock('rr_03', 0);
+
+        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
+        foreach ($processors as $processor) {
+            $templateProcessor->setValue($processor->getExportTag(), '');
         }
 
-        if (!$rr03Processed) {
-            $templateProcessor->cloneBlock('rr_03', 0);
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
+    }
+
+    private function generateRulebookOnISS(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_psis.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+
+        $processingStates = ['psis_03' => false, 'psis_04' => false, 'psis_05' => false];
+
+        foreach ($results as $result) {
+            $exportTag = strtolower($result->getExportTag());
+            if (in_array($exportTag, ['psis_03', 'psis_04', 'psis_05'])) {
+                $items = explode("\n", str_replace(['- ', "\r"], '', $result->getText()));
+                $itemCount = count($items);
+                $templateProcessor->cloneBlock($exportTag, $itemCount, indexVariables: true);
+                for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++) {
+                    $templateProcessor->setValue("{$exportTag}_item#$j", $items[$i]);
+                }
+                $processingStates[$exportTag] = true;
+            } else {
+                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+            }
+        }
+
+        foreach ($processingStates as $tag => $processed) {
+            if (!$processed) $templateProcessor->cloneBlock($tag, 0);
         }
 
         $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
