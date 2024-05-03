@@ -238,7 +238,7 @@ class PracticalSubmoduleController extends BaseController
             $this->processPracticalSubmoduleQuestionTranslation($question, $form);
             $this->processAutomaticPracticalSubmoduleQuestionAnswerCreation($question);
             $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.new', [], 'message'));
-            return $this->redirectToRoute('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
+            return $this->redirectToRoute('practical_submodule_question_edit', ['practicalSubmoduleQuestion' => $question->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
@@ -264,8 +264,7 @@ class PracticalSubmoduleController extends BaseController
             $this->em->persist($processor);
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleProcessor.new', [], 'message'));
-            $url = $this->generateUrl('practical_submodule_evaluate', ['practicalSubmodule' => $practicalSubmodule->getId()]);
-            return $this->redirect($url.'#_processors');
+            return $this->redirectToRoute('practical_submodule_processor_edit', ['practicalSubmoduleProcessor' => $processor->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), [], 'message'));
@@ -510,7 +509,7 @@ class PracticalSubmoduleController extends BaseController
 
         $tasks = $practicalSubmoduleService->export($practicalSubmodule);
 
-        if (true === $isActiveLocaleChanged) {
+        if ($isActiveLocaleChanged) {
             $translatableListener->setTranslatableLocale($activeLocale);
         }
 

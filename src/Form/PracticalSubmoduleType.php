@@ -48,6 +48,7 @@ class PracticalSubmoduleType extends AbstractType
             $this->translator->trans('practicalSubmodule.exportType.lia', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_LIA,
             $this->translator->trans('practicalSubmodule.exportType.dpia', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_DPIA,
             $this->translator->trans('practicalSubmodule.exportType.respondentsRight', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_RESPONDENTS_RIGHTS,
+            $this->translator->trans('practicalSubmodule.exportType.rulebookOnISS', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_RULEBOOK_ON_ISS,
         ];
 
         $builder
