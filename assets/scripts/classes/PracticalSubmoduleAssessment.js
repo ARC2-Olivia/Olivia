@@ -530,8 +530,17 @@ class PracticalSubmoduleAssessment {
 
         answer.querySelector("button").addEventListener("click", () => {
             const input = this.#parser.parseFromString(`
-                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][]"/>
+                <div>
+                    <input type="hidden" name="evaluation_assessment[${questionData.id}][]"/>
+                    <input type="text" class="form-input"/>
+                </div>
             `, "text/html").body.firstChild;
+
+            const inputHidden = input.querySelector("input[type='hidden']");
+            input.querySelector("input[type='text']").addEventListener("input", (evt) => {
+                inputHidden.value = evt.target.value;
+            });
+
             answer.appendChild(input);
         });
 
