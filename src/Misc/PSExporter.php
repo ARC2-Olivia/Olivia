@@ -100,7 +100,8 @@ class PSExporter
                     'heading' => $question->getIsHeading(),
                     'disabled' => $question->isDisabled(),
                     'multipleWeighted' => $question->isMultipleWeighted(),
-                    'largeText' => $question->isLargeText()
+                    'largeText' => $question->isLargeText(),
+                    'listWithSublist' => $question->isListWithSublist()
                 ]
             ];
 
