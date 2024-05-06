@@ -453,6 +453,21 @@ ul.mod--ps-pages {
     flex-basis: calc(25% - 16px);
 }
 
+.evaluation-assessment-lwsl, .evaluation-assessment-lwsl-sublist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.evaluation-assessment-lwsl {
+    margin-bottom: 8px;
+}
+
+.evaluation-assessment-lwsl-sublist {
+    margin-left: 16px;
+}
+
 .evaluation-revision-mode-1, .evaluation-revision-mode-2 {
     text-align: center;
 }

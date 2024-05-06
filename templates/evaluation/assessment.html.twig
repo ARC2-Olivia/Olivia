@@ -19,7 +19,7 @@
     {{ encore_entry_script_tags('PracticalSubmoduleAssessment') }}
     <script>
         window.addEventListener("load", () => {
-            const psa = new PracticalSubmoduleAssessment(
+            new PracticalSubmoduleAssessment(
                 "#evaluation_assessment",
                 {{ assessment|json_encode|raw }},
                 {
@@ -27,6 +27,7 @@
                     buttonPrevious: "{{ 'common.previous'|trans }}",
                     buttonSubmit: "{{ 'common.submit'|trans }}",
                     buttonAdd: "{{ 'common.add'|trans }}",
+                    buttonAddItem: "{{ 'common.addItem'|trans }}",
                     buttonSaveForLater: "{{ 'common.saveForLater'|trans }}"
                 }
             );

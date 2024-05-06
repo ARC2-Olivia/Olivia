@@ -84,6 +84,17 @@
             <button type="submit" form="{{ stForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
         </div>
 
+    {% elseif liForm is defined %}
+
+        <hr/>
+        {{ form_start(liForm, {'attr': {'id': liForm.vars.id}}) }}
+            {{ form_label(liForm.listWithSublist) }}
+            {{ form_widget(liForm.listWithSublist) }}
+        {{ form_end(liForm) }}
+        <div class="text-end">
+            <button type="submit" form="{{ liForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+
     {% endif %}
 
 {% endblock %}

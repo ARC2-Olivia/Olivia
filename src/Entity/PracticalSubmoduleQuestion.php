@@ -73,6 +73,9 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     #[ORM\Column(nullable: true)]
     private ?bool $largeText = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $listWithSublist = null;
+
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -309,6 +312,21 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public function setLargeText(?bool $largeText): self
     {
         $this->largeText = $largeText;
+
+        return $this;
+    }
+
+    public function isListWithSublist(): ?bool
+    {
+        if (null === $this->listWithSublist) {
+            return false;
+        }
+        return $this->listWithSublist;
+    }
+
+    public function setListWithSublist(?bool $listWithSublist): self
+    {
+        $this->listWithSublist = $listWithSublist;
 
         return $this;
     }

@@ -9,6 +9,7 @@ use App\Form\PracticalSubmodule\TranslatableTemplatedText;
 use App\Form\PracticalSubmodule\TranslatableTemplatedTextType;
 use App\Form\PracticalSubmoduleQuestionAnswerMultiChoiceType;
 use App\Form\PracticalSubmoduleQuestionAnswerWeightedType;
+use App\Form\PracticalSubmoduleQuestionListInputType;
 use App\Form\PracticalSubmoduleQuestionStaticTextType;
 use App\Form\PracticalSubmoduleQuestionType;
 use App\Repository\PracticalSubmoduleQuestionRepository;
@@ -63,20 +64,31 @@ class PracticalSubmoduleQuestionController extends BaseController
             'navigation' => $this->navigationService->forPracticalSubmodule($practicalSubmoduleQuestion->getPracticalSubmodule(), NavigationService::EVALUATION_EXTRA_EDIT_QUESTION)
         ];
 
-        if (PracticalSubmoduleQuestion::TYPE_STATIC_TEXT === $practicalSubmoduleQuestion->getType()) {
-            $stForm = $this->createForm(PracticalSubmoduleQuestionStaticTextType::class, $practicalSubmoduleQuestion);
-            $stForm->handleRequest($request);
-
-            if ($stForm->isSubmitted() && $stForm->isValid()) {
-                $this->em->flush();
-                $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.edit', [], 'message'));
+        switch ($practicalSubmoduleQuestion->getType()) {
+            case PracticalSubmoduleQuestion::TYPE_STATIC_TEXT: {
+                $stForm = $this->createForm(PracticalSubmoduleQuestionStaticTextType::class, $practicalSubmoduleQuestion);
+                $stForm->handleRequest($request);
+                if ($stForm->isSubmitted() && $stForm->isValid()) {
+                    $this->em->flush();
+                    $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.edit', [], 'message'));
+                }
+                $params['stForm'] = $stForm->createView();
+                break;
             }
-
-            $params['stForm'] = $stForm->createView();
-        }
-
-        if (PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT === $practicalSubmoduleQuestion->getType()) {
-            $params['tttForm'] = $this->prepareTemplatedTextAnswerForm($practicalSubmoduleQuestion, $request);
+            case PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT: {
+                $params['tttForm'] = $this->prepareTemplatedTextAnswerForm($practicalSubmoduleQuestion, $request);
+                break;
+            }
+            case PracticalSubmoduleQuestion::TYPE_LIST_INPUT: {
+                $liForm = $this->createForm(PracticalSubmoduleQuestionListInputType::class, $practicalSubmoduleQuestion);
+                $liForm->handleRequest($request);
+                if ($liForm->isSubmitted() && $liForm->isValid()) {
+                    $this->em->flush();
+                    $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.edit', [], 'message'));
+                }
+                $params['liForm'] = $liForm->createView();
+                break;
+            }
         }
 
         return $this->render('evaluation/evaluation_question/edit.html.twig', $params);

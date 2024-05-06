@@ -241,7 +241,8 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 'other' => $practicalSubmoduleQuestion->isOtherEnabled(),
                 'isHeading' => $practicalSubmoduleQuestion->getIsHeading(),
                 'multipleWeighted' => $practicalSubmoduleQuestion->isMultipleWeighted(),
-                'largeText' => $practicalSubmoduleQuestion->isLargeText()
+                'largeText' => $practicalSubmoduleQuestion->isLargeText(),
+                'listWithSublist' => $practicalSubmoduleQuestion->isListWithSublist()
             ];
 
             if ($editing) {

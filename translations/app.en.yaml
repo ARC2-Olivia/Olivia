@@ -36,6 +36,7 @@ common:
     export: Export
     file: File
     add: Add
+    addItem: Add item
     saveForLater: Save for later
     comingSoon: Coming soon!
     correct: Correct
@@ -295,6 +296,7 @@ form:
                 isHeading: Is heading
                 disabled: Disabled
                 largeText: Display input for large text
+                listWithSublist: Enable sublists
             placeholder:
                 questionText: Question text goes here...
                 dependentEvaluationQuestion: Nothing selected...
