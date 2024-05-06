@@ -36,6 +36,7 @@ common:
     export: Esportare
     file: File
     add: Aggiungere
+    addItem: Aggiungi articolo
     saveForLater: Salva per dopo
     comingSoon: Prossimamente!
     correct: Corretto
@@ -295,6 +296,7 @@ form:
                 isHeading: Si sta dirigendo
                 disabled: Disabilitato
                 largeText: Visualizza input per testo di grandi dimensioni
+                listWithSublist: Abilita sottoliste
             placeholder:
                 questionText: Il testo della domanda va qui...
                 dependentEvaluationQuestion: Niente selezionato...

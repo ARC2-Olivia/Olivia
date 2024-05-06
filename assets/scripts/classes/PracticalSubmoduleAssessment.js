@@ -26,6 +26,7 @@ class PracticalSubmoduleAssessment {
             buttonPrevious: translation.buttonPrevious || "Previous",
             buttonSubmit: translation.buttonSubmit || "Submit",
             buttonAdd: translation.buttonAdd || "Add",
+            buttonAddItem: translation.buttonAddItem || "Add item",
             buttonSaveForLater: translation.buttonSaveForLater || "Save for later",
             errorDefault: translation.errorDefault || "The answer to this question is invalid"
         };
@@ -97,7 +98,6 @@ class PracticalSubmoduleAssessment {
     }
 
     #appendPageNavigation() {
-        const context = this;
         const pages = this.#pager.querySelectorAll("[data-page]");
         for (let i = 0; i < pages.length; i++) {
             const currPage = pages[i];
@@ -131,7 +131,6 @@ class PracticalSubmoduleAssessment {
     }
 
     #initializePagingSuitableFormValidation() {
-        const context = this;
         this.#form.setAttribute("novalidate", "novalidate");
         this.#form.onsubmit = function(evt) {
             if ("sfl" === evt.submitter.value) return;
@@ -166,7 +165,7 @@ class PracticalSubmoduleAssessment {
             fetch(path, {
                 method: "POST",
                 body: formData
-            }).then((response) => {
+            }).then(() => {
                 context.#backgroundSavingEnabled = true;
             })
         }, 30000);
@@ -511,44 +510,144 @@ class PracticalSubmoduleAssessment {
     }
 
     #createListInputAnswer(questionData) {
+        const ctx = this;
+
         const answer = this.#parser.parseFromString(`
-            <label class="evaluation-assessment-question-answer:column">
+            <div class="evaluation-assessment-question-answer:column">
                 <button type="button" class="btn btn-theme-white btn-sm bg-green">
                     <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>
                     ${this.#translation.buttonAdd}
                 </button>
-            </label>
+            </div>
         `, "text/html").body.firstChild;
 
         const userAnswer = questionData.userAnswer || [];
-        for (const item of userAnswer) {
-            const input = this.#parser.parseFromString(`
-                <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][]" value="${item}"/>
-            `, "text/html").body.firstChild;
-            answer.appendChild(input);
-        }
 
-        answer.querySelector("button").addEventListener("click", () => {
-            const input = this.#parser.parseFromString(`
+        if (true === questionData.listWithSublist) {
+            for (const item of userAnswer) {
+                let [listItem, sublist] = item.split('###');
+                if (undefined === sublist) sublist = '';
+                sublist = sublist.split(':::');
+
+                const input = this.#parser.parseFromString(`
+                    <div class="evaluation-assessment-lwsl">
+                        <input type="hidden" name="evaluation_assessment[${questionData.id}][]" value="${item}"/>
+                        <input type="text" class="form-input" value="${listItem}"/>
+                        <div class="evaluation-assessment-lwsl-sublist" data-sublist>
+                            <button type="button" class="btn btn-theme-white btn-sm bg-green">
+                                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>
+                                ${this.#translation.buttonAddItem}
+                            </button>
+                        </div>
+                    </div>
+                `, "text/html").body.firstChild;
+
+                const inputHidden = input.querySelector("input[type='hidden']");
+                const inputText = input.querySelector("input[type='text']");
+                const divSublist = input.querySelector("div[data-sublist]");
+
+                for (const sublistItem of sublist) {
+                    const subInput = this.#parser.parseFromString(`<input type="text" class="form-input" value="${sublistItem}"/>`, "text/html").body.firstChild;
+                    subInput.addEventListener("input", function() {
+                        ctx.#updateListWithSublistValue(divSublist, inputText, inputHidden);
+                    });
+                    divSublist.appendChild(subInput);
+                }
+
+                inputText.addEventListener("input", function() {
+                    const subvalues = Array.from(divSublist.querySelectorAll("input[type='text']")).map((subinput) => subinput.value).filter((val) => val.trim().length > 0);
+                    let value = inputText.value + '###' + subvalues.join(':::');
+                    if ("###" === value.trim()) value = "";
+                    inputHidden.value = value;
+                });
+
+                input.querySelector("button").addEventListener("click", () => {
+                    const subInput = this.#parser.parseFromString(`<input type="text" class="form-input"/>`, "text/html").body.firstChild;
+                    subInput.addEventListener("input", function() {
+                        ctx.#updateListWithSublistValue(divSublist, inputText, inputHidden);
+                    });
+                    divSublist.appendChild(subInput);
+                });
+
+                answer.appendChild(input);
+            }
+
+            answer.querySelector("button").addEventListener("click", () => {
+                const input = this.#parser.parseFromString(`
+                    <div class="evaluation-assessment-lwsl">
+                        <input type="hidden" name="evaluation_assessment[${questionData.id}][]"/>
+                        <input type="text" class="form-input"/>
+                        <div class="evaluation-assessment-lwsl-sublist" data-sublist>
+                            <button type="button" class="btn btn-theme-white btn-sm bg-green">
+                                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>
+                                ${this.#translation.buttonAddItem}
+                            </button>
+                        </div>
+                    </div>
+                `, "text/html").body.firstChild;
+
+                const inputHidden = input.querySelector("input[type='hidden']");
+                const inputText = input.querySelector("input[type='text']");
+                const divSublist = input.querySelector("div[data-sublist]");
+
+                inputText.addEventListener("input", function() {
+                    ctx.#updateListWithSublistValue(divSublist, inputText, inputHidden);
+                });
+
+                input.querySelector("button").addEventListener("click", () => {
+                    const subInput = this.#parser.parseFromString(`<input type="text" class="form-input"/>`, "text/html").body.firstChild;
+                    subInput.addEventListener("input", function() {
+                        ctx.#updateListWithSublistValue(divSublist, inputText, inputHidden);
+                    });
+                    divSublist.appendChild(subInput);
+                });
+
+                answer.appendChild(input);
+            });
+        } else {
+            for (const item of userAnswer) {
+                const input = this.#parser.parseFromString(`
+                    <div>
+                        <input type="hidden" name="evaluation_assessment[${questionData.id}][]" value="${item}"/>
+                        <input type="text" class="form-input"/>
+                    </div>
+                `, "text/html").body.firstChild;
+                answer.appendChild(input);
+
+                const inputHidden = input.querySelector("input[type='hidden']");
+                input.querySelector("input[type='text']").addEventListener("input", (evt) => {
+                    inputHidden.value = evt.target.value;
+                });
+            }
+
+            answer.querySelector("button").addEventListener("click", () => {
+                const input = this.#parser.parseFromString(`
                 <div>
                     <input type="hidden" name="evaluation_assessment[${questionData.id}][]"/>
                     <input type="text" class="form-input"/>
                 </div>
             `, "text/html").body.firstChild;
 
-            const inputHidden = input.querySelector("input[type='hidden']");
-            input.querySelector("input[type='text']").addEventListener("input", (evt) => {
-                inputHidden.value = evt.target.value;
-            });
+                const inputHidden = input.querySelector("input[type='hidden']");
+                input.querySelector("input[type='text']").addEventListener("input", (evt) => {
+                    inputHidden.value = evt.target.value;
+                });
 
-            answer.appendChild(input);
-        });
+                answer.appendChild(input);
+            });
+        }
 
         return answer;
     }
 
+    #updateListWithSublistValue(divSublist, inputText, inputHidden) {
+        const subvalues = Array.from(divSublist.querySelectorAll("input[type='text']")).map((subinput) => subinput.value).filter((val) => val.trim().length > 0);
+        let value = inputText.value + '###' + subvalues.join(':::');
+        if ("###" === value.trim()) value = "";
+        inputHidden.value = value;
+    }
+
     #disableQuestion(questionElement) {
-        const context = this;
         if (!questionElement.classList.contains("hide")) questionElement.classList.add("hide");
         questionElement.querySelectorAll("input, textarea").forEach((input) => {
             if ("answerRequired" in input.dataset) input.required = false;
