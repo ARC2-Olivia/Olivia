@@ -105,12 +105,12 @@ class PracticalSubmoduleAssessmentAnswer
                 $displayableAnswer = $this->practicalSubmoduleQuestion->getTemplate();
                 foreach ($answer as $variable => $value) {
                     $pattern = '/\{\{\s*'.$variable.'[\|\s\w]*\s*\}\}/';
-                    $replacement = '<b>'.$value.'</b>';
+                    $replacement = '<b>'.htmlspecialchars($value).'</b>';
                     $displayableAnswer = preg_replace($pattern, $replacement, $displayableAnswer);
                 }
                 $displayableAnswers[] = $displayableAnswer;
             }
-            return implode('<br/>', $displayableAnswers);
+            return implode('<br/><br/>', $displayableAnswers);
         }
 
         return $this->answerValue;
