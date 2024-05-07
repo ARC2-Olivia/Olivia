@@ -101,7 +101,9 @@ class PSExporter
                     'disabled' => $question->isDisabled(),
                     'multipleWeighted' => $question->isMultipleWeighted(),
                     'largeText' => $question->isLargeText(),
-                    'listWithSublist' => $question->isListWithSublist()
+                    'listWithSublist' => $question->isListWithSublist(),
+                    'template' => $question->getTemplate(),
+                    'templateVariables' => $question->getTemplateVariables()
                 ]
             ];
 
