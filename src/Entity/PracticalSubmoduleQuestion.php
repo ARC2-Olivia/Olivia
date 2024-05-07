@@ -14,14 +14,16 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 #[ORM\Entity(repositoryClass: PracticalSubmoduleQuestionRepository::class)]
 class PracticalSubmoduleQuestion extends TranslatableEntity
 {
-    public const TYPE_YES_NO = 'yes_no';
-    public const TYPE_WEIGHTED = 'weighted';
-    public const TYPE_NUMERICAL_INPUT = 'numerical_input';
-    public const TYPE_TEXT_INPUT = 'text_input';
-    public const TYPE_TEMPLATED_TEXT_INPUT = 'templated_text_input';
-    public const TYPE_MULTI_CHOICE = 'multi_choice';
-    public const TYPE_LIST_INPUT = 'list_input';
-    public const TYPE_STATIC_TEXT = 'static_text';
+    public const
+        TYPE_YES_NO = 'yes_no',
+        TYPE_WEIGHTED = 'weighted',
+        TYPE_LIST_INPUT = 'list_input',
+        TYPE_TEXT_INPUT = 'text_input',
+        TYPE_STATIC_TEXT = 'static_text',
+        TYPE_MULTI_CHOICE = 'multi_choice',
+        TYPE_NUMERICAL_INPUT = 'numerical_input',
+        TYPE_TEMPLATED_LIST_INPUT = 'templated_list_input',
+        TYPE_TEMPLATED_TEXT_INPUT = 'templated_text_input';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -75,6 +77,13 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
 
     #[ORM\Column(nullable: true)]
     private ?bool $listWithSublist = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Gedmo\Translatable]
+    private ?string $template = null;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    private array $templateVariables = [];
 
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
@@ -327,6 +336,30 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public function setListWithSublist(?bool $listWithSublist): self
     {
         $this->listWithSublist = $listWithSublist;
+
+        return $this;
+    }
+
+    public function getTemplate(): ?string
+    {
+        return $this->template;
+    }
+
+    public function setTemplate(?string $template): self
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    public function getTemplateVariables(): array
+    {
+        return $this->templateVariables;
+    }
+
+    public function setTemplateVariables(?array $templateVariables): self
+    {
+        $this->templateVariables = $templateVariables;
 
         return $this;
     }

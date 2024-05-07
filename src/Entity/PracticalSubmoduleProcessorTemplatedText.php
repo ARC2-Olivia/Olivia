@@ -44,6 +44,8 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
 
         if ($questionType === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT && !$practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers()->isEmpty()) {
             $this->handleTemplatingForTemplatedTextQuestion($practicalSubmoduleAssessment);
+        } else if ($questionType === PracticalSubmoduleQuestion::TYPE_TEMPLATED_LIST_INPUT && !$practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers()->isEmpty()) {
+            $this->handleTemplatingForTemplatedListQuestion($practicalSubmoduleAssessment);
         } else if (in_array($questionType, PracticalSubmoduleQuestion::getSingleChoiceTypes())) {
             $this->handleTemplatingForSingleChoiceQuestion($practicalSubmoduleAssessment, $translator);
         } else if (in_array($questionType, PracticalSubmoduleQuestion::getMultipleAnswerTypes())) {
@@ -115,6 +117,26 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
                     $pattern = '/\{\{\s*' . $field . '\s*\}\}/';
                     $this->processedText = preg_replace($pattern, $value, $this->processedText);
                 }
+                break;
+            }
+        }
+    }
+
+    private function handleTemplatingForTemplatedListQuestion(PracticalSubmoduleAssessment $practicalSubmoduleAssessment): void
+    {
+        foreach ($practicalSubmoduleAssessment->getPracticalSubmoduleAssessmentAnswers() as $assessmentAnswer) {
+            if ($assessmentAnswer->getPracticalSubmoduleQuestion()->getId() === $this->practicalSubmoduleQuestion->getId()) {
+                $givenAnswer = json_decode($assessmentAnswer->getAnswerValue(), true);
+                $processedLines = [];
+                foreach ($givenAnswer as $item) {
+                    $processedLine = $this->resultText;
+                    foreach ($item as $variable => $value) {
+                        $pattern = '/\{\{\s*' . $variable . '\s*\}\}/';
+                        $processedLine = preg_replace($pattern, $value, $processedLine);
+                    }
+                    $processedLines[] = $processedLine;
+                }
+                $this->processedText = implode("\n", $processedLines);
                 break;
             }
         }

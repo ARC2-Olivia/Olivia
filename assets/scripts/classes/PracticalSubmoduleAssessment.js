@@ -7,6 +7,7 @@ class PracticalSubmoduleAssessment {
     #translation;
     #handlers = [];
     #backgroundSavingEnabled = true;
+    #templatedListInputIndex = {};
 
     constructor(querySelector, assessmentData, translation) {
         this.#parser = new DOMParser();
@@ -242,6 +243,9 @@ class PracticalSubmoduleAssessment {
             case 'static_text': {
                 question.classList.add(questionData.isHeading ? 'heading' : 'static-text');
                 questionText.classList.add('no-bold');
+            } break;
+            case 'templated_list_input': {
+                questionAnswers.append(this.#createTemplatedListInput(questionData));
             } break;
             default: finalize = false;
         }
@@ -510,8 +514,7 @@ class PracticalSubmoduleAssessment {
     }
 
     #createListInputAnswer(questionData) {
-        const ctx = this;
-
+        const context = this;
         const answer = this.#parser.parseFromString(`
             <div class="evaluation-assessment-question-answer:column">
                 <button type="button" class="btn btn-theme-white btn-sm bg-green">
@@ -549,7 +552,7 @@ class PracticalSubmoduleAssessment {
                 for (const sublistItem of sublist) {
                     const subInput = this.#parser.parseFromString(`<input type="text" class="form-input" value="${sublistItem}"/>`, "text/html").body.firstChild;
                     subInput.addEventListener("input", function() {
-                        ctx.#updateListWithSublistValue(divSublist, inputText, inputHidden);
+                        context.#updateListWithSublistValue(divSublist, inputText, inputHidden);
                     });
                     divSublist.appendChild(subInput);
                 }
@@ -564,7 +567,7 @@ class PracticalSubmoduleAssessment {
                 input.querySelector("button").addEventListener("click", () => {
                     const subInput = this.#parser.parseFromString(`<input type="text" class="form-input"/>`, "text/html").body.firstChild;
                     subInput.addEventListener("input", function() {
-                        ctx.#updateListWithSublistValue(divSublist, inputText, inputHidden);
+                        context.#updateListWithSublistValue(divSublist, inputText, inputHidden);
                     });
                     divSublist.appendChild(subInput);
                 });
@@ -591,13 +594,13 @@ class PracticalSubmoduleAssessment {
                 const divSublist = input.querySelector("div[data-sublist]");
 
                 inputText.addEventListener("input", function() {
-                    ctx.#updateListWithSublistValue(divSublist, inputText, inputHidden);
+                    context.#updateListWithSublistValue(divSublist, inputText, inputHidden);
                 });
 
                 input.querySelector("button").addEventListener("click", () => {
                     const subInput = this.#parser.parseFromString(`<input type="text" class="form-input"/>`, "text/html").body.firstChild;
                     subInput.addEventListener("input", function() {
-                        ctx.#updateListWithSublistValue(divSublist, inputText, inputHidden);
+                        context.#updateListWithSublistValue(divSublist, inputText, inputHidden);
                     });
                     divSublist.appendChild(subInput);
                 });
@@ -640,11 +643,60 @@ class PracticalSubmoduleAssessment {
         return answer;
     }
 
+    #createTemplatedListInput(questionData) {
+        const answer = this.#parser.parseFromString(`
+            <div class="evaluation-assessment-question-answer:column">
+                <button type="button" class="btn btn-theme-white btn-sm bg-green">
+                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>
+                    ${this.#translation.buttonAdd}
+                </button>
+            </div>
+        `, "text/html").body.firstChild;
+
+        const userAnswer = questionData.userAnswer || [];
+        for (const item of userAnswer) {
+            const index = this.#fetchTemplatedListIndexForQuestionId(questionData.id)
+            let answerRaw = `<div style="white-space: pre-wrap; margin-top: 16px">${questionData.template}</div>`;
+            for (const [variable, value] of Object.entries(item)) {
+                const pattern = new RegExp(`{{\\s*${variable}[\\|\\s\\w]*\\s*}}`);
+                const inputRaw = `
+                    <label class="evaluation-assessment-question-answer--inline" style="white-space: normal">
+                        <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${index}][${variable}]" value="${value}"/>
+                    </label>`.trim()
+                ;
+                answerRaw = answerRaw.replace(pattern, inputRaw);
+            }
+            answer.appendChild(this.#parser.parseFromString(answerRaw, "text/html").body.firstChild);
+        }
+
+        answer.querySelector("button").addEventListener("click", () => {
+            const index = this.#fetchTemplatedListIndexForQuestionId(questionData.id)
+            let answerRaw = `<div style="white-space: pre-wrap; margin-top: 16px">${questionData.template}</div>`;
+            for (const variable of questionData.templateVariables) {
+                const pattern = new RegExp(`{{\\s*${variable}[\\|\\s\\w]*\\s*}}`);
+                const inputRaw = `
+                    <label class="evaluation-assessment-question-answer--inline" style="white-space: normal">
+                        <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${index}][${variable}]"/>
+                    </label>`.trim()
+                ;
+                answerRaw = answerRaw.replace(pattern, inputRaw)
+            }
+            answer.appendChild(this.#parser.parseFromString(answerRaw, "text/html").body.firstChild);
+        });
+
+        return answer;
+    }
+
     #updateListWithSublistValue(divSublist, inputText, inputHidden) {
         const subvalues = Array.from(divSublist.querySelectorAll("input[type='text']")).map((subinput) => subinput.value).filter((val) => val.trim().length > 0);
         let value = inputText.value + '###' + subvalues.join(':::');
         if ("###" === value.trim()) value = "";
         inputHidden.value = value;
+    }
+
+    #fetchTemplatedListIndexForQuestionId(questionId) {
+        if (!(questionId in this.#templatedListInputIndex)) this.#templatedListInputIndex[questionId] = 0;
+        return ++this.#templatedListInputIndex[questionId];
     }
 
     #disableQuestion(questionElement) {

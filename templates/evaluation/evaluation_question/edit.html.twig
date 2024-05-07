@@ -95,6 +95,17 @@
             <button type="submit" form="{{ liForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
         </div>
 
+    {% elseif tliForm is defined %}
+
+        <hr/>
+        {{ form_start(tliForm, {'attr': {'id': tliForm.vars.id}}) }}
+            {{ form_label(tliForm.template) }}
+            {{ form_widget(tliForm.template) }}
+        {{ form_end(tliForm) }}
+        <div class="text-end">
+            <button type="submit" form="{{ tliForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+
     {% endif %}
 
 {% endblock %}

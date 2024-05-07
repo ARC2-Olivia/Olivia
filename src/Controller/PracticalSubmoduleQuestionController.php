@@ -11,7 +11,9 @@ use App\Form\PracticalSubmoduleQuestionAnswerMultiChoiceType;
 use App\Form\PracticalSubmoduleQuestionAnswerWeightedType;
 use App\Form\PracticalSubmoduleQuestionListInputType;
 use App\Form\PracticalSubmoduleQuestionStaticTextType;
+use App\Form\PracticalSubmoduleQuestionTemplatedListInputType;
 use App\Form\PracticalSubmoduleQuestionType;
+use App\Misc\TemplatedTextField;
 use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Service\NavigationService;
 use App\Service\PracticalSubmoduleService;
@@ -87,6 +89,18 @@ class PracticalSubmoduleQuestionController extends BaseController
                     $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.edit', [], 'message'));
                 }
                 $params['liForm'] = $liForm->createView();
+                break;
+            }
+            case PracticalSubmoduleQuestion::TYPE_TEMPLATED_LIST_INPUT: {
+                $tliForm = $this->createForm(PracticalSubmoduleQuestionTemplatedListInputType::class, $practicalSubmoduleQuestion);
+                $tliForm->handleRequest($request);
+                if ($tliForm->isSubmitted() && $tliForm->isValid()) {
+                    $ttt = (new TranslatableTemplatedText())->setText($practicalSubmoduleQuestion->getTemplate());
+                    $practicalSubmoduleQuestion->setTemplateVariables(array_map(function (TemplatedTextField $ttf) { return $ttf->getName(); }, $ttt->getTextFields()));
+                    $this->em->flush();
+                    $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.edit', [], 'message'));
+                }
+                $params['tliForm'] = $tliForm->createView();
                 break;
             }
         }

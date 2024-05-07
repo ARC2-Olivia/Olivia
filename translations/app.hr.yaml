@@ -295,6 +295,7 @@ form:
                 disabled: Onesposobljeno
                 largeText: Omogući prikaz za unos većeg teksta
                 listWithSublist: Omogući unos podlista
+                template: Predložak
             placeholder:
                 questionText: Ovdje stavite tekst pitanja...
                 dependentEvaluationQuestion: Ništa odabrano...
@@ -618,6 +619,7 @@ practicalSubmoduleQuestion:
         numericalInput: Numerički unos
         textInput: Tekstualni unos
         templatedTextInput: Tekstualni unos s predloškom
+        templatedListInput: Unos popisa s tekstualnim predloškom
         multipleChoice: Višestruki odabir
         listInput: Unos popisa
         staticText: Statični tekst
