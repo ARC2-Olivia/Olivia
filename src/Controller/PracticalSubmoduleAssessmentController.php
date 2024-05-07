@@ -117,7 +117,8 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 $this->storeMultiChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
             case PracticalSubmoduleQuestion::TYPE_LIST_INPUT:
                 $this->storeListInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
-            case PracticalSubmoduleQuestion::TYPE_TEMPLATED_LIST_INPUT: $this->storeTemplatedListInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
+            case PracticalSubmoduleQuestion::TYPE_TEMPLATED_LIST_INPUT:
+                $this->storeTemplatedListInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
             default:
                 $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
         }
