@@ -12,3 +12,12 @@
         <p>{{ evaluation.reportComment|txt2html }}</p>
     {% endif %}
 {% endblock %}
+
+{% block stylesheets %}
+    {{  parent() }}
+    <style>
+        .evaluation-assessment-datum-question {
+            white-space: unset;
+        }
+    </style>
+{% endblock %}

@@ -297,6 +297,7 @@ form:
                 disabled: Disabled
                 largeText: Display input for large text
                 listWithSublist: Enable sublists
+                template: Template
             placeholder:
                 questionText: Question text goes here...
                 dependentEvaluationQuestion: Nothing selected...
@@ -621,6 +622,7 @@ practicalSubmoduleQuestion:
         numericalInput: Numerical input
         textInput: Text input
         templatedTextInput: Templated text input
+        templatedListInput: Templated list input
         multipleChoice: Multiple choice
         listInput: List input
         staticText: Static text

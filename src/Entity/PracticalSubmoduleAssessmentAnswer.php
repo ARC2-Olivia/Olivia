@@ -87,7 +87,7 @@ class PracticalSubmoduleAssessmentAnswer
             return $this->practicalSubmoduleQuestionAnswer->getAnswerText();
         }
 
-        if ($this->practicalSubmoduleQuestion->getType() === PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT) {
+        if (PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT === $this->practicalSubmoduleQuestion->getType()) {
             $answeredFields = json_decode($this->getAnswerValue(), true);
             $displayableAnswer = $this->practicalSubmoduleQuestion->getPracticalSubmoduleQuestionAnswers()->get(0)->getAnswerText();
             foreach ($answeredFields as $field => $answer) {
@@ -96,6 +96,21 @@ class PracticalSubmoduleAssessmentAnswer
                 $displayableAnswer = preg_replace($pattern, $replacement, $displayableAnswer);
             }
             return $displayableAnswer;
+        }
+
+        if (PracticalSubmoduleQuestion::TYPE_TEMPLATED_LIST_INPUT === $this->practicalSubmoduleQuestion->getType()) {
+            $answers = json_decode($this->getAnswerValue(), true);
+            $displayableAnswers = [];
+            foreach ($answers as $answer) {
+                $displayableAnswer = $this->practicalSubmoduleQuestion->getTemplate();
+                foreach ($answer as $variable => $value) {
+                    $pattern = '/\{\{\s*'.$variable.'[\|\s\w]*\s*\}\}/';
+                    $replacement = '<b>'.$value.'</b>';
+                    $displayableAnswer = preg_replace($pattern, $replacement, $displayableAnswer);
+                }
+                $displayableAnswers[] = $displayableAnswer;
+            }
+            return implode('<br/>', $displayableAnswers);
         }
 
         return $this->answerValue;

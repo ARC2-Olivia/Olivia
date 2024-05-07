@@ -28,12 +28,13 @@ class PracticalSubmoduleQuestionType extends AbstractType
             $typeChoices = [
                 $this->translator->trans('practicalSubmoduleQuestion.type.yesNo', [], 'app') => PracticalSubmoduleQuestion::TYPE_YES_NO,
                 $this->translator->trans('practicalSubmoduleQuestion.type.weighted', [], 'app') => PracticalSubmoduleQuestion::TYPE_WEIGHTED,
-                $this->translator->trans('practicalSubmoduleQuestion.type.numericalInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT,
-                $this->translator->trans('practicalSubmoduleQuestion.type.textInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_TEXT_INPUT,
-                $this->translator->trans('practicalSubmoduleQuestion.type.templatedTextInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT,
-                $this->translator->trans('practicalSubmoduleQuestion.type.multipleChoice', [], 'app') => PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE,
                 $this->translator->trans('practicalSubmoduleQuestion.type.listInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_LIST_INPUT,
-                $this->translator->trans('practicalSubmoduleQuestion.type.staticText', [], 'app') => PracticalSubmoduleQuestion::TYPE_STATIC_TEXT
+                $this->translator->trans('practicalSubmoduleQuestion.type.textInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_TEXT_INPUT,
+                $this->translator->trans('practicalSubmoduleQuestion.type.staticText', [], 'app') => PracticalSubmoduleQuestion::TYPE_STATIC_TEXT,
+                $this->translator->trans('practicalSubmoduleQuestion.type.multipleChoice', [], 'app') => PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE,
+                $this->translator->trans('practicalSubmoduleQuestion.type.numericalInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT,
+                $this->translator->trans('practicalSubmoduleQuestion.type.templatedListInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_TEMPLATED_LIST_INPUT,
+                $this->translator->trans('practicalSubmoduleQuestion.type.templatedTextInput', [], 'app') => PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT,
             ];
             $builder->add('type', ChoiceType::class, [
                 'label' => 'form.entity.practicalSubmoduleQuestion.label.type',

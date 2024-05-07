@@ -297,6 +297,7 @@ form:
                 disabled: Disabilitato
                 largeText: Visualizza input per testo di grandi dimensioni
                 listWithSublist: Abilita sottoliste
+                template: Modello
             placeholder:
                 questionText: Il testo della domanda va qui...
                 dependentEvaluationQuestion: Niente selezionato...
@@ -621,6 +622,7 @@ practicalSubmoduleQuestion:
         numericalInput: Inserimento numerico
         textInput: L'immissione di testo
         templatedTextInput: Inserimento di testo basato su modelli
+        templatedListInput: Ingresso elenco basato su modelli
         multipleChoice: Scelta multipla
         listInput: Elenco input
         staticText: Testo statico

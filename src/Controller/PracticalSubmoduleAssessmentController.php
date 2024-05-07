@@ -67,7 +67,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
         if ($csrfToken !== null && $this->isCsrfTokenValid('practicalSubmoduleAssessment.finish', $csrfToken)) {
             $assessmentData = $request->request->all('evaluation_assessment');
             $assessmentAction = $request->request->get('_assessment_action');
-            $evaluationQuestionRepository = $this->em->getRepository(PracticalSubmoduleQuestion::class);
+            $practicalSubmoduleQuestionRepository = $this->em->getRepository(PracticalSubmoduleQuestion::class);
             $noQuestionError = false;
 
             $practicalSubmoduleAssessment->setCompleted('submit' === $assessmentAction);
@@ -78,9 +78,9 @@ class PracticalSubmoduleAssessmentController extends BaseController
             }
 
             foreach ($assessmentData as $questionId => $givenAnswer) {
-                $evaluationQuestion = $evaluationQuestionRepository->find($questionId);
-                if ($evaluationQuestion !== null) {
-                    $this->storeAnswer($practicalSubmoduleAssessment, $evaluationQuestion, $givenAnswer);
+                $practicalSubmoduleQuestion = $practicalSubmoduleQuestionRepository->find($questionId);
+                if ($practicalSubmoduleQuestion !== null) {
+                    $this->storeAnswer($practicalSubmoduleAssessment, $practicalSubmoduleQuestion, $givenAnswer);
                 } else {
                     $noQuestionError = true;
                 }
@@ -117,6 +117,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 $this->storeMultiChoiceAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
             case PracticalSubmoduleQuestion::TYPE_LIST_INPUT:
                 $this->storeListInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
+            case PracticalSubmoduleQuestion::TYPE_TEMPLATED_LIST_INPUT: $this->storeTemplatedListInputAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer); break;
             default:
                 $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, $givenAnswer);
         }
@@ -157,6 +158,28 @@ class PracticalSubmoduleAssessmentController extends BaseController
         $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, json_encode($givenAnswer));
     }
 
+    private function storeTemplatedListInputAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
+    {
+        if (is_array($givenAnswer)) {
+            $removalList = [];
+            foreach ($givenAnswer as $i => $item) {
+                $allEmpty = true;
+                foreach ($item as $variable => $value) {
+                    if (trim($value) !== '') {
+                        $allEmpty = false;
+                        break;
+                    }
+                }
+                if ($allEmpty)
+                    $removalList[] = $i;
+            }
+            foreach ($removalList as $i) {
+                unset($givenAnswer[$i]);
+            }
+            $this->storeSimpleAnswer($practicalSubmoduleQuestion, $practicalSubmoduleAssessment, json_encode(array_values($givenAnswer)));
+        }
+    }
+
     private function storeMultiChoiceAnswer(PracticalSubmoduleQuestion $practicalSubmoduleQuestion, PracticalSubmoduleAssessment $practicalSubmoduleAssessment, mixed $givenAnswer): void
     {
         if (key_exists('choices', $givenAnswer)) {
@@ -190,7 +213,7 @@ class PracticalSubmoduleAssessmentController extends BaseController
     {
         foreach ($givenAnswer as $item) {
             $item = trim($item);
-            if ('' === $item) {
+            if ('' === $item || '###' === $item) {
                 continue;
             }
 
@@ -242,7 +265,9 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 'isHeading' => $practicalSubmoduleQuestion->getIsHeading(),
                 'multipleWeighted' => $practicalSubmoduleQuestion->isMultipleWeighted(),
                 'largeText' => $practicalSubmoduleQuestion->isLargeText(),
-                'listWithSublist' => $practicalSubmoduleQuestion->isListWithSublist()
+                'listWithSublist' => $practicalSubmoduleQuestion->isListWithSublist(),
+                'template' => $practicalSubmoduleQuestion->getTemplate() ?? '',
+                'templateVariables' => $practicalSubmoduleQuestion->getTemplateVariables()
             ];
 
             if ($editing) {
@@ -253,37 +278,31 @@ class PracticalSubmoduleAssessmentController extends BaseController
                         case PracticalSubmoduleQuestion::TYPE_YES_NO:
                         case PracticalSubmoduleQuestion::TYPE_WEIGHTED: {
                             $question['userAnswer'] = [];
-                            foreach ($assessmentAnswers as $aa) {
+                            foreach ($assessmentAnswers as $aa)
                                 $question['userAnswer'][] = $aa->getPracticalSubmoduleQuestionAnswer()->getId();
-                            }
-                            break;
-                        }
+                        } break;
                         case PracticalSubmoduleQuestion::TYPE_TEXT_INPUT:
                         case PracticalSubmoduleQuestion::TYPE_NUMERICAL_INPUT: {
                             $question['userAnswer'] = $assessmentAnswers[0]->getAnswerValue();
-                            break;
-                        }
-                        case PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT: {
+                        } break;
+                        case PracticalSubmoduleQuestion::TYPE_TEMPLATED_TEXT_INPUT:
+                        case PracticalSubmoduleQuestion::TYPE_TEMPLATED_LIST_INPUT: {
                             $question['userAnswer'] = json_decode($assessmentAnswers[0]->getAnswerValue(), true);
-                            break;
-                        }
+                        } break;
                         case PracticalSubmoduleQuestion::TYPE_MULTI_CHOICE: {
                             $question['userAnswer'] = ['selected' => [], 'added' => []];
                             foreach ($assessmentAnswers as $aa) {
-                                if (null !== $aa->getPracticalSubmoduleQuestionAnswer()) {
+                                if (null !== $aa->getPracticalSubmoduleQuestionAnswer())
                                     $question['userAnswer']['selected'][] = $aa->getPracticalSubmoduleQuestionAnswer()->getId();
-                                } else {
+                                else
                                     $question['userAnswer']['added'][] = $aa->getAnswerValue();
-                                }
                             }
-                            break;
-                        }
+                        } break;
                         case PracticalSubmoduleQuestion::TYPE_LIST_INPUT: {
                             $question['userAnswer'] = [];
-                            foreach ($assessmentAnswers as $aa) {
+                            foreach ($assessmentAnswers as $aa)
                                 $question['userAnswer'][] = $aa->getAnswerValue();
-                            }
-                        }
+                        } break;
                     }
                 }
             }
