@@ -82,7 +82,7 @@ class PracticalSubmoduleAssessment {
             if (pageData.description !== null) {
                 const pageDescription = document.createElement("P");
                 pageDescription.classList.add("evaluation-assessment-page-description");
-                pageDescription.innerText = pageData.description;
+                pageDescription.innerHTML = pageData.description;
                 page.appendChild(pageDescription);
             }
 
