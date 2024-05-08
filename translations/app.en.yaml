@@ -591,6 +591,7 @@ practicalSubmodule:
         dpia: Data protection impact assessment (DPIA)
         respondentsRight: Respondents' rights
         rulebookOnISS: Rulebook on Information System Security
+        rulebookOnPDP: Rulebook on Personal Data Protection
     extra:
         question: Question
         questions: Questions

@@ -591,6 +591,7 @@ practicalSubmodule:
         dpia: Valutazione dell'impatto sulla protezione dei dati (DPIA)
         respondentsRight: Diritti degli intervistati
         rulebookOnISS: Regolamento sulla sicurezza dei sistemi informativi
+        rulebookOnPDP: Regolamento sulla protezione dei dati personali
     extra:
         question: Domanda
         questions: Domande
