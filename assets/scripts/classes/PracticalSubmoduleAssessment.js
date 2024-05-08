@@ -312,6 +312,7 @@ class PracticalSubmoduleAssessment {
     }
 
     #createWeightedAnswers(questionData) {
+        const context = this;
         const answers = [];
         const inputType = true === questionData.multipleWeighted ? 'checkbox' : 'radio';
         const requirement = questionData.multipleWeighted ? '' : ' data-answer-required required';
@@ -354,7 +355,7 @@ class PracticalSubmoduleAssessment {
 
         if (hasPrecheckedValues) {
             this.#handlers.push(function () {
-                const checkedValues = inputs.filter(i => i.checked === true).map(i => i.dataset.value);
+                const checkedValues = inputData.filter(i => i.checked === true).map(i => i.dataset.value);
                 context.#eventBus.notifyListeners("answerchange", null, { questionId: questionData.id, answer: checkedValues, checkType: 'contains' })
             })
         }
@@ -612,7 +613,7 @@ class PracticalSubmoduleAssessment {
                 const input = this.#parser.parseFromString(`
                     <div>
                         <input type="hidden" name="evaluation_assessment[${questionData.id}][]" value="${item}"/>
-                        <input type="text" class="form-input"/>
+                        <input type="text" class="form-input" value="${item}"/>
                     </div>
                 `, "text/html").body.firstChild;
                 answer.appendChild(input);
