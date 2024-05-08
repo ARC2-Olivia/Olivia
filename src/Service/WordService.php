@@ -34,6 +34,7 @@ class WordService
             PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY                    => $this->generateCookiePolicyDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY                   => $this->generatePrivacyPolicyDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_RULEBOOK_ON_ISS                  => $this->generateRulebookOnISS($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_RULEBOOK_ON_PDP                  => $this->generateRulebookOnPDP($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_RESPONDENTS_RIGHTS               => $this->generateRespondentsRightsDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
             default                                                          => $this->generateDefaultDocument($assessment)
@@ -275,6 +276,54 @@ class WordService
         foreach ($processingStates as $tag => $processed) {
             if (!$processed) $templateProcessor->cloneBlock($tag, 0);
         }
+
+        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
+        foreach ($processors as $processor) {
+            $templateProcessor->setValue($processor->getExportTag(), '');
+        }
+
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
+    }
+
+    private function generateRulebookOnPDP(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_pzop.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+
+        $processingStates = [
+            'pzop_02'   => false,
+            'pzop_03'   => false,
+            'pzop_04'   => false,
+            'pzop_05'   => false,
+            'pzop_08_a' => false,
+            'pzop_08_b' => false,
+            'pzop_12_d' => false,
+            'pzop_13'   => false,
+            'pzop_15_a' => false
+        ];
+
+        foreach ($results as $result) {
+            $exportTag = strtolower($result->getExportTag());
+            if (in_array($exportTag, ['pzop_02', 'pzop_03', 'pzop_04', 'pzop_08_a', 'pzop_08_b', 'pzop_12_d'])) {
+                $items = explode("\n", str_replace(['- ', "\r"], '', $result->getText()));
+                $itemCount = count($items);
+                $templateProcessor->cloneBlock($exportTag, $itemCount, indexVariables: true);
+                for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++)
+                    $templateProcessor->setValue("{$exportTag}_item#$j", $items[$i]);
+                $processingStates[$exportTag] = true;
+            } else if (in_array($exportTag, ['pzop_05', 'pzop_13', 'pzop_15_a'])) {
+                $templateProcessor->cloneBlock($exportTag);
+                $processingStates[$exportTag] = true;
+            } else {
+                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+            }
+        }
+
+        foreach ($processingStates as $tag => $processed)
+            if (!$processed) $templateProcessor->cloneBlock($tag, 0);
 
         $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
         foreach ($processors as $processor) {
