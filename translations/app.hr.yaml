@@ -588,6 +588,7 @@ practicalSubmodule:
         dpia: Procjena učinka na zaštitu podataka (DPIA)
         respondentsRight: Prava ispitanika
         rulebookOnISS: Pravilnik o sustavu informacijske sigurnosti
+        rulebookOnPDP: Pravilnik o zaštiti osobnih podataka
     extra:
         question: Pitanje
         questions: Pitanja

@@ -13,19 +13,22 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: PracticalSubmoduleRepository::class)]
 class PracticalSubmodule extends TranslatableEntity
 {
-    public const MODE_OF_OPERATION_SIMPLE = 'simple';
-    public const MODE_OF_OPERATION_ADVANCED = 'advanced';
+    public const
+        MODE_OF_OPERATION_SIMPLE = 'simple',
+        MODE_OF_OPERATION_ADVANCED = 'advanced';
 
-    public const EXPORT_TYPE_NONE = 'none';
-    public const EXPORT_TYPE_SIMPLE = 'simple';
-    public const EXPORT_TYPE_PRIVACY_POLICY = 'privacyPolicy';
-    public const EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT = 'consentPersonalDataProcessing';
-    public const EXPORT_TYPE_COOKIE_BANNER = 'cookieBanner';
-    public const EXPORT_TYPE_COOKIE_POLICY = 'cookiePolicy';
-    public const EXPORT_TYPE_LIA = 'lia';
-    public const EXPORT_TYPE_DPIA = 'dpia';
-    public const EXPORT_TYPE_RESPONDENTS_RIGHTS = 'respondentsRights';
-    public const EXPORT_TYPE_RULEBOOK_ON_ISS = 'RulebookOnISS';
+    public const
+        EXPORT_TYPE_NONE = 'none',
+        EXPORT_TYPE_LIA = 'lia',
+        EXPORT_TYPE_DPIA = 'dpia',
+        EXPORT_TYPE_SIMPLE = 'simple',
+        EXPORT_TYPE_COOKIE_BANNER = 'cookieBanner',
+        EXPORT_TYPE_COOKIE_POLICY = 'cookiePolicy',
+        EXPORT_TYPE_PRIVACY_POLICY = 'privacyPolicy',
+        EXPORT_TYPE_RULEBOOK_ON_PDP = 'ruleBookOnPDP',
+        EXPORT_TYPE_RULEBOOK_ON_ISS = 'RulebookOnISS',
+        EXPORT_TYPE_RESPONDENTS_RIGHTS = 'respondentsRights',
+        EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT = 'consentPersonalDataProcessing';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -108,8 +111,10 @@ class PracticalSubmodule extends TranslatableEntity
             self::EXPORT_TYPE_COOKIE_BANNER,
             self::EXPORT_TYPE_PRIVACY_POLICY,
             self::EXPORT_TYPE_RULEBOOK_ON_ISS,
+            self::EXPORT_TYPE_RULEBOOK_ON_PDP,
             self::EXPORT_TYPE_RESPONDENTS_RIGHTS,
-            self::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT
+            self::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT,
+
         ];
     }
 
