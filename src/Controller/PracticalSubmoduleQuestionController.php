@@ -209,7 +209,7 @@ class PracticalSubmoduleQuestionController extends BaseController
                 ->setPracticalSubmoduleQuestion($practicalSubmoduleQuestion)
                 ->setLocale($this->getParameter('locale.default'))
                 ->setAnswerText($ttt->getText())
-                ->setTemplatedTextFields($ttt->getTextFields())
+                ->setTemplatedTextFields(array_map(function(TemplatedTextField $ttf) { return $ttf->getName(); }, $ttt->getTextFields()))
             ;
             $this->em->persist($practicalSubmoduleQuestionAnswer);
             $this->em->flush();
