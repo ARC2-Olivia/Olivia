@@ -36,6 +36,7 @@ class WordService
             PracticalSubmodule::EXPORT_TYPE_RULEBOOK_ON_ISS                  => $this->generateRulebookOnISS($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_RULEBOOK_ON_PDP                  => $this->generateRulebookOnPDP($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_RESPONDENTS_RIGHTS               => $this->generateRespondentsRightsDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_CONTROLLER_PROCESSOR_CONTRACT    => $this->generateControllerProcessorContractDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
             default                                                          => $this->generateDefaultDocument($assessment)
         };
@@ -260,13 +261,8 @@ class WordService
 
         foreach ($results as $result) {
             $exportTag = strtolower($result->getExportTag());
-            if (in_array($exportTag, ['psis_03', 'psis_04', 'psis_05'])) {
-                $items = explode("\n", str_replace(['- ', "\r"], '', $result->getText()));
-                $itemCount = count($items);
-                $templateProcessor->cloneBlock($exportTag, $itemCount, indexVariables: true);
-                for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++) {
-                    $templateProcessor->setValue("{$exportTag}_item#$j", $items[$i]);
-                }
+            if (in_array($exportTag, array_keys($processingStates))) {
+                $this->handleListTag($result, $templateProcessor, $exportTag);
                 $processingStates[$exportTag] = true;
             } else {
                 $templateProcessor->setValue($result->getExportTag(), $result->getText());
@@ -293,37 +289,76 @@ class WordService
         $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_pzop.docx');
         $templateProcessor = new TemplateProcessor($templateFile);
 
-        $processingStates = [
-            'pzop_02'   => false,
-            'pzop_03'   => false,
-            'pzop_04'   => false,
-            'pzop_05'   => false,
-            'pzop_08_a' => false,
-            'pzop_08_b' => false,
-            'pzop_12_d' => false,
-            'pzop_13'   => false,
-            'pzop_15_a' => false
-        ];
+        $processingStates = new \stdClass();
+        $processingStates->lists = ['pzop_02'   => false, 'pzop_03'   => false, 'pzop_04'   => false, 'pzop_08_a' => false, 'pzop_08_b' => false, 'pzop_12_d' => false];
+        $processingStates->blocks = ['pzop_05'   => false, 'pzop_13'   => false, 'pzop_15_a' => false];
 
         foreach ($results as $result) {
             $exportTag = strtolower($result->getExportTag());
-            if (in_array($exportTag, ['pzop_02', 'pzop_03', 'pzop_04', 'pzop_08_a', 'pzop_08_b', 'pzop_12_d'])) {
-                $items = explode("\n", str_replace(['- ', "\r"], '', $result->getText()));
-                $itemCount = count($items);
-                $templateProcessor->cloneBlock($exportTag, $itemCount, indexVariables: true);
-                for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++)
-                    $templateProcessor->setValue("{$exportTag}_item#$j", $items[$i]);
-                $processingStates[$exportTag] = true;
-            } else if (in_array($exportTag, ['pzop_05', 'pzop_13', 'pzop_15_a'])) {
+            if (array_key_exists($exportTag, $processingStates->lists)) {
+                $this->handleListTag($result, $templateProcessor, $exportTag);
+                $processingStates->blocks[$exportTag] = true;
+            } else if (array_key_exists($exportTag, $processingStates->blocks)) {
                 $templateProcessor->cloneBlock($exportTag);
-                $processingStates[$exportTag] = true;
+                $processingStates->blocks[$exportTag] = true;
             } else {
                 $templateProcessor->setValue($result->getExportTag(), $result->getText());
             }
         }
 
-        foreach ($processingStates as $tag => $processed)
-            if (!$processed) $templateProcessor->cloneBlock($tag, 0);
+        foreach ($processingStates->lists as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
+        foreach ($processingStates->blocks as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
+
+        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
+        foreach ($processors as $processor) {
+            $templateProcessor->setValue($processor->getExportTag(), '');
+        }
+
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
+    }
+
+    private function generateControllerProcessorContractDocument(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_cpc.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+
+        $processingStates = new \stdClass();
+        $processingStates->lists = [
+            'cpc_02_b' => false,
+            'cpc_06'   => false,
+            'cpc_07'   => false,
+            'cpc_08_b' => false,
+            'cpc_13'   => false,
+            'cpc_14'   => false,
+            'cpc_15'   => false,
+            'cpc_16'   => false,
+            'cpc_17'   => false,
+            'cpc_18'   => false,
+            'cpc_19'   => false,
+            'cpc_20'   => false,
+            'cpc_21'   => false,
+            'cpc_22_b' => false,
+        ];
+        $processingStates->blocks = ['cpc_04_d' => false, 'cpc_08_a' => false, 'cpc_22_a' => false];
+
+        foreach ($results as $result) {
+            $exportTag = strtolower($result->getExportTag());
+            if (array_key_exists($exportTag, $processingStates->lists)) {
+                $this->handleListTag($result, $templateProcessor, $exportTag);
+                $processingStates->lists[$exportTag] = true;
+            } else if (array_key_exists($exportTag, $processingStates->blocks)) {
+                $templateProcessor->cloneBlock($exportTag);
+                $processingStates->blocks[$exportTag] = true;
+            } else {
+                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+            }
+        }
+
+        foreach ($processingStates->lists as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
+        foreach ($processingStates->blocks as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
 
         $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
         foreach ($processors as $processor) {
@@ -438,6 +473,15 @@ class WordService
             $templateProcessor->setComplexValue("$variable#$i", new Text($line, $fontStyle));
             $i++;
         }
+    }
+
+    private function handleListTag(ProcessorResult $result, TemplateProcessor $templateProcessor, string $exportTag): void
+    {
+        $items = explode("\n", str_replace(['- ', "\r"], '', $result->getText()));
+        $itemCount = count($items);
+        $templateProcessor->cloneBlock($exportTag, $itemCount, indexVariables: true);
+        for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++)
+            $templateProcessor->setValue("{$exportTag}_item#$j", $items[$i]);
     }
 
     private function translateCourseWorkload(Course $course): string

@@ -28,6 +28,7 @@ class PracticalSubmodule extends TranslatableEntity
         EXPORT_TYPE_RULEBOOK_ON_PDP = 'ruleBookOnPDP',
         EXPORT_TYPE_RULEBOOK_ON_ISS = 'RulebookOnISS',
         EXPORT_TYPE_RESPONDENTS_RIGHTS = 'respondentsRights',
+        EXPORT_TYPE_CONTROLLER_PROCESSOR_CONTRACT = 'controllerProcessorContract',
         EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT = 'consentPersonalDataProcessing';
 
     #[ORM\Id]
@@ -113,8 +114,8 @@ class PracticalSubmodule extends TranslatableEntity
             self::EXPORT_TYPE_RULEBOOK_ON_ISS,
             self::EXPORT_TYPE_RULEBOOK_ON_PDP,
             self::EXPORT_TYPE_RESPONDENTS_RIGHTS,
+            self::EXPORT_TYPE_CONTROLLER_PROCESSOR_CONTRACT,
             self::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT,
-
         ];
     }
 
