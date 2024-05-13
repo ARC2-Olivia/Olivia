@@ -15,9 +15,7 @@ class PracticalSubmoduleAssessment {
         this.#initializeTranslation(translation);
         this.#initializeForm(querySelector);
         this.#initializeAssessmentFromData(assessmentData);
-        for (const handler of this.#handlers) {
-            handler();
-        }
+        for (const handler of this.#handlers) handler();
         this.#initializeBackgroundSavingProcess();
     }
 
@@ -355,7 +353,7 @@ class PracticalSubmoduleAssessment {
 
         if (hasPrecheckedValues) {
             this.#handlers.push(function () {
-                const checkedValues = inputData.filter(i => i.checked === true).map(i => i.dataset.value);
+                const checkedValues = inputData.filter(i => i.input.checked === true).map(i => i.input.dataset.value);
                 context.#eventBus.notifyListeners("answerchange", null, { questionId: questionData.id, answer: checkedValues, checkType: 'contains' })
             })
         }
