@@ -589,6 +589,7 @@ practicalSubmodule:
         respondentsRight: Prava ispitanika
         rulebookOnISS: Pravilnik o sustavu informacijske sigurnosti
         rulebookOnPDP: Pravilnik o zaštiti osobnih podataka
+        contractBetweenControllerAndProcessor: Ugovor između voditelja i izvršitelja obrade
     extra:
         question: Pitanje
         questions: Pitanja
