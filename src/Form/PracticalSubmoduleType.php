@@ -51,6 +51,7 @@ class PracticalSubmoduleType extends AbstractType
             $this->translator->trans('practicalSubmodule.exportType.rulebookOnISS', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_RULEBOOK_ON_ISS,
             $this->translator->trans('practicalSubmodule.exportType.rulebookOnPDP', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_RULEBOOK_ON_PDP,
             $this->translator->trans('practicalSubmodule.exportType.contractBetweenControllerAndProcessor', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_CONTROLLER_PROCESSOR_CONTRACT,
+            $this->translator->trans('practicalSubmodule.exportType.videoSurveillanceNotification', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_VIDEO_SURVEILLANCE_NOTIFICATION,
         ];
 
         $builder
