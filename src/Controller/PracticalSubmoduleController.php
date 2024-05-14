@@ -24,6 +24,7 @@ use App\Repository\PracticalSubmoduleProcessorGroupRepository;
 use App\Repository\PracticalSubmoduleProcessorRepository;
 use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Repository\PracticalSubmoduleRepository;
+use App\Service\PdfService;
 use App\Service\PracticalSubmoduleService;
 use App\Service\NavigationService;
 use App\Service\SanitizerService;
@@ -484,12 +485,24 @@ class PracticalSubmoduleController extends BaseController
 
     #[Route("/export/{practicalSubmodule}/results", name: "export_results")]
     #[IsGranted("ROLE_USER")]
-    public function exportResults(PracticalSubmodule $practicalSubmodule, WordService $wordService, Request $request): Response
+    public function exportResults(PracticalSubmodule $practicalSubmodule, WordService $wordService, PdfService $pdfService, Request $request): Response
     {
         $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
-        $document = $wordService->generateDocumentFromAssessment($assessment, $request->getLocale());
-        $filename = $practicalSubmodule->getName().'.docx';
-        return $this->file($document, $filename)->deleteFileAfterSend();
+
+        if (PracticalSubmodule::exportsToWord($practicalSubmodule)) {
+            $document = $wordService->generateDocumentFromAssessment($assessment, $request->getLocale());
+            $filename = $practicalSubmodule->getName().'.docx';
+            return $this->file($document, $filename)->deleteFileAfterSend();
+        }
+
+        if (PracticalSubmodule::exportsToPdf($practicalSubmodule)) {
+            $document = $pdfService->generateDocumentFromAssessment($assessment, $request->getLocale());
+            $filename = $practicalSubmodule->getName().'.pdf';
+            return $this->file($document, $filename)->deleteFileAfterSend();
+        }
+
+        $this->addFlash('error', $this->translator->trans('error.export.results', domain: 'message'));
+        return $this->redirectToRoute('practical_submodule_results', ['practicalSubmodule' => $practicalSubmodule->getId()]);
     }
 
     #[Route("/export/{practicalSubmodule}/submodule", name: "export_submodule")]

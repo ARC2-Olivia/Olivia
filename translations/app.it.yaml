@@ -593,6 +593,7 @@ practicalSubmodule:
         rulebookOnISS: Regolamento sulla sicurezza dei sistemi informativi
         rulebookOnPDP: Regolamento sulla protezione dei dati personali
         contractBetweenControllerAndProcessor: Contratto tra Titolare e Responsabile del trattamento
+        videoSurveillanceNotification: Notifica di videosorveglianza
     extra:
         question: Domanda
         questions: Domande

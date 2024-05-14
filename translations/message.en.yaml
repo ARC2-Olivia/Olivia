@@ -140,6 +140,8 @@ error:
         token:
             invalid: Invalid password reset request.
             expired: The password reset request has expired.
+    export:
+        results: This questionnaire does not support export of results!
     course:
         name: Course name must not be empty.
         description: Course description must not be empty.

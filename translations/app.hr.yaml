@@ -590,6 +590,7 @@ practicalSubmodule:
         rulebookOnISS: Pravilnik o sustavu informacijske sigurnosti
         rulebookOnPDP: Pravilnik o zaštiti osobnih podataka
         contractBetweenControllerAndProcessor: Ugovor između voditelja i izvršitelja obrade
+        videoSurveillanceNotification: Obavijest o videonadzoru
     extra:
         question: Pitanje
         questions: Pitanja
