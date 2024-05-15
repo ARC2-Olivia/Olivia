@@ -91,8 +91,10 @@ class LessonService
         $score = 0;
         foreach ($lessonItemQuiz->getQuizQuestions() as $quizQuestion) {
             $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['question' => $quizQuestion, 'user' => $user]);
-            if ($quizQuestionAnswer !== null && $quizQuestionAnswer->getAnswer() === $quizQuestion->getCorrectAnswer()) {
-                $score++;
+            if ($quizQuestionAnswer !== null) {
+                $condition = QuizQuestion::TYPE_TRUE_FALSE === $quizQuestionAnswer->getQuestion()->getType() && ((bool)$quizQuestionAnswer->getAnswer()) === $quizQuestionAnswer->getQuestion()->getCorrectAnswer();
+                $condition = $condition || (QuizQuestion::TYPE_SINGLE_CHOICE === $quizQuestionAnswer->getQuestion()->getType() && ((int)$quizQuestionAnswer->getAnswer()) === $quizQuestionAnswer->getQuestion()->getCorrectChoiceId());
+                if (true === $condition) $score++;
             }
         }
 
