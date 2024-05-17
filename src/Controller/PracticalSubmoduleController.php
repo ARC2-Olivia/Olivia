@@ -24,6 +24,7 @@ use App\Repository\PracticalSubmoduleProcessorGroupRepository;
 use App\Repository\PracticalSubmoduleProcessorRepository;
 use App\Repository\PracticalSubmoduleQuestionRepository;
 use App\Repository\PracticalSubmoduleRepository;
+use App\Service\ExcelService;
 use App\Service\PdfService;
 use App\Service\PracticalSubmoduleService;
 use App\Service\NavigationService;
@@ -485,13 +486,19 @@ class PracticalSubmoduleController extends BaseController
 
     #[Route("/export/{practicalSubmodule}/results", name: "export_results")]
     #[IsGranted("ROLE_USER")]
-    public function exportResults(PracticalSubmodule $practicalSubmodule, WordService $wordService, PdfService $pdfService, Request $request): Response
+    public function exportResults(PracticalSubmodule $practicalSubmodule, WordService $wordService, ExcelService $excelService, PdfService $pdfService, Request $request): Response
     {
         $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->getUser()]);
 
         if (PracticalSubmodule::exportsToWord($practicalSubmodule)) {
             $document = $wordService->generateDocumentFromAssessment($assessment, $request->getLocale());
             $filename = $practicalSubmodule->getName().'.docx';
+            return $this->file($document, $filename)->deleteFileAfterSend();
+        }
+
+        if (PracticalSubmodule::exportsToExcel($practicalSubmodule)) {
+            $document = $excelService->generateDocumentFromAssessment($assessment, $request->getLocale());
+            $filename = $practicalSubmodule->getName().'.xlsx';
             return $this->file($document, $filename)->deleteFileAfterSend();
         }
 
