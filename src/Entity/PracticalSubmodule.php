@@ -30,7 +30,8 @@ class PracticalSubmodule extends TranslatableEntity
         EXPORT_TYPE_RESPONDENTS_RIGHTS = 'respondentsRights',
         EXPORT_TYPE_CONTROLLER_PROCESSOR_CONTRACT = 'controllerProcessorContract',
         EXPORT_TYPE_VIDEO_SURVEILLANCE_NOTIFICATION = 'videoSurveillanceNotification',
-        EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT = 'consentPersonalDataProcessing'
+        EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT = 'consentPersonalDataProcessing',
+        EXPORT_TYPE_RECORDS_OF_PROCESSING_ACTIVITIES_DC = 'recordsOfProcessingActivitiesDC'
     ;
 
     #[ORM\Id]
@@ -119,6 +120,7 @@ class PracticalSubmodule extends TranslatableEntity
             self::EXPORT_TYPE_CONTROLLER_PROCESSOR_CONTRACT,
             self::EXPORT_TYPE_VIDEO_SURVEILLANCE_NOTIFICATION,
             self::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT,
+            self::EXPORT_TYPE_RECORDS_OF_PROCESSING_ACTIVITIES_DC
         ];
     }
 
@@ -135,6 +137,11 @@ class PracticalSubmodule extends TranslatableEntity
             self::EXPORT_TYPE_CONTROLLER_PROCESSOR_CONTRACT,
             self::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT,
         ]);
+    }
+
+    public static function exportsToExcel(PracticalSubmodule $practicalSubmodule): bool
+    {
+        return in_array($practicalSubmodule->getExportType(), [self::EXPORT_TYPE_RECORDS_OF_PROCESSING_ACTIVITIES_DC]);
     }
 
     public static function exportsToPdf(PracticalSubmodule $practicalSubmodule): bool

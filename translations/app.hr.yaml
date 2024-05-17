@@ -591,6 +591,7 @@ practicalSubmodule:
         rulebookOnPDP: Pravilnik o zaštiti osobnih podataka
         contractBetweenControllerAndProcessor: Ugovor između voditelja i izvršitelja obrade
         videoSurveillanceNotification: Obavijest o videonadzoru
+        recordsOfProcessingActivitiesDC: Evidencija aktivnosti obrade - za voditelje obrade
     extra:
         question: Pitanje
         questions: Pitanja

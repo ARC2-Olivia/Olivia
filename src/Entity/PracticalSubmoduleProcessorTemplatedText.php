@@ -134,6 +134,11 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
                         $pattern = '/\{\{\s*' . $variable . '\s*\}\}/';
                         $processedLine = preg_replace($pattern, $value, $processedLine);
                     }
+                    $pattern = '/\{\{\s*values_one_line\s*\}\}/i';
+                    if (preg_match($pattern, $processedLine)) {
+                        $valuesOneLine = implode(', ', array_values($item));
+                        $processedLine = preg_replace($pattern, $valuesOneLine, $processedLine);
+                    }
                     $processedLines[] = $processedLine;
                 }
                 $this->processedText = implode("\n", $processedLines);
