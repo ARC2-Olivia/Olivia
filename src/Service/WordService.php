@@ -30,6 +30,7 @@ class WordService
     {
         return match ($assessment->getPracticalSubmodule()->getExportType()) {
             PracticalSubmodule::EXPORT_TYPE_LIA                              => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_TIA                              => $this->generateTransferImpactAssessmentDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_DPIA                             => $this->generateDataProtectionImpactAssessment($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY                    => $this->generateCookiePolicyDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_PRIVACY_POLICY                   => $this->generatePrivacyPolicyDocument($assessment, $locale),
@@ -359,6 +360,42 @@ class WordService
 
         foreach ($processingStates->lists as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
         foreach ($processingStates->blocks as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
+
+        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
+        foreach ($processors as $processor) {
+            $templateProcessor->setValue($processor->getExportTag(), '');
+        }
+
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
+    }
+
+    private function generateTransferImpactAssessmentDocument(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_tia.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+
+        $processingStates = new \stdClass();
+        $processingStates->lists = ['TIA-6.4' => false];
+        $processingStates->yesOrNo = ['TIA-6.1' => false, 'TIA-6.2' => false, 'TIA-6.3' => false];
+
+        foreach ($results as $result) {
+            $exportTag = $result->getExportTag();
+            if (array_key_exists($exportTag, $processingStates->lists)) {
+                $this->handleListTag($result, $templateProcessor, $exportTag);
+                $processingStates->lists[$exportTag] = true;
+            } else if (array_key_exists($exportTag, $processingStates->yesOrNo)) {
+                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+                $processingStates->yesOrNo[$exportTag] = true;
+            } else {
+                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+            }
+        }
+
+        foreach ($processingStates->lists as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
+        foreach ($processingStates->yesOrNo as $tag => $processed) if (!$processed) $templateProcessor->setValue($tag, $this->translator->trans('common.no', domain: 'app'));
 
         $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
         foreach ($processors as $processor) {
