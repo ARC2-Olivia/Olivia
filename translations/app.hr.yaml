@@ -592,6 +592,7 @@ practicalSubmodule:
         contractBetweenControllerAndProcessor: Ugovor između voditelja i izvršitelja obrade
         videoSurveillanceNotification: Obavijest o videonadzoru
         recordsOfProcessingActivitiesDC: Evidencija aktivnosti obrade - za voditelje obrade
+        tia: Procjena utjecaja prijenosa
     extra:
         question: Pitanje
         questions: Pitanja

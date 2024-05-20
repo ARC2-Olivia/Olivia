@@ -595,6 +595,7 @@ practicalSubmodule:
         contractBetweenControllerAndProcessor: Contract between Data Controller and Data Processor
         videoSurveillanceNotification: Video surveillance notification
         recordsOfProcessingActivitiesDC: Records of processing activities - for Data Controllers
+        tia: Transfer impact assessment
     extra:
         question: Question
         questions: Questions

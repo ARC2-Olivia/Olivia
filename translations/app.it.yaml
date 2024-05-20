@@ -595,6 +595,7 @@ practicalSubmodule:
         contractBetweenControllerAndProcessor: Contratto tra Titolare e Responsabile del trattamento
         videoSurveillanceNotification: Notifica di videosorveglianza
         recordsOfProcessingActivitiesDC: Registrazioni delle attività di trattamento - per Titolari del trattamento
+        tia: Valutazione dell'impatto del trasferimento
     extra:
         question: Domanda
         questions: Domande

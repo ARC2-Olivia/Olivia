@@ -20,6 +20,7 @@ class PracticalSubmodule extends TranslatableEntity
     public const
         EXPORT_TYPE_NONE = 'none',
         EXPORT_TYPE_LIA = 'lia',
+        EXPORT_TYPE_TIA = 'tia',
         EXPORT_TYPE_DPIA = 'dpia',
         EXPORT_TYPE_SIMPLE = 'simple',
         EXPORT_TYPE_COOKIE_BANNER = 'cookieBanner',
@@ -111,6 +112,7 @@ class PracticalSubmodule extends TranslatableEntity
     {
         return [
             self::EXPORT_TYPE_LIA,
+            self::EXPORT_TYPE_TIA,
             self::EXPORT_TYPE_DPIA,
             self::EXPORT_TYPE_COOKIE_BANNER,
             self::EXPORT_TYPE_PRIVACY_POLICY,
@@ -128,6 +130,7 @@ class PracticalSubmodule extends TranslatableEntity
     {
         return in_array($practicalSubmodule->getExportType(), [
             self::EXPORT_TYPE_LIA,
+            self::EXPORT_TYPE_TIA,
             self::EXPORT_TYPE_DPIA,
             self::EXPORT_TYPE_COOKIE_BANNER,
             self::EXPORT_TYPE_PRIVACY_POLICY,
