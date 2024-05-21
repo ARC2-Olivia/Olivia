@@ -37,6 +37,7 @@ class WordService
             PracticalSubmodule::EXPORT_TYPE_RULEBOOK_ON_ISS                  => $this->generateRulebookOnISS($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_RULEBOOK_ON_PDP                  => $this->generateRulebookOnPDP($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_RESPONDENTS_RIGHTS               => $this->generateRespondentsRightsDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_VIDEO_SURVEILLANCE_RULEBOOK      => $this->generateVideoSurvaillanceRulebookDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_CONTROLLER_PROCESSOR_CONTRACT    => $this->generateControllerProcessorContractDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT => $this->generatePersonalDataProcessingConsentDocument($assessment, $locale),
             default                                                          => $this->generateDefaultDocument($assessment)
@@ -307,14 +308,7 @@ class WordService
             }
         }
 
-        foreach ($processingStates->lists as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
-        foreach ($processingStates->blocks as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
-
-        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
-        foreach ($processors as $processor) {
-            $templateProcessor->setValue($processor->getExportTag(), '');
-        }
-
+        $this->clearUnprocessedTags($processingStates, $templateProcessor, $assessment);
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
         $templateProcessor->saveAs($document);
         return $document;
@@ -358,14 +352,7 @@ class WordService
             }
         }
 
-        foreach ($processingStates->lists as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
-        foreach ($processingStates->blocks as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
-
-        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
-        foreach ($processors as $processor) {
-            $templateProcessor->setValue($processor->getExportTag(), '');
-        }
-
+        $this->clearUnprocessedTags($processingStates, $templateProcessor, $assessment);
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
         $templateProcessor->saveAs($document);
         return $document;
@@ -394,14 +381,36 @@ class WordService
             }
         }
 
-        foreach ($processingStates->lists as $tag => $processed) if (!$processed) $templateProcessor->cloneBlock($tag, 0);
-        foreach ($processingStates->yesOrNo as $tag => $processed) if (!$processed) $templateProcessor->setValue($tag, $this->translator->trans('common.no', domain: 'app'));
+        $this->clearUnprocessedTags($processingStates, $templateProcessor, $assessment);
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $templateProcessor->saveAs($document);
+        return $document;
+    }
 
-        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
-        foreach ($processors as $processor) {
-            $templateProcessor->setValue($processor->getExportTag(), '');
+    private function generateVideoSurvaillanceRulebookDocument(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', $locale, 'ps_export_template_vsr.docx');
+        $templateProcessor = new TemplateProcessor($templateFile);
+
+        $processingStates = new \stdClass();
+        $processingStates->lists = ['vsr_01_d' => false];
+        $processingStates->blocks = ['vsr_02_a' => false, 'vsr_02_b' => false];
+
+        foreach ($results as $result) {
+            $exportTag = $result->getExportTag();
+            if (array_key_exists($exportTag, $processingStates->lists)) {
+                $this->handleListTag($result, $templateProcessor, $exportTag);
+                $processingStates->lists[$exportTag] = true;
+            } else if (array_key_exists($exportTag, $processingStates->blocks)) {
+                $templateProcessor->cloneBlock($exportTag);
+                $processingStates->blocks[$exportTag] = true;
+            } else {
+                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+            }
         }
 
+        $this->clearUnprocessedTags($processingStates, $templateProcessor, $assessment);
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
         $templateProcessor->saveAs($document);
         return $document;
@@ -536,5 +545,24 @@ class WordService
             };
         }
         return '';
+    }
+
+    private function clearUnprocessedTags(\stdClass $processingStates, TemplateProcessor $templateProcessor, PracticalSubmoduleAssessment $assessment): void
+    {
+        if (property_exists($processingStates, 'lists'))
+            foreach ($processingStates->lists as $tag => $processed)
+                if (!$processed) $templateProcessor->cloneBlock($tag, 0);
+
+        if (property_exists($processingStates, 'blocks'))
+            foreach ($processingStates->blocks as $tag => $processed)
+                if (!$processed) $templateProcessor->cloneBlock($tag, 0);
+
+        if (property_exists($processingStates, 'yesOrNo'))
+            foreach ($processingStates->yesOrNo as $tag => $processed)
+                if (!$processed) $templateProcessor->setValue($tag, $this->translator->trans('common.no', domain: 'app'));
+
+        $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
+        foreach ($processors as $processor)
+            $templateProcessor->setValue($processor->getExportTag(), '');
     }
 }

@@ -594,6 +594,7 @@ practicalSubmodule:
         rulebookOnPDP: Rulebook on Personal Data Protection
         contractBetweenControllerAndProcessor: Contract between Data Controller and Data Processor
         videoSurveillanceNotification: Video surveillance notification
+        videoSurveillanceRulebook: Video surveillance rulebook
         recordsOfProcessingActivitiesDC: Records of processing activities - for Data Controllers
         tia: Transfer impact assessment
     extra:
