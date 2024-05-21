@@ -594,6 +594,7 @@ practicalSubmodule:
         rulebookOnPDP: Regolamento sulla protezione dei dati personali
         contractBetweenControllerAndProcessor: Contratto tra Titolare e Responsabile del trattamento
         videoSurveillanceNotification: Notifica di videosorveglianza
+        videoSurveillanceRulebook: Regolamento sulla videosorveglianza
         recordsOfProcessingActivitiesDC: Registrazioni delle attività di trattamento - per Titolari del trattamento
         tia: Valutazione dell'impatto del trasferimento
     extra:
