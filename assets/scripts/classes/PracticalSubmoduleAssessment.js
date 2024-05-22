@@ -655,14 +655,30 @@ class PracticalSubmoduleAssessment {
 
         const userAnswer = questionData.userAnswer || [];
         for (const item of userAnswer) {
-            const index = this.#fetchTemplatedListIndexForQuestionId(questionData.id)
+            const index = this.#fetchTemplatedListIndexForQuestionId(questionData.id);
             let answerRaw = `<div style="white-space: pre-wrap; margin-top: 16px">${questionData.template}</div>`;
-            for (const [variable, value] of Object.entries(item)) {
-                const pattern = new RegExp(`{{\\s*${variable}[\\|\\s\\w]*\\s*}}`);
-                const inputRaw = `
-                    <label class="evaluation-assessment-question-answer--inline" style="white-space: normal">
-                        <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${index}][${variable}]" value="${value}"/>
-                    </label>`.trim()
+            for (const [templateVariable, value] of Object.entries(item)) {
+                const variableProps = templateVariable.split("|").map((prop) => prop.toLowerCase());
+                const variable = variableProps.length > 0 ? variableProps[0] : false;
+                if (false === variable) {
+                    continue;
+                }
+
+                const additionalLabelStyles = [];
+                const additionalInputStyles = [];
+                if (variableProps.includes("wider")) {
+                    additionalLabelStyles.push("width: 75%");
+                    additionalInputStyles.push("width: 100%");
+                }
+
+                const pattern = new RegExp(`{{\\s*${variable}[\\|\\s\\w]*\\s*}}`, 'i');
+                const inputRaw = variableProps.includes("largetext")
+                    ? `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal;${additionalLabelStyles.join(';')}">
+                           <textarea class="form-textarea" style="${additionalInputStyles.join(';')}" name="evaluation_assessment[${questionData.id}][${index}][${variable}]">${templateVariable}</textarea>
+                       </label>`.trim()
+                    : `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal;${additionalLabelStyles.join(';')}">
+                           <input type="text" class="form-input" style="${additionalInputStyles.join(';')}" name="evaluation_assessment[${questionData.id}][${index}][${templateVariable}]" value="${value}"/>
+                       </label>`.trim()
                 ;
                 answerRaw = answerRaw.replace(pattern, inputRaw);
             }
@@ -678,14 +694,30 @@ class PracticalSubmoduleAssessment {
         }
 
         answer.querySelector("button").addEventListener("click", () => {
-            const index = this.#fetchTemplatedListIndexForQuestionId(questionData.id)
+            const index = this.#fetchTemplatedListIndexForQuestionId(questionData.id);
             let answerRaw = `<div style="white-space: pre-wrap; margin-top: 16px">${questionData.template}</div>`;
-            for (const variable of questionData.templateVariables) {
-                const pattern = new RegExp(`{{\\s*${variable}[\\|\\s\\w]*\\s*}}`);
-                const inputRaw = `
-                    <label class="evaluation-assessment-question-answer--inline" style="white-space: normal">
-                        <input type="text" class="form-input" name="evaluation_assessment[${questionData.id}][${index}][${variable}]"/>
-                    </label>`.trim()
+            for (const templateVariable of questionData.templateVariables) {
+                const variableProps = templateVariable.split("|").map((prop) => prop.toLowerCase());
+                const variable = variableProps.length > 0 ? variableProps[0] : false;
+                if (false === variable) {
+                    continue;
+                }
+
+                const additionalLabelStyles = [];
+                const additionalInputStyles = [];
+                if (variableProps.includes("wider")) {
+                    additionalLabelStyles.push("width: 75%");
+                    additionalInputStyles.push("width: 100%");
+                }
+
+                const pattern = new RegExp(`{{\\s*${variable}[\\|\\s\\w]*\\s*}}`, 'i');
+                const inputRaw = variableProps.includes("largetext")
+                    ? `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal;${additionalLabelStyles.join(';')}">
+                           <textarea class="form-textarea" style="${additionalInputStyles.join(';')}" name="evaluation_assessment[${questionData.id}][${index}][${templateVariable}]"></textarea>
+                       </label>`.trim()
+                    : `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal;${additionalLabelStyles.join(';')}">
+                           <input type="text" class="form-input" style="${additionalInputStyles.join(';')}" name="evaluation_assessment[${questionData.id}][${index}][${templateVariable}]"/>
+                       </label>`.trim()
                 ;
                 answerRaw = answerRaw.replace(pattern, inputRaw)
             }

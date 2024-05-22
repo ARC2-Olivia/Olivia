@@ -96,7 +96,7 @@ class PracticalSubmoduleQuestionController extends BaseController
                 $tliForm->handleRequest($request);
                 if ($tliForm->isSubmitted() && $tliForm->isValid()) {
                     $ttt = (new TranslatableTemplatedText())->setText($practicalSubmoduleQuestion->getTemplate());
-                    $practicalSubmoduleQuestion->setTemplateVariables(array_map(function (TemplatedTextField $ttf) { return $ttf->getName(); }, $ttt->getTextFields()));
+                    $practicalSubmoduleQuestion->setTemplateVariables(array_map(function (TemplatedTextField $ttf) { return $ttf->simplify(); }, $ttt->getTextFields()));
                     $this->em->flush();
                     $this->addFlash('success', $this->translator->trans('success.practicalSubmoduleQuestion.edit', [], 'message'));
                 }
