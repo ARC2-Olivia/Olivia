@@ -12,7 +12,7 @@
                 <li><a href="{{ path('topic_index') }}" class="btn btn-theme-white">{{ 'nav.topics'|trans }}</a></li>
                 <li><a href="{{ path('about_us') }}" class="btn btn-theme-white">{{ 'nav.aboutUs'|trans }}</a></li>
                 <li><a href="{{ path('about_project') }}" class="btn btn-theme-white">{{ 'nav.aboutProject'|trans }}</a></li>
-{#                <li><a href="{{ path('seminars') }}" class="btn btn-theme-white">{{ 'nav.seminars'|trans }}</a></li>#}
+                <li><a href="{{ path('seminars') }}" class="btn btn-theme-white">{{ 'nav.seminars'|trans }}</a></li>
                 {% if is_granted('ROLE_USER') %}
                     <li>
                         <button id="profile-button" class="btn btn-theme-white">{{ app.user.nameOrEmail }}</button>
