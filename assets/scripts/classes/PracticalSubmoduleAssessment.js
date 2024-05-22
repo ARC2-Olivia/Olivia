@@ -8,6 +8,7 @@ class PracticalSubmoduleAssessment {
     #handlers = [];
     #backgroundSavingEnabled = true;
     #templatedListInputIndex = {};
+    #modalIndex = 0;
 
     constructor(querySelector, assessmentData, translation) {
         this.#parser = new DOMParser();
@@ -665,7 +666,15 @@ class PracticalSubmoduleAssessment {
                 ;
                 answerRaw = answerRaw.replace(pattern, inputRaw);
             }
-            answer.appendChild(this.#parser.parseFromString(answerRaw, "text/html").body.firstChild);
+            const answerHtml = this.#parser.parseFromString(answerRaw, "text/html").body.firstChild;
+
+            if (questionData.isModal) {
+                const modal = this.#prepareModalForTemplatedListInput(questionData);
+                const modalContent = modal.querySelector(".modal-dialog-content");
+                modalContent.appendChild(answerHtml);
+                answer.appendChild(modal)
+            } else
+                answer.appendChild(answerHtml);
         }
 
         answer.querySelector("button").addEventListener("click", () => {
@@ -680,10 +689,40 @@ class PracticalSubmoduleAssessment {
                 ;
                 answerRaw = answerRaw.replace(pattern, inputRaw)
             }
-            answer.appendChild(this.#parser.parseFromString(answerRaw, "text/html").body.firstChild);
+            const answerHtml = this.#parser.parseFromString(answerRaw, "text/html").body.firstChild;
+
+            if (questionData.isModal) {
+                const modal = this.#prepareModalForTemplatedListInput(questionData);
+                const modalContent = modal.querySelector(".modal-dialog-content");
+                modalContent.appendChild(answerHtml);
+                answer.appendChild(modal)
+            } else
+                answer.appendChild(answerHtml);
         });
 
         return answer;
+    }
+
+    #prepareModalForTemplatedListInput(questionData) {
+        const modalIndex = this.#modalIndex++;
+        const modal = this.#parser.parseFromString(`
+            <div style="margin-top: 16px">
+                <button type="button" class="btn btn-theme-white bg-blue" data-modal-open="#modal-${questionData.id}-${modalIndex}">Prikaži polja za odgovor</button>
+                <div id="modal-${questionData.id}-${modalIndex}" class="modal">
+                    <div class="modal-dialog wider">
+                        <div class="modal-dialog-content"></div>
+                        <div class="modal-dialog-actions">
+                            <button type="button" class="btn btn-link" data-modal-close="#modal-${questionData.id}-${modalIndex}">Zatvori</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `, "text/html").body.firstChild
+
+        window.Modals.initializeModal(modal.querySelector(".modal"));
+        window.Modals.initializeModalOpener(modal.querySelector("[data-modal-open]"))
+        window.Modals.initializeModalCloser(modal.querySelector("[data-modal-close]"))
+        return modal;
     }
 
     #updateListWithSublistValue(divSublist, inputText, inputHidden) {

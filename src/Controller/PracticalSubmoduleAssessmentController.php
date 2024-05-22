@@ -268,7 +268,8 @@ class PracticalSubmoduleAssessmentController extends BaseController
                 'largeText' => $practicalSubmoduleQuestion->isLargeText(),
                 'listWithSublist' => $practicalSubmoduleQuestion->isListWithSublist(),
                 'template' => $practicalSubmoduleQuestion->getTemplate() ?? '',
-                'templateVariables' => $practicalSubmoduleQuestion->getTemplateVariables()
+                'templateVariables' => $practicalSubmoduleQuestion->getTemplateVariables(),
+                'isModal' => $practicalSubmoduleQuestion->isModal()
             ];
 
             if ($editing) {

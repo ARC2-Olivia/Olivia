@@ -99,6 +99,8 @@
 
         <hr/>
         {{ form_start(tliForm, {'attr': {'id': tliForm.vars.id}}) }}
+            {{ form_label(tliForm.isModal) }}
+            {{ form_widget(tliForm.isModal) }}
             {{ form_label(tliForm.template) }}
             {{ form_widget(tliForm.template) }}
         {{ form_end(tliForm) }}
