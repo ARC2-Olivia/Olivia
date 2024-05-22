@@ -12,12 +12,31 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PracticalSubmoduleQuestionTemplatedListInputType extends AbstractType
 {
+    private ?TranslatorInterface $translator = null;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('template', TextareaType::class, [
-            'label' => 'form.entity.practicalSubmoduleQuestion.label.template',
-            'attr' => ['class' => 'form-textarea mb-3']
-        ]);
+        $booleanChoices = [
+            $this->translator->trans('common.no', [], 'app') => false,
+            $this->translator->trans('common.yes', [], 'app') => true
+        ];
+
+        $builder
+            ->add('isModal', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.isModal',
+                'choices' => $booleanChoices,
+                'attr' => ['class' => 'mb-3', 'data-df-select' => '']
+            ])
+            ->add('template', TextareaType::class, [
+                'label' => 'form.entity.practicalSubmoduleQuestion.label.template',
+                'attr' => ['class' => 'form-textarea mb-3']
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

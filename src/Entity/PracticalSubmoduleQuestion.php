@@ -85,6 +85,9 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private array $templateVariables = [];
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isModal = null;
+
     #[Assert\Callback]
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -360,6 +363,21 @@ class PracticalSubmoduleQuestion extends TranslatableEntity
     public function setTemplateVariables(?array $templateVariables): self
     {
         $this->templateVariables = $templateVariables;
+
+        return $this;
+    }
+
+    public function isModal(): ?bool
+    {
+        if (null === $this->isModal)
+            return false;
+
+        return $this->isModal;
+    }
+
+    public function setIsModal(?bool $isModal): self
+    {
+        $this->isModal = $isModal;
 
         return $this;
     }

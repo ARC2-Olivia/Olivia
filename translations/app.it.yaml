@@ -298,6 +298,7 @@ form:
                 largeText: Visualizza input per testo di grandi dimensioni
                 listWithSublist: Abilita sottoliste
                 template: Modello
+                isModal: Mostra come modale
             placeholder:
                 questionText: Il testo della domanda va qui...
                 dependentEvaluationQuestion: Niente selezionato...

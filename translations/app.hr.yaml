@@ -296,6 +296,7 @@ form:
                 largeText: Omogući prikaz za unos većeg teksta
                 listWithSublist: Omogući unos podlista
                 template: Predložak
+                isModal: Prikazati modalno
             placeholder:
                 questionText: Ovdje stavite tekst pitanja...
                 dependentEvaluationQuestion: Ništa odabrano...

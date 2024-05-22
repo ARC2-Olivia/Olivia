@@ -13,9 +13,15 @@
     </form>
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('modal') }}
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('EventBus') }}
+    {{ encore_entry_script_tags('modal') }}
     {{ encore_entry_script_tags('PracticalSubmoduleAssessment') }}
     <script>
         window.addEventListener("load", () => {
