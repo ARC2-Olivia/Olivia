@@ -54,6 +54,7 @@ class PracticalSubmoduleType extends AbstractType
             $this->translator->trans('practicalSubmodule.exportType.videoSurveillanceNotification', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_VIDEO_SURVEILLANCE_NOTIFICATION,
             $this->translator->trans('practicalSubmodule.exportType.videoSurveillanceRulebook', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_VIDEO_SURVEILLANCE_RULEBOOK,
             $this->translator->trans('practicalSubmodule.exportType.recordsOfProcessingActivitiesDC', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_RECORDS_OF_PROCESSING_ACTIVITIES_DC,
+            $this->translator->trans('practicalSubmodule.exportType.recordsOfProcessingActivitiesDP', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_RECORDS_OF_PROCESSING_ACTIVITIES_DP,
             $this->translator->trans('practicalSubmodule.exportType.tia', domain: 'app') => PracticalSubmodule::EXPORT_TYPE_TIA,
         ];
 

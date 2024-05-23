@@ -28,6 +28,7 @@ class ExcelService
     {
         return match ($assessment->getPracticalSubmodule()->getExportType()) {
             PracticalSubmodule::EXPORT_TYPE_RECORDS_OF_PROCESSING_ACTIVITIES_DC => $this->generateRecordsOfProcessingActivitiesDC($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_RECORDS_OF_PROCESSING_ACTIVITIES_DP => $this->generateRecordsOfProcessingActivitiesDP($assessment, $locale),
             default => null
         };
     }
@@ -37,6 +38,46 @@ class ExcelService
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
         $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'excel', $locale, 'ps_export_template_rpadc.xlsx');
         $columnCount = 25;
+
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $spreadsheet = $reader->load($templateFile);
+        $worksheet = $spreadsheet->getActiveSheet();
+
+        foreach ($results as $result) {
+            if (null === $result->getExportTag()) continue;
+
+            if ('A9' === $result->getExportTag()) {
+                $lines = str_replace("\r", '', $result->getText());
+                $lines = explode("\n", $lines);
+                $this->copyRowStyles($worksheet, $result->getExportTag(), $columnCount, count($lines));
+
+                $coordinate = $worksheet->getCell($result->getExportTag())->getCoordinate();
+                $rowOffset = 0;
+                foreach ($lines as $line) {
+                    $cellAddress = (new CellAddress($coordinate, $worksheet))->nextRow($rowOffset);
+                    foreach (explode(', ', $line) as $value) {
+                        $currentCell = $worksheet->getCell($cellAddress);
+                        $currentCell->setValue($value);
+                        $cellAddress = $cellAddress->nextColumn();
+                    }
+                    $rowOffset++;
+                }
+            } else {
+                $worksheet->getCell($result->getExportTag())->setValue($result->getText());
+            }
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        $writer->save($document);
+        return $document;
+    }
+
+    private function generateRecordsOfProcessingActivitiesDP(PracticalSubmoduleAssessment $assessment, string $locale): string
+    {
+        $results = $this->practicalSubmoduleService->runProcessors($assessment);
+        $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'excel', $locale, 'ps_export_template_rpadp.xlsx');
+        $columnCount = 8;
 
         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
         $spreadsheet = $reader->load($templateFile);

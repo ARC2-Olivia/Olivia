@@ -594,6 +594,7 @@ practicalSubmodule:
         videoSurveillanceNotification: Obavijest o videonadzoru
         videoSurveillanceRulebook: Pravilnik o videonadzoru
         recordsOfProcessingActivitiesDC: Evidencija aktivnosti obrade - za voditelje obrade
+        recordsOfProcessingActivitiesDP: Evidencija aktivnosti obrade - za izvršitelje obrade
         tia: Procjena utjecaja prijenosa
     extra:
         question: Pitanje

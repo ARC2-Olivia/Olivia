@@ -597,6 +597,7 @@ practicalSubmodule:
         videoSurveillanceNotification: Notifica di videosorveglianza
         videoSurveillanceRulebook: Regolamento sulla videosorveglianza
         recordsOfProcessingActivitiesDC: Registrazioni delle attività di trattamento - per Titolari del trattamento
+        recordsOfProcessingActivitiesDP: Registrazioni delle attività di trattamento - per i Responsabili del trattamento
         tia: Valutazione dell'impatto del trasferimento
     extra:
         question: Domanda

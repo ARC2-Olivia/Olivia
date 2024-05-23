@@ -597,6 +597,7 @@ practicalSubmodule:
         videoSurveillanceNotification: Video surveillance notification
         videoSurveillanceRulebook: Video surveillance rulebook
         recordsOfProcessingActivitiesDC: Records of processing activities - for Data Controllers
+        recordsOfProcessingActivitiesDP: Records of processing activities - for Data Processors
         tia: Transfer impact assessment
     extra:
         question: Question
