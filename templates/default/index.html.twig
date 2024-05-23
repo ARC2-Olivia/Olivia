@@ -71,9 +71,8 @@
                     <div class="index-carousel-slide">
                         <div class="index-testimonial">
                             <div class="container position-relative">
-                                {{ mdi('book-open-page-variant-outline', 'index-testimonial-icon') }}
-                                <h3>{{ testimonial.title }}</h3>
-                                <p>{{ testimonial.text }}</p>
+                                <h3>{{ testimonial.title|raw }}</h3>
+                                <p>{{ testimonial.text|raw }}</p>
                             </div>
                         </div>
                     </div>

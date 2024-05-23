@@ -179,11 +179,15 @@
 
 .index-testimonial h3 {
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: normal;
 }
 
 .index-testimonial p {
     margin: 0;
+}
+
+.index-testimonial a {
+    color: unset;
 }
 
 .index-testimonial-person {

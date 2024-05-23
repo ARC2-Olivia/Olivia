@@ -28,6 +28,10 @@ class DefaultController extends BaseController
             ['title' => $this->translator->trans('index.facts.3.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.3.text', domain: 'app')],
             ['title' => $this->translator->trans('index.facts.4.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.4.text', domain: 'app')]
         ];
+
+        if ($this->getParameter('locale.alternate') === $request->getLocale())
+            $testimonials[] = ['title' => $this->translator->trans('index.facts.5.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.5.text', domain: 'app')];
+
         return $this->render('default/index.html.twig', ['testimonials' => $testimonials]);
     }
 

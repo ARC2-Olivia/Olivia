@@ -139,17 +139,20 @@ index:
         text: "Olivia je istodobno virtualna učiteljica i asistentica. Olivia sadrži malu <i>online</i> akademiju koja Vam nudi niz modula za učenje kako biste poboljšali svoje znanje u području zaštite osobnih podataka, a služi i kao praktičan alat za pomoć pri izradi internih akata kojima možete dokazati svoju usklađenost i pouzdanost."
     facts:
         1:
-            title: "GDPR činjenica br. 1"
-            text: GDPR je zakon donesen u EU koji sadrži obvezna pravila kako organizacije i tvrtke moraju koristiti osobne podatke na način koji se štiti njihov integritet.
+            title: "6. lipnja 2024.<br/><b>Zaštita osobnih podataka i usklađivanje s GDPR-om u zaštitarskoj djelatnosti</b>"
+            text: "Prijave na: <a href='https://ec.europa.eu/eusurvey/runner/31592e6b-a115-b763-8ae0-751bee6c4ad4' target='_blank'>https://ec.europa.eu/eusurvey/runner/31592e6b-a115-b763-8ae0-751bee6c4ad4</a>"
         2:
-            title: "GDPR činjenica br. 2"
-            text: Korištenje osobnih podataka mora poštovati prava pojedinaca, u skladu s načelima integriteta i zakona.
+            title: "10. lipnja 2024.<br/><b>6. rođendan GDPR-a: jesmo li konačno svladali GDPR i kako se suočiti s novim izazovima?</b>"
+            text: "Prijave na: <a href='https://ec.europa.eu/eusurvey/runner/HUP-ARC2-savjetovanje-zagreb-10-6-2024' target='_blank'>https://ec.europa.eu/eusurvey/runner/HUP-ARC2-savjetovanje-zagreb-10-6-2024</a>"
         3:
-            title: "GDPR činjenica br. 3"
-            text: Osobni podatak je svaka informacija koja bi, izravno ili neizravno, mogla identificirati živu osobu.
+            title: "14. lipnja 2024.<br/><b>Kako provesti procjenu učinka na zaštitu podataka?</b>"
+            text: "Prijave na: <a href='https://ec.europa.eu/eusurvey/runner/online-ARC2radionica-DPIA' target='_blank'>https://ec.europa.eu/eusurvey/runner/online-ARC2radionica-DPIA</a>"
         4:
-            title: "GDPR činjenica br. 4"
-            text: GDPR svakoj osobi daje određena prava na njezine osobne podatke.
+            title: "20. lipnja 2024.<br/><b>Kako objasniti zaposlenicima zašto je važna zaštita osobnih podataka?</b>"
+            text: "Prijave na: <a href='https://ec.europa.eu/eusurvey/runner/20-lipnja-2024-ARC2-radionica' target='_blank'>https://ec.europa.eu/eusurvey/runner/20-lipnja-2024-ARC2-radionica</a>"
+        5:
+            title: "27. lipnja 2024.<br/><b>Kako objasniti zaposlenicima zašto je važna zaštita osobnih podataka?</b>"
+            text: "Prijave na: <a href='https://ec.europa.eu/eusurvey/runner/ARC2-online-radionica-27-lipnja2024' target='_blank'>https://ec.europa.eu/eusurvey/runner/ARC2-online-radionica-27-lipnja2024</a>"
 
 form:
     security:
