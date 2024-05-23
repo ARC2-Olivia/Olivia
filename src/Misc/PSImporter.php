@@ -144,7 +144,7 @@ class PSImporter
 
     private function doCreateQuestionTask(array $props): void
     {
-        if (false === $this->allKeysExist(['id', 'type', 'questionText', 'evaluable', 'position', 'other', 'heading', 'disabled', 'multipleWeighted', 'largeText', 'listWithSublist', 'template', 'templateVariables'], $props)) {
+        if (false === $this->allKeysExist(['id', 'type', 'questionText', 'evaluable', 'position', 'other', 'heading', 'disabled', 'multipleWeighted', 'largeText', 'listWithSublist', 'template', 'templateVariables', 'modal'], $props)) {
             return;
         }
 
@@ -162,6 +162,7 @@ class PSImporter
             ->setListWithSublist($props['listWithSublist'])
             ->setTemplate($props['template'])
             ->setTemplateVariables($props['templateVariables'])
+            ->setIsModal($props['modal'])
         ;
         $this->em->persist($question);
         $this->questionMapping[$props['id']] = $question;

@@ -103,7 +103,8 @@ class PSExporter
                     'largeText' => $question->isLargeText(),
                     'listWithSublist' => $question->isListWithSublist(),
                     'template' => $question->getTemplate(),
-                    'templateVariables' => $question->getTemplateVariables()
+                    'templateVariables' => $question->getTemplateVariables(),
+                    'modal' => $question->isModal(),
                 ]
             ];
 
