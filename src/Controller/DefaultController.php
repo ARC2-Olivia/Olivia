@@ -7,6 +7,7 @@ use App\Entity\Texts;
 use App\Form\ProfileType;
 use App\Form\Security\PasswordResetType;
 use App\Service\SecurityService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,6 +91,7 @@ class DefaultController extends BaseController
     }
 
     #[Route("/{_locale}/seminars", name: "seminars", requirements: ["_locale" => "%locale.supported%"])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function seminars(): Response
     {
         $files = $this->em->getRepository(File::class)->findBy(['seminar' => true]);
