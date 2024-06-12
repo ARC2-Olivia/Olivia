@@ -34,12 +34,13 @@
                                 <td>{{ file.modifiedAt is not null ? file.modifiedAt|date('d.m.Y. H:i') : '-' }}</td>
                                 <td>
                                     <div class="d-flex gap-1">
-                                        <a href="{{ path('admin_file_replace', {'file': file.id}) }}" class="btn btn-theme-white btn-sm bg-blue">{{ mdi('file-replace-outline') }}</a>
+                                        <a href="{{ path('admin_file_replace', {'file': file.id}) }}" class="btn btn-theme-white btn-sm bg-blue">{{ mdi('pencil') }}</a>
                                         <form method="post" action="{{ path('admin_file_delete', {'file': file.id}) }}" onsubmit="return confirm('{{ 'file.message.delete'|trans }}');">
                                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('file.delete') }}"/>
                                             <button type="submit" class="btn btn-theme-white btn-sm bg-red">{{ mdi('trash-can-outline') }}</button>
                                         </form>
                                         <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}" class="btn btn-theme-white btn-sm bg-green">{{ mdi('download') }}</a>
+                                        <button type="button" class="btn btn-theme-white btn-sm bg-dark-blue" data-copy="{{ absolute_url(path('file_fetch_uploaded_file', {'file': file.id})) }}" onclick="copy(this)">{{ mdi('content-copy') }}</button>
                                     </div>
                                 </td>
                             </tr>
@@ -60,8 +61,14 @@
     {{ parent() }}
     {{ encore_entry_script_tags('gridjs') }}
     <script>
+        function copy(element) {
+            if ("copy" in element.dataset) {
+                navigator.clipboard.writeText(element.dataset.copy);
+            }
+        }
+
         window.addEventListener("load", () => {
-            new Grid({ from: document.getElementById("files-table"), sort: true, search: true, pagination: true }).render(document.getElementById("files-table-wrapper"));
+            new Grid({from: document.getElementById("files-table"), sort: true, search: true, pagination: true}).render(document.getElementById("files-table-wrapper"));
         });
     </script>
 {% endblock %}
