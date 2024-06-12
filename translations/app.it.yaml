@@ -44,6 +44,7 @@ common:
     details: Dettagli
     description: Descrizione
     list: Elenco
+    close: Vicino
 
 button:
     details: Dettagli
@@ -105,6 +106,7 @@ nav:
     dataRequests: Richieste di dati
     files: File
     seminars: Seminario
+    presentations: Presentazioni
     home: Casa
     gdpr: Protezione dati
     topics: Temi GDPR
@@ -373,7 +375,8 @@ form:
                 type: Tipo
                 originalName: Nome originale
                 displayText: Testo da visualizzare
-                seminar: Seminario
+                seminar: Inseriscilo nella sezione Seminari
+                presentation: Inseriscilo nella sezione Presentazioni
                 createdAt: Creato a
                 modifiedAt: Modificato a
         topic:

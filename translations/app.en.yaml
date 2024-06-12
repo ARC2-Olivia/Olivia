@@ -44,6 +44,7 @@ common:
     details: Details
     description: Description
     list: List
+    close: Close
 
 button:
     details: Details
@@ -105,6 +106,7 @@ nav:
     dataRequests: Data requests
     files: Files
     seminars: Webinars
+    presentations: Presentations
     home: Home
     gdpr: Data protection
     topics: GDPR topics
@@ -373,7 +375,8 @@ form:
                 type: Type
                 originalName: Original name
                 displayText: Text to display
-                seminar: Seminar
+                seminar: Place in Webinars
+                presentation: Place in Presentations
                 createdAt: Created at
                 modifiedAt: Modified at
         topic:

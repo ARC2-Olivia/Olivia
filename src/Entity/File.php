@@ -32,6 +32,9 @@ class File
     #[ORM\Column(nullable: true)]
     private ?bool $seminar = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $presentation = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -113,6 +116,21 @@ class File
     public function setSeminar(?bool $seminar): self
     {
         $this->seminar = $seminar;
+
+        return $this;
+    }
+
+    public function isPresentation(): ?bool
+    {
+        if (null === $this->presentation) {
+            return false;
+        }
+        return $this->presentation;
+    }
+
+    public function setPresentation(?bool $presentation): self
+    {
+        $this->presentation = $presentation;
 
         return $this;
     }

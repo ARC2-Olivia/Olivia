@@ -90,12 +90,20 @@ class DefaultController extends BaseController
         return $this->render('default/aboutProject.html.twig', ['texts' => $texts]);
     }
 
-    #[Route("/{_locale}/seminars", name: "seminars", requirements: ["_locale" => "%locale.supported%"])]
+    #[Route("/{_locale}/webinars", name: "seminars", requirements: ["_locale" => "%locale.supported%"])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function seminars(): Response
+    public function webinars(): Response
     {
         $files = $this->em->getRepository(File::class)->findBy(['seminar' => true]);
         return $this->render('default/seminars.html.twig', ['files' => $files]);
+    }
+
+    #[Route("/{_locale}/presentations", name: "presentations", requirements: ["_locale" => "%locale.supported%"])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function presentation(): Response
+    {
+        $files = $this->em->getRepository(File::class)->findBy(['presentation' => true]);
+        return $this->render('default/presentations.html.twig', ['files' => $files]);
     }
 
     #[Route("/{_locale}/maintenance", name: "maintenance", requirements: ["_locale" => "%locale.supported%"])]

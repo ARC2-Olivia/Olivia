@@ -43,6 +43,7 @@ common:
     details: Detalji
     description: Opis
     list: Popis
+    close: Zatvori
 
 button:
     details: Detalji
@@ -103,6 +104,7 @@ nav:
     dataRequests: Podatkovni zahtjevi
     files: Datoteke
     seminars: Webinari
+    presentations: Prezentacije
     home: Naslovna
     gdpr: Zaštita podataka
     topics: GDPR teme
@@ -374,7 +376,8 @@ form:
                 type: Vrsta
                 originalName: Originalni naziv
                 displayText: Tekst za prikaz
-                seminar: Seminar
+                seminar: Stavi u rubriku Webinar
+                presentation: Stavi u rubriku Prezentacije
                 createdAt: Vrijeme stvaranja
                 modifiedAt: Vrijeme modifikacije
         topic:

@@ -166,6 +166,7 @@ class AdminController extends BaseController
                     ->setOriginalName($upload->getClientOriginalName())
                     ->setDisplayText($form->get('displayText')->getData())
                     ->setSeminar($form->get('seminar')->getData())
+                    ->setPresentation($form->get('presentation')->getData())
                     ->setCreatedAt(new \DateTimeImmutable())
                 ;
                 $directory = $this->getParameter('dir.file_repository');
@@ -204,7 +205,12 @@ class AdminController extends BaseController
     #[Route("/file/replace/{file}", name: "file_replace")]
     public function replaceFile(File $file, Request $request): Response
     {
-        $form = $this->createForm(BasicFileUploadType::class, ['type' => $file->getType(), 'displayText' => $file->getDisplayText(), 'seminar' => $file->isSeminar()], ['complexMode' => true, 'requiredFile' => false]);
+        $form = $this->createForm(BasicFileUploadType::class, [
+            'type' => $file->getType(),
+            'displayText' => $file->getDisplayText(),
+            'seminar' => $file->isSeminar(),
+            'presentation' => $file->isPresentation()
+        ], ['complexMode' => true, 'requiredFile' => false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -225,6 +231,7 @@ class AdminController extends BaseController
                 ->setType($form->get('type')->getData())
                 ->setDisplayText($form->get('displayText')->getData())
                 ->setSeminar($form->get('seminar')->getData())
+                ->setPresentation($form->get('presentation')->getData())
                 ->setModifiedAt(new \DateTimeImmutable())
             ;
             $this->em->flush();

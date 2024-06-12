@@ -63,6 +63,12 @@ ul.navigation-admin {
     align-items: stretch;
 }
 
+@media screen and (max-width: 1399px) {
+    .navigation-responsive > .navigation-main {
+        column-gap: 0;
+    }
+}
+
 @media screen and (max-width: 1199px) {
     .header-logo {
         margin-top: -24px !important;
