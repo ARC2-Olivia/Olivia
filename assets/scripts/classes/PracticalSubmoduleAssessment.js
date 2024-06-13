@@ -674,7 +674,7 @@ class PracticalSubmoduleAssessment {
                 const pattern = new RegExp(`{{\\s*${variable}[\\|\\s\\w]*\\s*}}`, 'i');
                 const inputRaw = variableProps.includes("largetext")
                     ? `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal;${additionalLabelStyles.join(';')}">
-                           <textarea class="form-textarea" style="${additionalInputStyles.join(';')}" name="evaluation_assessment[${questionData.id}][${index}][${variable}]">${templateVariable}</textarea>
+                           <textarea class="form-textarea" style="${additionalInputStyles.join(';')}" name="evaluation_assessment[${questionData.id}][${index}][${templateVariable}]">${value}</textarea>
                        </label>`.trim()
                     : `<label class="evaluation-assessment-question-answer--inline" style="white-space: normal;${additionalLabelStyles.join(';')}">
                            <input type="text" class="form-input" style="${additionalInputStyles.join(';')}" name="evaluation_assessment[${questionData.id}][${index}][${templateVariable}]" value="${value}"/>

@@ -88,8 +88,10 @@ class PracticalSubmoduleQuestionRepository extends ServiceEntityRepository
             ->select('COUNT(psq.id)')
             ->where('psq.type != :type')
             ->andWhere('psq.practicalSubmodule = :submodule')
+            ->andWhere('psq.disabled = :disabled')
             ->setParameter('type', PracticalSubmoduleQuestion::TYPE_STATIC_TEXT)
             ->setParameter('submodule', $practicalSubmodule)
+            ->setParameter('disabled', false)
             ->getQuery()->getSingleScalarResult()
         ;
     }
