@@ -45,7 +45,7 @@ class ProcessorResult
         if (null === $this->text) {
             return null;
         }
-        return str_replace('|distinguish', '', $this->text);
+        return str_replace(['|distinguish', '/*/'], '', $this->text);
     }
 
     public function isHtml(): ?bool

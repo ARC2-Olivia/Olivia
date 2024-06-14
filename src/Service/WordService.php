@@ -187,14 +187,37 @@ class WordService
         $fontStyle = ['name' => 'Bell MT', 'size' => 12];
 
         foreach ($results as $result) {
-            $lines = explode("\n", str_replace("\r", '', $result->getText()));
-            $textRun = new TextRun();
-            $textRun->addText(array_shift($lines), $fontStyle);
-            foreach ($lines as $line) {
-                $textRun->addTextBreak();
-                $textRun->addText($line, $fontStyle);
+            if ('dpia_11' === $result->getExportTag()) {
+                $lines = explode('/*/', preg_replace('/\/\*\/(\n|\r\|\r\n)/', '/*/', $result->getText()));
+                $lines = array_filter($lines, function ($line) { return strlen(trim($line)) > 0; });
+                $lineCount = count($lines);
+                $templateProcessor->cloneBlock('dpia_11', $lineCount, indexVariables: true);
+                for ($i = 1; $i <= $lineCount; $i++) {
+                    $line = explode(', ', $lines[$i-1]);
+                    $firstValue = explode("\n", str_replace("\r", "", $line[0]));
+                    $firstValueCount = count($firstValue);
+                    $firstValueTextRun = new TextRun();
+                    for ($j = 0; $j < $firstValueCount; $j++) {
+                        if ($j > 0) {
+                            $firstValueTextRun->addTextBreak();
+                        }
+                        $firstValueTextRun->addText($firstValue[$j], $fontStyle);
+                    }
+                    $templateProcessor->setComplexValue("dpia_11a#$i", $firstValueTextRun);
+                    $templateProcessor->setValue("dpia_11b#$i", $line[1]);
+                    $templateProcessor->setValue("dpia_11c#$i", $line[2]);
+                    $templateProcessor->setValue("dpia_11d#$i", $line[3]);
+                }
+            } else {
+                $lines = explode("\n", str_replace("\r", '', $result->getText()));
+                $textRun = new TextRun();
+                $textRun->addText(array_shift($lines), $fontStyle);
+                foreach ($lines as $line) {
+                    $textRun->addTextBreak();
+                    $textRun->addText($line, $fontStyle);
+                }
+                $templateProcessor->setComplexValue($result->getExportTag(), $textRun);
             }
-            $templateProcessor->setComplexValue($result->getExportTag(), $textRun);
         }
 
         $processors = $this->practicalSubmoduleService->findRunnableProcessors($assessment->getPracticalSubmodule());
