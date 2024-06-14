@@ -16,10 +16,10 @@ class ProcessorResult
 
     /**
      * @param string|null $text
-     * @param File[]|null $files
      * @param bool $isHtml
      * @param PracticalSubmoduleQuestion|null $question
      * @param string|null $exportTag
+     * @param bool $isMultiValueProcessor
      */
     public function __construct(?string $text = null,
                                 bool $isHtml = false,
@@ -45,7 +45,9 @@ class ProcessorResult
         if (null === $this->text) {
             return null;
         }
-        return str_replace(['|distinguish', '/*/'], '', $this->text);
+        $displayableText = str_replace(['|distinguish', '/*/'], '', $this->text);
+        $displayableText = str_replace('|*|', '; ', $displayableText);
+        return $displayableText;
     }
 
     public function isHtml(): ?bool

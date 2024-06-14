@@ -193,7 +193,7 @@ class WordService
                 $lineCount = count($lines);
                 $templateProcessor->cloneBlock('dpia_11', $lineCount, indexVariables: true);
                 for ($i = 1; $i <= $lineCount; $i++) {
-                    $line = explode(', ', $lines[$i-1]);
+                    $line = explode('|*|', $lines[$i-1]);
                     $firstValue = explode("\n", str_replace("\r", "", $line[0]));
                     $firstValueCount = count($firstValue);
                     $firstValueTextRun = new TextRun();
