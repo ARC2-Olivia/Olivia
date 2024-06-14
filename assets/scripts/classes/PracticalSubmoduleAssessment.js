@@ -610,7 +610,7 @@ class PracticalSubmoduleAssessment {
         } else {
             for (const item of userAnswer) {
                 const input = this.#parser.parseFromString(`
-                    <div>
+                    <div style="width: 100%">
                         <input type="hidden" name="evaluation_assessment[${questionData.id}][]" value="${item}"/>
                         <input type="text" class="form-input" value="${item}"/>
                     </div>
