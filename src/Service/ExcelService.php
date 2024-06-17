@@ -47,15 +47,15 @@ class ExcelService
             if (null === $result->getExportTag()) continue;
 
             if ('A9' === $result->getExportTag()) {
-                $lines = str_replace("\r", '', $result->getText());
-                $lines = explode("\n", $lines);
+                $lines = explode('/*/', preg_replace('/\/\*\/(\n|\r\|\r\n)/', '/*/', $result->getText()));
+                $lines = array_filter($lines, function ($line) { return strlen(trim($line)) > 0; });
                 $this->copyRowStyles($worksheet, $result->getExportTag(), $columnCount, count($lines));
 
                 $coordinate = $worksheet->getCell($result->getExportTag())->getCoordinate();
                 $rowOffset = 0;
                 foreach ($lines as $line) {
                     $cellAddress = (new CellAddress($coordinate, $worksheet))->nextRow($rowOffset);
-                    foreach (explode(', ', $line) as $value) {
+                    foreach (explode('|*|', $line) as $value) {
                         $currentCell = $worksheet->getCell($cellAddress);
                         $currentCell->setValue($value);
                         $cellAddress = $cellAddress->nextColumn();
