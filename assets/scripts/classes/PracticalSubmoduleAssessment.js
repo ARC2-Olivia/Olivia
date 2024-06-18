@@ -28,6 +28,8 @@ class PracticalSubmoduleAssessment {
             buttonAdd: translation.buttonAdd || "Add",
             buttonAddItem: translation.buttonAddItem || "Add item",
             buttonSaveForLater: translation.buttonSaveForLater || "Save for later",
+            buttonShowFields: translation.buttonShowFields || "Show fields",
+            buttonClose: translation.buttonClose || "Close",
             errorDefault: translation.errorDefault || "The answer to this question is invalid"
         };
     }
@@ -739,12 +741,12 @@ class PracticalSubmoduleAssessment {
         const modalIndex = this.#modalIndex++;
         const modal = this.#parser.parseFromString(`
             <div style="margin-top: 16px">
-                <button type="button" class="btn btn-theme-white bg-blue" data-modal-open="#modal-${questionData.id}-${modalIndex}">Prikaži polja za odgovor</button>
+                <button type="button" class="btn btn-theme-white bg-blue" data-modal-open="#modal-${questionData.id}-${modalIndex}">${this.#translation.buttonShowFields}</button>
                 <div id="modal-${questionData.id}-${modalIndex}" class="modal">
                     <div class="modal-dialog wider">
                         <div class="modal-dialog-content"></div>
                         <div class="modal-dialog-actions">
-                            <button type="button" class="btn btn-link" data-modal-close="#modal-${questionData.id}-${modalIndex}">Zatvori</button>
+                            <button type="button" class="btn btn-link" data-modal-close="#modal-${questionData.id}-${modalIndex}">${this.#translation.buttonClose}</button>
                         </div>
                     </div>
                 </div>

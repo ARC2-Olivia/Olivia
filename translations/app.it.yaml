@@ -44,6 +44,8 @@ common:
     details: Dettagli
     description: Descrizione
     list: Elenco
+    close: Vicino
+    showFields: Mostra campi
 
 button:
     details: Dettagli

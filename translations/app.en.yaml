@@ -44,6 +44,8 @@ common:
     details: Details
     description: Description
     list: List
+    close: Close
+    showFields: Show fields
 
 button:
     details: Details
