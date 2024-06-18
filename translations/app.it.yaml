@@ -225,11 +225,11 @@ form:
                 certificateInfo: Scrivere le informazioni relative al certificato.
             choices:
                 estimatedWorkload:
-                    hours: ore)
+                    hours: ore
                     days: giorno/i
                     weeks: settimana/e
-                    months: mesi)
-                    years: anni)
+                    months: mesi
+                    years: anni
         lesson:
             label:
                 name: Nome
@@ -682,7 +682,7 @@ practicalSubmoduleAssessment:
         downloadReport: Scarica il rapporto
 
 termsOfService:
-    format: ver. %versione%, rev. %revisione%
+    format: ver. %version%, rev. %revision%
     ongoing: in corso
     message:
         accept: Sei sicuro di voler accettare i termini di servizio?
@@ -719,7 +719,7 @@ file:
     title:
         index: File
         new: Caricamento nuovo file
-        edit: Sostituisci il file <i>%nomefile%</i>
+        edit: Sostituisci il file <i>%filename%</i>
     message:
         delete: Sei sicuro di voler eliminare questo file?
     type:
