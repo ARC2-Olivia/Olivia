@@ -37,7 +37,7 @@ class ExcelService
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
         $templateFile = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'excel', $locale, 'ps_export_template_rpadc.xlsx');
-        $columnCount = 25;
+        $columnCount = 26;
 
         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
         $spreadsheet = $reader->load($templateFile);
