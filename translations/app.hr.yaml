@@ -44,6 +44,7 @@ common:
     description: Opis
     list: Popis
     close: Zatvori
+    showFields: Pokaži polja
 
 button:
     details: Detalji
