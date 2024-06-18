@@ -141,7 +141,7 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
                     }
                     $processedLines[] = $processedLine;
                 }
-                $this->processedText = implode("\n", $processedLines);
+                $this->processedText = implode("/*/", $processedLines);
                 break;
             }
         }
