@@ -45,7 +45,8 @@ class ProcessorResult
         if (null === $this->text) {
             return null;
         }
-        $displayableText = str_replace(['|distinguish', '/*/'], '', $this->text);
+        $displayableText = str_replace('|distinguish', '', $this->text);
+        $displayableText = str_replace('/*/', '<br/>', $displayableText);
         $displayableText = str_replace('|*|', '; ', $displayableText);
         return $displayableText;
     }
