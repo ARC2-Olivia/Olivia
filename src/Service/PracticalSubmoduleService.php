@@ -221,10 +221,13 @@ class PracticalSubmoduleService
     }
 
     /** @return ProcessorResult[] */
-    public function runProcessors(PracticalSubmoduleAssessment $assessment): array
+    public function runProcessors(?PracticalSubmoduleAssessment $assessment): array
     {
-        $results = [];
+        if (null === $assessment) {
+            return [];
+        }
 
+        $results = [];
         $processors = $this->findRunnableProcessors($assessment->getPracticalSubmodule());
         foreach ($processors as $processor) {
             $result = match ($processor->getType()) {
@@ -238,7 +241,9 @@ class PracticalSubmoduleService
                 default => null
             };
 
-            if ($result !== null) $results[] = $result;
+            if ($result !== null) {
+                $results[] = $result;
+            }
         }
 
         return $results;
