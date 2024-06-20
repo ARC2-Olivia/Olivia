@@ -658,7 +658,7 @@ class PracticalSubmoduleAssessment {
         const userAnswer = questionData.userAnswer || [];
         for (const item of userAnswer) {
             const index = this.#fetchTemplatedListIndexForQuestionId(questionData.id);
-            let answerRaw = `<div style="white-space: pre-wrap; margin-top: 16px">${questionData.template}</div>`;
+            let answerRaw = `<div style="white-space: pre-wrap; margin-top: 16px; width: 100%">${questionData.template}</div>`;
             for (const [templateVariable, value] of Object.entries(item)) {
                 const variableProps = templateVariable.split("|").map((prop) => prop.toLowerCase());
                 const variable = variableProps.length > 0 ? variableProps[0] : false;
@@ -697,7 +697,7 @@ class PracticalSubmoduleAssessment {
 
         answer.querySelector("button").addEventListener("click", () => {
             const index = this.#fetchTemplatedListIndexForQuestionId(questionData.id);
-            let answerRaw = `<div style="white-space: pre-wrap; margin-top: 16px">${questionData.template}</div>`;
+            let answerRaw = `<div style="white-space: pre-wrap; margin-top: 16px; width: 100%">${questionData.template}</div>`;
             for (const templateVariable of questionData.templateVariables) {
                 const variableProps = templateVariable.split("|").map((prop) => prop.toLowerCase());
                 const variable = variableProps.length > 0 ? variableProps[0] : false;
