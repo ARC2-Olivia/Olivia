@@ -315,8 +315,8 @@ class WordService
         $templateProcessor = new TemplateProcessor($templateFile);
 
         $processingStates = new \stdClass();
-        $processingStates->lists = ['pzop_02'   => false, 'pzop_03'   => false, 'pzop_04'   => false, 'pzop_08_a' => false, 'pzop_08_b' => false, 'pzop_12_d' => false];
-        $processingStates->blocks = ['pzop_05'   => false, 'pzop_13'   => false, 'pzop_15_a' => false];
+        $processingStates->lists = ['pzop_02'   => false, 'pzop_03'   => false, 'pzop_04'   => false];
+        $processingStates->blocks = ['pzop_05'   => false, 'pzop_12'   => false, 'pzop_15' => false];
 
         foreach ($results as $result) {
             $exportTag = strtolower($result->getExportTag());
@@ -546,11 +546,17 @@ class WordService
 
     private function handleListTag(ProcessorResult $result, TemplateProcessor $templateProcessor, string $exportTag): void
     {
-        $items = explode("\n", str_replace(['- ', "\r"], '', $result->getText()));
+        if (str_contains($result->getText(), '/*/')) {
+            $items = explode('/*/', $result->getText());
+        } else {
+            $items = explode("\n", str_replace(['- ', "\r"], '', $result->getText()));
+        }
+
         $itemCount = count($items);
         $templateProcessor->cloneBlock($exportTag, $itemCount, indexVariables: true);
-        for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++)
+        for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++) {
             $templateProcessor->setValue("{$exportTag}_item#$j", $items[$i]);
+        }
     }
 
     private function translateCourseWorkload(Course $course): string
