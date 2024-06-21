@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Misc\TemplatedTextField;
 use App\Repository\PracticalSubmoduleProcessorTemplatedTextRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -131,7 +132,8 @@ class PracticalSubmoduleProcessorTemplatedText extends TranslatableEntity implem
                 foreach ($givenAnswer as $item) {
                     $processedLine = $this->resultText;
                     foreach ($item as $variable => $value) {
-                        $pattern = '/\{\{\s*' . $variable . '\s*\}\}/';
+                        $ttf = TemplatedTextField::desimplifyField($variable);
+                        $pattern = '/\{\{\s*' . $ttf->getName() . '\s*\}\}/';
                         $processedLine = preg_replace($pattern, $value, $processedLine);
                     }
                     $pattern = '/\{\{\s*values_one_line\s*\}\}/i';
