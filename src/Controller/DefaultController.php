@@ -94,7 +94,7 @@ class DefaultController extends BaseController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function webinars(): Response
     {
-        $files = $this->em->getRepository(File::class)->findBy(['seminar' => true]);
+        $files = $this->em->getRepository(File::class)->findBy(['seminar' => true], ['webinarOrder' => 'ASC']);
         return $this->render('default/seminars.html.twig', ['files' => $files]);
     }
 
@@ -102,7 +102,7 @@ class DefaultController extends BaseController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function presentation(): Response
     {
-        $files = $this->em->getRepository(File::class)->findBy(['presentation' => true]);
+        $files = $this->em->getRepository(File::class)->findBy(['presentation' => true], ['presentationOrder' => 'ASC']);
         return $this->render('default/presentations.html.twig', ['files' => $files]);
     }
 

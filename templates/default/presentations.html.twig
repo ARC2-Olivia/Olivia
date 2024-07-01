@@ -9,37 +9,14 @@
         </div>
     </div>
     <div class="container py-5">
-        <ul class="file-list">
+        <ul id="file-list" class="file-list"{% if is_granted('ROLE_MODERATOR') %} data-path="{{ path('file_reorder_presentations') }}"{% endif %}>
             {% for file in files %}
-                <li class="file-list-item">
-                    {% if constant('TYPE_VIDEO', file) == file.type %}
-                        <button type="button" data-modal-open="#video-modal-{{ file.id }}">
-                            <div class="text-align-left">{{ file|raw|nl2br }}</div>
-                            {{ mdi('video-outline', 'file-list-item-icon') }}
-                        </button>
-                    {% else %}
-                        <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}" target="_blank">
-                            <div class="text-align-left">{{ file|raw|nl2br }}</div>
-                            {{ mdi('download', 'file-list-item-icon') }}
-                        </a>
-                    {% endif %}
-                </li>
+                {% include 'default/_seminars_item.html.twig' %}
             {% endfor %}
         </ul>
     </div>
     {% for file in files|filter(f => constant('TYPE_VIDEO', f) == f.type) %}
-        <div class="modal" id="video-modal-{{ file.id }}">
-            <div class="modal-dialog wider">
-                <div class="modal-dialog-content">
-                    <video controls style="width: 100%">
-                        <source src="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}">
-                    </video>
-                </div>
-                <div class="modal-dialog-actions">
-                    <button type="button" class="btn btn-link" data-modal-close="#video-modal-{{ file.id }}">{{ 'common.close'|trans }}</button>
-                </div>
-            </div>
-        </div>
+        {% include 'default/_seminars_modal.html.twig' %}
     {% endfor %}
 {% endblock %}
 
@@ -51,4 +28,10 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('modal') }}
+    {% if is_granted('ROLE_MODERATOR') %}
+        {{ encore_entry_script_tags('axios') }}
+        {{ encore_entry_script_tags('sortable') }}
+        {{ encore_entry_script_tags('Reorderer') }}
+        {{ encore_entry_script_tags('seminars.sort') }}
+    {% endif %}
 {% endblock %}

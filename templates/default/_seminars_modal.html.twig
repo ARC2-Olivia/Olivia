@@ -1,0 +1,13 @@
+{% trans_default_domain 'app' %}
+<div class="modal" id="video-modal-{{ file.id }}">
+    <div class="modal-dialog wider">
+        <div class="modal-dialog-content">
+            <video controls style="width: 100%">
+                <source src="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}">
+            </video>
+        </div>
+        <div class="modal-dialog-actions">
+            <button type="button" class="btn btn-link" data-modal-close="#video-modal-{{ file.id }}">{{ 'common.close'|trans }}</button>
+        </div>
+    </div>
+</div>
