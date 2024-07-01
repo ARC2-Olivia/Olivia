@@ -38,6 +38,12 @@ class File
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $modifiedAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $webinarOrder = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $presentationOrder = null;
+
     public function __toString(): string
     {
         if (null !== $this->displayText) {
@@ -137,6 +143,36 @@ class File
     public function setModifiedAt(?\DateTimeImmutable $modifiedAt): self
     {
         $this->modifiedAt = $modifiedAt;
+
+        return $this;
+    }
+
+    public function getWebinarOrder(): ?int
+    {
+        if (null === $this->webinarOrder) {
+            return PHP_INT_MAX;
+        }
+        return $this->webinarOrder;
+    }
+
+    public function setWebinarOrder(?int $webinarOrder): self
+    {
+        $this->webinarOrder = $webinarOrder;
+
+        return $this;
+    }
+
+    public function getPresentationOrder(): ?int
+    {
+        if (null === $this->presentationOrder) {
+            return PHP_INT_MAX;
+        }
+        return $this->presentationOrder;
+    }
+
+    public function setPresentationOrder(?int $presentationOrder): self
+    {
+        $this->presentationOrder = $presentationOrder;
 
         return $this;
     }
