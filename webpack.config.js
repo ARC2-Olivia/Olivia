@@ -46,6 +46,7 @@ Encore
     .addEntry('ps.processor-groups.sort', './assets/scripts/ps.processor-groups.sort.js')
     .addEntry('index.carousel', './assets/scripts/index.carousel.js')
     .addEntry('tabs.simple', './assets/scripts/tabs.simple.js')
+    .addEntry('seminars.sort', './assets/scripts/seminars.sort.js')
 
     // Classes
     .addEntry('PracticalSubmoduleAssessment', './assets/scripts/classes/PracticalSubmoduleAssessment.js')
