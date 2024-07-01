@@ -106,8 +106,9 @@ nav:
     termsOfService: Termini di servizio
     dataRequests: Richieste di dati
     files: File
-    seminars: Seminario
-    home: Casa
+    seminars: Seminari
+    presentations: Presentazioni
+    home: Home
     gdpr: Protezione dati
     topics: Temi GDPR
 
@@ -375,7 +376,8 @@ form:
                 type: Tipo
                 originalName: Nome originale
                 displayText: Testo da visualizzare
-                seminar: Seminario
+                seminar: Inseriscilo nella sezione Seminari
+                presentation: Inseriscilo nella sezione Presentazioni
                 createdAt: Creato a
                 modifiedAt: Modificato a
         topic:
