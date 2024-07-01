@@ -376,7 +376,7 @@ form:
                 type: Tipo
                 originalName: Nome originale
                 displayText: Testo da visualizzare
-                seminar: Inseriscilo nella sezione Webinari
+                seminar: Inseriscilo nella sezione Seminari
                 presentation: Inseriscilo nella sezione Presentazioni
                 createdAt: Creato a
                 modifiedAt: Modificato a
