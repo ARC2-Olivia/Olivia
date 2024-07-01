@@ -376,7 +376,7 @@ form:
                 type: Tipo
                 originalName: Nome originale
                 displayText: Testo da visualizzare
-                seminar: Inseriscilo nella sezione Seminari
+                seminar: Inseriscilo nella sezione Webinari
                 presentation: Inseriscilo nella sezione Presentazioni
                 createdAt: Creato a
                 modifiedAt: Modificato a
@@ -754,6 +754,8 @@ extra:
         title: La sessione scadrà a breve
         text: Desideri prolungare la sessione?
         extend: Estendere
+    webinars: Webinari
+    presentations: Presentazioni
 
 export:
     cookieBanner:
