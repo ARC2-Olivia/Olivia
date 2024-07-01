@@ -1,0 +1,1 @@
+window.addEventListener("load", () => new Reorderer("file-list", "file-list-item-reorder-handle", "reordering"));
