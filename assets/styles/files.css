@@ -3,6 +3,8 @@
     flex-direction: column;
     gap: 8px;
     font-size: 20px;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 ul.file-list {
@@ -16,6 +18,12 @@ ul.file-list {
     padding: 8px 12px;
     position: relative;
     cursor: pointer;
+    display: flex;
+    column-gap: 8px;
+}
+
+.file-list-item.reordering {
+    opacity: 50%;
 }
 
 .file-list-item:hover {
@@ -23,7 +31,7 @@ ul.file-list {
     color: #ffffff;
 }
 
-.file-list-item:hover > button {
+.file-list-item:hover button {
     color: #ffffff;
 }
 
@@ -32,18 +40,30 @@ ul.file-list {
     justify-content: space-between;
     align-items: start;
     column-gap: 8px;
+    flex-basis: 0;
+    flex-shrink: 0;
+    flex-grow: 1;
 }
 
-.file-list-item > a {
+.file-list-item a {
     text-decoration: none;
     color: unset;
-}
-
-.file-list-item > button {
-    width: 100%;
 }
 
 .file-list-item-icon {
     width: 28px;
     opacity: 33.33334%;
+}
+
+.file-list-item > .file-list-item-reorder-handle {
+    flex-basis: 0;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.file-list-item-reorder-handle > svg {
+    width: 18px;
+    height: 36px;
+    color: rgba(0, 0, 0, 0.5);
 }
