@@ -68,13 +68,15 @@
         <table class="item-large">
             <tr>
                 <th style="width:160px">CONTACT INFO:</th>
-                <td>{{ vsn_02 }}</td>
+                <td>{{ vsn_02|nl2br }}</td>
             </tr>
         </table>
-        <div class="item-small" style="margin-top: 36px"><b>Purpose of processing:</b> protection of people and property</div>
-        <div class="item-small"><b>Legal basis:</b> {{ vsn_03 }}</div>
-        <div class="item-small"><b>Recording retention period:</b> {{ vsn_04 }}</div>
-        <div class="item-small"><b>Respondents' rights</b> (of natural people recorded by video surveillance cameras): The right to access your personal data, the right to delete them, the right to limit their processing, and the right to object to their processing</div>
-        <div class="item-small"><b>Complete information on the processing of your personal data</b> by the controller can be found in the <i>Privacy Policy</i> available {{ vsn_05 }}</div>
+        <div class="item-small"><b>LEGAL BASIS:</b> {{ vsn_03 }}</div>
+        <div class="item-small"><b>RECORDING RETENTION PERIOD:</b> {{ vsn_04 }}</div>
+        <div class="item-small"><b>DATA ACCESS:</b> {{ vsn_05 }}</div>
+        {% if vsn_06 is defined %}
+            <div class="item-small"><b>TRANSFER OF DATA TO THIRD COUNTRIES:</b> {{ vsn_06 }}</div>
+        {% endif %}
+        <div class="item-small"><b>{{ vsn_07 }}</b></div>
     </div>
 </div>
