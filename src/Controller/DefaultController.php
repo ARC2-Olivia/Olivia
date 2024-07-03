@@ -91,7 +91,21 @@ class DefaultController extends BaseController
     public function seminars(): Response
     {
         $files = $this->em->getRepository(File::class)->findBy(['seminar' => true]);
-        return $this->render('default/seminars.html.twig', ['files' => $files]);
+
+        $webinars = array_filter($files, function ($file) { return $file::TYPE_VIDEO === $file->getType(); });
+        usort($webinars, function (File $a, File $b) {
+            if ($a->getWebinarOrder() === $b->getWebinarOrder()) return 0;
+            return $a->getWebinarOrder() > $b->getWebinarOrder() ? 1 : -1;
+        });
+
+        $presentations = array_filter($files, function ($file) { return $file::TYPE_FILE === $file->getType(); });
+        usort($presentations, function (File $a, File $b) {
+            if ($a->getPresentationOrder() === $b->getPresentationOrder()) return 0;
+            return $a->getPresentationOrder() > $b->getPresentationOrder() ? 1 : -1;
+        });
+
+
+        return $this->render('default/seminars.html.twig', ['webinars' => $webinars, 'presentations' => $presentations]);
     }
 
     #[Route("/{_locale}/maintenance", name: "maintenance", requirements: ["_locale" => "%locale.supported%"])]

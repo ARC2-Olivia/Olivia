@@ -10,32 +10,20 @@
     </div>
     <div class="container py-5">
         <h2 class="mb-3">{{ 'extra.webinars'|trans }}</h2>
-        <ul class="file-list mb-5">
-            {% for file in files|filter(f => constant('TYPE_VIDEO', f) == f.type) %}
+        <ul id="file-list-1" class="file-list mb-5"{% if is_granted('ROLE_MODERATOR') %} data-path="{{ path('file_reorder_webinars') }}"{% endif %}>
+            {% for file in webinars %}
                 {% include 'default/_seminars_item.html.twig' %}
             {% endfor %}
         </ul>
         <h2 class="mb-3">{{ 'extra.presentations'|trans }}</h2>
-        <ul class="file-list">
-            {% for file in files|filter(f => constant('TYPE_VIDEO', f) != f.type) %}
+        <ul id="file-list-2" class="file-list"{% if is_granted('ROLE_MODERATOR') %} data-path="{{ path('file_reorder_presentations') }}"{% endif %}>
+            {% for file in presentations %}
                 {% include 'default/_seminars_item.html.twig' %}
             {% endfor %}
         </ul>
     </div>
-    {% for file in files|filter(f => constant('TYPE_VIDEO', f) == f.type) %}
-        <div class="modal" id="video-modal-{{ file.id }}">
-            <div class="modal-dialog wider">
-                <div class="modal-dialog-content">
-                    <video controls style="width: 100%">
-                        <source src="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}">
-                    </video>
-                </div>
-                <div class="modal-dialog-actions">
-                    <button type="button" class="btn btn-link" data-modal-close="#video-modal-{{ file.id }}">{{ 'common.cancel'|trans }}</button>
-                    {# <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}" class="btn btn-theme-white bg-blue" target="_blank" download>{{ 'common.download'|trans }}</a> #}
-                </div>
-            </div>
-        </div>
+    {% for file in webinars %}
+        {% include 'default/_seminars_modal.html.twig' %}
     {% endfor %}
 {% endblock %}
 
@@ -47,4 +35,10 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('modal') }}
+    {% if is_granted('ROLE_MODERATOR') %}
+        {{ encore_entry_script_tags('axios') }}
+        {{ encore_entry_script_tags('sortable') }}
+        {{ encore_entry_script_tags('Reorderer') }}
+        {{ encore_entry_script_tags('seminars.sort') }}
+    {% endif %}
 {% endblock %}

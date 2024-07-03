@@ -1,4 +1,7 @@
-<li class="file-list-item">
+<li class="file-list-item" data-id="{{ file.id }}">
+    {% if is_granted('ROLE_MODERATOR') %}
+        <div class="file-list-item-reorder-handle">{{ mdi('drag-vertical', '', '6 0 12 24') }}</div>
+    {% endif %}
     {% if constant('TYPE_VIDEO', file) == file.type %}
         <button type="button" data-modal-open="#video-modal-{{ file.id }}">
             <div class="text-align-left">{{ file|raw|nl2br }}</div>
