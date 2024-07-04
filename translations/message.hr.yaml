@@ -111,6 +111,10 @@ warning:
         image.store: Došlo je do greške prilikom spremanja slike za tematiku. Pokušajte je ponovno učitati na stranici za uređivanje tematike
 
 error:
+    user:
+        email:
+            blank: E-mail ne smije biti prazan.
+            invalid: Nevaljana e-mail adresa.
     passwordPolicy:
         length: Lozinka mora sadržavati najmanje 8 znakova.
         number: Lozinka mora sadržavati barem jedan broj.
