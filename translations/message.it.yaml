@@ -111,6 +111,10 @@ warning:
         image.store: Si è verificato un errore durante la memorizzazione dell'immagine dell'argomento. Puoi provare a ricaricarlo mentre modifichi l'argomento.
 
 error:
+    user:
+        email:
+            blank: L'e-mail non può essere vuota.
+            invalid: Indirizzo email non valido.
     passwordPolicy:
         length: La password deve contenere almeno 8 caratteri.
         number: La password deve contenere almeno un numero.

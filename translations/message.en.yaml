@@ -111,6 +111,10 @@ warning:
         image.store: There was an error storing the topic image. You can try to reupload it while editing the topic.
 
 error:
+    user:
+        email:
+            blank: E-mail cannot be blank.
+            invalid: Invalid e-mail address.
     passwordPolicy:
         length: Password must be at least 8 characters long.
         number: Password must contain at least one number.
