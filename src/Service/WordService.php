@@ -360,7 +360,7 @@ class WordService
             'cpc_21'   => false,
             'cpc_22_b' => false,
         ];
-        $processingStates->blocks = ['cpc_04_d' => false, 'cpc_08_a' => false, 'cpc_22_a' => false];
+        $processingStates->blocks = ['cpc_04_d' => false, 'cpc_08_a' => false, 'cpc_22_a' => false, 'cpc_itspec_01' => false, 'cpc_itspec_02' => false];
 
         foreach ($results as $result) {
             $exportTag = strtolower($result->getExportTag());
