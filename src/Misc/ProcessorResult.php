@@ -40,6 +40,14 @@ class ProcessorResult
         return $this->text;
     }
 
+    public function getSanitizedText(): ?string
+    {
+        if (null === $this->text) {
+            return null;
+        }
+        return htmlspecialchars($this->text, ENT_QUOTES);
+    }
+
     public function getDisplayableText(): ?string
     {
         if (null === $this->text) {
