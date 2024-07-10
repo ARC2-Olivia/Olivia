@@ -415,19 +415,21 @@ class PracticalSubmoduleController extends BaseController
                 $answerData[] = $answerDatum;
             }
         } else {
-            foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
-                $questionId = $answer->getPracticalSubmoduleQuestion()->getId();
-                if (!key_exists($questionId, $answerData)) {
-                    $answerDatum = new \stdClass();
-                    $answerDatum->questionId = $questionId;
-                    $answerDatum->question = $answer->getPracticalSubmoduleQuestion()->getQuestionText();
-                    $answerDatum->answers = [];
-                    $answerDatum->dependentQuestionId = $answer->getPracticalSubmoduleQuestion()?->getDependentPracticalSubmoduleQuestion()?->getId();
-                    $answerDatum->dependees = [];
-                    $answerDatum->unansweredDependees = [];
-                    $answerData[$questionId] = $answerDatum;
+            if (null !== $assessment) {
+                foreach ($assessment->getPracticalSubmoduleAssessmentAnswers() as $answer) {
+                    $questionId = $answer->getPracticalSubmoduleQuestion()->getId();
+                    if (!key_exists($questionId, $answerData)) {
+                        $answerDatum = new \stdClass();
+                        $answerDatum->questionId = $questionId;
+                        $answerDatum->question = $answer->getPracticalSubmoduleQuestion()->getQuestionText();
+                        $answerDatum->answers = [];
+                        $answerDatum->dependentQuestionId = $answer->getPracticalSubmoduleQuestion()?->getDependentPracticalSubmoduleQuestion()?->getId();
+                        $answerDatum->dependees = [];
+                        $answerDatum->unansweredDependees = [];
+                        $answerData[$questionId] = $answerDatum;
+                    }
+                    $answerData[$questionId]->answers[] = $answer->getDisplayableAnswer();
                 }
-                $answerData[$questionId]->answers[] = $answer->getDisplayableAnswer();
             }
 
             $dependeeIds = [];
