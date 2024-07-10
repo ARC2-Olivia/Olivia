@@ -53,7 +53,7 @@ class WordService
         $boldFontStyle = ['name' => 'Constantia', 'size' => 12, 'bold' => true];
 
         foreach ($results as $result) {
-            $text = $result->getText();
+            $text = $result->getSanitizedText();
             $text = str_replace('</p><p>', "\n", $text);
             $text = str_replace('</strong>', '|bold', $text);
             $text = strip_tags($text);
@@ -108,7 +108,7 @@ class WordService
 
             $blockName = 'list_'.$exportTag;
             if (in_array($blockName, $variables)) {
-                $list = explode("\n", $result->getText());
+                $list = explode("\n", $result->getSanitizedText());
                 $list = array_map($callbackTrim, $list);
                 $list = array_filter($list, $callbackIsNotEmpty);
                 $listSize = count($list);
@@ -120,7 +120,7 @@ class WordService
                     $i++;
                 }
             } else {
-                $templateProcessor->setValue($result->getExportTag(), str_replace("\n", '<w:br/>', $result->getText()));
+                $templateProcessor->setValue($result->getExportTag(), str_replace("\n", '<w:br/>', $result->getSanitizedText()));
             }
         }
 
@@ -141,7 +141,7 @@ class WordService
             if (null === $exportTag) {
                 continue;
             }
-            $this->handleTemplatingForLIA($exportTag, $templateProcessor, $result->getText());
+            $this->handleTemplatingForLIA($exportTag, $templateProcessor, $result->getSanitizedText());
         }
 
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
@@ -152,7 +152,7 @@ class WordService
     private function generateCookiePolicyDocument(PracticalSubmoduleAssessment $assessment, string $locale)
     {
         $results = $this->practicalSubmoduleService->runProcessors($assessment);
-        $lines = explode("\n", str_replace("\r", '', $results[0]->getText()));
+        $lines = explode("\n", str_replace("\r", '', $results[0]->getSanitizedText()));
         $linesData = [];
         foreach ($lines as $line) {
             $lineData = ['text' => strip_tags($line), 'fontStyle' => []];
@@ -188,7 +188,7 @@ class WordService
 
         foreach ($results as $result) {
             if ('dpia_11' === $result->getExportTag()) {
-                $lines = explode('/*/', preg_replace('/\/\*\/(\n|\r\|\r\n)/', '/*/', $result->getText()));
+                $lines = explode('/*/', preg_replace('/\/\*\/(\n|\r\|\r\n)/', '/*/', $result->getSanitizedText()));
                 $lines = array_filter($lines, function ($line) { return strlen(trim($line)) > 0; });
                 $lineCount = count($lines);
                 $templateProcessor->cloneBlock('dpia_11', $lineCount, indexVariables: true);
@@ -209,7 +209,7 @@ class WordService
                     $templateProcessor->setValue("dpia_11d#$i", $line[3]);
                 }
             } else {
-                $lines = explode("\n", str_replace("\r", '', $result->getText()));
+                $lines = explode("\n", str_replace("\r", '', $result->getSanitizedText()));
                 $textRun = new TextRun();
                 $textRun->addText(array_shift($lines), $fontStyle);
                 foreach ($lines as $line) {
@@ -243,7 +243,7 @@ class WordService
             $exportTag = strtolower($result->getExportTag());
             switch ($exportTag) {
                 case 'rr_02': {
-                    $items = explode("\n", str_replace(['- ', "\r"], '', $result->getText()));
+                    $items = explode("\n", str_replace(['- ', "\r"], '', $result->getSanitizedText()));
                     $itemCount = count($items);
                     $templateProcessor->cloneBlock('rr_02', $itemCount, indexVariables: true);
                     for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++) {
@@ -258,7 +258,7 @@ class WordService
                     break;
                 }
                 default: {
-                    $templateProcessor->setValue($result->getExportTag(), $result->getText());
+                    $templateProcessor->setValue($result->getExportTag(), $result->getSanitizedText());
                 }
             }
         }
@@ -290,7 +290,7 @@ class WordService
                 $this->handleListTag($result, $templateProcessor, $exportTag);
                 $processingStates[$exportTag] = true;
             } else {
-                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+                $templateProcessor->setValue($result->getExportTag(), $result->getSanitizedText());
             }
         }
 
@@ -327,7 +327,7 @@ class WordService
                 $templateProcessor->cloneBlock($exportTag);
                 $processingStates->blocks[$exportTag] = true;
             } else {
-                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+                $templateProcessor->setValue($result->getExportTag(), $result->getSanitizedText());
             }
         }
 
@@ -371,7 +371,7 @@ class WordService
                 $templateProcessor->cloneBlock($exportTag);
                 $processingStates->blocks[$exportTag] = true;
             } else {
-                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+                $templateProcessor->setValue($result->getExportTag(), $result->getSanitizedText());
             }
         }
 
@@ -397,10 +397,10 @@ class WordService
                 $this->handleListTag($result, $templateProcessor, $exportTag);
                 $processingStates->lists[$exportTag] = true;
             } else if (array_key_exists($exportTag, $processingStates->yesOrNo)) {
-                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+                $templateProcessor->setValue($result->getExportTag(), $result->getSanitizedText());
                 $processingStates->yesOrNo[$exportTag] = true;
             } else {
-                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+                $templateProcessor->setValue($result->getExportTag(), $result->getSanitizedText());
             }
         }
 
@@ -429,7 +429,7 @@ class WordService
                 $templateProcessor->cloneBlock($exportTag);
                 $processingStates->blocks[$exportTag] = true;
             } else {
-                $templateProcessor->setValue($result->getExportTag(), $result->getText());
+                $templateProcessor->setValue($result->getExportTag(), $result->getSanitizedText());
             }
         }
 
@@ -511,13 +511,13 @@ class WordService
     private function handleResult(ProcessorResult $result, \PhpOffice\PhpWord\Element\Section $section): void
     {
         if (true === $result->isHtml()) {
-            $string = str_replace('<br>', '<br/>', $result->getText());
+            $string = str_replace('<br>', '<br/>', $result->getSanitizedText());
             $html = new \DOMDocument('1.0', 'UTF-8');
             $html->loadHTML(mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8'));
             $body = $html->getElementsByTagName("body")->item(0);
             \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html->saveXML($body, LIBXML_NOEMPTYTAG), true);
         } else {
-            foreach (explode("\n", $result->getText()) as $line) {
+            foreach (explode("\n", $result->getSanitizedText()) as $line) {
                 if (str_starts_with($line, '- ')) {
                     $section->addListItem(preg_replace('/^- /', '', $line, 1));
                 } else {
@@ -546,7 +546,12 @@ class WordService
 
     private function handleListTag(ProcessorResult $result, TemplateProcessor $templateProcessor, string $exportTag): void
     {
-        $items = explode("\n", str_replace(['- ', "\r"], '', $result->getText()));
+        if (str_contains($result->getSanitizedText(), '/*/')) {
+            $items = explode('/*/', $result->getSanitizedText());
+        } else {
+            $items = explode("\n", str_replace(['- ', "\r"], '', $result->getSanitizedText()));
+        }
+
         $itemCount = count($items);
         $templateProcessor->cloneBlock($exportTag, $itemCount, indexVariables: true);
         for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++)
