@@ -101,6 +101,9 @@ class PracticalSubmodule extends TranslatableEntity
     #[ORM\Column(nullable: true)]
     private ?bool $revisionMode = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $answersReportHidden = null;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
@@ -472,6 +475,21 @@ class PracticalSubmodule extends TranslatableEntity
     public function setRevisionMode(?bool $revisionMode): self
     {
         $this->revisionMode = $revisionMode;
+
+        return $this;
+    }
+
+    public function isAnswersReportHidden(): ?bool
+    {
+        if (null === $this->answersReportHidden) {
+            return false;
+        }
+        return $this->answersReportHidden;
+    }
+
+    public function setAnswersReportHidden(?bool $answersReportHidden): self
+    {
+        $this->answersReportHidden = $answersReportHidden;
 
         return $this;
     }
