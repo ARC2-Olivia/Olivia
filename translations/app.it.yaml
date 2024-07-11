@@ -280,6 +280,7 @@ form:
                 position: Posizione
                 exportType: Tipo di esportazione
                 revisionMode: Modalità di revisione (consigliata da impostare nei casi in cui si debbano apportare modifiche importanti)
+                answersReportHidden: Nascondi il rapporto sulle risposte nei risultati
             placeholder:
                 name: Nome del sottomodulo pratico
                 publicName: ad esempio, crea la tua politica sulla privacy con facilità!

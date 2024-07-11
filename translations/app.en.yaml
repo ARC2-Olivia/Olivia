@@ -279,6 +279,7 @@ form:
                 position: Position
                 exportType: Export type
                 revisionMode: Revision mode (recommended to be set in cases where major changes are to be made)
+                answersReportHidden: Hide answer report in the results
             placeholder:
                 name: Name of the practical submodule
                 publicName: e.g. Create your own privacy policy with ease!

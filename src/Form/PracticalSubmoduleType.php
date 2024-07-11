@@ -128,6 +128,11 @@ class PracticalSubmoduleType extends AbstractType
                 'choices' => $booleanChoices,
                 'attr' => ['class' => 'form-select mb-3']
             ])
+            ->add('answersReportHidden', ChoiceType::class, [
+                'label' => 'form.entity.practicalSubmodule.label.answersReportHidden',
+                'choices' => $booleanChoices,
+                'attr' => ['class' => 'form-select mb-3']
+            ])
             ->add('position', NumberType::class, [
                 'html5' => true,
                 'label' => 'form.entity.practicalSubmodule.label.position',

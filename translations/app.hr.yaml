@@ -277,6 +277,7 @@ form:
                 position: Redni broj
                 exportType: Vrsta izvoza
                 revisionMode: Način revizije (preporučeno postaviti u slučajevima kada se rade veće izmjene)
+                answersReportHidden: Sakrij izvješće o odgovorima u rezultatima
             placeholder:
                 name: Naziv praktičnog podmodula
                 publicName: npr. Izradite svoju politiku privatnosti za čas posla!
