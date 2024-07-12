@@ -519,7 +519,7 @@ class PracticalSubmoduleAssessment {
         const context = this;
         const answer = this.#parser.parseFromString(`
             <div class="evaluation-assessment-question-answer:column">
-                <button type="button" class="btn btn-theme-white btn-lg bg-green">
+                <button type="button" class="btn btn-theme-white bg-green">
                     <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>
                     ${this.#translation.buttonAdd}
                 </button>
@@ -539,7 +539,7 @@ class PracticalSubmoduleAssessment {
                         <input type="hidden" name="evaluation_assessment[${questionData.id}][]" value="${item}"/>
                         <input type="text" class="form-input" value="${listItem}"/>
                         <div class="evaluation-assessment-lwsl-sublist" data-sublist>
-                            <button type="button" class="btn btn-theme-white btn-lg bg-green">
+                            <button type="button" class="btn btn-theme-white bg-green">
                                 <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>
                                 ${this.#translation.buttonAddItem}
                             </button>
@@ -583,7 +583,7 @@ class PracticalSubmoduleAssessment {
                         <input type="hidden" name="evaluation_assessment[${questionData.id}][]"/>
                         <input type="text" class="form-input"/>
                         <div class="evaluation-assessment-lwsl-sublist" data-sublist>
-                            <button type="button" class="btn btn-theme-white btn-lg bg-green">
+                            <button type="button" class="btn btn-theme-white bg-green">
                                 <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>
                                 ${this.#translation.buttonAddItem}
                             </button>
@@ -648,7 +648,7 @@ class PracticalSubmoduleAssessment {
     #createTemplatedListInput(questionData) {
         const answer = this.#parser.parseFromString(`
             <div class="evaluation-assessment-question-answer:column">
-                <button type="button" class="btn btn-theme-white btn-lg bg-green">
+                <button type="button" class="btn btn-theme-white bg-green">
                     <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>
                     ${this.#translation.buttonAdd}
                 </button>
