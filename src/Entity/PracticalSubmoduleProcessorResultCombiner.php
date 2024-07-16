@@ -134,7 +134,7 @@ class PracticalSubmoduleProcessorResultCombiner implements PracticalSubmodulePro
         return $this->resultText;
     }
 
-    public function setResultText(?string $resultText): PracticalSubmoduleProcessorImplementationInterface
+    public function setResultText(?string $resultText): self
     {
         $this->resultText = $resultText;
 

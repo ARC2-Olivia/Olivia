@@ -302,9 +302,15 @@ class PSImporter
                 }
             } break;
             case $processor::TYPE_RESULT_COMBINER: {
-                $pspResultCombiner = new PracticalSubmoduleProcessorResultCombiner();
+                $resultText = $implProps['resultText'] ?? '';
+                $separateBy = $implProps['separateBy'] ?? PracticalSubmoduleProcessorResultCombiner::SEPARATE_BY_SPACE;
+                $pspResultCombiner = (new PracticalSubmoduleProcessorResultCombiner())->setSeparateBy($separateBy)->setResultText($resultText);
                 $processor->setPracticalSubmoduleProcessorResultCombiner($pspResultCombiner);
                 $this->em->persist($pspResultCombiner);
+
+                if (true === (key_exists('trans', $implProps) && key_exists('resultText', $implProps['trans']))) {
+                    $this->translationRepository->translate($pspResultCombiner, 'resultText', $this->localeAlternate, $implProps['trans']['resultText']);
+                }
             } break;
         }
     }
@@ -427,6 +433,7 @@ class PSImporter
         }
     }
 
+    /** @deprecated */
     private function doCreateProcessorGroupTask(mixed $props)
     {
         if (false === $this->allKeysExist(['title', 'position'], $props)) {
