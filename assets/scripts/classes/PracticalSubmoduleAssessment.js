@@ -627,7 +627,7 @@ class PracticalSubmoduleAssessment {
 
             answer.querySelector("button").addEventListener("click", () => {
                 const input = this.#parser.parseFromString(`
-                <div>
+                <div style="width: 100%">
                     <input type="hidden" name="evaluation_assessment[${questionData.id}][]"/>
                     <input type="text" class="form-input"/>
                 </div>
