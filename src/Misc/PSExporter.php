@@ -170,7 +170,7 @@ class PSExporter
                     'included' => $processor->isIncluded(),
                     'position' => $processor->getPosition(),
                     'disabled' => $processor->isDisabled(),
-                    'exportTag' => $processor->getExportTag(),
+                    'exportTag' => $processor->getExportTag()
                 ]
             ];
 
@@ -248,6 +248,19 @@ class PSExporter
                         }
                     }
                 } break;
+                case $processor::TYPE_RESULT_COMBINER: {
+                    $impl = $processor->getPracticalSubmoduleProcessorResultCombiner();
+                    if (null !== $impl) {
+                        $implProps['resultText'] = $impl->getResultText();
+                        $implProps['separateBy'] = $impl->getSeparateBy();
+
+                        $trans = $this->translationRepository->findTranslations($impl);
+                        if (true === key_exists($this->localeAlternate, $trans)) {
+                            $transResultText = $trans[$this->localeAlternate]['resultText'] ?? null;
+                            if (null !== $transResultText) $implProps['trans'] = ['resultText' => $transResultText];
+                        }
+                    }
+                }
             }
 
             $task['task_props']['impl'] = $implProps;
