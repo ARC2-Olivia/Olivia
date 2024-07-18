@@ -58,6 +58,7 @@ button:
     exportTemplate: Export template
     show: Show
     downloadForm: Download form
+    downloadExample: Download example
 
 page:
     login: Olivia | Login
@@ -769,14 +770,23 @@ extra:
 
 export:
     cookieBanner:
-        title: Consent for the processing of personal data through cookies
-        subtitles:
-            firstParty: First party cookies
-            thirdParty: Third party cookies
+        title:
+            1: CONSENT FOR THE PROCESSING OF PERSONAL DATA THROUGH COOKIES
+            2: CONSENT SETTINGS FOR TRACKING TECHNOLOGIES
         buttons:
-            declineAll: Decline all
-            acceptAll: Accept all
-            acceptSelected: Accept selected
+            declineAll: DECLINE ALL
+            acceptAll: ACCEPT ALL
+            acceptSelected: ACCEPT SELECTED
+            settings: CUSTOMIZE
+        settings:
+            1: You have the ability to adjust your consent-related settings for any tracking technology used for the purposes listed below. For further information on the usefulness and operation of such tracking tools, please see the “Cookie Notice”. You can change your settings at any time on the "Cookie Notice" link.
+            2: If you want, you can click on the <span class="close-intext">&times;</span>. This will result in continued browsing of this website without cookies or other tracking tools (except technical cookies which are always active).
+        technicalCookies:
+            title: Technical (necessary) cookies (always active)
+            description: Necessary cookies are necessary to provide the basic functionality of the website. You can disable them in your browser settings, but this may affect the proper functioning of the site.
+        message:
+            example: The following is an example of a cookie banner based on your answers in the questionnaire. This cookie banner isn't fully functional and it is only meant to be used as a preview of how your own cookie banner should look like. Additionally, the example you can download by clicking on the button <i>Download example</i> above will give you a code for a non-functional cookie banner that can be used as a basis for implementation of a fully functional one.
+            settings: Click on the <i>Customize cookies</i> button to open additional options for customizing your own cookie settings.
 
 maintenance:
     1: The OLIVIA tool is undergoing maintenance.

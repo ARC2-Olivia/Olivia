@@ -8,30 +8,32 @@
     .kookie-banner {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 16px;
         border: solid 1px rgba(0, 0, 0, .5);
         border-radius: 4px;
         padding: 16px 24px;
-        color: rgba(0, 0, 0, .8) !important;
+        color: #FFFFFF;
         font-size: 16px;
-        background-color: #FFFFFF;
+        background-color: #156082;
         font-family: 'Source Sans 3', 'Helvetica', 'Calibri', 'Arial', sans-serif;
     }
 
     .kookie-banner h1 {
         margin: 0;
-        font-size: 24px;
+        color: #FFFF00;
+        font-size: 18px;
     }
 
-    .kookie-banner h2 {
-        margin: 16px 0 0;
-        font-size: 20px;
+    .kookie-banner a {
+        color: #FFFF00;
+        text-decoration: none;
     }
 
     .cookie-banner--cookie {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 24px;
     }
 
     .slider {
@@ -42,25 +44,13 @@
         flex-shrink: 0;
     }
 
-    .slider > input {
-        display: none;
-    }
-
-    .slider > input:checked + .slide:before {
-        transform: translateX(24px);
-    }
-
-    .slider > input:checked + .slide {
-        background-color: #03a9f5;
-    }
-
     .slider > .slide {
         position: relative;
         display: block;
         height: 100%;
         width: 100%;
         border-radius: 16px;
-        background-color: #ededed;
+        background-color: #cbcbcb;
         transition: .2s;
     }
 
@@ -76,15 +66,32 @@
         transition: .2s;
     }
 
+    .slider > input {
+        display: none;
+    }
+
+    .slider > input:checked + .slide:before {
+        transform: translateX(24px);
+    }
+
+    .slider > input:checked + .slide {
+        background-color: #8cd8e4;
+    }
+
+    .slider > input:checked + .slide:before {
+        background-color: #38b1d5;
+    }
+
     .cookie-banner--actions {
         display: flex;
         gap: 8px;
         margin-top: 16px;
         justify-content: end;
+        flex-wrap: wrap;
     }
 
     .btn-cookie {
-        background-color: black;
+        background-color: #156082;
         border: solid 1px black;
         border-radius: 4px;
         color: white;
@@ -93,13 +100,52 @@
     }
 
     .btn-cookie:hover {
-        background-color: white;
-        color: black;
+        background-color: #217fa3;
+    }
+
+    .btn-cookie.settings {
+        margin-right: auto;
+    }
+
+    .btn-cookie.accept-selected {
+        margin-left: auto;
+    }
+
+    .close-intext {
+        display: inline-block;
+        font-size: 24px;
+        line-height: 0;
+    }
+
+    .cookie-banner--close {
+        text-align: right;
+        height: 0;
+    }
+
+    .btn-close {
+        color: #FFFFFF;
+        cursor: pointer;
+        font-size: 32px;
+        line-height: 0;
+        background: none;
+        border: none;
+    }
+
+    .btn-close:hover {
+        color: #FFFF00;
     }
 
     @media screen and (max-width: 767px) {
         .cookie-banner--actions {
             justify-content: space-between;
+        }
+
+        .btn-cookie.settings {
+            margin-right: unset;
+        }
+
+        .btn-cookie.accept-selected {
+            margin-left: unset;
         }
 
         .cookie-banner--actions > button{
@@ -115,42 +161,60 @@
         }
     }
 </style>
-{% if cookieBanner.message is defined and showReportMessage == true %}<p>{{ cookieBanner.message|raw }}</p>{% endif %}
-{% if showBanner %}
-    <div class="kookie-banner">
-        <h1>{% trans into 'hr' %}export.cookieBanner.title{% endtrans %}</h1>
-        {% if cookieBanner.usage is defined %}<p>{{ cookieBanner.usage }}</p>{% endif %}
-        {% if cookieBanner.link is defined %}<p>{{ cookieBanner.link|raw }}</p>{% endif %}
-        {% if cookieBanner.first_party is defined %}
-            <h2>{% trans into 'hr' %}export.cookieBanner.subtitles.firstParty{% endtrans %}</h2>
-            {% for item in cookieBanner.first_party|split("\n")|filter(s => s|length > 0) %}
-                <div class="cookie-banner--cookie">
-                    <span>{{ item }}</span>
-                    <label class="slider">
-                        <input type="checkbox"/>
-                        <span class="slide"></span>
-                    </label>
-                </div>
-            {% endfor %}
-        {% endif %}
 
-        {% if cookieBanner.third_party is defined %}
-            <h2>{% trans into 'hr' %}export.cookieBanner.subtitles.thirdParty{% endtrans %}</h2>
-            {% for item in cookieBanner.third_party|split("\n")|filter(s => s|length > 0) %}
-                <div class="cookie-banner--cookie">
-                    <span>{{ item }}</span>
-                    <label class="slider">
-                        <input type="checkbox"/>
-                        <span class="slide"></span>
-                    </label>
-                </div>
-            {% endfor %}
-        {% endif %}
+{% if showReportMessage == true %}
+    {% if cookieBanner.message is defined %}<p>{{ cookieBanner.message|raw }}</p>{% endif %}
+    <p>{% trans %}export.cookieBanner.message.example{% endtrans %}</p>
+    <p>{% trans %}export.cookieBanner.message.settings{% endtrans %}</p>
+{% endif %}
+{% if showBanner %}
+    <form method="post" action="javascript:void(0);" class="kookie-banner" name="cookies-form{% if showReportMessage == true %}-a{% endif %}">
+        <div class="cookie-banner--close">
+            <button type="submit" class="btn-close" name="decline-all">&times;</button>
+        </div>
+        <h1>{% trans into locale_alternate %}export.cookieBanner.title.1{% endtrans %}</h1>
+        {% if cookieBanner.link is defined %}<p>{{ cookieBanner.link|raw }}</p>{% endif %}
 
         <div class="cookie-banner--actions">
-            <button class="btn-cookie">{% trans into 'hr' %}export.cookieBanner.buttons.declineAll{% endtrans %}</button>
-            <button class="btn-cookie">{% trans into 'hr' %}export.cookieBanner.buttons.acceptAll{% endtrans %}</button>
-            <button class="btn-cookie">{% trans into 'hr' %}export.cookieBanner.buttons.acceptSelected{% endtrans %}</button>
+            <button type="button" class="btn-cookie settings">{% trans into locale_alternate %}export.cookieBanner.buttons.settings{% endtrans %}</button>
+            <button type="submit" class="btn-cookie" name="decline-all">{% trans into locale_alternate %}export.cookieBanner.buttons.declineAll{% endtrans %}</button>
+            <button type="submit" class="btn-cookie" name="accept-all">{% trans into locale_alternate %}export.cookieBanner.buttons.acceptAll{% endtrans %}</button>
         </div>
-    </div>
+    </form>
+
+    <form method="post" action="javascript:void(0);" class="kookie-banner" name="cookies-form{% if showReportMessage == true %}-b{% endif %}">
+        <div class="cookie-banner--close">
+            <button type="submit" class="btn-close" name="decline-all">&times;</button>
+        </div>
+        <h1>{% trans into locale_alternate %}export.cookieBanner.title.2{% endtrans %}</h1>
+        <p>{% trans into locale_alternate %}export.cookieBanner.settings.1{% endtrans %}</p>
+        <p>{% trans into locale_alternate %}export.cookieBanner.settings.2{% endtrans %}</p>
+        <div class="cookie-banner--cookie">
+            <div>
+                <strong>{% trans into locale_alternate %}export.cookieBanner.technicalCookies.title{% endtrans %}</strong>
+                <p>{% trans into locale_alternate %}export.cookieBanner.technicalCookies.description{% endtrans %}</p>
+            </div>
+            <label class="slider">
+                <input type="checkbox" checked disabled/>
+                <span class="slide"></span>
+            </label>
+        </div>
+        {% for cookie in cookieBanner.cookies %}
+            <div class="cookie-banner--cookie">
+                <div>
+                    <strong>{{ cookie.type }}</strong>
+                    <p>{{ cookie.description }}</p>
+                </div>
+                <label class="slider">
+                    <input type="checkbox"/>
+                    <span class="slide"></span>
+                </label>
+            </div>
+        {% endfor %}
+        <div class="cookie-banner--actions">
+            <button type="submit" class="btn-cookie" name="decline-all">{% trans into locale_alternate %}export.cookieBanner.buttons.declineAll{% endtrans %}</button>
+            <button type="submit" class="btn-cookie" name="accept-all">{% trans into locale_alternate %}export.cookieBanner.buttons.acceptAll{% endtrans %}</button>
+            <button type="submit" class="btn-cookie accept-selected" name="accept-selected">{% trans into locale_alternate %}export.cookieBanner.buttons.acceptSelected{% endtrans %}</button>
+        </div>
+    </form>
 {% endif %}
