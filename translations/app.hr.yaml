@@ -771,6 +771,7 @@ export:
         settings:
             1: Imate mogućnost prilagoditi postavke vezane za davanje privole na bilo koju tehnologiju praćenja korištenu u svrhe navedene u nastavku. Za dodatne informacije o korisnosti i funkcioniranju takvih alata za praćenje, molimo pogledajte “Obavijest o kolačićima”. Svoje postavke u svakom trenutku možete promijeniti na poveznici “Obavijest o kolačićima”.
             2: Ako želite, možete kliknuti na <span class="close-intext">&times;</span>. To će rezultirati nastavkom pregledavanja ove web stranice  bez kolačića ili drugih alata za praćenje  (osim tehničkih kolačića koji su uvijek aktivni).
+            3: ""
         technicalCookies:
             title: Tehnički (nužni) kolačići (uvijek aktivni)
             description: Nužni kolačići su neophodni za pružanje osnovnih funkcionalnosti web stranice. Možete ih onemogućiti u postavkama preglednika, ali to može utjecati na ispravno funkcioniranje stranice.

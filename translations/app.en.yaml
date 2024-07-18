@@ -779,6 +779,7 @@ export:
         settings:
             1: You have the ability to adjust your consent-related settings for any tracking technology used for the purposes listed below. For further information on the usefulness and operation of such tracking tools, please see the “Cookie Notice”. You can change your settings at any time on the "Cookie Notice" link.
             2: If you want, you can click on the <span class="close-intext">&times;</span>. This will result in continued browsing of this website without cookies or other tracking tools (except technical cookies which are always active).
+            3: You can review and change your choices at any time by accessing this panel via the appropriate link. To refuse your consent to the processing activities described below, deactivate the individual controls or use the "Reject all" button and confirm that you want to save the choices made.
         technicalCookies:
             title: Technical (necessary) cookies (always active)
             description: Necessary cookies are necessary to provide the basic functionality of the website. You can disable them in your browser settings, but this may affect the proper functioning of the site.

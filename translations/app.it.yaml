@@ -772,6 +772,7 @@ export:
         settings:
             1: Le opzioni disponibili in questa sezione ti permettono di personalizzare le preferenze relative al consenso per qualsiasi tecnologia di tracciamento utilizzata per le finalità descritte di seguito. Per ottenere ulteriori informazioni in merito all'utilità e al funzionamento di tali strumenti di tracciamento, fai riferimento alla cookie policy.
             2: Se vuioi negare il consenso, puoi fare clic sulla <span class="close-intext">&times;</span>, il che comporterà il mantenimento delle impostazioni predefinite e quindi la continuazione della navigazione senza cookie o altri strumenti di tracciamento diversi da quelli tecnici.
+            3: Puoi rivedere e modificare le tue scelte in qualsiasi momento accedendo al presente pannello tramite l’apposito link. Per rifiutare il tuo consenso alle attività di trattamento descritte di seguito, disattiva i singoli comandi o utilizza il pulsante “Rifiuta tutto” e conferma di voler salvare le scelte effettuate.
         technicalCookies:
             title: Necessari (tecnici)
             description: I cookie necessari permettono al sito di funzionare correttamente, consentendo al visitatore una migliore navigazione del sito. Sono i cookie che servono a effettuare la navigazione o a fornire un servizio richiesto dall’utente. Non vengono utilizzati per scopi ulteriori.
