@@ -176,7 +176,8 @@
         </div>
         <h1>{% trans into locale_alternate %}export.cookieBanner.title.1{% endtrans %}</h1>
         {% if cookieBanner.link is defined %}<p>{{ cookieBanner.link|raw }}</p>{% endif %}
-
+        <p>{% trans into locale_alternate %}export.cookieBanner.settings.3{% endtrans %}</p>
+        <p>{% trans into locale_alternate %}export.cookieBanner.settings.2{% endtrans %}</p>
         <div class="cookie-banner--actions">
             <button type="button" class="btn-cookie settings">{% trans into locale_alternate %}export.cookieBanner.buttons.settings{% endtrans %}</button>
             <button type="submit" class="btn-cookie" name="decline-all">{% trans into locale_alternate %}export.cookieBanner.buttons.declineAll{% endtrans %}</button>
