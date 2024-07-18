@@ -5,7 +5,9 @@
         {% if evaluation.exportType == constant('EXPORT_TYPE_COOKIE_BANNER', evaluation) %}
             <div class="d-flex justify-content-between align-items-start flex-column gap-3">
                 <h2>{{ 'practicalSubmodule.extra.results.consentForm'|trans }}</h2>
-                <a href="{{ path('file_fetch_consent_form', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-orange btn-lg">{{ 'button.downloadExample'|trans }}</a>
+                {% if showBanner %}
+                    <a href="{{ path('file_fetch_consent_form', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-orange btn-lg">{{ 'button.downloadExample'|trans }}</a>
+                {% endif %}
             </div>
         {% elseif evaluation.exportType not in [constant('EXPORT_TYPE_NONE', evaluation), constant('EXPORT_TYPE_COOKIE_BANNER', evaluation)] %}
             <div class="d-flex justify-content-between align-items-start flex-column gap-3">

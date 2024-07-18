@@ -162,12 +162,14 @@
     }
 </style>
 
-{% if showReportMessage == true %}
-    {% if cookieBanner.message is defined %}<p>{{ cookieBanner.message|raw }}</p>{% endif %}
-    <p>{% trans %}export.cookieBanner.message.example{% endtrans %}</p>
-    <p>{% trans %}export.cookieBanner.message.settings{% endtrans %}</p>
+{% if showReportMessage == true and cookieBanner.message is defined %}
+    <p>{{ cookieBanner.message|raw }}</p>
 {% endif %}
 {% if showBanner %}
+    {% if showReportMessage == true %}
+        <p>{% trans %}export.cookieBanner.message.example{% endtrans %}</p>
+        <p>{% trans %}export.cookieBanner.message.settings{% endtrans %}</p>
+    {% endif %}
     <form method="post" action="javascript:void(0);" class="kookie-banner" name="cookies-form{% if showReportMessage == true %}-a{% endif %}">
         <div class="cookie-banner--close">
             <button type="submit" class="btn-close" name="decline-all">&times;</button>
