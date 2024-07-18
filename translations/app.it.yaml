@@ -58,6 +58,7 @@ button:
     exportTemplate: Modello di esportazione
     show: Mostra
     downloadForm: Scarica il modulo
+    downloadExample: Scarica esempio
 
 page:
     login: Olivia | Login
@@ -760,14 +761,23 @@ extra:
 
 export:
     cookieBanner:
-        title: Consenso al trattamento dei dati personali tramite cookies
-        subtitles:
-            firstParty: Cookie di prima parte
-            thirdParty: Cookie di terze parti
+        title:
+            1: LE TUE PREFERENZE RELATIVE ALLA PRIVACY
+            2: LE TUE PREFERENZE RELATIVE AL CONSENSO PER LE TECNOLOGIE DI TRACCIAMENTO
         buttons:
-            declineAll: Rifiuta tutto
-            acceptAll: Accettare tutti
-            acceptSelected: Accetta selezionato
+            declineAll: RIFUTA TUTTO
+            acceptAll: ACCETTA TUTTO
+            acceptSelected: CONFERMO LE MIE SCELTE
+            settings: PERSONALIZZA
+        settings:
+            1: Le opzioni disponibili in questa sezione ti permettono di personalizzare le preferenze relative al consenso per qualsiasi tecnologia di tracciamento utilizzata per le finalità descritte di seguito. Per ottenere ulteriori informazioni in merito all'utilità e al funzionamento di tali strumenti di tracciamento, fai riferimento alla cookie policy.
+            2: Se vuioi negare il consenso, puoi fare clic sulla <span class="close-intext">&times;</span>, il che comporterà il mantenimento delle impostazioni predefinite e quindi la continuazione della navigazione senza cookie o altri strumenti di tracciamento diversi da quelli tecnici.
+        technicalCookies:
+            title: Necessari (tecnici)
+            description: I cookie necessari permettono al sito di funzionare correttamente, consentendo al visitatore una migliore navigazione del sito. Sono i cookie che servono a effettuare la navigazione o a fornire un servizio richiesto dall’utente. Non vengono utilizzati per scopi ulteriori.
+        message:
+            example: Di seguito è riportato un esempio di banner cookie basato sulle risposte fornite al questionario. Questo banner sui cookie non è completamente funzionale ed è pensato solo per essere utilizzato come anteprima di come dovrebbe apparire il tuo banner sui cookie. Inoltre, l'esempio che puoi scaricare facendo clic sul pulsante <i>Scarica esempio</i> qui sopra ti fornirà un codice per un banner cookie non funzionale che può essere utilizzato come base per l'implementazione di uno completamente funzionale.
+            settings: Fai clic sul pulsante <i>Personalizza</i> per aprire opzioni aggiuntive per personalizzare le tue impostazioni sui cookie.
 
 maintenance:
     1: Lo strumento OLIVIA è in fase di manutenzione.

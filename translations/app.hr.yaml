@@ -57,6 +57,7 @@ button:
     exportTemplate: Izvoz predloška
     show: Prikaži
     downloadForm: Preuzmi obrazac
+    downloadExample: Preuzmi primjer
 
 page:
     login: Olivia | Prijava
@@ -759,14 +760,23 @@ extra:
 
 export:
     cookieBanner:
-        title: Privola za obradu osobnih podataka putem kolačića
-        subtitles:
-            firstParty: Kolačići prve strane
-            thirdParty: Kolačići treće strane
+        title:
+            1: PRIVOLA ZA OBRADU OSOBNIH PODATAKA PUTEM KOLAČIĆA
+            2: POSTAVKE ZA DAVANJE PRIVOLE ZA TEHNOLOGIJE PRAĆENJA
         buttons:
-            declineAll: Ne pristajem za sve
-            acceptAll: Pristajem za sve
-            acceptSelected: Pristajem za odabrano
+            declineAll: ODBIJAM SVE
+            acceptAll: PRIHVAĆAM SVE
+            acceptSelected: POTVRĐUJEM SVOJ ODABIR
+            settings: POSTAVKE KOLAČIĆA
+        settings:
+            1: Imate mogućnost prilagoditi postavke vezane za davanje privole na bilo koju tehnologiju praćenja korištenu u svrhe navedene u nastavku. Za dodatne informacije o korisnosti i funkcioniranju takvih alata za praćenje, molimo pogledajte “Obavijest o kolačićima”. Svoje postavke u svakom trenutku možete promijeniti na poveznici “Obavijest o kolačićima”.
+            2: Ako želite, možete kliknuti na <span class="close-intext">&times;</span>. To će rezultirati nastavkom pregledavanja ove web stranice  bez kolačića ili drugih alata za praćenje  (osim tehničkih kolačića koji su uvijek aktivni).
+        technicalCookies:
+            title: Tehnički (nužni) kolačići (uvijek aktivni)
+            description: Nužni kolačići su neophodni za pružanje osnovnih funkcionalnosti web stranice. Možete ih onemogućiti u postavkama preglednika, ali to može utjecati na ispravno funkcioniranje stranice.
+        message:
+            example: Slijedi primjer trake/skočnog prozora kolačića uređen na temelju vaših odgovora u upitniku. Ovaj traka/skočni prozor nije u potpunosti funkcionalan i namijenjen je samo za pregled kako bi Vaš trebao izgledati. Uz to, primjer koji možete preuzeti klikom na gornji gumb <i>Preuzmi primjer</i> dat će vam kod za nefunkcionalnu traku/skočni prozor koji se može koristiti kao osnova za implementaciju potpuno funkcionalne inačice.
+            settings: Kliknite na gumb <i>Postavke kolačića</i> kako biste otvorili dodatne opcije za prilagodbu vlastitih postavki kolačića.
 
 maintenance:
     1: Provode se radovi nad alatom OLIVIA.

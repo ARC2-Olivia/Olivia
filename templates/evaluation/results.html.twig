@@ -21,3 +21,21 @@
         }
     </style>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if evaluation.exportType == constant('EXPORT_TYPE_COOKIE_BANNER', evaluation) and cookieBanner is not empty %}
+        <script>
+            window.addEventListener("DOMContentLoaded", () => {
+               const cookiesFormA = document.querySelector("form[name='cookies-form-a']");
+               const cookiesFormB = document.querySelector("form[name='cookies-form-b']");
+               cookiesFormB.style.display = "none";
+
+               cookiesFormA.querySelector("button.settings").addEventListener("click", () => {
+                   cookiesFormA.style.display = "none";
+                   cookiesFormB.style.display = "flex";
+               });
+            });
+        </script>
+    {% endif %}
+{% endblock %}
