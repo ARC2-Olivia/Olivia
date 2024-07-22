@@ -711,6 +711,10 @@ termsOfService:
         rescind: Rescindere
 
 dataRequest:
+    message:
+        resolve:
+            access: Sei sicuro di voler risolvere la richiesta di accesso ai dati da parte dell'utente %user%?
+            delete: Sei sicuro di voler risolvere la richiesta di cancellazione dei dati da parte dell'utente %user%?
     title:
         index:
             default: Richieste di dati

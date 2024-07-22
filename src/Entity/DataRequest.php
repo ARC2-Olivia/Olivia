@@ -17,7 +17,7 @@ class DataRequest
     private ?int $id = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\Column(length: 7)]
@@ -28,6 +28,9 @@ class DataRequest
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $resolvedAt = null;
+
+    #[ORM\Column(length: 180, nullable: true)]
+    private ?string $deletedUserEmail = null;
 
     public static function createAccessRequest(User $user): self
     {
@@ -90,5 +93,25 @@ class DataRequest
         $this->resolvedAt = $resolvedAt;
 
         return $this;
+    }
+
+    public function getDeletedUserEmail(): ?string
+    {
+        return $this->deletedUserEmail;
+    }
+
+    public function setDeletedUserEmail(?string $deletedUserEmail): self
+    {
+        $this->deletedUserEmail = $deletedUserEmail;
+
+        return $this;
+    }
+
+    public function getUserIdentifier(): ?string
+    {
+        if (null !== $this->user) {
+            return $this->user->getNameOrEmail();
+        }
+        return $this->deletedUserEmail;
     }
 }

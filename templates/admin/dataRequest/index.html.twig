@@ -9,24 +9,7 @@
             </div>
             <div class="card-body">
                 <div id="data-access-requests-table-wrapper"></div>
-                <table id="data-access-requests-table">
-                    <thead>
-                        <tr>
-                            <th>{{ 'form.entity.dataRequest.label.id'|trans }}</th>
-                            <th>{{ 'form.entity.dataRequest.label.user'|trans }}</th>
-                            <th>{{ 'form.entity.dataRequest.label.requestedAt'|trans }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for dr in dataAccessRequests %}
-                            <tr>
-                                <td>{{ dr.id }}</td>
-                                <td>{{ dr.user.email }}</td>
-                                <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                {% include 'admin/dataRequest/_index_access.html.twig' %}
             </div>
         </div>
 
@@ -36,24 +19,7 @@
             </div>
             <div class="card-body">
                 <div id="data-deletion-requests-table-wrapper"></div>
-                <table id="data-deletion-requests-table">
-                    <thead>
-                        <tr>
-                            <th>{{ 'form.entity.dataRequest.label.id'|trans }}</th>
-                            <th>{{ 'form.entity.dataRequest.label.user'|trans }}</th>
-                            <th>{{ 'form.entity.dataRequest.label.requestedAt'|trans }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for dr in dataDeletionRequests %}
-                            <tr>
-                                <td>{{ dr.id }}</td>
-                                <td>{{ dr.user.email }}</td>
-                                <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                {% include 'admin/dataRequest/_index_delete.html.twig' %}
             </div>
         </div>
 
@@ -63,28 +29,7 @@
             </div>
             <div class="card-body">
                 <div id="resolved-data-requests-table-wrapper"></div>
-                <table id="resolved-data-requests-table">
-                    <thead>
-                        <tr>
-                            <th>{{ 'form.entity.dataRequest.label.id'|trans }}</th>
-                            <th>{{ 'form.entity.dataRequest.label.user'|trans }}</th>
-                            <th>{{ 'form.entity.dataRequest.label.type'|trans }}</th>
-                            <th>{{ 'form.entity.dataRequest.label.requestedAt'|trans }}</th>
-                            <th>{{ 'form.entity.dataRequest.label.resolvedAt'|trans }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for dr in resolvedDataRequests %}
-                            <tr>
-                                <td>{{ dr.id }}</td>
-                                <td>{{ dr.user.email }}</td>
-                                <td>{{ dr.type }}</td>
-                                <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
-                                <td>{{ dr.resolvedAt|date('d.m.Y. H:i') }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                {% include 'admin/dataRequest/_index_resolved.html.twig' %}>
             </div>
         </div>
     </div>

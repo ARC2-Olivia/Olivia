@@ -1,0 +1,19 @@
+{% trans_default_domain 'app' %}
+<table id="data-access-requests-table">
+    <thead>
+        <tr>
+            <th>{{ 'form.entity.dataRequest.label.id'|trans }}</th>
+            <th>{{ 'form.entity.dataRequest.label.user'|trans }}</th>
+            <th>{{ 'form.entity.dataRequest.label.requestedAt'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for dr in dataAccessRequests %}
+            <tr>
+                <td>{{ dr.id }}</td>
+                <td>{{ dr.user.email }}</td>
+                <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

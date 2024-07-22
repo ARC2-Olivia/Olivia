@@ -3,15 +3,12 @@
 namespace App\Service;
 
 use App\Entity\DataRequest;
-use App\Entity\Note;
-use App\Entity\Gdpr;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DataRequestService
@@ -20,6 +17,8 @@ class DataRequestService
     private ParameterBagInterface $parameterBag;
     private TranslatorInterface $translator;
     private MailerInterface $mailer;
+
+    private const BATCH_SIZE = 50;
 
     public function __construct(EntityManagerInterface $em, ParameterBagInterface $parameterBag, TranslatorInterface $translator, MailerInterface $mailer)
     {
@@ -84,6 +83,64 @@ class DataRequestService
 
     private function resolveDataDeletionRequest(DataRequest $dataRequest): void
     {
+        $user = $dataRequest->getUser();
+        $identifier = $user->getNameOrEmail();
+        $email = $user->getEmail();
+
+        $batchCounter = 0;
+        $this->deleteEntitiesForUser($user, \App\Entity\AcceptedGdpr::class, $batchCounter);
+        $this->deleteEntitiesForUser($user, \App\Entity\EduLog::class, $batchCounter);
+        $this->deleteEntitiesForUser($user, \App\Entity\Enrollment::class, $batchCounter);
+        $this->deleteEntitiesForUser($user, \App\Entity\LessonCompletion::class, $batchCounter);
+        $this->deleteEntitiesForUser($user, \App\Entity\Note::class, $batchCounter);
+        $this->deleteEntitiesForUser($user, \App\Entity\QuizQuestionAnswer::class, $batchCounter);
+        $this->deleteEntitiesForUser($user, \App\Entity\PracticalSubmoduleAssessment::class, $batchCounter);
+
+        foreach ($this->em->getRepository(\App\Entity\DataRequest::class)->findUnresolvedByTypeForUser(\App\Entity\DataRequest::TYPE_ACCESS, $user) as $unresolvedDataRequest) {
+            $this->deleteEntity($unresolvedDataRequest, $batchCounter);
+        }
+
+        foreach ($this->em->getRepository(\App\Entity\DataRequest::class)->findUnresolvedByTypeForUser(\App\Entity\DataRequest::TYPE_DELETE, $user) as $unresolvedDataRequest) {
+            if ($dataRequest->getId() !== $unresolvedDataRequest->getId()) {
+                $this->deleteEntity($unresolvedDataRequest, $batchCounter);
+            }
+        }
+
+        foreach ($this->em->getRepository(\App\Entity\DataRequest::class)->findResolvedByTypeForUser(\App\Entity\DataRequest::TYPE_ACCESS, $user) as $resolvedDataRequest) {
+            $resolvedDataRequest->setDeletedUserEmail($email)->setUser(null);
+        }
+
+        $dataRequest->setResolvedAt(new \DateTimeImmutable())->setDeletedUserEmail($email)->setUser(null);
+        $this->em->remove($user);
+        $this->em->flush();
+
+        $email = (new Email())
+            ->from($this->parameterBag->get('mail.from'))
+            ->to($email)
+            ->subject($this->translator->trans('mail.dataDeletion.subject', [], 'mail'))
+            ->html($this->translator->trans('mail.dataDeletion.body', ['%user%' => $identifier], 'mail'))
+        ;
+        $this->mailer->send($email);
+    }
+
+    private function deleteEntitiesForUser(User $user, string $entityClass, int &$batchCounter): void
+    {
+        if (!class_exists($entityClass)) {
+            return;
+        }
+        foreach ($this->em->getRepository($entityClass)->findBy(['user' => $user]) as $entity) {
+            $this->deleteEntity($entity, $batchCounter);
+        }
+    }
+
+    private function deleteEntity(mixed $entity, int &$batchCounter): void
+    {
+        $this->em->remove($entity);
+        $batchCounter++;
+        if ($batchCounter > self::BATCH_SIZE) {
+            $this->em->flush();
+            $batchCounter = 0;
+        }
     }
 
     private function makeUserCsv(DataRequest $dataRequest, Filesystem $fs): string
@@ -121,7 +178,7 @@ class DataRequestService
             ];
             fputcsv($stream, $header, ';');
 
-            $dumpedNotes = $this->em->getRepository(Note::class)->dumpForDataAccess($dataRequest->getUser());
+            $dumpedNotes = $this->em->getRepository(\App\Entity\Note::class)->dumpForDataAccess($dataRequest->getUser());
             foreach ($dumpedNotes as $item) {
                 $row = [$item['note_id'], $item['lesson_id'], $item['text'], $item['updated_at']];
                 fputcsv($stream, $row, ';');
@@ -149,7 +206,7 @@ class DataRequestService
             ];
             fputcsv($stream, $header, ';');
 
-            $dumpedTermsOfServices = $this->em->getRepository(Gdpr::class)->dumpForDataAccess($dataRequest->getUser());
+            $dumpedTermsOfServices = $this->em->getRepository(\App\Entity\Gdpr::class)->dumpForDataAccess($dataRequest->getUser());
             foreach ($dumpedTermsOfServices as $item) {
                 $row = [$item['id'], $item['version'], $item['revision'], $item['started_at'], $item['ended_at'], $item['content'], $item['active'], $item['accepted_at']];
                 fputcsv($stream, $row, ';');
