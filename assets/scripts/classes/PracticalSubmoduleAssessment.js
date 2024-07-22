@@ -614,27 +614,27 @@ class PracticalSubmoduleAssessment {
                 const input = this.#parser.parseFromString(`
                     <div style="width: 100%">
                         <input type="hidden" name="evaluation_assessment[${questionData.id}][]" value="${item}"/>
-                        <input type="text" class="form-input" value="${item}"/>
+                        <textarea class="form-textarea list-input">${item}</textarea>
                     </div>
                 `, "text/html").body.firstChild;
                 answer.appendChild(input);
 
                 const inputHidden = input.querySelector("input[type='hidden']");
-                input.querySelector("input[type='text']").addEventListener("input", (evt) => {
+                input.querySelector("textarea").addEventListener("input", (evt) => {
                     inputHidden.value = evt.target.value;
                 });
             }
 
             answer.querySelector("button").addEventListener("click", () => {
                 const input = this.#parser.parseFromString(`
-                <div style="width: 100%">
-                    <input type="hidden" name="evaluation_assessment[${questionData.id}][]"/>
-                    <input type="text" class="form-input"/>
-                </div>
-            `, "text/html").body.firstChild;
+                    <div style="width: 100%">
+                        <input type="hidden" name="evaluation_assessment[${questionData.id}][]"/>
+                        <textarea class="form-textarea list-input"></textarea>
+                    </div>
+                `, "text/html").body.firstChild;
 
                 const inputHidden = input.querySelector("input[type='hidden']");
-                input.querySelector("input[type='text']").addEventListener("input", (evt) => {
+                input.querySelector("textarea").addEventListener("input", (evt) => {
                     inputHidden.value = evt.target.value;
                 });
 
