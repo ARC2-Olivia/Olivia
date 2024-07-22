@@ -719,6 +719,10 @@ privacyPolicy:
         edit: Editing privacy policy
 
 dataRequest:
+    message:
+        resolve:
+            access: Are you sure you want resolve the data access request from the user %user%?
+            delete: Are you sure you want resolve the data deletion request from the user %user%?
     title:
         index:
             default: Data requests

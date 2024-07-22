@@ -61,4 +61,22 @@ class DataRequestRepository extends ServiceEntityRepository
             ->getQuery()->getResult()
         ;
     }
+
+    public function findResolvedByTypeForUser(string $type, \App\Entity\User $user): array
+    {
+        return $this->createQueryBuilder('dr')
+            ->where('dr.resolvedAt IS NOT NULL')->andWhere('dr.type = :type')->andWhere('dr.user = :user')
+            ->setParameters(['type' => $type, 'user' => $user])
+            ->getQuery()->getResult()
+        ;
+    }
+
+    public function findUnresolvedByTypeForUser(string $type, \App\Entity\User $user): array
+    {
+        return $this->createQueryBuilder('dr')
+            ->where('dr.resolvedAt IS NULL')->andWhere('dr.type = :type')->andWhere('dr.user = :user')
+            ->setParameters(['type' => $type, 'user' => $user])
+            ->getQuery()->getResult()
+        ;
+    }
 }

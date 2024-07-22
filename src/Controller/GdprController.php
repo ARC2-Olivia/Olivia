@@ -208,7 +208,7 @@ class GdprController extends BaseController
             $this->addFlash('error', $this->translator->trans('error.dataRequest.access', [], 'message'));
         }
 
-        return $this->redirectToRoute('profile');
+        return $this->redirectToRoute('gdpr_data_protection');
     }
 
     #[Route("/data-protection/delete", name: "data_protection_delete")]
@@ -225,7 +225,7 @@ class GdprController extends BaseController
             $this->addFlash('error', $this->translator->trans('error.dataRequest.delete', [], 'message'));
         }
 
-        return $this->redirectToRoute('profile');
+        return $this->redirectToRoute('gdpr_data_protection');
     }
 
     #[Route("/data-protection/resolve/{dataRequest}", name: "data_protection_resolve")]

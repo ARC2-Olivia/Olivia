@@ -711,6 +711,10 @@ termsOfService:
         rescind: Raskini
 
 dataRequest:
+    message:
+        resolve:
+            access: Jeste li sigurni da želite razriješiti zahtjev za pristup podacima od korisnika %user%?
+            delete: Jeste li sigurni da želite razriješiti zahtjev za brisanjem podataka od korisnika %user%?
     title:
         index:
             default: Podatkovni zahtjevi
