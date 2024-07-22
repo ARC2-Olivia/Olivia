@@ -34,6 +34,10 @@
     padding: 8px 12px;
 }
 
+.form-textarea.list-input {
+    min-height: 4rem;
+}
+
 .form-slider[type=range] {
     width: 100%;
     border: none;
