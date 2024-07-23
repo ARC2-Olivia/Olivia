@@ -565,6 +565,13 @@ quizQuestionChoice:
     delete: Sei sicuro di voler eliminare questa scelta?
     edit: Modificare una scelta
 
+quizQuestionAnswer:
+    dataAcess:
+        id: ID
+        quizQuestionId: ID della domanda del quiz
+        quizQuestionText: Testo della domanda del quiz
+        answer: Risposta
+
 note:
     dataAccess:
         id: ID

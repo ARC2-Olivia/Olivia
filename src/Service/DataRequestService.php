@@ -52,12 +52,12 @@ class DataRequestService
         $excelFile = Path::join($this->parameterBag->get('dir.temp'), uniqid("{$dataRequest->getUser()->getId()}-", true).'.xlsx');
         $spreadsheet = new Spreadsheet();
 
-        // Add user data
         $this->addUserToExcel($dataRequest, $spreadsheet);
         $this->addNotesToExcel($dataRequest, $spreadsheet);
         $this->addGdprToExcel($dataRequest, $spreadsheet);
-        $this->addEnrollmentToExcel($dataRequest, $spreadsheet);
-        $this->addLessonCompletionToExcel($dataRequest, $spreadsheet);
+        $this->addEnrollmentsToExcel($dataRequest, $spreadsheet);
+        $this->addLessonCompletionsToExcel($dataRequest, $spreadsheet);
+        $this->addQuizQuestionAnswersToExcel($dataRequest, $spreadsheet);
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($excelFile);
@@ -217,7 +217,7 @@ class DataRequestService
         }
     }
 
-    private function addEnrollmentToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
+    private function addEnrollmentsToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
         $worksheet = $spreadsheet->createSheet();
         $worksheet->setTitle('Enrollments');
@@ -247,7 +247,7 @@ class DataRequestService
         }
     }
 
-    private function addLessonCompletionToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
+    private function addLessonCompletionsToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
         $worksheet = $spreadsheet->createSheet();
         $worksheet->setTitle('Lesson completion');
@@ -270,6 +270,33 @@ class DataRequestService
             $worksheet->setCellValue($cellAddress, $data['lesson_name']);
             $cellAddress = $cellAddress->nextColumn();
             $worksheet->setCellValue($cellAddress, $data['completed']);
+            $rowOffset++;
+        }
+    }
+
+    private function addQuizQuestionAnswersToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
+    {
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Quiz question answer');
+
+        $this->addHeader($worksheet, [
+            $this->translator->trans('quizQuestionAnswer.dataAcess.id', [], 'app'),
+            $this->translator->trans('quizQuestionAnswer.dataAcess.quizQuestionId', [], 'app'),
+            $this->translator->trans('quizQuestionAnswer.dataAcess.quizQuestionText', [], 'app'),
+            $this->translator->trans('quizQuestionAnswer.dataAcess.answer', [], 'app'),
+        ]);
+
+        $dumpedLessonCompletions = $this->em->getRepository(\App\Entity\QuizQuestionAnswer::class)->dumpForDataAccess($dataRequest->getUser());
+        $rowOffset = 0;
+        foreach ($dumpedLessonCompletions as $data) {
+            $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
+            $worksheet->setCellValue($cellAddress, $data['id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['question_id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['question_text']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['answer']);
             $rowOffset++;
         }
     }
