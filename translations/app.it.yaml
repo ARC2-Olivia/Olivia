@@ -545,6 +545,13 @@ lesson:
         listOfLessons: Elenco delle lezioni
         quizRezults: Risultati del quiz
 
+lessonCompletion:
+    dataAccess:
+        id: ID
+        lessonId: ID della lezione
+        lessonName: Nome della lezione
+        completed: Completato
+
 quizQuestion:
     add: Aggiungi domanda
     delete: Sei sicuro di voler eliminare questa domanda?

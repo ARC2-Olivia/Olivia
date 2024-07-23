@@ -545,6 +545,13 @@ lesson:
         listOfLessons: Popis lekcija
         quizRezults: Rezultati kviza
 
+lessonCompletion:
+    dataAccess:
+        id: ID
+        lessonId: ID lekcije
+        lessonName: Naziv lekcije
+        completed: Završeno
+
 quizQuestion:
     add: Dodaj pitanje
     delete: Jeste li sigurni da želite izbrisati ovo pitanje?

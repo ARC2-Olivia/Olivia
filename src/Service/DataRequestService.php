@@ -57,6 +57,7 @@ class DataRequestService
         $this->addNotesToExcel($dataRequest, $spreadsheet);
         $this->addGdprToExcel($dataRequest, $spreadsheet);
         $this->addEnrollmentToExcel($dataRequest, $spreadsheet);
+        $this->addLessonCompletionToExcel($dataRequest, $spreadsheet);
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($excelFile);
@@ -139,57 +140,33 @@ class DataRequestService
 
     private function addUserToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
-        $header = [
-            $this->translator->trans('user.dataAccess.id', [], 'app'),
-            $this->translator->trans('user.dataAccess.email', [], 'app'),
-            $this->translator->trans('user.dataAccess.roles', [], 'app')
-        ];
-
-        $data = [
-            strval($dataRequest->getUser()->getId()),
-            $dataRequest->getUser()->getEmail(),
-            implode(',', $dataRequest->getUser()->getRoles())
-        ];
-
         $worksheet = $spreadsheet->getActiveSheet();
         $worksheet->setTitle('User');
 
-        $cellAddress = new CellAddress('A1', $worksheet);
-        foreach ($header as $item) {
-            $cell = $worksheet->getCell($cellAddress);
-            $cell->setValue($item);
-            $cellAddress = $cellAddress->nextColumn();
-        }
+        $this->addHeader($worksheet, [
+            $this->translator->trans('user.dataAccess.id', [], 'app'),
+            $this->translator->trans('user.dataAccess.email', [], 'app'),
+            $this->translator->trans('user.dataAccess.roles', [], 'app')
+        ]);
 
-        $cellAddress = new CellAddress('A2', $worksheet);
-        foreach ($data as $item) {
-            $cell = $worksheet->getCell($cellAddress);
-            $cell->setValue($item);
-            $cellAddress = $cellAddress->nextColumn();
-        }
+        $worksheet->setCellValue('A2', strval($dataRequest->getUser()->getId()));
+        $worksheet->setCellValue('B2', strval($dataRequest->getUser()->getEmail()));
+        $worksheet->setCellValue('C2', implode(',', $dataRequest->getUser()->getRoles()));
     }
 
     private function addNotesToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
-        $header = [
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Notes');
+
+        $this->addHeader($worksheet, [
             $this->translator->trans('note.dataAccess.id', [], 'app'),
             $this->translator->trans('note.dataAccess.lesson', [], 'app'),
             $this->translator->trans('note.dataAccess.text', [], 'app'),
             $this->translator->trans('note.dataAccess.updatedAt', [], 'app')
-        ];
+        ]);
 
         $dumpedNotes = $this->em->getRepository(\App\Entity\Note::class)->dumpForDataAccess($dataRequest->getUser());
-
-        $worksheet = $spreadsheet->createSheet();
-        $worksheet->setTitle('Notes');
-
-        $cellAddress = new CellAddress('A1', $worksheet);
-        foreach ($header as $item) {
-            $cell = $worksheet->getCell($cellAddress);
-            $cell->setValue($item);
-            $cellAddress = $cellAddress->nextColumn();
-        }
-
         $rowOffset = 0;
         foreach ($dumpedNotes as $data) {
             $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
@@ -206,28 +183,20 @@ class DataRequestService
 
     private function addGdprToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
-        $header = [
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Accepted Terms of service');
+
+        $this->addHeader($worksheet, [
             $this->translator->trans('termsOfService.dataAccess.id', [], 'app'),
             $this->translator->trans('termsOfService.dataAccess.version', [], 'app'),
             $this->translator->trans('termsOfService.dataAccess.revision', [], 'app'),
             $this->translator->trans('termsOfService.dataAccess.startedAt', [], 'app'),
             $this->translator->trans('termsOfService.dataAccess.endedAt', [], 'app'),
             $this->translator->trans('termsOfService.dataAccess.active', [], 'app'),
-            $this->translator->trans('termsOfService.dataAccess.acceptedAt', [], 'app'),
-        ];
+            $this->translator->trans('termsOfService.dataAccess.acceptedAt', [], 'app')
+        ]);
 
         $dumpedGdprs = $this->em->getRepository(\App\Entity\Gdpr::class)->dumpForDataAccess($dataRequest->getUser());
-
-        $worksheet = $spreadsheet->createSheet();
-        $worksheet->setTitle('Accepted Terms of service');
-
-        $cellAddress = new CellAddress('A1', $worksheet);
-        foreach ($header as $item) {
-            $cell = $worksheet->getCell($cellAddress);
-            $cell->setValue($item);
-            $cellAddress = $cellAddress->nextColumn();
-        }
-
         $rowOffset = 0;
         foreach ($dumpedGdprs as $data) {
             $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
@@ -250,26 +219,18 @@ class DataRequestService
 
     private function addEnrollmentToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
-        $header = [
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Enrollments');
+
+        $this->addHeader($worksheet, [
             $this->translator->trans('enrollment.dataAccess.id', [], 'app'),
             $this->translator->trans('enrollment.dataAccess.courseId', [], 'app'),
             $this->translator->trans('enrollment.dataAccess.courseName', [], 'app'),
             $this->translator->trans('enrollment.dataAccess.enrolledAt', [], 'app'),
-            $this->translator->trans('enrollment.dataAccess.passed', [], 'app'),
-        ];
+            $this->translator->trans('enrollment.dataAccess.passed', [], 'app')
+        ]);
 
         $dumpedEnrollments = $this->em->getRepository(\App\Entity\Enrollment::class)->dumpForDataAccess($dataRequest->getUser());
-
-        $worksheet = $spreadsheet->createSheet();
-        $worksheet->setTitle('Enrollments');
-
-        $cellAddress = new CellAddress('A1', $worksheet);
-        foreach ($header as $item) {
-            $cell = $worksheet->getCell($cellAddress);
-            $cell->setValue($item);
-            $cellAddress = $cellAddress->nextColumn();
-        }
-
         $rowOffset = 0;
         foreach ($dumpedEnrollments as $data) {
             $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
@@ -283,6 +244,43 @@ class DataRequestService
             $cellAddress = $cellAddress->nextColumn();
             $worksheet->setCellValue($cellAddress, $data['passed']);
             $rowOffset++;
+        }
+    }
+
+    private function addLessonCompletionToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
+    {
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Lesson completion');
+
+        $this->addHeader($worksheet, [
+            $this->translator->trans('lessonCompletion.dataAccess.id', [], 'app'),
+            $this->translator->trans('lessonCompletion.dataAccess.lessonId', [], 'app'),
+            $this->translator->trans('lessonCompletion.dataAccess.lessonName', [], 'app'),
+            $this->translator->trans('lessonCompletion.dataAccess.completed', [], 'app'),
+        ]);
+
+        $dumpedLessonCompletions = $this->em->getRepository(\App\Entity\LessonCompletion::class)->dumpForDataAccess($dataRequest->getUser());
+        $rowOffset = 0;
+        foreach ($dumpedLessonCompletions as $data) {
+            $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
+            $worksheet->setCellValue($cellAddress, $data['id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['lesson_id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['lesson_name']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['completed']);
+            $rowOffset++;
+        }
+    }
+
+    private function addHeader(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $worksheet, array $header): void
+    {
+        $cellAddress = new CellAddress('A1', $worksheet);
+        foreach ($header as $item) {
+            $cell = $worksheet->getCell($cellAddress);
+            $cell->setValue($item);
+            $cellAddress = $cellAddress->nextColumn();
         }
     }
 }
