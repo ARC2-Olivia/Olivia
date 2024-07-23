@@ -14,7 +14,7 @@ mail:
             goodbye: "Distinti saluti,"
     dataAccess:
         subject: "Olivia | Dati dalla richiesta di accesso ai dati"
-        body: "I dati richiesti sono reperibili nel file ZIP allegato."
+        body: "I dati richiesti sono reperibili nel file Excel allegato."
     dataDeletion:
         subject: "Olivia | Richiesta di cancellazione dati risolta"
         body: "<p>Caro %user%.</p><p>La tua richiesta di eliminazione dei dati è stata risolta e tutti i tuoi dati sono stati eliminati dal sito web di Olivia.</p><p>Cordiali saluti,<br/>la squadra di Olivia</p>"

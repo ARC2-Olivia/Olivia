@@ -5,8 +5,11 @@ namespace App\Service;
 use App\Entity\DataRequest;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -46,39 +49,30 @@ class DataRequestService
             $fs->mkdir($this->parameterBag->get('dir.temp'));
         }
 
-        $csvFiles = [
-            'User.csv' => $this->makeUserCsv($dataRequest, $fs),
-            'Note.csv' => $this->makeNoteCsv($dataRequest, $fs),
-            'TermsOfService.csv' => $this->makeTermsOfServiceCsv($dataRequest, $fs),
-        ];
+        $excelFile = Path::join($this->parameterBag->get('dir.temp'), uniqid("{$dataRequest->getUser()->getId()}-", true).'.xlsx');
+        $spreadsheet = new Spreadsheet();
 
-        $zip = new \ZipArchive();
-        $zipFilename = $fs->tempnam($this->parameterBag->get('dir.temp'), 'Olivia-user-data-', '.zip');;
-        $zipFileOpened = $zip->open($zipFilename, \ZipArchive::CREATE);
+        // Add user data
+        $this->addUserToExcel($dataRequest, $spreadsheet);
+        $this->addNotesToExcel($dataRequest, $spreadsheet);
+        $this->addGdprToExcel($dataRequest, $spreadsheet);
+        $this->addEnrollmentToExcel($dataRequest, $spreadsheet);
 
-        if ($zipFileOpened === true) {
-            foreach ($csvFiles as $name => $filepath) {
-                $zip->addFile($filepath, $name);
-            }
-            $zip->close();
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($excelFile);
 
-            $email = (new Email())
-                ->from($this->parameterBag->get('mail.from'))
-                ->to($dataRequest->getUser()->getEmail())
-                ->subject($this->translator->trans('mail.dataAccess.subject', [], 'mail'))
-                ->text($this->translator->trans('mail.dataAccess.body', [], 'mail'))
-                ->attachFromPath($zipFilename, 'Olivia-user-data.zip', 'application/zip')
-            ;
-            $this->mailer->send($email);
+        $email = (new Email())
+            ->from($this->parameterBag->get('mail.from'))
+            ->to($dataRequest->getUser()->getEmail())
+            ->subject($this->translator->trans('mail.dataAccess.subject', [], 'mail'))
+            ->text($this->translator->trans('mail.dataAccess.body', [], 'mail'))
+            ->attachFromPath($excelFile, 'Olivia-user-data.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        ;
+        $this->mailer->send($email);
 
-            $dataRequest->setResolvedAt(new \DateTimeImmutable());
-            $this->em->flush();
-        }
-
-        unlink($zipFilename);
-        foreach ($csvFiles as $name => $filepath) {
-            unlink($filepath);
-        }
+        $spreadsheet->disconnectWorksheets();
+        unset($spreadsheet);
+        unlink($excelFile);
     }
 
     private function resolveDataDeletionRequest(DataRequest $dataRequest): void
@@ -143,76 +137,152 @@ class DataRequestService
         }
     }
 
-    private function makeUserCsv(DataRequest $dataRequest, Filesystem $fs): string
+    private function addUserToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
-        $csvUser = $fs->tempnam($this->parameterBag->get('dir.temp'), 'User-', '.csv');
-        if (($stream = fopen($csvUser, 'w')) !== false) {
-            $header = [
-                $this->translator->trans('user.dataAccess.id', [], 'app'),
-                $this->translator->trans('user.dataAccess.email', [], 'app'),
-                $this->translator->trans('user.dataAccess.roles', [], 'app')
-            ];
-            fputcsv($stream, $header, ';');
+        $header = [
+            $this->translator->trans('user.dataAccess.id', [], 'app'),
+            $this->translator->trans('user.dataAccess.email', [], 'app'),
+            $this->translator->trans('user.dataAccess.roles', [], 'app')
+        ];
 
-            $row = [
-                strval($dataRequest->getUser()->getId()),
-                $dataRequest->getUser()->getEmail(),
-                implode(',', $dataRequest->getUser()->getRoles())
-            ];
-            fputcsv($stream, $row, ';');
+        $data = [
+            strval($dataRequest->getUser()->getId()),
+            $dataRequest->getUser()->getEmail(),
+            implode(',', $dataRequest->getUser()->getRoles())
+        ];
 
-            fclose($stream);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $worksheet->setTitle('User');
+
+        $cellAddress = new CellAddress('A1', $worksheet);
+        foreach ($header as $item) {
+            $cell = $worksheet->getCell($cellAddress);
+            $cell->setValue($item);
+            $cellAddress = $cellAddress->nextColumn();
         }
-        return $csvUser;
+
+        $cellAddress = new CellAddress('A2', $worksheet);
+        foreach ($data as $item) {
+            $cell = $worksheet->getCell($cellAddress);
+            $cell->setValue($item);
+            $cellAddress = $cellAddress->nextColumn();
+        }
     }
 
-    private function makeNoteCsv(DataRequest $dataRequest, Filesystem $fs)
+    private function addNotesToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
-        $csvNote = $fs->tempnam($this->parameterBag->get('dir.temp'), 'Note-', '.csv');
-        if (($stream = fopen($csvNote, 'w')) !== false) {
-            $header = [
-                $this->translator->trans('note.dataAccess.id', [], 'app'),
-                $this->translator->trans('note.dataAccess.lesson', [], 'app'),
-                $this->translator->trans('note.dataAccess.text', [], 'app'),
-                $this->translator->trans('note.dataAccess.updatedAt', [], 'app'),
-            ];
-            fputcsv($stream, $header, ';');
+        $header = [
+            $this->translator->trans('note.dataAccess.id', [], 'app'),
+            $this->translator->trans('note.dataAccess.lesson', [], 'app'),
+            $this->translator->trans('note.dataAccess.text', [], 'app'),
+            $this->translator->trans('note.dataAccess.updatedAt', [], 'app')
+        ];
 
-            $dumpedNotes = $this->em->getRepository(\App\Entity\Note::class)->dumpForDataAccess($dataRequest->getUser());
-            foreach ($dumpedNotes as $item) {
-                $row = [$item['note_id'], $item['lesson_id'], $item['text'], $item['updated_at']];
-                fputcsv($stream, $row, ';');
-            }
+        $dumpedNotes = $this->em->getRepository(\App\Entity\Note::class)->dumpForDataAccess($dataRequest->getUser());
 
-            fclose($stream);
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Notes');
+
+        $cellAddress = new CellAddress('A1', $worksheet);
+        foreach ($header as $item) {
+            $cell = $worksheet->getCell($cellAddress);
+            $cell->setValue($item);
+            $cellAddress = $cellAddress->nextColumn();
         }
 
-        return $csvNote;
+        $rowOffset = 0;
+        foreach ($dumpedNotes as $data) {
+            $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
+            $worksheet->setCellValue($cellAddress, $data['note_id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['lesson_id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['text']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['updated_at']);
+            $rowOffset++;
+        }
     }
 
-    private function makeTermsOfServiceCsv(DataRequest $dataRequest, Filesystem $fs)
+    private function addGdprToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
-        $csvAcceptedTermsOfService = $fs->tempnam($this->parameterBag->get('dir.temp'), 'AcceptedTermsOfService-', '.csv');
-        if (($stream = fopen($csvAcceptedTermsOfService, 'w')) !== false) {
-            $header = [
-                $this->translator->trans('termsOfService.dataAccess.id', [], 'app'),
-                $this->translator->trans('termsOfService.dataAccess.version', [], 'app'),
-                $this->translator->trans('termsOfService.dataAccess.revision', [], 'app'),
-                $this->translator->trans('termsOfService.dataAccess.startedAt', [], 'app'),
-                $this->translator->trans('termsOfService.dataAccess.endedAt', [], 'app'),
-                $this->translator->trans('termsOfService.dataAccess.content', [], 'app'),
-                $this->translator->trans('termsOfService.dataAccess.active', [], 'app'),
-                $this->translator->trans('termsOfService.dataAccess.acceptedAt', [], 'app'),
-            ];
-            fputcsv($stream, $header, ';');
+        $header = [
+            $this->translator->trans('termsOfService.dataAccess.id', [], 'app'),
+            $this->translator->trans('termsOfService.dataAccess.version', [], 'app'),
+            $this->translator->trans('termsOfService.dataAccess.revision', [], 'app'),
+            $this->translator->trans('termsOfService.dataAccess.startedAt', [], 'app'),
+            $this->translator->trans('termsOfService.dataAccess.endedAt', [], 'app'),
+            $this->translator->trans('termsOfService.dataAccess.active', [], 'app'),
+            $this->translator->trans('termsOfService.dataAccess.acceptedAt', [], 'app'),
+        ];
 
-            $dumpedTermsOfServices = $this->em->getRepository(\App\Entity\Gdpr::class)->dumpForDataAccess($dataRequest->getUser());
-            foreach ($dumpedTermsOfServices as $item) {
-                $row = [$item['id'], $item['version'], $item['revision'], $item['started_at'], $item['ended_at'], $item['content'], $item['active'], $item['accepted_at']];
-                fputcsv($stream, $row, ';');
-            }
-            fclose($stream);
+        $dumpedGdprs = $this->em->getRepository(\App\Entity\Gdpr::class)->dumpForDataAccess($dataRequest->getUser());
+
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Accepted Terms of service');
+
+        $cellAddress = new CellAddress('A1', $worksheet);
+        foreach ($header as $item) {
+            $cell = $worksheet->getCell($cellAddress);
+            $cell->setValue($item);
+            $cellAddress = $cellAddress->nextColumn();
         }
-        return $csvAcceptedTermsOfService;
+
+        $rowOffset = 0;
+        foreach ($dumpedGdprs as $data) {
+            $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
+            $worksheet->setCellValue($cellAddress, $data['id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['version']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['revision']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['started_at']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['ended_at']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['active']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['accepted_at']);
+            $rowOffset++;
+        }
+    }
+
+    private function addEnrollmentToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
+    {
+        $header = [
+            $this->translator->trans('enrollment.dataAccess.id', [], 'app'),
+            $this->translator->trans('enrollment.dataAccess.courseId', [], 'app'),
+            $this->translator->trans('enrollment.dataAccess.courseName', [], 'app'),
+            $this->translator->trans('enrollment.dataAccess.enrolledAt', [], 'app'),
+            $this->translator->trans('enrollment.dataAccess.passed', [], 'app'),
+        ];
+
+        $dumpedEnrollments = $this->em->getRepository(\App\Entity\Enrollment::class)->dumpForDataAccess($dataRequest->getUser());
+
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Enrollments');
+
+        $cellAddress = new CellAddress('A1', $worksheet);
+        foreach ($header as $item) {
+            $cell = $worksheet->getCell($cellAddress);
+            $cell->setValue($item);
+            $cellAddress = $cellAddress->nextColumn();
+        }
+
+        $rowOffset = 0;
+        foreach ($dumpedEnrollments as $data) {
+            $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
+            $worksheet->setCellValue($cellAddress, $data['id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['course_id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['course_name']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['enrolled_at']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['passed']);
+            $rowOffset++;
+        }
     }
 }

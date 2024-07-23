@@ -493,6 +493,14 @@ course:
         learningOutcomes: Ishodi učenja
         certificateInfo: Informacije o certifikaciji
 
+enrollment:
+    dataAccess:
+        id: ID
+        courseId: ID teoretskog modula
+        courseName: Naziv teoretskog modula
+        enrolledAt: Datum i vrijeme upisa
+        passed: Položeno
+
 lesson:
     type:
         text: Čitanje
@@ -702,7 +710,7 @@ termsOfService:
         revision: Revizija
         startedAt: Početak
         endedAt: Završetak
-        content: Sadrćžaj
+        content: Sadržaj
         active: Aktivno
         acceptedAt: Vrijeme prihvaćanja
     extra:
