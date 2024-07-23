@@ -498,6 +498,14 @@ course:
         learningOutcomes: Learning outcomes
         certificateInfo: Certification information
 
+enrollment:
+    dataAccess:
+        id: ID
+        courseId: Course ID
+        courseName: Course name
+        enrolledAt: Enrolled at
+        passed: Passed
+
 lesson:
     type:
         text: Reading

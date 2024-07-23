@@ -14,7 +14,7 @@ mail:
             goodbye: "S poštovanjem,"
     dataAccess:
         subject: "Olivia | Zahtjev za pristup podacima"
-        body: "Zatraženi podaci se nalaze u priloženoj ZIP datoteci."
+        body: "Zatraženi podaci se nalaze u priloženoj Excel datoteci."
     dataDeletion:
         subject: "Olivia | Riješen zahtjev za brisanjem podataka"
         body: "<p>Poštovani %user%.</p><p>Vaš zahtjev za brisanjem podataka je riješen, te su svi Vaši podaci izbrisani su s web stranice Olivia.</p><p>S poštovanjem,<br/>Olivia tim</p>"

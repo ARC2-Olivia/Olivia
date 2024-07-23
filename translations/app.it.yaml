@@ -498,6 +498,14 @@ course:
         learningOutcomes: Risultati dell'apprendimento
         certificateInfo: Informazioni sulla certificazione
 
+enrollment:
+    dataAccess:
+        id: ID
+        courseId: ID del corso
+        courseName: Nome del corso
+        enrolledAt: Iscritto a
+        passed: Passato
+
 lesson:
     type:
         text: Lettura

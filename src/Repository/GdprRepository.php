@@ -101,7 +101,7 @@ class GdprRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
         try {
-            $stmt = $conn->prepare('SELECT tos.id, tos.version, tos.revision, tos.started_at, tos.ended_at, tos.content, tos.active, atos.accepted_at FROM terms_of_service tos LEFT JOIN accepted_terms_of_service atos ON atos.terms_of_service_id = tos.id WHERE atos.user_id = :userId');
+            $stmt = $conn->prepare('SELECT g.id, g.version, g.revision, g.started_at, g.ended_at, g.active, ag.accepted_at FROM gdpr g LEFT JOIN accepted_gdpr ag ON ag.gdpr_id = g.id WHERE ag.user_id = :userId');
             $result = $stmt->executeQuery(['userId' => $user->getId()]);
             return $result->fetchAllAssociative();
         } catch (Exception $e) {
