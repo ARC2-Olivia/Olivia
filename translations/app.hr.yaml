@@ -560,6 +560,13 @@ quizQuestionChoice:
     delete: Jeste li sigurni da želite obrisati odgovor?
     edit: Uređivanje odgovora
 
+quizQuestionAnswer:
+    dataAcess:
+        id: ID
+        quizQuestionId: ID pitanja iz kviza
+        quizQuestionText: Tekst pitanja
+        answer: Odgovor
+
 note:
     dataAccess:
         id: ID

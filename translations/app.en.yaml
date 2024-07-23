@@ -563,6 +563,13 @@ quizQuestionChoice:
     delete: Are you sure you want to delete this choice?
     edit: Editing a choice
 
+quizQuestionAnswer:
+    dataAcess:
+        id: ID
+        quizQuestionId: Quiz question ID
+        quizQuestionText: Quiz question text
+        answer: Answer
+
 note:
     dataAccess:
         id: ID
