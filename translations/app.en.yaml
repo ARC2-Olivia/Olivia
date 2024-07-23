@@ -543,6 +543,13 @@ lesson:
         listOfLessons: List of lessons
         quizRezults: Quiz results
 
+lessonCompletion:
+    dataAccess:
+        id: ID
+        lessonId: Lesson ID
+        lessonName: Lesson name
+        completed: Completed
+
 quizQuestion:
     add: Add question
     delete: Are you sure you want to delete this question?
