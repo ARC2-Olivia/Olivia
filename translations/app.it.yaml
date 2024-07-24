@@ -718,6 +718,16 @@ practicalSubmoduleAssessment:
         lastSubmittedAt: Ultimo invio alle
         completed: Completato
 
+practicalSubmoduleAssessmentAnswer:
+    dataAccess:
+        id: ID
+        practicalSubmoduleQuestionId: ID domanda modulo pratico
+        practicalSubmoduleQuestionText: Testo della domanda del modulo pratico
+        practicalSubmoduleQuestionAnswerId: ID domanda risposta modulo pratico
+        practicalSubmoduleQuestionAnswerText: Modulo pratico domanda risposta testo
+        practicalSubmoduleQuestionAnswerValue: Modulo pratico domanda risposta valore
+        answerValue: Valore della risposta
+
 termsOfService:
     format: ver. %version%, rev. %revision%
     ongoing: in corso
