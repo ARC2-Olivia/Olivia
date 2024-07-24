@@ -77,6 +77,9 @@ class DataRequestService
         $spreadsheet->disconnectWorksheets();
         unset($spreadsheet);
         unlink($excelFile);
+
+        $dataRequest->setResolvedAt(new \DateTimeImmutable());
+        $this->em->flush();
     }
 
     private function resolveDataDeletionRequest(DataRequest $dataRequest): void
