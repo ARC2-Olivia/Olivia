@@ -59,6 +59,7 @@ class DataRequestService
         $this->addLessonCompletionsToExcel($dataRequest, $spreadsheet);
         $this->addQuizQuestionAnswersToExcel($dataRequest, $spreadsheet);
         $this->addPracticalSubmoduleAssessmentsToExcel($dataRequest, $spreadsheet);
+        $this->addPracticalSubmoduleAssessmentAnswersToExcel($dataRequest, $spreadsheet);
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($excelFile);
@@ -251,7 +252,7 @@ class DataRequestService
     private function addLessonCompletionsToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
         $worksheet = $spreadsheet->createSheet();
-        $worksheet->setTitle('Lesson completion');
+        $worksheet->setTitle('Lesson completions');
 
         $this->addHeader($worksheet, [
             $this->translator->trans('lessonCompletion.dataAccess.id', [], 'app'),
@@ -278,7 +279,7 @@ class DataRequestService
     private function addQuizQuestionAnswersToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
         $worksheet = $spreadsheet->createSheet();
-        $worksheet->setTitle('Quiz question answer');
+        $worksheet->setTitle('Quiz question answers');
 
         $this->addHeader($worksheet, [
             $this->translator->trans('quizQuestionAnswer.dataAcess.id', [], 'app'),
@@ -305,7 +306,7 @@ class DataRequestService
     private function addPracticalSubmoduleAssessmentsToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
         $worksheet = $spreadsheet->createSheet();
-        $worksheet->setTitle('Practical module assessment');
+        $worksheet->setTitle('Practical module assessments');
 
         $this->addHeader($worksheet, [
             $this->translator->trans('practicalSubmoduleAssessment.dataAccess.id', [], 'app'),
@@ -331,6 +332,42 @@ class DataRequestService
             $worksheet->setCellValue($cellAddress, $data['last_submitted_at']);
             $cellAddress = $cellAddress->nextColumn();
             $worksheet->setCellValue($cellAddress, $data['completed']);
+            $rowOffset++;
+        }
+    }
+
+    private function addPracticalSubmoduleAssessmentAnswersToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
+    {
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Practical module assessment answers');
+
+        $this->addHeader($worksheet, [
+            $this->translator->trans('practicalSubmoduleAssessmentAnswer.dataAccess.id', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessmentAnswer.dataAccess.practicalSubmoduleQuestionId', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessmentAnswer.dataAccess.practicalSubmoduleQuestionText', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessmentAnswer.dataAccess.practicalSubmoduleQuestionAnswerId', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessmentAnswer.dataAccess.practicalSubmoduleQuestionAnswerText', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessmentAnswer.dataAccess.practicalSubmoduleQuestionAnswerValue', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessmentAnswer.dataAccess.answerValue', [], 'app')
+        ]);
+
+        $dumpedLessonCompletions = $this->em->getRepository(\App\Entity\PracticalSubmoduleAssessmentAnswer::class)->dumpForDataAccess($dataRequest->getUser());
+        $rowOffset = 0;
+        foreach ($dumpedLessonCompletions as $data) {
+            $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
+            $worksheet->setCellValue($cellAddress, $data['id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['practical_submodule_question_id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['practical_submodule_question_text']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['practical_submodule_question_answer_id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['practical_submodule_question_answer_text']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['practical_submodule_question_answer_value']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['answer_value']);
             $rowOffset++;
         }
     }

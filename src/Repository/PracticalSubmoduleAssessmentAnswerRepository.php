@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\PracticalSubmoduleAssessmentAnswer;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,15 @@ class PracticalSubmoduleAssessmentAnswerRepository extends ServiceEntityReposito
         }
     }
 
-//    /**
-//     * @return EvaluationAssessmentAnswer[] Returns an array of EvaluationAssessmentAnswer objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?EvaluationAssessmentAnswer
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function dumpForDataAccess(User $user): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare('SELECT psaa.id, psq.id as practical_submodule_question_id, psq.question_text as practical_submodule_question_text, psqa.id as practical_submodule_question_answer_id, psqa.answer_text as practical_submodule_question_answer_text, psqa.answer_value as practical_submodule_question_answer_value, psaa.answer_value FROM practical_submodule_assessment_answer psaa LEFT JOIN practical_submodule_assessment psa ON psaa.practical_submodule_assessment_id = psa.id LEFT JOIN practical_submodule_question psq ON psaa.practical_submodule_question_id = psq.id LEFT JOIN practical_submodule_question_answer psqa ON psaa.practical_submodule_question_answer_id = psqa.id WHERE psa.user_id = :userId');
+            $result = $stmt->executeQuery(['userId' => $user->getId()]);
+            return $result->fetchAllAssociative();
+        } catch (Exception $e) {
+            return [];
+        }
+    }
 }

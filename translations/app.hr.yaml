@@ -713,6 +713,16 @@ practicalSubmoduleAssessment:
         lastSubmittedAt: Vrijeme zadnje predaje
         completed: Završeno
 
+practicalSubmoduleAssessmentAnswer:
+    dataAccess:
+        id: ID
+        practicalSubmoduleQuestionId: ID pitanja praktičnog modula
+        practicalSubmoduleQuestionText: Tekst pitanja praktičnog modula
+        practicalSubmoduleQuestionAnswerId: ID odgovora za pitanje praktičnog modula
+        practicalSubmoduleQuestionAnswerText: Tekst odgovora za pitanje praktičnog modula
+        practicalSubmoduleQuestionAnswerValue: Vrijednost odgovora za pitanje praktičnog modula
+        answerValue: Vrijednost odgovora
+
 termsOfService:
     format: Ver. %version%, rev. %revision%
     ongoing: u tijeku
