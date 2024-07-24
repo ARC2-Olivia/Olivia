@@ -13,7 +13,7 @@
         {% for dr in resolvedDataRequests %}
             <tr>
                 <td>{{ dr.id }}</td>
-                <td>{{ dr.deletedUserEmail }}</td>
+                <td>{{ dr.userIdentifier }}</td>
                 <td>{{ dr.type }}</td>
                 <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
                 <td>{{ dr.resolvedAt|date('d.m.Y. H:i') }}</td>
