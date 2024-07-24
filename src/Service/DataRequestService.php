@@ -58,6 +58,7 @@ class DataRequestService
         $this->addEnrollmentsToExcel($dataRequest, $spreadsheet);
         $this->addLessonCompletionsToExcel($dataRequest, $spreadsheet);
         $this->addQuizQuestionAnswersToExcel($dataRequest, $spreadsheet);
+        $this->addPracticalSubmoduleAssessmentsToExcel($dataRequest, $spreadsheet);
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($excelFile);
@@ -283,7 +284,7 @@ class DataRequestService
             $this->translator->trans('quizQuestionAnswer.dataAcess.id', [], 'app'),
             $this->translator->trans('quizQuestionAnswer.dataAcess.quizQuestionId', [], 'app'),
             $this->translator->trans('quizQuestionAnswer.dataAcess.quizQuestionText', [], 'app'),
-            $this->translator->trans('quizQuestionAnswer.dataAcess.answer', [], 'app'),
+            $this->translator->trans('quizQuestionAnswer.dataAcess.answer', [], 'app')
         ]);
 
         $dumpedLessonCompletions = $this->em->getRepository(\App\Entity\QuizQuestionAnswer::class)->dumpForDataAccess($dataRequest->getUser());
@@ -297,6 +298,39 @@ class DataRequestService
             $worksheet->setCellValue($cellAddress, $data['question_text']);
             $cellAddress = $cellAddress->nextColumn();
             $worksheet->setCellValue($cellAddress, $data['answer']);
+            $rowOffset++;
+        }
+    }
+
+    private function addPracticalSubmoduleAssessmentsToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
+    {
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Practical module assessment');
+
+        $this->addHeader($worksheet, [
+            $this->translator->trans('practicalSubmoduleAssessment.dataAccess.id', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessment.dataAccess.practicalSubmoduleId', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessment.dataAccess.practicalSubmoduleName', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessment.dataAccess.takenAt', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessment.dataAccess.lastSubmittedAt', [], 'app'),
+            $this->translator->trans('practicalSubmoduleAssessment.dataAccess.completed', [], 'app')
+        ]);
+
+        $dumpedLessonCompletions = $this->em->getRepository(\App\Entity\PracticalSubmoduleAssessment::class)->dumpForDataAccess($dataRequest->getUser());
+        $rowOffset = 0;
+        foreach ($dumpedLessonCompletions as $data) {
+            $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
+            $worksheet->setCellValue($cellAddress, $data['id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['practical_submodule_id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['practical_submodule_name']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['taken_at']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['last_submitted_at']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['completed']);
             $rowOffset++;
         }
     }

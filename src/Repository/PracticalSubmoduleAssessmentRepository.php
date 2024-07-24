@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\PracticalSubmoduleAssessment;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,15 @@ class PracticalSubmoduleAssessmentRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return EvaluationAssessment[] Returns an array of EvaluationAssessment objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?EvaluationAssessment
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function dumpForDataAccess(User $user): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare('SELECT psa.id, ps.id as practical_submodule_id, ps.name as practical_submodule_name, psa.taken_at, psa.last_submitted_at, psa.completed FROM practical_submodule_assessment psa LEFT JOIN practical_submodule ps ON psa.practical_submodule_id = ps.id WHERE psa.user_id = :userId');
+            $result = $stmt->executeQuery(['userId' => $user->getId()]);
+            return $result->fetchAllAssociative();
+        } catch (Exception $e) {
+            return [];
+        }
+    }
 }

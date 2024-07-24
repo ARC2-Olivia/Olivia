@@ -664,8 +664,10 @@ practicalSubmoduleQuestion:
         staticText: Testo statico
     delete: Sei sicuro di voler eliminare questa domanda?
     empty: Non ci sono domande definite per questo sottomodulo.
+
 practicalSubmoduleQuestionAnswer:
     delete: Sei sicuro di voler eliminare questa risposta alla domanda?
+
 practicalSubmoduleProcessor:
     type:
         simple: Semplice
@@ -685,12 +687,15 @@ practicalSubmoduleProcessor:
             space: Spazio
             newline: Nuova linea
             doubleNewline: Doppia nuova linea
+
 practicalSubmodulePage:
     empty: Non ci sono pagine definite per questo sottomodulo.
     delete: Sei sicuro di voler eliminare questa pagina?
+
 practicalSubmoduleProcessorGroup:
     empty: Non esistono gruppi di processori definiti per questo sottomodulo.
     delete: Sei sicuro di voler eliminare questo gruppo di processori?
+
 practicalSubmoduleAssessment:
     message:
         1: Questo questionario contiene <b>%questionCount%</b> domande. Alcune domande appariranno solo se hai risposto in modo specifico a una delle domande precedenti.
@@ -705,6 +710,13 @@ practicalSubmoduleAssessment:
         edit: Modifica il questionario
         results: Visualizza rapporto
         downloadReport: Scarica il rapporto
+    dataAccess:
+        id: ID
+        practicalSubmoduleId: ID modulo pratico
+        practicalSubmoduleName: Nome del modulo pratico
+        takenAt: Preso a
+        lastSubmittedAt: Ultimo invio alle
+        completed: Completato
 
 termsOfService:
     format: ver. %version%, rev. %revision%

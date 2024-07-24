@@ -709,6 +709,13 @@ practicalSubmoduleAssessment:
         edit: Edit questionnaire
         results: View report
         downloadReport: Download report
+    dataAccess:
+        id: ID
+        practicalSubmoduleId: Practical module ID
+        practicalSubmoduleName: Practical module name
+        takenAt: Taken at
+        lastSubmittedAt: Last submitted at
+        completed: Completed
 
 termsOfService:
     format: Ver. %version%, rev. %revision%
