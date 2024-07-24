@@ -710,6 +710,13 @@ practicalSubmoduleAssessment:
         edit: Izmjeni upitnik
         results: Pregled izvještaja
         downloadReport: Preuzmi izvještaj
+    dataAccess:
+        id: ID
+        practicalSubmoduleId: ID praktičnog modula
+        practicalSubmoduleName: Naziv praktičnog modula
+        takenAt: Vrijeme polaganja
+        lastSubmittedAt: Vrijeme zadnje predaje
+        completed: Završeno
 
 termsOfService:
     format: Ver. %version%, rev. %revision%
