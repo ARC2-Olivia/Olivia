@@ -797,6 +797,15 @@ certificate:
     issueDate: Data di emissione
     certifiedBy: Certificato da
 
+edulog:
+    dataAccess:
+        id: ID
+        at: Orario dell'evento
+        courseId: ID modulo teorico
+        lessonId: ID lezione
+        action: Azione
+        ipAddress: Indirizzo IP
+
 extra:
     free: Gratuito
     exitImmitation: Esci dall'imitazione

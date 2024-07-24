@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\EduLog;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,15 @@ class EduLogRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return EduLog[] Returns an array of EduLog objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?EduLog
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function dumpForDataAccess(User $user): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare('SELECT el.id, el.at, el.course_id, el.lesson_id, el.action, el.ip_address FROM edu_log el WHERE el.user_id = :userId');
+            $result = $stmt->executeQuery(['userId' => $user->getId()]);
+            return $result->fetchAllAssociative();
+        } catch (Exception $e) {
+            return [];
+        }
+    }
 }

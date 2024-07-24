@@ -60,6 +60,7 @@ class DataRequestService
         $this->addQuizQuestionAnswersToExcel($dataRequest, $spreadsheet);
         $this->addPracticalSubmoduleAssessmentsToExcel($dataRequest, $spreadsheet);
         $this->addPracticalSubmoduleAssessmentAnswersToExcel($dataRequest, $spreadsheet);
+        $this->addEduLogsToExcel($dataRequest, $spreadsheet);
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($excelFile);
@@ -306,7 +307,7 @@ class DataRequestService
     private function addPracticalSubmoduleAssessmentsToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
         $worksheet = $spreadsheet->createSheet();
-        $worksheet->setTitle('Practical module assessments');
+        $worksheet->setTitle('Practical assessments');
 
         $this->addHeader($worksheet, [
             $this->translator->trans('practicalSubmoduleAssessment.dataAccess.id', [], 'app'),
@@ -339,7 +340,7 @@ class DataRequestService
     private function addPracticalSubmoduleAssessmentAnswersToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
     {
         $worksheet = $spreadsheet->createSheet();
-        $worksheet->setTitle('Practical module assessment answers');
+        $worksheet->setTitle('Practical assessment answers');
 
         $this->addHeader($worksheet, [
             $this->translator->trans('practicalSubmoduleAssessmentAnswer.dataAccess.id', [], 'app'),
@@ -368,6 +369,39 @@ class DataRequestService
             $worksheet->setCellValue($cellAddress, $data['practical_submodule_question_answer_value']);
             $cellAddress = $cellAddress->nextColumn();
             $worksheet->setCellValue($cellAddress, $data['answer_value']);
+            $rowOffset++;
+        }
+    }
+
+    private function addEduLogsToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
+    {
+        $worksheet = $spreadsheet->createSheet();
+        $worksheet->setTitle('Edulogs');
+
+        $this->addHeader($worksheet, [
+            $this->translator->trans('edulog.dataAccess.id', [], 'app'),
+            $this->translator->trans('edulog.dataAccess.at', [], 'app'),
+            $this->translator->trans('edulog.dataAccess.courseId', [], 'app'),
+            $this->translator->trans('edulog.dataAccess.lessonId', [], 'app'),
+            $this->translator->trans('edulog.dataAccess.action', [], 'app'),
+            $this->translator->trans('edulog.dataAccess.ipAddress', [], 'app')
+        ]);
+
+        $dumpedLessonCompletions = $this->em->getRepository(\App\Entity\EduLog::class)->dumpForDataAccess($dataRequest->getUser());
+        $rowOffset = 0;
+        foreach ($dumpedLessonCompletions as $data) {
+            $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
+            $worksheet->setCellValue($cellAddress, $data['id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['at']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['course_id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['lesson_id']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['action']);
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $data['ip_address']);
             $rowOffset++;
         }
     }

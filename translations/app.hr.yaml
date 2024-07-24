@@ -789,6 +789,15 @@ topic:
         title: About topics
         text: Being both a virtual educator and an assistant, OLIVIA includes mini online academy offering you a variety of learning modules to enhance your knowledge in the area of GDPR, as well as a practical tool assisting you in practical application of the GDPR-related necessary documents and procedures.
 
+edulog:
+    dataAccess:
+        id: Šifra
+        at: Vrijeme događaja
+        courseId: Šifra teoretkog modula
+        lessonId: Šifra lekcije
+        action: Akcija
+        ipAddress: IP adresa
+
 certificate:
     title: POTVRDA
     subtitle: O ZAVRŠETKU
