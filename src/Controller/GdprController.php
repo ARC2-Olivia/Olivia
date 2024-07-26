@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\DataRequest;
 use App\Entity\Gdpr;
 use App\Entity\User;
+use App\Form\DataRequest\DeleteSpecificDataRequestType;
 use App\Form\GdprPrivacyPolicyType;
 use App\Form\GdprTermsOfServiceType;
 use App\Security\GdprVoter;
@@ -191,7 +192,8 @@ class GdprController extends BaseController
     #[Route("/data-protection", name: "data_protection")]
     public function dataProtection(): Response
     {
-        return $this->render('gdpr/index.html.twig');
+        $deleteSpecificDataRequestForm = $this->createForm(DeleteSpecificDataRequestType::class, DeleteSpecificDataRequestType::getDefaultData());
+        return $this->render('gdpr/index.html.twig', ['deleteSpecificDataRequestForm' => $deleteSpecificDataRequestForm->createView()]);
     }
 
     #[Route("/data-protection/access", name: "data_protection_access")]
@@ -225,6 +227,16 @@ class GdprController extends BaseController
             $this->addFlash('error', $this->translator->trans('error.dataRequest.delete', [], 'message'));
         }
 
+        return $this->redirectToRoute('gdpr_data_protection');
+    }
+
+    #[Route("/data-protection/delete-specific", name: "data_protection_delete_specific")]
+    public function requestDataDeletionSpecific(Request $request): Response
+    {
+        $data = DeleteSpecificDataRequestType::getDefaultData();
+        $form = $this->createForm(DeleteSpecificDataRequestType::class, $data);
+        $form->handleRequest($request);
+        dd($data);
         return $this->redirectToRoute('gdpr_data_protection');
     }
 

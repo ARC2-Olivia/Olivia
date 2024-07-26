@@ -8,8 +8,9 @@
 
 .profile .action-and-description {
     display: flex;
-    gap: 16px;
-    align-items: center;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: start;
 }
 
 .profile .action-and-description > .action {
@@ -30,10 +31,4 @@
 .profile-value {
     color: #000000;
     font-size: 16px;
-}
-
-@media screen and (max-width: 768px) {
-    .profile .action-and-description {
-        flex-direction: column;
-    }
 }

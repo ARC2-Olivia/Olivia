@@ -178,6 +178,16 @@ form:
                 confirmPassword: Conferma la nuova password
             message:
                 email: Inserisci l'indirizzo email che hai utilizzato per creare il tuo account Olivia. Verrà inviato un URL speciale che ti consentirà di modificare la password del tuo account. L'URL ha un limite di tempo di 3 ore prima che diventi non valido.
+    dataRequest:
+        deleteSpecific:
+            label:
+                gdprs: Termini di servizio accettati
+                notes: Appunti dai moduli teorici
+                enrollments: Iscrizioni ai moduli teorici
+                lessonCompletions: Completamento delle lezioni dei moduli teorici
+                quizQuestionAnswers: Risposte al quiz dei moduli teorici
+                practicalSubmoduleAssessments: Risposte al questionario dei moduli pratici
+                other: Qualcos'altro o qualcosa di più specifico
     entity:
         user:
             label:
@@ -405,14 +415,22 @@ profile:
     request:
         access:
             button: Richiedi l'accesso ai dati
+            title: Richiedi l'accesso ai dati
             description: "In qualsiasi momento, puoi inviare una richiesta per accedere a tutti i dati che hai inserito o che sono stati generati dalle tue attività nello strumento Olivia. I dati verranno inviati all'indirizzo e-mail registrato come allegato in formato file Microsoft Excel. I dati includono: iscrizioni ai corsi del modulo di formazione, appunti sulle lezioni del modulo di formazione, completamenti delle lezioni del modulo di formazione, risposte ai quiz del modulo di formazione, registri delle attività del modulo di formazione, risposte alla valutazione del modulo di pratica, risultati della valutazione del modulo di pratica e il tuo account dello strumento Olivia dati."
             disclaimer: "NOTA: La richiesta di accesso ai dati non verrà immediatamente evasa, ma verrà inviata una e-mail all'indirizzo di posta elettronica registrato con i dati allegati."
             confirmation: Sei sicuro di voler inviare una richiesta di accesso ai dati?
         delete:
-            button: Richiedere la cancellazione dei dati
-            description: "In qualsiasi momento puoi inviare una richiesta di cancellazione di tutti i dati che hai inserito o che sono stati generati dalle tue attività nello strumento Olivia. I dati includono: iscrizioni ai corsi del modulo di formazione, appunti sulle lezioni del modulo di formazione, completamenti delle lezioni del modulo di formazione, risposte ai quiz del modulo di formazione, registri delle attività del modulo di formazione, risposte alla valutazione del modulo di pratica e il tuo account dello strumento Olivia ."
+            button: Richiedi la cancellazione dei tuoi dati personali
+            title: Richiedere la cancellazione dei dati personali (articolo 17 GDPR)
+            description: "Raccogliamo il tuo nome, cognome e indirizzo e-mail allo scopo di fornire il servizio. Eliminando il tuo nome, cognome e indirizzo e-mail, il tuo account utente e tutti i dati che hai inserito nello strumento web Olivia e che sono stati generati in base alla tua attività nello strumento Olivia verranno eliminati."
             disclaimer: "NOTA: La richiesta di cancellazione dei dati non verrà elaborata immediatamente, ma verrà inviata un'ultima e-mail al tuo indirizzo di posta elettronica registrato per avvisarti del processo terminato."
-            confirmation: Sei sicuro di voler inviare una richiesta di cancellazione dati?
+            confirmation: Sei sicuro di voler inviare questa richiesta di cancellazione dei dati?
+        deleteSpecific:
+            button: Specifica i dati che vuoi eliminare
+            title: Specifica i dati che vuoi eliminare
+            description: "Puoi richiedere la cancellazione dei dati da te inseriti e/o generati in base alla tua attività nello strumento Olivia, come ad esempio le iscrizioni ai corsi del modulo teorico, gli appunti delle lezioni del modulo teorico, lo svolgimento delle lezioni del modulo teorico, le risposte ai quiz dei moduli teorici, le risposte alle domande dei moduli pratici, ecc."
+            disclaimer: "NOTA: la richiesta di accesso ai dati non verrà elaborata immediatamente, ma quando la richiesta sarà elaborata, riceverai un messaggio e-mail finale all'indirizzo e-mail registrato che ti informerà dell'eliminazione completata."
+            confirmation: Sei sicuro di voler inviare una richiesta per eliminare i dati personali selezionati?
 
 user:
     title:
@@ -759,6 +777,7 @@ dataRequest:
         resolve:
             access: Sei sicuro di voler risolvere la richiesta di accesso ai dati da parte dell'utente %user%?
             delete: Sei sicuro di voler risolvere la richiesta di cancellazione dei dati da parte dell'utente %user%?
+        deleteSpecificForm: Seleziona i dati personali che desideri eliminare.
     title:
         index:
             default: Richieste di dati
