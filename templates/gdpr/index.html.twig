@@ -5,46 +5,111 @@
 
 {% block body %}
     <div class="container">
-        <div class="row gy-2 pt-4">
+        <div class="row gy-2 py-4">
             <div class="col-12">
                 {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
             </div>
             <div class="card card-body profile">
                 <h1>{{ 'nav.gdpr'|trans }}</h1>
+
                 <hr/>
                 <div class="action-and-description">
                     <div class="description">
+                        <h2 class="mb-3">{{ 'profile.request.access.title'|trans }}</h2>
                         <p class="mb-3">{{ 'profile.request.access.description'|trans }}</p>
                         <p>{{ 'profile.request.access.disclaimer'|trans }}</p>
                     </div>
-                    <form class="action text-end" action="{{ path('gdpr_data_protection_access') }}" method="post" onsubmit="return confirm('{{ 'profile.request.access.confirmation'|trans }}')">
+                    <form class="action" action="{{ path('gdpr_data_protection_access') }}" method="post" onsubmit="return confirm('{{ 'profile.request.access.confirmation'|trans }}')">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('data.request.access') }}"/>
-                        <button type="submit" class="btn btn-theme-white bg-green">{{ 'profile.request.access.button'|trans }}</button>
+                        <button type="submit" class="btn btn-theme-white bg-green">{% trans %}profile.request.access.button{% endtrans %}</button>
                     </form>
                 </div>
+
                 <hr/>
                 <div class="action-and-description">
                     <div class="description">
+                        <h2 class="mb-3">{{ 'profile.request.delete.title'|trans }}</h2>
                         <p class="mb-3">{{ 'profile.request.delete.description'|trans }}</p>
                         <p>{{ 'profile.request.delete.disclaimer'|trans }}</p>
                     </div>
-                    <form class="action text-end" action="{{ path('gdpr_data_protection_delete') }}" method="post" onsubmit="return confirm('{{ 'profile.request.delete.confirmation'|trans }}')">
+                    <form class="action" action="{{ path('gdpr_data_protection_delete') }}" method="post" onsubmit="return confirm('{{ 'profile.request.delete.confirmation'|trans }}')">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('data.request.delete') }}"/>
                         <button type="submit" class="btn btn-theme-white bg-red">{{ 'profile.request.delete.button'|trans }}</button>
                     </form>
+                </div>
+
+                <hr/>
+                <div class="action-and-description">
+                    <div class="description">
+                        <h2 class="mb-3">{{ 'profile.request.deleteSpecific.title'|trans }}</h2>
+                        <p class="mb-3">{{ 'profile.request.deleteSpecific.description'|trans }}</p>
+                        <p>{{ 'profile.request.deleteSpecific.disclaimer'|trans }}</p>
+                    </div>
+                    <div class="action">
+                        <button type="button" class="btn btn-theme-white bg-red" data-modal-open="#delete-specific-modal">{{ 'profile.request.deleteSpecific.button'|trans }}</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="modal" id="delete-specific-modal">
+        <div class="modal-dialog">
+            <div class="modal-dialog-heading">
+                <h2>{{ 'profile.request.deleteSpecific.title'|trans }}</h2>
+            </div>
+            {{ form_start(deleteSpecificDataRequestForm, {'attr': {'id': deleteSpecificDataRequestForm.vars.id}}) }}
+                <p class="mb-3">{{ 'dataRequest.message.deleteSpecificForm'|trans }}</p>
+
+                <label class="form-checkbox mb-3">
+                    {{ form_widget(deleteSpecificDataRequestForm.gdprs) }}
+                    <span>{{ deleteSpecificDataRequestForm.gdprs.vars.label|trans }}</span>
+                </label>
+
+                <label class="form-checkbox mb-3">
+                    {{ form_widget(deleteSpecificDataRequestForm.notes) }}
+                    <span>{{ deleteSpecificDataRequestForm.notes.vars.label|trans }}</span>
+                </label>
+
+                <label class="form-checkbox mb-3">
+                    {{ form_widget(deleteSpecificDataRequestForm.enrollments) }}
+                    <span>{{ deleteSpecificDataRequestForm.enrollments.vars.label|trans }}</span>
+                </label>
+
+                <label class="form-checkbox mb-3">
+                    {{ form_widget(deleteSpecificDataRequestForm.lessonCompletions) }}
+                    <span>{{ deleteSpecificDataRequestForm.lessonCompletions.vars.label|trans }}</span>
+                </label>
+
+                <label class="form-checkbox mb-3">
+                    {{ form_widget(deleteSpecificDataRequestForm.quizQuestionAnswers) }}
+                    <span>{{ deleteSpecificDataRequestForm.quizQuestionAnswers.vars.label|trans }}</span>
+                </label>
+
+                <label class="form-checkbox mb-3">
+                    {{ form_widget(deleteSpecificDataRequestForm.practicalSubmoduleAssessments) }}
+                    <span>{{ deleteSpecificDataRequestForm.practicalSubmoduleAssessments.vars.label|trans }}</span>
+                </label>
+
+                {{ form_label(deleteSpecificDataRequestForm.other) }}
+                {{ form_widget(deleteSpecificDataRequestForm.other) }}
+            {{ form_end(deleteSpecificDataRequestForm) }}
+            <div class="modal-dialog-actions">
+                <button type="button" class="btn btn-link" data-modal-close="#delete-specific-modal">{{ 'common.cancel'|trans }}</button>
+                <button type="submit" class="btn btn-theme-white bg-blue" form="{{ deleteSpecificDataRequestForm.vars.id }}">{{ 'common.submit'|trans }}</button>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('popper.dropdown') }}
+    {{ encore_entry_link_tags('modal') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('popper.dropdown') }}
+    {{ encore_entry_script_tags('modal') }}
 {% endblock %}

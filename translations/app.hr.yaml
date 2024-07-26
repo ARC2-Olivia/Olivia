@@ -175,6 +175,16 @@ form:
                 confirmPassword: Potvrda nove lozinke
             message:
                 email: Unesite e-mail adresu s kojom ste stvorili svoj Olivia račun. Na tu adresu će Vam se poslati posebna e-mail poruka s poveznicom koja će Vam omogućiti promjenu lozinke. Poveznica istiće nakon 3 sata.
+    dataRequest:
+        deleteSpecific:
+            label:
+                gdprs: Prihvaćeni Uvjeti pružanja usluge
+                notes: Bilješke iz teoretkih modula
+                enrollments: Prijave na teoretske module
+                lessonCompletions: Završenost lekcija u teoretskim modulima
+                quizQuestionAnswers: Odgovori na pitanja iz kvizova u teoretskim modulima
+                practicalSubmoduleAssessments: Odgovori na pitanja iz upitnika u praktičnim modulima
+                other: Nešto drugo ili specifičnije
     entity:
         user:
             label:
@@ -400,14 +410,22 @@ profile:
     request:
         access:
             button: Zatraži pristup podacima
+            title: Zatraži pristup podacima
             description: "Zahtjev za pristup podacima, koje ste ili unijeli ili su se generirali na temelju Vaše aktivnosti u alatu Olivia, možete poslati bilo kada. Podaci će se poslati na Vašu registriranu e-mail adresu kao prilog u obliku Microsoft Excel datoteke. U podacima su uključeni: prijave na tečajeve u teoretskom modulu, bilješke iz lekcija u teoretskom modulu, dovršenost lekcija u teoretskom moduli, odgovori na kvizove u teoretskom modulu, zapisi aktivnosti u teoretskom modulu, podaci o Vašem zadnjem pokušaju rješavanja upitnika praktičnog modula, odgovori na pitanja u praktičnom modulu, i podaci Vašeg Olivia računa."
             disclaimer: "NAPOMENA: Zahtjev za pristup podacima se neće odmah obraditi kada se zatraži, ali kada obrada Vašeg zahtjeva dođe na red dobiti ćete poruku na svoju registriranu e-mail adresu s podacima u prilogu."
             confirmation: Jeste li sigurni da želite poslati zahtjev za pristup podacima?
         delete:
-            button: Zatraži brisanje podataka
-            description: "Zahtjev za brisanje podataka, koje ste ili unijeli ili su se generirali na temelju Vaše aktivnosti u alatu Olivia, možete poslati bilo kada. Podaci koji će se obrisati su sljedeći: prijave na tečajeve u teoretskom modulu, bilješke iz lekcija u teoretskom modulu, dovršenost lekcija u teoretskom moduli, odgovori na kvizove u teoretskom modulu, zapisi aktivnosti u teoretskom modulu, pokušaj rješavanja upitnika u praktičnom modulu, odgovori na pitanja u praktičnom modulu, i podaci Vašeg Olivia računa."
+            button: Zatraži brisanje osobnih podataka
+            title: Zatraži brisanje svojih osobnih podataka (članak 17 GDPR-a)
+            description: "Prikupljamo Vaše ime i prezime i e-mail adresu u svrhu pružanja usluge. Brisanjem Vašeg imena i prezimena i e-mail adrese bit će izbrisan i Vaš korisnički račun i svi podaci koje ste unijeli u web alat Olivia i koji su se generirali na temelju Vaše aktivnosti u alatu Olivia."
             disclaimer: "NAPOMENA: Zahtjev za pristup podacima se neće odmah obraditi kada se zatraži, ali kada obrada Vašeg zahtjeva dođe na red dobiti ćete konačnu e-mail poruku na svoju registriranu e-mail adresu koja će Vas obavijestiti o završenom brisanju."
-            confirmation: Jeste li sigurni da želite poslati zahtjev za brisanjem podataka?
+            confirmation: Jeste li sigurni da želite poslati zahtjev za brisanjem svojih osobnih podataka?
+        deleteSpecific:
+            button: Specificiraj podatke koje želiš obrisati
+            title: Specificiraj podatke koje želiš obrisati
+            description: "Možete zatražiti brisanje podataka koji ste unijeli i/ili koji su se generirali na temelju Vaše aktivnosti u alatu Olivia, kao što su prijave na tečajeve u teoretskom modulu, bilješke iz lekcija u teoretskom modulu, dovršenost lekcija u teoretskom modulu, odgovori na kvizove u teoretskim modulima, odgovori na pitanja u praktičnim modulima, itd."
+            disclaimer: "NAPOMENA: Zahtjev za pristup podacima se neće odmah obraditi kada se zatraži, ali kada obrada Vašeg zahtjeva dođe na red dobiti ćete konačnu e-mail poruku na svoju registriranu e-mail adresu koja će Vas obavijestiti o završenom brisanju."
+            confirmation: Jeste li sigurni da želite poslati zahtjev za brisanjem odabranih osobnih podataka?
 
 user:
     title:
@@ -754,6 +772,7 @@ dataRequest:
         resolve:
             access: Jeste li sigurni da želite razriješiti zahtjev za pristup podacima od korisnika %user%?
             delete: Jeste li sigurni da želite razriješiti zahtjev za brisanjem podataka od korisnika %user%?
+        deleteSpecificForm: Odaberite koje osobne podatke želite obrisati.
     title:
         index:
             default: Podatkovni zahtjevi
