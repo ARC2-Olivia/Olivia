@@ -379,6 +379,7 @@ form:
                 type: Vrsta
                 requestedAt: Vrijeme zahtjeva
                 resolvedAt: Vrijeme razrješenja
+                specifics: Specifično
         file:
             label:
                 id: ID

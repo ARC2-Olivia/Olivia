@@ -17,4 +17,7 @@ mail:
         body: "Zatraženi podaci se nalaze u priloženoj Excel datoteci."
     dataDeletion:
         subject: "Olivia | Riješen zahtjev za brisanjem podataka"
-        body: "<p>Poštovani %user%.</p><p>Vaš zahtjev za brisanjem podataka je riješen, te su svi Vaši podaci izbrisani su s web stranice Olivia.</p><p>S poštovanjem,<br/>Olivia tim</p>"
+        body: "<p>Poštovani %user%.</p><p>Vaš zahtjev za brisanjem podataka je riješen, te su svi Vaši podaci izbrisani s web stranice Olivia.</p><p>S poštovanjem,<br/>Olivia tim</p>"
+    dataDeletionSpecific:
+        subject: "Olivia | Riješen zahtjev za brisanjem specifičnih podataka"
+        body: "<p>Poštovani %user%.</p><p>Vaš zahtjev za brisanjem podataka specifičnih podataka je riješen, te su svi podaci koje ste specificirali izbrisani s web stranice Olivia.</p><p>S poštovanjem,<br/>Olivia tim</p>"

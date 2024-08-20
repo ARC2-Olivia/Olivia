@@ -13,17 +13,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DeleteSpecificDataRequestType extends AbstractType
 {
-    public static function getDefaultData(): \stdClass
+    public static function getDefaultData(): array
     {
-        $defaultData = new \stdClass();
-        $defaultData->gdprs = false;
-        $defaultData->notes = false;
-        $defaultData->enrollments = false;
-        $defaultData->lessonCompletions = false;
-        $defaultData->quizQuestionAnswers = false;
-        $defaultData->practicalSubmoduleAssessments = false;
-        $defaultData->other = '';
-        return $defaultData;
+        return [
+            'gdprs' => false,
+            'notes' => false,
+            'enrollments' => false,
+            'lessonCompletions' => false,
+            'quizQuestionAnswers' => false,
+            'practicalSubmoduleAssessments' => false,
+            'other' => '',
+        ];
     }
 
     private ?TranslatorInterface $translator = null;
