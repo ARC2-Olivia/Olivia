@@ -382,6 +382,7 @@ form:
                 type: Type
                 requestedAt: Requested at
                 resolvedAt: Resolved at
+                specifics: Specifics
         file:
             label:
                 id: ID

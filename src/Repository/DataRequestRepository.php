@@ -42,11 +42,12 @@ class DataRequestRepository extends ServiceEntityRepository
     /**
      * @return DataRequest[]
      */
-    public function findUnresolvedByType(string $type): array
+    public function findUnresolvedByTypes(...$types): array
     {
+        $types = array_unique($types);
         return $this->createQueryBuilder('dr')
-            ->where('dr.type = :type')->andWhere('dr.resolvedAt IS NULL')
-            ->setParameter('type', $type)
+            ->where('dr.type IN (:types)')->andWhere('dr.resolvedAt IS NULL')
+            ->setParameter('types', $types)
             ->getQuery()->getResult()
         ;
     }

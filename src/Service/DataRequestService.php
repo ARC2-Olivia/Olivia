@@ -33,11 +33,10 @@ class DataRequestService
 
     public function resolve(DataRequest $dataRequest): void
     {
-
-        if ($dataRequest->getType() === DataRequest::TYPE_ACCESS) {
-            $this->resolveDataAccessRequest($dataRequest);
-        } else if ($dataRequest->getType() === DataRequest::TYPE_DELETE) {
-            $this->resolveDataDeletionRequest($dataRequest);
+        switch ($dataRequest->getType()) {
+            case DataRequest::TYPE_ACCESS: $this->resolveDataAccessRequest($dataRequest); break;
+            case DataRequest::TYPE_DELETE: $this->resolveDataDeleteRequest($dataRequest); break;
+            case DataRequest::TYPE_DELETE_SPECIFIC: $this->resolveDataDeleteSpecificRequest($dataRequest); break;
         }
     }
 
@@ -60,7 +59,6 @@ class DataRequestService
         $this->addQuizQuestionAnswersToExcel($dataRequest, $spreadsheet);
         $this->addPracticalSubmoduleAssessmentsToExcel($dataRequest, $spreadsheet);
         $this->addPracticalSubmoduleAssessmentAnswersToExcel($dataRequest, $spreadsheet);
-        $this->addEduLogsToExcel($dataRequest, $spreadsheet);
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($excelFile);
@@ -82,7 +80,7 @@ class DataRequestService
         $this->em->flush();
     }
 
-    private function resolveDataDeletionRequest(DataRequest $dataRequest): void
+    private function resolveDataDeleteRequest(DataRequest $dataRequest): void
     {
         $user = $dataRequest->getUser();
         $identifier = $user->getNameOrEmail();
@@ -90,7 +88,6 @@ class DataRequestService
 
         $batchCounter = 0;
         $this->deleteEntitiesForUser($user, \App\Entity\AcceptedGdpr::class, $batchCounter);
-        $this->deleteEntitiesForUser($user, \App\Entity\EduLog::class, $batchCounter);
         $this->deleteEntitiesForUser($user, \App\Entity\Enrollment::class, $batchCounter);
         $this->deleteEntitiesForUser($user, \App\Entity\LessonCompletion::class, $batchCounter);
         $this->deleteEntitiesForUser($user, \App\Entity\Note::class, $batchCounter);
@@ -98,6 +95,10 @@ class DataRequestService
         $this->deleteEntitiesForUser($user, \App\Entity\PracticalSubmoduleAssessment::class, $batchCounter);
 
         foreach ($this->em->getRepository(\App\Entity\DataRequest::class)->findUnresolvedByTypeForUser(\App\Entity\DataRequest::TYPE_ACCESS, $user) as $unresolvedDataRequest) {
+            $this->deleteEntity($unresolvedDataRequest, $batchCounter);
+        }
+
+        foreach ($this->em->getRepository(\App\Entity\DataRequest::class)->findUnresolvedByTypeForUser(\App\Entity\DataRequest::TYPE_DELETE_SPECIFIC, $user) as $unresolvedDataRequest) {
             $this->deleteEntity($unresolvedDataRequest, $batchCounter);
         }
 
@@ -122,6 +123,39 @@ class DataRequestService
             ->html($this->translator->trans('mail.dataDeletion.body', ['%user%' => $identifier], 'mail'))
         ;
         $this->mailer->send($email);
+    }
+
+    private function resolveDataDeleteSpecificRequest(DataRequest $dataRequest)
+    {
+        $user = $dataRequest->getUser();
+        $identifier = $user->getNameOrEmail();
+        $email = $user->getEmail();
+
+        $batchCounter = 0;
+        if (null !== $dataRequest->getSpecifics()) {
+            $specifics = $dataRequest->getSpecifics();
+            if ($this->isKeySetAndTrue($specifics, 'gdprs')) $this->deleteEntitiesForUser($user, \App\Entity\AcceptedGdpr::class, $batchCounter);
+            if ($this->isKeySetAndTrue($specifics, 'enrollments')) $this->deleteEntitiesForUser($user, \App\Entity\Enrollment::class, $batchCounter);
+            if ($this->isKeySetAndTrue($specifics, 'lessonCompletions')) $this->deleteEntitiesForUser($user, \App\Entity\LessonCompletion::class, $batchCounter);
+            if ($this->isKeySetAndTrue($specifics, 'notes')) $this->deleteEntitiesForUser($user, \App\Entity\Note::class, $batchCounter);
+            if ($this->isKeySetAndTrue($specifics, 'quizQuestionAnswers')) $this->deleteEntitiesForUser($user, \App\Entity\QuizQuestionAnswer::class, $batchCounter);
+            if ($this->isKeySetAndTrue($specifics, 'practicalSubmoduleAssessments')) $this->deleteEntitiesForUser($user, \App\Entity\PracticalSubmoduleAssessment::class, $batchCounter);
+        }
+        $dataRequest->setResolvedAt(new \DateTimeImmutable());
+        $this->em->flush();
+
+        $email = (new Email())
+            ->from($this->parameterBag->get('mail.from'))
+            ->to($email)
+            ->subject($this->translator->trans('mail.dataDeletionSpecific.subject', [], 'mail'))
+            ->html($this->translator->trans('mail.dataDeletionSpecific.body', ['%user%' => $identifier], 'mail'))
+        ;
+        $this->mailer->send($email);
+    }
+
+    private function isKeySetAndTrue(array $array, string $key): bool
+    {
+        return key_exists($key, $array) && $array[$key] === true;
     }
 
     private function deleteEntitiesForUser(User $user, string $entityClass, int &$batchCounter): void
@@ -372,39 +406,6 @@ class DataRequestService
             $worksheet->setCellValue($cellAddress, $data['practical_submodule_question_answer_value']);
             $cellAddress = $cellAddress->nextColumn();
             $worksheet->setCellValue($cellAddress, $data['answer_value']);
-            $rowOffset++;
-        }
-    }
-
-    private function addEduLogsToExcel(DataRequest $dataRequest, Spreadsheet $spreadsheet): void
-    {
-        $worksheet = $spreadsheet->createSheet();
-        $worksheet->setTitle('Edulogs');
-
-        $this->addHeader($worksheet, [
-            $this->translator->trans('edulog.dataAccess.id', [], 'app'),
-            $this->translator->trans('edulog.dataAccess.at', [], 'app'),
-            $this->translator->trans('edulog.dataAccess.courseId', [], 'app'),
-            $this->translator->trans('edulog.dataAccess.lessonId', [], 'app'),
-            $this->translator->trans('edulog.dataAccess.action', [], 'app'),
-            $this->translator->trans('edulog.dataAccess.ipAddress', [], 'app')
-        ]);
-
-        $dumpedLessonCompletions = $this->em->getRepository(\App\Entity\EduLog::class)->dumpForDataAccess($dataRequest->getUser());
-        $rowOffset = 0;
-        foreach ($dumpedLessonCompletions as $data) {
-            $cellAddress = (new CellAddress('A2', $worksheet))->nextRow($rowOffset);
-            $worksheet->setCellValue($cellAddress, $data['id']);
-            $cellAddress = $cellAddress->nextColumn();
-            $worksheet->setCellValue($cellAddress, $data['at']);
-            $cellAddress = $cellAddress->nextColumn();
-            $worksheet->setCellValue($cellAddress, $data['course_id']);
-            $cellAddress = $cellAddress->nextColumn();
-            $worksheet->setCellValue($cellAddress, $data['lesson_id']);
-            $cellAddress = $cellAddress->nextColumn();
-            $worksheet->setCellValue($cellAddress, $data['action']);
-            $cellAddress = $cellAddress->nextColumn();
-            $worksheet->setCellValue($cellAddress, $data['ip_address']);
             $rowOffset++;
         }
     }

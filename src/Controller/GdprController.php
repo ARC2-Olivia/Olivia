@@ -219,7 +219,7 @@ class GdprController extends BaseController
         $csrfToken = $request->request->get('_csrf_token');
 
         if ($csrfToken !== null && $this->isCsrfTokenValid('data.request.delete', $csrfToken)) {
-            $dataRequest = DataRequest::createDeletionRequest($this->getUser());
+            $dataRequest = DataRequest::createDeleteRequest($this->getUser());
             $this->em->persist($dataRequest);
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.dataRequest.delete', [], 'message'));
@@ -231,12 +231,21 @@ class GdprController extends BaseController
     }
 
     #[Route("/data-protection/delete-specific", name: "data_protection_delete_specific")]
-    public function requestDataDeletionSpecific(Request $request): Response
+    public function requestSpecificDataDeletion(Request $request): Response
     {
-        $data = DeleteSpecificDataRequestType::getDefaultData();
-        $form = $this->createForm(DeleteSpecificDataRequestType::class, $data);
+        $form = $this->createForm(DeleteSpecificDataRequestType::class, DeleteSpecificDataRequestType::getDefaultData());
         $form->handleRequest($request);
-        dd($data);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $specifics = $form->getData();
+            $specifics['other'] = trim($specifics['other']);
+            $dataRequest = DataRequest::createDeleteSpecificRequest($this->getUser(), $specifics);
+            $this->em->persist($dataRequest);
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('success.dataRequest.delete', [], 'message'));
+        } else {
+            $this->addFlash('error', $this->translator->trans('error.dataRequest.delete', [], 'message'));
+        }
+
         return $this->redirectToRoute('gdpr_data_protection');
     }
 

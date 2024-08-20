@@ -18,3 +18,6 @@ mail:
     dataDeletion:
         subject: "Olivia | Richiesta di cancellazione dati risolta"
         body: "<p>Caro %user%.</p><p>La tua richiesta di eliminazione dei dati è stata risolta e tutti i tuoi dati sono stati eliminati dal sito web di Olivia.</p><p>Cordiali saluti,<br/>la squadra di Olivia</p>"
+    dataDeletionSpecific:
+        subject: "Olivia | Richiesta di cancellazione dati specifica risolta"
+        body: "<p>Caro %user%.</p><p>La tua richiesta di cancellazione dei dati è stata risolta e tutti i dati specificati nella richiesta sono stati eliminati dal sito web di Olivia.</p><p>Cordiali saluti,<br/>la squadra di Olivia</p>"

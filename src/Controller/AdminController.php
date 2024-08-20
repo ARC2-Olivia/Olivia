@@ -132,13 +132,13 @@ class AdminController extends BaseController
     #[Route("/data-request", name: "data_request_index")]
     public function dataRequests(DataRequestRepository $dataRequestRepository): Response
     {
-        /** @var DataRequest $dataAccessRequests */ $dataAccessRequests = $dataRequestRepository->findUnresolvedByType(DataRequest::TYPE_ACCESS);
-        /** @var DataRequest $dataDeletionRequests */ $dataDeletionRequests = $dataRequestRepository->findUnresolvedByType(DataRequest::TYPE_DELETE);
+        /** @var DataRequest $dataAccessRequests */ $dataAccessRequests = $dataRequestRepository->findUnresolvedByTypes(DataRequest::TYPE_ACCESS);
+        /** @var DataRequest $dataDeleteRequests */ $dataDeleteRequests = $dataRequestRepository->findUnresolvedByTypes(DataRequest::TYPE_DELETE, DataRequest::TYPE_DELETE_SPECIFIC);
         /** @var DataRequest $resolvedDataRequests */ $resolvedDataRequests = $dataRequestRepository->findResolved();
 
         return $this->render('admin/dataRequest/index.html.twig', [
             'dataAccessRequests' => $dataAccessRequests,
-            'dataDeletionRequests' => $dataDeletionRequests,
+            'dataDeleteRequests' => $dataDeleteRequests,
             'resolvedDataRequests' => $resolvedDataRequests
         ]);
     }

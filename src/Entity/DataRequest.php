@@ -10,6 +10,7 @@ class DataRequest
 {
     const TYPE_ACCESS = 'access';
     const TYPE_DELETE = 'delete';
+    const TYPE_DELETE_SPECIFIC = 'delete-specific';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,7 +21,7 @@ class DataRequest
     #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
-    #[ORM\Column(length: 7)]
+    #[ORM\Column(length: 16)]
     private ?string $type = null;
 
     #[ORM\Column]
@@ -32,14 +33,22 @@ class DataRequest
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $deletedUserEmail = null;
 
+    #[ORM\Column(nullable: true)]
+    private array $specifics = [];
+
     public static function createAccessRequest(User $user): self
     {
         return (new DataRequest())->setUser($user)->setType(self::TYPE_ACCESS)->setRequestedAt(new \DateTimeImmutable());
     }
 
-    public static function createDeletionRequest(User $user): self
+    public static function createDeleteRequest(User $user): self
     {
         return (new DataRequest())->setUser($user)->setType(self::TYPE_DELETE)->setRequestedAt(new \DateTimeImmutable());
+    }
+
+    public static function createDeleteSpecificRequest(User $user, array $specifics): self
+    {
+        return (new DataRequest())->setUser($user)->setType(self::TYPE_DELETE_SPECIFIC)->setRequestedAt(new \DateTimeImmutable())->setSpecifics($specifics);
     }
 
     public function getId(): ?int
@@ -113,5 +122,17 @@ class DataRequest
             return $this->user->getNameOrEmail();
         }
         return $this->deletedUserEmail;
+    }
+
+    public function getSpecifics(): ?array
+    {
+        return $this->specifics;
+    }
+
+    public function setSpecifics(?array $specifics): self
+    {
+        $this->specifics = $specifics;
+
+        return $this;
     }
 }
