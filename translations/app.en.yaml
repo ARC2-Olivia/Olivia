@@ -56,6 +56,7 @@ button:
     lessons: Lessons
     export: Export
     exportTemplate: Export template
+    download: Download
     show: Show
     downloadForm: Download form
     downloadExample: Download example
@@ -647,6 +648,19 @@ practicalSubmodule:
         recordsOfProcessingActivitiesDC: Records of processing activities - for Data Controllers
         recordsOfProcessingActivitiesDP: Records of processing activities - for Data Processors
         tia: Transfer impact assessment
+    exportButtonText:
+        respondentsRights: Download the form for exercising the rights of respondents (Word document)
+        consentPersonalDataProcessing: Download the consent form (Word document)
+        lia: Download the legitimate interest test form (Word document)
+        privacyPolicy: Download the Privacy Policy form (Word document)
+        controllerProcessorContract: Download the contract form (Word document)
+        recordsOfProcessingActivities: Download the record form (Word document)
+        rulebookOnMeasures: Download the rulebook template (Word document)
+        dpia: Download the impact assessment form (Word document)
+        cookiePolicy: Download the cookie notice template (Word document)
+        videoSurveillanceNotification: Download video surveillance notice
+        videoSurveillanceRulebook: Download the rulebook template
+        tia: Download form (Word document)
     extra:
         question: Question
         questions: Questions

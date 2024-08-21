@@ -13,7 +13,8 @@ class PracticalSubmoduleExtension extends AbstractExtension
     {
         return [
             new TwigFilter('assessment_completed', [PracticalSubmoduleRuntime::class, 'isAssessmentCompleted']),
-            new TwigFilter('total_questions_statistic', [PracticalSubmoduleRuntime::class, 'getTotalQuestionsStatistic'])
+            new TwigFilter('total_questions_statistic', [PracticalSubmoduleRuntime::class, 'getTotalQuestionsStatistic']),
+            new TwigFilter('export_button_text', [PracticalSubmoduleRuntime::class, 'getExportButtonText'])
         ];
     }
 
@@ -21,7 +22,8 @@ class PracticalSubmoduleExtension extends AbstractExtension
     {
         return [
             new TwigFunction('assessment_completed', [PracticalSubmoduleRuntime::class, 'isAssessmentCompleted']),
-            new TwigFunction('total_questions_statistic', [PracticalSubmoduleRuntime::class, 'getTotalQuestionsStatistic'])
+            new TwigFunction('total_questions_statistic', [PracticalSubmoduleRuntime::class, 'getTotalQuestionsStatistic']),
+            new TwigFilter('export_button_text', [PracticalSubmoduleRuntime::class, 'getExportButtonText'])
         ];
     }
 }

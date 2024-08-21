@@ -5,10 +5,10 @@
     position: relative;
     border-radius: 4px;
     min-width: 64px;
-    height: 36px;
+    min-height: 36px;
     padding: 0 16px;
     text-decoration: none;
-    white-space: nowrap;
+    text-align: center;
 }
 
 .btn.btn-theme-white {
@@ -99,13 +99,19 @@
 .btn.btn-sm {
     min-width: unset;
     padding: 0 8px;
-    height: 28px;
+    min-height: 28px;
 }
 
 .btn.btn-lg {
     padding: 0 20px;
     font-size: 1.1rem;
-    height: 48px;
+    min-height: 48px;
+}
+
+.btn.btn-xl {
+    padding: 0 24px;
+    font-size: 1.3rem;
+    min-height: 48px;
 }
 
 .btn.btn-thematic-orange-outline {
