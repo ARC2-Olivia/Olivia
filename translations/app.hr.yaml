@@ -739,7 +739,9 @@ practicalSubmoduleAssessment:
     action:
         start: Popuni upitnik
         edit: Izmjeni upitnik
-        results: Pregled izvještaja
+        results:
+            default: Pregled izvještaja
+            formOrTemplate: Preuzmi obrazac/predložak
         downloadReport: Preuzmi izvještaj
     dataAccess:
         id: ID
