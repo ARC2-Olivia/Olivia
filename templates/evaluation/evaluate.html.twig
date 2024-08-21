@@ -36,7 +36,9 @@
                         <button type="submit" class="btn btn-theme-white bg-green">{{ 'practicalSubmoduleAssessment.action.edit'|trans }}</button>
                     </form>
                     {% if assessment.completed %}
-                        <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-red">{{ 'practicalSubmoduleAssessment.action.results'|trans }}</a>
+                        <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-red">
+                            {{ ('practicalSubmoduleAssessment.action.results.'~(evaluation.exportType is null or evaluation.exportType == 'none' ? 'default' : 'formOrTemplate'))|trans }}
+                        </a>
                     {% endif %}
                 {% endif %}
             </div>

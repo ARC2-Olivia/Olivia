@@ -745,7 +745,9 @@ practicalSubmoduleAssessment:
     action:
         start: Fill questionnaire
         edit: Edit questionnaire
-        results: View report
+        results:
+            default: View report
+            formOrTemplate: Download form/template
         downloadReport: Download report
     dataAccess:
         id: ID

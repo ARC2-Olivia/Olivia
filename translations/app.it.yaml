@@ -743,7 +743,9 @@ practicalSubmoduleAssessment:
     action:
         start: Compila il questionario
         edit: Modifica il questionario
-        results: Visualizza rapporto
+        results:
+            default: Visualizza rapporto
+            formOrTemplate: Scarica il modulo/modello
         downloadReport: Scarica il rapporto
     dataAccess:
         id: ID
