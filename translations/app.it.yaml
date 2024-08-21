@@ -609,7 +609,9 @@ practicalSubmodule:
     nav:
         overview: Panoramica
         questionnaire: Questionario
-        results: Rapporto
+        results:
+            default: Rapporto
+            formOrTemplate: Modulo/modello
         edit:
             default: Modificare
             question: Modifica domanda

@@ -610,7 +610,9 @@ practicalSubmodule:
     nav:
         overview: Overview
         questionnaire: Questionnaire
-        results: Report
+        results:
+            default: Report
+            formOrTemplate: Form/template
         edit:
             default: Edit
             question: Edit question

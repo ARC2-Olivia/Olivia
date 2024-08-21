@@ -609,7 +609,9 @@ practicalSubmodule:
     nav:
         overview: Pregled
         questionnaire: Upitnik
-        results: Izvještaj
+        results:
+            default: Izvještaj
+            formOrTemplate: Obrazac/predložak
         edit:
             default: Uređivanje
             question: Uređivanje pitanja

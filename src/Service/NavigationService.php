@@ -117,8 +117,11 @@ class NavigationService
 
             $assessment = $this->em->getRepository(PracticalSubmoduleAssessment::class)->findOneBy(['practicalSubmodule' => $practicalSubmodule, 'user' => $this->security->getUser()]);
             if (null !== $assessment && $assessment->isCompleted()) {
+                $text = null === $practicalSubmodule->getExportType() || PracticalSubmodule::EXPORT_TYPE_NONE === $practicalSubmodule->getExportType()
+                    ? $this->translator->trans('practicalSubmodule.nav.results.default', [], 'app')
+                    : $this->translator->trans('practicalSubmodule.nav.results.formOrTemplate', [], 'app');
                 $navigation[] = [
-                    'text' => $this->translator->trans('practicalSubmodule.nav.results', [], 'app'),
+                    'text' => $text,
                     'path' => $this->router->generate('practical_submodule_results', ['practicalSubmodule' => $practicalSubmodule->getId()]),
                     'active' => $activeNav === self::EVALUATION_EXTRA_RESULTS
                 ];
