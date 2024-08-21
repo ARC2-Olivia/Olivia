@@ -55,6 +55,7 @@ button:
     lessons: Lekcije
     export: Izvoz
     exportTemplate: Izvoz predloška
+    download: Preuzmite
     show: Prikaži
     downloadForm: Preuzmi obrazac
     downloadExample: Preuzmi primjer
@@ -642,6 +643,19 @@ practicalSubmodule:
         recordsOfProcessingActivitiesDC: Evidencija aktivnosti obrade - za voditelje obrade
         recordsOfProcessingActivitiesDP: Evidencija aktivnosti obrade - za izvršitelje obrade
         tia: Procjena utjecaja prijenosa
+    exportButtonText:
+        respondentsRights: Preuzmi obrazac za ostvarivanje prava ispitanika (Word dokument)
+        consentPersonalDataProcessing: Preuzmi obrazac privole (Word dokument)
+        lia: Preuzmi obrazac testa legitimnog interesa (Word dokument)
+        privacyPolicy: Preuzmi obrazac Politike privatnosti (Word dokument)
+        controllerProcessorContract: Preuzmi obrazac ugovora (Word dokument)
+        recordsOfProcessingActivities: Preuzmi obrazac evidencije (Word dokument)
+        rulebookOnMeasures: Preuzmi predložak pravilnika (Word dokument)
+        dpia: Preuzmi obrazac procjene učinka (Word dokument)
+        cookiePolicy: Preuzmite predložak obavijesti o kolačićima (Word dokument)
+        videoSurveillanceNotification: Preuzmi obavijest o videonadzoru
+        videoSurveillanceRulebook: Preuzmi predložak pravilnika
+        tia: Preuzmi obrazac (Word dokument)
     extra:
         question: Pitanje
         questions: Pitanja

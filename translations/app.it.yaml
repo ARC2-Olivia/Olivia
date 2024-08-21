@@ -56,6 +56,7 @@ button:
     lessons: Lezioni
     export: Esportare
     exportTemplate: Modello di esportazione
+    download: Scaricamento
     show: Mostra
     downloadForm: Scarica il modulo
     downloadExample: Scarica esempio
@@ -647,6 +648,19 @@ practicalSubmodule:
         recordsOfProcessingActivitiesDC: Registrazioni delle attività di trattamento - per Titolari del trattamento
         recordsOfProcessingActivitiesDP: Registrazioni delle attività di trattamento - per i Responsabili del trattamento
         tia: Valutazione dell'impatto del trasferimento
+    exportButtonText:
+        respondentsRights: Scarica il modulo per l'esercizio dei diritti degli intervistati (documento Word)
+        consentPersonalDataProcessing: Download the consent form (Word document)
+        lia: Download the legitimate interest test form (Word document)
+        privacyPolicy: Download the Privacy Policy form (Word document)
+        controllerProcessorContract: Download the contract form (Word document)
+        recordsOfProcessingActivities: Download the record form (Word document)
+        rulebookOnMeasures: Download the rulebook template (Word document)
+        dpia: Download the impact assessment form (Word document)
+        cookiePolicy: Download the cookie notice template (Word document)
+        videoSurveillanceNotification: Download video surveillance notice
+        videoSurveillanceRulebook: Download the rulebook template
+        tia: Download form (Word document)
     extra:
         question: Domanda
         questions: Domande

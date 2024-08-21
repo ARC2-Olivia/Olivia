@@ -12,14 +12,8 @@
         {% elseif evaluation.exportType not in [constant('EXPORT_TYPE_NONE', evaluation), constant('EXPORT_TYPE_COOKIE_BANNER', evaluation)] %}
             <div class="d-flex justify-content-between align-items-start flex-column gap-3">
                 <h2>{{ 'practicalSubmodule.extra.results.template'|trans }}</h2>
-                <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-orange btn-lg">
-                    {{ (evaluation.exportType in [
-                        constant('EXPORT_TYPE_PRIVACY_POLICY', evaluation),
-                        constant('EXPORT_TYPE_PERSONAL_DATA_PROCESSING_CONSENT', evaluation),
-                        constant('EXPORT_TYPE_LIA', evaluation),
-                        constant('EXPORT_TYPE_COOKIE_POLICY', evaluation),
-                        constant('EXPORT_TYPE_DPIA', evaluation)]
-                    ? 'button.exportTemplate' : 'button.export')|trans }}
+                <a href="{{ path('practical_submodule_export_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-orange btn-xl" style="">
+                    {{ evaluation|export_button_text }}
                 </a>
             </div>
         {% else %}
