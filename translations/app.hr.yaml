@@ -674,7 +674,7 @@ practicalSubmodule:
             report: IZVJEŠTAJ
             template: PREDLOŽAK
             results: REZULTATI
-            consentForm: OBRAZAC ZA PRISTANAK
+            consentForm: OBRAZAC PRIVOLE
         connectedTo: Povezani tečajevi
         reportTitle: Izvještaj - %practicalSubmodule%
         questionCount: "%number% pitanja"
