@@ -40,7 +40,8 @@
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {% if isCompleted %}
-                <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'practicalSubmodule.nav.results'|trans }}</a>
+                {% set tabName = evaluation.exportType is null or evaluation.exportType == constant('EXPORT_TYPE_NONE', evaluation) ? ('practicalSubmodule.nav.results.default'|trans) : ('practicalSubmodule.nav.results.formOrTemplate'|trans) %}
+                <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ tabName }}</a>
             {% else %}
                 <a href="{{ path('practical_submodule_evaluate', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'practicalSubmodule.nav.questionnaire'|trans }}</a>
             {% endif %}
