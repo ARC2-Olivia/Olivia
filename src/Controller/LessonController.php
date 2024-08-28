@@ -594,6 +594,7 @@ class LessonController extends BaseController
         }
         $lessonItemEmbeddedVideo->setLesson($lesson);
         $lessonItemEmbeddedVideo->setVideoUrl($form->get('video')->getData());
+        $lessonItemEmbeddedVideo->setVideoUrlAlt($form->get('videoAlt')->getData());
         if ($persist) $this->em->persist($lessonItemEmbeddedVideo);
         $this->em->flush();
     }

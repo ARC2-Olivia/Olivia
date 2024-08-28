@@ -248,9 +248,10 @@ form:
                 description: Description
                 descriptionAlt: Description (alternate language)
                 text: Content
-                textAlt: Content (altenate language)
+                textAlt: Content (alternate language)
                 file: File
                 video: Video embed URL
+                videoAlt: Video embed URL (for english language)
                 passingPercentage: Passing percentage
         quizQuestion:
             label:

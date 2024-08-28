@@ -244,11 +244,12 @@ form:
                 name: Naziv
                 nameAlt: Naziv (drugi jezik)
                 description: Opis
-                descriptionAlt: Opis (drugu jezik)
+                descriptionAlt: Opis (drugi jezik)
                 text: Sadržaj
                 textAlt: Sadržaj (drugi jezik)
                 file: Datoteka
                 video: URL videa
+                videoAlt: URL videa (za engleski jezik)
                 passingPercentage: Postotak za prolaz
         quizQuestion:
             label:

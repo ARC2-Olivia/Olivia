@@ -20,6 +20,9 @@ class LessonItemEmbeddedVideo
     #[ORM\Column(length: 255)]
     private ?string $videoUrl = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $videoUrlAlt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -49,8 +52,15 @@ class LessonItemEmbeddedVideo
         return $this;
     }
 
-    public function isYoutubeVideo(): bool
+    public function getVideoUrlAlt(): ?string
     {
-        return str_contains($this->videoUrl, 'youtube') || str_contains($this->videoUrl, 'youtu.be');
+        return $this->videoUrlAlt;
+    }
+
+    public function setVideoUrlAlt(?string $videoUrlAlt): self
+    {
+        $this->videoUrlAlt = $videoUrlAlt;
+
+        return $this;
     }
 }
