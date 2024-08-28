@@ -1,7 +1,8 @@
-{% if lessonItem.youtubeVideo %}
+{% if lessonItem|is_youtube_video %}
     <iframe class="lesson-video" src="{{ lessonItem|youtube_embed_link }}"></iframe>
 {% else %}
+    {% set videoUrl = app.request.locale == locale_default and lessonItem.videoUrlAlt|trim != '' ? lessonItem.videoUrlAlt : lessonItem.videoUrl %}
     <video controls class="lesson-video">
-        <source src="{{ lessonItem.videoUrl }}">
+        <source src="{{ videoUrl }}">
     </video>
 {% endif %}

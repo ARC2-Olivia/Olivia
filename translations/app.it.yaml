@@ -253,6 +253,7 @@ form:
                 textAlt: Contenuto (lingua alternativa)
                 file: File
                 video: URL di incorporamento del video
+                videoAlt: URL di incorporamento del video (per la lingua inglese)
                 passingPercentage: Percentuale di passaggio
         quizQuestion:
             label:

@@ -13,6 +13,7 @@ class OliviaExtension extends AbstractExtension
     {
         return [
             new TwigFilter('translate_workload', [OliviaRuntime::class, 'translateWorkload']),
+            new TwigFilter('is_youtube_video', [OliviaRuntime::class, 'isYoutubeVideo']),
             new TwigFilter('youtube_embed_link', [OliviaRuntime::class, 'getYoutubeEmbedLink']),
             new TwigFilter('is_valid_evaluator', [OliviaRuntime::class, 'isValidEvaluator']),
             new TwigFilter('txt2html', [OliviaRuntime::class, 'textToHtml']),

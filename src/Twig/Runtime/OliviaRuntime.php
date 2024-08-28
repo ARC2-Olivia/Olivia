@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Service\EnrollmentService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -23,12 +24,14 @@ class OliviaRuntime implements RuntimeExtensionInterface
     private ?Security $security = null;
     private ?ParameterBagInterface $parameterBag = null;
     private ?ValidatorInterface $validator = null;
+    private ?RequestStack $requestStack = null;
 
     public function __construct(TranslatorInterface $translator,
                                 EnrollmentService $enrollmentService,
                                 Security $security,
                                 ParameterBagInterface $parameterBag,
-                                ValidatorInterface $validator
+                                ValidatorInterface $validator,
+                                RequestStack $requestStack
     )
     {
         $this->translator = $translator;
@@ -36,6 +39,7 @@ class OliviaRuntime implements RuntimeExtensionInterface
         $this->security = $security;
         $this->parameterBag = $parameterBag;
         $this->validator = $validator;
+        $this->requestStack = $requestStack;
     }
 
     public function translateWorkload(Course $course, bool $forceDefaultLocale = false): string
@@ -65,9 +69,19 @@ class OliviaRuntime implements RuntimeExtensionInterface
         return '';
     }
 
+    public function isYoutubeVideo(LessonItemEmbeddedVideo $lessonItem): bool
+    {
+        $videoUrl = $this->parameterBag->get('locale.default') === $this->requestStack->getCurrentRequest()->getLocale() && '' !== trim($lessonItem->getVideoUrlAlt() ?? '')
+            ? $lessonItem->getVideoUrlAlt()
+            : $lessonItem->getVideoUrl();
+        return str_contains($videoUrl, 'youtube') || str_contains($videoUrl, 'youtu.be');
+    }
+
     public function getYoutubeEmbedLink(LessonItemEmbeddedVideo $lessonItem): ?string
     {
-        $videoUrl = $lessonItem->getVideoUrl();
+        $videoUrl = $this->parameterBag->get('locale.default') === $this->requestStack->getCurrentRequest()->getLocale() && '' !== trim($lessonItem->getVideoUrlAlt() ?? '')
+            ? $lessonItem->getVideoUrlAlt()
+            : $lessonItem->getVideoUrl();
 
         if (str_contains($videoUrl, 'youtube')) {
             // Get YouTube video ID.

@@ -64,15 +64,24 @@ class LessonType extends AbstractType
                 'attr' => ['class' => 'form-input mb-3'],
             ]);
         } else if ($lessonType === Lesson::TYPE_VIDEO) {
-            $builder->add('video', TextType::class, [
-                'mapped' => false,
-                'label' => 'form.entity.lesson.label.video',
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'error.lesson.video.blank'])
-                ],
-                'attr' => ['class' => 'form-input mb-3'],
-                'data' => $lessonItem?->getVideoUrl()
-            ]);
+            $builder
+                ->add('video', TextType::class, [
+                    'mapped' => false,
+                    'label' => 'form.entity.lesson.label.video',
+                    'constraints' => [
+                        new Assert\NotBlank(['message' => 'error.lesson.video.blank'])
+                    ],
+                    'attr' => ['class' => 'form-input mb-3'],
+                    'data' => $lessonItem?->getVideoUrl()
+                ])
+                ->add('videoAlt', TextType::class, [
+                    'mapped' => false,
+                    'required' => false,
+                    'label' => 'form.entity.lesson.label.videoAlt',
+                    'attr' => ['class' => 'form-input mb-3'],
+                    'data' => $lessonItem?->getVideoUrlAlt()
+                ])
+            ;
         } else if ($lessonType === Lesson::TYPE_QUIZ) {
             $builder->add('passingPercentage', RangeType::class, [
                 'mapped' => false,
