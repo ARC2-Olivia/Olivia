@@ -54,11 +54,12 @@ class WordService
 
         foreach ($results as $result) {
             $text = $result->getSanitizedText();
+            $text = html_entity_decode($text);
             $text = str_replace('</p><p>', "\n", $text);
             $text = str_replace('</strong>', '|bold', $text);
             $text = strip_tags($text);
             $text = str_replace("\r", '', $text);
-            $text = html_entity_decode($text);
+            $text = str_replace('&nbsp;', ' ', $text);
 
             $lines = explode("\n", $text);
             $textRun = new TextRun();
