@@ -46,7 +46,7 @@
                 <a href="{{ path('practical_submodule_evaluate', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'practicalSubmodule.nav.questionnaire'|trans }}</a>
             {% endif %}
         {% else %}
-            <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange">{{ 'button.loginToApply'|trans }}</a>
+            <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange" style="width: max-content">{{ 'button.loginToApply'|trans }}</a>
         {% endif %}
     </div>
 </div>
