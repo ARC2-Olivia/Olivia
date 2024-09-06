@@ -34,6 +34,7 @@
     --app-color-green: #3eaea6;
     --app-color-light-green: #d3e6dd;
     --app-color-yellow: #f8b322;
+    --app-color-black: #555;
 }
 
 body {
@@ -45,6 +46,8 @@ body {
     padding: 0;
     background-color: #ffffff;
     font-family: var(--app-font-default);
+    color: var(--app-color-black);
+    font-size: 1.04rem;
 }
 
 header, footer, .body {

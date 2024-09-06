@@ -32,7 +32,7 @@
 }
 
 .evaluation-card-name {
-    color: black
+    color: var(--app-color-black);
 }
 
 .evaluation-content {
@@ -208,8 +208,10 @@ ul.mod--ps-pages {
 .evaluation-assessment-question-text {
     white-space: pre-line;
     padding: 8px;
-    background-color: #d3e6dd;
+    background-color: var(--app-color-blue-alt);
+    color: #ffffff;
     border-radius: 4px;
+    font-size: 1.1rem;
 }
 
 .evaluation-assessment-question-text div {

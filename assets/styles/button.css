@@ -16,7 +16,7 @@
 }
 
 .btn.btn-theme-black {
-    color: black;
+    color: var(--app-color-black);
 }
 
 .btn.btn-theme-dark-blue{
