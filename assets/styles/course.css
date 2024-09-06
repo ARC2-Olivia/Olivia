@@ -32,7 +32,7 @@
 }
 
 .course-card-name {
-    color: black
+    color: var(--app-color-black);
 }
 
 .course-header {
