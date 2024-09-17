@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\User;
 use App\Exception\UserNotActivatedException;
 use App\Exception\UserNotFoundException;
 use App\Form\Security\LoginType;
@@ -72,6 +73,13 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        /** @var User $user */
+        $user = $token->getUser();
+        if (null !== $user->getConfirmationToken()) {
+            $user->setConfirmationToken(null);
+            $this->userRepository->flush();
+        }
+
         $target = $this->getTargetPath($request->getSession(), $firewallName);
         if ($target) return new RedirectResponse($target);
         return new RedirectResponse($this->router->generate('index'));

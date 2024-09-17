@@ -40,12 +40,14 @@ class SecurityService
     public function activateUserWithToken(string $confirmationToken, User &$user = null): bool
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['confirmationToken' => $confirmationToken]);
-        if ($user !== null) {
-            $user->setActivated(true)->setConfirmationToken(null);
-            $this->em->flush();
-            return true;
+        if (null === $user) {
+            return false;
         }
-        return false;
+        if (!$user->isActivated()) {
+            $user->setActivated(true);
+            $this->em->flush();
+        }
+        return true;
     }
 
     public function userExists(string $email): bool
