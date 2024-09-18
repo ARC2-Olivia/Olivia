@@ -88,7 +88,7 @@ page:
         index: Olivia | Protezione dati
     profile: Olivia | Profilo
     topic:
-        index: Olivia | Temi GDPR
+        index: Olivia | Contenuti di Olivia
         new: Olivia | Nuovo argomento GDPR
         show: Olivia | Argomento GDPR
         edit: Olivia | Modifica argomento GDPR
@@ -111,7 +111,7 @@ nav:
     presentations: Presentazioni
     home: Home
     gdpr: Protezione dati
-    topics: Temi GDPR
+    topics: Contenuti di Olivia
 
 footer:
     contact: "Contatto: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -140,9 +140,9 @@ index:
                 title: PRATICO
                 text: Il lato pratico di OLIVIA aiuta le PMI nella piena implementazione del GDPR.
     topics:
-        title: Temi GDPR &ndash; Impara e applica
-        button: Temi GDPR
-        text: Olivia è un'insegnante virtuale e un'assistente allo stesso tempo. Olivia contiene una piccola accademia online che ti offre una serie di moduli di apprendimento per migliorare le tue conoscenze nel campo della protezione dei dati personali e funge anche da strumento pratico per aiutarti a creare documenti interni per dimostrare la tua conformità e affidabilità.
+        title: "Contenuti di Olivia: impara ed applica il GDPR"
+        button: Contenuti di Olivia
+        text: Olivia è allo stesso tempo un'insegnante virtuale e un'assistente digitale. Olivia contiene una piccola accademia online che offre una serie di moduli di apprendimento - suddivisi per area tematica - per migliorare le conoscenze nel campo della protezione dei dati personali e funge anche da guida pratica per la relativa predisposizione della documentazione necessaria a provare il proprio livello di compliance.
     facts:
         1:
             title: "Fatto n. 1 del GDPR"
@@ -800,7 +800,7 @@ file:
 
 topic:
     title:
-        index: Temi GDPR
+        index: Contenuti di Olivia
         new: Nuovo argomento GDPR
         edit: Modifica argomento GDPR <i>%topic%</i>
     message:
@@ -834,7 +834,7 @@ extra:
         title: La sessione scadrà a breve
         text: Desideri prolungare la sessione?
         extend: Estendere
-    webinars: Webinari
+    webinars: Webinar
     presentations: Presentazioni
 
 export:
