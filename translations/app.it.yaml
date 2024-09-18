@@ -652,17 +652,17 @@ practicalSubmodule:
         tia: Valutazione dell'impatto del trasferimento
     exportButtonText:
         respondentsRights: Scarica il modulo per l'esercizio dei diritti degli intervistati (documento Word)
-        consentPersonalDataProcessing: Download the consent form (Word document)
-        lia: Download the legitimate interest test form (Word document)
-        privacyPolicy: Download the Privacy Policy form (Word document)
-        controllerProcessorContract: Download the contract form (Word document)
-        recordsOfProcessingActivities: Download the record form (Word document)
-        rulebookOnMeasures: Download the rulebook template (Word document)
-        dpia: Download the impact assessment form (Word document)
-        cookiePolicy: Download the cookie notice template (Word document)
-        videoSurveillanceNotification: Download video surveillance notice
-        videoSurveillanceRulebook: Download the rulebook template
-        tia: Download form (Word document)
+        consentPersonalDataProcessing: Scarica il modulo di consenso (documento Word)
+        lia: Scarica il modulo di verifica dell'interesse legittimo (documento Word)
+        privacyPolicy: Scarica il modulo Informativa sulla Privacy (documento Word)
+        controllerProcessorContract: Scarica il modulo del contratto (documento Word)
+        recordsOfProcessingActivities: Scarica il modulo di registrazione (documento Word)
+        rulebookOnMeasures: Scarica il modello del regolamento (documento Word)
+        dpia: Scarica il modulo di valutazione dell'impatto (documento Word)
+        cookiePolicy: Scarica il modello di avviso sui cookie (documento Word)
+        videoSurveillanceNotification: Scarica l'avviso di videosorveglianza
+        videoSurveillanceRulebook: Scarica il modello del regolamento
+        tia: Scarica il modulo (documento Word)
     extra:
         question: Domanda
         questions: Domande
