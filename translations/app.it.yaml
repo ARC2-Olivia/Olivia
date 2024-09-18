@@ -121,24 +121,24 @@ footer:
 index:
     about:
         left:
-            title: A proposito di OLIVIA
+            title: Che cos’è Olivia
             description:
-                1: Nel mondo digitale di oggi, l'importanza della protezione dei dati è in costante aumento ed è fondamentale per le PMI darle la priorità che merita.
-                2: Siamo il Consorzio ARC2, composto dalle autorità croate e italiane per la protezione dei dati, dalla Facoltà di Organizzazione e Informatica – Università di Zagabria, Università Vrije di Bruxelles e Università di Firenze.
-                3: La nostra missione è consentire alle PMI croate e italiane di conformarsi alle normative sulla protezione dei dati. Ecco perché abbiamo introdotto Olivia, uno strumento progettato per rendere la conformità al GDPR più semplice che mai!
+                1: Nell’attuale era della digitalizzazione, la protezione dei dati personali assume sempre maggiore importanza ed è essenziale che le PMI le assegnino un ruolo centrale nell’ambito della propria organizzazione.
+                2: Il Consorzio ARC2 - composto dall’autorità croata e italiana per la protezione dei dati personali, dalla Facoltà di Organizzazione e Informatica – Università di Zagabria, dall’Università Vrije di Bruxelles e dall’Università di Firenze – ha come mission proprio quella di supportare le PMI croate e italiane nell’attività di adeguamento a quanto richiesto dalla normativa in materia di protezione dei dati personali.
+                3: Da questa mission, nasce Olivia, un tool progettato per rendere la compliance al GDPR più semplice che mai!
         right:
             1:
                 title: INNOVATIVO
-                text: Creata in collaborazione, OLIVIA consente un approccio innovativo alla conformità al GDPR.
+                text: Creata in collaborazione dai partner del Consorzio ARC2, OLIVIA presenta un approccio innovativo all’attività di compliance al GDPR.
             2:
                 title: GRATUITO
                 text: OLIVIA è uno strumento aperto e facile da usare, liberamente accessibile a tutti gli utenti interessati.
             3:
                 title: EDUCATIVO
-                text: OLIVIA semplifica l'accesso al quadro della conoscenza, alle regole e alle procedure.
+                text: OLIVIA semplifica l'accesso alle informazioni relative al quadro normativo attualmente esistente in materia di Data Protection, nonché alle relative regole e procedure, agevolandone la comprensione.
             4:
                 title: PRATICO
-                text: Il lato pratico di OLIVIA aiuta le PMI nella piena implementazione del GDPR.
+                text: Il taglio pratico che caratterizza OLIVIA facilita le PMI nella gestione delle attività di compliance al GDPR.
     topics:
         title: "Contenuti di Olivia: impara ed applica il GDPR"
         button: Contenuti di Olivia
