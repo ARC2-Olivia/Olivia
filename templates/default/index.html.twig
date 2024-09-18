@@ -70,10 +70,12 @@
                 {% for testimonial in testimonials %}
                     <div class="index-carousel-slide">
                         <div class="index-testimonial">
-                            <div class="container position-relative">
+                            <div class="container d-flex gap-2 align-items-center">
                                 {{ mdi('book-open-page-variant-outline', 'index-testimonial-icon') }}
-                                <h3>{{ testimonial.title }}</h3>
-                                <p>{{ testimonial.text }}</p>
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <h3>{{ testimonial.title }}</h3>
+                                    <p>{{ testimonial.text }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>

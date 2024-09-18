@@ -169,12 +169,8 @@
 }
 
 .index-testimonial-icon {
-    position: absolute;
-    left: 1rem;
-    top: 0;
-    bottom: 0;
-    margin: auto 0;
-    height: 88px
+    flex-basis: 88px;
+    flex-shrink: 0;
 }
 
 .index-testimonial h3 {

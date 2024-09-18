@@ -145,16 +145,16 @@ index:
         text: Olivia è allo stesso tempo un'insegnante virtuale e un'assistente digitale. Olivia contiene una piccola accademia online che offre una serie di moduli di apprendimento - suddivisi per area tematica - per migliorare le conoscenze nel campo della protezione dei dati personali e funge anche da guida pratica per la relativa predisposizione della documentazione necessaria a provare il proprio livello di compliance.
     facts:
         1:
-            title: "Fatto n. 1 del GDPR"
-            text: Il GDPR è una legge dell’UE con norme obbligatorie su come le organizzazioni e le aziende devono utilizzare i dati personali in modo rispettoso dell’integrità.
+            title: "Info n. 1 sul GDPR"
+            text: Il GDPR è la normativa europea in materia di protezione dei dati personali che stabilisce regole uniformi in relazione al trattamento di dati personali   legge dell’UE con norme obbligatorie su come le organizzazioni e le aziende devono utilizzare i dati personali in modo rispettoso dell’integrità.
         2:
-            title: "Fatto n. 2 del GDPR"
-            text: L’utilizzo dei dati personali deve essere rispettoso dei diritti delle persone, in linea con i principi legali e di integrità.
+            title: "Info n. 2 sul GDPR"
+            text: Il trattamento dei dati personali deve avvenire in conformità alle regole e ai principi fissati dal GDPR.
         3:
-            title: "Fatto n. 3 del GDPR"
-            text: Per dato personale si intende qualsiasi informazione che, direttamente o indirettamente, possa identificare una persona vivente.
+            title: "Info n. 3 sul GDPR"
+            text: Per dato personale si intende qualsiasi informazione che, direttamente o indirettamente, possa identificare una persona fisica.
         4:
-            title: "Fatto n. 4 del GDPR"
+            title: "Info n. 4 sul GDPR"
             text: Il GDPR garantisce a ogni persona determinati diritti sui propri dati personali.
 
 form:
