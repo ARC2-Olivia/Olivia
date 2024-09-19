@@ -12,6 +12,10 @@
 	<div class="container py-5">
 		{% include '_partials/toasts.html.twig' %}
 		<div class="news-header">
+			<a href="{{ path('news_index') }}" class="news-header-back">
+				{{ mdi('chevron-left') }}
+				<span>{{ 'common.back'|trans }}</span>
+			</a>
 			<h1 class="news-header-title">{{ newsItem.title }}</h1>
 			<span class="news-header-date">{{ newsItem.createdAt|date('d.m.Y.') }}</span>
 		</div>
