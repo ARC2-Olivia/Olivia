@@ -45,6 +45,7 @@ common:
     list: Popis
     close: Zatvori
     showFields: Pokaži polja
+    back: Natrag
 
 button:
     details: Detalji

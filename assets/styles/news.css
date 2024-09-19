@@ -11,7 +11,26 @@
 }
 
 .news-header-date {
-    color: var(--app-color-blue)
+    color: var(--app-color-blue);
+    font-size: 1.2rem;
+}
+
+a.news-header-back {
+    text-decoration: unset;
+}
+
+.news-header-back:hover {
+    color: var(--app-color-yellow);
+}
+
+.news-header-back {
+    display: flex;
+    align-items: center;
+    color: var(--app-color-blue-alt)
+}
+
+.news-header-back svg {
+    width: 24px;
 }
 
 .news-list {

@@ -46,6 +46,7 @@ common:
     list: Elenco
     close: Vicino
     showFields: Mostra campi
+    back: Indietro
 
 button:
     details: Dettagli

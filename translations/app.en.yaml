@@ -46,6 +46,7 @@ common:
     list: List
     close: Close
     showFields: Show fields
+    back: Back
 
 button:
     details: Details
