@@ -22,6 +22,7 @@
 @import "./styles/maintenance.css";
 @import "./styles/files.css";
 @import "./styles/certificates.css";
+@import "./styles/news.css";
 
 :root {
     --app-font-default: 'PT Sans', sans-serif;
