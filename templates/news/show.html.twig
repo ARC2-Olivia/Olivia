@@ -11,19 +11,11 @@
 	
 	<div class="container py-5">
 		{% include '_partials/toasts.html.twig' %}
-		<ul class="news-list">
-			{% if is_granted('ROLE_MODERATOR') %}
-				<li><a href="{{ path('news_new') }}" class="news-add-button">{{ mdi('plus-circle') }}</a></li>
-			{% endif %}
-			{% for newsItem in news %}
-				<li>
-					<a href="{{ path('news_show', {'newsItem': newsItem.id}) }}" class="news-item">
-						<span class="news-item-title">{{ newsItem.title }}</span>
-						<span class="news-item-date">{{ newsItem.createdAt|date('d.m.Y.') }}</span>
-					</a>
-				</li>
-			{% endfor %}
-		</ul>
+		<div class="news-header">
+			<h1 class="news-header-title">{{ newsItem.title }}</h1>
+			<span class="news-header-date">{{ newsItem.createdAt|date('d.m.Y.') }}</span>
+		</div>
+		<div class="ql-editor">{{ newsItem.content|raw }}</div>
 	</div>
 {% endblock %}
 

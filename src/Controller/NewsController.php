@@ -41,4 +41,10 @@ class NewsController extends BaseController
 
         return $this->render('news/new.html.twig', ['form' => $form->createView(), 'newsItem' => $newsItem]);
     }
+
+    #[Route('/show/{newsItem}', name: 'show')]
+    public function show(NewsItem $newsItem): Response
+    {
+        return $this->render('news/show.html.twig', ['newsItem' => $newsItem]);
+    }
 }
