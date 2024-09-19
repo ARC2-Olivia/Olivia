@@ -66,6 +66,9 @@ success:
     topic:
         new: New topic has been created.
         edit: Topic has been updated.
+    newsItem:
+        new: New news item has been created.
+        edit: News item has been deleted.
 
 warning:
     accountConfirmation:
@@ -109,6 +112,8 @@ warning:
     topic:
         delete: Topic <i>%topic%</i> has been deleted.
         image.store: There was an error storing the topic image. You can try to reupload it while editing the topic.
+    newsItem:
+        delete: A news item has been deleted.
 
 error:
     user:
@@ -264,3 +269,6 @@ error:
         image:
             maxSize: File exceeds the allowed maximum size of 5 megabytes.
             mimeType: File has to be an image.
+    newsItem:
+        title: Title of the news item must not be empty.
+        content: Content of the news item must not be empty.

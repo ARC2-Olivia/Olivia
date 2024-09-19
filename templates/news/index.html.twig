@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block body %}
+	<div class="index-banner" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
+		<div class="container index-banner-wrapper">
+			<div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
+			<div class="index-banner-subtitle">{{ 'nav.news'|trans }}</div>
+		</div>
+	</div>
+	
+	<div class="container py-5">
+		{% include '_partials/toasts.html.twig' %}
+		<ul class="news-list">
+			{% if is_granted('ROLE_MODERATOR') %}
+				<li><a href="{{ path('news_new') }}" class="news-add-button">{{ mdi('plus-circle') }}</a></li>
+				{% endif %}
+				{% for newsItem in news %}
+					<li>
+						<a href="#" class="news-item">
+							<span class="news-item-title">{{ newsItem.title }}</span>
+							<span class="news-item-date">{{ newsItem.createdAt|date('d.m.Y.') }}</span>
+						</a>
+					</li>
+				{% endfor %}
+		</ul>
+	</div>
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+        .body { background-color: white; }
+		
+		.news-list {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+			font-size: 1.2rem;
+		}
+		
+		ul.news-list {
+			list-style: none;
+			padding-left: 0;
+		}
+		
+		.news-add-button {
+			background-color: #3A526A5F;
+			color: var(--app-color-dark-blue);
+			border-radius: 4px;
+			padding: 8px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			opacity: 0.75;
+		}
+		
+		.news-add-button:hover {
+			opacity: 1;
+		}
+		
+		.news-add-button svg {
+			height: 32px;
+		}
+		
+		a.news-item {
+			text-decoration: unset;
+			color: unset;
+		}
+		
+		.news-list .news-item {
+			display: flex;
+			justify-content: space-between;
+			position: relative;
+			padding: 8px;
+			border-radius: 8px;
+		}
+		
+		.news-list .news-item:before {
+			content: "";
+			position: absolute;
+			background-color: var(--app-color-light-blue);
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 1079;
+			border-radius: 4px;
+			opacity: 0;
+		}
+		
+		.news-list .news-item:hover:before {
+			opacity: 0.625;
+		}
+		
+		.news-list .news-item > .news-item-title {
+			color: var(--app-color-dark-blue);
+			font-weight: bold;
+			flex-shrink: 0;
+			flex-grow: 1;
+            z-index: 1080;
+		}
+
+        .news-list .news-item > .news-item-date {
+            color: var(--app-color-blue-alt);
+            flex-shrink: 0;
+            flex-basis: 128px;
+			text-align: end;
+			border-left: solid 1px var(--app-color-blue-alt);
+            z-index: 1080;
+        }
+	</style>
+{% endblock %}

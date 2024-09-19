@@ -113,6 +113,7 @@ nav:
     home: Home
     gdpr: Protezione dati
     topics: Temi GDPR
+    news: Notizia
 
 footer:
     contact: "Contatto: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -413,6 +414,11 @@ form:
                 aboutUsAlt: "Contenuto della pagina <i>Chi siamo</i> (lingua alternativa)"
                 aboutProject: "<i>Informazioni sul progetto ARC2</i> contenuto della pagina"
                 aboutProjectAlt: "<i>Informazioni sul progetto ARC2</i> contenuto della pagina (lingua alternativa)"
+        newsItem:
+            label:
+                title: Titolo
+                content: Contenuto
+                createdAt: Tempo di creazione
 
 profile:
     request:
@@ -826,6 +832,14 @@ topic:
     about:
         title: A proposito di argomenti
         text: Essendo sia un educatore virtuale che un assistente, OLIVIA include una mini accademia online che ti offre una varietà di moduli di apprendimento per migliorare le tue conoscenze nell'area del GDPR, oltre a uno strumento pratico che ti assiste nell'applicazione pratica dei documenti necessari e delle informazioni relative al GDPR. procedure.
+
+newsItem:
+    title:
+        index: Notizia
+        new: Nuova notizia
+        edit: Modifica la notizia
+    message:
+        delete: Sei sicuro di voler chiudere questo nuovo lavoro?
 
 certificate:
     title: CERTIFICATO

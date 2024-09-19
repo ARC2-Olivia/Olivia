@@ -66,6 +66,9 @@ success:
     topic:
         new: È stato creato un nuovo argomento.
         edit: L'argomento è stato aggiornato.
+    newsItem:
+        new: È stata creata una nuova notizia.
+        edit: La notizia è stata eliminata.
 
 warning:
     accountConfirmation:
@@ -109,6 +112,8 @@ warning:
     topic:
         delete: L'argomento <i>%topic%</i> è stato eliminato.
         image.store: Si è verificato un errore durante la memorizzazione dell'immagine dell'argomento. Puoi provare a ricaricarlo mentre modifichi l'argomento.
+    newsItem:
+        delete: Una notizia è stata eliminata.
 
 error:
     user:
@@ -264,3 +269,6 @@ error:
         image:
             maxSize: Il file supera la dimensione massima consentita di 5 megabyte.
             mimeType: Il file deve essere un'immagine.
+    newsItem:
+        title: Il titolo della notizia non deve essere vuoto.
+        content: Il contenuto della notizia non deve essere vuoto.
