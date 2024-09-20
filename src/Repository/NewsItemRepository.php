@@ -48,4 +48,15 @@ class NewsItemRepository extends ServiceEntityRepository
             ->orderBy('ni.createdAt', 'DESC')
             ->getQuery()->getResult();
     }
+
+    /**
+     * @return NewsItem[]
+     */
+    public function findLatestAmount(int $amount): array
+    {
+        return $this->createQueryBuilder('ni')
+            ->orderBy('ni.createdAt', 'DESC')
+            ->setMaxResults($amount)
+            ->getQuery()->getResult();
+    }
 }

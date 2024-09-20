@@ -64,23 +64,21 @@
         </div>
     </div>
 
-    {% if testimonials is not empty %}
-        <div class="container-fluid my-2 p-0">
-            <div id="carousel" class="index-carousel">
-                {% for testimonial in testimonials %}
-                    <div class="index-carousel-slide">
-                        <div class="index-testimonial">
-                            <div class="container d-flex gap-2 align-items-center">
-                                {{ mdi('book-open-page-variant-outline', 'index-testimonial-icon') }}
-                                <div class="d-flex flex-column flex-grow-1">
-                                    <h3>{{ testimonial.title }}</h3>
-                                    <p>{{ testimonial.text }}</p>
-                                </div>
-                            </div>
+    {% if news is not empty %}
+        <div class="container my-5 py-0">
+            <h2 class="news-h2">{{ 'nav.news'|trans }}</h2>
+            <ul class="news-grid">
+                {% for newsItem in news %}
+                    <li class="news-item">
+                        <span class="news-item-title">{{ newsItem.title }}</span>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="news-item-date">{{ newsItem.createdAt|date('d.m.Y.') }}</span>
+                            <a href="{{ path('news_show', {'newsItem': newsItem.id}) }}" class="news-item-link">{{ 'common.details'|trans }}</a>
                         </div>
-                    </div>
+                    </li>
                 {% endfor %}
-            </div>
+            </ul>
+            <a href="{{ path('news_index') }}" class="btn btn-theme-white bg-blue mt-4">{{ 'button.moreNews'|trans }}</a>
         </div>
     {% endif %}
 {% endblock %}
@@ -89,10 +87,4 @@
     <style>
         .body { background-color: white; }
     </style>
-{% endblock %}
-
-{% block javascripts %}
-    {% if testimonials is not empty %}
-        {{ encore_entry_script_tags('index.carousel') }}
-    {% endif %}
 {% endblock %}
