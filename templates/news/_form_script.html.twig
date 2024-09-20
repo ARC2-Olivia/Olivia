@@ -1,0 +1,18 @@
+{% trans_default_domain 'app' %}
+{{ encore_entry_script_tags('quill') }}
+<script>
+    const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" }, placeholder: `{{ 'form.entity.newsItem.placeholder.content'|trans }}` };
+    const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
+
+    window.onload = () => {
+        const quill = new Quill("#editor", settings);
+        quill.root.innerHTML = `{{ newsItem.content|raw }}`;
+        QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
+
+        const form = document.querySelector("form#{{ form.vars.id }}");
+        form.onsubmit = function(e) {
+            const text = this.querySelector("#{{ form.content.vars.id }}");
+            text.value = quill.root.innerHTML;
+        };
+    };
+</script>

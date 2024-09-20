@@ -19,6 +19,12 @@ class NewsController extends BaseController
         return $this->render('news/index.html.twig', ['news' => $news]);
     }
 
+    #[Route('/show/{newsItem}', name: 'show')]
+    public function show(NewsItem $newsItem): Response
+    {
+        return $this->render('news/show.html.twig', ['newsItem' => $newsItem]);
+    }
+
     #[Route('/new', name: 'new')]
     #[IsGranted('ROLE_MODERATOR')]
     public function new(Request $request): Response
@@ -42,9 +48,23 @@ class NewsController extends BaseController
         return $this->render('news/new.html.twig', ['form' => $form->createView(), 'newsItem' => $newsItem]);
     }
 
-    #[Route('/show/{newsItem}', name: 'show')]
-    public function show(NewsItem $newsItem): Response
+    #[Route('/edit/{newsItem}', name: 'edit')]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function edit(NewsItem $newsItem, Request $request): Response
     {
-        return $this->render('news/show.html.twig', ['newsItem' => $newsItem]);
+        $form = $this->createForm(NewsItemType::class, $newsItem);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('success.newsItem.edit', domain: 'message'));
+            return $this->render('news/show.html.twig', ['newsItem' => $newsItem]);
+        } else {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addFlash('error', $this->translator->trans($error->getMessage(), domain: 'message'));
+            }
+        }
+
+        return $this->render('news/edit.html.twig', ['form' => $form->createView(), 'newsItem' => $newsItem]);
     }
 }
