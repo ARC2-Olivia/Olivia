@@ -22,9 +22,9 @@
 		{% if is_granted('ROLE_MODERATOR') %}
 			<div class="d-flex gap-2 align-items-center justify-content-center mb-4">
 				<a href="{{ path('news_edit', {'newsItem': newsItem.id}) }}" class="btn btn-theme-white bg-blue">{{ 'common.edit'|trans }}</a>
-				<form method="post">
+				<form action="{{ path('news_delete', {'newsItem': newsItem.id}) }}" method="post" onsubmit="return confirm(`{{ 'newsItem.message.delete'|trans }}`)">
 					<input type="hidden" name="_csrf_token" value="{{ csrf_token('news.delete') }}"/>
-					<button type="button" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</button>
+					<button type="submit" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</button>
 				</form>
 			</div>
 		{% endif %}

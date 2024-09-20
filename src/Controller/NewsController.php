@@ -38,7 +38,7 @@ class NewsController extends BaseController
             $this->em->persist($newsItem);
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.newsItem.new', domain: 'message'));
-            return $this->render('news/index.html.twig');
+            return $this->redirectToRoute('news_index');
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), domain: 'message'));
@@ -58,7 +58,7 @@ class NewsController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('success.newsItem.edit', domain: 'message'));
-            return $this->render('news/show.html.twig', ['newsItem' => $newsItem]);
+            return $this->redirectToRoute('news_show', ['newsItem' => $newsItem->getId()]);
         } else {
             foreach ($form->getErrors(true) as $error) {
                 $this->addFlash('error', $this->translator->trans($error->getMessage(), domain: 'message'));
@@ -66,5 +66,19 @@ class NewsController extends BaseController
         }
 
         return $this->render('news/edit.html.twig', ['form' => $form->createView(), 'newsItem' => $newsItem]);
+    }
+
+    #[Route('/delete/{newsItem}', name: 'delete', methods: ['POST'])]
+    #[IsGranted('ROLE_MODERATOR')]
+    public function delete(NewsItem $newsItem, Request $request): Response
+    {
+        $csrfToken = $request->request->get('_csrf_token');
+        if ($this->isCsrfTokenValid('news.delete', $csrfToken)) {
+            $this->em->remove($newsItem);
+            $this->em->flush();
+            $this->addFlash('warning', $this->translator->trans('warning.newsItem.delete', domain: 'message'));
+            return $this->redirectToRoute('news_index');
+        }
+        return $this->redirectToRoute('news_show', ['newsItem' => $newsItem->getId()]);
     }
 }
