@@ -19,10 +19,14 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
     font-size: 1.15rem;
-    column-gap: 1.75rem;
+    column-gap: 1rem;
     row-gap: 1rem;
     position: static;
     z-index: 1020;
+}
+
+.navigation-profile-button {
+    font-size: 0.95rem;
 }
 
 ul.navigation-main,
@@ -92,6 +96,14 @@ ul.navigation-admin {
 
     .navigation-responsive > .navigation-main.show {
         visibility: visible;
+    }
+
+    .navigation-profile-button {
+        font-size: 1.15rem;
+    }
+
+    .navigation-profile-button > br {
+        display: none;
     }
 
     .navigation-admin--wrapper {

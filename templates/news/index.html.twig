@@ -18,8 +18,8 @@
 			{% for newsItem in news %}
 				<li>
 					<a href="{{ path('news_show', {'newsItem': newsItem.id}) }}" class="news-item">
-						<span class="news-item-title">{{ newsItem.title }}</span>
 						<span class="news-item-date">{{ newsItem.createdAt|date('d.m.Y.') }}</span>
+						<span class="news-item-title">{{ newsItem.title }}</span>
 					</a>
 				</li>
 			{% endfor %}
