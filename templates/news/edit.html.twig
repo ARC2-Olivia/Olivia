@@ -11,7 +11,8 @@
 	
 	<div class="container py-5">
 		{% include '_partials/toasts.html.twig' %}
-		<h1 class="mb-4">{{ 'newsItem.title.new'|trans }}</h1>
+		<h1 class="mb-1">{{ 'newsItem.title.edit'|trans }}</h1>
+		<h2 class="mb-4"><i>{{ newsItem.title }}</i></h2>
 		{% include 'news/_form.html.twig' %}
 	</div>
 {% endblock %}
