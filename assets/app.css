@@ -222,6 +222,7 @@ h2 > a {
 .fg-orange { color: var(--app-color-orange) !important; }
 .fg-green { color: var(--app-color-green) !important; }
 .fg-blue { color: var(--app-color-blue) !important; }
+.fg-dark-blue { color: var(--app-color-dark-blue) !important; }
 .fg-red { color: var(--app-color-red) !important; }
 .fg-white { color: #ffffff !important; }
 .fg-black { color: #000000 !important; }

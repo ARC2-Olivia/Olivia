@@ -61,6 +61,7 @@ button:
     show: Show
     downloadForm: Download form
     downloadExample: Download example
+    moreNews: More news
 
 page:
     login: Olivia | Login

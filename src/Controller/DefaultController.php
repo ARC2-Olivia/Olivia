@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\File;
+use App\Entity\NewsItem;
 use App\Entity\Texts;
 use App\Form\ProfileType;
 use App\Form\Security\PasswordResetType;
@@ -23,17 +24,8 @@ class DefaultController extends BaseController
     #[Route("/{_locale}", name: "index", requirements: ["_locale" => "%locale.supported%"])]
     public function index(Request $request): Response
     {
-        $testimonials = [
-            ['title' => $this->translator->trans('index.facts.1.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.1.text', domain: 'app')],
-            ['title' => $this->translator->trans('index.facts.2.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.2.text', domain: 'app')],
-            ['title' => $this->translator->trans('index.facts.3.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.3.text', domain: 'app')],
-            ['title' => $this->translator->trans('index.facts.4.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.4.text', domain: 'app')]
-        ];
-
-        if ($this->getParameter('locale.alternate') === $request->getLocale())
-            $testimonials[] = ['title' => $this->translator->trans('index.facts.5.title', domain: 'app'), 'text' => $this->translator->trans('index.facts.5.text', domain: 'app')];
-
-        return $this->render('default/index.html.twig', ['testimonials' => $testimonials]);
+        $news = $this->em->getRepository(NewsItem::class)->findLatestAmount(6);
+        return $this->render('default/index.html.twig', ['news' => $news]);
     }
 
     #[Route("/{_locale}/profile", name: "profile", requirements: ["_locale" => "%locale.supported%"])]
