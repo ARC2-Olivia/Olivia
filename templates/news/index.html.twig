@@ -22,6 +22,8 @@
 						<span class="news-item-title">{{ newsItem.title }}</span>
 					</a>
 				</li>
+			{% else %}
+				<li><p class="text-center"><i>{{ 'newsItem.message.empty'|trans }}</i></p></li>
 			{% endfor %}
 		</ul>
 	</div>

@@ -842,6 +842,7 @@ newsItem:
         edit: Modifica la notizia
     message:
         delete: Sei sicuro di voler chiudere questo nuovo lavoro?
+        empty:
 
 certificate:
     title: CERTIFICATO

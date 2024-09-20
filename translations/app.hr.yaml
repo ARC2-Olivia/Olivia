@@ -847,6 +847,7 @@ newsItem:
         edit: Uređivanje stavke novosti
     message:
         delete: Jeste li sigurni da želite obrisati ovu novost?
+        empty: Nema novosti za prikazati.
 
 edulog:
     dataAccess:
