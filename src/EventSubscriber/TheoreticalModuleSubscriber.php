@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\AllCoursesCompletedUser;
 use App\Entity\Course;
 use App\Entity\Enrollment;
 use App\Entity\Lesson;
@@ -96,6 +97,12 @@ class TheoreticalModuleSubscriber implements EventSubscriberInterface
     public function onTheoreticalModuleCompleted(TheoreticalModuleCompletedEvent $event): void
     {
         $user = $event->getUser();
+        if (null !== $user->getAllCoursesCompletedUser()) {
+            return;
+        }
+        $allCoursesCompletedUser = (new AllCoursesCompletedUser())->setUser($user)->setAt(new \DateTimeImmutable());
+        $this->em->persist($allCoursesCompletedUser);
+        $this->em->flush();
         $this->requestStack->getSession()->set(self::PLAY_GOLDEN_TROPHY_ANIMATION, true);
     }
 
