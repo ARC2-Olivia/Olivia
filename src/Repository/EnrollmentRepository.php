@@ -41,7 +41,7 @@ class EnrollmentRepository extends ServiceEntityRepository
         }
     }
 
-    public function countPassedForUser(User $user): int
+    public function countPassedByUser(User $user): int
     {
         return $this->createQueryBuilder('e')
             ->select('COUNT(e.id)')

@@ -1,3 +1,9 @@
+{% if class is not defined %}
+	{% set class = '' %}
+{% endif %}
+{% if viewBox is not defined %}
+	{% set viewBox = '0 0 24 24' %}
+{% endif %}
 <svg class="{{ class }}" viewBox="{{ viewBox }}">
     {% block innerSvg %}{% endblock %}
 </svg>

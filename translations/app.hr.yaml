@@ -45,6 +45,7 @@ common:
     list: Popis
     close: Zatvori
     showFields: Pokaži polja
+    back: Natrag
 
 button:
     details: Detalji
@@ -59,6 +60,7 @@ button:
     show: Prikaži
     downloadForm: Preuzmi obrazac
     downloadExample: Preuzmi primjer
+    moreNews: Više novosti
 
 page:
     login: Olivia | Prijava
@@ -93,6 +95,7 @@ page:
         show: Olivia | GDPR tema
         edit: Olivia | Uređivanje GDPR teme
     maintetance: Olivia | Radovi na aplikaciji
+
 nav:
     training: Nauči
     practice: Primijeni
@@ -110,6 +113,8 @@ nav:
     home: Naslovna
     gdpr: Zaštita podataka
     topics: GDPR teme
+    news: Novosti
+    certificates: Certifikati
 
 footer:
     contact: "Kontakt: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -408,6 +413,14 @@ form:
                 aboutUsAlt: "Sadržaj stranice <i>O nama</i> (drugi jezik)"
                 aboutProject: "Sadržaj stranice <i>O ARC2 projektu</i>"
                 aboutProjectAlt: "Sadržaj stranice <i>O ARC2 projektu</i> (drugi jezik)"
+        newsItem:
+            label:
+                title: Naslov
+                content: Sadržaj
+                createdAt: Vrijeme stvaranja
+            placeholder:
+                title: Naslov novosti
+                content: Sadržaj novosti
 
 profile:
     request:
@@ -822,6 +835,15 @@ topic:
     about:
         title: About topics
         text: Being both a virtual educator and an assistant, OLIVIA includes mini online academy offering you a variety of learning modules to enhance your knowledge in the area of GDPR, as well as a practical tool assisting you in practical application of the GDPR-related necessary documents and procedures.
+
+newsItem:
+    title:
+        index: Novosti
+        new: Nova stavka novosti
+        edit: Uređivanje stavke novosti
+    message:
+        delete: Jeste li sigurni da želite obrisati ovu novost?
+        empty: Nema novosti za prikazati.
 
 edulog:
     dataAccess:

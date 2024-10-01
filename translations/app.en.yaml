@@ -46,6 +46,7 @@ common:
     list: List
     close: Close
     showFields: Show fields
+    back: Back
 
 button:
     details: Details
@@ -60,6 +61,7 @@ button:
     show: Show
     downloadForm: Download form
     downloadExample: Download example
+    moreNews: More news
 
 page:
     login: Olivia | Login
@@ -112,6 +114,8 @@ nav:
     home: Home
     gdpr: Data protection
     topics: GDPR topics
+    news: News
+    certificates: Certificates
 
 footer:
     contact: "Contact: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -411,6 +415,11 @@ form:
                 aboutUsAlt: "<i>About us</i> page content (alternate language)"
                 aboutProject: "<i>About ARC2 project</i> page content"
                 aboutProjectAlt: "<i>About ARC2 project</i> page content (alternate language)"
+        newsItem:
+            label:
+                title: Title
+                content: Content
+                createdAt: Created at
 
 profile:
     request:
@@ -831,6 +840,15 @@ topic:
     about:
         title: About topics
         text: Being both a virtual educator and an assistant, OLIVIA includes mini online academy offering you a variety of learning modules to enhance your knowledge in the area of GDPR, as well as a practical tool assisting you in practical application of the GDPR-related necessary documents and procedures.
+
+newsItem:
+    title:
+        index: News
+        new: New news item
+        edit: Edit news item
+    message:
+        delete: Are you sure you want to delete this news item?
+        empty: Non ci sono novità da visualizzare.
 
 edulog:
     dataAccess:
