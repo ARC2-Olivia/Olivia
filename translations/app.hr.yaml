@@ -870,6 +870,10 @@ export:
             example: Slijedi primjer trake/skočnog prozora kolačića uređen na temelju vaših odgovora u upitniku. Ovaj traka/skočni prozor nije u potpunosti funkcionalan i namijenjen je samo za pregled kako bi Vaš trebao izgledati. Uz to, primjer koji možete preuzeti klikom na gornji gumb <i>Preuzmi primjer</i> dat će vam kod za nefunkcionalnu traku/skočni prozor koji se može koristiti kao osnova za implementaciju potpuno funkcionalne inačice.
             settings: Kliknite na gumb <i>Postavke kolačića</i> kako biste otvorili dodatne opcije za prilagodbu vlastitih postavki kolačića.
 
+trophy:
+    course: Tečaj položen!
+    allCourses: Svi tečajevi položeni!
+
 maintenance:
     1: Provode se radovi nad alatom OLIVIA.
     2: Molimo strpljenje.
