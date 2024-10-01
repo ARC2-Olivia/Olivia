@@ -498,6 +498,10 @@ iframe.lesson-video {
     border-radius: 50%;
 }
 
+.trophy-anim-delay-4s > * {
+    animation-delay: 4s;
+}
+
 .trophy-anim-background {
     z-index: 3000;
     position: fixed;
@@ -509,6 +513,26 @@ iframe.lesson-video {
     animation-name: trophy-background;
     animation-duration: 4s;
     animation-timing-function: ease;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+.trophy-anim-text {
+    z-index: 3030;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    color: #ffffff;
+    text-align: center;
+    font-size: 5vw;
+    font-weight: bold;
+    text-shadow: 0 4px 8px #000000;
+    animation-name: trophy-text;
+    animation-duration: 4s;
+    animation-timing-function: linear;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
@@ -549,6 +573,10 @@ iframe.lesson-video {
     color: var(--app-color-orange);
 }
 
+.trophy-anim-trophy.golden > svg {
+    color: var(--app-color-yellow);
+}
+
 .trophy-anim-shine > svg {
     height: 100%;
     width: 100%;
@@ -561,6 +589,15 @@ iframe.lesson-video {
     95% { opacity: 1; z-index: 3000; }
     99% { opacity: 0; z-index: 3000; }
     100% { opacity: 0; z-index: -3000; }
+}
+
+@keyframes trophy-text {
+    0% { opacity: 0; z-index: 3030 }
+    25% { opacity: 0; z-index: 3030 }
+    30% { opacity: 1; z-index: 3030 }
+    95% { opacity: 1; z-index: 3030 }
+    99% { opacity: 0; z-index: 3030 }
+    100% { opacity: 0; z-index: -3030 }
 }
 
 @keyframes trophy-trophy {

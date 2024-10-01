@@ -41,6 +41,15 @@ class EnrollmentRepository extends ServiceEntityRepository
         }
     }
 
+    public function countPassedForUser(User $user): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->where('e.user = :user')->andWhere('e.passed = :passed')
+            ->setParameters(['user' => $user, 'passed' => true])
+            ->getQuery()->getSingleScalarResult();
+    }
+
     public function dumpForDataAccess(User $user): array
     {
         $conn = $this->getEntityManager()->getConnection();

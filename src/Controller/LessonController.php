@@ -14,8 +14,8 @@ use App\Entity\QuizQuestion;
 use App\Entity\QuizQuestionAnswer;
 use App\Entity\QuizQuestionChoice;
 use App\Entity\User;
+use App\Event\QuizFinishedEvent;
 use App\Form\LessonType;
-use App\Form\Quiz\QuizType;
 use App\Form\QuizQuestionType;
 use App\Repository\LessonCompletionRepository;
 use App\Repository\LessonRepository;
@@ -26,6 +26,7 @@ use App\Traits\BasicFileManagementTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Translatable\Entity\Translation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,7 +85,6 @@ class LessonController extends BaseController
             $lesson->setPosition($lessonRepository->nextPositionInCourse($course));
             $lessonRepository->save($lesson, true);
             $this->processLessonTranslation($lesson, $form);
-            $recheckCoursePassingCondition = false;
 
             if ($lesson->getType() === Lesson::TYPE_TEXT) {
                 $this->handleTextLessonType($form, $lesson);
@@ -217,8 +217,6 @@ class LessonController extends BaseController
             }
         }
 
-        $playTrophyAnimation = Lesson::TYPE_QUIZ === $lesson->getType() && $request->getSession()->get(self::PLAY_TROPHY_ANIMATION, false);
-        $request->getSession()->remove(self::PLAY_TROPHY_ANIMATION);
         return $this->render('lesson/show.html.twig', [
             'lesson' => $lesson,
             'lessonItem' => $lessonItem,
@@ -229,7 +227,6 @@ class LessonController extends BaseController
             'currentLessonInfo' => $currentLessonInfo,
             'note' => $note,
             'quizPercentage' => !$this->isGranted('ROLE_MODERATOR') ? $this->lessonService->getQuizPercentage($lesson, $user) : null,
-            'playTrophyAnimation' => $playTrophyAnimation,
             'navigation' => $this->navigationService->forCourse($lesson->getCourse(), NavigationService::COURSE_LESSONS)
         ]);
     }
@@ -386,7 +383,7 @@ class LessonController extends BaseController
 
     #[Route("/finish-quiz/{lesson}", name: "quiz_finish", methods: ["POST"])]
     #[IsGranted("solve_quiz", subject: "lesson")]
-    public function finishQuiz(Lesson $lesson, Request $request, EnrollmentService $enrollmentService): Response
+    public function finishQuiz(Lesson $lesson, Request $request, EventDispatcherInterface $dispatcher): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -404,18 +401,20 @@ class LessonController extends BaseController
             $quizQuestionRepository = $this->em->getRepository(QuizQuestion::class);
             $quizQuestionAnswerRepository = $this->em->getRepository(QuizQuestionAnswer::class);
 
-            $quizQuestionAnswers = [];
             foreach ($answers as $answer) {
                 $quizQuestion = $quizQuestionRepository->find($answer->questionId);
                 if ($quizQuestion !== null) {
                     $quizQuestionAnswer = $quizQuestionAnswerRepository->findOneBy(['user' => $user, 'question' => $quizQuestion]);
                     if ($quizQuestionAnswer === null) $quizQuestionAnswer = new QuizQuestionAnswer();
                     $quizQuestionAnswer->setUser($user)->setQuestion($quizQuestion)->setAnswer($answer->answer);
-                    $quizQuestionAnswers[] = $quizQuestionAnswer;
                     $this->em->persist($quizQuestionAnswer);
                 }
             }
 
+            $this->em->flush();
+            $dispatcher->dispatch(new QuizFinishedEvent($user, $lesson));
+
+            /*
             $sum = 0;
             $questionCount = 0;
             foreach ($quizQuestionAnswers as $quizQuestionAnswer) {
@@ -449,6 +448,7 @@ class LessonController extends BaseController
                 $this->regrade($lesson->getCourse(), $user);
                 $this->addFlash('success', $this->translator->trans('success.quiz.finish', ['%quizName%' => $lesson->getName()], 'message'));
             }
+            */
         }
 
         return $this->json(['redirect' => $this->generateUrl('lesson_show', ['lesson' => $lesson->getId()])]);

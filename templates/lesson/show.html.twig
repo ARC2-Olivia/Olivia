@@ -6,15 +6,7 @@
         {% include 'lesson/_show_sectionNav.html.twig' %}
         {% include 'lesson/_show_sectionMain.html.twig' %}
     </div>
-    {% if playTrophyAnimation == true %}
-        <div class="trophy-anim-background"></div>
-        <div class="trophy-anim-trophy">
-            {{ mdi('trophy-variant') }}
-        </div>
-        <div class="trophy-anim-shine">
-            {{ mdi('decagram') }}
-        </div>
-    {% endif %}
+    {% include '_partials/trophy_animation.html.twig' %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -32,5 +24,49 @@
         {{ encore_entry_script_tags('notes.update') }}
         {{ encore_entry_script_tags('lessons.completion') }}
         {{ encore_entry_script_tags('modal') }}
+        <script>
+            function playTrophyAnimations(trophyTypes = []) {
+                if (!Array.isArray(trophyTypes) || trophyTypes.length <= 0) {
+                    return;
+                }
+                
+                const types = new Set(trophyTypes);
+                const offsetInSeconds = 4;
+                const durationInSeconds = 4;
+                
+                let baseOffsetInSeconds = 0;
+                for (const type of types) {
+                    const animBackground = document.createElement("DIV");
+                    animBackground.classList.add("trophy-anim-background");
+                    
+                    const animTrophy = document.createElement("DIV");
+                    animTrophy.classList.add("trophy-anim-trophy");
+                    if ("golden" === type) {
+                        animTrophy.classList.add("golden");
+                    }
+                    animTrophy.innerHTML = `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M17 4V2H7V4H2V11C2 12.1 2.9 13 4 13H7.1C7.5 14.96 9.04 16.5 11 16.9V19.08C8 19.54 8 22 8 22H16C16 22 16 19.54 13 19.08V16.9C14.96 16.5 16.5 14.96 16.9 13H20C21.1 13 22 12.1 22 11V4H17M4 11V6H7V11L4 11M20 11L17 11V6H20L20 11Z"></path></svg>`
+                    
+                    const animShine = document.createElement("DIV");
+                    animShine.classList.add("trophy-anim-shine");
+                    animShine.innerHTML = `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12Z"></path></svg>`;
+                    
+                    const animWrapper = document.createElement("DIV");
+                    animWrapper.append(animBackground, animTrophy, animShine);
+                    
+                    setTimeout(function () {
+                        document.querySelector('body').appendChild(animWrapper);
+                        setTimeout(function () {
+                            animWrapper.remove();
+                        }, (baseOffsetInSeconds + durationInSeconds) * 1000);
+                    }, baseOffsetInSeconds * 1000);
+                    
+                    baseOffsetInSeconds += offsetInSeconds;
+                }
+            }
+            
+            window.addEventListener("DOMContentLoaded", function () {
+                //playTrophyAnimations(["normal", "golden"]);
+            })
+        </script>
     {% endif %}
 {% endblock %}
