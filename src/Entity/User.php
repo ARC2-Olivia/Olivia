@@ -58,6 +58,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $affiliation = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?AllCoursesCompletedUser $allCoursesCompletedUser = null;
+
     public function __construct()
     {
         $this->acceptedGdprs = new ArrayCollection();
@@ -258,5 +261,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             return trim("$trimmedFirstName $trimmedLastName");
         }
         return $this->email;
+    }
+
+    public function getAllCoursesCompletedUser(): ?AllCoursesCompletedUser
+    {
+        return $this->allCoursesCompletedUser;
+    }
+
+    public function setAllCoursesCompletedUser(AllCoursesCompletedUser $allCoursesCompletedUser): self
+    {
+        // set the owning side of the relation if necessary
+        if ($allCoursesCompletedUser->getUser() !== $this) {
+            $allCoursesCompletedUser->setUser($this);
+        }
+
+        $this->allCoursesCompletedUser = $allCoursesCompletedUser;
+
+        return $this;
     }
 }
