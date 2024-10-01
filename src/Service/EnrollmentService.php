@@ -74,4 +74,9 @@ class EnrollmentService
             $this->em->flush();
         }
     }
+
+    public function countPassedByUser(user $user): int
+    {
+        return $this->em->getRepository(Enrollment::class)->countPassedForUser($user);
+    }
 }
