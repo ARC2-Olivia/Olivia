@@ -890,6 +890,10 @@ export:
             example: Di seguito è riportato un esempio di banner cookie basato sulle risposte fornite al questionario. Questo banner sui cookie non è completamente funzionale ed è pensato solo per essere utilizzato come anteprima di come dovrebbe apparire il tuo banner sui cookie. Inoltre, l'esempio che puoi scaricare facendo clic sul pulsante <i>Scarica esempio</i> qui sopra ti fornirà un codice per un banner cookie non funzionale che può essere utilizzato come base per l'implementazione di uno completamente funzionale.
             settings: Fai clic sul pulsante <i>Personalizza</i> per aprire opzioni aggiuntive per personalizzare le tue impostazioni sui cookie.
 
+trophy:
+    course: Corso completato!
+    allCourses: Tutti i corsi completati!
+
 maintenance:
     1: Lo strumento OLIVIA è in fase di manutenzione.
     2: Per favore sii paziente.
