@@ -77,6 +77,6 @@ class EnrollmentService
 
     public function countPassedByUser(user $user): int
     {
-        return $this->em->getRepository(Enrollment::class)->countPassedForUser($user);
+        return $this->em->getRepository(Enrollment::class)->countPassedByUser($user);
     }
 }

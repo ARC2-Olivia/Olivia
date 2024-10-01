@@ -220,6 +220,7 @@ h2 > a {
 .bg-light-red { background-color: var(--app-color-light-red) !important; }
 
 .fg-orange { color: var(--app-color-orange) !important; }
+.fg-yellow { color: var(--app-color-yellow) !important; }
 .fg-green { color: var(--app-color-green) !important; }
 .fg-blue { color: var(--app-color-blue) !important; }
 .fg-dark-blue { color: var(--app-color-dark-blue) !important; }
