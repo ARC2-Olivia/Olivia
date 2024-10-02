@@ -58,8 +58,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $affiliation = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?AllCoursesCompletedUser $allCoursesCompletedUser = null;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $allCoursesPassedAt = null;
 
     public function __construct()
     {
@@ -263,19 +263,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function getAllCoursesCompletedUser(): ?AllCoursesCompletedUser
+    public function getAllCoursesPassedAt(): ?\DateTimeImmutable
     {
-        return $this->allCoursesCompletedUser;
+        return $this->allCoursesPassedAt;
     }
 
-    public function setAllCoursesCompletedUser(AllCoursesCompletedUser $allCoursesCompletedUser): self
+    public function setAllCoursesPassedAt(?\DateTimeImmutable $allCoursesPassedAt): self
     {
-        // set the owning side of the relation if necessary
-        if ($allCoursesCompletedUser->getUser() !== $this) {
-            $allCoursesCompletedUser->setUser($this);
-        }
-
-        $this->allCoursesCompletedUser = $allCoursesCompletedUser;
+        $this->allCoursesPassedAt = $allCoursesPassedAt;
 
         return $this;
     }

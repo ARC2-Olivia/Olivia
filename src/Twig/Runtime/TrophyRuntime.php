@@ -34,7 +34,7 @@ class TrophyRuntime implements RuntimeExtensionInterface
 
     public function getTrophyIcon(User $user, string $class = ''): ?Markup
     {
-        if (null !== $user->getAllCoursesCompletedUser())
+        if (null !== $user->getAllCoursesPassedAt())
             return new Markup($this->twig->render('mdi/trophy-variant.html.twig', ['class' => 'fg-yellow '.$class, 'viewBox' => '0 0 24 24']), 'UTF-8');
         if ($this->enrollmentService->countPassedByUser($user) > 0)
             return new Markup($this->twig->render('mdi/trophy-variant.html.twig', ['class' => 'fg-orange '.$class, 'viewBox' => '0 0 24 24']), 'UTF-8');
