@@ -119,8 +119,8 @@ class DefaultController extends BaseController
         $courseRepository = $this->em->getRepository(Course::class);
 
         $courses = [];
-        $courses['certified'] = $courseRepository->findEnrolledByUserAndOrderedByPosition($user);
-        $courses['uncertified'] = $courseRepository->findNotEnrolledByUserAndOrderedByPosition($user);
+        $courses['certified'] = $courseRepository->findPassedByUserAndOrderedByPosition($user);
+        $courses['uncertified'] = $courseRepository->findNotPassedByUserAndOrderedByPosition($user);
         $courses['golden'] = null !== $user->getAllCoursesPassedAt();
         return $this->render('default/certificates.html.twig', ['courses' => $courses]);
     }
