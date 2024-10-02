@@ -18,7 +18,9 @@
                         <button id="profile-button" class="btn btn-theme-white">{{ app.user.nameOrEmail }}</button>
                         <ul class="dropdown max-200px" data-dropdown data-for="#profile-button">
                             <li class="dropdown-item"><a href="{{ path('profile') }}">{{ 'common.profile'|trans }}</a></li>
-                            <li class="dropdown-item"><a href="#" class="d-flex align-items-center">{{ 'nav.certificates'|trans }}{{ app.user|trophy_icon('ms-1') }}</a></li>
+                            {% if is_user() %}
+                                <li class="dropdown-item"><a href="{{ path('certificates') }}" class="d-flex align-items-center">{{ 'nav.certificates'|trans }}{{ app.user|trophy_icon('ms-1') }}</a></li>
+                            {% endif %}
                             <li class="dropdown-item"><a href="{{ path('gdpr_data_protection') }}">{{ 'nav.gdpr'|trans }}</a></li>
                             <li class="dropdown-item"><a href="{{ path('gdpr_privacy_policy') }}">{{ 'nav.privacyPolicy'|trans }}</a></li>
                             <li class="dropdown-item"><a href="{{ path('gdpr_active_terms_of_service') }}">{{ 'nav.termsOfService'|trans }}</a></li>

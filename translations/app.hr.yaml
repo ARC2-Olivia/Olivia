@@ -61,6 +61,7 @@ button:
     downloadForm: Preuzmi obrazac
     downloadExample: Preuzmi primjer
     moreNews: Više novosti
+    goToCourse: Idi ne tečaj
 
 page:
     login: Olivia | Prijava
@@ -862,6 +863,14 @@ certificate:
     learningOutcomes: Ishodi učenja
     issueDate: Datum izdavanja
     certifiedBy: Ovjerio
+    page:
+        title:
+            index: Certifikati
+        section:
+            achieved: Ostvareni certifikati
+            nonAchieved: Neostvareni certifikati
+        message:
+            empty: Ovdje nema certifikata za prikazati.
 
 extra:
     free: Besplatno

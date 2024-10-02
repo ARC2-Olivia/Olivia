@@ -62,6 +62,7 @@ button:
     downloadForm: Download form
     downloadExample: Download example
     moreNews: More news
+    goToCourse: Go to course
 
 page:
     login: Olivia | Login
@@ -867,6 +868,14 @@ certificate:
     learningOutcomes: Learning outcomes
     issueDate: Issue date
     certifiedBy: Certified by
+    page:
+        title:
+            index: Certificates
+        section:
+            achieved: Achieved certificates
+            nonAchieved: Non-achieved certificates
+        message:
+            empty: There are no certificates to display here.
 
 extra:
     free: Free
