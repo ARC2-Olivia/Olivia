@@ -9,6 +9,7 @@
         </div>
     </div>
     <div class="container py-5">
+        
         <h2>{{ 'certificate.page.section.achieved'|trans }}</h2>
         {% if courses.certified is not empty %}
             <ul class="certificate-list">
@@ -19,7 +20,10 @@
                     <li class="certificate-list-item">{% include 'default/_certificates_item.html.twig' with {'course': course, 'certified': true} only %}</li>
                 {% endfor %}
             </ul>
+        {% else %}
+            <p class="mt-2"><i>{{ 'certificate.page.message.empty'|trans }}</i></p>
         {% endif %}
+        
         <h2 class="mt-3">{{ 'certificate.page.section.nonAchieved'|trans }}</h2>
         {% if courses.uncertified is not empty %}
             <ul class="certificate-list uncertified">
@@ -30,6 +34,9 @@
                     <li class="certificate-list-item">{% include 'default/_certificates_item.html.twig' with {'course': course} only %}</li>
                 {% endfor %}
             </ul>
+        {% else %}
+            <p class="mt-2"><i>{{ 'certificate.page.message.empty'|trans }}</i></p>
         {% endif %}
+        
     </div>
 {% endblock %}
