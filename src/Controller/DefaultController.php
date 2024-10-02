@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Course;
 use App\Entity\File;
 use App\Entity\NewsItem;
 use App\Entity\Texts;
+use App\Entity\User;
 use App\Form\ProfileType;
 use App\Form\Security\PasswordResetType;
 use App\Service\SecurityService;
@@ -96,6 +98,21 @@ class DefaultController extends BaseController
     {
         $files = $this->em->getRepository(File::class)->findBy(['presentation' => true], ['presentationOrder' => 'ASC']);
         return $this->render('default/presentations.html.twig', ['files' => $files]);
+    }
+
+    #[Route("/{_locale}/certificates", name: "certificates", requirements: ["_locale" => "%locale.supported%"])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function certificates(): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $courseRepository = $this->em->getRepository(Course::class);
+
+        $courses = [];
+        $courses['certified'] = $courseRepository->findEnrolledByUserAndOrderedByPosition($user);
+        $courses['uncertified'] = $courseRepository->findNotEnrolledByUserAndOrderedByPosition($user);
+        $courses['golden'] = null !== $user->getAllCoursesCompletedUser();
+        return $this->render('default/certificates.html.twig', ['courses' => $courses]);
     }
 
     #[Route("/{_locale}/maintenance", name: "maintenance", requirements: ["_locale" => "%locale.supported%"])]

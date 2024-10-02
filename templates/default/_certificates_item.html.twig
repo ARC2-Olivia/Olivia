@@ -1,0 +1,18 @@
+{% trans_default_domain 'app' %}
+
+{% if certified is not defined %}
+	{% set certified = false %}
+{% endif %}
+
+{{ mdi('trophy-variant', 'fg-orange certificate-list-item-icon') }}
+<div class="certificate-list-item-name">{{ course.nameOrPublicName }}</div>
+{% if certified %}
+	<div class="certificate-list-item-actions">
+		<a href="{{ path('course_overview', {'course': course.id}) }}" class="btn btn-theme-white bg-blue" target="_blank">{{ 'button.goToCourse'|trans }}</a>
+		<a href="{{ path('file_fetch_course_certificate', {'course': course.id}) }}" class="btn btn-theme-white bg-green" download>{{ 'common.download'|trans }}</a>
+	</div>
+{% else %}
+	<div class="certificate-list-item-actions">
+		<a href="{{ path('course_overview', {'course': course.id}) }}" class="btn btn-theme-white bg-blue" target="_blank">{{ 'button.goToCourse'|trans }}</a>
+	</div>
+{% endif %}

@@ -1,0 +1,13 @@
+{% trans_default_domain 'app' %}
+
+{% if certified is not defined %}
+	{% set certified = false %}
+{% endif %}
+
+{{ mdi('trophy-variant', 'fg-yellow certificate-list-item-icon') }}
+<div class="certificate-list-item-name">{{ 'trophy.allCourses'|trans }}</div>
+{% if certified %}
+	<div class="certificate-list-item-actions">
+		<a href="#" class="btn btn-theme-white bg-green" download>{{ 'common.download'|trans }}</a>
+	</div>
+{% endif %}

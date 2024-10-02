@@ -62,6 +62,7 @@ button:
     downloadForm: Scarica il modulo
     downloadExample: Scarica esempio
     moreNews: Altre notizie
+    goToCourse: Vai al corso
 
 page:
     login: Olivia | Login
@@ -853,6 +854,14 @@ certificate:
     learningOutcomes: Risultati dell'apprendimento
     issueDate: Data di emissione
     certifiedBy: Certificato da
+    page:
+        title:
+            index: Certificati
+        section:
+            achieved: Certificati realizzati
+            nonAchieved: Certificati non realizzati
+        message:
+            empty: Non ci sono certificati da visualizzare qui.
 
 edulog:
     dataAccess:
