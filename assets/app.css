@@ -21,6 +21,7 @@
 @import "./styles/quiz.css";
 @import "./styles/maintenance.css";
 @import "./styles/files.css";
+@import "./styles/certificates.css";
 
 :root {
     --app-font-default: 'PT Sans', sans-serif;

@@ -97,11 +97,10 @@ class TheoreticalModuleSubscriber implements EventSubscriberInterface
     public function onTheoreticalModuleCompleted(TheoreticalModuleCompletedEvent $event): void
     {
         $user = $event->getUser();
-        if (null !== $user->getAllCoursesCompletedUser()) {
+        if (null !== $user->getAllCoursesPassedAt()) {
             return;
         }
-        $allCoursesCompletedUser = (new AllCoursesCompletedUser())->setUser($user)->setAt(new \DateTimeImmutable());
-        $this->em->persist($allCoursesCompletedUser);
+        $user->setAllCoursesPassedAt(new \DateTimeImmutable());
         $this->em->flush();
         $this->requestStack->getSession()->set(self::PLAY_GOLDEN_TROPHY_ANIMATION, true);
     }
