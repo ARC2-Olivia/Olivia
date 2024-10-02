@@ -86,29 +86,29 @@ class CourseRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function findEnrolledByUserAndOrderedByPosition(User $user)
+    public function findPassedByUserAndOrderedByPosition(User $user)
     {
         return $this->createQueryBuilder('c')
             ->leftJoin('c.enrollments', 'e')
-            ->where('e.user = :user')
-            ->setParameter('user', $user)
+            ->where('e.user = :user')->andWhere('e.passed = :passed')
+            ->setParameters(['user' => $user, 'passed' => true])
             ->orderBy('c.position', 'ASC')
             ->getQuery()->getResult();
     }
 
-    public function findNotEnrolledByUserAndOrderedByPosition(User $user)
+    public function findNotPassedByUserAndOrderedByPosition(User $user)
     {
-        $enrolledIds = $this->createQueryBuilder('c')
+        $passedIds = $this->createQueryBuilder('c')
             ->select('c.id')
             ->leftJoin('c.enrollments', 'e')
-            ->where('e.user = :user')
-            ->setParameter('user', $user)
+            ->where('e.user = :user')->andWhere('e.passed = :passed')
+            ->setParameters(['user' => $user, 'passed' => true])
             ->orderBy('c.position', 'ASC')
             ->getQuery()->getResult();
 
         return $this->createQueryBuilder('c')
-            ->where('c.id NOT IN (:enrolledIds)')
-            ->setParameter('enrolledIds', $enrolledIds)
+            ->where('c.id NOT IN (:passedIds)')
+            ->setParameter('passedIds', $passedIds)
             ->orderBy('c.position', 'ASC')
             ->getQuery()->getResult();
     }
