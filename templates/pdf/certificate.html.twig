@@ -11,235 +11,99 @@
 
             body {
                 font-family: 'Raleway', sans-serif;
-                font-size: 2cm;
+                font-size: 4.5mm;
             }
 
             .page {
                 display: block;
                 position: relative;
-                height: 273.1mm;
-            }
-
-            .section-1, .section-2, .section-3 {
-                position: relative;
-                height: 100%;
-                float: left;
+                height: 297mm;
             }
 
             .section-1 {
                 background-color: #3a526a;
-                width: 35%;
             }
-
-            .section-1:before, .section-1:after {
-                content: "";
-                position: absolute;
-                left: 25%;
-                right: 37%;
-                background-color: #fe5722;
-                height: 8mm;
-            }
-
-            .section-1:before {
-                top: 0;
-            }
-
-            .section-1:after {
-                bottom: 0;
-            }
-
-            .section-1-divider-bottom {
-                width: 1px;
-                height: 45mm;
-                background-color: #ffffff;
-                position: absolute;
-                bottom: 16mm;
-                right: 58mm;
-            }
-
-            .section-1-divider-top {
-                width: 1px;
-                height: 45mm;
-                background-color: #ffffff;
-                position: absolute;
-                top: 16mm;
-                right: 58mm;
-            }
-
-            .section-1-divider-top.alt, .section-1-divider-bottom.alt {
-                height: 28mm;
-            }
-
+            
             .section-2 {
-                position: relative;
-                width: 62%;
+                padding: 8mm 12mm;
             }
-
-            .section-2-inner {
-                position: absolute;
-                top: 10mm;
-                left: 5mm;
-                right: 5mm;
-                bottom: 5mm;
-                font-size: 7mm;
-            }
-
-            .section-2-divider {
-                width: 1px;
-                height: 25mm;
-                background-color: #000000;
-                position: absolute;
-                bottom: -5mm;
-                right: 48mm;
-            }
-
-            .section-2-divider.alt {
-                right: 67mm;
-            }
-
-            .section-3 {
-                background-color: #3a526a;
-                width: 3%;
-            }
-
-            .section-3:before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 50%;
-                background-color: #fe5722;
-            }
-
+            
             .title-wrapper {
-                position: absolute;
-                font-weight: bold;
-                top: 10mm;
-                left: 4%;
-                right: 0;
-                bottom: 10mm;
                 text-align: center;
+                color: #ffffff;
+                padding-top: 10mm;
+                padding-bottom: 10mm;
             }
-
+            
             .title {
-                position: absolute;
-                top: 50%;
-                left: 0;
-                font-size: 3.9cm;
-                color: white;
-                -webkit-transform: translateY(-50%) rotate(-90deg) translateY(-78mm);
-            }
-
-            .subtitle {
-                position: absolute;
-                top: 50%;
-                left: 21mm;
-                font-size: 1.75cm;
-                color: white;
-                white-space: nowrap;
-                -webkit-transform: translateY(-50%) rotate(-90deg) translateY(-20mm);
-            }
-
-            .title-wrapper.alt .title {
-                left: 32mm;
-            }
-
-            .title-wrapper.alt .subtitle {
-                left: 32mm;
-            }
-
-            .certificant, .course, .for {
-                text-align: center;
-                font-size: 10mm;
-                margin-bottom: 2mm;
-                padding-left: 22mm;
-            }
-
-            .certificant, .course {
+                font-size: 16mm;
                 font-weight: bold;
-                color: #fe5722;
             }
-
-            .course {
-                margin-bottom: 20mm;
+            
+            .subtitle {
+                font-size: 8mm;
+                font-weight: bold;
             }
-
+            
+            .title-decor {
+                height: 29mm;
+                width: 5mm;
+                background-color: #FE5722;
+            }
+            
+            .title-decor.left {
+                float: left;
+            }
+            
+            .title-decor.right {
+                float: right;
+            }
+            
+            .certificant, .course {
+                color: #FE5722;
+                font-weight: bold;
+                font-size: 7mm;
+                text-align: center;
+            }
+            
+            .for {
+                font-size: 5mm;
+                text-align: center;
+                font-weight: bold;
+                margin-top: 1mm;
+            }
+            
             .mb-cert {
-                margin-bottom: 7mm;
+                margin-bottom: 10mm;
             }
-
-            ul {
-                margin: 0;
-                padding-left: 6.1mm;
+            
+            .mb-tiny {
+                margin-bottom: 2mm;
             }
-
-            li {
-                margin-top: 2mm;
-            }
-
-            .issue-date {
-                position: absolute;
-                bottom: 0;
-                right: 0;
-                text-align: left;
-            }
-
-            .issue-date-label {
-                color: #fe5722;
-                margin-bottom: 3mm;
-            }
-
-            .certified-by {
-                position: absolute;
-                bottom: 0;
-                right: 60mm;
-                text-align: right;
-            }
-
-            .certified-by.alt {
-                right: 80mm;
-            }
-
-            .certified-by-label {
-                color: #fe5722;
-                margin-bottom: 3mm;
-            }
-
+            
             .ribbon {
-                position: absolute;
-                height: 45mm;
-                width: 45mm;
+                border: solid 1.5mm #FE5722;
                 border-radius: 50%;
-                background-color: #ffffff;
-                border: solid 2mm #fe5722;
-                right: -24.5mm;
-                top: 5mm;
-            }
-
-            .ribbon-logo {
-                margin-top: 7mm;
+                background-color: #FFFFFF;
+                margin: -15mm auto 2mm 0;
+                width: 35mm;
+                height: 35mm;
                 text-align: center;
             }
-
-            .ribbon-logo > img {
-                width: 38mm;
+            
+            .ribbon img {
+                width: 90%;
+                margin-top: 8mm;
             }
-
-            .ribbon-website {
-                text-align: center;
-                white-space: nowrap;
+            
+            .ribbon span {
                 font-size: 4mm;
                 font-weight: bold;
             }
         </style>
     </head>
     <body>
-        <div class="page">
-            {% include 'pdf/_certificate_page.html.twig' with {'strings': strings[defaultLocale]} %}
-        </div>
-        <div class="page">
-            {% include 'pdf/_certificate_page.html.twig' with {'strings': strings[alternateLocale], 'isAlt': true} %}
-        </div>
+        <div class="page">{% include 'pdf/_certificate_page.html.twig' with {'strings': strings[defaultLocale]} %}</div>
+        <div class="page">{% include 'pdf/_certificate_page.html.twig' with {'strings': strings[alternateLocale]} %}</div>
     </body>
 </html>

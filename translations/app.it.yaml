@@ -854,6 +854,7 @@ certificate:
     learningOutcomes: Risultati dell'apprendimento
     issueDate: Data di emissione
     certifiedBy: Certificato da
+    url: Indirizzo URL
     page:
         title:
             index: Certificati
