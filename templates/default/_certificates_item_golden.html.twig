@@ -8,6 +8,6 @@
 <div class="certificate-list-item-name">{{ 'trophy.allCourses'|trans }}</div>
 {% if certified %}
 	<div class="certificate-list-item-actions">
-		<a href="#" class="btn btn-theme-white bg-green" download>{{ 'common.download'|trans }}</a>
+		<a href="{{ path('file_fetch_golden_certificate') }}" class="btn btn-theme-white bg-green">{{ 'common.download'|trans }}</a>
 	</div>
 {% endif %}

@@ -61,7 +61,7 @@ button:
     downloadForm: Preuzmi obrazac
     downloadExample: Preuzmi primjer
     moreNews: Više novosti
-    goToCourse: Idi ne tečaj
+    goToCourse: Idi na tečaj
 
 page:
     login: Olivia | Prijava
@@ -869,6 +869,8 @@ certificate:
     issueDate: Datum izdavanja
     certifiedBy: Ovjerio
     url: URL adresa
+    allCourses: polaganje svih tečajeva
+    completedCourses: Položeni tečajevi
     page:
         title:
             index: Certifikati

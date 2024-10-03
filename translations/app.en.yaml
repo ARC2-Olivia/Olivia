@@ -871,6 +871,8 @@ certificate:
     issueDate: Issue date
     certifiedBy: Certified by
     url: URL address
+    allCourses: completing all courses
+    completedCourses: Completed courses
     page:
         title:
             index: Certificates

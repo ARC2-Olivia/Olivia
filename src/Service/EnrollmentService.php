@@ -7,7 +7,6 @@ use App\Entity\Enrollment;
 use App\Entity\Lesson;
 use App\Entity\LessonCompletion;
 use App\Entity\User;
-use App\Repository\EnrollmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class EnrollmentService
@@ -75,8 +74,15 @@ class EnrollmentService
         }
     }
 
-    public function countPassedByUser(user $user): int
+    public function countPassedByUser(User $user): int
     {
         return $this->em->getRepository(Enrollment::class)->countPassedByUser($user);
+    }
+
+    public function passedAll(User $user): bool
+    {
+        $totalCourseCount = $this->em->getRepository(Course::class)->count([]);
+        $userCompletedCourseCount = $this->countPassedByUser($user);
+        return $totalCourseCount === $userCompletedCourseCount;
     }
 }

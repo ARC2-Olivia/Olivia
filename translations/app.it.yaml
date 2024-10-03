@@ -855,6 +855,8 @@ certificate:
     issueDate: Data di emissione
     certifiedBy: Certificato da
     url: Indirizzo URL
+    allCourses: aver completato tutti i corsi
+    completedCourses: Corsi completati
     page:
         title:
             index: Certificati
