@@ -86,6 +86,18 @@ class CourseRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
+    /**
+     * @param string $locale
+     * @return Course[]
+     */
+    public function findAllForLocale(string $locale): array
+    {
+        $query = $this->createQueryBuilder('c')->orderBy('c.position', 'ASC')->getQuery();
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, TranslationWalker::class);
+        $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
+        return $query->getResult();
+    }
+
     public function findPassedByUserAndOrderedByPosition(User $user)
     {
         return $this->createQueryBuilder('c')

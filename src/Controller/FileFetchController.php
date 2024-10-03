@@ -123,6 +123,45 @@ class FileFetchController extends AbstractController
         return $this->file($pdf, $filename)->deleteFileAfterSend();
     }
 
+    #[Route("/golden-certificate/{_locale}", name: "golden_certificate", requirements: ["_locale" => "%locale.supported%"])]
+    public function allCertificate(CourseRepository $courseRepository,
+                                   WkhtmltopdfService $wkhtmltopdfService,
+                                   \Twig\Environment $twig,
+                                   TranslatorInterface $translator,
+                                   Request $request,
+    ): Response
+    {
+        if (null !== $this->getUser()->getAllCoursesPassedAt()) {
+            $this->createAccessDeniedException();
+        }
+        $defaultLocale = $this->getParameter('locale.default');
+        $alternateLocale = $this->getParameter('locale.alternate');
+        $locales = [$defaultLocale, $alternateLocale];
+
+        /** @var User $user */ $user = $this->getUser();
+        $projectDir = $this->getParameter('kernel.project_dir');
+        $strings = [];
+        foreach ($locales as $locale) {
+            $courses = $courseRepository->findAllForLocale($locale);
+            $strings[$locale] = [
+                'title' => $translator->trans('certificate.title', domain: 'app', locale: $locale),
+                'subtitle' => $translator->trans('certificate.subtitle', domain: 'app', locale: $locale),
+                'for' => $translator->trans('certificate.for', domain: 'app', locale: $locale),
+                'reason' => $translator->trans('certificate.allCourses', domain: 'app', locale: $locale),
+                'completedCourses' => $translator->trans('certificate.completedCourses', domain: 'app', locale: $locale),
+                'issueDate' => $translator->trans('certificate.issueDate', domain: 'app', locale: $locale),
+                'certifiedBy' => $translator->trans('certificate.certifiedBy', domain: 'app', locale: $locale),
+                'courses' => array_map(function (Course $course) { return $course->getNameOrPublicName(); }, $courses)
+            ];
+        }
+
+        $html = $twig->render('pdf/goldenCertificate.html.twig', ['user' => $user, 'projectDir' => $projectDir, 'defaultLocale' => $defaultLocale, 'alternateLocale' => $alternateLocale, 'strings' => $strings]);
+        $pdf = $wkhtmltopdfService->makePortraitPdf($html);
+
+        $filename = 'OLIVIA-certificate.pdf';
+        return $this->file($pdf, $filename)->deleteFileAfterSend();
+    }
+
     #[Route("/ps-report-answers/{practicalSubmodule}/{_locale}", name: "practical_submodule_report_answers", requirements: ["_locale" => "%locale.supported%"])]
     public function practicalSubmoduleReportAnswers(PracticalSubmodule $practicalSubmodule,
                                                     WkhtmltopdfService $wkhtmltopdfService,

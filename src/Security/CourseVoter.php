@@ -68,7 +68,7 @@ class CourseVoter extends Voter
             || ($this->security->isGranted('ROLE_USER') && $this->enrollmentService->isEnrolled($course, $user));
     }
 
-    private function canGetCertificate(Course $course, User $user)
+    private function canGetCertificate(Course $course, User $user): bool
     {
         return $this->enrollmentService->isPassed($course, $user);
     }
