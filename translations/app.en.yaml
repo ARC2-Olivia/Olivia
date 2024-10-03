@@ -868,6 +868,7 @@ certificate:
     learningOutcomes: Learning outcomes
     issueDate: Issue date
     certifiedBy: Certified by
+    url: URL address
     page:
         title:
             index: Certificates

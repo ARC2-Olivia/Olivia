@@ -102,6 +102,7 @@ class FileFetchController extends AbstractController
                 'learningOutcomes' => $translator->trans('certificate.learningOutcomes', domain: 'app', locale: $locale),
                 'issueDate' => $translator->trans('certificate.issueDate', domain: 'app', locale: $locale),
                 'certifiedBy' => $translator->trans('certificate.certifiedBy', domain: 'app', locale: $locale),
+                'url' => $translator->trans('certificate.url', domain: 'app', locale: $locale),
                 'course' => [
                     'name' => $course->getName(),
                     'workload' => $this->translateWorkload($course, $translator, $locale),
@@ -112,7 +113,7 @@ class FileFetchController extends AbstractController
         }
 
         $html = $twig->render('pdf/certificate.html.twig', ['user' => $user, 'projectDir' => $projectDir, 'defaultLocale' => $defaultLocale, 'alternateLocale' => $alternateLocale, 'strings' => $strings]);
-        $pdf = $wkhtmltopdfService->makeLandscapePdf($html);
+        $pdf = $wkhtmltopdfService->makePortraitPdf($html);
 
         if ($request->getLocale() !== $this->getParameter('locale.default')) {
             $course = $courseRepository->findByIdForLocale($course->getId(), $this->getParameter('locale.default'));

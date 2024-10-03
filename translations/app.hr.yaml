@@ -863,6 +863,7 @@ certificate:
     learningOutcomes: Ishodi učenja
     issueDate: Datum izdavanja
     certifiedBy: Ovjerio
+    url: URL adresa
     page:
         title:
             index: Certifikati
