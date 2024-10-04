@@ -35,7 +35,7 @@ services:
             - '../src/Kernel.php'
 
     App\EventSubscriber\LocaleSubscriber:
-        arguments: ['@Gedmo\Translatable\TranslatableListener', '%locale.default%']
+        arguments: ['@Gedmo\Translatable\TranslatableListener', '@parameter_bag', '%locale.default%']
 
     App\EventSubscriber\EduLogSubscriber:
         arguments: ['%edulog.enabled%']

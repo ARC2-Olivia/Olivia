@@ -2,19 +2,30 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use App\API\Filter\CurrentUserFilter;
 use App\Repository\EnrollmentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EnrollmentRepository::class)]
+#[ApiResource(normalizationContext: ['groups' => ['api']])]
+#[GetCollection]
+#[ApiFilter(CurrentUserFilter::class)]
 class Enrollment
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('api')]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'enrollments')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('api')]
     private ?Course $course = null;
 
     #[ORM\ManyToOne]
@@ -22,6 +33,7 @@ class Enrollment
     private ?User $user = null;
 
     #[ORM\Column]
+    #[Groups('api')]
     private ?\DateTimeImmutable $enrolledAt = null;
 
     #[ORM\Column(nullable: true)]

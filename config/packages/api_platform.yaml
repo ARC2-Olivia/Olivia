@@ -1,0 +1,13 @@
+api_platform:
+    metadata_backward_compatibility_layer: false
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+    patch_formats:
+        json: ['application/merge-patch+json']
+    swagger:
+        versions: [3]
+    defaults:
+        pagination_enabled: false
+    eager_loading:
+        force_eager: false
+    path_segment_name_generator: 'App\Operation\OliviaPathSegmentNameGenerator'
