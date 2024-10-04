@@ -2,40 +2,56 @@
 
 namespace App\Entity;
 
+
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\CourseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
+#[ApiResource(normalizationContext: ['groups' => ['api']])]
+#[Get]
+#[GetCollection]
 class Course extends TranslatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('api')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "error.course.name")]
     #[Gedmo\Translatable]
+    #[Groups('api')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable]
+    #[Groups('api')]
     private ?string $publicName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Ignore]
     private ?string $image = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "error.course.description")]
     #[Gedmo\Translatable]
+    #[Groups('api')]
     private ?string $description = null;
 
     #[ORM\Column(length: 64, nullable: true)]
+    #[Groups('api')]
     private ?string $estimatedWorkload = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
@@ -43,21 +59,26 @@ class Course extends TranslatableEntity
     private array $tags = [];
 
     #[ORM\ManyToMany(targetEntity: Instructor::class, inversedBy: 'courses')]
+    #[Ignore]
     private Collection $instructors;
 
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: Lesson::class, orphanRemoval: true)]
     private Collection $lessons;
 
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: Enrollment::class, orphanRemoval: true)]
+    #[Ignore]
     private Collection $enrollments;
 
     #[ORM\ManyToMany(targetEntity: PracticalSubmodule::class, mappedBy: 'courses')]
+    #[Groups('api')]
+    #[SerializedName('linkedPracticalSubmodules')]
     private Collection $practicalSubmodules;
 
     #[ORM\ManyToOne(inversedBy: 'theoreticalSubmodules')]
     private ?Topic $topic = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups('api')]
     private ?int $position = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -66,6 +87,7 @@ class Course extends TranslatableEntity
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable]
+    #[Groups('api')]
     private ?string $certificateInfo = null;
 
     public function __construct()
@@ -341,6 +363,8 @@ class Course extends TranslatableEntity
         return $this->learningOutcomes;
     }
 
+    #[Groups('api')]
+    #[SerializedName('learningOutcomes')]
     public function getLearningOutcomesAsArray(): array
     {
         $trimmedLearningOutcomes = trim($this->learningOutcomes);
