@@ -115,6 +115,30 @@ class DefaultController extends BaseController
         return $this->render('default/certificates.html.twig', ['courses' => $courses]);
     }
 
+    #[Route("/{_locale}/apikey/generate", name: "generate_api_key", requirements: ["_locale" => "%locale.supported%"])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function generateApiKey(Request $request, SecurityService $securityService): Response
+    {
+        $csrfToken = $request->request->get('_csrf_token');
+        if (null !== $csrfToken && $this->isCsrfTokenValid('apikey.generate', $csrfToken)) {
+            $securityService->generateApiKeyForUser($this->getUser());
+            $this->addFlash('success', $this->translator->trans('success.api.generate', [], 'message'));
+        }
+        return $this->redirectToRoute('profile');
+    }
+
+    #[Route("/{_locale}/apikey/delete", name: "delete_api_key", requirements: ["_locale" => "%locale.supported%"])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function deleteApiKey(Request $request, SecurityService $securityService): Response
+    {
+        $csrfToken = $request->request->get('_csrf_token');
+        if (null !== $csrfToken && $this->isCsrfTokenValid('apikey.delete', $csrfToken)) {
+            $securityService->deleteApiKeyForUser($this->getUser());
+            $this->addFlash('warning', $this->translator->trans('warning.api.delete', [], 'message'));
+        }
+        return $this->redirectToRoute('profile');
+    }
+
     #[Route("/{_locale}/maintenance", name: "maintenance", requirements: ["_locale" => "%locale.supported%"])]
     public function maintenance(): Response
     {

@@ -69,6 +69,8 @@ success:
     newsItem:
         new: New news item has been created.
         edit: News item has been deleted.
+    api:
+        generate: New API key has been generated.
 
 warning:
     accountConfirmation:
@@ -114,6 +116,8 @@ warning:
         image.store: There was an error storing the topic image. You can try to reupload it while editing the topic.
     newsItem:
         delete: A news item has been deleted.
+    api:
+        delete: API key has been deleted.
 
 error:
     user:

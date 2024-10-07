@@ -69,6 +69,8 @@ success:
     newsItem:
         new: È stata creata una nuova notizia.
         edit: La notizia è stata eliminata.
+    api:
+        generate: È stata generata una nuova chiave API.
 
 warning:
     accountConfirmation:
@@ -114,6 +116,8 @@ warning:
         image.store: Si è verificato un errore durante la memorizzazione dell'immagine dell'argomento. Puoi provare a ricaricarlo mentre modifichi l'argomento.
     newsItem:
         delete: Una notizia è stata eliminata.
+    api:
+        delete: La chiave API è stata eliminata.
 
 error:
     user:

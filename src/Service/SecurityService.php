@@ -103,4 +103,22 @@ class SecurityService
         ;
         $this->em->flush();
     }
+
+    public function generateApiKeyForUser(User $user): void
+    {
+        $userRepository = $this->em->getRepository(User::class);
+        do {
+            $apiKey = bin2hex(random_bytes(32));
+        } while ($userRepository->count(['apiKey' => $apiKey]) > 0);
+        $user->setApiKey($apiKey);
+        $this->em->flush();
+    }
+
+    public function deleteApiKeyForUser(User $user): void
+    {
+        if (null !== $user->getApiKey()) {
+            $user->setApiKey(null);
+            $this->em->flush();
+        }
+    }
 }
