@@ -462,6 +462,8 @@ user:
             action: Izmjeni lozinku
             show: Lozinka
             edit: Izmjena lozinke
+        api:
+            show: API ključ
 
 instructor:
     title:

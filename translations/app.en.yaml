@@ -462,6 +462,12 @@ user:
             action: Change password
             show: Password
             edit: Changing password
+        api:
+            show: API key
+            action:
+                generate: Generiraj
+                regenerate: Regeneriraj
+                copy: Kopiraj
 
 instructor:
     title:

@@ -66,6 +66,11 @@ success:
     topic:
         new: Stvorena je nova tematika.
         edit: Tematika je ažurirana.
+    newsItem:
+        new: Stvorena je nova stavka novosti.
+        edit: Stavka novosti je ažurirana.
+    api:
+        generate: Generiran je novi API ključ.
 
 warning:
     accountConfirmation:
@@ -109,6 +114,10 @@ warning:
     topic:
         delete: Izbrisala se tematika <i>%topic%</i>.
         image.store: Došlo je do greške prilikom spremanja slike za tematiku. Pokušajte je ponovno učitati na stranici za uređivanje tematike
+    newsItem:
+        delete: Izbrisana je stavka novosti.
+    api:
+        delete: API ključ je izbrisan.
 
 error:
     user:
@@ -264,3 +273,6 @@ error:
         image:
             maxSize: Datoteka premašuje maksimalnu dopuštenu veličinu od 5 megabajta.
             mimeType: Datoteka mora biti slika.
+    newsItem:
+        title: Naslov novosti ne smije biti prazan.
+        content: Sadržaj novosti ne smije biti prazan.

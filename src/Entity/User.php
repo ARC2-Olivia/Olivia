@@ -61,6 +61,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $allCoursesPassedAt = null;
 
+    #[ORM\Column(length: 64, nullable: true)]
+    private ?string $apiKey = null;
+
     public function __construct()
     {
         $this->acceptedGdprs = new ArrayCollection();
@@ -271,6 +274,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAllCoursesPassedAt(?\DateTimeImmutable $allCoursesPassedAt): self
     {
         $this->allCoursesPassedAt = $allCoursesPassedAt;
+
+        return $this;
+    }
+
+    public function getApiKey(): ?string
+    {
+        return $this->apiKey;
+    }
+
+    public function setApiKey(?string $apiKey): self
+    {
+        $this->apiKey = $apiKey;
 
         return $this;
     }

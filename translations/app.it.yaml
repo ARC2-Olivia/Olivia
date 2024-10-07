@@ -463,6 +463,8 @@ user:
             action: Cambiare la password
             show: Parola d'ordine
             edit: Modifica della password
+        api:
+            show: Chiave API
 
 instructor:
     title:
