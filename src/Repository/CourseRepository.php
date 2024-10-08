@@ -98,14 +98,21 @@ class CourseRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findPassedByUserAndOrderedByPosition(User $user)
+    public function findPassedByUserAndOrderedByPosition(User $user, string $locale = null)
     {
-        return $this->createQueryBuilder('c')
+        $query = $this->createQueryBuilder('c')
             ->leftJoin('c.enrollments', 'e')
             ->where('e.user = :user')->andWhere('e.passed = :passed')
             ->setParameters(['user' => $user, 'passed' => true])
             ->orderBy('c.position', 'ASC')
-            ->getQuery()->getResult();
+            ->getQuery();
+
+        if (null !== $locale) {
+            $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, TranslationWalker::class);
+            $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
+        }
+
+        return $query->getResult();
     }
 
     public function findNotPassedByUserAndOrderedByPosition(User $user)
