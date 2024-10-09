@@ -55,7 +55,7 @@ class CertificateStateProvider implements ProviderInterface
 
         if (null !== $user->getAllCoursesPassedAt()) {
             $certificate = new Certificate();
-            $certificate->title = $this->translator->trans('trophy.allCourses', [], 'app');
+            $certificate->title = $this->translator->trans('trophy.allCourses', [], 'app', $locale);
             $certificate->url = $this->router->generate('file_fetch_golden_certificate', ['_locale' => $locale], RouterInterface::ABSOLUTE_URL);
             $certificates[] = $certificate;
         }
