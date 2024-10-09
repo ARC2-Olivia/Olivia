@@ -2,11 +2,15 @@
 
 namespace App\Repository;
 
+use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Gedmo\Translatable\Query\TreeWalker\TranslationWalker;
+use Gedmo\Translatable\TranslatableListener;
 
 /**
  * @extends ServiceEntityRepository<PracticalSubmoduleAssessment>
@@ -39,6 +43,24 @@ class PracticalSubmoduleAssessmentRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /** @return PracticalSubmoduleAssessment[] */
+    public function findByUserWithLocale(User $user, string $locale): array {
+        $query = $this->createQueryBuilder('psa')->where('psa.user = :user')->setParameter('user', $user)->getQuery();
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, TranslationWalker::class);
+        $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
+        return $query->getResult();
+    }
+
+    public function findOneByUserAndPracticalSubmoduleWithLocale(User $user, PracticalSubmodule $practicalSubmodule, string $locale): ?PracticalSubmoduleAssessment {
+        $query = $this->createQueryBuilder('psa')
+            ->where('psa.user = :user')->andWhere('psa.practicalSubmodule = :practicalSubmodule')
+            ->setParameter('user', $user)->setParameter('practicalSubmodule', $practicalSubmodule)
+            ->setMaxResults(1)->getQuery();
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, TranslationWalker::class);
+        $query->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
+        return $query->getOneOrNullResult();
     }
 
     public function dumpForDataAccess(User $user): array

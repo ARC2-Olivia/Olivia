@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleQuestion;
+use App\Repository\Trait\FindOneByIdWithLocaleTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PracticalSubmoduleQuestionRepository extends ServiceEntityRepository
 {
+    use FindOneByIdWithLocaleTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PracticalSubmoduleQuestion::class);

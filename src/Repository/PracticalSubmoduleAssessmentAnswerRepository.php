@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\PracticalSubmoduleAssessmentAnswer;
 use App\Entity\User;
+use App\Repository\Trait\TranslatableHintsTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,6 +20,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PracticalSubmoduleAssessmentAnswerRepository extends ServiceEntityRepository
 {
+    use TranslatableHintsTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PracticalSubmoduleAssessmentAnswer::class);
@@ -51,5 +55,15 @@ class PracticalSubmoduleAssessmentAnswerRepository extends ServiceEntityReposito
         } catch (Exception $e) {
             return [];
         }
+    }
+
+    public function findByAssessmentWithLocale(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $query = $this->createQueryBuilder('psaa')
+            ->where('psaa.practicalSubmoduleAssessment = :assessment')
+            ->setParameter('assessment', $assessment)
+            ->getQuery();
+        $this->setTranslatableHints($query, $locale);
+        return $query->getResult();
     }
 }
