@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Operation;
+namespace App\API\Operation;
 
+use ApiPlatform\Core\Util\Inflector;
 use ApiPlatform\Operation\PathSegmentNameGeneratorInterface;
 
 class OliviaPathSegmentNameGenerator implements PathSegmentNameGeneratorInterface
@@ -11,10 +12,10 @@ class OliviaPathSegmentNameGenerator implements PathSegmentNameGeneratorInterfac
      */
     public function getSegmentName(string $name, bool $collection = true): string
     {
-        $name = match ($name) {
-            'Course' => 'TheoreticalSubmodule',
-            default => $name
-        };
-        return \ApiPlatform\Core\Util\Inflector::tableize($name);
+        $newName = 'Course' === $name ? 'TheoreticalSubmodule' : $name;
+        if ($collection) {
+            $newName = Inflector::pluralize($newName);
+        }
+        return Inflector::tableize($newName);
     }
 }

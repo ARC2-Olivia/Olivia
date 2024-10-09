@@ -12,4 +12,4 @@ api_platform:
         pagination_enabled: false
     eager_loading:
         force_eager: false
-    path_segment_name_generator: 'App\Operation\OliviaPathSegmentNameGenerator'
+    path_segment_name_generator: 'App\API\Operation\OliviaPathSegmentNameGenerator'

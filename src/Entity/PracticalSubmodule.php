@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use App\API\State\PracticalSubmoduleAnswersProcessor;
+use App\API\State\PracticalSubmoduleAnswersInfoProvider;
 use App\Repository\PracticalSubmoduleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
