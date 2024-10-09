@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PracticalSubmoduleRepository::class)]
-#[ApiResource(normalizationContext: ['groups' => ['api']])]
+#[ApiResource(normalizationContext: ['groups' => ['PracticalSubmodule']])]
 #[Get]
 #[GetCollection]
 class PracticalSubmodule extends TranslatableEntity
@@ -50,24 +50,24 @@ class PracticalSubmodule extends TranslatableEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('api')]
+    #[Groups('PracticalSubmodule')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "error.practicalSubmodule.name")]
     #[Gedmo\Translatable]
-    #[Groups('api')]
+    #[Groups('PracticalSubmodule')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable]
-    #[Groups('api')]
+    #[Groups('PracticalSubmodule')]
     private ?string $publicName = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "error.practicalSubmodule.description")]
     #[Gedmo\Translatable]
-    #[Groups('api')]
+    #[Groups('PracticalSubmodule')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
@@ -84,7 +84,7 @@ class PracticalSubmodule extends TranslatableEntity
     private ?string $image = null;
 
     #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'practicalSubmodules')]
-    #[Groups('api')]
+    #[Groups('PracticalSubmodule')]
     #[SerializedName('linkedTheoreticalSubmodules')]
     private Collection $courses;
 
@@ -106,18 +106,18 @@ class PracticalSubmodule extends TranslatableEntity
     private ?string $reportComment = null;
 
     #[ORM\ManyToOne(inversedBy: 'practicalSubmodules')]
-    #[Groups('api')]
+    #[Groups('PracticalSubmodule')]
     private ?Topic $topic = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    #[Groups('api')]
+    #[Groups('PracticalSubmodule')]
     private ?int $position = null;
 
     #[ORM\Column(length: 32, nullable: true)]
     private ?string $exportType = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups('api')]
+    #[Groups('PracticalSubmodule')]
     private ?bool $revisionMode = null;
 
     #[ORM\Column(nullable: true)]

@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
-#[ApiResource(normalizationContext: ['groups' => ['api']])]
+#[ApiResource(normalizationContext: ['groups' => ['TheoreticalSubmodule']])]
 #[Get]
 #[GetCollection]
 class Course extends TranslatableEntity
@@ -26,18 +26,18 @@ class Course extends TranslatableEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('api')]
+    #[Groups('TheoreticalSubmodule')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "error.course.name")]
     #[Gedmo\Translatable]
-    #[Groups('api')]
+    #[Groups('TheoreticalSubmodule')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable]
-    #[Groups('api')]
+    #[Groups('TheoreticalSubmodule')]
     private ?string $publicName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -47,11 +47,11 @@ class Course extends TranslatableEntity
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "error.course.description")]
     #[Gedmo\Translatable]
-    #[Groups('api')]
+    #[Groups('TheoreticalSubmodule')]
     private ?string $description = null;
 
     #[ORM\Column(length: 64, nullable: true)]
-    #[Groups('api')]
+    #[Groups('TheoreticalSubmodule')]
     private ?string $estimatedWorkload = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
@@ -70,7 +70,7 @@ class Course extends TranslatableEntity
     private Collection $enrollments;
 
     #[ORM\ManyToMany(targetEntity: PracticalSubmodule::class, mappedBy: 'courses')]
-    #[Groups('api')]
+    #[Groups('TheoreticalSubmodule')]
     #[SerializedName('linkedPracticalSubmodules')]
     private Collection $practicalSubmodules;
 
@@ -78,7 +78,7 @@ class Course extends TranslatableEntity
     private ?Topic $topic = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    #[Groups('api')]
+    #[Groups('TheoreticalSubmodule')]
     private ?int $position = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -87,7 +87,7 @@ class Course extends TranslatableEntity
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Gedmo\Translatable]
-    #[Groups('api')]
+    #[Groups('TheoreticalSubmodule')]
     private ?string $certificateInfo = null;
 
     public function __construct()
@@ -363,7 +363,7 @@ class Course extends TranslatableEntity
         return $this->learningOutcomes;
     }
 
-    #[Groups('api')]
+    #[Groups('TheoreticalSubmodule')]
     #[SerializedName('learningOutcomes')]
     public function getLearningOutcomesAsArray(): array
     {
