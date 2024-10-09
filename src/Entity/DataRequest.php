@@ -34,7 +34,7 @@ class DataRequest
     private ?string $deletedUserEmail = null;
 
     #[ORM\Column(nullable: true)]
-    private array $specifics = [];
+    private ?array $specifics = [];
 
     public static function createAccessRequest(User $user): self
     {
