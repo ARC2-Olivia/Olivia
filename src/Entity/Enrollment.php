@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EnrollmentRepository::class)]
-#[ApiResource(normalizationContext: ['groups' => ['api']])]
+#[ApiResource(normalizationContext: ['groups' => ['Enrollment']])]
 #[GetCollection]
 #[ApiFilter(CurrentUserFilter::class)]
 class Enrollment
@@ -20,12 +20,12 @@ class Enrollment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('api')]
+    #[Groups('Enrollment')]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'enrollments')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('api')]
+    #[Groups('Enrollment')]
     private ?Course $course = null;
 
     #[ORM\ManyToOne]
@@ -33,10 +33,11 @@ class Enrollment
     private ?User $user = null;
 
     #[ORM\Column]
-    #[Groups('api')]
+    #[Groups('Enrollment')]
     private ?\DateTimeImmutable $enrolledAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('Enrollment')]
     private ?bool $passed = null;
 
     public function getId(): ?int

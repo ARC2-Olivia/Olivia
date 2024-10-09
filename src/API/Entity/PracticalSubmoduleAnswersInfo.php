@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\GetCollection;
 use App\API\State\PracticalSubmoduleAnswersInfoProvider;
 use App\Entity\PracticalSubmodule;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 #[ApiResource(
     operations: [
@@ -17,17 +18,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ),
         new GetCollection(uriTemplate: '/practical_submodules/answers.{_format}')
     ],
-    normalizationContext: ['groups' => ['api']],
+    normalizationContext: ['groups' => ['PracticalSubmoduleAnswers']],
     provider: PracticalSubmoduleAnswersInfoProvider::class
 )]
 class PracticalSubmoduleAnswersInfo
 {
-    #[Groups('api')]
+    #[Groups('PracticalSubmoduleAnswers')]
     public ?int $id = null;
 
-    #[Groups('api')]
+    #[Groups('PracticalSubmoduleAnswers')]
+    #[MaxDepth(1)]
     public ?PracticalSubmodule $practicalSubmodule = null;
 
-    #[Groups('api')]
+    #[Groups('PracticalSubmoduleAnswers')]
     public array $answers = [];
 }

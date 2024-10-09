@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TopicRepository::class)]
-#[ApiResource(normalizationContext: ['groups' => ['api']])]
+#[ApiResource(normalizationContext: ['groups' => ['Topic']])]
 #[Get]
 #[GetCollection]
 class Topic extends TranslatableEntity
@@ -23,28 +23,28 @@ class Topic extends TranslatableEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('api')]
+    #[Groups('Topic')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "error.topic.title")]
     #[Gedmo\Translatable]
-    #[Groups('api')]
+    #[Groups('Topic')]
     private ?string $title = null;
 
     #[ORM\OneToMany(mappedBy: 'topic', targetEntity: Course::class)]
-    #[Groups('api')]
+    #[Groups('Topic')]
     private Collection $theoreticalSubmodules;
 
     #[ORM\OneToMany(mappedBy: 'topic', targetEntity: PracticalSubmodule::class)]
-    #[Groups('api')]
+    #[Groups('Topic')]
     private Collection $practicalSubmodules;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    #[Groups('api')]
+    #[Groups('Topic')]
     private ?int $position = null;
 
     public function __construct()

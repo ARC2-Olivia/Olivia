@@ -8,8 +8,8 @@ api_platform:
         json: ['application/merge-patch+json']
     swagger:
         versions: [3]
-    defaults:
-        pagination_enabled: false
     eager_loading:
         force_eager: false
     path_segment_name_generator: 'App\API\Operation\OliviaPathSegmentNameGenerator'
+    defaults:
+        url_generation_strategy: !php/const ApiPlatform\Api\UrlGeneratorInterface::ABS_URL
