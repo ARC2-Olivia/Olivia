@@ -97,6 +97,8 @@ page:
         show: Olivia | Argomento GDPR
         edit: Olivia | Modifica argomento GDPR
     maintenance: Olivia | Manutenzione del sito
+    certificates: Olivia | Conferme di completamento del corso
+    apiInfo: Olivia | API
 
 nav:
     training: Imparare
@@ -117,7 +119,8 @@ nav:
     gdpr: Protezione dati
     topics: Contenuti di Olivia
     news: Notizia
-    certificates: Certificati
+    certificates: Conferme di completamento del corso
+    apiInfo: API
 
 footer:
     contact: "Contatto: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -465,6 +468,10 @@ user:
             edit: Modifica della password
         api:
             show: Chiave API
+            action:
+                generate: Generare
+                regenerate: Rigenerare
+                copy: Copia
 
 instructor:
     title:
@@ -849,7 +856,7 @@ newsItem:
         empty:
 
 certificate:
-    title: CERTIFICATO
+    title: CONFERME
     subtitle: DI COMPLETAMENTO
     for: per
     workload: Carico di lavoro
@@ -861,21 +868,16 @@ certificate:
     completedCourses: Corsi completati
     page:
         title:
-            index: Certificati
+            index: Conferme
         section:
-            achieved: Certificati realizzati
-            nonAchieved: Certificati non realizzati
+            achieved: Cenferme realizzati
+            nonAchieved: Cenferme non realizzati
         message:
-            empty: Non ci sono certificati da visualizzare qui.
+            empty: Non ci sono conferme da visualizzare qui.
 
-edulog:
-    dataAccess:
-        id: ID
-        at: Orario dell'evento
-        courseId: ID modulo teorico
-        lessonId: ID lezione
-        action: Azione
-        ipAddress: Indirizzo IP
+apiInfo:
+    message:
+        inProgress: Questa pagina è in costruzione e al momento è disponibile solo la traduzione in inglese.
 
 extra:
     free: Gratuito

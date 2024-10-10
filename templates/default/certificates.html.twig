@@ -1,15 +1,11 @@
 {% extends 'base.html.twig' %}
 {% trans_default_domain 'app' %}
 
+{% block title %}{{ 'page.certificates'|trans }}{% endblock %}
+
 {% block body %}
-    <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
-        <div class="container index-banner-wrapper">
-            <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
-            <div class="index-banner-subtitle">{{ 'nav.certificates'|trans }}</div>
-        </div>
-    </div>
     <div class="container py-5">
-        
+        <h1 class="mb-4">{{ 'nav.certificates'|trans }}</h1>
         <h2>{{ 'certificate.page.section.achieved'|trans }}</h2>
         {% if courses.certified is not empty %}
             <ul class="certificate-list">
