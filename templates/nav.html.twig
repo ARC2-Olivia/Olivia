@@ -25,6 +25,9 @@
                             {% if is_user() %}
                                 <li class="dropdown-item"><a href="{{ path('certificates') }}" class="d-flex align-items-center">{{ 'nav.certificates'|trans }}{{ app.user|trophy_icon('ms-1') }}</a></li>
                             {% endif %}
+                            {% if is_user() %}
+                                <li class="dropdown-item"><a href="{{ path('api_info') }}" class="d-flex align-items-center">{{ 'nav.apiInfo'|trans }}</a></li>
+                            {% endif %}
                             <li class="dropdown-item"><a href="{{ path('gdpr_data_protection') }}">{{ 'nav.gdpr'|trans }}</a></li>
                             <li class="dropdown-item"><a href="{{ path('gdpr_privacy_policy') }}">{{ 'nav.privacyPolicy'|trans }}</a></li>
                             <li class="dropdown-item"><a href="{{ path('gdpr_active_terms_of_service') }}">{{ 'nav.termsOfService'|trans }}</a></li>

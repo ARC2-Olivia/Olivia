@@ -96,6 +96,8 @@ page:
         show: Olivia | GDPR tema
         edit: Olivia | Uređivanje GDPR teme
     maintetance: Olivia | Radovi na aplikaciji
+    certificates: Olivia | Potvrde o položenim tečajevima
+    apiInfo: Olivia | API
 
 nav:
     training: Nauči
@@ -116,7 +118,8 @@ nav:
     gdpr: Zaštita podataka
     topics: GDPR teme
     news: Novosti
-    certificates: Certifikati
+    certificates: Potvrde o položenim tečajevima
+    apiInfo: API
 
 footer:
     contact: "Kontakt: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -869,18 +872,22 @@ certificate:
     workload: Radno opterećenje
     learningOutcomes: Ishodi učenja
     issueDate: Datum izdavanja
-    certifiedBy: Ovjerio
+    certifiedBy: Izdao
     url: URL adresa
     allCourses: polaganje svih tečajeva
     completedCourses: Položeni tečajevi
     page:
         title:
-            index: Certifikati
+            index: Potvrde
         section:
-            achieved: Ostvareni certifikati
-            nonAchieved: Neostvareni certifikati
+            achieved: Ostvarene potvrde
+            nonAchieved: Neostvarene potvrde
         message:
-            empty: Ovdje nema certifikata za prikazati.
+            empty: Ovdje nema potvrda za prikazati.
+
+apiInfo:
+    message:
+        inProgress: Ova stranica je u izradi, i trenutno je dostupan samo engleski prijevod.
 
 extra:
     free: Besplatno

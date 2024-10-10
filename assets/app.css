@@ -26,6 +26,7 @@
 
 :root {
     --app-font-default: 'PT Sans', sans-serif;
+    --app-font-code: 'PT Mono', 'Consolas', 'Fira Code', 'DejaVu Sans', monospace;
     --app-color-blue: #03a9f5;
     --app-color-light-blue: #CCE5FF;
     --app-color-dark-blue: #3a526a;
@@ -54,6 +55,11 @@ body {
 
 header, footer, .body {
     flex-basis: 0;
+}
+
+code {
+    font-family: var(--app-font-code) !important;
+    font-size: 1rem;
 }
 
 .body {
@@ -209,6 +215,30 @@ h2 > a {
 
 .text-align-left {
     text-align: left;
+}
+
+.api-field {
+    border-radius: 4px;
+    background-color: var(--app-color-dark-blue);
+    color: var(--app-color-yellow);
+    width: 100%;
+    min-height: 36px;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-family: 'PT Mono', 'Consolas', 'Fira Code', 'DejaVu Sans', monospace;
+    text-overflow: ellipsis;
+    font-size: 1rem;
+}
+
+div.api-field {
+    overflow-x: scroll;
+    text-wrap: nowrap;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.api-field:is(:focus, :focus-visible) {
+    outline: solid 4px var(--app-color-light-blue);
 }
 
 .bg-orange { background-color: var(--app-color-orange) !important; }

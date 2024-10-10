@@ -115,6 +115,13 @@ class DefaultController extends BaseController
         return $this->render('default/certificates.html.twig', ['courses' => $courses]);
     }
 
+    #[Route("/{_locale}/api-info", name: "api_info", requirements: ["_locale" => "%locale.supported%"])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function apiInfo(): Response
+    {
+        return $this->render('default/apiInfo.html.twig');
+    }
+
     #[Route("/{_locale}/apikey/generate", name: "generate_api_key", requirements: ["_locale" => "%locale.supported%"])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function generateApiKey(Request $request, SecurityService $securityService): Response

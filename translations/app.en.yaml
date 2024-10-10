@@ -97,6 +97,8 @@ page:
         show: Olivia | GDPR topic
         edit: Olivia | Edit GDPR topic
     maintenance: Olivia | Site maintenance
+    certificates: Olivia | Proofs of course completion
+    apiInfo: Olivia | API
 
 nav:
     training: Learn
@@ -117,7 +119,8 @@ nav:
     gdpr: Data protection
     topics: GDPR topics
     news: News
-    certificates: Certificates
+    certificates: Proofs of course completion
+    apiInfo: API
 
 footer:
     contact: "Contact: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
@@ -467,9 +470,9 @@ user:
         api:
             show: API key
             action:
-                generate: Generiraj
-                regenerate: Regeneriraj
-                copy: Kopiraj
+                generate: Generate
+                regenerate: Regenerate
+                copy: Copy
 
 instructor:
     title:
@@ -869,24 +872,82 @@ edulog:
         ipAddress: IP address
 
 certificate:
-    title: CERTIFICATE
+    title: PROOF
     subtitle: OF COMPLETION
     for: for
     workload: Workload
     learningOutcomes: Learning outcomes
     issueDate: Issue date
-    certifiedBy: Certified by
+    certifiedBy: Issued by
     url: URL address
     allCourses: completing all courses
     completedCourses: Completed courses
     page:
         title:
-            index: Certificates
+            index: Proofs
         section:
-            achieved: Achieved certificates
-            nonAchieved: Non-achieved certificates
+            achieved: Achieved proofs
+            nonAchieved: Non-achieved proof
         message:
-            empty: There are no certificates to display here.
+            empty: There are no proofs to display here.
+
+apiInfo:
+    message:
+        inProgress: This page is under construction, and only the english translation is currently available.
+    section:
+        intro:
+            title: Intro
+            text: "This page contains a list of available API endpoints exposed to every user to use. The API only allows for data to be read/fetched. Each API endpoint listed contains:"
+            list:
+                1: it's name,
+                2: it's URL,
+                3: short description, and
+                4: a <strong>cUrl</strong> example
+        apikey:
+            title: API key
+            text: "To access the API endpoints a special, user-specific, API key is required. Your own API key can be generated and retrieved from your account's <a href='%profilePath%' target='_blank'>profile page</a>."
+        headers:
+            title: Headers
+            text: "There are two headers that can be attached to the request you're sending to an API endpoint - <strong><span class='fg-red'>one required</span>, and <span class='fg-blue'>one optional</span></strong>. Those requests are the following:"
+            list:
+                1: <strong><code>Authorization</code></strong> <span class="fg-red">(required)</span><br/>This header contains an authorization scheme (<code>Bearer</code>) and an API key to authorize your request to an API endpoint. The header should look like the following (with <code>API_KEY</code> substituted with your own API key)
+                2: "<strong><code>Accept-Language</code></strong> <span class='fg-blue'>(optional)</span><br/>This header contains the language in which you want the API endpoint to respond with. Only two values are allowed: <code class='fg-orange'>%localeDefault%</code>, and <code class='fg-orange'>%localeAlternate%</code>. If any other value is set in this header, or this header isn't even attached to the request, the endpoint will proceed as if <code class='fg-orange'>%localeDefault%</code> was set. The header should look like the following: "
+        endpoints:
+            title: Endpoints
+            url: URL
+            description: Description
+            curl: Example in cUrl
+            list:
+                1:
+                    title: Fetch all theoretical submodules (courses)
+                    description: Fetches data of all theoretical submodules (courses).
+                2:
+                    title: Fetch one theoretical submodule (course) by it's ID
+                    description: Fetches data of specific a theoretical submodule (course) using it's ID. The <code>{id}</code> in the URL must be substituted actual ID (number).
+                3:
+                    title: Fetch all practical submodules
+                    description: Fetches data of all practical submodules.
+                4:
+                    title: Fetch one practical submodule by it's ID
+                    description: Fetches data of specific practical submodule using it's ID. The <code>{id}</code> in the URL must be substituted with an actual ID (number).
+                5:
+                    title: Fetch all topics
+                    description: Fetches data of all topics.
+                6:
+                    title: Fetch one topic by it's ID
+                    description: Fetches data of a specific topic using it's ID. The <code>{id}</code> in the URL must be substituted with an actual ID (number).
+                7:
+                    title: Fetch enrollments
+                    description: Fetches data of all enrollments made by a user account tied to the API key.
+                8:
+                    title: Fetch certificates
+                    description: Fetches data of all certificates achieved by a user account tied to the API key.
+                9:
+                    title: Fetch answers to all practical submodules
+                    description: Fetches data of all answers made, by the user account tied to the API key, to all practical submodules the user account participated in.
+                10:
+                    title: Fetch answers to one practical submodule by it'd ID
+                    description: Fetches data of all answers made, by the user account tied to the API key, to a specific practical submodule using it's ID. The <code>{id}</code> in the URL must be substituted with an actual ID (number).
 
 extra:
     free: Free
