@@ -473,9 +473,9 @@ user:
         api:
             show: API ključ
             action:
-                generate: Generate
-                regenerate: Regenerate
-                copy: Copy
+                generate: Generiraj
+                regenerate: Regeneriraj
+                copy: Kopiraj
 
 instructor:
     title:
