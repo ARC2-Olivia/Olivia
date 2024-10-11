@@ -243,7 +243,7 @@ form:
                 tags: GDPR, IT, Sicurezza,...
                 instructor: Scegli un istruttore...
                 learningOutcomes: Scrivi ogni risultato di apprendimento in una nuova riga.
-                certificateInfo: Scrivere le informazioni relative al certificato.
+                certificateInfo: Scrivere le informazioni relative al conferma di completamento.
             choices:
                 estimatedWorkload:
                     hours: ore
@@ -491,7 +491,7 @@ course:
         instructors: Istruttori
         lessons: Lezioni
         edit: Modificare
-        certificate: Certificato
+        certificate: conferma di completamento
         participants: Partecipanti
     extra:
         noInstructors: Al momento non ci sono istruttori definiti per questo corso.
@@ -502,13 +502,13 @@ course:
         notSubmitted: Non ancora presentato
     certificate:
         congratulations: Congratulazioni, %user%!
-        button: Scarica il certificato
+        button: Scarica il conferma di completamento
         received:
-            1: Hai fatto un ottimo lavoro e quindi sei stato premiato con un meritato certificato!
-            2: Questo è il modo per realizzarlo! I tuoi sforzi non sono passati inosservati. Il tuo certificato è pronto!
+            1: Hai fatto un ottimo lavoro e quindi sei stato premiato con un meritato conferma di completamento!
+            2: Questo è il modo per realizzarlo! I tuoi sforzi non sono passati inosservati. Il tuo conferma di completamento è pronto!
         notReceived:
-            1: Forse al momento è vuoto ma presto sarà pieno del tuo certificato!
-            2: Continua così, rispondi ai quiz e ricevi con orgoglio il tuo certificato!
+            1: Forse al momento è vuoto ma presto sarà pieno del tuo conferma di completamento!
+            2: Continua così, rispondi ai quiz e ricevi con orgoglio il tuo conferma di completamento!
     enroll:
         message: Sei sicuro di volerti iscrivere al corso '%course%'?
     participants:
@@ -531,7 +531,7 @@ course:
         value:
             language: Italiana
             type: Corso online di autoapprendimento
-            certification: Certificato al termine
+            certification: Conferme al termine
             enrollment: Accesso libero, senza chiave di registrazione
     overview:
         aboutTopic: Informazioni sull'argomento

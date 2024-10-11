@@ -492,7 +492,7 @@ course:
         instructors: Instructors
         lessons: Lessons
         edit: Edit
-        certificate: Certificate
+        certificate: Proof of completion
         participants: Participants
     extra:
         noInstructors: There are currently no defined instructors for this course.
@@ -503,13 +503,13 @@ course:
         notSubmitted: Not yet submitted
     certificate:
         congratulations: Congratulations, %user%!
-        button: Download certificate
+        button: Download proof
         received:
-            1: You did a great job and therefore you are rewarded with a well-deserved certificate!
-            2: This is the way to make it happen! Your efforts haven’t gone unnoticed. Your certificate is ready!
+            1: You did a great job and therefore you are rewarded with a well-deserved proof of completion!
+            2: This is the way to make it happen! Your efforts haven’t gone unnoticed. Your proof of completion is ready!
         notReceived:
-            1: Maybe this is empty at the moment but soon it will be packed with your certificate!
-            2: Just keep up the good work, take the quizzes and pridefully receive your certificate!
+            1: Maybe this is empty at the moment but soon it will be packed with your proof of completion!
+            2: Just keep up the good work, take the quizzes and pridefully receive your proof of completion!
     enroll:
         message: Are you sure you want to enroll to course '%course%'?
     participants:
