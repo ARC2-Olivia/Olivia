@@ -241,7 +241,7 @@ form:
                 tags: GDPR,IT,Sigurnost,...
                 instructor: Odaberi instruktora...
                 learningOutcomes: Svaki ishod učenja stavite u zasebni red.
-                certificateInfo: Unesite informacije vezane uz certifikat.
+                certificateInfo: Unesite informacije vezane uz potvrdu.
             choices:
                 estimatedWorkload:
                     hours: sati
@@ -501,13 +501,13 @@ course:
         notSubmitted: Još nije predano
     certificate:
         congratulations: Čestitke, %user%!
-        button: Preuzmite certifikat
+        button: Preuzmite potvrdu
         received:
-            1: Odradili ste sjajan posao i stoga ste nagrađeni dobro zasluženim certifikatom!
-            2: Ovako se ciljevi ostvaruju! Vaši napori nisu prošli nezapaženo. Vaš certifikat je spreman!
+            1: Odradili ste sjajan posao i stoga ste nagrađeni dobro zasluženom potvrdom!
+            2: Ovako se ciljevi ostvaruju! Vaši napori nisu prošli nezapaženo. Vaša potvrda je spreman!
         notReceived:
-            1: Možda je ovo trenutno prazno, ali uskoro će biti spakirano s vašim certifikatom!
-            2: Samo nastavite radno, rješavajte kvizove i s ponosom primite svoj certifikat!
+            1: Možda je ovo trenutno prazno, ali uskoro će biti spakirano s vašom potvrdom!
+            2: Samo nastavite radno, rješavajte kvizove i s ponosom primite svoju potvrdu!
     enroll:
         message: Jeste li sigurni da se želite upisati na tečaj '%course%'?
     participants:
