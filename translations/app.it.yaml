@@ -491,7 +491,7 @@ course:
         instructors: Istruttori
         lessons: Lezioni
         edit: Modificare
-        certificate: conferma di completamento
+        certificate: Conferma
         participants: Partecipanti
     extra:
         noInstructors: Al momento non ci sono istruttori definiti per questo corso.
