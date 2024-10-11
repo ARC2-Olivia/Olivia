@@ -114,6 +114,7 @@ class TheoreticalModuleSubscriber implements EventSubscriberInterface
         $sum = 0;
         $questionCount = 0;
         foreach ($quizQuestionAnswers as $quizQuestionAnswer) {
+            if (null === $quizQuestionAnswer) continue;
             $condition = QuizQuestion::TYPE_TRUE_FALSE === $quizQuestionAnswer->getQuestion()->getType() && ((bool)$quizQuestionAnswer->getAnswer()) === $quizQuestionAnswer->getQuestion()->getCorrectAnswer();
             $condition = $condition || (QuizQuestion::TYPE_SINGLE_CHOICE === $quizQuestionAnswer->getQuestion()->getType() && ((int)$quizQuestionAnswer->getAnswer()) === $quizQuestionAnswer->getQuestion()->getCorrectChoiceId());
             if (true === $condition) $sum += 100;
