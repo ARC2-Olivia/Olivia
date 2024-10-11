@@ -467,6 +467,10 @@ user:
             edit: Izmjena lozinke
         api:
             show: API ključ
+            action:
+                generate: Generate
+                regenerate: Regenerate
+                copy: Copy
 
 instructor:
     title:
