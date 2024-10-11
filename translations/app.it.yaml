@@ -233,8 +233,8 @@ form:
                 position: Posizione
                 learningOutcomes: Risultati dell'apprendimento (scrivi ogni risultato di apprendimento in una nuova riga)
                 learningOutcomesAlt: Risultati dell'apprendimento (lingua alternativa)
-                certificateInfo: Informazioni sul certificato
-                certificateInfoAlt: Informazioni sul certificato (lingua alternativa)
+                certificateInfo: Informazioni sulla conferma di completamento
+                certificateInfoAlt: Informazioni sulla conferma di completamento (lingua alternativa)
             placeholder:
                 name: Nome del corso
                 publicName: ad esempio, cos'è la politica sulla privacy e perché è importante?
@@ -536,7 +536,7 @@ course:
     overview:
         aboutTopic: Informazioni sull'argomento
         learningOutcomes: Risultati dell'apprendimento
-        certificateInfo: Informazioni sulla certificazione
+        certificateInfo: Informazioni sulla conferme di completamento
 
 enrollment:
     dataAccess:
