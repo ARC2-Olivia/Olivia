@@ -235,8 +235,8 @@ form:
                 position: Redni broj
                 learningOutcomes: Ishodi učenja (svaki ishod učenja stavite u zasebni red.)
                 learningOutcomesAlt: Ishodi učenja (drugi jezik)
-                certificateInfo: Informacije o certifikatu
-                certificateInfoAlt: Informacije o certifikatu (drugi jezik)
+                certificateInfo: Informacije o potvrdi o uspješno položenom tečaju
+                certificateInfoAlt: Informacije o potvrdi o uspješno položenom tečaju (drugi jezik)
             placeholder:
                 name: Naziv tečaja
                 publicName: npr. Što je politika privatnosti i zašto je morate imati?
@@ -535,12 +535,12 @@ course:
         value:
             language: Hrvatski
             type: Internetski tečaj s vlastitim tempom
-            certification: Certifikat po završetku
+            certification: Potvrda po završetku
             enrollment: Slobodan pristup, bez ključa za upis
     overview:
         aboutTopic: O temi
         learningOutcomes: Ishodi učenja
-        certificateInfo: Informacije o certifikaciji
+        certificateInfo: Informacije o potvrdi o uspješno položenom tečaju
 
 enrollment:
     dataAccess:
