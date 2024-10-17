@@ -18,6 +18,7 @@ parameters:
     edulog.enabled: false
     wkhtmltopdf: '%env(WKHTMLTOPDF)%'
     maintenance.mode: '%env(bool:MAINTENANCE_MODE)%'
+    video.topic.index: '%env(trim:VIDEO_URL_TOPIC_INDEX)%'
 
 services:
     # default configuration for services in *this* file
