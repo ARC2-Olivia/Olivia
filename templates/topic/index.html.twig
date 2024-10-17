@@ -20,6 +20,7 @@
         {% if is_topic_index_video_url_available() %}
             <div class="row mb-5">
                 <div class="col-12 col-lg-6 mx-auto">
+                    <div class="topic-about-title">{{ 'index.topics.videoTitle'|trans|raw }}</div>
                     <video preload="none" class="w-100" controls>
                         <source src="{{ get_topic_index_video_url() }}">
                     </video>
