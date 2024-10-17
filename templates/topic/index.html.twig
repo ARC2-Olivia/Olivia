@@ -17,11 +17,11 @@
             <div class="topic-about-title">{{ 'index.topics.title'|trans|raw }}</div>
             <div class="topic-about-text">{{ 'index.topics.text'|trans|raw }}</div>
         </div>
-        {% if videoUrl.topic.index is not empty %}
+        {% if is_topic_index_video_url_available() %}
             <div class="row mb-5">
                 <div class="col-12 col-lg-6 mx-auto">
-                    <video class="w-100" controls>
-                        <source src="{{ videoUrl.topic.index }}">
+                    <video preload="none" class="w-100" controls>
+                        <source src="{{ get_topic_index_video_url() }}">
                     </video>
                 </div>
             </div>

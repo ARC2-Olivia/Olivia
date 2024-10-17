@@ -3,9 +3,6 @@ twig:
     globals:
         locale_default: '%locale.default%'
         locale_alternate: '%locale.alternate%'
-        videoUrl:
-            topic:
-                index: '%video.topic.index%'
 
 when@test:
     twig:
