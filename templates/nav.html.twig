@@ -11,9 +11,14 @@
                 <li><a href="{{ path('index') }}" class="btn btn-theme-white">{{ 'nav.home'|trans }}</a></li>
                 <li><a href="{{ path('news_index') }}" class="btn btn-theme-white">{{ 'nav.news'|trans }}</a></li>
                 <li><a href="{{ path('topic_index') }}" class="btn btn-theme-white">{{ 'nav.topics'|trans }}</a></li>
-                <li><a href="{{ path('about_us') }}" class="btn btn-theme-white">{{ 'nav.aboutUs'|trans }}</a></li>
-                <li><a href="{{ path('about_project') }}" class="btn btn-theme-white">{{ 'nav.aboutProject'|trans }}</a></li>
-                <li><a href="{{ path('seminars') }}" class="btn btn-theme-white">{{ 'nav.seminars'|trans }}</a></li>
+                <li>
+                    <button id="info-button" class="btn btn-theme-white">{{ 'nav.info'|trans }}</button>
+                    <ul class="dropdown max-200px" data-dropdown data-for="#info-button">
+                        <li class="dropdown-item"><a href="{{ path('about_us') }}">{{ 'nav.aboutUs'|trans }}</a></li>
+                        <li class="dropdown-item"><a href="{{ path('about_project') }}">{{ 'nav.aboutProject'|trans }}</a></li>
+                    </ul>
+                </li>
+				<li><a href="{{ path('seminars') }}" class="btn btn-theme-white">{{ 'nav.seminars'|trans }}</a></li>
                 {% if is_granted('ROLE_USER') %}
                     <li>
                         <button id="profile-button" class="btn btn-theme-white navigation-profile-button">
