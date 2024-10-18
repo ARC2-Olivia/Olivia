@@ -122,7 +122,7 @@ nav:
     home: Home
     gdpr: Protezione dati
     topics: Temi GDPR
-    news: Notizia
+    news: Notizie
     certificates: Conferme di completamento del corso
     apiInfo: API
 
@@ -857,7 +857,7 @@ topic:
 
 newsItem:
     title:
-        index: Notizia
+        index: Notizie
         new: Nuova notizia
         edit: Modifica la notizia
     message:
