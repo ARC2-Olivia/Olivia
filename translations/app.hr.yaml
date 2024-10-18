@@ -62,6 +62,8 @@ button:
     downloadExample: Preuzmi primjer
     moreNews: Više novosti
     goToCourse: Idi na tečaj
+    enableDyslexiaMode: Uključi pomoć pri disleksiji
+    disableDyslexiaMode: Isključi pomoć pri disleksiji
 
 page:
     login: Olivia | Prijava
