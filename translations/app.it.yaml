@@ -63,6 +63,8 @@ button:
     downloadExample: Scarica esempio
     moreNews: Altre notizie
     goToCourse: Vai al corso
+    enableDyslexiaMode: Includere un aiuto per la dislessia
+    disableDyslexiaMode: Disattiva l'aiuto per la dislessia
 
 page:
     login: Olivia | Login

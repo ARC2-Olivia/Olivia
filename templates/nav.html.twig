@@ -1,5 +1,8 @@
 {% trans_default_domain 'app' %}
 
+{% set currentRoute = app.request.attributes.get('_route', 'index') %}
+{% set currentRouteParams = app.request.attributes.get('_route_params', {}) %}
+
 <div class="container{% if wide is defined and wide == true %}-fluid{% endif %}">
     <div class="d-flex justify-content-between align-items-center">
         <div class="header-logo">
@@ -55,13 +58,19 @@
                     <li><a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'common.login'|trans }}</a></li>
                 {% endif %}
                 <li>
+                    <button id="accessibility-button" class="btn btn-theme-white">{{ mdi('human-handsup', 'mt-1') }}</button>
+                    <ul class="dropdown" data-dropdown data-for="#accessibility-button">
+                        <li class="dropdown-item"><a href="{{ path(currentRoute, currentRouteParams|merge({'accessibilityToggle': 'dyslexiaMode'})) }}">
+                            {{ is_dylexia_mode_enabled() ? 'button.disableDyslexiaMode'|trans : 'button.enableDyslexiaMode'|trans }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
                     <button id="locale-button" class="btn btn-theme-white">
                         {{ mdi('web', 'mt-1') }}
                         <sup class="nav-locale">{{ app.request.locale }}</sup>
                     </button>
                     <ul class="dropdown" data-dropdown data-for="#locale-button">
-                        {% set currentRoute = app.request.attributes.get('_route', 'index') %}
-                        {% set currentRouteParams = app.request.attributes.get('_route_params', {}) %}
                         <li class="dropdown-item"><a href="{{ path(currentRoute, currentRouteParams|merge({'_locale': locale_default})) }}">{{ locale_default }}</a></li>
                         <li class="dropdown-item"><a href="{{ path(currentRoute, currentRouteParams|merge({'_locale': locale_alternate})) }}">{{ locale_alternate }}</a></li>
                     </ul>

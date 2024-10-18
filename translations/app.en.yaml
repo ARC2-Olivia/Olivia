@@ -63,6 +63,8 @@ button:
     downloadExample: Download example
     moreNews: More news
     goToCourse: Go to course
+    enableDyslexiaMode: Enable dyslexia mode
+    disableDyslexiaMode: Disable dyslexia mode
 
 page:
     login: Olivia | Login
