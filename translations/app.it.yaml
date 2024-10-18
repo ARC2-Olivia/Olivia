@@ -541,7 +541,7 @@ course:
     overview:
         aboutTopic: Informazioni sull'argomento
         learningOutcomes: Risultati dell'apprendimento
-        certificateInfo: Informazioni sulla conferme di completamento
+        certificateInfo: Informazioni sull’attestato di completamento
 
 enrollment:
     dataAccess:
