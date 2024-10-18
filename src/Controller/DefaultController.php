@@ -26,7 +26,7 @@ class DefaultController extends BaseController
     #[Route("/{_locale}", name: "index", requirements: ["_locale" => "%locale.supported%"])]
     public function index(Request $request): Response
     {
-        $news = $this->em->getRepository(NewsItem::class)->findLatestAmount(6);
+        $news = $this->em->getRepository(NewsItem::class)->findLatestAmount(6, $request->getLocale());
         return $this->render('default/index.html.twig', ['news' => $news]);
     }
 

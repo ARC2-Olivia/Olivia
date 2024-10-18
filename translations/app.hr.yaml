@@ -423,6 +423,7 @@ form:
                 title: Naslov
                 content: Sadržaj
                 createdAt: Vrijeme stvaranja
+                language: Jezik
             placeholder:
                 title: Naslov novosti
                 content: Sadržaj novosti
@@ -855,6 +856,9 @@ newsItem:
     message:
         delete: Jeste li sigurni da želite obrisati ovu novost?
         empty: Nema novosti za prikazati.
+    language:
+        default: Engleski
+        alternate: Hrvatski
 
 edulog:
     dataAccess:
