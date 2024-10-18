@@ -8,6 +8,7 @@
 @import "./styles/form.css";
 @import "./styles/toast.css";
 @import "./styles/table.css";
+@import "./styles/dyslexic.css";
 
 @import "./styles/index.css";
 @import "./styles/footer.css";
@@ -26,7 +27,9 @@
 
 :root {
     --app-font-default: 'PT Sans', sans-serif;
+    --app-font-dyslexic: 'OpenDyslexic', sans-serif;
     --app-font-code: 'PT Mono', 'Consolas', 'Fira Code', 'DejaVu Sans', monospace;
+    --app-font-dyslexic-code: 'OpenDyslexicMono', monospace;
     --app-color-blue: #03a9f5;
     --app-color-light-blue: #CCE5FF;
     --app-color-dark-blue: #3a526a;
@@ -38,6 +41,7 @@
     --app-color-light-green: #d3e6dd;
     --app-color-yellow: #f8b322;
     --app-color-black: #555;
+    --app-color-dyslexic-light: #fffdd0;
 }
 
 body {
