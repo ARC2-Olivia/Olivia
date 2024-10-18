@@ -42,21 +42,20 @@ class NewsItemRepository extends ServiceEntityRepository
     /**
      * @return NewsItem[]
      */
-    public function findAllDescending(): array
+    public function findAllDescending(string $locale = null): array
     {
-        return $this->createQueryBuilder('ni')
-            ->orderBy('ni.createdAt', 'DESC')
-            ->getQuery()->getResult();
+        $qb = $this->createQueryBuilder('ni')->orderBy('ni.createdAt', 'DESC');
+        if (null !== $locale) $qb->andwhere('ni.language = :language')->setParameter('language', $locale);
+        return $qb->getQuery()->getResult();
     }
 
     /**
      * @return NewsItem[]
      */
-    public function findLatestAmount(int $amount): array
+    public function findLatestAmount(int $amount, string $locale = null): array
     {
-        return $this->createQueryBuilder('ni')
-            ->orderBy('ni.createdAt', 'DESC')
-            ->setMaxResults($amount)
-            ->getQuery()->getResult();
+        $qb = $this->createQueryBuilder('ni')->orderBy('ni.createdAt', 'DESC')->setMaxResults($amount);
+        if (null !== $locale) $qb->andwhere('ni.language = :language')->setParameter('language', $locale);
+        return $qb->getQuery()->getResult();
     }
 }

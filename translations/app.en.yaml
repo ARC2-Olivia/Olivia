@@ -427,6 +427,10 @@ form:
                 title: Title
                 content: Content
                 createdAt: Created at
+                language: Language
+            placeholder:
+                title: News title
+                content: News content
 
 profile:
     request:
@@ -861,7 +865,10 @@ newsItem:
         edit: Edit news item
     message:
         delete: Are you sure you want to delete this news item?
-        empty: Non ci sono novità da visualizzare.
+        empty: There is nothing new to view.
+    language:
+        default: English
+        alternate: Croatian
 
 edulog:
     dataAccess:

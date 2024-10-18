@@ -427,6 +427,10 @@ form:
                 title: Titolo
                 content: Contenuto
                 createdAt: Tempo di creazione
+                language: Lingua
+            placeholder:
+                title: Titolo della notizia
+                content: Contenuto delle notizie
 
 profile:
     request:
@@ -854,7 +858,10 @@ newsItem:
         edit: Modifica la notizia
     message:
         delete: Sei sicuro di voler chiudere questo nuovo lavoro?
-        empty:
+        empty: Non ci sono novità da visualizzare.
+    language:
+        default: Inglese
+        alternate: Italiana
 
 certificate:
     title: CONFERME

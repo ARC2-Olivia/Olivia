@@ -9,6 +9,9 @@
 		<div id="editor"></div>
 	</div>
 	{{ form_widget(form.content) }}
+
+	{{ form_label(form.language) }}
+	{{ form_widget(form.language) }}
 	
 	<div class="text-end">
 		<a href="{{ path('news_index') }}" class="btn btn-link me-3">{{ 'common.cancel'|trans }}</a>

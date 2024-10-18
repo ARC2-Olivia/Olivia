@@ -13,9 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewsController extends BaseController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $news = $this->em->getRepository(NewsItem::class)->findAllDescending();
+        $news = $this->em->getRepository(NewsItem::class)->findAllDescending($request->getLocale());
         return $this->render('news/index.html.twig', ['news' => $news]);
     }
 
