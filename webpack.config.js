@@ -48,6 +48,7 @@ Encore
     .addEntry('tabs.simple', './assets/scripts/tabs.simple.js')
     .addEntry('seminars.sort', './assets/scripts/seminars.sort.js')
     .addEntry('copy.from-input', './assets/scripts/copy.from-input.js')
+    .addEntry('particles', './assets/scripts/_external/particles.js/particles.min.js')
 
     // Classes
     .addEntry('PracticalSubmoduleAssessment', './assets/scripts/classes/PracticalSubmoduleAssessment.js')
