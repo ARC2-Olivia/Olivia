@@ -40,11 +40,11 @@
     border-radius: inherit;
     position: absolute;
     pointer-events: none;
-    top: 0;
-    bottom: 0;
-    right: 0;
     left: 0;
-    opacity: 0;
+    width: 0;
+    height: 100%;
+    opacity: 0.375;
+    transition: width 175ms;
 }
 
 .btn.btn-theme-white::before {
@@ -62,13 +62,14 @@
 
 .btn.btn-link::before {
     background-color: var(--app-color-blue);
+    opacity: 0.25;
 }
 
 .btn.btn-theme-white:hover::before,
 .btn.btn-theme-black:hover::before,
 .btn.btn-theme-dark-blue:hover::before,
 .btn.btn-link:hover::before {
-    opacity: 0.08;
+    width: 100%;
 }
 
 .btn-nav {
@@ -118,6 +119,7 @@
     color: var(--app-color-orange);
     border: solid 1px var(--app-color-orange);
     background-color: white;
+    transition: background-color 100ms, color 100ms;
 }
 
 .btn.btn-thematic-orange-outline:hover {
@@ -129,6 +131,7 @@
     color: var(--app-color-blue);
     border: solid 1px var(--app-color-blue);
     background-color: white;
+    transition: background-color 100ms, color 100ms;
 }
 
 .btn.btn-thematic-blue-outline:hover {
@@ -150,6 +153,7 @@
 .btn.btn-thematic-gray-to-green {
     background-color: rgba(0, 0, 0, 0.125);
     color: white;
+    transition: background-color 100ms;
 }
 
 .btn.btn-thematic-gray-to-green:hover {
