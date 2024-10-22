@@ -2,6 +2,7 @@
     background-size: cover;
     background-position: 50% 50%;
     padding: 128px 0 96px 20px;
+    position: relative;
 }
 
 .index-banner.homepage {
@@ -16,6 +17,14 @@
     flex-direction: column;
     row-gap: 8px;
     color: #ffffff;
+}
+
+.index-banner-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .index-banner-wrapper .index-banner-title {
