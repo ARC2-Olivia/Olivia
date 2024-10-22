@@ -5,6 +5,7 @@
 
 {% block body %}
     <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-module-practice.png') }}');">
+        <div id="index-banner-particles" class="index-banner-particles" data-particles></div>
         <div class="container index-banner-wrapper">
             <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
             <div class="index-banner-subtitle">{{ 'practicalSubmodule.title.index'|trans }}</div>
@@ -19,4 +20,9 @@
             {% if is_granted('ROLE_MODERATOR') %}{% include 'evaluation/_index_add.html.twig' %}{% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('particles') }}
 {% endblock %}

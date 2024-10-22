@@ -2,12 +2,7 @@
 {% trans_default_domain 'app' %}
 
 {% block body %}
-	<div class="index-banner" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
-		<div class="container index-banner-wrapper">
-			<div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
-			<div class="index-banner-subtitle">{{ 'nav.news'|trans }}</div>
-		</div>
-	</div>
+	{% include 'news/_banner.html.twig' %}
 	
 	<div class="container py-5">
 		{% include '_partials/toasts.html.twig' %}
@@ -31,4 +26,5 @@
 {% block javascripts %}
 	{{ parent() }}
 	{% include 'news/_form_script.html.twig' %}
+	{{ encore_entry_script_tags('particles') }}
 {% endblock %}
