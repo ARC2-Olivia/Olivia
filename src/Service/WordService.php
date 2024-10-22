@@ -10,6 +10,7 @@ use PhpOffice\PhpWord\Element\Text;
 use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -30,6 +31,7 @@ class WordService
     {
         return match ($assessment->getPracticalSubmodule()->getExportType()) {
             PracticalSubmodule::EXPORT_TYPE_LIA                              => $this->generateLegitimateInterestAssessmentDocument($assessment, $locale),
+            PracticalSubmodule::EXPORT_TYPE_SCC                              => $this->generateStandardContractClausesDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_TIA                              => $this->generateTransferImpactAssessmentDocument($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_DPIA                             => $this->generateDataProtectionImpactAssessment($assessment, $locale),
             PracticalSubmodule::EXPORT_TYPE_COOKIE_POLICY                    => $this->generateCookiePolicyDocument($assessment, $locale),
@@ -438,6 +440,23 @@ class WordService
         $document = tempnam($this->parameterBag->get('dir.temp'), 'word-');
         $templateProcessor->saveAs($document);
         return $document;
+    }
+
+    private function generateStandardContractClausesDocument(PracticalSubmoduleAssessment $assessment, string $locale)
+    {
+        $result = $this->practicalSubmoduleService->runProcessors($assessment)[0];
+        $filename = match (strtolower($result->getExportTag())) {
+            'scc_01' => 'ps_export_scc_module_1.docx',
+            'scc_02a' => 'ps_export_scc_module_2a.docx',
+            'scc_02b' => 'ps_export_scc_module_2b.docx',
+            'scc_03' => 'ps_export_scc_module_3.docx',
+            'scc_04' => 'ps_export_scc_module_4.docx'
+        };
+
+        $originalDocument = Path::join($this->parameterBag->get('kernel.project_dir'), 'assets', 'word', 'hr', 'scc', $filename);
+        $copiedDocument = tempnam($this->parameterBag->get('dir.temp'), 'word-');
+        copy($originalDocument, $copiedDocument);
+        return $copiedDocument;
     }
 
     private function generateDefaultDocument(PracticalSubmoduleAssessment $assessment): string|false

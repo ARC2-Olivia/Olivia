@@ -678,6 +678,7 @@ practicalSubmodule:
         recordsOfProcessingActivitiesDC: Registrazioni delle attività di trattamento - per Titolari del trattamento
         recordsOfProcessingActivitiesDP: Registrazioni delle attività di trattamento - per i Responsabili del trattamento
         tia: Valutazione dell'impatto del trasferimento
+        scc: Clausole contrattuali tipo
     exportButtonText:
         respondentsRights: Scarica il modulo per l'esercizio dei diritti degli intervistati (documento Word)
         consentPersonalDataProcessing: Download the consent form (Word document)
@@ -691,6 +692,7 @@ practicalSubmodule:
         videoSurveillanceNotification: Download video surveillance notice
         videoSurveillanceRulebook: Download the rulebook template
         tia: Download form (Word document)
+        scc: Download form (Word document)
     extra:
         question: Domanda
         questions: Domande

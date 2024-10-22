@@ -679,6 +679,7 @@ practicalSubmodule:
         recordsOfProcessingActivitiesDC: Records of processing activities - for Data Controllers
         recordsOfProcessingActivitiesDP: Records of processing activities - for Data Processors
         tia: Transfer impact assessment
+        scc: Standard contract clauses
     exportButtonText:
         respondentsRights: Download the form for exercising the rights of respondents (Word document)
         consentPersonalDataProcessing: Download the consent form (Word document)
@@ -692,6 +693,7 @@ practicalSubmodule:
         videoSurveillanceNotification: Download video surveillance notice
         videoSurveillanceRulebook: Download the rulebook template
         tia: Download form (Word document)
+        scc: Download form (Word document)
     extra:
         question: Question
         questions: Questions

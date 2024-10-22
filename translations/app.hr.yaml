@@ -679,6 +679,7 @@ practicalSubmodule:
         recordsOfProcessingActivitiesDC: Evidencija aktivnosti obrade - za voditelje obrade
         recordsOfProcessingActivitiesDP: Evidencija aktivnosti obrade - za izvršitelje obrade
         tia: Procjena utjecaja prijenosa
+        scc: Standardne ugovorne klauzule
     exportButtonText:
         respondentsRights: Preuzmi obrazac za ostvarivanje prava ispitanika (Word dokument)
         consentPersonalDataProcessing: Preuzmi obrazac privole (Word dokument)
@@ -692,6 +693,7 @@ practicalSubmodule:
         videoSurveillanceNotification: Preuzmi obavijest o videonadzoru
         videoSurveillanceRulebook: Preuzmi predložak pravilnika
         tia: Preuzmi obrazac (Word dokument)
+        scc: Preuzmi obrazac (Word dokument)
     extra:
         question: Pitanje
         questions: Pitanja
