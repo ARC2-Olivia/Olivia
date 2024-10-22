@@ -4,12 +4,7 @@
 {% block title %}{{ 'page.topic.index'|trans }}{% endblock %}
 
 {% block body %}
-    <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-module-theory.png') }}'); background-position: center 60%">
-        <div class="container index-banner-wrapper">
-            <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
-            <div class="index-banner-subtitle">{{ 'topic.title.index'|trans }}</div>
-        </div>
-    </div>
+    {% include 'topic/_banner.html.twig' %}
 
     <div class="container py-5">
         {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
@@ -34,4 +29,9 @@
             {% if is_granted('ROLE_MODERATOR') %}{% include 'topic/_index_add.html.twig' %}{% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('particles') }}
 {% endblock %}

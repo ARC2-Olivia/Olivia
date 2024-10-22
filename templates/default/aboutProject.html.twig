@@ -3,6 +3,7 @@
 
 {% block body %}
     <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-index.png') }}')">
+        <div id="index-banner-particles" class="index-banner-particles" data-particles></div>
         <div class="container index-banner-wrapper">
             <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
             <div class="index-banner-subtitle">{{ 'nav.aboutProject'|trans }}</div>
@@ -22,4 +23,10 @@
     <style>
         .body { background-color: white; }
     </style>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('particles') }}
 {% endblock %}
