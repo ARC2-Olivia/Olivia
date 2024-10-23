@@ -918,7 +918,7 @@ apiInfo:
             text: "To access the API endpoints a special, user-specific, API key is required. Your own API key can be generated and retrieved from your account's <a href='%profilePath%' target='_blank'>profile page</a>."
         headers:
             title: Headers
-            text: "There are two headers that can be attached to the request you're sending to an API endpoint - <strong><span class='fg-red'>one required</span>, and <span class='fg-blue'>one optional</span></strong>. Those requests are the following:"
+            text: "There are two headers that can be attached to the request you're sending to an API endpoint - <strong><span class='fg-red'>one required</span>, and <span class='fg-blue'>one optional</span></strong>. Those headers are the following:"
             list:
                 1: <strong><code>Authorization</code></strong> <span class="fg-red">(required)</span><br/>This header contains an authorization scheme (<code>Bearer</code>) and an API key to authorize your request to an API endpoint. The header should look like the following (with <code>API_KEY</code> substituted with your own API key)
                 2: "<strong><code>Accept-Language</code></strong> <span class='fg-blue'>(optional)</span><br/>This header contains the language in which you want the API endpoint to respond with. Only two values are allowed: <code class='fg-orange'>%localeDefault%</code>, and <code class='fg-orange'>%localeAlternate%</code>. If any other value is set in this header, or this header isn't even attached to the request, the endpoint will proceed as if <code class='fg-orange'>%localeDefault%</code> was set. The header should look like the following: "
@@ -950,8 +950,8 @@ apiInfo:
                     title: Fetch enrollments
                     description: Fetches data of all enrollments made by a user account tied to the API key.
                 8:
-                    title: Fetch certificates
-                    description: Fetches data of all certificates achieved by a user account tied to the API key.
+                    title: Fetch proofs of completion
+                    description: Fetches data of all proofs of completion achieved by a user account tied to the API key.
                 9:
                     title: Fetch answers to all practical submodules
                     description: Fetches data of all answers made, by the user account tied to the API key, to all practical submodules the user account participated in.
