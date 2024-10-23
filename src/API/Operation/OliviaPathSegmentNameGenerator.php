@@ -12,8 +12,13 @@ class OliviaPathSegmentNameGenerator implements PathSegmentNameGeneratorInterfac
      */
     public function getSegmentName(string $name, bool $collection = true): string
     {
+        $pluralize = $collection;
         $newName = 'Course' === $name ? 'TheoreticalSubmodule' : $name;
-        if ($collection) {
+        if ('ProofOfCompletion' === $newName) {
+            $newName = 'ProofsOfCompletion';
+            $pluralize = false;
+        }
+        if ($pluralize) {
             $newName = Inflector::pluralize($newName);
         }
         return Inflector::tableize($newName);
