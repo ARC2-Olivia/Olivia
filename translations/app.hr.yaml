@@ -896,6 +896,60 @@ certificate:
 apiInfo:
     message:
         inProgress: Ova stranica je u izradi, i trenutno je dostupan samo engleski prijevod.
+    section:
+        intro:
+            title: Uvod
+            text: "Ova stranica sadrži popis dostupnih API točaka koji su dostupni svakom korisniku. API dopušta samo čitanje odnosno dohvaćanje podataka. Svaka navedena API točka sadrži:"
+            list:
+                1: njen naziv,
+                2: njenu URL poveznicu,
+                3: kratki opis, i
+                4: primjer s <strong>cUrl</strong>.
+        apikey:
+            title: API ključ
+            text: "Za pristup API točkama potreban je poseban API ključ specifičan za korisnika. Vaš vlastiti API ključ se može generirati i kopirati iz <a href='%profilePath%' target='_blank'>profilne stranice</a> vašeg računa."
+        headers:
+            title: Zaglavlja
+            text: "Zahtjevu koji šaljete API točki se mogu pridružiti dva specifična zaglavlja - <strong><span class='fg-red'>jedno potrebno</span> i <span class='fg-blue' >jedno izborno</span></strong>. Ta zaglavlja su sljedeća:"
+            list:
+                1: <strong><code>Authorization</code></strong> <span class="fg-red">(obavezno)</span><br/>Ovo zaglavlje sadrži autorizacijsku shemu (<code>Bearer</code>) i API ključ za autorizaciju vašeg zahtjeva API točki. Zaglavlje bi trebalo izgledati ovako (<code>API_KEY</code> zamjenite sa svojim API ključem)
+                2: "<strong><code>Accept-Language</code></strong> <span class='fg-blue'>(izborno)</span><br/>Ovo zaglavlje sadrži jezik na kojem želite da API točka odgovori. Dopuštene su samo dvije vrijednosti: <code class='fg-orange'>%localeDefault%</code>, and <code class='fg-orange'>%localeAlternate%</code>. Ako je bilo koja druga vrijednost postavljena u ovom zaglavlju ili ovo zaglavlje nije čak ni priloženo zahtjevu, API točka će nastaviti kao da je postavljen <code class='fg-orange'>%localeDefault%</code>. Zaglavlje bi trebalo izgledati ovako: "
+        endpoints:
+            title: API točke
+            url: URL
+            description: Opic
+            curl: Primjer s cUrl
+            list:
+                1:
+                    title: Dohvati sve teoretske podmodule (tečajeve)
+                    description: Dohvaća podatke o svim teoretskim podmodulima (tečajevima).
+                2:
+                    title: Dohvati jedan teorestki podmodul (tečaj) prema ID-u
+                    description: Dohvaća podatke za specifičan teoretski podmodul (tečaj) prema njegovom ID-u. Potrebno je zamjeniti <code>{id}</code> u URL poveznici sa stvarnom vrijednošću ID-a (broj).
+                3:
+                    title: Dohvati sve praktične podmodule
+                    description: Dohvaća podatke za sve praktične podmodule
+                4:
+                    title: Dohvati jedan praktični podmodul prema ID-u
+                    description: Dohvaća podatke za specifičan praktični podmodul prema njegovom ID-u. Potrebno je zamjeniti <code>{id}</code> u URL poveznici sa stvarnom vrijednošću ID-a (broj).
+                5:
+                    title: Dohvati sve teme
+                    description: Dohvaća podatke za sve GDPR teme.
+                6:
+                    title: Dohvati jednu temu prema ID-u
+                    description: Dohvaća podatke za specifičnu GDPR temu prema njenom ID-u. Potrebno je zamjeniti <code>{id}</code> u URL poveznici sa stvarnom vrijednošću ID-a (broj).
+                7:
+                    title: Dohvati upise na tečajeve
+                    description: Dohvaća podatke o svim upisima povezanim sa korisničkim računom koji stoji iza API ključa.
+                8:
+                    title: Dohvati potvrde o završetku
+                    description: Dohvaća podatke o svim potvrdama o završetku koje je ostvario korisnički račun koji stoji iza API ključa.
+                9:
+                    title: Dohvati sve odgovore na sve praktične podmodule
+                    description: Dohvaća podatke o svim odgovorima koje je napravio korisnički račun, koji stoji iza API ključa, za sve praktične podmodule u kojima je sudjelovao.
+                10:
+                    title: Dohvati sve odgovore za jedan praktični podmodul prema ID-u
+                    description: Dohvaća podatke o svim odgovorima koje je napravio korisnički račun, koji stoji iza API ključa, za jedan praktični podmodul specificiran s njegovim ID-em. Potrebno je zamjeniti <code>{id}</code> u URL poveznici sa stvarnom vrijednošću ID-a (broj).
 
 extra:
     free: Besplatno
