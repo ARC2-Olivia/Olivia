@@ -5,11 +5,6 @@
 
 {% block body %}
 	<div class="container py-5">
-		{% if app.request.locale == locale_alternate %}
-			<div class="toast toast-theme-warning">
-				<div class="toast-message">{{ 'apiInfo.message.inProgress'|trans }}</div>
-			</div>
-		{% endif %}
 		<div class="card card-body profile">
 			<h1>{{ 'nav.apiInfo'|trans }}</h1>
 			<hr/>
