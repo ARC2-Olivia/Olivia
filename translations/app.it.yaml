@@ -890,6 +890,60 @@ certificate:
 apiInfo:
     message:
         inProgress: Questa pagina è in costruzione e al momento è disponibile solo la traduzione in inglese.
+    section:
+        intro:
+            title: Introduzione
+            text: "Questa pagina contiene un elenco di endpoint API disponibili esposti a ogni utente per l'uso. L'API permette solo la lettura/recupero dei dati. Ogni endpoint API elencato contiene:"
+            list:
+                1: il suo nome,
+                2: il suo URL,
+                3: breve descrizione, e
+                4: un esempio di <strong>cUrl</strong>
+        apikey:
+            title: Chiave API
+            text: "Per accedere agli endpoint API è necessaria una chiave API speciale, specifica per l'utente. La tua chiave API può essere generata e recuperata dalla <a href='%profilePath%' target='_blank'>pagina del profilo</a> del tuo account."
+        headers:
+            title: Intestazioni
+            text: "Ci sono due intestazioni che possono essere allegate alla richiesta che stai inviando a un endpoint API - <strong><span class='fg-red'>una richiesta</span>, e <span class='fg-blue'>una opzionale</span></strong>. Queste intestazioni sono le seguenti:"
+            list:
+                1: <strong><code>Authorization</code></strong> <span class="fg-red">(richiesta)</span><br/>Questa intestazione contiene uno schema di autorizzazione (<code>Bearer</code>) e una chiave API per autorizzare la tua richiesta a un endpoint API. L'intestazione dovrebbe avere il seguente aspetto (con <code>API_KEY</code> sostituito con la tua chiave API)
+                2: "<strong><code>Accept-Language</code></strong> <span class='fg-blue'>(opzionale)</span><br/>Questa intestazione contiene la lingua con cui vuoi che l'endpoint API risponda. Sono consentiti solo due valori: <code class='fg-orange'>%localeDefault%</code>, e <code class='fg-orange'>%localeAlternate%</code>. Se in questa intestazione è impostato qualsiasi altro valore, o se questa intestazione non è nemmeno allegata alla richiesta, l'endpoint procederà come se fosse impostato <code class='fg-orange'>%localeDefault%</code>. L'intestazione dovrebbe avere il seguente aspetto: "
+        endpoints:
+            title: Endpoint
+            url: URL
+            description: Descrizione
+            curl: Esempio in cUrl
+            list:
+                1:
+                    title: Recupera tutti i sottomoduli teorici (corsi)
+                    description: Recupera i dati di tutti i sottomoduli teorici (corsi).
+                2:
+                    title: Recupera un sottomodulo teorico (corso) dal suo ID
+                    description: Recupera i dati di un sottomodulo teorico specifico (corso) usando il suo ID. Il <code>{id}</code> nell'URL deve essere sostituito con l'ID effettivo (numero).
+                3:
+                    title: Recupera tutti i sottomoduli pratici
+                    description: Recupera i dati di tutti i sottomoduli pratici.
+                4:
+                    title: Recupera un sottomodulo pratico dal suo ID
+                    description: Recupera i dati di un sottomodulo pratico specifico usando il suo ID. Il <code>{id}</code> nell'URL deve essere sostituito con l'ID effettivo (numero).
+                5:
+                    title: Recupera tutti gli argomenti
+                    description: Recupera i dati di tutti gli argomenti.
+                6:
+                    title: Recupera un argomento dal suo ID
+                    description: Recupera i dati di un argomento specifico usando il suo ID. Il <code>{id}</code> nell'URL deve essere sostituito con l'ID effettivo (numero).
+                7:
+                    title: Recupera le iscrizioni
+                    description: Recupera i dati di tutte le iscrizioni effettuate da un account utente collegato alla chiave API.
+                8:
+                    title: Recupera le prove di completamento
+                    description: Recupera i dati di tutte le prove di completamento ottenute da un account utente collegato alla chiave API.
+                9:
+                    title: Recupera le risposte a tutti i sottomoduli pratici
+                    description: Recupera i dati di tutte le risposte date, dall'account utente collegato alla chiave API, a tutti i sottomoduli pratici a cui l'account utente ha partecipato.
+                10:
+                    title: Recupera le risposte a un sottomodulo pratico dal suo ID
+                    description: Recupera i dati di tutte le risposte date, dall'account utente collegato alla chiave API, a un sottomodulo pratico specifico usando il suo ID. Il <code>{id}</code> nell'URL deve essere sostituito con l'ID effettivo (numero).
 
 extra:
     free: Gratuito
