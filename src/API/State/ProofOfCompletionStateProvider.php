@@ -4,7 +4,7 @@ namespace App\API\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\API\Entity\Certificate;
+use App\API\Entity\ProofOfCompletion;
 use App\Entity\Course;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CertificateStateProvider implements ProviderInterface
+class ProofOfCompletionStateProvider implements ProviderInterface
 {
     private ?Security $security = null;
     private ?EntityManagerInterface $em = null;
@@ -50,27 +50,27 @@ class CertificateStateProvider implements ProviderInterface
             return [];
         }
 
-        $certificates = [];
+        $proofs = [];
         $locale = $this->getLocale();
 
         if (null !== $user->getAllCoursesPassedAt()) {
-            $certificate = new Certificate();
-            $certificate->title = $this->translator->trans('trophy.allCourses', [], 'app', $locale);
-            $certificate->url = $this->router->generate('file_fetch_golden_certificate', ['_locale' => $locale], RouterInterface::ABSOLUTE_URL);
-            $certificates[] = $certificate;
+            $proof = new ProofOfCompletion();
+            $proof->title = $this->translator->trans('trophy.allCourses', [], 'app', $locale);
+            $proof->url = $this->router->generate('file_fetch_golden_certificate', ['_locale' => $locale], RouterInterface::ABSOLUTE_URL);
+            $proofs[] = $proof;
         }
 
         $courseRepository = $this->em->getRepository(Course::class);
         /** @var Course $course */
         foreach ($courseRepository->findPassedByUserAndOrderedByPosition($user, $locale) as $course) {
-            $certificate = new Certificate();
-            $certificate->title = $course->getNameOrPublicName();
-            $certificate->theoreticalSubmodule = $course;
-            $certificate->url = $this->router->generate('file_fetch_course_certificate', ['course' => $course->getId(), '_locale' => $locale], RouterInterface::ABSOLUTE_URL);
-            $certificates[] = $certificate;
+            $proof = new ProofOfCompletion();
+            $proof->title = $course->getNameOrPublicName();
+            $proof->theoreticalSubmodule = $course;
+            $proof->url = $this->router->generate('file_fetch_course_certificate', ['course' => $course->getId(), '_locale' => $locale], RouterInterface::ABSOLUTE_URL);
+            $proofs[] = $proof;
         }
 
-        return $certificates;
+        return $proofs;
     }
 
     private function getLocale()
