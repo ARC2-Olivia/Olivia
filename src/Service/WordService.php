@@ -247,6 +247,8 @@ class WordService
             switch ($exportTag) {
                 case 'rr_02': {
                     $items = explode("\n", str_replace(['- ', "\r"], '', $result->getSanitizedText()));
+                    $items = array_filter($items, function ($i) { return '' !== trim($i); });
+                    $items = array_values($items);
                     $itemCount = count($items);
                     $templateProcessor->cloneBlock('rr_02', $itemCount, indexVariables: true);
                     for ($i = 0, $j = 1; $i < $itemCount; $i++, $j++) {
