@@ -325,7 +325,7 @@ class WordService
             $exportTag = strtolower($result->getExportTag());
             if (array_key_exists($exportTag, $processingStates->lists)) {
                 $this->handleListTag($result, $templateProcessor, $exportTag);
-                $processingStates->blocks[$exportTag] = true;
+                $processingStates->lists[$exportTag] = true;
             } else if (array_key_exists($exportTag, $processingStates->blocks)) {
                 $templateProcessor->cloneBlock($exportTag);
                 $processingStates->blocks[$exportTag] = true;
@@ -549,9 +549,10 @@ class WordService
 
     private function handleListTag(ProcessorResult $result, TemplateProcessor $templateProcessor, string $exportTag): void
     {
-        $items = str_contains($result->getSanitizedText(), '/*/')
-            ? explode('/*/', $result->getSanitizedText())
-            : explode("\n", str_replace(['- ', "\r"], '', $result->getSanitizedText()));
+        $text = $result->getSanitizedText();
+        $items = str_contains($text, '/*/')
+            ? explode('/*/', $text)
+            : explode("\n", str_replace(['- ', "\r"], '', $text));
         $items = array_filter($items, function ($i) { return '' !== trim($i); });
         $items = array_values($items);
 
