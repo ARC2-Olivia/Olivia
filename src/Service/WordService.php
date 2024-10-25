@@ -549,11 +549,11 @@ class WordService
 
     private function handleListTag(ProcessorResult $result, TemplateProcessor $templateProcessor, string $exportTag): void
     {
-        if (str_contains($result->getSanitizedText(), '/*/')) {
-            $items = explode('/*/', $result->getSanitizedText());
-        } else {
-            $items = explode("\n", str_replace(['- ', "\r"], '', $result->getSanitizedText()));
-        }
+        $items = str_contains($result->getSanitizedText(), '/*/')
+            ? explode('/*/', $result->getSanitizedText())
+            : explode("\n", str_replace(['- ', "\r"], '', $result->getSanitizedText()));
+        $items = array_filter($items, function ($i) { return '' !== trim($i); });
+        $items = array_values($items);
 
         $itemCount = count($items);
         $templateProcessor->cloneBlock($exportTag, $itemCount, indexVariables: true);
