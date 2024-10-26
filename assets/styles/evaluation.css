@@ -226,6 +226,7 @@ ul.mod--ps-pages {
 
 .evaluation-assessment-question.heading .evaluation-assessment-question-text {
     background: none;
+    color: unset;
 }
 
 .evaluation-assessment-question-text:not(.no-bold) {
