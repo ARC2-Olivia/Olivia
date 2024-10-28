@@ -43,13 +43,6 @@
         <label class="col-6">{{ form_widget(form.estimatedWorkload.workloadTime) }}</label>
     </div>
 
-    {{ form_label(form.tags) }}
-    {{ form_widget(form.tags) }}
-    {% if form.tagsAlt is defined %}
-        {{ form_label(form.tagsAlt) }}
-        {{ form_widget(form.tagsAlt) }}
-    {% endif %}
-
     {{ form_label(form.instructors) }}
     {{ form_widget(form.instructors) }}
 

@@ -122,7 +122,6 @@ class PSImporter
             ->setDescription($props['description'] ?? '')
             ->setReportComment($props['report_comment'] ?? '')
             ->setPaging($props['paging'] ?? false)
-            ->setTags($props['tags'] ?? [])
             ->setModeOfOperation($opmode)
             ->setExportType($props['export_type'] ?? PracticalSubmodule::EXPORT_TYPE_NONE)
         ;
@@ -133,12 +132,10 @@ class PSImporter
             $transPublicName = $props['trans']['public_name'] ?? null;
             $transDescription = $props['trans']['description'] ?? null;
             $transReportComment = $props['trans']['report_comment'] ?? null;
-            $transTags = $props['trans']['tags'] ?? null;
             if (null !== $transName) $this->translationRepository->translate($this->practicalSubmodule, 'name', $this->localeAlternate, $transName);
             if (null !== $transPublicName) $this->translationRepository->translate($this->practicalSubmodule, 'publicName', $this->localeAlternate, $transPublicName);
             if (null !== $transDescription) $this->translationRepository->translate($this->practicalSubmodule, 'description', $this->localeAlternate, $transDescription);
             if (null !== $transReportComment) $this->translationRepository->translate($this->practicalSubmodule, 'reportComment', $this->localeAlternate, $transReportComment);
-            if (null !== $transTags) $this->translationRepository->translate($this->practicalSubmodule, 'tags', $this->localeAlternate, explode(',', $transTags));
         }
     }
 
