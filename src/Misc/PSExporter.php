@@ -56,7 +56,6 @@ class PSExporter
                 'description' => $this->practicalSubmodule->getDescription(),
                 'report_comment' => $this->practicalSubmodule->getReportComment(),
                 'paging' => $this->practicalSubmodule->isPaging(),
-                'tags' => $this->practicalSubmodule->getTags(),
                 'op_mode' => $this->practicalSubmodule->getModeOfOperation(),
                 'export_type' => $this->practicalSubmodule->getExportType()
             ]
@@ -68,13 +67,11 @@ class PSExporter
             $transPublicName = $trans[$this->localeAlternate]['publicName'] ?? null;
             $transDescription = $trans[$this->localeAlternate]['description'] ?? null;
             $transReportComment = $trans[$this->localeAlternate]['reportComment'] ?? null;
-            $transTags = $trans[$this->localeAlternate]['tags'] ?? null;
             $task['task_props']['trans'] = [];
             if (null !== $transName) $task['task_props']['trans']['name'] = $transName;
             if (null !== $transPublicName) $task['task_props']['trans']['public_name'] = $transPublicName;
             if (null !== $transDescription) $task['task_props']['trans']['description'] = $transDescription;
             if (null !== $transReportComment) $task['task_props']['trans']['report_comment'] = $transReportComment;
-            if (null !== $transTags) $task['task_props']['trans']['tags'] = $transTags;
         }
 
         $this->tasks[] = $task;

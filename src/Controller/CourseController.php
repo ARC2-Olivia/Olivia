@@ -284,12 +284,6 @@ class CourseController extends BaseController
             $translated = true;
         }
 
-        $tagsAlt = $form->get('tagsAlt')->getData();
-        if ($tagsAlt !== null && count($tagsAlt) > 0) {
-            $translationRepository->translate($course, 'tags', $localeAlt, $tagsAlt);
-            $translated = true;
-        }
-
         if ($translated) $this->em->flush();
     }
 }

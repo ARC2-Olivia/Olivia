@@ -5,8 +5,6 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use App\API\State\PracticalSubmoduleAnswersProcessor;
-use App\API\State\PracticalSubmoduleAnswersInfoProvider;
 use App\Repository\PracticalSubmoduleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -70,10 +68,6 @@ class PracticalSubmodule extends TranslatableEntity
     #[Gedmo\Translatable]
     #[Groups('PracticalSubmodule')]
     private ?string $description = null;
-
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-    #[Gedmo\Translatable]
-    private array $tags = [];
 
     #[ORM\OneToMany(mappedBy: 'practicalSubmodule', targetEntity: PracticalSubmoduleQuestion::class, orphanRemoval: true)]
     private Collection $practicalSubmoduleQuestions;
@@ -225,18 +219,6 @@ class PracticalSubmodule extends TranslatableEntity
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getTags(): array
-    {
-        return $this->tags;
-    }
-
-    public function setTags(?array $tags): self
-    {
-        $this->tags = $tags;
 
         return $this;
     }

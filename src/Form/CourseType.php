@@ -80,10 +80,6 @@ class CourseType extends AbstractType
                 'label' => 'form.entity.course.label.estimatedWorkload',
                 'allowed_workload_times' => $allowedWorkloadTimes,
             ])
-            ->add('tags', TextType::class, [
-                'label' => 'form.entity.course.label.tags',
-                'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.tags', [], 'app')]
-            ])
             ->add('instructors', EntityType::class, [
                 'class' => Instructor::class,
                 'label' => 'form.entity.course.label.instructors',
@@ -106,7 +102,6 @@ class CourseType extends AbstractType
                 'attr' => ['class' => 'form-input mb-3', 'inputmode' => 'numeric']
             ])
         ;
-        $builder->get('tags')->addModelTransformer(new SimpleArrayToStringTransformer());
 
         if ($options['include_translatable_fields']) {
             $builder
@@ -134,11 +129,6 @@ class CourseType extends AbstractType
                     'mapped' => false,
                     'label' => 'form.entity.course.label.certificateInfoAlt',
                     'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.certificateInfo', [], 'app')]
-                ])
-                ->add('tagsAlt', TextType::class, [
-                    'mapped' => false,
-                    'label' => 'form.entity.course.label.tagsAlt',
-                    'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.course.placeholder.tags', [], 'app')]
                 ])
             ;
             $builder->get('tagsAlt')->addModelTransformer(new SimpleArrayToStringTransformer());

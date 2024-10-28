@@ -103,13 +103,6 @@ class PracticalSubmoduleType extends AbstractType
                 'attr' => ['class' => 'form-select mb-3'],
                 'disabled' => true === $options['has_advanced_mode_features']
             ])
-            ->add('tags', TextType::class, [
-                'label' => 'form.entity.practicalSubmodule.label.tags',
-                'attr' => [
-                    'class' => 'form-input mb-3',
-                    'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.tags', [], 'app')
-                ]
-            ])
             ->add('courses', EntityType::class, [
                 'class' => Course::class,
                 'label' => 'form.entity.practicalSubmodule.label.courses',
@@ -140,7 +133,6 @@ class PracticalSubmoduleType extends AbstractType
                 'attr' => ['class' => 'form-input mb-3', 'inputmode' => 'numeric']
             ])
         ;
-        $builder->get('tags')->addModelTransformer(new SimpleArrayToStringTransformer());
 
         if ($options['include_translatable_fields']) {
             $builder
@@ -159,18 +151,12 @@ class PracticalSubmoduleType extends AbstractType
                     'label' => 'form.entity.practicalSubmodule.label.descriptionAlt',
                     'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.description', [], 'app')]
                 ])
-                ->add('tagsAlt', TextareaType::class, [
-                    'mapped' => false,
-                    'label' => 'form.entity.practicalSubmodule.label.tagsAlt',
-                    'attr' => ['class' => 'form-input mb-3', 'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.tags', [], 'app')]
-                ])
                 ->add('reportCommentAlt', TextareaType::class, [
                     'mapped' => false,
                     'label' => 'form.entity.practicalSubmodule.label.reportCommentAlt',
                     'attr' => ['class' => 'form-textarea mb-3', 'placeholder' => $this->translator->trans('form.entity.practicalSubmodule.placeholder.reportComment', [], 'app')],
                 ])
             ;
-            $builder->get('tagsAlt')->addModelTransformer(new SimpleArrayToStringTransformer());
         }
     }
 

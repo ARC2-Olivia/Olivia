@@ -54,10 +54,6 @@ class Course extends TranslatableEntity
     #[Groups('TheoreticalSubmodule')]
     private ?string $estimatedWorkload = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-    #[Gedmo\Translatable]
-    private array $tags = [];
-
     #[ORM\ManyToMany(targetEntity: Instructor::class, inversedBy: 'courses')]
     #[Ignore]
     private Collection $instructors;
@@ -164,18 +160,6 @@ class Course extends TranslatableEntity
     public function setEstimatedWorkload(?string $estimatedWorkload): self
     {
         $this->estimatedWorkload = $estimatedWorkload;
-
-        return $this;
-    }
-
-    public function getTags(): array
-    {
-        return $this->tags;
-    }
-
-    public function setTags(array $tags): self
-    {
-        $this->tags = $tags;
 
         return $this;
     }
