@@ -14,7 +14,7 @@ class RegistrationData
     private ?string $lastName = null;
 
     #[Assert\NotBlank(message: 'error.registration.email.blank')]
-    #[Assert\Email(message: 'error.registration.email.format')]
+    #[Assert\Email(message: 'error.registration.email.format', mode: 'strict')]
     private ?string $email = null;
 
     #[PasswordPolicy]
