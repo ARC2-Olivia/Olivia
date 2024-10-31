@@ -194,9 +194,17 @@ ul.mod--ps-pages {
 }
 
 .evaluation-assessment-question.static-text {
-    background-color: #e5eefd;
+    background-color: var(--app-color-blue-alt);
     padding: 16px;
     border-radius: 8px;
+}
+
+.evaluation-assessment-question.static-text a {
+    color: var(--app-color-yellow)
+}
+
+.evaluation-assessment-question.static-text a:active {
+    color: var(--app-color-light-red)
 }
 
 .evaluation-assessment-question.heading {
