@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Repository\CourseRepository;
 use App\Repository\PracticalSubmoduleAssessmentRepository;
 use App\Repository\PracticalSubmoduleQuestionRepository;
+use App\Service\ExcelService;
 use App\Service\PracticalSubmoduleService;
 use App\Service\WkhtmltopdfService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -132,7 +133,7 @@ class FileFetchController extends AbstractController
     ): Response
     {
         if (null !== $this->getUser()->getAllCoursesPassedAt()) {
-            $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         $defaultLocale = $this->getParameter('locale.default');
         $alternateLocale = $this->getParameter('locale.alternate');
@@ -279,6 +280,15 @@ class FileFetchController extends AbstractController
         $showBanner = key_exists('link', $cookieBanner) && key_exists('cookies', $cookieBanner);
         $html = $twig->render('export/cookieBanner.html.twig', ['cookieBanner' => $cookieBanner, 'showBanner' => $showBanner]);
         return $this->makeFileResponseFromString('consent-form.html', $html, 'text/html');
+    }
+
+    #[Route("/users-excel", name: "users_excel")]
+    #[IsGranted("ROLE_ADMIN")]
+    public function usersExcel(ExcelService $excelService): Response
+    {
+        $excel = $excelService->generateUsersDocument();
+        if (null === $excel) return $this->makeFileResponseFromString("report.txt", "Unable to process request.");
+        return $this->file($excel, 'users.xlsx')->deleteFileAfterSend();
     }
 
     private function makeFileResponseFromString(string $filename, string $content, string $contentType = 'text/plain'): Response
