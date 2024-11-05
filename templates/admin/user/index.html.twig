@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-title d-flex justify-content-between align-items-center">
                 <span>{{ 'user.title.index'|trans }}</span>
-                <a href="#" class="btn btn-theme-white bg-blue font-size-default">{{ 'common.new'|trans }}</a>
+                <a href="{{ path('file_fetch_users_excel') }}" class="btn btn-theme-white bg-green font-size-default" target="_blank">{{ 'button.exportToExcel'|trans }}</a>
             </div>
             <div class="card-text">
                 <div id="users-table-wrapper"></div>

@@ -55,6 +55,7 @@ button:
     results: Rezultati
     lessons: Lekcije
     export: Izvoz
+    exportToExcel: Izvoz u Excel
     exportTemplate: Izvoz predloška
     download: Preuzmite
     show: Prikaži

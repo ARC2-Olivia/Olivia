@@ -56,6 +56,7 @@ button:
     results: Risultati
     lessons: Lezioni
     export: Esportare
+    exportToExcel: Esporta in Excel
     exportTemplate: Modello di esportazione
     download: Scaricamento
     show: Mostra

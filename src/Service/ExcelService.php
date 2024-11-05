@@ -4,9 +4,12 @@ namespace App\Service;
 
 use App\Entity\PracticalSubmodule;
 use App\Entity\PracticalSubmoduleAssessment;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
 use PhpOffice\PhpSpreadsheet\Cell\CellRange;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -15,12 +18,14 @@ class ExcelService
 {
     private ?PracticalSubmoduleService $practicalSubmoduleService = null;
     private ?ParameterBagInterface $parameterBag = null;
+    private ?EntityManagerInterface $em = null;
     private ?TranslatorInterface $translator = null;
 
-    public function __construct(PracticalSubmoduleService $practicalSubmoduleService, ParameterBagInterface $parameterBag, TranslatorInterface $translator)
+    public function __construct(PracticalSubmoduleService $practicalSubmoduleService, ParameterBagInterface $parameterBag, EntityManagerInterface $em, TranslatorInterface $translator)
     {
         $this->practicalSubmoduleService = $practicalSubmoduleService;
         $this->parameterBag = $parameterBag;
+        $this->em = $em;
         $this->translator = $translator;
     }
 
@@ -31,6 +36,33 @@ class ExcelService
             PracticalSubmodule::EXPORT_TYPE_RECORDS_OF_PROCESSING_ACTIVITIES_DP => $this->generateRecordsOfProcessingActivitiesDP($assessment, $locale),
             default => null
         };
+    }
+
+    public function generateUsersDocument(): ?string
+    {
+        $spreadsheet = new Spreadsheet();
+        $worksheet = $spreadsheet->getActiveSheet();
+        $worksheet->setCellValue('A1', $this->translator->trans('common.id', [], 'app'));
+        $worksheet->setCellValue('B1', $this->translator->trans('form.entity.user.label.email', [], 'app'));
+        $worksheet->setCellValue('C1', $this->translator->trans('form.entity.user.label.roles', [], 'app'));
+
+        $users = $this->em->getRepository(User::class)->findAll();
+        $rowOffset = 0;
+        $cellCoordinate = 'A2';
+        foreach ($users as $user) {
+            $cellAddress = (new CellAddress($cellCoordinate, $worksheet))->nextRow($rowOffset);
+            $worksheet->setCellValue($cellAddress, $user->getId());
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, $user->getEmail());
+            $cellAddress = $cellAddress->nextColumn();
+            $worksheet->setCellValue($cellAddress, implode(',', $user->getRoles()));
+            $rowOffset++;
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $document = tempnam($this->parameterBag->get('dir.temp'), 'users-');
+        $writer->save($document);
+        return $document;
     }
 
     private function generateRecordsOfProcessingActivitiesDC(PracticalSubmoduleAssessment $assessment, string $locale): string
