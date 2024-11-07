@@ -125,6 +125,7 @@ class FileFetchController extends AbstractController
     }
 
     #[Route("/golden-certificate/{_locale}", name: "golden_certificate", requirements: ["_locale" => "%locale.supported%"])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function allCertificate(CourseRepository $courseRepository,
                                    WkhtmltopdfService $wkhtmltopdfService,
                                    \Twig\Environment $twig,
@@ -248,6 +249,7 @@ class FileFetchController extends AbstractController
     }
 
     #[Route("/consent-form/{practicalSubmodule}", name: "consent_form")]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function consentForm(PracticalSubmodule $practicalSubmodule,
                                 \Twig\Environment $twig,
                                 PracticalSubmoduleService $practicalSubmoduleService,
