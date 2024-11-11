@@ -28,7 +28,7 @@
             <div class="row mb-5 justify-content-center g-2">
                 {% for file in files %}
                     <div class="col-12 col-sm-6 col-md-4">
-                        <a href="#" class=" topic-file">
+                        <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}" class=" topic-file" download>
                             {{ mdi('download', 'topic-file-icon') }}
                             <div class="topic-file-text">{{ file.displayText }}</div>
                         </a>
