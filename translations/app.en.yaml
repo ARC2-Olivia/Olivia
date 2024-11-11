@@ -409,6 +409,12 @@ form:
                 presentation: Place in Presentations
                 createdAt: Created at
                 modifiedAt: Modified at
+                includeIn: Include in
+            choices:
+                includeIn:
+                    none: None
+                    topicIndexDefault: GDPR topics (english language)
+                    topicIndexAlternate: GDPR topics (alternate language)
         topic:
             label:
                 title: Title

@@ -42,10 +42,15 @@ class BasicFileUploadType extends AbstractType
         if (true === $options['complexMode']) {
             $typeChoices = [$this->translator->trans('file.type.file', domain: 'app') => File::TYPE_FILE, $this->translator->trans('file.type.video', domain: 'app') => File::TYPE_VIDEO];
             $booleanChoices = [$this->translator->trans('common.no', domain: 'app') => false, $this->translator->trans('common.yes', domain: 'app') => true];
+            $includeInChoices = [
+                $this->translator->trans('form.entity.file.choices.includeIn.topicIndexDefault', domain: 'app') => File::INCLUDE_IN_TOPIC_INDEX_DEFAULT,
+                $this->translator->trans('form.entity.file.choices.includeIn.topicIndexAlternate', domain: 'app') => File::INCLUDE_IN_TOPIC_INDEX_ALTERNATE
+            ];
             $builder
                 ->add('type', ChoiceType::class, ['label' => 'form.entity.file.label.type', 'choices' => $typeChoices, 'attr' => ['class' => 'form-select mb-3']])
                 ->add('seminar', ChoiceType::class, ['label' => 'form.entity.file.label.seminar', 'choices' => $booleanChoices, 'attr' => ['class' => 'form-select mb-3']])
                 ->add('presentation', ChoiceType::class, ['label' => 'form.entity.file.label.presentation', 'choices' => $booleanChoices, 'attr' => ['class' => 'form-select mb-3']])
+                ->add('includeIn', ChoiceType::class, ['label' => 'form.entity.file.label.includeIn', 'multiple' => true, 'choices' => $includeInChoices, 'attr' => ['class' => 'mb-3', 'data-df-select' => '']])
                 ->add('displayText', TextareaType::class, ['label' => 'form.entity.file.label.displayText', 'required' => false, 'attr' => ['class' => 'form-textarea']])
             ;
         }

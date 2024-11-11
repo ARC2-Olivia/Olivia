@@ -409,6 +409,12 @@ form:
                 presentation: Inseriscilo nella sezione Presentazioni
                 createdAt: Creato a
                 modifiedAt: Modificato a
+                includeIn: Includi in
+            choices:
+                includeIn:
+                    none: Nessuno
+                    topicIndexDefault: Contenuti di Olivia (lingua inglese)
+                    topicIndexAlternate: Contenuti di Olivia (lingua italiana)
         topic:
             label:
                 title: Titolo

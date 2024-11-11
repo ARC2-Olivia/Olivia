@@ -31,7 +31,7 @@ class WkhtmltopdfService
             $tempHtmlShellPath = escapeshellarg($tempHtml);
             $outputShellPath = escapeshellarg($output);
 
-            `$wkhtmltopdfShellPath ${commandLineArguments} file:///$tempHtmlShellPath $outputShellPath`;
+            `$wkhtmltopdfShellPath {$commandLineArguments} file:///$tempHtmlShellPath $outputShellPath`;
         } catch (\Exception $ex) {
             if (is_string($tempHtml)) $fs->remove($tempHtml);
             if (is_string($output)) $fs->remove($output);

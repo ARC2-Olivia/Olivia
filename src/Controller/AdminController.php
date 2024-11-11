@@ -167,6 +167,7 @@ class AdminController extends BaseController
                     ->setDisplayText($form->get('displayText')->getData())
                     ->setSeminar($form->get('seminar')->getData())
                     ->setPresentation($form->get('presentation')->getData())
+                    ->setIncludeIn($form->get('includeIn')->getData())
                     ->setCreatedAt(new \DateTimeImmutable())
                 ;
                 $directory = $this->getParameter('dir.file_repository');
@@ -209,7 +210,8 @@ class AdminController extends BaseController
             'type' => $file->getType(),
             'displayText' => $file->getDisplayText(),
             'seminar' => $file->isSeminar(),
-            'presentation' => $file->isPresentation()
+            'presentation' => $file->isPresentation(),
+            'includeIn' => $file->getIncludeIn(),
         ], ['complexMode' => true, 'requiredFile' => false]);
         $form->handleRequest($request);
 
@@ -232,6 +234,7 @@ class AdminController extends BaseController
                 ->setDisplayText($form->get('displayText')->getData())
                 ->setSeminar($form->get('seminar')->getData())
                 ->setPresentation($form->get('presentation')->getData())
+                ->setIncludeIn($form->get('includeIn')->getData())
                 ->setModifiedAt(new \DateTimeImmutable())
             ;
             $this->em->flush();
