@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Course;
+use App\Entity\File;
 use App\Entity\PracticalSubmodule;
 use App\Entity\Topic;
 use App\Form\TopicType;
@@ -20,10 +21,13 @@ class TopicController extends BaseController
     use BasicFileManagementTrait;
 
     #[Route("/", name: "index")]
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $topics = $this->em->getRepository(Topic::class)->findAllSortedByPosition();
-        return $this->render('topic/index.html.twig', ['topics' => $topics]);
+        $includeIn = 'en' === $request->getLocale() ? File::INCLUDE_IN_TOPIC_INDEX_DEFAULT : File::INCLUDE_IN_TOPIC_INDEX_ALTERNATE;
+        $videos = $this->em->getRepository(File::class)->findByTypeAndInclusion(File::TYPE_VIDEO, $includeIn);
+        $files = $this->em->getRepository(File::class)->findByTypeAndInclusion(File::TYPE_FILE, $includeIn);
+        return $this->render('topic/index.html.twig', ['topics' => $topics, 'videos' => $videos, 'files' => $files]);
     }
 
     #[Route("/show/{topic}", name: "show")]

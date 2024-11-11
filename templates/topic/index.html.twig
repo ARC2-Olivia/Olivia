@@ -12,16 +12,31 @@
             <div class="topic-about-title">{{ 'index.topics.title'|trans|raw }}</div>
             <div class="topic-about-text">{{ 'index.topics.text'|trans|raw }}</div>
         </div>
-        {% if is_topic_index_video_url_available() %}
-            <div class="row mb-5">
-                <div class="col-12 col-lg-6 mx-auto">
-                    <div class="topic-about-title">{{ 'index.topics.videoTitle'|trans|raw }}</div>
-                    <video preload="none" class="w-100" controls>
-                        <source src="{{ get_topic_index_video_url() }}">
-                    </video>
-                </div>
+        
+        {% if videos is not empty %}
+            <div class="row mb-5 justify-content-center">
+                {% for video in videos %}
+                    <div class="col-12 col-lg-6 mb-4">
+                        <div class="topic-about-title">{{ video.displayText }}</div>
+                        <video preload="none" class="w-100" controls><source src="{{ path('file_fetch_uploaded_file', {'file': video.id}) }}"></video>
+                    </div>
+                {% endfor %}
             </div>
         {% endif %}
+        
+        {% if files is not empty %}
+            <div class="row mb-5 justify-content-center g-2">
+                {% for file in files %}
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <a href="#" class=" topic-file">
+                            {{ mdi('download', 'topic-file-icon') }}
+                            <div class="topic-file-text">{{ file.displayText }}</div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
         <div class="row g-3">
             {% for topic in topics %}
                 {% include 'topic/_index_topic.html.twig' with {'topic': topic} %}

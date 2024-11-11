@@ -84,6 +84,34 @@
     text-align: center;
 }
 
+.topic-file {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--app-color-light-blue);
+    border-radius: 8px;
+    padding: 16px;
+    gap: 8px;
+}
+
+a.topic-file {
+    text-decoration: none;
+}
+
+.topic-file > .topic-file-icon {
+    height: 24px;
+    color: var(--app-color-dark-blue);
+}
+
+.topic-file > .topic-file-text {
+    font-size: 16px;
+    color: var(--app-color-dark-blue);
+}
+
+.topic-file:hover > .topic-file-text {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 1199px) {
     .topic-segment-row > * {
         flex-basis: 100%;

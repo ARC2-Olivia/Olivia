@@ -39,28 +39,12 @@ class FileRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return File[] Returns an array of File objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('f.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?File
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /** @return File[] */
+    public function findByTypeAndInclusion(string $type, string $includeIn)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.type = :type')->andWhere('f.includeIn LIKE :includeIn')
+            ->setParameter('type', $type)->setParameter('includeIn', '%'.$includeIn.'%')
+            ->getQuery()->getResult();
+    }
 }

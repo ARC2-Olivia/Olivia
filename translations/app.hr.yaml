@@ -406,6 +406,12 @@ form:
                 seminar: Seminar
                 createdAt: Vrijeme stvaranja
                 modifiedAt: Vrijeme modifikacije
+                includeIn: Uključi u
+            choices:
+                includeIn:
+                    none: Nigdje
+                    topicIndexDefault: GDPR teme (engleski jezik)
+                    topicIndexAlternate: GDPR teme (hrvatski jezik)
         topic:
             label:
                 title: Naslov

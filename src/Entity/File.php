@@ -12,6 +12,9 @@ class File
     public const TYPE_FILE = 'file';
     public const TYPE_VIDEO = 'video';
 
+    public const INCLUDE_IN_TOPIC_INDEX_DEFAULT = 'topic_index_default';
+    public const INCLUDE_IN_TOPIC_INDEX_ALTERNATE = 'topic_index_alternate';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -43,6 +46,9 @@ class File
 
     #[ORM\Column(nullable: true)]
     private ?int $presentationOrder = null;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    private ?array $includeIn = [];
 
     public function __toString(): string
     {
@@ -173,6 +179,21 @@ class File
     public function setPresentationOrder(?int $presentationOrder): self
     {
         $this->presentationOrder = $presentationOrder;
+
+        return $this;
+    }
+
+    public function getIncludeIn(): array
+    {
+        if (null === $this->includeIn) {
+            return [];
+        }
+        return $this->includeIn;
+    }
+
+    public function setIncludeIn(?array $includeIn): self
+    {
+        $this->includeIn = $includeIn ?? [];
 
         return $this;
     }
