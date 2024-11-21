@@ -49,7 +49,7 @@ class BasicFileUploadType extends AbstractType
             $builder
                 ->add('type', ChoiceType::class, ['label' => 'form.entity.file.label.type', 'choices' => $typeChoices, 'attr' => ['class' => 'form-select mb-3']])
                 ->add('seminar', ChoiceType::class, ['label' => 'form.entity.file.label.seminar', 'choices' => $booleanChoices, 'attr' => ['class' => 'form-select mb-3']])
-                ->add('includeIn', ChoiceType::class, ['label' => 'form.entity.file.label.includeIn', 'multiple' => true, 'choices' => $includeInChoices, 'attr' => ['class' => 'mb-3', 'data-df-select' => '']])
+                ->add('includeIn', ChoiceType::class, ['label' => 'form.entity.file.label.includeIn', 'required' => false, 'multiple' => true, 'choices' => $includeInChoices, 'attr' => ['class' => 'mb-3', 'data-df-select' => '']])
                 ->add('displayText', TextareaType::class, ['label' => 'form.entity.file.label.displayText', 'required' => false, 'attr' => ['class' => 'form-textarea']])
             ;
         }
