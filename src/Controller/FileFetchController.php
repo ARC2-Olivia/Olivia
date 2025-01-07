@@ -7,7 +7,6 @@ use App\Entity\File;
 use App\Entity\Instructor;
 use App\Entity\LessonItemFile;
 use App\Entity\PracticalSubmodule;
-use App\Entity\PracticalSubmoduleAssessment;
 use App\Entity\Topic;
 use App\Entity\User;
 use App\Repository\CourseRepository;
@@ -133,7 +132,7 @@ class FileFetchController extends AbstractController
                                    Request $request,
     ): Response
     {
-        if (null !== $this->getUser()->getAllCoursesPassedAt()) {
+        if (null === $this->getUser()->getAllCoursesPassedAt()) {
             throw $this->createAccessDeniedException();
         }
         $defaultLocale = $this->getParameter('locale.default');
