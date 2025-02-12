@@ -10,14 +10,17 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CaptchaType extends AbstractType
 {
     private RequestStack $requestStack;
+    private TranslatorInterface $translator;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, TranslatorInterface $translator)
     {
         $this->requestStack = $requestStack;
+        $this->translator = $translator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -32,8 +35,8 @@ class CaptchaType extends AbstractType
         $result = $firstNumber + $secondNumber;
         $this->requestStack->getSession()->set('captcha_result', $result);
 
-        $view->vars['captcha_1st_number'] = $firstNumber;
-        $view->vars['captcha_2nd_number'] = $secondNumber;
+        $view->vars['captcha_1st_number'] = $this->translator->trans('number.'.$firstNumber, [], 'app');
+        $view->vars['captcha_2nd_number'] = $this->translator->trans('number.'.$secondNumber, [], 'app');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
