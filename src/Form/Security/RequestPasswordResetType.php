@@ -2,6 +2,7 @@
 
 namespace App\Form\Security;
 
+use App\Form\Custom\RecaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +22,7 @@ class RequestPasswordResetType extends AbstractType
                     new Assert\Email(['message' => 'error.resetPassword.email.format'])
                 ]
             ])
+            ->add('recaptcha', RecaptchaType::class)
         ;
     }
 

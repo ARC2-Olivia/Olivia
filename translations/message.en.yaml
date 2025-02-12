@@ -154,6 +154,9 @@ error:
         token:
             invalid: Invalid password reset request.
             expired: The password reset request has expired.
+    recaptcha:
+        noData: You have not performed a reCAPTCHA check.
+        validationFailed: reCAPTCHA verification failed. Please try again.
     export:
         results: This questionnaire does not support export of results!
     course:

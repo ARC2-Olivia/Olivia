@@ -57,7 +57,10 @@ class SecurityController extends AbstractController
             return new Response('Access denied.', Response::HTTP_FORBIDDEN);
         }
 
-        if ($this->isGranted(User::ROLE_USER)) return $this->redirectToRoute('index');
+        if ($this->isGranted(User::ROLE_USER)) {
+            return $this->redirectToRoute('index');
+        }
+
         $registration = new RegistrationData();
         $form = $this->createForm(RegistrationType::class, $registration);
         $form->handleRequest($request);
