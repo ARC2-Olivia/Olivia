@@ -25,7 +25,6 @@
                         {{ form_widget(form.acceptedGdpr) }}
                         <span class="ms-2">{{ form.acceptedGdpr.vars.label|raw }}</span>
                     </label>
-                    <div class="mb-3">{{ form_widget(form.recaptcha) }}</div>
                     <button type="submit" class="btn btn-theme-white bg-black w-100 mb-3">{{ 'common.submit'|trans }}</button>
                     {{ form_end(form) }}
                     <a href="{{ path('security_login') }}" class="btn btn-link">{{ 'common.login'|trans }}</a>

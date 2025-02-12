@@ -2,7 +2,6 @@
 
 namespace App\Form\Security;
 
-use App\Form\Custom\RecaptchaType;
 use App\Security\RegistrationData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -51,7 +50,6 @@ class RegistrationType extends AbstractType
             ->add('acceptedGdpr', CheckboxType::class, [
                 'label' => $this->translator->trans('form.security.registration.label.termsOfService', ['%url%' => $this->router->generate('gdpr_active_terms_of_service')], 'app')
             ])
-            ->add('recaptcha', RecaptchaType::class)
         ;
     }
 
