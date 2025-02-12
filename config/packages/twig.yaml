@@ -3,6 +3,7 @@ twig:
     globals:
         locale_default: '%locale.default%'
         locale_alternate: '%locale.alternate%'
+        registration_enabled: '%registration.enabled%'
 
 when@test:
     twig:

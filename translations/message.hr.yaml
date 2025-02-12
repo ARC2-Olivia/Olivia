@@ -78,6 +78,7 @@ warning:
         text: Token za potvrdu računa iz danog URL-a nije valjan. Ili je račun već aktiviran, ili račun koji treba aktivirati nije stvoren.
     registration:
         userExists: Korisnik s tom e-mail adresom već postoji.
+        disabled: Registracija i reset lozinki su privremeno onemogućene.
     course:
         image.store: Došlo je do greške prilikom spremanja slike za tečaj. Pokušajte je ponovno učitati na stranici za uređivanje tečaja.
         delete: Izbrisan je tečaj <i>%course%</i>.

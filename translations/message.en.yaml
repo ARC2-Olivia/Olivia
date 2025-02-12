@@ -78,6 +78,7 @@ warning:
         text: The confirmation token from the supplied URL is invalid. Either the account has been already activated, or the account doesn't exist.
     registration:
         userExists: User with that e-mail already exists.
+        disabled: Registrations and password resets have been temporarily disabled.
     course:
         image.store: There was an error storing the course image. You can try to reupload it while editing the basic course information.
         delete: Course <i>%course%</i> has been deleted.
