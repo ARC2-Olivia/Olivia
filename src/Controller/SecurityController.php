@@ -12,6 +12,7 @@ use App\Service\MailerService;
 use App\Service\SecurityService;
 use App\Service\GdprService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,15 +23,21 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SecurityController extends AbstractController
 {
     private TranslatorInterface $translator;
+    private ParameterBagInterface $parameterBag;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, ParameterBagInterface $parameterBag)
     {
         $this->translator = $translator;
+        $this->parameterBag = $parameterBag;
     }
 
     #[Route("/login", name: "login")]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        if (!$this->parameterBag->get('registration.enabled')) {
+            $this->addFlash('warning', $this->translator->trans('warning.registration.disabled', [], 'message'));
+        }
+
         if ($this->isGranted(User::ROLE_USER)) return $this->redirectToRoute('index');
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) $this->addFlash('error', $this->translator->trans($error->getMessageKey(), [], 'message'));
@@ -44,8 +51,12 @@ class SecurityController extends AbstractController
     }
 
     #[Route("/registration", name: "registration")]
-    public function registration(Request $request, SecurityService $securityService, MailerService $mailerService, GdprService $termsOfServiceService): Response
+    public function registration(Request $request, SecurityService $securityService, MailerService $mailerService): Response
     {
+        if (!$this->parameterBag->get('registration.enabled')) {
+            return new Response('Access denied.', Response::HTTP_FORBIDDEN);
+        }
+
         if ($this->isGranted(User::ROLE_USER)) return $this->redirectToRoute('index');
         $registration = new RegistrationData();
         $form = $this->createForm(RegistrationType::class, $registration);
@@ -69,6 +80,10 @@ class SecurityController extends AbstractController
     #[Route("/confirmation/{confirmationToken}", name: "confirmation")]
     public function confirmation(string $confirmationToken, SecurityService $securityService, GdprService $termsOfServiceService): Response
     {
+        if (!$this->parameterBag->get('registration.enabled')) {
+            return new Response('Access denied.', Response::HTTP_FORBIDDEN);
+        }
+
         $user = null;
         $activationSuccess = $securityService->activateUserWithToken($confirmationToken, $user);
         if ($user !== null) $termsOfServiceService->userAcceptsCurrentlyActiveGdpr($user);
@@ -78,6 +93,10 @@ class SecurityController extends AbstractController
     #[Route("/request-password-reset", name: "request_password_reset")]
     public function requestPasswordReset(Request $request, SecurityService $securityService, MailerService $mailerService): Response
     {
+        if (!$this->parameterBag->get('registration.enabled')) {
+            return new Response('Access denied.', Response::HTTP_FORBIDDEN);
+        }
+
         $requestSent = false;
         $form = $this->createForm(RequestPasswordResetType::class);
 
@@ -99,6 +118,10 @@ class SecurityController extends AbstractController
     #[Route("/password-reset/{passwordResetToken}", name: "password_reset")]
     public function passwordReset(string $passwordResetToken, Request $request, SecurityService $securityService): Response
     {
+        if (!$this->parameterBag->get('registration.enabled')) {
+            return new Response('Access denied.', Response::HTTP_FORBIDDEN);
+        }
+
         if (false === $securityService->passwordResetTokenExists($passwordResetToken)) {
             $this->addFlash('error', $this->translator->trans('error.resetPassword.token.invalid', [], 'message'));
             return $this->redirectToRoute('security_login');

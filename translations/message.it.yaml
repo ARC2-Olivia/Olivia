@@ -78,6 +78,7 @@ warning:
         text: Il token di conferma dall'URL fornito non è valido. O l'account è già stato attivato oppure l'account non esiste.
     registration:
         userExists: L'utente con quell'e-mail esiste già.
+        disabled: Le registrazioni e le reimpostazioni delle password sono state temporaneamente disabilitate.
     course:
         image.store: Si è verificato un errore durante la memorizzazione dell'immagine del corso. Puoi provare a ricaricarlo mentre modifichi le informazioni di base del corso.
         delete: Il corso <i>%corso%</i> è stato eliminato.
