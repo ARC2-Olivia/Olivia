@@ -154,6 +154,9 @@ error:
         token:
             invalid: Zahtjev za resetiranje lozinke nije valjan.
             expired: Istekao je zahtjev za resetiranje lozinke.
+    captcha:
+        incorrect: Vaš odgovor na provjeri jeste li robot nije točan.
+        empty: Morate dati odgovor na provjeri jeste li robot.
     export:
         results: Ovaj upitnik ne podržava izvoz rezultata!
     course:
