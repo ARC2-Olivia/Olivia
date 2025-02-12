@@ -154,6 +154,9 @@ error:
         token:
             invalid: Richiesta di reimpostazione della password non valida.
             expired: La richiesta di reimpostazione della password è scaduta.
+    captcha:
+        incorrect: La tua risposta per verificare se sei un robot non è corretta.
+        empty: Devi rispondere alla verifica se sei un robot.
     export:
         results: Questo questionario non supporta l'esportazione dei risultati!
     course:

@@ -1,0 +1,6 @@
+{% block captcha_widget %}
+	<div class="d-flex gap-2 mb-3 align-items-center">
+		<span class="flex-shrink-0">{{ captcha_1st_number }} + {{ captcha_2nd_number }}</span>
+		{{ form_widget(form.result, {'attr': {'class': 'form-input'}}) }}
+	</div>
+{% endblock %}

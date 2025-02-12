@@ -154,6 +154,9 @@ error:
         token:
             invalid: Invalid password reset request.
             expired: The password reset request has expired.
+    captcha:
+        incorrect: Your answer to verify if you are a robot is incorrect.
+        empty: You have to give an answer to check if you are a robot.
     export:
         results: This questionnaire does not support export of results!
     course:
