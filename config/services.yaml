@@ -21,8 +21,6 @@ parameters:
     video.topic.index.default: '%env(trim:VIDEO_URL_TOPIC_INDEX_DEFAULT)%'
     video.topic.index.alternate: '%env(trim:VIDEO_URL_TOPIC_INDEX_ALTERNATE)%'
     registration.enabled: '%env(bool:REGISTRATION_ENABLED)%'
-    recaptcha.site.key: '%env(RECAPTCHA_SITE_KEY)%'
-    recaptcha.secret.key: '%env(RECAPTCHA_SECRET_KEY)%'
 
 services:
     # default configuration for services in *this* file

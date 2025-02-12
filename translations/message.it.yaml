@@ -154,9 +154,6 @@ error:
         token:
             invalid: Richiesta di reimpostazione della password non valida.
             expired: La richiesta di reimpostazione della password è scaduta.
-    recaptcha:
-        noData: Non utilizzare il comando reCAPTCHA.
-        validationFailed: Verifica reCAPTCHA non riuscita. Per favore riprova.
     export:
         results: Questo questionario non supporta l'esportazione dei risultati!
     course:

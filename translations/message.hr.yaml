@@ -154,9 +154,6 @@ error:
         token:
             invalid: Zahtjev za resetiranje lozinke nije valjan.
             expired: Istekao je zahtjev za resetiranje lozinke.
-    recaptcha:
-        noData: Niste izvršili reCAPTCHA provjeru.
-        validationFailed: reCAPTCHA provjera nije uspjela. Molimo, pokušajte ponovno.
     export:
         results: Ovaj upitnik ne podržava izvoz rezultata!
     course:
