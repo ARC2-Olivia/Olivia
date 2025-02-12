@@ -1000,3 +1000,28 @@ trophy:
 maintenance:
     1: Provode se radovi nad alatom OLIVIA.
     2: Molimo strpljenje.
+
+captcha:
+    description: Dokažite da niste robot, riješite matematički zadatak. Rješenje unesite kao broj.
+
+number:
+    1: Jedan
+    2: Dva
+    3: Tri
+    4: Četiri
+    5: Pet
+    6: Šest
+    7: Sedam
+    8: Osam
+    9: Devet
+    10: Deset
+    11: Jedanaest
+    12: Dvanaest
+    13: Trinaest
+    14: Četrnaest
+    15: Petnaest
+    16: Šestnaest
+    17: Sedamnaest
+    18: Osamnaest
+    19: Devetnaest
+    20: Dvadeset

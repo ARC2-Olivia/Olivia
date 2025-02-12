@@ -989,3 +989,28 @@ trophy:
 maintenance:
     1: Lo strumento OLIVIA è in fase di manutenzione.
     2: Per favore sii paziente.
+
+captcha:
+    description: Dimostra che non sei un robot, risolvi un problema di matematica. Inserisci la soluzione come numero.
+
+number:
+    1: Uno
+    2: Due
+    3: Tre
+    4: Quattro
+    5: Cinque
+    6: Sei
+    7: Sette
+    8: Otto
+    9: Nove
+    10: Dieci
+    11: Undici
+    12: Dodici
+    13: Tredici
+    14: Quattordici
+    15: Quindici
+    16: Sedici
+    17: Diciassette
+    18: Diciotto
+    19: Diciannove
+    20: Venti
