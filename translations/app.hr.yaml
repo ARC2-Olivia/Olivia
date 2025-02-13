@@ -65,6 +65,8 @@ button:
     goToCourse: Idi na tečaj
     enableDyslexiaMode: Uključi pomoć pri disleksiji
     disableDyslexiaMode: Isključi pomoć pri disleksiji
+    enableContrastMode: Omogući kontrast
+    disableContrastMode: Onemogući kontrast
 
 page:
     login: Olivia | Prijava

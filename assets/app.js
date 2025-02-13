@@ -1,4 +1,6 @@
 import './app.css';
+import './styles/accessibility/dyslexic.css'
+import './styles/accessibility/contrasted.css'
 import './scripts/toast'
 
 window.addEventListener("load", () => {
