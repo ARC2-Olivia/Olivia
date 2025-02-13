@@ -66,6 +66,8 @@ button:
     goToCourse: Vai al corso
     enableDyslexiaMode: Includere un aiuto per la dislessia
     disableDyslexiaMode: Disattiva l'aiuto per la dislessia
+    enableContrastMode: Abilita contrasto
+    disableContrastMode: Disattiva contrasto
 
 page:
     login: Olivia | Login

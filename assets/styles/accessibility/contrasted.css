@@ -1,0 +1,236 @@
+:root {
+    --app-color-contrast-black: #000000;
+    --app-color-contrast-white: #FFFFFF;
+    --app-color-contrast-yellow: #FFFF00;
+}
+
+body.contrasted {
+    color: var(--app-color-contrast-white);
+}
+
+body.contrasted :is(a, h2, h3) {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted header {
+    background-color: var(--app-color-contrast-black) !important;
+}
+
+body.contrasted .nav-locale {
+    color: var(--app-color-contrast-yellow);
+    opacity: 1;
+}
+
+body.contrasted .body {
+    background-color: var(--app-color-contrast-black);
+}
+
+body.contrasted :is(.index-banner-title, .index-banner-subtitle) {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .index-about::before {
+    display: none;
+}
+
+body.contrasted .index-about--left h2 {
+    color: var(--app-color-contrast-yellow) !important;
+}
+
+body.contrasted .index-about--right h3 {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .index-about--right--item-icon {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .index-topics h3 {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .dropdown-item {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .news-h2 {
+    color: var(--app-color-contrast-yellow);
+    border-color: var(--app-color-contrast-white);
+}
+
+body.contrasted .news-item {
+    border-color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .news-grid .news-item .news-item-title {
+    color: var(--app-color-contrast-white);
+}
+
+body.contrasted .news-grid .news-item .news-item-date {
+    color: var(--app-color-contrast-white);
+}
+
+body.contrasted .news-grid .news-item .news-item-link {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .footer-1 {
+    background-color: var(--app-color-contrast-black);
+}
+
+body.contrasted .footer-column {
+    color: var(--app-color-contrast-white);
+}
+
+body.contrasted .footer-column a {
+    color: var(--app-color-contrast-yellow);
+    text-decoration: underline;
+}
+
+body.contrasted .btn-theme-white {
+    color: var(--app-color-contrast-white);
+    background-color: var(--app-color-contrast-black) !important;
+    border: solid 1px var(--app-color-contrast-yellow);
+}
+
+body.contrasted .btn-nav {
+    color: var(--app-color-contrast-white) !important;
+}
+
+body.contrasted .btn-nav::before {
+    background-color: var(--app-color-contrast-white) !important;
+}
+
+body.contrasted .btn-nav:is(:hover, .active) {
+    color: var(--app-color-contrast-yellow) !important;
+}
+
+body.contrasted .btn-nav:is(:hover, .active)::before {
+    background-color: var(--app-color-contrast-yellow) !important;
+}
+
+body.contrasted .news-list .news-item::before {
+    background-color: var(--app-color-contrast-white);
+}
+
+body.contrasted .news-list .news-item > .news-item-date {
+    color: var(--app-color-contrast-white);
+    border-color: var(--app-color-contrast-white);
+}
+
+body.contrasted .news-list .news-item > .news-item-title {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .news-header-back {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .news-header-back:hover {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .news-header-title {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .news-header-date {
+    color: var(--app-color-contrast-white);
+}
+
+body.contrasted .h1-login {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .card {
+    background-color: var(--app-color-contrast-black);
+    border: solid 1px var(--app-color-contrast-yellow);
+    color: var(--app-color-contrast-white);
+}
+
+body.contrasted .card-title {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .btn-link {
+    color: var(--app-color-contrast-yellow);
+    text-decoration: underline;
+}
+
+body.contrasted .form-input {
+    border-color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .form-input::placeholder {
+    color: var(--app-color-contrast-black);
+    opacity: 0.66667;
+}
+
+body.contrasted form :is(label, p) {
+    color: var(--app-color-contrast-white);
+}
+
+body.contrasted .btn-link::before {
+    display: none;
+}
+
+body.contrasted .topic-about-title {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .topic-title {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .course-card-name {
+    color: var(--app-color-contrast-white);
+}
+
+body.contrasted .course-card-details {
+    color: var(--app-color-contrast-white);
+}
+
+body.contrasted .course-card-details-icon {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .topic-type {
+    color: var(--app-color-contrast-black);
+    font-weight: bold;
+}
+
+body.contrasted .topic-type:is(.learn, .apply) {
+    background-color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .topic-segments-divider {
+    background-color: var(--app-color-contrast-white);
+}
+
+body.contrasted .course-header-breadcrumbs a {
+    color: var(--app-color-contrast-yellow);
+    opacity: 1;
+    text-decoration: underline;
+}
+
+body.contrasted .course-header-breadcrumbs :not(a) {
+    color: var(--app-color-contrast-white);
+    opacity: 1;
+}
+
+body.contrasted .course-header-name {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .course-header-details svg {
+    color: var(--app-color-contrast-yellow);
+}
+
+body.contrasted .course-content {
+    background-color: var(--app-color-contrast-black);
+    color: var(--app-color-contrast-white);
+}
+
+body.contrasted {
+
+}

@@ -66,6 +66,8 @@ button:
     goToCourse: Go to course
     enableDyslexiaMode: Enable dyslexia mode
     disableDyslexiaMode: Disable dyslexia mode
+    enableContrastMode: Enable contrast
+    disableContrastMode: Disable contrast
 
 page:
     login: Olivia | Login

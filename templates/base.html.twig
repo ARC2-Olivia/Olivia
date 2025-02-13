@@ -35,7 +35,7 @@
         {% if isAuthenticated %}{{ encore_entry_script_tags('session.extend') }}{% endif %}
         {% block javascripts %}{% endblock %}
     </head>
-    <body data-extend-session-path="{{ path('extend_session') }}" data-extend-session-translations="{{ extendSessionTranslations|json_encode }}"{% if is_dylexia_mode_enabled() %} class="dyslexic"{% endif %}>
+    <body data-extend-session-path="{{ path('extend_session') }}" data-extend-session-translations="{{ extendSessionTranslations|json_encode }}" class="{{ accessibility_body_class() }}">
         {% if hideHeader != true %}
             <header class="bg-dark-blue">
                 {% include 'nav.html.twig' %}

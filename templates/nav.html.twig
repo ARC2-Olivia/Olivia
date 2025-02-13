@@ -54,8 +54,11 @@
                 <li>
                     <button id="accessibility-button" class="btn btn-theme-white">{{ mdi('human-handsup', 'mt-1') }}</button>
                     <ul class="dropdown" data-dropdown data-for="#accessibility-button">
-                        <li class="dropdown-item"><a href="{{ path(currentRoute, currentRouteParams|merge({'accessibilityToggle': 'dyslexiaMode'})) }}">
-                            {{ is_dylexia_mode_enabled() ? 'button.disableDyslexiaMode'|trans : 'button.enableDyslexiaMode'|trans }}</a>
+                        <li class="dropdown-item">
+                            <a href="{{ path(currentRoute, currentRouteParams|merge({'accessibilityToggle': 'dyslexiaMode'})) }}">{{ is_dyslexia_mode_enabled() ? 'button.disableDyslexiaMode'|trans : 'button.enableDyslexiaMode'|trans }}</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="{{ path(currentRoute, currentRouteParams|merge({'accessibilityToggle': 'contrastMode'})) }}">{{ is_contrast_mode_enabled() ? 'button.disableContrastMode'|trans : 'button.enableContrastMode'|trans }}</a>
                         </li>
                     </ul>
                 </li>
