@@ -2,6 +2,7 @@ import './app.css';
 import './styles/accessibility/dyslexic.css'
 import './styles/accessibility/contrasted.css'
 import './scripts/toast'
+import './scripts/accessibility/zoom'
 
 window.addEventListener("load", () => {
     // Menu buttons

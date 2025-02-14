@@ -46,6 +46,9 @@ common:
     close: Zatvori
     showFields: Pokaži polja
     back: Natrag
+    increase: Povećaj
+    decrease: Smanji
+    reset: Resetiraj
 
 button:
     details: Detalji
