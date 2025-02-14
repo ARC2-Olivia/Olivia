@@ -1,32 +1,26 @@
-:root {
-    --app-color-contrast-black: #000000;
-    --app-color-contrast-white: #FFFFFF;
-    --app-color-contrast-yellow: #FFFF00;
-}
-
 body.contrasted {
-    color: var(--app-color-contrast-white);
+    color: white;
 }
 
 body.contrasted :is(a, h2, h3) {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted header {
-    background-color: var(--app-color-contrast-black) !important;
+    background-color: black !important;
 }
 
 body.contrasted .nav-locale {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
     opacity: 1;
 }
 
 body.contrasted .body {
-    background-color: var(--app-color-contrast-black);
+    background-color: black;
 }
 
 body.contrasted :is(.index-banner-title, .index-banner-subtitle) {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .index-about::before {
@@ -34,140 +28,140 @@ body.contrasted .index-about::before {
 }
 
 body.contrasted .index-about--left h2 {
-    color: var(--app-color-contrast-yellow) !important;
+    color: yellow !important;
 }
 
 body.contrasted .index-about--right h3 {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .index-about--right--item-icon {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .index-topics h3 {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .dropdown-item {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .news-h2 {
-    color: var(--app-color-contrast-yellow);
-    border-color: var(--app-color-contrast-white);
+    color: yellow;
+    border-color: white;
 }
 
 body.contrasted .news-item {
-    border-color: var(--app-color-contrast-yellow);
+    border-color: yellow;
 }
 
 body.contrasted .news-grid .news-item .news-item-title {
-    color: var(--app-color-contrast-white);
+    color: white;
 }
 
 body.contrasted .news-grid .news-item .news-item-date {
-    color: var(--app-color-contrast-white);
+    color: white;
 }
 
 body.contrasted .news-grid .news-item .news-item-link {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .footer-1 {
-    background-color: var(--app-color-contrast-black);
+    background-color: black;
 }
 
 body.contrasted .footer-column {
-    color: var(--app-color-contrast-white);
+    color: white;
 }
 
 body.contrasted .footer-column a {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
     text-decoration: underline;
 }
 
 body.contrasted .btn-theme-white {
-    color: var(--app-color-contrast-white);
-    background-color: var(--app-color-contrast-black) !important;
-    border: solid 1px var(--app-color-contrast-yellow);
+    color: white;
+    background-color: black !important;
+    border: solid 1px yellow;
 }
 
 body.contrasted .btn-nav {
-    color: var(--app-color-contrast-white) !important;
+    color: white !important;
 }
 
 body.contrasted .btn-nav::before {
-    background-color: var(--app-color-contrast-white) !important;
+    background-color: white !important;
 }
 
 body.contrasted .btn-nav:is(:hover, .active) {
-    color: var(--app-color-contrast-yellow) !important;
+    color: yellow !important;
 }
 
 body.contrasted .btn-nav:is(:hover, .active)::before {
-    background-color: var(--app-color-contrast-yellow) !important;
+    background-color: yellow !important;
 }
 
 body.contrasted .news-list .news-item::before {
-    background-color: var(--app-color-contrast-white);
+    background-color: white;
 }
 
 body.contrasted .news-list .news-item > .news-item-date {
-    color: var(--app-color-contrast-white);
-    border-color: var(--app-color-contrast-white);
+    color: white;
+    border-color: white;
 }
 
 body.contrasted .news-list .news-item > .news-item-title {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .news-header-back {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .news-header-back:hover {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .news-header-title {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .news-header-date {
-    color: var(--app-color-contrast-white);
+    color: white;
 }
 
 body.contrasted .h1-login {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .card {
-    background-color: var(--app-color-contrast-black);
-    border: solid 1px var(--app-color-contrast-yellow);
-    color: var(--app-color-contrast-white);
+    background-color: black;
+    border: solid 1px yellow;
+    color: white;
 }
 
 body.contrasted .card-title {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .btn-link {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
     text-decoration: underline;
 }
 
 body.contrasted .form-input {
-    border-color: var(--app-color-contrast-yellow);
+    border-color: yellow;
 }
 
 body.contrasted .form-input::placeholder {
-    color: var(--app-color-contrast-black);
+    color: black;
     opacity: 0.66667;
 }
 
 body.contrasted form :is(label, p) {
-    color: var(--app-color-contrast-white);
+    color: white;
 }
 
 body.contrasted .btn-link::before {
@@ -175,60 +169,192 @@ body.contrasted .btn-link::before {
 }
 
 body.contrasted .topic-about-title {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .topic-title {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .course-card-name {
-    color: var(--app-color-contrast-white);
+    color: white;
 }
 
 body.contrasted .course-card-details {
-    color: var(--app-color-contrast-white);
+    color: white;
 }
 
 body.contrasted .course-card-details-icon {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .topic-type {
-    color: var(--app-color-contrast-black);
+    color: black;
     font-weight: bold;
 }
 
 body.contrasted .topic-type:is(.learn, .apply) {
-    background-color: var(--app-color-contrast-yellow);
+    background-color: yellow;
 }
 
 body.contrasted .topic-segments-divider {
-    background-color: var(--app-color-contrast-white);
+    background-color: white;
 }
 
 body.contrasted .course-header-breadcrumbs a {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
     opacity: 1;
     text-decoration: underline;
 }
 
 body.contrasted .course-header-breadcrumbs :not(a) {
-    color: var(--app-color-contrast-white);
+    color: white;
     opacity: 1;
 }
 
 body.contrasted .course-header-name {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .course-header-details svg {
-    color: var(--app-color-contrast-yellow);
+    color: yellow;
 }
 
 body.contrasted .course-content {
-    background-color: var(--app-color-contrast-black);
-    color: var(--app-color-contrast-white);
+    background-color: black;
+    color: white;
+}
+
+body.contrasted .file-list-item {
+    background-color: black;
+    border: solid 1px yellow;
+}
+
+body.contrasted .file-list-item > :is(a, button) {
+    color: white;
+}
+
+body.contrasted .file-list-item-reorder-handle > svg {
+    color: white;
+}
+
+body.contrasted .file-list-item-icon {
+    color: white;
+    opacity: 1;
+}
+
+body.contrasted .modal-dialog {
+    background-color: black;
+    border: solid 1px yellow;
+}
+
+body.contrasted .modal-dialog .modal-dialog-actions {
+    border-color: white;
+}
+
+body.contrasted .profile-label {
+    color: yellow;
+}
+
+body.contrasted .profile-value {
+    color: white;
+}
+
+body.contrasted .api-field {
+    color: yellow;
+    background-color: black;
+    border: solid 1px white;
+}
+
+body.contrasted .api-field:is(:focus, :focus-visible) {
+    outline-color: white;
+}
+
+body.contrasted .navigation-admin {
+    background-color: black;
+    border: solid 1px white;
+}
+
+body.contrasted .navigation-admin a {
+   text-decoration: underline;
+}
+
+body.contrasted .ql-snow.ql-toolbar button svg  {
+    color: yellow;
+    stroke: yellow;
+    fill: yellow;
+}
+
+body.contrasted .ql-snow .ql-stroke  {
+    stroke: yellow;
+}
+
+body.contrasted .ql-snow .ql-fill  {
+    fill: yellow;
+}
+
+body.contrasted .ql-snow .ql-picker  {
+    color: yellow;
+}
+
+body.contrasted .ql-snow .ql-picker-options {
+    background-color: black;
+}
+
+body.contrasted .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+    border-color: white;
+}
+
+body.contrasted input.gridjs-input {
+    border: solid 1px yellow;
+}
+
+body.contrasted table.gridjs-table {
+    border: solid 1px yellow;
+}
+
+body.contrasted th.gridjs-th {
+    background-color: black;
+    color: white;
+}
+
+body.contrasted button:is(.gridjs-sort-asc, .gridjs-sort-desc, .gridjs-sort-neutral) {
+    filter: invert(1);
+}
+
+body.contrasted button.gridjs-sort-neutral {
+    opacity: 0.5;
+}
+
+body.contrasted td.gridjs-td {
+    border-color: white;
+    color: white;
+    background-color: black;
+}
+
+body.contrasted .gridjs-footer {
+    background-color: black;
+    border: solid 1px yellow;
+}
+
+body.contrasted .gridjs-pagination .gridjs-summary {
+    color: white;
+}
+
+body.contrasted .gridjs-pagination .gridjs-pages button {
+    background-color: black;
+    color: white;
+    border: solid 1px yellow;
+}
+
+body.contrasted .gridjs-pagination .gridjs-pages button:hover {
+    background-color: yellow;
+    color: black;
+}
+
+body.contrasted .gridjs-pagination .gridjs-pages button.gridjs-currentPage {
+    background-color: yellow;
+    color: black;
 }
 
 body.contrasted {
