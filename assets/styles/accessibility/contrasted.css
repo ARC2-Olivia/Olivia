@@ -2,7 +2,15 @@ body.contrasted {
     color: white;
 }
 
-body.contrasted :is(a, h2, h3) {
+body.contrasted .fg-yellow {
+    color: yellow !important;
+}
+
+body.contrasted .fg-orange {
+    color: red !important;
+}
+
+body.contrasted :is(a, h1, h2, h3) {
     color: yellow;
 }
 
@@ -43,8 +51,16 @@ body.contrasted .index-topics h3 {
     color: yellow;
 }
 
+body.contrasted .dropdown {
+    border: solid 1px white;
+}
+
 body.contrasted .dropdown-item {
     color: yellow;
+}
+
+body.contrasted .dropdown-divider {
+    background-color: white;
 }
 
 body.contrasted .news-h2 {
@@ -252,6 +268,10 @@ body.contrasted .modal-dialog .modal-dialog-actions {
     border-color: white;
 }
 
+body.contrasted .modal-dialog .modal-dialog-content {
+    color: white;
+}
+
 body.contrasted .profile-label {
     color: yellow;
 }
@@ -382,6 +402,142 @@ body.contrasted .df-select-menu-item[data-df-selected]:before {
 body.contrasted .df-select-menu-item:hover {
     background-color: yellow;
     color: black;
+}
+
+body.contrasted .toast-message {
+    color: black;
+}
+
+body.contrasted .toast.toast-theme-success {
+    background-color: #00ff00;
+}
+
+body.contrasted .toast.toast-theme-warning {
+    background-color: yellow;
+}
+
+body.contrasted .toast.toast-theme-error {
+    background-color: red;
+}
+
+body.contrasted .lesson-content {
+    background-color: black;
+    color: white;
+}
+
+body.contrasted .lesson-item-icon {
+    color: white !important;
+}
+
+body.contrasted .lesson-item-reorder-handle-icon svg {
+    color: yellow;
+}
+
+
+body.contrasted .lesson-section-navigation-item-type {
+    color: white;
+}
+
+body.contrasted .lesson-section-navigation-item-name {
+    color: yellow;
+}
+
+body.contrasted .lesson-section-navigation-item:is(:hover, .active) {
+    border-left-color: yellow;
+}
+
+body.contrasted .lesson-moderation-tools-item {
+    color: white;
+}
+
+body.contrasted .lesson-moderation-tools-caption {
+    color: yellow;
+}
+
+body.contrasted .lesson-moderation-tools-item::before {
+    background-color: white;
+}
+
+body.contrasted .lesson-moderation-tools-item:hover::before {
+    opacity: 0.5;
+}
+
+body.contrasted .lesson-moderation-tools-item svg {
+    color: yellow;
+}
+
+body.contrasted .lesson-section-navigation-caption.fg-black {
+    color: yellow !important;
+}
+
+body.contrasted .highlight {
+    background-color: yellow;
+    color: black;
+}
+
+body.contrasted .lesson-quiz-completion.passed {
+    border-color: #00ff00;
+    background-color: #00ff00;
+    color: black;
+}
+
+body.contrasted .btn.btn-thematic-orange-outline {
+    border-color: red;
+    color: red;
+}
+
+body.contrasted .btn.btn-thematic-orange-outline:hover {
+    background-color: red;
+    color: white;
+}
+
+body.contrasted .lesson-notes-content > textarea {
+    color: white;
+    border-color: white;
+}
+
+body.contrasted .lesson-notes-heading {
+    background-color: black;
+    border-bottom: solid 1px white;
+}
+
+body.contrasted .quiz-trophy {
+    color: yellow;
+}
+
+body.contrasted .lesson-quiz-intro hr {
+    border-color: white;
+}
+
+body.contrasted .lesson-nav-quiz-completion.passed {
+    background-color: #00ff00;
+    color: black;
+}
+
+body.contrasted .quiz-answer.true {
+    background-color: #00ff00;
+    color: black;
+}
+
+body.contrasted .quiz-answer.false {
+    background-color: red;
+    color: black;
+}
+
+body.contrasted .quiz-anim-whiteout {
+    background-color: black;
+}
+
+body.contrasted .quiz-anim-correct {
+    color: #00ff00;
+}
+
+body.contrasted .quiz-anim-wrong {
+    color: red;
+}
+
+body.contrasted .quiz-submit {
+    background-color: blue;
 }
 
 body.contrasted {

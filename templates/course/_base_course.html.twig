@@ -4,7 +4,7 @@
 {% block title %}{{ 'page.course.show'|trans }}{% endblock %}
 
 {% block header %}
-    <div class="container-fluid bg-dark-blue">
+    <div class="container-fluid {{ is_contrast_mode_enabled() ? 'bg-black border-bottom' : 'bg-dark-blue' }}">
         <div class="container fg-white">
             <div class="row gx-2">
                 <div class="col-12 col-md-9 pt-5 pb-3">
