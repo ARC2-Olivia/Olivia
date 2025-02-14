@@ -47,6 +47,9 @@ common:
     close: Vicino
     showFields: Mostra campi
     back: Indietro
+    increase: Aumento
+    decrease: Diminuire
+    reset: Reset
 
 button:
     details: Dettagli

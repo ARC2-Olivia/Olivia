@@ -47,6 +47,9 @@ common:
     close: Close
     showFields: Show fields
     back: Back
+    increase: Increase
+    decrease: Decrease
+    reset: Reset
 
 button:
     details: Details

@@ -60,6 +60,15 @@
                         <li class="dropdown-item">
                             <a href="{{ path(currentRoute, currentRouteParams|merge({'accessibilityToggle': 'contrastMode'})) }}">{{ is_contrast_mode_enabled() ? 'button.disableContrastMode'|trans : 'button.enableContrastMode'|trans }}</a>
                         </li>
+                        <li class="dropdown-divider"></li>
+                        <li class="dropdown-item d-flex gap-1 flex-column">
+                            <div class="dropdown-item-text">Zoom</div>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-theme-white flex-grow-1 flex-shrink-0" data-zoom="increase">{{ mdi('magnify-plus-outline') }}{{ 'common.increase'|trans }}</button>
+                                <button type="button" class="btn btn-theme-white flex-grow-1 flex-shrink-0" data-zoom="decrease">{{ mdi('magnify-minus-outline') }}{{ 'common.decrease'|trans }}</button>
+                            </div>
+                            <button type="button" class="btn btn-theme-white" data-zoom="reset">{{ 'common.reset'|trans }}</button>
+                        </li>
                     </ul>
                 </li>
                 <li>

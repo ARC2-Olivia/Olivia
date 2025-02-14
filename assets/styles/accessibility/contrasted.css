@@ -67,6 +67,10 @@ body.contrasted .dropdown-item {
     color: yellow;
 }
 
+body.contrasted .dropdown-item-text {
+    color: #ffffff !important;
+}
+
 body.contrasted .dropdown-divider {
     background-color: white;
 }
