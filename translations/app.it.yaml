@@ -50,6 +50,7 @@ common:
     increase: Aumento
     decrease: Diminuire
     reset: Reset
+    zoom: Dimensioni dello schermo
 
 button:
     details: Dettagli
