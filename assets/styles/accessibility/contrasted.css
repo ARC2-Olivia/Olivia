@@ -10,6 +10,14 @@ body.contrasted .fg-orange {
     color: red !important;
 }
 
+body.contrasted .bg-green {
+    background-color: #00ff00 !important;
+}
+
+body.contrasted .bg-red {
+    background-color: red !important;
+}
+
 body.contrasted :is(a, h1, h2, h3) {
     color: yellow;
 }
@@ -160,6 +168,10 @@ body.contrasted .card {
 
 body.contrasted .card-title {
     color: yellow;
+}
+
+body.contrasted .card-text {
+    color: white;
 }
 
 body.contrasted .btn-link {
@@ -538,6 +550,73 @@ body.contrasted .quiz-anim-wrong {
 
 body.contrasted .quiz-submit {
     background-color: blue;
+}
+
+body.contrasted .course-card-icon-passed > svg {
+    color: red !important;
+}
+
+body.contrasted .btn.btn-thematic-blue-outline {
+    border-color: #00ff00;
+    color: #00ff00;
+    background-color: black;
+}
+
+body.contrasted .btn.btn-thematic-blue-outline:hover {
+    background-color: #00ff00;
+    color: black;
+}
+
+body.contrasted .evaluation-content {
+    background-color: black;
+    color: white;
+}
+
+body.contrasted .evaluation-assessment-datum-question {
+    border-color: yellow;
+    background-color: black;
+    color: yellow;
+    border-width: 1px;
+}
+
+body.contrasted .evaluation-assessment-datum-answers {
+    border-color: white;
+    border-width: 1px;
+}
+
+body.contrasted .evaluation-assessment-page-title {
+    color: yellow;
+}
+
+body.contrasted .evaluation-assessment-question-text {
+    background: none;
+    color: yellow;
+    border-radius: 0;
+    border-bottom: solid 1px white;
+}
+
+body.contrasted .evaluation-assessment-question.heading .evaluation-assessment-question-text {
+    border: none;
+    background-color: yellow;
+    border-radius: 4px;
+    color: black;
+}
+
+body.contrasted .evaluation-assessment-datum-dependee-message {
+    background-color: blue;
+}
+
+body.contrasted .evaluation-assessment-datum-dependee-message.unanswered {
+    background-color: red;
+}
+
+body.contrasted .evaluation-assessment-datum-unanswered-dependee {
+    border-color: red;
+    border-width: 1px;
+}
+
+body.contrasted .evaluation-content hr {
+    border-color: white;
 }
 
 body.contrasted {
