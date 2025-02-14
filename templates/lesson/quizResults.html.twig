@@ -5,7 +5,7 @@
     <div class="lesson-sections">
         {% include 'lesson/_show_sectionNav.html.twig' %}
         <div class="lesson-section-main lesson-content">
-            <h2 class="lesson-section-main-caption fg-black">{{ 'lesson.extra.quizRezults'|trans }}</h2>
+            <h2 class="lesson-section-main-caption {{ is_contrast_mode_enabled() ? 'fg-yellow' : 'fg-black' }}">{{ 'lesson.extra.quizRezults'|trans }}</h2>
             <div class="lesson-section-main-content">
                 <div class="lesson-quiz-results">
                     {% for quizResult in quizResults %}
