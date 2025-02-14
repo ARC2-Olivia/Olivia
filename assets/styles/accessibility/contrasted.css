@@ -357,6 +357,33 @@ body.contrasted .gridjs-pagination .gridjs-pages button.gridjs-currentPage {
     color: black;
 }
 
+body.contrasted .df-select-box {
+    border-color: yellow;
+}
+
+body.contrasted .df-selected-item {
+    background-color: black;
+    color: yellow;
+}
+
+body.contrasted .df-select-menu {
+    border-color: yellow;
+    background-color: black;
+}
+
+body.contrasted .df-select-menu-item {
+    color: white;
+}
+
+body.contrasted .df-select-menu-item[data-df-selected]:before {
+    color: yellow;
+}
+
+body.contrasted .df-select-menu-item:hover {
+    background-color: yellow;
+    color: black;
+}
+
 body.contrasted {
 
 }
