@@ -49,6 +49,7 @@ common:
     increase: Povećaj
     decrease: Smanji
     reset: Resetiraj
+    zoom: Veličina prikaza
 
 button:
     details: Detalji
