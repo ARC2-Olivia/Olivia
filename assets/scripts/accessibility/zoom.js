@@ -35,7 +35,7 @@ class AccessibilityZoom
         if (true === sendRequest && typeof this.#updateRoute === 'string') {
             const formData = new FormData();
             formData.set('zoomLevel', this.#zoomLevel.toString());
-            fetch('/olivia/public/accessibility/zoom/update', { method: 'POST', body: formData });
+            fetch(this.#updateRoute, { method: 'POST', body: formData });
         }
     }
 
