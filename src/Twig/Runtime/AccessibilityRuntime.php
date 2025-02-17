@@ -9,6 +9,7 @@ class AccessibilityRuntime implements RuntimeExtensionInterface
 {
     private const SESSION_DYSLEXIA_MODE = 'accessibility.dyslexiaMode';
     private const SESSION_CONTRAST_MODE = 'accessibility.contrastMode';
+    private const SESSION_ZOOM_LEVEL = 'accessibility.zoomLevel';
 
     private ?RequestStack $requestStack = null;
 
@@ -46,5 +47,15 @@ class AccessibilityRuntime implements RuntimeExtensionInterface
         $session = $this->requestStack->getSession();
         $this->contrastMode = true === $session->get(self::SESSION_CONTRAST_MODE);
         return true === $this->contrastMode;
+    }
+
+    public function getZoomLevel(): string
+    {
+        $zoomLevel = $this->requestStack->getSession()->get(self::SESSION_ZOOM_LEVEL);
+        if (!is_numeric($zoomLevel)) {
+            $zoomLevel = '1.0';
+            $this->requestStack->getSession()->set(self::SESSION_ZOOM_LEVEL, $zoomLevel);
+        }
+        return $zoomLevel;
     }
 }
