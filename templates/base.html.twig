@@ -16,9 +16,10 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
     <head>
+        <title>{% block title %}{{ 'app.name'|trans }}{% endblock %}</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{{ 'app.name'|trans }}{% endblock %}</title>
+        <meta name="olivia:zoom" content="{{ zoom_level() }}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         {# <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet"> #}
@@ -33,6 +34,9 @@
         {{ encore_entry_script_tags('app') }}
         {{ encore_entry_script_tags('popper.dropdown') }}
         {% if isAuthenticated %}{{ encore_entry_script_tags('session.extend') }}{% endif %}
+        <script>
+            window.addEventListener("DOMContentLoaded", () => { new AccessibilityZoom('{{ path('accessibility_zoom_update') }}'); });
+        </script>
         {% block javascripts %}{% endblock %}
     </head>
     <body data-extend-session-path="{{ path('extend_session') }}" data-extend-session-translations="{{ extendSessionTranslations|json_encode }}" class="{{ accessibility_body_class() }}">
