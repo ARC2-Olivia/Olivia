@@ -1,0 +1,47 @@
+{% extends 'lesson/_base_courseLesson.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% set canView = is_granted('view', course) %}
+
+{% block lessonContent %}
+    {% if canView %}
+        <div id="lesson-items" class="lesson-items"{% if is_granted('ROLE_MODERATOR') %} data-path="{{ path('lesson_reorder') }}"{% endif %}>
+            {% for lessonInfo in lessonsInfo %}
+                {% include 'lesson/_course_lessonItem.html.twig' with {'lessonInfo': lessonInfo} %}
+            {% else %}
+                <div>{{ 'lesson.extra.noLessons'|trans }}</div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div id="lesson-items" class="lesson-items col-12 col-lg-9 mb-5 mb-lg-0"{% if is_granted('ROLE_MODERATOR') %} data-path="{{ path('lesson_reorder') }}"{% endif %}>
+            {% for lessonInfo in lessonsInfo %}
+                {% include 'lesson/_course_lessonItem.html.twig' with {'lessonInfo': lessonInfo} %}
+            {% else %}
+                <div>{{ 'lesson.extra.noLessons'|trans }}</div>
+            {% endfor %}
+        </div>
+        {% include 'course/_overview_details.html.twig' %}
+    {% endif %}
+
+    {% if is_granted('ROLE_MODERATOR') %}
+        <div class="lesson-actions">
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'text'}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'lesson.extra.text'|trans }}</a>
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'file'}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'lesson.extra.file'|trans }}</a>
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'video'}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'lesson.extra.video'|trans }}</a>
+            <a href="{{ path('lesson_new', {'course': course.id, 'lessonType': 'quiz'}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'lesson.extra.quiz'|trans }}</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('axios') }}
+    {% if is_granted('ROLE_MODERATOR') %}
+        {{ encore_entry_script_tags('sortable') }}
+        {{ encore_entry_script_tags('Reorderer') }}
+        {{ encore_entry_script_tags('lessons.sort') }}
+    {% endif %}
+    {% if is_user() and canView %}
+        {{ encore_entry_script_tags('lessons.completion') }}
+    {% endif %}
+{% endblock %}

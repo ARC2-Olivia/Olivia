@@ -1,0 +1,19 @@
+{% extends 'admin/_base_admin.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block adminContent %}
+    <div class="container-fluid p-5">
+        {% include '_partials/toasts.html.twig' %}
+        {% include 'admin/file/_form.html.twig' with {'title': ('file.title.edit'|trans({'%filename%': file.originalName})|raw)} %}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('df-select') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('df-select') }}
+{% endblock %}

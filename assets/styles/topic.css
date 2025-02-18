@@ -1,0 +1,144 @@
+.topic-segments {
+    display: flex;
+    column-gap: 40px;
+    row-gap: 16px;
+    justify-content: center;
+}
+
+.topic-segments-divider {
+    width: 2px;
+    background-color: var(--app-color-blue);
+    align-self: stretch;
+}
+
+.topic-segment {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-basis: 0;
+    flex-shrink: 0;
+    flex-grow: 1;
+}
+
+.topic-segment-title {
+    text-align: center;
+}
+
+.topic-segment-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.topic-segment-row > * {
+    flex-basis: calc(50% - 16px);
+    flex-shrink: 0;
+}
+
+.topic-segment.theory .topic-segment-row {
+    justify-content: end;
+}
+
+.learn2apply-arrow {
+    width: 192px;
+    height: 64px;
+    margin: 0 auto;
+}
+
+.topic-title {
+    font-weight: 600;
+    color: var(--app-color-blue);
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.topic-type {
+    position: absolute;
+    color: white;
+    background-color: var(--app-color-blue);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    top: 24px;
+    z-index: 1000;
+    padding: 8px 18px;
+}
+
+.topic-type.learn {
+    background-color: var(--app-color-blue);
+}
+
+.topic-type.apply {
+    background-color: var(--app-color-green);
+}
+
+.topic-about-title {
+    text-align: center;
+    color: var(--app-color-blue);
+    font-weight: 600;
+    font-size: 32px;
+    margin-bottom: 16px;
+}
+
+.topic-about-text {
+    text-align: center;
+}
+
+.topic-file {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--app-color-light-blue);
+    border-radius: 8px;
+    padding: 16px;
+    gap: 8px;
+}
+
+a.topic-file {
+    text-decoration: none;
+}
+
+.topic-file > .topic-file-icon {
+    height: 24px;
+    color: var(--app-color-dark-blue);
+}
+
+.topic-file > .topic-file-text {
+    font-size: 16px;
+    color: var(--app-color-dark-blue);
+}
+
+.topic-file:hover > .topic-file-text {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 1199px) {
+    .topic-segment-row > * {
+        flex-basis: 100%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .topic-segments {
+        flex-direction: column;
+    }
+
+    .topic-segments-divider {
+        display: none;
+    }
+
+    .learn2apply-arrow {
+        display: none;
+    }
+
+    .topic-segment.theory > .topic-segment-title {
+        text-align: start;
+    }
+
+    .topic-segment.theory > .topic-segment-grid {
+        flex-direction: row;
+    }
+}
+
+@media screen and (max-width: 575px) {
+}

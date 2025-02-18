@@ -1,0 +1,43 @@
+{% extends 'lesson/_base_lesson.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block lessonContent %}
+    <div class="lesson-sections">
+        {% include 'lesson/_show_sectionNav.html.twig' %}
+        <div class="lesson-section-main lesson-content">
+            <h2 class="lesson-section-main-caption {{ is_contrast_mode_enabled() ? 'fg-yellow' : 'fg-black' }}">{{ 'lesson.extra.quizRezults'|trans }}</h2>
+            <div class="lesson-section-main-content">
+                <div class="lesson-quiz-results">
+                    {% for quizResult in quizResults %}
+                        <div class="lesson-quiz-result-info">
+                            <div class="lesson-quiz-result-question{{ quizResult.correct ? ' correct' : ' incorrect' }}">{{ quizResult.question.text }}</div>
+                            <div class="position-relative">
+                                <div>{{ 'lesson.quiz.correctAnswer'|trans }}: <b>{{ quizResult.question|display_correct_answer }}</b></div>
+                                <div>{{ 'lesson.quiz.yourAnswer'|trans }}: <b>{{ quizResult.answer }}</b></div>
+                                <div class="lesson-quiz-result-icon">{{ quizResult.correct ? mdi('check-circle-outline', 'fg-green') : mdi('close-circle-outline', 'fg-red') }}</div>
+                            </div>
+                            <div class="ql-editor">{{ quizResult.question.explanation|raw }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="lesson-section-main-navigation">
+                {% if previousLesson is not null %}
+                    <a href="{{ path('lesson_show', {'lesson': previousLesson.id}) }}" class="lesson-section-main-navigation-previous">{{ 'common.previous'|trans }}</a>
+                {% endif %}
+                {% if nextLesson is not null %}
+                    <a href="{{ path('lesson_show', {'lesson': nextLesson.id}) }}" class="lesson-section-main-navigation-next">{{ 'common.next'|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if is_user() %}
+        {{ encore_entry_script_tags('axios') }}
+        {{ encore_entry_script_tags('lessons.completion') }}
+    {% endif %}
+{% endblock %}

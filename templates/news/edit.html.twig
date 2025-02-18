@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block body %}
+	{% include 'news/_banner.html.twig' %}
+	
+	<div class="container py-5">
+		{% include '_partials/toasts.html.twig' %}
+		<h1 class="mb-1">{{ 'newsItem.title.edit'|trans }}</h1>
+		<h2 class="mb-4"><i>{{ newsItem.title }}</i></h2>
+		{% include 'news/_form.html.twig' %}
+	</div>
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('quill') }}
+	<style>
+		.editor-container {
+			height: 440px;
+			padding-bottom: 84px;
+		}
+	</style>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'news/_form_script.html.twig' %}
+	{{ encore_entry_script_tags('particles') }}
+{% endblock %}

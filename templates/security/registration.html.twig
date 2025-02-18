@@ -1,0 +1,36 @@
+{% extends 'security/_base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.registration'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="w-100 h-100 row gx-0 justify-content-center align-items-center">
+        <div class="security-form-wrapper">
+            {% include '_partials/toasts.html.twig' %}
+            <div class="card">
+                <div class="card-title py-5">
+                    <h1 class="h1-login text-center">
+                        <span>{{ 'app.brand.1'|trans }}</span>
+                        <span>{{ 'app.brand.2'|trans }}</span>
+                    </h1>
+                </div>
+                <div class="card-text">
+                    {{ form_start(form) }}
+                    <label>{{ form_widget(form.firstName, {'attr': {'placeholder': form.firstName.vars.label}}) }}</label>
+                    <label>{{ form_widget(form.lastName, {'attr': {'placeholder': form.lastName.vars.label}}) }}</label>
+                    <label>{{ form_widget(form.email, {'attr': {'placeholder': form.email.vars.label}}) }}</label>
+                    <label>{{ form_widget(form.plainPassword.first, {'attr': {'placeholder': form.plainPassword.first.vars.label}}) }}</label>
+                    <label>{{ form_widget(form.plainPassword.second, {'attr': {'placeholder': form.plainPassword.second.vars.label}}) }}</label>
+                    <label class="d-flex align-items-center mb-3">
+                        {{ form_widget(form.acceptedGdpr) }}
+                        <span class="ms-2">{{ form.acceptedGdpr.vars.label|raw }}</span>
+                    </label>
+                    <label>{{ form_widget(form.captcha) }}</label>
+                    <button type="submit" class="btn btn-theme-white bg-black w-100 mb-3">{{ 'common.submit'|trans }}</button>
+                    {{ form_end(form) }}
+                    <a href="{{ path('security_login') }}" class="btn btn-link">{{ 'common.login'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

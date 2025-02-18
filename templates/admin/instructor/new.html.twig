@@ -1,0 +1,17 @@
+{% extends 'admin/_base_admin.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block adminContent %}
+    <div class="container-fluid p-5">
+        {% include '_partials/toasts.html.twig' %}
+        <div class="card">
+            <div class="card-title">{{ 'instructor.title.new'|trans }}</div>
+            <div class="card-text">
+                {% include 'admin/instructor/_form.html.twig' %}
+            </div>
+            <div class="card-actions">
+                <button type="submit" class="btn btn-theme-white bg-blue" form="instructor">{{ 'common.save'|trans }}</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

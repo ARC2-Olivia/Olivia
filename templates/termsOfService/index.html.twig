@@ -1,0 +1,53 @@
+{% extends 'termsOfService/_base_tos.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.termsOfService.index'|trans }}{% endblock %}
+
+{% block tosContent %}
+    <div class="card card-body">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <h1 class="card-title">{{ 'termsOfService.title.index'|trans }}</h1>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('gdpr_new') }}" class="btn btn-theme-white bg-blue btn-sm">{{ mdi('plus') }}</a>
+            {% endif %}
+        </div>
+        <div id="tos-table-wrapper"></div>
+        <table id="tos-table">
+            <thead>
+                <tr>
+                    <th>{{ 'form.entity.termsOfService.label.id'|trans }}</th>
+                    <th>{{ 'form.entity.termsOfService.label.title'|trans }}</th>
+                    <th>{{ 'form.entity.termsOfService.label.startedAt'|trans }}</th>
+                    <th>{{ 'form.entity.termsOfService.label.endedAt'|trans }}</th>
+                    <th>{{ 'form.entity.termsOfService.label.active'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gdpr in gdprs %}
+                    <tr>
+                        <td>{{ gdpr.id }}</td>
+                        <td><a href="{{ path('gdpr_terms_of_service', {'gdpr': gdpr.id}) }}">{{ 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) }}</a></td>
+                        <td>{{ gdpr.startedAt|date('d.m.Y.') }}</td>
+                        <td>{{ gdpr.endedAt is not null ? gdpr.endedAt|date('d.m.Y.') : '&mdash;' }}</td>
+                        <td>{{ gdpr.active ? 'common.yes'|trans : 'common.no'|trans }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('gridjs') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('gridjs') }}
+    <script>
+        window.addEventListener("load", () => {
+            new Grid({ from: document.getElementById("tos-table"), sort: true, search: true, pagination: true }).render(document.getElementById("tos-table-wrapper"));
+        });
+    </script>
+{% endblock %}

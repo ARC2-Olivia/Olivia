@@ -1,0 +1,29 @@
+{% trans_default_domain 'app' %}
+
+<li class="mod--evaluation-evaluator" data-id="{{ evaluationEvaluator.id }}">
+    <div class="mod--evaluation-evaluator-status">
+        <div class="mod--evaluation-evaluator-reorder-handle">{{ mdi('drag-vertical', '', '6 0 12 24') }}</div>
+        <div class="mod--evaluation-evaluator-included">
+            {% if not evaluationEvaluator.implementation|is_valid_evaluator %}
+                {{ mdi('text-box-remove', 'invalid') }}
+            {% elseif evaluationEvaluator.disabled %}
+                {{ mdi('text-box-remove', 'disabled') }}
+            {% elseif evaluationEvaluator.included %}
+                {{ mdi('text-box-check', 'included') }}
+            {% else %}
+                {{ mdi('text-box-minus', 'not-included') }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="mod--evaluation-evaluator-details{% if evaluationEvaluator.disabled %} disabled{% endif %}">
+        <div class="mod--evaluation-evaluator-text">{{ evaluationEvaluator.name }}</div>
+        <div class="mod--evaluation-evaluator-type">{{ evaluationEvaluator.type }}</div>
+    </div>
+    <div class="mod--evaluation-evaluator-actions">
+        <form action="{{ path('practical_submodule_processor_delete', {'practicalSubmoduleProcessor': evaluationEvaluator.id}) }}" method="post" onsubmit="return confirm('{{ 'practicalSubmoduleProcessor.delete'|trans }}')">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmoduleProcessor.delete') }}"/>
+            <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
+        </form>
+        <a href="{{ path('practical_submodule_processor_edit', {'practicalSubmoduleProcessor': evaluationEvaluator.id}) }}" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('cog') }}</a>
+    </div>
+</li>

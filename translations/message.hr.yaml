@@ -1,0 +1,282 @@
+type:
+    success: Uspjeh
+    warning: Pozor
+    error: Greška
+
+success:
+    user:
+        edit: Korisnik je uređen.
+    accountConfirmation:
+        subject: Uspješna potvrda!
+        text: Vaš Olivia Tool račun je aktiviran! Prijavite se kako biste pristupili teorijskom ili praktičnom modulu.
+    registration: Poslan Vam je e-mail za potvrdu registracije. Kliknite ili navigirajte do poveznice u e-mail poruc kako biste aktivirali svoj račun.
+    course:
+        new: Stvoren je tečaj <i>%courseName%</i>.
+        edit: Tečaj je uređen.
+    instructor:
+        new: Stvoren je novi instruktor.
+        add: Dodan je <i>%instructor%</i> kao instruktor na tečaju <i>%course%</i>.
+    lesson:
+        new: Dodana je nova lekcija za tečaj <i>%course%</i>.
+        edit: Lekcija je uređena.
+    quiz:
+        finish: Završili ste kviz <i>%quizName%</i>.
+    quizQuestion:
+        new: Dodano je novo kviz pitanje.
+        edit: Pitanje je uređeno.
+    quizQuestionChoice:
+        new: Dodan je novi odgovor na pitanje.
+        edit: Odgovor je uređen.
+    practicalSubmodule:
+        new: Stvoren je novi praktični podmodul.
+        edit: Praktični podmodul je uređen.
+    practicalSubmoduleQuestion:
+        new: Dodano je novo pitanje u podmodul.
+        edit: Pitanje je uređeno.
+    practicalSubmoduleQuestionAnswer:
+        new: Novi odgovor je dodan pitanju.
+        edit: Odgovor na pitanje je uređeno.
+    practicalSubmoduleProcessor:
+        new: Novi procesor je dodan u podmodul.
+        edit: Procesor je uređen.
+    practicalSubmoduleAssessment:
+        finish: Vaš upitnik je spremljen. Rezultate upitnika možete vidjeti klikom na gumb <i>Pregled izvještaja</i> u kartici <i>Upitnik</i>.
+        save: Vaš upitnik je spremljen za kasnije ispunjavanje.
+    practicalSubmodulePage:
+        new: Nova stranica je dodana u podmodul.
+        edit: Stranice je uređena.
+    practicalSubmoduleProcessorGroup:
+        new: Nova procesorska grupa je dodana u podmodul.
+        edit: Procesorska grupaje uređena.
+    termsOfService:
+        new: Stvoreni su novi Uvjeti pružanja usluge. Korisnici će trebati prihvatiti nove uvjete kako bi mogli koristiti aplikaciju.
+        edit: Uvjeti korištenja usluge <i>%termsOfService%</i> su ažurirani.
+        revise: Revidirani su Uvjeti korištenja usluge. Korisnici će trebati prihvatiti nove uvjete kako bi mogli koristiti aplikaciju.
+        accept: Prihvaćeni su Uvjeti pružanja usluge.
+        rescind: Raskinuti su prihvaćeni Uvjeti pružanja usluge.
+    dataRequest:
+        access: Poslan je zahtjev za pristup podacima.
+        delete: Poslan je zahtjev za brisanje podataka.
+    file:
+        new: Učitana je nova datoteka.
+        edit: Izmjenila se postojeća datoteka.
+    resetPassword:
+        change: Lozinka je uspješno promijenjena.
+        email: "E-mail poruka je poslana unesenoj e-mail adresi (ako postoji račun s tom e-mail adresom). Kliknite na poveznicu u e-mail poruci kako biste promjenili svoju lozinku. Poveznica ističe nakon 3 sata, počevši od vremena kada se poslali zahtjev za resetiranje lozinke."
+    topic:
+        new: Stvorena je nova tematika.
+        edit: Tematika je ažurirana.
+    newsItem:
+        new: Stvorena je nova stavka novosti.
+        edit: Stavka novosti je ažurirana.
+    api:
+        generate: Generiran je novi API ključ.
+
+warning:
+    accountConfirmation:
+        subject: Nevažeći token!
+        text: Token za potvrdu računa iz danog URL-a nije valjan. Ili je račun već aktiviran, ili račun koji treba aktivirati nije stvoren.
+    registration:
+        userExists: Korisnik s tom e-mail adresom već postoji.
+        disabled: Registracija i reset lozinki su privremeno onemogućene.
+    course:
+        image.store: Došlo je do greške prilikom spremanja slike za tečaj. Pokušajte je ponovno učitati na stranici za uređivanje tečaja.
+        delete: Izbrisan je tečaj <i>%course%</i>.
+    instructor:
+        image.store: Došlo je do greške prilikom spremanja slike instruktora. Pokušajte je ponovno učitati na stranici za uređivanje instruktora.
+        delete: Izbrisan je instruktor.
+        remove: Uklonjen je instruktor <i>%instructor%</i> iz tečaja <i>%course%</i>.
+    lesson:
+        delete: Izbrisana je lekcija <i>%lesson%</i> tečaja <i>%course%</i>.
+        worseQuizResult: Rezultati kviza se nisu spremili jer ste na prethodnom pokušaju rješavanja postigli bolji rezultat od novijeg pokušaja.
+    quizQuestion:
+        delete: Izbrisano je pitanje kviza <i>%lesson%</i>.
+    quizQuestionChoice:
+        delete: Obrisan je odgovor na pitanje.
+        correctAnswerChanged: Zbog toga što je odgovor na pitanje označen točnim, ostali odgovori su automatski označeni kao netočni.
+    practicalSubmodule:
+        image.store: Došlo je do greške prilikom spremanja slike za praktični podmodul. Pokušajte je ponovno učitati na stranici za uređivanje osnovnih informacija podmodula.
+        delete: Izbrisan je podmodul <i>%evaluation%</i>.
+    practicalSubmoduleQuestion:
+        delete: Izbrisano je pitanje iz podmodula <i>%evaluation%</i>.
+        manyToOne: Pitanje koje ste htjeli obrisati se pojavljuje kao ovisno pitanje za prikaz drugih pitanja, ili kao obavezna komponenta jednom ili više <i>simple</i>, <i>templated_text</i>, ili <i>html</i> procesora. Uredite ili obrišite pitanja i/ili procesore koji koriste to pitanje, te ga pokušajte ponovno obrisati.
+    practicalSubmoduleQuestionAnswer:
+        delete: Izbrisan je odgovor na pitanje.
+    practicalSubmoduleProcessor:
+        delete: Izbrisan je procesor iz podmodula.
+    practicalSubmoduleAssessment:
+        noQuestion: Došlo je do greške tijekom spremanja odgovora na neka pitanja.
+    practicalSubmodulePage:
+        delete: Izbrisana je stranica iz podmodula.
+    practicalSubmoduleProcessorGroup:
+        delete: Izbrisana je procesorska grupa iz podmodula.
+    file:
+        delete: Izbrisana je datoteka.
+    topic:
+        delete: Izbrisala se tematika <i>%topic%</i>.
+        image.store: Došlo je do greške prilikom spremanja slike za tematiku. Pokušajte je ponovno učitati na stranici za uređivanje tematike
+    newsItem:
+        delete: Izbrisana je stavka novosti.
+    api:
+        delete: API ključ je izbrisan.
+
+error:
+    user:
+        email:
+            blank: E-mail ne smije biti prazan.
+            invalid: Nevaljana e-mail adresa.
+    passwordPolicy:
+        length: Lozinka mora sadržavati najmanje 8 znakova.
+        number: Lozinka mora sadržavati barem jedan broj.
+        uppercase: Lozinka mora sadržavati barem jedno veliko slovo.
+    login:
+        notFound: Pogrešni podaci za prijavu.
+        notActivated: Korisnički račun nije aktiviran.
+    registration:
+        firstName:
+            blank: Polje za ime korisnika ne smije biti prazno.
+        lastName:
+            blank: Polje za prezime korisnika ne smije biti prazno.
+        email:
+            blank: E-mail polje ne smije biti prazno.
+            format: E-mail nije zapisan u formatu za e-mail adrese.
+        password:
+            blank: Polja za lozinke ne smiju biti prazna.
+            repeated: Lozinke se moraju podudarati.
+        termsOfService: Morate prihvatiti Uvjeta pružanja usluge za nastavak registracije, i općenito kako biste smijeli koristiti aplikaciju.
+    resetPassword:
+        email:
+            blank: E-mail polje ne smije biti prazno.
+            format: E-mail nije zapisan u formatu za e-mail adrese.
+        password:
+            blank: Polja za lozinke ne smiju biti prazna.
+            repeated: Lozinke se moraju podudarati.
+        token:
+            invalid: Zahtjev za resetiranje lozinke nije valjan.
+            expired: Istekao je zahtjev za resetiranje lozinke.
+    captcha:
+        incorrect: Vaš odgovor na provjeri jeste li robot nije točan.
+        empty: Morate dati odgovor na provjeri jeste li robot.
+    export:
+        results: Ovaj upitnik ne podržava izvoz rezultata!
+    course:
+        name: Naziv tečaja ne smije biti prazno.
+        description: Opis tečaja ne smije biti prazno.
+        image:
+            maxSize: Datoteka premašuje maksimalnu dopuštenu veličinu od 5 megabajta.
+            mimeType: Datoteka mora biti slika.
+        estimatedWorkload:
+            value: 'Vrijednot procijenjenog opterećenja mora biti broj: ili cijeli broj ili decimalni broj s decimalnom točkom.'
+    instructor:
+        firstName: Ime ne smije biti prazno.
+        lastName: Przeime ne smije biti prazno.
+        notNull: Niste odabrali instruktora.
+        remove: Instructor <i>%instructor%</i> je maknut sa tečaja course <i>%course%</i>.
+    lesson:
+        name: Naziv lekcije ne smije biti prazno.
+        file:
+            size: Datoteka premašuje maksimalnu dopuštenu veličinu od 20 megabajta.
+            noFile: Potrebno je učitati datoteku.
+            store: Došlo je do greške tijekom spremanja učitane datoteke za lekciju.
+        video:
+            blank: Potreban je video URL.
+            store: Došlo je do greške tijekom spremanja učitanog videa za lekciju.
+        quiz:
+            blank: Obavezno je postaviti postotak za prolaznost.
+            range: Vrijednost postotka za prolaznost mora biti između 0 i 100.
+            type: Nije moguće dodati novo pitanje u lekciju koja nije kviz.
+            start: Kvoz se nije uspio pokrenuti. Molimo, pokušajte ponovno.
+            finish: Vaša sesija je istekla tijekom rješavanja kviza. Molimo, riješite ga ponovno.
+            missingLessonItemQuiz: Došlo je do greške tijekom pokretanja ili završavanja kviza. Molimo, obavijestite moderatore o ovoj grešci.
+            results:
+                completionData: Nema rezultata za pokazati jer kviz nije riješen.
+                type: Nemoguće je prikazati rezultate kviz ako lekcija nije namijenjena da bude kviz.
+                missingLessonItemQuiz: Rezultati kviza se ne mogu prikazati zbog greške. Molimo, obavijestite moderatore o ovoj grešci.
+    quizQuestion:
+        text: Tekst pitanja ne smije biti prazan.
+        explanation: Tekst objašnjenja ne smije biti prazno.
+    practicalSubmodule:
+        name: Naziv ne smije biti prazan.
+        description: Opis ne smije biti prazan.
+        image:
+            maxSize: Datoteka premašuje maksimalnu dopuštenu veličinu od 5 megabajta.
+            mimeType: Datoteka mora biti slika.
+        import:
+            erroneousFirstTask: Prvi zadatak u uvozu mora kreirati praktični podmodul, i ne smije imati greške.
+            wrongFirstTaskType: Prvi zadatak u uvozu mora kreirati praktični podmodul. Je li datoteka na bilo koji način mijenjana nakon izvoza?
+            missingTaskOrderKey: Nedotaju određeni podaci potreban za uvoz. Je li datoteka na bilo koji način mijenjana nakon izvoza?
+            default: Došlo je do nepredviđene greške tijekom uvoza praktičnog podmodula.
+        modeOfOperation: Nevažeća vrsta rada.
+        terminology:
+            invalid: Nevaljana terminologija.
+    practicalSubmoduleQuestion:
+        questionText: Tekst pitanja ne smije biti prazan.
+        dependentValue:
+            notBool: Za odabrano ovisno pitanje, njegova ovisna vrijednost mora biti ili <b>1</b> za <b><i>da</i></b> ili <b>0</b> za <b><i>ne</i></b>.
+            notNumeric: Za odabrano ovisno pitanje, njegova ovisna vrijednost mora biti broj.
+    practicalSubmoduleQuestionAnswer:
+        answerText: Tekst odgovora ne smije biti prazan.
+        answerValue:
+            weighted: Ponder odgovora mora biti broj.
+        csrf: Došlo je do greške u obradi odgovora za pitanje. Molimo, pokušajte ih ponovno dodati.
+        empty: Nema odgovora koje se mogu dodati pitanju.
+        templatedText:
+            textFields: I primarni i prevedeni prdlošci odgovora moraju sadržavati isti broj polja s istim nazivima.
+    practicalSubmoduleProcessor:
+        name: Naziv procesora ne smije biti prazan.
+    practicalSubmoduleProcessorSimple:
+        evaluationQuestion: Procesoru morate odabrati pitanje.
+        expectedValue:
+            blank: Procesoru morate zadati očekivanu vrijednost.
+            notBool: Za odabrano pitanje, očekivani odgovor mora biti ili <b>1</b> za <b><i>da</i></b> ili <b>0</b> za <b><i>ne</i></b>.
+            notNumeric: Za odabrano pitanje, očekivani odgovor mora biti broj.
+        resultText: Procesoru je potrebno unijeti rezultirajući tekst koji će se generirati nakon uspješne obrade.
+    practicalSubmoduleProcessorSumAggregate:
+        questionsAndProcessors: Barem jedno pitanje ili procesor je potrebno dodijeliti procesoru agregata zbroja (ako je uključen u ispis rezultata).
+        expectedValueRange:
+            start: Početak očekivanog vrijednosnog raspona mora biti broj.
+            end: Kraj očekivanog vrijednosnog raspona mora biti broj.
+            invalid: Početak očekivanog vrijednosnog raspona mora biti manji ili jednak (≤) kraju očekivanog vrijednosnog raspona.
+        resultText: Procesoru je potrebno unijeti rezultirajući tekst koji će se generirati nakon uspješne obrade.
+    practicalSubmoduleProcessorProductAggregate:
+        questionsAndProcessors: Barem jedno pitanje ili procesor je potrebno dodijeliti procesoru agregata produkta (ako je uključen u ispis rezultata).
+        expectedValueRange:
+            start: Početak očekivanog vrijednosnog raspona mora biti broj.
+            end: Kraj očekivanog vrijednosnog raspona mora biti broj.
+            invalid: Početak očekivanog vrijednosnog raspona mora biti manji ili jednak (≤) kraju očekivanog vrijednosnog raspona.
+        resultText: Procesoru je potrebno unijeti rezultirajući tekst koji će se generirati nakon uspješne obrade.
+    practicalSubmoduleProcessorTemplatedText:
+        question: Procesoru je potrebno odabrati pitanje.
+    practicalSubmoduleProcessorMaxValue:
+        questionsAndProcessors: Barem jedno pitanje ili procesor je potrebno dodijeliti procesoru najveće vrijednosti (ako je uključen u ispis rezultata).
+        expectedValueRange:
+            start: Početak očekivanog vrijednosnog raspona mora biti broj.
+            end: Kraj očekivanog vrijednosnog raspona mora biti broj.
+            invalid: Početak očekivanog vrijednosnog raspona mora biti manji ili jednak (≤) kraju očekivanog vrijednosnog raspona.
+        resultText: Procesoru je potrebno unijeti rezultirajući tekst koji će se generirati nakon uspješne obrade.
+    practicalSubmoduleAssessment:
+        start: Upitnik se nije mogao pokrenuti. Molimo, pokušajte ponovno.
+        edit: Upitnik se nije mogao učitati za uređivanje. Molimo, pokušajte ponovno.
+        finish: Došlo je do greške u obradi vašeg upitnika. Molimo, ponovno popunite upitnik.
+    practicalSubmodulePage:
+        questions: Potrebno je dodati barem jedno pitanje u stranicu.
+        submoduleMismatch: Jedno od odabranih pitanja ne pripada istom podmodulu kojem pripada stranica.
+    practicalSubmoduleProcessorGroup:
+        questions: Potrebno je dodati barem jedan procesor u grupu.
+        submoduleMismatch: Jedno od odabranih procesora ne pripada istom podmodulu kojem pripada grupa.
+    termsOfService:
+        termsOfService: Sadržaj uvjeta pružanja usluge ne smije biti prazan.
+        termsOfServiceAlt: Prijevod sadržaja uvjeta pružanja usluge ne smije biti prazan.
+        privacyPolicy: Sadržaj politike privatnosti ne smije biti prazan.
+        privacyPolicyAlt: Prijevod sadržaja politike privatnosti ne smije biti prazan.
+    dataRequest:
+        access: Zahtjev za pristup podacima nije poslan. Molimo, ponovno učitajte stranicu te pokušajte ponovno.
+        delete: Zahtjev za brisanje podataka nije poslan. Molimo, ponovno učitajte stranicu te pokušajte ponovno.
+    topic:
+        title: Naslov tematike ne smije biti prazan.
+        image:
+            maxSize: Datoteka premašuje maksimalnu dopuštenu veličinu od 5 megabajta.
+            mimeType: Datoteka mora biti slika.
+    newsItem:
+        title: Naslov novosti ne smije biti prazan.
+        content: Sadržaj novosti ne smije biti prazan.

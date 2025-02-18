@@ -1,0 +1,46 @@
+{% extends 'course/_base_course.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block courseContent %}
+    <div id="participants-table-wrapper"></div>
+    <table id="participants-table" class="table table-cols-6">
+        <thead>
+            <tr>
+                <th>{{ 'common.id'|trans }}</th>
+                <th>{{ 'course.participants.label.user'|trans }}</th>
+                <th>{{ 'course.participants.label.email'|trans }}</th>
+                <th>{{ 'course.participants.label.enrolledAt'|trans }}</th>
+                <th>{{ 'course.participants.label.completion'|trans }}</th>
+                <th>{{ 'course.participants.label.score'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for participant in participants %}
+                <tr>
+                    <td>{{ participant.id }}</td>
+                    <td>{{ participant.user }}</td>
+                    <td>{{ participant.email }}</td>
+                    <td>{{ participant.enrolledAt }}</td>
+                    <td>{{ ('course.participants.completion.'~participant.completion)|trans }}</td>
+                    <td>{{ participant.score }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('gridjs') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('gridjs') }}
+    <script>
+        window.addEventListener("load", () => {
+            new Grid({ from: document.getElementById("participants-table"), sort: true, search: true, pagination: true }).render(document.getElementById("participants-table-wrapper"));
+        });
+    </script>
+{% endblock %}
+

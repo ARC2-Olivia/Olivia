@@ -1,0 +1,53 @@
+{% extends 'admin/_base_admin.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block adminContent %}
+    <div class="container-fluid p-5">
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">{{ 'dataRequest.title.index.typeAccess'|trans }}</span>
+            </div>
+            <div class="card-body">
+                <div id="data-access-requests-table-wrapper"></div>
+                {% include 'admin/dataRequest/_index_access.html.twig' %}
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <span class="card-title">{{ 'dataRequest.title.index.typeDelete'|trans }}</span>
+            </div>
+            <div class="card-body">
+                <div id="data-delete-requests-table-wrapper"></div>
+                {% include 'admin/dataRequest/_index_delete.html.twig' %}
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <span class="card-title">{{ 'dataRequest.title.index.resolved'|trans }}</span>
+            </div>
+            <div class="card-body">
+                <div id="resolved-data-requests-table-wrapper"></div>
+                {% include 'admin/dataRequest/_index_resolved.html.twig' %}>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('gridjs') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('gridjs') }}
+    <script>
+        window.addEventListener("load", () => {
+            new Grid({ from: document.getElementById("data-access-requests-table"), sort: true, search: true, pagination: true }).render(document.getElementById("data-access-requests-table-wrapper"));
+            new Grid({ from: document.getElementById("data-delete-requests-table"), sort: true, search: true, pagination: true }).render(document.getElementById("data-delete-requests-table-wrapper"));
+            new Grid({ from: document.getElementById("resolved-data-requests-table"), sort: true, search: true, pagination: true }).render(document.getElementById("resolved-data-requests-table-wrapper"));
+        });
+    </script>
+{% endblock %}

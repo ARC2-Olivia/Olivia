@@ -1,0 +1,19 @@
+{% extends 'evaluation/_base_evaluation.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block evaluationContent %}
+    {% include 'evaluation/evaluation_evaluator/_form_base.html.twig' %}
+    <div class="text-end">
+        <button type="submit" form="{{ form.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('df-select') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('df-select') }}
+{% endblock %}

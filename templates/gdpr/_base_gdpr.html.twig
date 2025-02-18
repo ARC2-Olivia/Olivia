@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% if isActive is not defined %}
+    {% set isActive = false %}
+{% endif %}
+
+{% block body %}
+    <div class="container">
+        <div class="row gy-2 py-4">
+            <div class="col-12">
+                {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
+            </div>
+            <div class="col-12">
+                {% if tab is defined %}
+                    {% if tab == 'privacyPolicy' %}
+                        <div class="d-flex justify-content-center align-items-center my-3">
+                            <button class="btn btn-nav active">{{ 'form.entity.termsOfService.label.privacyPolicy'|trans }}</button>
+                            <a href="{{ path('gdpr_active_terms_of_service') }}" class="btn btn-nav">{{ 'form.entity.termsOfService.label.termsOfService'|trans }}</a>
+                        </div>
+                    {% elseif tab == 'termsOfService' %}
+                        <div class="d-flex justify-content-center align-items-center my-3">
+                            <a href="{{ path('gdpr_privacy_policy') }}" class="btn btn-nav">{{ 'form.entity.termsOfService.label.privacyPolicy'|trans }}</a>
+                            <button class="btn btn-nav active">{{ 'form.entity.termsOfService.label.termsOfService'|trans }}</button>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                {% block gdprContent %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('popper.dropdown') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('popper.dropdown') }}
+{% endblock %}

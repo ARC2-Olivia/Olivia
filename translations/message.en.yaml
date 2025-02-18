@@ -1,0 +1,282 @@
+type:
+    success: Success
+    warning: Warning
+    error: Error
+
+success:
+    user:
+        edit: User has been edited.
+    accountConfirmation:
+        subject: Confirmation success!
+        text: Your Olivia Tool account has been activated! Login to access either the Training or Practice modules.
+    registration: Confirmation e-mail has been sent. Click or navigate to the URL in the e-mail to activate your account.
+    course:
+        new: Course <i>%courseName%</i> has been successfully created.
+        edit: Course has been successfully updated.
+    instructor:
+        new: You have created a new instructor.
+        add: You have added <i>%instructor%</i> as an instructor for the course <i>%course%</i>.
+    lesson:
+        new: You have added a new lesson for the course <i>%course%</i>.
+        edit: Lesson has been edited.
+    quiz:
+        finish: You have finished the quiz <i>%quizName%</i>.
+    quizQuestion:
+        new: You have added a new question to the course.
+        edit: Question has been edited.
+    quizQuestionChoice:
+        new: You have added a new choice to the question.
+        edit: Choice has been edited.
+    practicalSubmodule:
+        new: You have created a new practical submodule.
+        edit: A practical submodule has been edited.
+    practicalSubmoduleQuestion:
+        new: A new question has been added to the submodule.
+        edit: Question has been updated.
+    practicalSubmoduleQuestionAnswer:
+        new: A new answer has been added to the question.
+        edit: Question answer has been updated.
+    practicalSubmoduleProcessor:
+        new: A new processor has been created for the submodule.
+        edit: Processor has been updated.
+    practicalSubmoduleAssessment:
+        finish: Your questionnaire has been saved. You can view the results by clicking the <i>View report</i> button from the <i>Questionnaire</i> tab.
+        save: Vaš questionnaire has been saved for later completion.
+    practicalSubmodulePage:
+        new: A new page has been added to the submodule.
+        edit: Page has been updated
+    practicalSubmoduleProcessorGroup:
+        new: A new processor group has been added to the submodule.
+        edit: Processor group has been updated;
+    termsOfService:
+        new: A new terms of service have been created. Users will have to accept the terms of service in order to use the application.
+        edit: Terms of service <i>%termsOfService%</i> have been edited.
+        revise: Terms of service have been revised. Users will have to accept the terms of service in order to use the application.
+        accept: Terms of service have been accepted.
+        rescind: Terms of service have been rescinded.
+    dataRequest:
+        access: A data access request has been sent.
+        delete: A data deletion request has been sent.
+    file:
+        new: New file has been uploaded.
+        edit: Existing file has been changed.
+    resetPassword:
+        change: Password has been successfully changed.
+        email: "An e-mail message has been sent to the entered e-mail address (if an account exists). Click on the URL in the e-mail message to reset your password. Be warned: the URL is valid for only 3 hours, starting with the time submitted the request for password reset."
+    topic:
+        new: New topic has been created.
+        edit: Topic has been updated.
+    newsItem:
+        new: New news item has been created.
+        edit: News item has been deleted.
+    api:
+        generate: New API key has been generated.
+
+warning:
+    accountConfirmation:
+        subject: Invalid token!
+        text: The confirmation token from the supplied URL is invalid. Either the account has been already activated, or the account doesn't exist.
+    registration:
+        userExists: User with that e-mail already exists.
+        disabled: Registrations and password resets have been temporarily disabled.
+    course:
+        image.store: There was an error storing the course image. You can try to reupload it while editing the basic course information.
+        delete: Course <i>%course%</i> has been deleted.
+    instructor:
+        image.store: There was an error storing the instructor's image. You can try to reupload it later.
+        delete: You have deleted an instructor.
+        remove: You have removed <i>%instructor%</i> from the course <i>%course%</i>.
+    lesson:
+        delete: Lesson <i>%lesson%</i> from the course <i>%course%</i> has been deleted.
+        worseQuizResult: Quiz results have not been saved because you scored better in the previous attempt than the new one.
+    quizQuestion:
+        delete: Question for the quiz <i>%lesson%</i> has been deleted.
+    quizQuestionChoice:
+        delete: Choice has been deleted.
+        correctAnswerChanged: Because the choice has been marked as the correct one, the other choices were automatically marked incorrect.
+    practicalSubmodule:
+        image.store: There was an error storing the image for the practical submodule. You can try to reupload it while editing the basic practical submodule information.
+        delete: Submodule <i>%evaluation%</i> has been deleted.
+    practicalSubmoduleQuestion:
+        delete: Question for the <i>%evaluation%</i> submodule has been deleted.
+        manyToOne: The question you wanted to delete is being used as a dependent question for other questions, or in one or several <i>simple</i>, <i>templated_text</i>, ili <i>html</i> processors. Update or delete the questions and/or processors that are using the question, and then try deleting it again.
+    practicalSubmoduleQuestionAnswer:
+        delete: Answer has been deleted from the question.
+    practicalSubmoduleProcessor:
+        delete: Processor has been deleted from the submodule.
+    practicalSubmoduleAssessment:
+        noQuestion: There was an error storing the answer to one of the questions.
+    practicalSubmodulePage:
+        delete: Page has been deleted from the submodule.
+    practicalSubmoduleProcessorGroup:
+        delete: Processor group has been deleted from the submodule
+    file:
+        delete: A file has been removed.
+    topic:
+        delete: Topic <i>%topic%</i> has been deleted.
+        image.store: There was an error storing the topic image. You can try to reupload it while editing the topic.
+    newsItem:
+        delete: A news item has been deleted.
+    api:
+        delete: API key has been deleted.
+
+error:
+    user:
+        email:
+            blank: E-mail cannot be blank.
+            invalid: Invalid e-mail address.
+    passwordPolicy:
+        length: Password must be at least 8 characters long.
+        number: Password must contain at least one number.
+        uppercase: Password must contain at least one uppercase letter.
+    login:
+        notFound: Invalid credentials.
+        notActivated: User account is not activated.
+    registration:
+        firstName:
+            blank: First name field must not be empty
+        lastName:
+            blank: Last name field must not be empty
+        email:
+            blank: E-mail field must not be empty.
+            format: E-mail is not written in an e-mail format.
+        password:
+            blank: Password fields must not be empty.
+            repeated: Passwords must match!
+        termsOfService: To proceed with the registration, and to be allowed to use the application, the terms of service have to be accepted.
+    resetPassword:
+        email:
+            blank: E-mail field must not be empty.
+            format: E-mail is not written in an e-mail format.
+        password:
+            blank: Password fields must not be empty.
+            repeated: Passwords must match!
+        token:
+            invalid: Invalid password reset request.
+            expired: The password reset request has expired.
+    captcha:
+        incorrect: Your answer to verify if you are a robot is incorrect.
+        empty: You have to give an answer to check if you are a robot.
+    export:
+        results: This questionnaire does not support export of results!
+    course:
+        name: Course name must not be empty.
+        description: Course description must not be empty.
+        image:
+            maxSize: File exceeds the allowed maximum size of 5 megabytes.
+            mimeType: File has to be an image.
+        estimatedWorkload:
+            value: 'Estimated workload value needs to be a number: integer or a decimal number with "." as a decimal point.'
+    instructor:
+        firstName: First name must not be blank.
+        lastName: Last name must not be blank.
+        notNull: You have to choose an instructor from the dropdown to add to the course.
+        remove: Instructor <i>%instructor%</i> is not assigned to course <i>%course%</i>.
+    lesson:
+        name: Lesson name must not be empty.
+        file:
+            size: File exceeds the allowed maximum size of 20 megabytes.
+            noFile: A file has to be uploaded.
+            store: There was an error storing the uploaded file for the lesson.
+        video:
+            blank: Video URL is required.
+            store: There was an error storing the uploaded video for the lesson.
+        quiz:
+            blank: Passing percentage is required.
+            range: Passing percentage value must be between 0 and 100.
+            type: Unable to add a new question to a lesson that is not a quiz.
+            start: Unable to start the quiz. Please, try again.
+            finish: Your session expired while taking the quiz. Please, retake it again.
+            missingLessonItemQuiz: Error occurred while starting or finishing the quiz. Please, report the error to one of the moderators.
+            results:
+                completionData: There are no results to display because the quiz has not been taken.
+                type: Cannot display results of a non-quiz lesson.
+                missingLessonItemQuiz: Quiz results couldn't be shown due to an error. Please, report the error to one of the moderators.
+    quizQuestion:
+        text: Question text must not be blank.
+        explanation: Explanation text must not be blank.
+    practicalSubmodule:
+        name: Name of the practical submodule must not be blank.
+        description: Description of the practical submodule must not be blank.
+        image:
+            maxSize: File exceeds the allowed maximum size of 5 megabytes.
+            mimeType: File has to be an image.
+        import:
+            erroneousFirstTask: First task has to create a practical submodule, and it must not be erroneous.
+            wrongFirstTaskType: First task has to create a practical submodule. Has the file been tampered with in any way after export?
+            missingTaskOrderKey: Certain data important for the export is missing from the file. Has the file been tampered with in any way after export?
+            default: Unexpected error occurred while importing the practical submodule.
+        modeOfOperation: Invalid mode of operation.
+        terminology:
+            invalid: Invalid terminology.
+    practicalSubmoduleQuestion:
+        questionText: The question text must not be empty.
+        dependentValue:
+            notBool: For the chosen dependent question, the dependent value must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
+            notNumeric: For the chosen dependent question, the dependent value needs to be a number.
+    practicalSubmoduleQuestionAnswer:
+        answerText: Answer text must not be empty.
+        answerValue:
+            weighted: Answer weight must be a number.
+        csrf: There was an error processing answers for the question. Please, try to add them again.
+        empty: There were no answers to add to the question.
+        templatedText:
+            textFields: Both default and translated answering templates need to contain same number of fields with the same names.
+    practicalSubmoduleProcessor:
+        name: Processor name must not be empty.
+    practicalSubmoduleProcessorSimple:
+        evaluationQuestion: A question has to be chosen for the processor.
+        expectedValue:
+            blank: An expected value has to be given to the processor.
+            notBool: For the chosen question, the expected answer must be either <b>1</b> for <b><i>yes</i></b> or <b>0</b> for <b><i>no</i></b>.
+            notNumeric: For the chosen question, the expected answer needs to be a number.
+        resultText: A resulting text that the processor will generate upon successful processing needs to be assigned.
+    practicalSubmoduleProcessorSumAggregate:
+        questionsAndProcessors: Atleast one question or processor needs to be assigned to the sum aggregate processor (if included in calculation).
+        expectedValueRange:
+            start: Start of the expected value range needs to be a number.
+            end: End of the expected value range needs to be a number.
+            invalid: Start of the expected value range has to be less or equal to (≤) the end of the expected value range.
+        resultText: A resulting text that the processor will generate upon successful evaluation needs to be assigned.
+    practicalSubmoduleProcessorProductAggregate:
+        questionsAndProcessors: Atleast one question or processor needs to be assigned to the product aggregate processor (if included in calculation).
+        expectedValueRange:
+            start: Start of the expected value range needs to be a number.
+            end: End of the expected value range needs to be a number.
+            invalid: Start of the expected value range has to be less or equal to (≤) the end of the expected value range.
+        resultText: A resulting text that the processor will generate upon successful evaluation needs to be assigned.
+    practicalSubmoduleProcessorTemplatedText:
+        question: A question has to be chosen for the processor.
+    practicalSubmoduleProcessorMaxValue:
+        questionsAndProcessors: Atleast one question or processor needs to be assigned to the max value processor (if included in calculation).
+        expectedValueRange:
+            start: Start of the expected value range needs to be a number.
+            end: End of the expected value range needs to be a number.
+            invalid: Start of the expected value range has to be less or equal to (≤) the end of the expected value range.
+        resultText: A resulting text that the processor will generate upon successful evaluation needs to be assigned.
+    practicalSubmoduleAssessment:
+        start: Unable to start the quiestionnaire. Please, try again.
+        edit: Unable to start editing the questionnaire. Please, try again.
+        finish: There was an error processing your questionnaire. Please, take it again.
+    practicalSubmodulePage:
+        questions: You have to add at least one question to the page.
+        submoduleMismatch: One of the selected questions doesn't belong to the same submodule as the page.
+    practicalSubmoduleProcessorGroup:
+        questions: You have to add at least one processor to the group.
+        submoduleMismatch: One of the selected processors doesn't belong to the same submodule as the group.
+    termsOfService:
+        termsOfService: Contents of the terms of service must not be empty.
+        termsOfServiceAlt: Translation of the contents of the terms of service must not be empty.
+        privacyPolicy: Contents of the privacy policy must not be empty.
+        privacyPolicyAlt: Translation of the contents of the privacy policy must not be empty.
+    dataRequest:
+        access: Unable to send data access request. Please, refresh the page and try again.
+        delete: Unable to send data deletion request. Please, refresh the page and try again.
+    topic:
+        title: Topic title must not be empty.
+        image:
+            maxSize: File exceeds the allowed maximum size of 5 megabytes.
+            mimeType: File has to be an image.
+    newsItem:
+        title: Title of the news item must not be empty.
+        content: Content of the news item must not be empty.

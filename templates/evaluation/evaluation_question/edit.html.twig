@@ -1,0 +1,123 @@
+{% extends 'evaluation/_base_evaluation.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block evaluationContent %}
+    {% include 'evaluation/evaluation_question/_form.html.twig' with {'isEditing': true} %}
+    <div class="text-end">
+        <button type="submit" form="{{ form.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+    </div>
+
+    {% set isWeightedQuestion = evaluationQuestion.type == constant('TYPE_WEIGHTED', evaluationQuestion) %}
+    {% set isMultiChoiceQuestion = evaluationQuestion.type == constant('TYPE_MULTI_CHOICE', evaluationQuestion) %}
+    {% if isWeightedQuestion or isMultiChoiceQuestion %}
+
+        <hr/>
+        {% if evaluationQuestion.practicalSubmoduleQuestionAnswers.count > 0 %}
+            <ul class="mod--evaluation-question-answers">
+                {% for evaluationQuestionAnswer in evaluationQuestion.practicalSubmoduleQuestionAnswers %}
+                    <li class="mod--evaluation-question-answer">
+                        <div class="mod--evaluation-question-answer-details">
+                            <div class="mod--evaluation-question-answer-text">{{ evaluationQuestionAnswer.answerText }}</div>
+                            {% if isWeightedQuestion %}
+                                <div class="mod--evaluation-question-answer-value">{{ evaluationQuestionAnswer.answerValue }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mod--evaluation-question-actions">
+                            <form action="{{ path('practical_submodule_question_answer_delete', {'practicalSubmoduleQuestionAnswer': evaluationQuestionAnswer.id}) }}"
+                                  method="post"
+                                  onsubmit="return confirm('{{ 'practicalSubmoduleQuestionAnswer.delete'|trans }}')"
+                            >
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmoduleQuestionAnswer.delete') }}"/>
+                                <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
+                            </form>
+                            {% if isWeightedQuestion %}
+                                <a href="{{ path('practical_submodule_question_answer_edit_weighted', {'practicalSubmoduleQuestionAnswer': evaluationQuestionAnswer.id}) }}"
+                                   class="btn btn-sm btn-round btn-theme-white bg-green"
+                                >
+                                    {{ mdi('pencil') }}
+                                </a>
+                            {% elseif isMultiChoiceQuestion %}
+                                <a href="{{ path('practical_submodule_question_answer_edit_multi_choice', {'practicalSubmoduleQuestionAnswer': evaluationQuestionAnswer.id}) }}"
+                                   class="btn btn-sm btn-round btn-theme-white bg-green"
+                                >
+                                    {{ mdi('pencil') }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="text-end">
+            {% if isWeightedQuestion %}
+                <a href="{{ path('practical_submodule_question_add_weighted_answer', {'practicalSubmoduleQuestion': evaluationQuestion.id}) }}" class="btn btn-link btn-sm">
+                    {{ mdi('plus') }} {{ 'practicalSubmodule.extra.answer'|trans }}
+                </a>
+            {% elseif isMultiChoiceQuestion %}
+                <a href="{{ path('practical_submodule_question_add_multi_choice_answer', {'practicalSubmoduleQuestion': evaluationQuestion.id}) }}" class="btn btn-link btn-sm">
+                    {{ mdi('plus') }} {{ 'practicalSubmodule.extra.answer'|trans }}
+                </a>
+            {% endif %}
+        </div>
+
+    {% elseif tttForm is defined %}
+
+        <hr/>
+        {{ form_start(tttForm, {'attr': {'id': tttForm.vars.id}}) }}
+            {{ form_label(tttForm.text) }}
+            {{ form_widget(tttForm.text) }}
+            {{ form_label(tttForm.translatedText) }}
+            {{ form_widget(tttForm.translatedText) }}
+        {{ form_end(tttForm) }}
+        <div class="text-end">
+            <button type="submit" form="{{ tttForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+
+    {% elseif stForm is defined %}
+
+        <hr/>
+        {{ form_start(stForm, {'attr': {'id': stForm.vars.id}}) }}
+            {{ form_label(stForm.isHeading) }}
+            {{ form_widget(stForm.isHeading) }}
+        {{ form_end(stForm) }}
+        <div class="text-end">
+            <button type="submit" form="{{ stForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+
+    {% elseif liForm is defined %}
+
+        <hr/>
+        {{ form_start(liForm, {'attr': {'id': liForm.vars.id}}) }}
+            {{ form_label(liForm.listWithSublist) }}
+            {{ form_widget(liForm.listWithSublist) }}
+        {{ form_end(liForm) }}
+        <div class="text-end">
+            <button type="submit" form="{{ liForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+
+    {% elseif tliForm is defined %}
+
+        <hr/>
+        {{ form_start(tliForm, {'attr': {'id': tliForm.vars.id}}) }}
+            {{ form_label(tliForm.isModal) }}
+            {{ form_widget(tliForm.isModal) }}
+            {{ form_label(tliForm.template) }}
+            {{ form_widget(tliForm.template) }}
+        {{ form_end(tliForm) }}
+        <div class="text-end">
+            <button type="submit" form="{{ tliForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('df-select') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('df-select') }}
+{% endblock %}

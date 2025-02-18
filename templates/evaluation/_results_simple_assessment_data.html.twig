@@ -1,0 +1,32 @@
+{% trans_default_domain 'app' %}
+
+{% if forReport is not defined %}
+    {% set forReport = false %}
+{% endif %}
+
+{% for answerDatum in answerData %}
+    {% if answerDatum.result.questionSet %}
+        <div class="evaluation-assessment-data">
+            <div class="evaluation-assessment-datum">
+                <div class="evaluation-assessment-datum-question">{{ answerDatum.result.question.questionText }}</div>
+                <div class="evaluation-assessment-datum-answers simple-style-pt1">
+                    {% for answer in answerDatum.answers %}
+                        <div class="evaluation-assessment-datum-answer">{{ answer|trans|raw|nl2br }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="evaluation-assessment-data mb-5 mt-2" {% if forReport == true %}style="margin-top: -2.7rem !important;"{% endif %}>
+        <div class="evaluation-assessment-datum-answers simple-style-pt2">
+            {% if answerDatum.result.textSet %}
+                <b>{{ 'common.description'|trans }}:</b>
+                {% if answerDatum.result.html %}
+                    <div class="ql-editor">{{ answerDatum.result.displayableText|raw }}</div>
+                {% else %}
+                    <div>{{ answerDatum.result.displayableText|raw|nl2br }}</div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

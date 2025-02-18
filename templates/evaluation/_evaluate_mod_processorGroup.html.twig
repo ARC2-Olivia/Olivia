@@ -1,0 +1,19 @@
+{% trans_default_domain 'app' %}
+
+<li class="mod--evaluation-evaluator" data-id="{{ processorGroup.id }}">
+    <div class="mod--ps-page-reorder-handle">{{ mdi('drag-vertical', '', '6 0 12 24') }}</div>
+    <div class="mod--ps-page-details">
+        <div class="mod--ps-page-text">{{ processorGroup.title }}</div>
+        <div class="mod--ps-page-order">{{ processorGroup.position }}</div>
+    </div>
+    <div class="mod--ps-page-actions">
+        <form action="{{ path('practical_submodule_processor_group_delete', {'practicalSubmoduleProcessorGroup': processorGroup.id}) }}"
+              method="post"
+              onsubmit="return confirm('{{ 'practicalSubmoduleProcessorGroup.delete'|trans }}')"
+        >
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmoduleProcessorGroup.delete') }}"/>
+            <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
+        </form>
+        <a href="{{ path('practical_submodule_processor_group_edit', {'practicalSubmoduleProcessorGroup': processorGroup.id}) }}" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('cog') }}</a>
+    </div>
+</li>

@@ -1,0 +1,32 @@
+{% trans_default_domain 'app' %}
+{% set playTrophyAnimation = play_trophy_animation() %}
+{% set playGoldenTrophyAnimation = play_golden_trophy_animation() %}
+
+{% if playTrophyAnimation and not playGoldenTrophyAnimation %}
+	<div>
+		<div class="trophy-anim-background"></div>
+		<div class="trophy-anim-trophy">{{ mdi('trophy-variant') }}</div>
+		<div class="trophy-anim-text">{{ 'trophy.course'|trans }}</div>
+		<div class="trophy-anim-shine">{{ mdi('decagram') }}</div>
+	</div>
+{% elseif not playTrophyAnimation and playGoldenTrophyAnimation %}
+	<div>
+		<div class="trophy-anim-background"></div>
+		<div class="trophy-anim-trophy golden">{{ mdi('trophy-variant') }}</div>
+		<div class="trophy-anim-text">{{ 'trophy.allCourses'|trans }}</div>
+		<div class="trophy-anim-shine">{{ mdi('decagram') }}</div>
+	</div>
+{% elseif playTrophyAnimation and playGoldenTrophyAnimation %}
+	<div>
+		<div class="trophy-anim-background"></div>
+		<div class="trophy-anim-trophy">{{ mdi('trophy-variant') }}</div>
+		<div class="trophy-anim-text">{{ 'trophy.course'|trans }}</div>
+		<div class="trophy-anim-shine">{{ mdi('decagram') }}</div>
+	</div>
+	<div class="trophy-anim-delay-4s">
+		<div class="trophy-anim-background"></div>
+		<div class="trophy-anim-trophy golden">{{ mdi('trophy-variant') }}</div>
+		<div class="trophy-anim-text">{{ 'trophy.allCourses'|trans }}</div>
+		<div class="trophy-anim-shine">{{ mdi('decagram') }}</div>
+	</div>
+{% endif %}

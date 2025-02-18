@@ -1,0 +1,26 @@
+{% trans_default_domain 'app' %}
+
+<div class="evaluation-assessment-datum">
+    <div class="evaluation-assessment-datum-question">{{ answerDatum.question|raw|nl2br }}</div>
+    <div class="evaluation-assessment-datum-answers">
+        {% for answer in answerDatum.answers %}
+            <div class="evaluation-assessment-datum-answer">{{ answer|trans|raw|nl2br }}</div>
+        {% endfor %}
+    </div>
+    {% if answerDatum.dependees|length > 0 %}
+        <div class="evaluation-assessment-datum-dependee-message">{{ 'practicalSubmoduleAssessment.message.dependees'|trans }}</div>
+        <div class="evaluation-assessment-datum-dependee-list">
+            {% for dependee in answerDatum.dependees %}
+                {% include 'evaluation/_results_advanced_assessment_data.html.twig' with {'answerDatum': dependee} %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if answerDatum.unansweredDependees|length > 0 %}
+        <div class="evaluation-assessment-datum-dependee-message unanswered">{{ 'practicalSubmoduleAssessment.message.unansweredDependees'|trans }}</div>
+        <div class="evaluation-assessment-datum-dependee-list">
+            {% for unansweredDependee in answerDatum.unansweredDependees %}
+                <div class="evaluation-assessment-datum-unanswered-dependee">{{ unansweredDependee }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

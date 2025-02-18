@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.topic.index'|trans }}{% endblock %}
+
+{% block body %}
+    {% include 'topic/_banner.html.twig' %}
+
+    <div class="container py-5">
+        {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
+        <div class="row pb-5">
+            <div class="topic-about-title">{{ 'index.topics.title'|trans|raw }}</div>
+            <div class="topic-about-text">{{ 'index.topics.text'|trans|raw }}</div>
+        </div>
+        
+        {% if videos is not empty %}
+            <div class="row mb-5 justify-content-center">
+                {% for video in videos %}
+                    <div class="col-12 col-lg-6 mb-4">
+                        <div class="topic-about-title">{{ video.displayText }}</div>
+                        <video preload="none" class="w-100" controls><source src="{{ path('file_fetch_uploaded_file', {'file': video.id}) }}"></video>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% if files is not empty %}
+            <div class="row mb-5 justify-content-center g-2">
+                {% for file in files %}
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}" class=" topic-file" download>
+                            {{ mdi('download', 'topic-file-icon') }}
+                            <div class="topic-file-text">{{ file.displayText }}</div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <div class="row g-3">
+            {% for topic in topics %}
+                {% include 'topic/_index_topic.html.twig' with {'topic': topic} %}
+            {% endfor %}
+            {% if is_granted('ROLE_MODERATOR') %}{% include 'topic/_index_add.html.twig' %}{% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('particles') }}
+{% endblock %}

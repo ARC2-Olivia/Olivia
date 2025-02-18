@@ -1,0 +1,19 @@
+<li class="file-list-item" data-id="{{ file.id }}">
+    {% if constant('TYPE_VIDEO', file) == file.type %}
+        {% if is_granted('ROLE_MODERATOR') %}
+            <div class="file-list-item-reorder-handle">{{ mdi('drag-vertical', '', '6 0 12 24') }}</div>
+        {% endif %}
+        <button type="button" data-modal-open="#video-modal-{{ file.id }}">
+            <div class="text-align-left">{{ file|raw|nl2br }}</div>
+            {{ mdi('video-outline', 'file-list-item-icon') }}
+        </button>
+    {% else %}
+        {% if is_granted('ROLE_MODERATOR') %}
+            <div class="file-list-item-reorder-handle">{{ mdi('drag-vertical', '', '6 0 12 24') }}</div>
+        {% endif %}
+        <a href="{{ path('file_fetch_uploaded_file', {'file': file.id}) }}" target="_blank">
+            <div class="text-align-left">{{ file|raw|nl2br }}</div>
+            {{ mdi('download', 'file-list-item-icon') }}
+        </a>
+    {% endif %}
+</li>

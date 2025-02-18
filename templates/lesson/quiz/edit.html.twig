@@ -1,0 +1,77 @@
+{% extends 'lesson/_base_lesson.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block lessonContent %}
+    <div class="lesson-sections">
+        {% include 'lesson/_show_sectionNav.html.twig' %}
+
+        <div class="lesson-section-main lesson-content">
+            {% include '_partials/toasts.html.twig' %}
+            <div class="lesson-section-main-content">
+                <div class="lesson-section-main-caption">{{ 'quizQuestion.edit'|trans() }}</div>
+                {% include 'lesson/quiz/_form.html.twig' %}
+                <div class="d-flex flex-row-reverse">
+                    <button type="submit" class="btn btn-theme-white bg-blue" form="{{ form.vars.id }}">{{ 'common.submit'|trans }}</button>
+                    <a href="{{ path('lesson_show', {'lesson': lesson.id}) }}" class="btn btn-link">{{ 'common.cancel'|trans }}</a>
+                </div>
+
+                {% if constant('TYPE_SINGLE_CHOICE', quizQuestion) == quizQuestion.type %}
+                    <hr class="my-3"/>
+                    <a href="{{ path('quiz_question_add_choice', {'quizQuestion': quizQuestion.id}) }}" class="btn btn-link">{{ mdi('plus') }}{{ 'quizQuestionChoice.add'|trans }}</a>
+                    <div class="quiz-question-choices mt-3">
+                        {% for qqc in quizQuestion.quizQuestionChoices %}
+                            <div class="quiz-question-choice">
+                                <div class="quiz-question-choice-info">
+                                    <div class="quiz-question-choice-text">{{ qqc.text }}</div>
+                                    <div class="quiz-question-choice-mark">{{ ('common.'~(qqc.correct ? 'correct' : 'incorrect'))|trans }}</div>
+                                </div>
+                                <div class="quiz-question-choice-actions">
+                                    <a href="{{ path('quiz_question_choice_edit', {'qqc': qqc.id}) }}" class="btn btn-theme-white btn-sm bg-green">{{ mdi('cog') }}</a>
+                                    <form method="post"
+                                          action="{{ path('quiz_question_choice_delete', {'qqc': qqc.id}) }}"
+                                          onsubmit='return confirm("{{ 'quizQuestionChoice.delete'|trans }}")'
+                                    >
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('qqc.delete') }}"/>
+                                        <button type="submit" class="btn btn-theme-white bg-red btn-sm">{{ mdi('trash-can-outline') }}</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('quill') }}
+    <style>
+        .editor-container {
+            height: 440px;
+            padding-bottom: 42px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('quill') }}
+    <script>
+        const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
+        const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
+
+        window.onload = () => {
+            const quill = new Quill("#explanation-editor", settings);
+            quill.root.innerHTML = `{{ quizQuestion.explanation|raw }}`;
+            QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
+
+            const form = document.querySelector("form#quiz_question");
+            form.onsubmit = function(e) {
+                const content = this.querySelector("#quiz_question_explanation");
+                content.value = quill.root.innerHTML;
+            };
+        };
+    </script>
+{% endblock %}

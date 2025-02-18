@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.profile'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row gap-2 pt-4 justify-content-center">
+            <div class="col-12">
+                {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
+            </div>
+
+            <div class="col-12 card card-body profile">
+                <h2>{{ 'user.profile.basicData.show'|trans }}</h2>
+                <hr/>
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <div class="profile-label">{{ 'form.entity.user.label.firstName'|trans }}</div>
+                        <div class="profile-value">{{ app.user.firstName is not null ? app.user.firstName : '-' }}</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="profile-label">{{ 'form.entity.user.label.lastName'|trans }}</div>
+                        <div class="profile-value">{{ app.user.lastName is not null ? app.user.lastName : '-' }}</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="profile-label">{{ 'form.entity.user.label.email'|trans }}</div>
+                        <div class="profile-value">{{ app.user.email }}</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="profile-label">{{ 'form.entity.user.label.affiliation'|trans }}</div>
+                        <div class="profile-value">{{ app.user.affiliation is not null ? app.user.affiliation : '-' }}</div>
+                    </div>
+                    <div class="col-12">
+                        <a href="{{ path('profile_edit_basic_data') }}" class="btn btn-theme-white bg-blue">{{ 'user.profile.basicData.action'|trans }}</a>
+                        <a href="{{ path('profile_edit_password') }}" class="btn btn-theme-white bg-blue">{{ 'user.profile.password.action'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 card card-body profile">
+                <h2>{{ 'user.profile.api.show'|trans }}</h2>
+                <hr/>
+                <div class="d-flex flex-column flex-lg-row gap-3">
+                    <label class="flex-grow-1">
+                        <input id="apikey" type="text" class="api-field" value="{{ app.user.apiKey }}" readonly/>
+                    </label>
+                    <div class="flex-shrink-0 d-flex gap-2">
+                        <form method="post" action="{{ path('generate_api_key') }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('apikey.generate') }}"/>
+                            <button type="submit" class="btn btn-theme-white bg-blue">{{ ('user.profile.api.action.'~(app.user.apiKey is null ? 'generate' : 'regenerate'))|trans }}</button>
+                        </form>
+                        {% if app.user.apiKey is not null %}
+                            <button type="button" class="btn btn-theme-white bg-green" data-copy-from-input="#apikey">{{ 'user.profile.api.action.copy'|trans }}</button>
+                            <form method="post" action="{{ path('delete_api_key') }}">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('apikey.delete') }}"/>
+                                <button type="submit" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('copy.from-input') }}
+{% endblock %}

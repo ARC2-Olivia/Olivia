@@ -1,0 +1,66 @@
+{% extends 'evaluation/_base_evaluation.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block evaluationContent %}
+    {% if is_granted('ROLE_MODERATOR') %}
+
+        {% include 'evaluation/_evaluate_mod_questions.html.twig' %}
+        <hr>
+        {% include 'evaluation/_evaluate_mod_processors.html.twig' %}
+        {% if evaluation.paging %}
+            <hr>
+            {% include 'evaluation/_evaluate_mod_pages.html.twig' %}
+        {% endif %}
+        {% if constant('EXPORT_TYPE_PRIVACY_POLICY', evaluation) == evaluation.exportType %}
+            <hr>
+            {% include 'evaluation/_evaluate_mod_processorGroups.html.twig' %}
+        {% endif %}
+
+    {% elseif is_user() %}
+
+        <div class="evaluation-assessment-intro">
+            <p>{{ ('practicalSubmoduleAssessment.message.1')|trans({'%questionCount%': questionCount})|raw }}</p>
+            <p>{{ ('practicalSubmoduleAssessment.message.2')|trans|raw }}</p>
+            <p>{{ ('practicalSubmoduleAssessment.message.3')|trans|raw }}</p>
+            <div class="d-flex justify-content-center align-items-center flex-column flex-md-row gap-3">
+                <form action="{{ path('practical_submodule_start_assessment', {'practicalSubmodule': evaluation.id}) }}"
+                      method="post"
+                      {% if assessment is not null %}onsubmit="return confirm(`{{ 'practicalSubmoduleAssessment.message.fillAgain'|trans }}`);"{% endif %}
+                >
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmoduleAssessment.start') }}"/>
+                    <button type="submit" class="btn btn-theme-white bg-blue">{{ 'practicalSubmoduleAssessment.action.start'|trans }}</button>
+                </form>
+                {% if assessment is not null %}
+                    <form action="{{ path('practical_submodule_edit_assessment', {'practicalSubmodule': evaluation.id}) }}" method="post">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmoduleAssessment.edit') }}"/>
+                        <button type="submit" class="btn btn-theme-white bg-green">{{ 'practicalSubmoduleAssessment.action.edit'|trans }}</button>
+                    </form>
+                    {% if assessment.completed %}
+                        <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-red">
+                            {{ ('practicalSubmoduleAssessment.action.results.'~(evaluation.exportType is null or evaluation.exportType == 'none' ? 'default' : 'formOrTemplate'))|trans }}
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            {% if assessmentLastSubmittedAt is not null %}
+                <p><i>{{ assessmentLastSubmittedAt }}</i></p>
+            {% endif %}
+        </div>
+
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if is_granted('ROLE_MODERATOR') %}
+        {{ encore_entry_script_tags('axios') }}
+        {{ encore_entry_script_tags('sortable') }}
+        {{ encore_entry_script_tags('Reorderer') }}
+        {{ encore_entry_script_tags('evaluation.questions.sort') }}
+        {{ encore_entry_script_tags('evaluation.evaluators.sort') }}
+        {% if evaluation.paging %}
+            {{ encore_entry_script_tags('ps.pages.sort') }}
+            {{ encore_entry_script_tags('ps.processor-groups.sort') }}
+        {% endif %}
+    {% endif %}
+{% endblock %}

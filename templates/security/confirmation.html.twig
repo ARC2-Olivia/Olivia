@@ -1,0 +1,22 @@
+{% extends 'security/_base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.confirmation'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="w-100 h-100 row gx-0 justify-content-center align-items-center">
+        <div class="card security-form-wrapper">
+            {% if activationSuccess %}
+                <div class="card-title">{{ 'success.accountConfirmation.subject'|trans({}, 'message') }}</div>
+                <div class="card-text">{{ 'success.accountConfirmation.text'|trans({}, 'message') }}</div>
+            {% else %}
+                <div class="card-title">{{ 'warning.accountConfirmation.subject'|trans({}, 'message') }}</div>
+                <div class="card-text">{{ 'warning.accountConfirmation.text'|trans({}, 'message') }}</div>
+            {% endif %}
+            <div class="card-actions justify-content-between">
+                <a href="{{ path('index') }}" class="btn btn-link">{{ 'common.homepage'|trans }}</a>
+                <a href="{{ path('security_login') }}" class="btn btn-link">{{ 'common.login'|trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

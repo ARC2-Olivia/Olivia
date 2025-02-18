@@ -1,0 +1,46 @@
+{% trans_default_domain 'app' %}
+
+{{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+    {% if form.nameAlt is defined %}
+        {{ form_label(form.nameAlt) }}
+        {{ form_widget(form.nameAlt) }}
+    {% endif %}
+
+    {{ form_label(form.description) }}
+    {{ form_widget(form.description) }}
+    {% if form.descriptionAlt is defined %}
+        {{ form_label(form.descriptionAlt) }}
+        {{ form_widget(form.descriptionAlt) }}
+    {% endif %}
+
+    {% if lessonType == constant('App\\Entity\\Lesson::TYPE_TEXT') %}
+        {{ form_label(form.text) }}
+        <div class="editor-container mb-3">
+            {% include '_partials/ql-editor-toolbar.html.twig' %}
+            <div id="editor"></div>
+        </div>
+        {{ form_widget(form.text) }}
+        {% if form.textAlt is defined %}
+            {{ form_label(form.textAlt) }}
+            <div class="editor-container mb-3">
+                {% include '_partials/ql-editor-toolbar.html.twig' with {'editorToolbarId': 'editor-toolbar-alt', 'editorHtmlId': 'editor-html-alt'} %}
+                <div id="editor-alt"></div>
+            </div>
+            {{ form_widget(form.textAlt) }}
+        {% endif %}
+    {% elseif lessonType == constant('App\\Entity\\Lesson::TYPE_FILE') %}
+        {{ form_label(form.file) }}
+        {{ form_widget(form.file) }}
+    {% elseif lessonType == constant('App\\Entity\\Lesson::TYPE_VIDEO') %}
+        {{ form_label(form.video) }}
+        {{ form_widget(form.video) }}
+    {% elseif lessonType == constant('App\\Entity\\Lesson::TYPE_QUIZ') %}
+        {{ form_label(form.passingPercentage) }}
+        <div class="d-flex align-items-center" style="column-gap: 16px">
+            <span id="passing-percentage-value" class="mb-3"></span>
+            {{ form_widget(form.passingPercentage) }}
+        </div>
+    {% endif %}
+{{ form_end(form) }}

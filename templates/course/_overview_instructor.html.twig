@@ -1,0 +1,17 @@
+{% trans_default_domain 'app' %}
+
+{% if isLast is not defined %}
+    {% set isLast = false %}
+{% endif %}
+
+<div class="row{% if not isLast %} mb-4{% endif %}">
+    <div class="course-instructor">
+        <div class="course-instructor-image">
+            <img src="{{ instructor.image is not null ? path('file_fetch_instructor_image', {'instructor': instructor.id}) : asset('build/images/avatar-empty.svg') }}" alt="Instructor image"/>
+        </div>
+        <div class="course-instructor-name-and-institution">
+            <span>{{ instructor }}</span>
+            <span>{{ instructor.institution }}</span>
+        </div>
+    </div>
+</div>

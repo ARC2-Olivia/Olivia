@@ -1,0 +1,61 @@
+{% extends 'admin/_base_admin.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block adminContent %}
+    <div class="container-fluid p-5">
+        <div class="card">
+            <div class="card-title d-flex justify-content-between align-items-center">
+                <span>{{ 'user.title.index'|trans }}</span>
+                <a href="{{ path('file_fetch_users_excel') }}" class="btn btn-theme-white bg-green font-size-default" target="_blank">{{ 'button.exportToExcel'|trans }}</a>
+            </div>
+            <div class="card-text">
+                <div id="users-table-wrapper"></div>
+                <table id="users-table" class="table table-cols-5">
+                    <thead>
+                        <tr>
+                            <th>{{ 'common.id'|trans }}</th>
+                            <th>{{ 'form.entity.user.label.email'|trans }}</th>
+                            <th>{{ 'form.entity.user.label.roles'|trans }}</th>
+                            <th>{{ 'form.entity.user.label.activated'|trans }}</th>
+                            <th>{{ 'common.actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.roles|join(', ') }}</td>
+                                <td>{{ user.activated ? 'common.yes'|trans : 'common.no'|trans }}</td>
+                                <td>
+                                    <a href="{{ path('admin_user_edit', {'user': user.id}) }}" class="btn btn-theme-white btn-sm bg-blue">{{ mdi('pencil') }}</a>
+                                    <form class="d-inline-block">
+                                        <button type="button" class="btn btn-theme-white btn-sm bg-red">{{ mdi('trash-can-outline') }}</button>
+                                    </form>
+                                    {% if app.user.id != user.id %}
+                                        <a href="{{ path('index', {'_switch_user': user.email}) }}" class="btn btn-theme-white btn-sm bg-green">{{ mdi('account-switch') }}</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('gridjs') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('gridjs') }}
+    <script>
+        window.addEventListener("load", () => {
+            new Grid({ from: document.getElementById("users-table"), sort: true, search: true, pagination: true }).render(document.getElementById("users-table-wrapper"));
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'termsOfService/_base_tos.html.twig' %}
+{% trans_default_domain 'app' %}
+{% set gdprTitle = 'termsOfService.format'|trans({'%version%': gdpr.version, '%revision%': gdpr.revision}) %}
+
+{% block title %}{{ 'page.termsOfService.edit'|trans }}{% endblock %}
+
+{% block tosContent %}
+    <div class="card card-body">
+        <h1 class="card-title">{{ 'termsOfService.title.edit'|trans({'%termsOfService%': gdprTitle})|raw }}</h1>
+        {{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+            {{ form_label(form.termsOfService) }}
+            <div class="editor-container mb-3">
+                {% include '_partials/ql-editor-toolbar.html.twig' with {'editorToolbarId': 'editor-toolbar-tos', 'editorHtmlId': 'editor-html-tos'} %}
+                <div id="editor-tos"></div>
+            </div>
+            {{ form_widget(form.termsOfService) }}
+
+            {{ form_label(form.privacyPolicy) }}
+            <div class="editor-container mb-3">
+                {% include '_partials/ql-editor-toolbar.html.twig' with {'editorToolbarId': 'editor-toolbar-pp', 'editorHtmlId': 'editor-html-pp'} %}
+                <div id="editor-pp"></div>
+            </div>
+            {{ form_widget(form.privacyPolicy) }}
+
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('quill') }}
+    <style>
+        .editor-container {
+            height: 440px;
+            padding-bottom: 42px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('quill') }}
+    <script>
+        const settingsTos = { theme: "snow", modules: { toolbar: "#editor-toolbar-tos" } };
+        const settingsPp = { theme: "snow", modules: { toolbar: "#editor-toolbar-pp" } };
+        const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
+
+        window.addEventListener("load", () => {
+            const quillTos = new Quill("#editor-tos", settingsTos);
+            quillTos.root.innerHTML = `{{ gdpr.termsOfService|raw }}`;
+
+            const quillPp = new Quill("#editor-pp", settingsPp);
+            quillPp.root.innerHTML = `{{ gdpr.privacyPolicy|raw }}`;
+
+            QuillUtils.assignHtmlEditingCapabilities(quillTos, document.getElementById("editor-html-tos"), translation)
+            QuillUtils.assignHtmlEditingCapabilities(quillPp, document.getElementById("editor-html-pp"), translation)
+
+            const form = document.querySelector('form#gdpr');
+            form.onsubmit = function (e) {
+                const termsOfService = this.querySelector("#gdpr_termsOfService");
+                termsOfService.value = quillTos.root.innerHTML;
+                const privacyPolicy = this.querySelector("#gdpr_privacyPolicy");
+                privacyPolicy.value = quillPp.root.innerHTML;
+            }
+        });
+    </script>
+{% endblock %}

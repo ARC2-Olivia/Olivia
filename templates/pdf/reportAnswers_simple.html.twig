@@ -1,0 +1,82 @@
+{% trans_default_domain 'app' %}
+<style>
+    * {
+        font-family: sans-serif;
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 18px;
+        padding-top: 16px;
+        margin-bottom: 16px;
+    }
+
+    .evaluation-assessment-data {
+        display: flex;
+        flex-direction: column;
+        row-gap: 32px;
+    }
+
+    .evaluation-assessment-datum {
+        display: block;
+        margin-bottom: 32px;
+    }
+
+    .evaluation-assessment-datum > * {
+        margin-bottom: 8px;
+    }
+
+    .evaluation-assessment-datum > *:last-child {
+        margin-bottom: 0;
+    }
+
+    .evaluation-assessment-datum-question {
+        font-weight: 600;
+        white-space: pre-line;
+        color: #ffffff;
+        background-color: #3a526a;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        padding: 8px 16px;
+        border: solid 3px rgba(0, 0, 0, .1);
+    }
+
+    .evaluation-assessment-datum-answers {
+        border-left: solid 1px #cdcdcd;
+        border-right: solid 1px #cdcdcd;
+        border-bottom: solid 1px #cdcdcd;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 16px;
+        margin-top: -8px;
+    }
+
+    .evaluation-assessment-datum-answers.simple-style-pt1 {
+        border-bottom-color: #f8d7da;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0
+    }
+
+    .evaluation-assessment-datum-answers.simple-style-pt2 {
+        border-color: #f8d7da;
+    }
+
+    .mt-2 {
+        margin-top: 0.5rem !important;
+    }
+
+    .mb-5 {
+        margin-bottom: 3rem !important;
+    }
+
+    .my-3 {
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+</style>
+
+<h1>{{ 'practicalSubmodule.extra.reportTitle'|trans({'%practicalSubmodule%': practicalSubmodule.name}) }}</h1>
+{% include 'evaluation/_results_simple_assessment_data.html.twig' with {'forReport': true} %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.certificates'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <h1 class="mb-4">{{ 'nav.certificates'|trans }}</h1>
+        <h2>{{ 'certificate.page.section.achieved'|trans }}</h2>
+        {% if courses.certified is not empty %}
+            <ul class="certificate-list">
+                {% if courses.golden %}
+                    <li class="certificate-list-item">{% include 'default/_certificates_item_golden.html.twig' with {'certified': true} only %}</li>
+                {% endif %}
+                {% for course in courses.certified %}
+                    <li class="certificate-list-item">{% include 'default/_certificates_item.html.twig' with {'course': course, 'certified': true} only %}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="mt-2"><i>{{ 'certificate.page.message.empty'|trans }}</i></p>
+        {% endif %}
+        
+        <h2 class="mt-3">{{ 'certificate.page.section.nonAchieved'|trans }}</h2>
+        {% if courses.uncertified is not empty %}
+            <ul class="certificate-list uncertified">
+                {% if not courses.golden %}
+                    <li class="certificate-list-item">{% include 'default/_certificates_item_golden.html.twig' %}</li>
+                {% endif %}
+                {% for course in courses.uncertified %}
+                    <li class="certificate-list-item">{% include 'default/_certificates_item.html.twig' with {'course': course} only %}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="mt-2"><i>{{ 'certificate.page.message.empty'|trans }}</i></p>
+        {% endif %}
+        
+    </div>
+{% endblock %}

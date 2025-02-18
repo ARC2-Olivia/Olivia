@@ -1,0 +1,10 @@
+{% trans_default_domain 'app' %}
+{% if lesson.type == constant('TYPE_TEXT', lesson) %}
+    {{ 'lesson.type.text'|trans }}
+{% elseif lesson.type == constant('TYPE_FILE', lesson) %}
+    {{ 'lesson.type.file'|trans }}
+{% elseif lesson.type == constant('TYPE_VIDEO', lesson) %}
+    {{ 'lesson.type.video'|trans }}
+{% elseif lesson.type == constant('TYPE_QUIZ', lesson) %}
+    {{ 'lesson.type.quiz'|trans }}
+{% endif %}

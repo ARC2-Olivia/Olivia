@@ -1,0 +1,56 @@
+{% extends 'course/_base_course.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block courseContent %}
+    <div class="row g-4 p-0" style="margin-top: 0 !important;">
+        <div class="col-12 col-lg-9">
+            {% if is_granted('ROLE_MODERATOR') %}
+                <div class="mb-4">
+                    <a href="{{ path('course_edit', {'course': course.id}) }}" class="btn btn-theme-white bg-green">{{ 'common.edit'|trans }}</a>
+                </div>
+            {% endif %}
+            {% if course.description is not empty %}
+                <h3>{{ 'course.overview.aboutTopic'|trans }}</h3>
+                <div class="ql-editor">{{ course.description|raw }}</div>
+            {% endif %}
+            {% if course.learningOutcomesAsArray is not empty %}
+                <h3 class="mt-4">{{ 'course.overview.learningOutcomes'|trans }}</h3>
+                <ul class="ps-3">
+                    {% for lo in course.learningOutcomesAsArray %}
+                        <li>{{ lo }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if course.certificateInfo is not empty %}
+                <h3 class="mt-4">{{ 'course.overview.certificateInfo'|trans }}</h3>
+                <p>{{ course.certificateInfo }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if course.instructors is not empty %}
+        <div class="mt-5 p-0">
+            <h3 class="mb-3">{{ 'course.nav.instructors'|trans }}</h3>
+            {% for instructor in course.instructors %}
+                {% if loop.last %}
+                    {% include 'course/_overview_instructor.html.twig' with {'instructor': instructor, 'isLast': true} %}
+                {% else %}
+                    {% include 'course/_overview_instructor.html.twig' with {'instructor': instructor} %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block belowCourseContent %}
+    {% if course.practicalSubmodules is not empty %}
+        <div class="row course-content mb-4">
+            <h3 class="mb-2">{{ 'course.extra.connectedTo'|trans }}</h3>
+            <div class="course-connected-modules">
+                {% for ps in course.practicalSubmodules %}
+                    {% include 'evaluation/_index_evaluation.html.twig' with {'usePublicName': true, 'evaluation': ps} %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'course/_base_course.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block courseContent %}
+    <div class="p-0">
+        {% include 'course/_form.html.twig' %}
+        <div class="d-flex justify-content-between mt-3">
+            <form action="{{ path('course_delete', {'course': course.id}) }}"
+                  onsubmit="return confirm('{{ 'course.delete'|trans({'%course%': course.name}) }}')"
+                  method="post"
+            >
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('course.delete') }}"/>
+                <button type="submit" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</button>
+            </form>
+            <button type="submit" form="course" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('df-select') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('df-select') }}
+{% endblock %}

@@ -1,0 +1,101 @@
+.df-select {
+	position: relative;
+}
+
+.df-select:focus-within .df-select-menu {
+	display: flex;
+}
+
+.df-select-box {
+	border: solid 1px rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+	min-height: 2rem;
+	display: flex;
+	gap: 8px;
+	padding: 4px 8px;
+	cursor: pointer;
+	background-color: white;
+	width: 100%;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.df-select-menu {
+	z-index: 1090;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border: solid 1px rgba(0, 0, 0, 0.2);
+	background-color: white;
+	border-radius: 4px;
+	display: none;
+	flex-direction: column;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	transform: translateY(calc(100% - 1px));
+	max-height: 400px;
+	overflow-y: scroll;
+}
+
+.df-select-menu-item {
+	padding: 6px 16px;
+	cursor: pointer;
+	background: none;
+	border: none;
+	text-align: start;
+	display: flex;
+	column-gap: 8px;
+	align-items: start;
+}
+
+.df-select-menu-item::before {
+	content: "";
+	width: 16px;
+	font-size: 0.75rem;
+	flex-shrink: 0;
+}
+
+.df-select-menu-item[data-df-selected]::before {
+	content: "✓"
+}
+
+.df-select-menu-item:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.df-selected-item {
+	background-color: rgba(0, 0, 0, 0.1);
+	padding: 4px 8px;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	column-gap: 4px;
+	cursor: default;
+	flex-shrink: 0;
+	max-width: 100%;
+}
+
+.df-selected-item > button {
+	background: none;
+	cursor: pointer;
+	border: none;
+	padding: 0;
+	height: 16px;
+	width: 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 4px;
+	flex-shrink: 0;
+}
+
+.df-selected-item > span {
+	text-align: start;
+}
+
+.df-selected-item > button:hover {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+

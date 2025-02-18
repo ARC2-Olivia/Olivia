@@ -1,0 +1,52 @@
+{% trans_default_domain 'app' %}
+
+{% if usePublicName is not defined %}
+    {% set usePublicName = false %}
+{% endif %}
+
+{% if displayForTopic is not defined %}
+    {% set displayForTopic = false %}
+{% endif %}
+
+{% if isMultipart is not defined %}
+    {% set isMultipart = false %}
+{% endif %}
+
+{% set isCompleted = evaluation|assessment_completed %}
+
+<div class="card bordered p-0 position-relative" style="min-height: 320px">
+    {% if displayForTopic == true %}
+        <span class="topic-type apply">
+            {{ 'nav.practice'|trans }}
+            {% if isMultipart == true and loop is defined and offset is defined %}
+                {{ 'topic.multipartName'|trans({'%number%': offset})|raw }}
+            {% endif %}
+        </span>
+    {% endif %}
+    <div class="card-image ms-0 me-0 mt-0">
+        {% if evaluation.image is not null %}
+            <img src="{{ path('file_fetch_practical_submodule_image', {'practicalSubmodule': evaluation.id}) }}" alt="Practical submodule image"/>
+        {% endif %}
+    </div>
+    <div class="card-text flex-grow-1 ps-2 pe-2">
+        <div class="d-flex align-items-center course-card-details mb-3">
+            {{ mdi('clipboard-list-outline', 'course-card-details-icon') }}
+            <span>{{ evaluation|total_questions_statistic }}</span>
+        </div>
+        <div class="course-card-name">{{ evaluation.nameOrPublicName }}</div>
+    </div>
+    <div class="card-actions ps-2 pe-2 pb-2 justify-content-between">
+        <a href="{{ path('practical_submodule_overview', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.details'|trans }}</a>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if isCompleted %}
+                {% set tabName = evaluation.exportType is null or evaluation.exportType == constant('EXPORT_TYPE_NONE', evaluation) ? ('practicalSubmodule.nav.results.default'|trans) : ('practicalSubmodule.nav.results.formOrTemplate'|trans) %}
+                <a href="{{ path('practical_submodule_results', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ tabName }}</a>
+            {% else %}
+                <a href="{{ path('practical_submodule_evaluate', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-blue">{{ 'practicalSubmodule.nav.questionnaire'|trans }}</a>
+            {% endif %}
+        {% else %}
+            <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange" style="width: max-content">{{ 'button.loginToApply'|trans }}</a>
+        {% endif %}
+    </div>
+</div>

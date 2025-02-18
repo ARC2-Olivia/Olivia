@@ -1,0 +1,15 @@
+{% trans_default_domain 'app' %}
+
+<h2 class="mb-3">{{ 'practicalSubmodule.extra.pages'|trans }}</h2>
+{% if pages is not empty %}
+    <ul id="ps_pages" class="mod--ps-pages" data-path="{{ path('practical_submodule_page_reorder') }}">
+        {% for page in pages %}
+            {% include 'evaluation/_evaluate_mod_page.html.twig' %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>{{ 'practicalSubmodulePage.empty'|trans }}</p>
+{% endif %}
+<div class="text-end">
+    <a href="{{ path('practical_submodule_add_page', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'practicalSubmodule.extra.page'|trans }}</a>
+</div>

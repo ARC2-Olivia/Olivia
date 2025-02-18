@@ -1,0 +1,44 @@
+{% extends 'evaluation/_base_evaluation.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.evaluation.assessment'|trans }}{% endblock %}
+
+{% block evaluationContent %}
+    <form id="evaluation_assessment"
+          class="evaluation-assessment"
+          action="{{ path('practical_submodule_assessment_finish', {'practicalSubmoduleAssessment': assessment.id}) }}"
+          method="post"
+    >
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token("practicalSubmoduleAssessment.finish") }}"/>
+    </form>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('modal') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('EventBus') }}
+    {{ encore_entry_script_tags('modal') }}
+    {{ encore_entry_script_tags('PracticalSubmoduleAssessment') }}
+    <script>
+        window.addEventListener("load", () => {
+            new PracticalSubmoduleAssessment(
+                "#evaluation_assessment",
+                {{ assessment|json_encode|raw }},
+                {
+                    buttonNext: "{{ 'common.next'|trans }}",
+                    buttonPrevious: "{{ 'common.previous'|trans }}",
+                    buttonSubmit: "{{ 'common.submit'|trans }}",
+                    buttonAdd: "{{ 'common.add'|trans }}",
+                    buttonAddItem: "{{ 'common.addItem'|trans }}",
+                    buttonSaveForLater: "{{ 'common.saveForLater'|trans }}",
+                    buttonShowFields: "{{ 'common.showFields'|trans }}",
+                    buttonClose: "{{ 'common.close'|trans }}"
+                }
+            );
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block body %}
+	{% include 'news/_banner.html.twig' %}
+	
+	<div class="container py-5">
+		{% include '_partials/toasts.html.twig' %}
+		<ul class="news-list">
+			{% if is_granted('ROLE_MODERATOR') %}
+				<li><a href="{{ path('news_new') }}" class="news-add-button">{{ mdi('plus-circle') }}</a></li>
+			{% endif %}
+			{% for newsItem in news %}
+				<li>
+					<a href="{{ path('news_show', {'newsItem': newsItem.id}) }}" class="news-item">
+						<span class="news-item-date">{{ newsItem.createdAt|date('d.m.Y.') }}</span>
+						<span class="news-item-title">{{ newsItem.title }}</span>
+					</a>
+				</li>
+			{% else %}
+				<li><p class="text-center"><i>{{ 'newsItem.message.empty'|trans }}</i></p></li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+        .body { background-color: white; }
+	</style>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('particles') }}
+{% endblock %}

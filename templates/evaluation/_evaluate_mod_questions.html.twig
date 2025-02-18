@@ -1,0 +1,15 @@
+{% trans_default_domain 'app' %}
+
+<h2 class="mb-3">{{ 'practicalSubmodule.extra.questions'|trans }}</h2>
+{% if evaluationQuestions is not empty %}
+    <ul id="evaluation_questions" class="mod--evaluation-questions" data-path="{{ path('practical_submodule_question_reorder') }}">
+        {% for evaluationQuestion in evaluationQuestions %}
+            {% include 'evaluation/_evaluate_mod_evaluationQuestion.html.twig' %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>{{ 'practicalSubmoduleQuestion.empty'|trans }}</p>
+{% endif %}
+<div class="text-end">
+    <a href="{{ path('practical_submodule_add_question', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-link btn-sm">{{ mdi('plus') }} {{ 'practicalSubmodule.extra.question'|trans }}</a>
+</div>

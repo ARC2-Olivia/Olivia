@@ -1,0 +1,29 @@
+{% extends 'evaluation/_base_evaluation.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block evaluationContent %}
+    <div class="p-0">
+        {% include 'evaluation/_form.html.twig' %}
+        <div class="d-flex justify-content-between mt-3">
+            <form action="{{ path('practical_submodule_delete', {'practicalSubmodule': evaluation.id}) }}"
+                  onsubmit="return confirm('{{ 'practicalSubmodule.delete'|trans({'%evaluation%': evaluation.name}) }}')"
+                  method="post"
+            >
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmodule.delete') }}"/>
+                <button type="submit" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</button>
+            </form>
+            <a href="{{ path('practical_submodule_export_submodule', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green" download>{{ 'common.export'|trans }}</a>
+            <button type="submit" form="{{ form.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('df-select') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('df-select') }}
+{% endblock %}

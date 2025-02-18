@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.evaluation.index'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="index-banner" style="background-image: url('{{ asset('build/images/bg-module-practice.png') }}');">
+        <div id="index-banner-particles" class="index-banner-particles" data-particles></div>
+        <div class="container index-banner-wrapper">
+            <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
+            <div class="index-banner-subtitle">{{ 'practicalSubmodule.title.index'|trans }}</div>
+        </div>
+    </div>
+    <div class="container py-5">
+        {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
+        <div class="submodule-grid">
+            {% for evaluation in evaluations %}
+                {% include 'evaluation/_index_evaluation.html.twig' with {'evaluation': evaluation} %}
+            {% endfor %}
+            {% if is_granted('ROLE_MODERATOR') %}{% include 'evaluation/_index_add.html.twig' %}{% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('particles') }}
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.topic.show'|trans }}{% endblock %}
+
+{% block body %}
+    {% include 'topic/_banner.html.twig' %}
+    
+    <div class="container py-5">
+        {% include "_partials/toasts.html.twig" with {'classAddition': 'row'} %}
+        <div class="row g-3">
+            <div class="topic-title">{{ topic.title }}</div>
+            <img class="learn2apply-arrow" src="{{ asset('build/images/smudged-arrow.png') }}" alt="Learn to start applying"/>
+            <div class="topic-segments">
+
+                <div class="topic-segment theory">
+                    {% set isMultipart = theoreticalSubmodules|length > 1 %}
+                    {% set offset = 0 %}
+                    {% for pair in theoreticalSubmodules|make_pairs %}
+                        <div class="topic-segment-row">
+                            {% for course in pair %}
+                                {% set offset = offset + 1 %}
+                                {% include 'course/_index_course.html.twig' with {'usePublicName': true, 'displayForTopic': true} %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="topic-segments-divider"></div>
+
+                <div class="topic-segment">
+                    {% set isMultipart = practicalSubmodules|length > 1 %}
+                    {% set offset = 0 %}
+                    {% for pair in practicalSubmodules|make_pairs %}
+                        <div class="topic-segment-row">
+                            {% for evaluation in pair %}
+                                {% set offset = offset + 1 %}
+                                {% include 'evaluation/_index_evaluation.html.twig' with {'usePublicName': true, 'displayForTopic': true} %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('particles') }}
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const cards = document.querySelectorAll(".card");
+            let maxHeight = 0;
+            for (const card of cards) {
+                if (maxHeight < card.offsetHeight) {
+                    maxHeight = card.offsetHeight;
+                }
+            }
+            for (const card of cards) {
+                card.style.height = `${maxHeight}px`;
+            }
+        });
+    </script>
+{% endblock %}

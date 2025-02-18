@@ -1,0 +1,15 @@
+{{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+    {% if form.type is defined %}
+        {{ form_label(form.type) }}
+        {{ form_widget(form.type) }}
+    {% endif %}
+
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+
+    {{ form_label(form.included) }}
+    {{ form_widget(form.included) }}
+
+    {{ form_label(form.disabled) }}
+    {{ form_widget(form.disabled) }}
+{{ form_end(form) }}

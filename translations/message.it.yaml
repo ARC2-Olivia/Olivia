@@ -1,0 +1,282 @@
+type:
+    success: Successo
+    warning: Avvertimento
+    error: Errore
+
+success:
+    user:
+        edit: L'utente è stato modificato.
+    accountConfirmation:
+        subject: Conferma di successo!
+        text: Il tuo account Olivia Tool è stato attivato! Effettua il login per accedere ai moduli Formazione o Pratica.
+    registration: L'e-mail di conferma è stata inviata. Fai clic o accedi all'URL contenuto nell'e-mail per attivare il tuo account.
+    course:
+        new: Il corso <i>%courseName%</i> è stato creato con successo.
+        edit: Il corso è stato aggiornato con successo.
+    instructor:
+        new: Hai creato un nuovo istruttore.
+        add: Hai aggiunto <i>%instructor%</i> come istruttore per il corso <i>%course%</i> .
+    lesson:
+        new: Hai aggiunto una nuova lezione per il corso <i>%course%</i> .
+        edit: La lezione è stata modificata.
+    quiz:
+        finish: Hai completato il quiz <i>%quizName%</i> .
+    quizQuestion:
+        new: Hai aggiunto una nuova domanda al corso.
+        edit: La domanda è stata modificata.
+    quizQuestionChoice:
+        new: Hai aggiunto una nuova scelta alla domanda.
+        edit: La scelta è stata modificata.
+    practicalSubmodule:
+        new: Hai creato un nuovo sottomodulo pratico.
+        edit: È stato modificato un sottomodulo pratico.
+    practicalSubmoduleQuestion:
+        new: Una nuova domanda è stata aggiunta al sottomodulo.
+        edit: La domanda è stata aggiornata.
+    practicalSubmoduleQuestionAnswer:
+        new: Alla domanda è stata aggiunta una nuova risposta.
+        edit: La risposta alla domanda è stata aggiornata.
+    practicalSubmoduleProcessor:
+        new: Per il sottomodulo è stato creato un nuovo processore.
+        edit: Il processore è stato aggiornato.
+    practicalSubmoduleAssessment:
+        finish: Il tuo questionario è stato salvato. È possibile visualizzare i risultati facendo clic su <i>Visualizza rapporto</i> nella scheda <i>Questionario</i>.
+        save: Il tuo questionario è stato salvato per essere completato successivamente.
+    practicalSubmodulePage:
+        new: Una nuova pagina è stata aggiunta al sottomodulo.
+        edit: La pagina è stata aggiornata
+    practicalSubmoduleProcessorGroup:
+        new: Al sottomodulo è stato aggiunto un nuovo gruppo di processori.
+        edit: Il gruppo Processore è stato aggiornato;
+    termsOfService:
+        new: Sono stati creati nuovi termini di servizio. Gli utenti dovranno accettare i termini di servizio per poter utilizzare l'applicazione.
+        edit: I termini di servizio <i>%termsOfService%</i> sono stati modificati.
+        revise: I termini di servizio sono stati rivisti. Gli utenti dovranno accettare i termini di servizio per poter utilizzare l'applicazione.
+        accept: I termini di servizio sono stati accettati.
+        rescind: I termini del servizio sono stati annullati.
+    dataRequest:
+        access: È stata inviata una richiesta di accesso ai dati.
+        delete: È stata inviata una richiesta di cancellazione dei dati.
+    file:
+        new: Il nuovo file è stato caricato.
+        edit: Il file esistente è stato modificato.
+    resetPassword:
+        change: La password è stata modificata con successo.
+        email: "Un messaggio e-mail è stato inviato all'indirizzo e-mail inserito (se esiste un account). Fare clic sull'URL nel messaggio di posta elettronica per reimpostare la password. Attenzione: l'URL è valido solo per 3 ore, a partire dal momento in cui è stata inviata la richiesta di reimpostazione della password."
+    topic:
+        new: È stato creato un nuovo argomento.
+        edit: L'argomento è stato aggiornato.
+    newsItem:
+        new: È stata creata una nuova notizia.
+        edit: La notizia è stata eliminata.
+    api:
+        generate: È stata generata una nuova chiave API.
+
+warning:
+    accountConfirmation:
+        subject: Gettone non valido!
+        text: Il token di conferma dall'URL fornito non è valido. O l'account è già stato attivato oppure l'account non esiste.
+    registration:
+        userExists: L'utente con quell'e-mail esiste già.
+        disabled: Le registrazioni e le reimpostazioni delle password sono state temporaneamente disabilitate.
+    course:
+        image.store: Si è verificato un errore durante la memorizzazione dell'immagine del corso. Puoi provare a ricaricarlo mentre modifichi le informazioni di base del corso.
+        delete: Il corso <i>%corso%</i> è stato eliminato.
+    instructor:
+        image.store: Si è verificato un errore durante la memorizzazione dell'immagine dell'istruttore. Puoi provare a ricaricarlo più tardi.
+        delete: Hai eliminato un insegnante.
+        remove: Hai rimosso <i>%istruttore%</i> dal corso <i>%course%</i> .
+    lesson:
+        delete: La lezione <i>%lesson%</i> del corso <i>%course%</i> è stata eliminata.
+        worseQuizResult: I risultati del quiz non sono stati salvati perché hai ottenuto un punteggio migliore nel tentativo precedente rispetto a quello nuovo.
+    quizQuestion:
+        delete: La domanda per il quiz <i>%lesson%</i> è stata eliminata.
+    quizQuestionChoice:
+        delete: La scelta è stata cancellata.
+        correctAnswerChanged: Poiché la scelta è stata contrassegnata come corretta, le altre scelte sono state automaticamente contrassegnate come errate.
+    practicalSubmodule:
+        image.store: Si è verificato un errore durante la memorizzazione dell'immagine per il sottomodulo pratico. Puoi provare a ricaricarlo mentre modifichi le informazioni pratiche di base del sottomodulo.
+        delete: Il sottomodulo <i>%evaluation%</i> è stato eliminato.
+    practicalSubmoduleQuestion:
+        delete: La domanda per il sottomodulo <i>%evaluation%</i> è stata eliminata.
+        manyToOne: La domanda che desideri eliminare viene utilizzata come domanda dipendente per altre domande o in uno o più processori <i>semplici</i> , <i>templated_text</i> , ili <i>html</i> . Aggiorna o elimina le domande e/o i responsabili del trattamento che utilizzano la domanda, quindi prova a eliminarla nuovamente.
+    practicalSubmoduleQuestionAnswer:
+        delete: La risposta è stata cancellata dalla domanda.
+    practicalSubmoduleProcessor:
+        delete: Il processore è stato cancellato dal sottomodulo.
+    practicalSubmoduleAssessment:
+        noQuestion: Si è verificato un errore durante la memorizzazione della risposta a una delle domande.
+    practicalSubmodulePage:
+        delete: La pagina è stata eliminata dal sottomodulo.
+    practicalSubmoduleProcessorGroup:
+        delete: Il gruppo processore è stato eliminato dal sottomodulo
+    file:
+        delete: Un file è stato rimosso.
+    topic:
+        delete: L'argomento <i>%topic%</i> è stato eliminato.
+        image.store: Si è verificato un errore durante la memorizzazione dell'immagine dell'argomento. Puoi provare a ricaricarlo mentre modifichi l'argomento.
+    newsItem:
+        delete: Una notizia è stata eliminata.
+    api:
+        delete: La chiave API è stata eliminata.
+
+error:
+    user:
+        email:
+            blank: L'e-mail non può essere vuota.
+            invalid: Indirizzo email non valido.
+    passwordPolicy:
+        length: La password deve contenere almeno 8 caratteri.
+        number: La password deve contenere almeno un numero.
+        uppercase: La password deve contenere almeno una lettera maiuscola.
+    login:
+        notFound: Credenziali non valide.
+        notActivated: "L'account utente non è attivato."
+    registration:
+        firstName:
+            blank: Il campo del nome non deve essere vuoto
+        lastName:
+            blank: Il campo del cognome non deve essere vuoto
+        email:
+            blank: Il campo e-mail non deve essere vuoto.
+            format: L'e-mail non è scritta in formato e-mail.
+        password:
+            blank: I campi della password non devono essere vuoti.
+            repeated: Le password devono essere identiche!
+        termsOfService: Per procedere con la registrazione e poter utilizzare l'applicazione è necessario accettare i termini del servizio.
+    resetPassword:
+        email:
+            blank: Il campo e-mail non deve essere vuoto.
+            format: L'e-mail non è scritta in formato e-mail.
+        password:
+            blank: I campi della password non devono essere vuoti.
+            repeated: Le password devono essere identiche!
+        token:
+            invalid: Richiesta di reimpostazione della password non valida.
+            expired: La richiesta di reimpostazione della password è scaduta.
+    captcha:
+        incorrect: La tua risposta per verificare se sei un robot non è corretta.
+        empty: Devi rispondere alla verifica se sei un robot.
+    export:
+        results: Questo questionario non supporta l'esportazione dei risultati!
+    course:
+        name: Il nome del corso non deve essere vuoto.
+        description: La descrizione del corso non deve essere vuota.
+        image:
+            maxSize: Il file supera la dimensione massima consentita di 5 megabyte.
+            mimeType: Il file deve essere un'immagine.
+        estimatedWorkload:
+            value: 'Il valore stimato del carico di lavoro deve essere un numero: intero o decimale con &quot;.&quot; come punto decimale.'
+    instructor:
+        firstName: Il nome non deve essere vuoto.
+        lastName: Il cognome non deve essere vuoto.
+        notNull: Devi scegliere un istruttore dal menu a discesa da aggiungere al corso.
+        remove: L'istruttore <i>%istruttore%</i> non è assegnato al corso <i>%corso%</i> .
+    lesson:
+        name: Il nome della lezione non deve essere vuoto.
+        file:
+            size: Il file supera la dimensione massima consentita di 20 megabyte.
+            noFile: È necessario caricare un file.
+            store: Si è verificato un errore durante la memorizzazione del file caricato per la lezione.
+        video:
+            blank: L'URL del video è obbligatorio.
+            store: Si è verificato un errore durante la memorizzazione del video caricato per la lezione.
+        quiz:
+            blank: È richiesta la percentuale di passaggio.
+            range: Il valore della percentuale di passaggio deve essere compreso tra 0 e 100.
+            type: Impossibile aggiungere una nuova domanda a una lezione che non sia un quiz.
+            start: Impossibile avviare il quiz. Per favore riprova.
+            finish: La tua sessione è scaduta mentre rispondevi al quiz. Per favore, riprendilo di nuovo.
+            missingLessonItemQuiz: Si è verificato un errore durante l'avvio o il completamento del quiz. Per favore, segnala l'errore a uno dei moderatori.
+            results:
+                completionData: Non ci sono risultati da visualizzare perché il quiz non è stato completato.
+                type: Impossibile visualizzare i risultati di una lezione che non sia un quiz.
+                missingLessonItemQuiz: Impossibile mostrare i risultati del quiz a causa di un errore. Per favore, segnala l'errore a uno dei moderatori.
+    quizQuestion:
+        text: Il testo della domanda non deve essere vuoto.
+        explanation: Il testo esplicativo non deve essere vuoto.
+    practicalSubmodule:
+        name: Il nome del sottomodulo pratico non deve essere vuoto.
+        description: La descrizione del sottomodulo pratico non deve essere lasciata vuota.
+        image:
+            maxSize: Il file supera la dimensione massima consentita di 5 megabyte.
+            mimeType: Il file deve essere un'immagine.
+        import:
+            erroneousFirstTask: Il primo compito deve creare un sottomodulo pratico e non deve essere errato.
+            wrongFirstTaskType: Il primo compito è creare un sottomodulo pratico. Il file è stato manomesso in qualche modo dopo l'esportazione?
+            missingTaskOrderKey: Nel file mancano alcuni dati importanti per l'esportazione. Il file è stato manomesso in qualche modo dopo l'esportazione?
+            default: Si è verificato un errore imprevisto durante l'importazione del sottomodulo pratico.
+        modeOfOperation: Modalità operativa non valida.
+        terminology:
+            invalid: Terminologia non valida.
+    practicalSubmoduleQuestion:
+        questionText: Il testo della domanda non deve essere vuoto.
+        dependentValue:
+            notBool: Per la domanda dipendente scelta, il valore dipendente deve essere <b>1</b> per <b><i>sì</i></b> o <b>0</b> per <b><i>no</i></b> .
+            notNumeric: Per la domanda dipendente scelta, il valore dipendente deve essere un numero.
+    practicalSubmoduleQuestionAnswer:
+        answerText: Il testo della risposta non deve essere vuoto.
+        answerValue:
+            weighted: Il peso della risposta deve essere un numero.
+        csrf: Si è verificato un errore durante l'elaborazione delle risposte alla domanda. Per favore, prova ad aggiungerli di nuovo.
+        empty: Non c'erano risposte da aggiungere alla domanda.
+        templatedText:
+            textFields: Sia i modelli di risposta predefiniti che quelli tradotti devono contenere lo stesso numero di campi con gli stessi nomi.
+    practicalSubmoduleProcessor:
+        name: Il nome del processore non deve essere vuoto.
+    practicalSubmoduleProcessorSimple:
+        evaluationQuestion: È necessario scegliere una domanda per il processore.
+        expectedValue:
+            blank: È necessario fornire al processore un valore atteso.
+            notBool: Per la domanda scelta, la risposta prevista deve essere <b>1</b> per <b><i>sì</i></b> oppure <b>0</b> per <b><i>no</i></b> .
+            notNumeric: Per la domanda scelta, la risposta prevista deve essere un numero.
+        resultText: È necessario assegnare un testo risultante che il processore genererà al termine dell'elaborazione riuscita.
+    practicalSubmoduleProcessorSumAggregate:
+        questionsAndProcessors: È necessario assegnare almeno una domanda o un processore al processore dell'aggregato totale (se incluso nel calcolo).
+        expectedValueRange:
+            start: L'inizio dell'intervallo di valori previsto deve essere un numero.
+            end: La fine dell'intervallo di valori previsto deve essere un numero.
+            invalid: L'inizio dell'intervallo dei valori attesi deve essere inferiore o uguale a (≤) la fine dell'intervallo dei valori attesi.
+        resultText: È necessario assegnare un testo risultante che il processore genererà al termine della valutazione positiva.
+    practicalSubmoduleProcessorProductAggregate:
+        questionsAndProcessors: È necessario assegnare almeno una domanda o un processore al processore aggregato del prodotto (se incluso nel calcolo).
+        expectedValueRange:
+            start: L'inizio dell'intervallo di valori previsto deve essere un numero.
+            end: La fine dell'intervallo di valori previsto deve essere un numero.
+            invalid: L'inizio dell'intervallo dei valori attesi deve essere inferiore o uguale a (≤) la fine dell'intervallo dei valori attesi.
+        resultText: È necessario assegnare un testo risultante che il processore genererà al termine della valutazione positiva.
+    practicalSubmoduleProcessorTemplatedText:
+        question: È necessario scegliere una domanda per il processore.
+    practicalSubmoduleProcessorMaxValue:
+        questionsAndProcessors: È necessario assegnare almeno una domanda o un processore al processore del valore massimo (se incluso nel calcolo).
+        expectedValueRange:
+            start: L'inizio dell'intervallo di valori previsto deve essere un numero.
+            end: La fine dell'intervallo di valori previsto deve essere un numero.
+            invalid: L'inizio dell'intervallo dei valori attesi deve essere inferiore o uguale a (≤) la fine dell'intervallo dei valori attesi.
+        resultText: È necessario assegnare un testo risultante che il processore genererà al termine della valutazione positiva.
+    practicalSubmoduleAssessment:
+        start: Impossibile avviare il questionario. Per favore riprova.
+        edit: Impossibile iniziare a modificare il questionario. Per favore riprova.
+        finish: Si è verificato un errore durante l'elaborazione del tuo questionario. Per favore, prendilo di nuovo.
+    practicalSubmodulePage:
+        questions: Devi aggiungere almeno una domanda alla pagina.
+        submoduleMismatch: Una delle domande selezionate non appartiene allo stesso sottomodulo della pagina.
+    practicalSubmoduleProcessorGroup:
+        questions: Devi aggiungere almeno un processore al gruppo.
+        submoduleMismatch: Uno dei processori selezionati non appartiene allo stesso sottomodulo del gruppo.
+    termsOfService:
+        termsOfService: Il contenuto dei termini di servizio non deve essere vuoto.
+        termsOfServiceAlt: La traduzione del contenuto dei termini di servizio non deve essere vuota.
+        privacyPolicy: Il contenuto dell'informativa sulla privacy non deve essere vuoto.
+        privacyPolicyAlt: La traduzione del contenuto dell'informativa sulla privacy non deve essere vuota.
+    dataRequest:
+        access: Impossibile inviare la richiesta di accesso ai dati. Perfavore ricarica la pagina e riprova.
+        delete: Impossibile inviare la richiesta di cancellazione dei dati. Perfavore ricarica la pagina e riprova.
+    topic:
+        title: Il titolo dell'argomento non deve essere vuoto.
+        image:
+            maxSize: Il file supera la dimensione massima consentita di 5 megabyte.
+            mimeType: Il file deve essere un'immagine.
+    newsItem:
+        title: Il titolo della notizia non deve essere vuoto.
+        content: Il contenuto della notizia non deve essere vuoto.

@@ -1,0 +1,24 @@
+{% extends 'evaluation/_base_evaluation.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block evaluationContent %}
+    {% if evaluation.revisionMode and not is_granted('ROLE_TESTER')%}
+        <p class="evaluation-revision-mode-1">{{ 'practicalSubmodule.extra.revisionMode.1'|trans }}</p>
+        <p class="evaluation-revision-mode-2">{{ 'practicalSubmodule.extra.revisionMode.2'|trans }}</p>
+    {% else %}
+        <div>{{ evaluation.description|raw|nl2br }}</div>
+    {% endif %}
+{% endblock %}
+
+{% block belowEvaluationContent %}
+    {% if evaluation.courses is not empty %}
+        <div class="row course-content mb-4">
+            <h3 class="mb-2">{{ 'practicalSubmodule.extra.connectedTo'|trans }}</h3>
+            <div class="evaluation-connected-modules">
+                {% for course in evaluation.courses %}
+                    {% include 'course/_index_course.html.twig' with {'usePublicName': true} %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

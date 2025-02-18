@@ -1,0 +1,34 @@
+.profile hr {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.profile p {
+    margin: 0;
+}
+
+.profile .action-and-description {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.profile .action-and-description > .action {
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+.profile .action-and-description > .description {
+    flex-basis: 0;
+    flex-grow: 4;
+}
+
+.profile-label {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 14px;
+}
+
+.profile-value {
+    color: #000000;
+    font-size: 16px;
+}

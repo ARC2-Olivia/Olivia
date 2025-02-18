@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.profile'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row gy-2 pt-4">
+            <div class="col-12">
+                {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
+            </div>
+            <div class="col-12 card card-body profile">
+                <h2>{{ 'user.profile.basicData.edit'|trans }}</h2>
+                <hr/>
+                {{ form_start(form)  }}
+                    <div class="col-12 col-md-6">
+                        {{ form_label(form.firstName) }}
+                        {{ form_widget(form.firstName) }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ form_label(form.lastName) }}
+                        {{ form_widget(form.lastName) }}
+                    </div>
+                    <div class="col-12">
+                        {{ form_label(form.affiliation) }}
+                        {{ form_widget(form.affiliation) }}
+                    </div>
+                    <div class="col-12 text-end">
+                        <a href="{{ path('profile') }}" class="btn btn-link">{{ 'common.cancel'|trans }}</a>
+                        <button type="submit" class="btn btn-theme-white bg-green">{{ 'common.save'|trans }}</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

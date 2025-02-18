@@ -1,0 +1,110 @@
+{% trans_default_domain 'app' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            html, body {
+                padding: 0;
+                margin: 0;
+            }
+
+            body {
+                font-family: 'Raleway', sans-serif;
+                font-size: 4.5mm;
+            }
+
+            .page {
+                display: block;
+                position: relative;
+                height: 297mm;
+                page-break-after: always;
+            }
+
+            .section-1 {
+                background-color: #3a526a;
+            }
+            
+            .section-2 {
+                padding: 8mm 12mm;
+            }
+            
+            .title-wrapper {
+                text-align: center;
+                color: #ffffff;
+                padding-top: 10mm;
+                padding-bottom: 10mm;
+            }
+            
+            .title {
+                font-size: 16mm;
+                font-weight: bold;
+            }
+            
+            .subtitle {
+                font-size: 8mm;
+                font-weight: bold;
+            }
+            
+            .title-decor {
+                height: 29mm;
+                width: 5mm;
+                background-color: #f8b322;
+            }
+            
+            .title-decor.left {
+                float: left;
+            }
+            
+            .title-decor.right {
+                float: right;
+            }
+            
+            .certificant, .course {
+                color: #f8b322;
+                font-weight: bold;
+                font-size: 7mm;
+                text-align: center;
+            }
+            
+            .for {
+                font-size: 5mm;
+                text-align: center;
+                font-weight: bold;
+                margin-top: 1mm;
+            }
+            
+            .mb-cert {
+                margin-bottom: 10mm;
+            }
+            
+            .mb-tiny {
+                margin-bottom: 2mm;
+            }
+            
+            .ribbon {
+                border: solid 1.5mm #f8b322;
+                border-radius: 50%;
+                background-color: #FFFFFF;
+                margin: -15mm auto 2mm 0;
+                width: 35mm;
+                height: 35mm;
+                text-align: center;
+            }
+            
+            .ribbon img {
+                width: 90%;
+                margin-top: 8mm;
+            }
+            
+            .ribbon span {
+                font-size: 4mm;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page">{% include 'pdf/_goldenCertificate_page.html.twig' with {'strings': strings[defaultLocale]} %}</div>
+        <div class="page">{% include 'pdf/_goldenCertificate_page.html.twig' with {'strings': strings[alternateLocale]} %}</div>
+    </body>
+</html>

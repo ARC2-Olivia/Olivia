@@ -1,0 +1,33 @@
+{% extends 'security/_base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.login'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="w-100 h-100 row gx-0 justify-content-center align-items-center">
+        <div class="security-form-wrapper">
+            {% include '_partials/toasts.html.twig' %}
+            <div class="card">
+                <div class="card-title py-4">
+                    <h1 class="h1-login text-center">
+                        <span>{{ 'app.brand.1'|trans }}</span>
+                        <span>{{ 'app.brand.2'|trans }}</span>
+                    </h1>
+                </div>
+                <div class="card-text">
+                    {{ form_start(form) }}
+                    <label>{{ form_widget(form.email, {'attr': {'placeholder': form.email.vars.label}}) }}</label>
+                    <label>{{ form_widget(form.plainPassword, {'attr': {'placeholder': form.plainPassword.vars.label}}) }}</label>
+                    <button type="submit" class="btn btn-theme-white bg-black w-100 mb-3">{{ 'common.login'|trans }}</button>
+                    {{ form_end(form) }}
+                    {% if registration_enabled %}
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ path('security_registration') }}" class="btn btn-link">{{ 'common.registration'|trans }}</a>
+                            <a href="{{ path('security_request_password_reset') }}" class="btn btn-link">{{ 'common.resetPassword'|trans }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,299 @@
+@import "./styles/ress.min.css";
+@import "~bootstrap/dist/css/bootstrap-grid.css";
+@import "~bootstrap/dist/css/bootstrap-utilities.css";
+
+@import "./styles/navigation.css";
+@import "./styles/button.css";
+@import "./styles/card.css";
+@import "./styles/form.css";
+@import "./styles/toast.css";
+@import "./styles/table.css";
+
+@import "./styles/index.css";
+@import "./styles/footer.css";
+@import "./styles/course.css";
+@import "./styles/lesson.css";
+@import "./styles/quizQuestion.css";
+@import "./styles/quizQuestionChoice.css";
+@import "./styles/evaluation.css";
+@import "./styles/topic.css";
+@import "./styles/profile.css";
+@import "./styles/quiz.css";
+@import "./styles/maintenance.css";
+@import "./styles/files.css";
+@import "./styles/news.css";
+@import "./styles/certificates.css";
+
+:root {
+    --app-font-default: 'PT Sans', sans-serif;
+    --app-font-dyslexic: 'OpenDyslexic', sans-serif;
+    --app-font-code: 'PT Mono', 'Consolas', 'Fira Code', 'DejaVu Sans', monospace;
+    --app-font-dyslexic-code: 'OpenDyslexicMono', monospace;
+    --app-color-blue: #03a9f5;
+    --app-color-light-blue: #CCE5FF;
+    --app-color-dark-blue: #3a526a;
+    --app-color-blue-alt: #667e98;
+    --app-color-orange: #fe5722;
+    --app-color-red: #f51b38;
+    --app-color-light-red: #f8d7da;
+    --app-color-green: #3eaea6;
+    --app-color-light-green: #d3e6dd;
+    --app-color-yellow: #f8b322;
+    --app-color-black: #555;
+    --app-color-dyslexic-light: #fffdd0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    max-width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    font-family: var(--app-font-default);
+    color: var(--app-color-black);
+    font-size: 1.04rem;
+}
+
+header, footer, .body {
+    flex-basis: 0;
+}
+
+code {
+    font-family: var(--app-font-code) !important;
+    font-size: 1rem;
+}
+
+.body {
+    flex-grow: 1;
+}
+
+.h1-login {
+    color: var(--app-color-blue);
+    margin: 0;
+    font-size: 64px;
+}
+
+.h1-login :first-child {
+    font-weight: bold;
+}
+
+.h1-login :last-child {
+    font-weight: normal;
+}
+
+.raised {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.font-size-default {
+    font-size: 1rem !important;
+}
+
+.sharp {
+    border-radius: 0;
+}
+
+.toasts {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+    margin-bottom: 4px;
+}
+
+header {
+    color: var(--app-color-dark-blue);
+    background-color: white;
+}
+
+.header-logo {
+    height: 108px;
+    margin-top: -28px;
+    margin-bottom: -32px;
+}
+
+.header-logo > img {
+    height: 100%;
+}
+
+.brand {
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.nav-locale {
+    color: #ffffff;
+    opacity: .5;
+}
+
+.exit-immitation {
+    position: fixed;
+    bottom: 64px;
+    right: 16px;
+}
+
+.exit-immitation .btn {
+    padding: 24px;
+}
+
+.hide {
+    display: none;
+}
+
+.panel {
+    background-color: #e5eefd;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.w-fit {
+    width: fit-content !important;
+}
+
+.min-h-500px {
+    min-height: 250px;
+}
+
+.fake-li {
+    display: flex;
+    column-gap: 8px;
+}
+
+.fake-li:before {
+    content: "•";
+    margin-left: 8px;
+}
+
+.centerify {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h2 > a {
+    text-decoration: none;
+    color: unset;
+}
+
+.submodule-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.security-form-wrapper {
+    width: 480px !important;
+}
+
+.certificate-awarded {
+    margin-bottom: 16px;
+}
+
+.badge {
+    padding: 2px 8px;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.highlight {
+    background-color: var(--app-color-dark-blue);
+    border-radius: 5px;
+    padding: 10px !important;
+    color: #fff
+}
+
+.big {
+    font-size: 20px;
+}
+
+.ql-editor ul {
+    padding-left: 2rem;
+}
+
+.ql-editor img {
+    max-width: 100%;
+}
+
+.text-align-left {
+    text-align: left;
+}
+
+.api-field {
+    border-radius: 4px;
+    background-color: var(--app-color-dark-blue);
+    color: var(--app-color-yellow);
+    width: 100%;
+    min-height: 36px;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-family: 'PT Mono', 'Consolas', 'Fira Code', 'DejaVu Sans', monospace;
+    text-overflow: ellipsis;
+    font-size: 1rem;
+}
+
+div.api-field {
+    overflow-x: scroll;
+    text-wrap: nowrap;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.api-field:is(:focus, :focus-visible) {
+    outline: solid 4px var(--app-color-light-blue);
+}
+
+.bg-orange { background-color: var(--app-color-orange) !important; }
+.bg-green { background-color: var(--app-color-green) !important; }
+.bg-light-green { background-color: var(--app-color-light-green) !important; }
+.bg-blue { background-color: var(--app-color-blue) !important; }
+.bg-light-blue { background-color: var(--app-color-light-blue) !important; }
+.bg-dark-blue { background-color: var(--app-color-dark-blue) !important; }
+.bg-red { background-color: var(--app-color-red) !important; }
+.bg-light-red { background-color: var(--app-color-light-red) !important; }
+
+.fg-orange { color: var(--app-color-orange) !important; }
+.fg-yellow { color: var(--app-color-yellow) !important; }
+.fg-green { color: var(--app-color-green) !important; }
+.fg-blue { color: var(--app-color-blue) !important; }
+.fg-light-blue { color: var(--app-color-light-blue) !important; }
+.fg-dark-blue { color: var(--app-color-dark-blue) !important; }
+.fg-red { color: var(--app-color-red) !important; }
+.fg-white { color: #ffffff !important; }
+.fg-black { color: #000000 !important; }
+
+@media screen and (max-width: 1199px) {
+    .submodule-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .submodule-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .certificate-awarded {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .submodule-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .h1-login {
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
+    }
+}
+
+.security-form-wrapper {
+    width: 100%;
+}

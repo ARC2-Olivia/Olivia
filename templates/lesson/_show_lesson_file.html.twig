@@ -1,0 +1,8 @@
+{% trans_default_domain 'app' %}
+
+<a href="{{ path('file_fetch_lesson_file', {'lessonItemFile': lessonItem.id}) }}" class="card raised file-download" download="download">
+    <div class="card-text">
+        <span class="file-download-caption">{{ 'common.download'|trans }}</span>
+        <span class="file-download-icon">{{ mdi('download') }}</span>
+    </div>
+</a>

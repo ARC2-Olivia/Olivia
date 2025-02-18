@@ -1,0 +1,1 @@
+window.addEventListener("load", () => new Reorderer("lesson-items", "lesson-item-reorder-handle", "reordering"));

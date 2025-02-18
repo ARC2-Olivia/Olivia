@@ -1,0 +1,1 @@
+window.addEventListener("load", () => new Reorderer("ps_pages", "mod--ps-page-reorder-handle", "reordering"));

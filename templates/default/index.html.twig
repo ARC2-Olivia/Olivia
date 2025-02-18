@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block body %}
+    <div class="index-banner homepage" style="background-image: url('{{ asset('build/images/bg-index-2.jpg') }}')">
+        <div id="index-banner-particles" class="index-banner-particles" data-particles></div>
+        <div class="container-fluid container-xl index-banner-wrapper">
+            <div class="index-banner-title">{{ 'app.brand.short'|trans }}</div>
+            <div class="index-banner-subtitle">{{ 'app.subtitle'|trans }}</div>
+            <div class="index-banner-actions">
+                <a href="{{ path('topic_index') }}" class="btn btn-theme-white bg-orange">{{ 'nav.topics'|trans }}</a>
+                <a href="{{ path('about_us') }}" class="btn btn-theme-white bg-blue">{{ 'nav.aboutUs'|trans }}</a>
+                <a href="{{ path('about_project') }}" class="btn btn-theme-white bg-blue">{{ 'nav.aboutProject'|trans }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="index-about">
+        <div class="index-about--left">
+            <h2>{{ 'index.about.left.title'|trans }}</h2>
+            <p class="mb-3">{{ 'index.about.left.description.1'|trans|raw }}</p>
+            <p class="mb-3">{{ 'index.about.left.description.2'|trans|raw }}</p>
+            <p class="mb-3">{{ 'index.about.left.description.3'|trans|raw }}</p>
+        </div>
+        <div class="index-about--right">
+            <div class="index-about--right--item">
+                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                <div class="index-about--right--item-info">
+                    <h3>{{ 'index.about.right.1.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.1.text'|trans }}</p>
+                </div>
+            </div>
+            <div class="index-about--right--item">
+                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                <div class="index-about--right--item-info">
+                    <h3>{{ 'index.about.right.2.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.2.text'|trans }}</p>
+                </div>
+            </div>
+            <div class="index-about--right--item">
+                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                <div class="index-about--right--item-info">
+                    <h3>{{ 'index.about.right.3.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.3.text'|trans }}</p>
+                </div>
+            </div>
+            <div class="index-about--right--item">
+                <div class="index-about--right--item-icon">{{ mdi('lightbulb-variant-outline') }}</div>
+                <div class="index-about--right--item-info">
+                    <h3>{{ 'index.about.right.4.title'|trans }}</h3>
+                    <p>{{ 'index.about.right.4.text'|trans }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="index-topics">
+            <div class="index-topics--l" style="background-image: url('{{ asset('build/images/index-lock.png') }}')"></div>
+            <div class="index-topics--r">
+                <h3>{{ 'index.topics.title'|trans|raw }}</h3>
+                <p>{{ 'index.topics.text'|trans|raw }}</p>
+                <div><a href="{{ path('topic_index') }}" class="btn btn-theme-white bg-orange">{{ 'index.topics.button'|trans }}</a></div>
+            </div>
+        </div>
+    </div>
+
+    {% if news is not empty %}
+        <div class="container my-5 py-0">
+            <h2 class="news-h2">{{ 'nav.news'|trans }}</h2>
+            <ul class="news-grid">
+                {% for newsItem in news %}
+                    <li class="news-item">
+                        <span class="news-item-title">{{ newsItem.title }}</span>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="news-item-date">{{ newsItem.createdAt|date('d.m.Y.') }}</span>
+                            <a href="{{ path('news_show', {'newsItem': newsItem.id}) }}" class="news-item-link">{{ 'common.details'|trans }}</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('news_index') }}" class="btn btn-theme-white bg-blue mt-4">{{ 'button.moreNews'|trans }}</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .body { background-color: white; }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('particles') }}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% trans_default_domain 'app' %}
+<table id="data-access-requests-table">
+    <thead>
+        <tr>
+            <th>{{ 'form.entity.dataRequest.label.id'|trans }}</th>
+            <th>{{ 'form.entity.dataRequest.label.user'|trans }}</th>
+            <th>{{ 'form.entity.dataRequest.label.requestedAt'|trans }}</th>
+            <th>{{ 'common.actions'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for dr in dataAccessRequests %}
+            <tr>
+                <td>{{ dr.id }}</td>
+                <td>{{ dr.user.email }}</td>
+                <td>{{ dr.requestedAt|date('d.m.Y. H:i') }}</td>
+                <td>
+                    <form method="post" action="{{ path('gdpr_data_protection_resolve', {'dataRequest': dr.id}) }}" onsubmit="return confirm(`{{ 'dataRequest.message.resolve.access'|trans({'%user%': dr.user.nameOrEmail}) }}`)">
+                        <button type="submit" class="btn btn-theme-white bg-blue">{{ 'common.resolve'|trans }}</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

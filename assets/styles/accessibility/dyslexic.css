@@ -1,0 +1,103 @@
+@font-face {
+    font-family: "OpenDyslexic";
+    src: url("../../fonts/OpenDyslexic-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "OpenDyslexic";
+    src: url("../../fonts/OpenDyslexic-Bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "OpenDyslexic";
+    src: url("../../fonts/OpenDyslexic-Italic.otf") format("opentype");
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "OpenDyslexic";
+    src: url("../../fonts/OpenDyslexic-Bold-Italic.otf") format("opentype");
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "OpenMono";
+    src: url("../../fonts/OpenDyslexicMono-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body.dyslexic {
+    font-family: var(--app-font-dyslexic);
+    --app-color-black: #222;
+}
+
+body.dyslexic code {
+    font-family: var(--app-font-dyslexic) !important;
+}
+
+
+body.dyslexic .api-field {
+    font-family: var(--app-font-dyslexic) !important;
+}
+
+body.dyslexic .navigation-responsive > .navigation-main {
+    font-size: 1.05rem;
+    align-items: center;
+}
+
+body.dyslexic .body {
+    background-color: var(--app-color-dyslexic-light);
+}
+
+body.dyslexic .card {
+    background-color: var(--app-color-dyslexic-light);
+}
+
+body.dyslexic .card.course-add {
+    background-color: #3A526A5F;
+}
+
+body.dyslexic .card-title {
+    line-height: 5rem;
+}
+
+body.dyslexic .index-banner-wrapper {
+    background-color: #000000cc;
+    backdrop-filter: blur(5px);
+    padding: 24px;
+    border-radius: 8px;
+}
+
+body.dyslexic .modal .modal-dialog {
+    background-color: var(--app-color-dyslexic-light);
+}
+
+body.dyslexic .course-content {
+    background-color: var(--app-color-dyslexic-light);
+    color: var(--app-color-black);
+}
+
+body.dyslexic .lesson-content {
+    background-color: var(--app-color-dyslexic-light);
+    color: var(--app-color-black);
+}
+
+body.dyslexic .evaluation-content {
+    background-color: var(--app-color-dyslexic-light);
+    color: var(--app-color-black);
+}
+
+body.dyslexic .lesson-section-navigation-item:not(:hover, .active) {
+    border-left-color: var(--app-color-dyslexic-light);
+}
+
+body.dyslexic .quiz-anim-whiteout {
+    background-color: var(--app-color-dyslexic-light);
+}

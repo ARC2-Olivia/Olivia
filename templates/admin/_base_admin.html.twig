@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.admin'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="navigation-admin--wrapper">
+        <ul class="navigation-admin">
+            <li><a href="{{ path('admin_user_index') }}">{{ 'nav.users'|trans }}</a></li>
+            <li><a href="{{ path('admin_instructor_index') }}">{{ 'nav.instructors'|trans }}</a></li>
+            <li><a href="{{ path('admin_data_request_index') }}">{{ 'nav.dataRequests'|trans }}</a></li>
+            <li><a href="{{ path('admin_file_index') }}">{{ 'nav.files'|trans }}</a></li>
+            <li><a href="{{ path('admin_texts_about_us') }}">{{ 'nav.aboutUs'|trans }}</a></li>
+            <li><a href="{{ path('admin_texts_about_project') }}">{{ 'nav.aboutProject'|trans }}</a></li>
+        </ul>
+        <div class="flex-grow-1">
+            {% block adminContent %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('popper.dropdown') }}
+    <style>
+        .body {
+            background-color: #cecece;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('popper.dropdown') }}
+{% endblock %}

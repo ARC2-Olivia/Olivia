@@ -1,0 +1,1033 @@
+app:
+    name: Olivia
+    brand: OLIVIA tool
+    brand.1: OLIVIA
+    brand.2: Tool
+    brand.short: OLIVIA
+    subtitle: Virtualna asistentica za usklađivanje s GDPR-om
+
+common:
+    id: ID
+    username: E-mail
+    password: Lozinka
+    homepage: Naslovna
+    login: Prijava
+    logout: Odjava
+    registration: Registracija
+    resetPassword: Resetiranje lozinka
+    submit: Potvrdi
+    save: Spremi
+    cancel: Odustani
+    yes: Da
+    no: Ne
+    trueValue: 'Da'
+    falseValue: 'Ne'
+    actions: Akcije
+    edit: Uredi
+    delete: Izbriši
+    new: Novo
+    remove: Ukloni
+    next: Sljedeće
+    previous: Prethodno
+    download: Preuzmi
+    profile: Profil
+    resolve: Riješi
+    import: Uvoz
+    export: Izvoz
+    file: Datoteka
+    add: Dodaj
+    addItem: Dodaj stavku
+    saveForLater: Spremi za kasnije
+    correct: Točno
+    incorrect: Netočno
+    details: Detalji
+    description: Opis
+    list: Popis
+    close: Zatvori
+    showFields: Pokaži polja
+    back: Natrag
+    increase: Povećaj
+    decrease: Smanji
+    reset: Resetiraj
+    zoom: Veličina prikaza
+
+button:
+    details: Detalji
+    startNow: Započni učenje
+    loginToEnroll: Prijavite se za učenje
+    loginToApply: Prijavite se za primjenu
+    results: Rezultati
+    lessons: Lekcije
+    export: Izvoz
+    exportToExcel: Izvoz u Excel
+    exportTemplate: Izvoz predloška
+    download: Preuzmite
+    show: Prikaži
+    downloadForm: Preuzmi obrazac
+    downloadExample: Preuzmi primjer
+    moreNews: Više novosti
+    goToCourse: Idi na tečaj
+    enableDyslexiaMode: Uključi pomoć pri disleksiji
+    disableDyslexiaMode: Isključi pomoć pri disleksiji
+    enableContrastMode: Omogući kontrast
+    disableContrastMode: Onemogući kontrast
+
+page:
+    login: Olivia | Prijava
+    registration: Olivia | Registracija
+    confirmation: Olivia | Potvrda računa
+    resetPassword: Olivia | Resetiranje lozinke
+    course:
+        index: Olivia | Tečajevi
+        new: Olivia | Novi tečaj
+        show: Olivia | Detalji tečaja
+    lesson:
+        index: Olivia | Lekcije
+        show: Olivia | Sadržaj lekcije
+    admin: Olivia | Administracija
+    evaluation:
+        index: Olivia | Praktični podmoduli
+        new: Olivia | Novi praktični podmodul
+        show: Olivia | Detalji praktičnog podmodula
+        assessment: Olivia | Provjera iz praktičnog podmodula
+    termsOfService:
+        index: Olivia | Ispis uvjeta pružanja usluge i politika privatnosti
+        new: Olivia | Novi uvjeti pružanja usluge i politika privatnosti
+        show: Olivia | Uvjeti pružanja usluge i politika privatnosti
+        edit: Olivia | Uređivanje uvjeta pružanja usluga i politike privatnosti
+        revise: Olivia | Revizija uvjeta pružanja usluga i politike privatnosti
+    gdpr:
+        index: Olivia | Zaštita podataka
+    profile: Olivia | Profil
+    topic:
+        index: Olivia | GDPR tema
+        new: Olivia | Nova GDPR tema
+        show: Olivia | GDPR tema
+        edit: Olivia | Uređivanje GDPR teme
+    maintetance: Olivia | Radovi na aplikaciji
+    certificates: Olivia | Potvrde o položenim tečajevima
+    apiInfo: Olivia | API
+
+nav:
+    training: Nauči
+    practice: Primijeni
+    aboutUs: O nama
+    aboutProject: O ARC2 projektu
+    admin: Administracija
+    users: Korisnici
+    instructors: Instruktori
+    language: Promjeni jezik
+    privacyPolicy: Politika privatnosti
+    termsOfService: Uvjeti pružanja usluge
+    dataRequests: Podatkovni zahtjevi
+    files: Datoteke
+    info: Informacije
+    resources: Resursi
+    seminars: Webinari
+    presentations: Prezentacije
+    home: Naslovna
+    gdpr: Zaštita podataka
+    topics: GDPR teme
+    news: Novosti
+    certificates: Potvrde o položenim tečajevima
+    apiInfo: API
+
+footer:
+    contact: "Kontakt: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
+    text: Alat je razvijen u sklopu projekta ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs financiran od strane Europske komisije.
+    gdpr: "<a href='%privacyPolicyUrl%'>Politika privatnosti</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href='%termsOfServiceUrl%'>Uvjeti pružanja usluge</a>"
+
+index:
+    about:
+        left:
+            title: O alatu OLIVIA
+            description:
+                1: U današnjem digtalnom svijetu zaštita osobnih podataka je važnija nego ikad prije. Upravo iz tog razloga predstavljamo Oliviu. Njezina misija je pomoći poduzetnicima da se usklade s propisima o zaštiti osobnih podataka.
+                2: "Mi smo ARC2 Konzorcij. Sastojimo se od: Agencije za zaštitu osobnih podataka (AZOP), talijanskog tijela za zaštitu podataka (Garante Privacy), Fakulteta organizacije i informatike &ndash; Sveučilište u Zagrebu, Sveučilišta Vrije i Sveučilišta u Firenci."
+                3: Naša misija je pomoći hrvatskim i talijanskim MSP-ovima postignuti usklađenost s propisima o zaštiti podataka. Zato predstavljamo Oliviju &ndash; alat dizajniran da učini usklađivanje s GDPR-om lakše nego ikada prije!
+        right:
+            1:
+                title: INOVATIVNO
+                text: Stvorena u partnerstvu, OLIVIA omogućuje inovativan pristup usklađivanju s GDPR-om.
+            2:
+                title: BESPLATNO
+                text: OLIVIA je jednostavni i otvoreni alat, besplatno dostupan svim zainteresiranim korisnicima.
+            3:
+                title: EDUKATIVNO
+                text: OLIVIA pojednostavljuje pristup okviru znanja, pravilima, i procedurama.
+            4:
+                title: PRAKTIČNO
+                text: Praktična strana alata OLIVIA pomaže MSP-ovima u potpunosti implementirati GDPR.
+    topics:
+        title: GDPR teme &ndash; Naučite i primijenite
+        button: GDPR teme
+        text: "Olivia je istodobno virtualna učiteljica i asistentica. Olivia sadrži malu <i>online</i> akademiju koja Vam nudi niz modula za učenje kako biste poboljšali svoje znanje u području zaštite osobnih podataka, a služi i kao praktičan alat za pomoć pri izradi internih akata kojima možete dokazati svoju usklađenost i pouzdanost."
+        videoTitle: Kako koristiti Oliviju?
+    facts:
+        1:
+            title: "6. lipnja 2024.<br/><b>Zaštita osobnih podataka i usklađivanje s GDPR-om u zaštitarskoj djelatnosti</b>"
+            text: "Prijave na: <a href='https://ec.europa.eu/eusurvey/runner/31592e6b-a115-b763-8ae0-751bee6c4ad4' target='_blank'>https://ec.europa.eu/eusurvey/runner/31592e6b-a115-b763-8ae0-751bee6c4ad4</a>"
+        2:
+            title: "10. lipnja 2024.<br/><b>6. rođendan GDPR-a: jesmo li konačno svladali GDPR i kako se suočiti s novim izazovima?</b>"
+            text: "Prijave na: <a href='https://ec.europa.eu/eusurvey/runner/HUP-ARC2-savjetovanje-zagreb-10-6-2024' target='_blank'>https://ec.europa.eu/eusurvey/runner/HUP-ARC2-savjetovanje-zagreb-10-6-2024</a>"
+        3:
+            title: "14. lipnja 2024.<br/><b>Kako provesti procjenu učinka na zaštitu podataka?</b>"
+            text: "Prijave na: <a href='https://ec.europa.eu/eusurvey/runner/online-ARC2radionica-DPIA' target='_blank'>https://ec.europa.eu/eusurvey/runner/online-ARC2radionica-DPIA</a>"
+        4:
+            title: "20. lipnja 2024.<br/><b>Kako objasniti zaposlenicima zašto je važna zaštita osobnih podataka?</b>"
+            text: "Prijave na: <a href='https://ec.europa.eu/eusurvey/runner/20-lipnja-2024-ARC2-radionica' target='_blank'>https://ec.europa.eu/eusurvey/runner/20-lipnja-2024-ARC2-radionica</a>"
+        5:
+            title: "27. lipnja 2024.<br/><b>Kako objasniti zaposlenicima zašto je važna zaštita osobnih podataka?</b>"
+            text: "Prijave na: <a href='https://ec.europa.eu/eusurvey/runner/ARC2-online-radionica-27-lipnja2024' target='_blank'>https://ec.europa.eu/eusurvey/runner/ARC2-online-radionica-27-lipnja2024</a>"
+
+form:
+    security:
+        registration:
+            label:
+                firstName: Ime
+                lastName: Prezime
+                email: E-mail
+                password: Lozinka
+                confirmPassword: Potvrdi lozinku
+                termsOfService: Prihvaćam <a href="%url%" target="_blank">Uvjete pružanja usluge</a>.
+        login:
+            label:
+                email: E-mail
+                password: Lozinka
+        resetPassword:
+            label:
+                email: E-mail
+                password: Nova lozinka
+                confirmPassword: Potvrda nove lozinke
+            message:
+                email: Unesite e-mail adresu s kojom ste stvorili svoj Olivia račun. Na tu adresu će Vam se poslati posebna e-mail poruka s poveznicom koja će Vam omogućiti promjenu lozinke. Poveznica istiće nakon 3 sata.
+    dataRequest:
+        deleteSpecific:
+            label:
+                gdprs: Prihvaćeni Uvjeti pružanja usluge
+                notes: Bilješke iz teoretkih modula
+                enrollments: Prijave na teoretske module
+                lessonCompletions: Završenost lekcija u teoretskim modulima
+                quizQuestionAnswers: Odgovori na pitanja iz kvizova u teoretskim modulima
+                practicalSubmoduleAssessments: Odgovori na pitanja iz upitnika u praktičnim modulima
+                other: Nešto drugo ili specifičnije
+    entity:
+        user:
+            label:
+                email: E-mail
+                roles: Uloge
+                activated: Aktiviran račun
+                firstName: Ime
+                lastName: Prezime
+                affiliation: Pripadnost
+        instructor:
+            label:
+                firstName: Ime
+                lastName: Prezime
+                email: E-mail
+                institution: Institucija
+                institutionAlt: Institucija (drugi jezik)
+                image: Slika
+                biography: Biografija
+                biographyAlt: Biografija (drugi jezik)
+        course:
+            label:
+                name: Naslov
+                nameAlt: Naslov (drugi jezik)
+                publicName: Javni naslov
+                publicNameAlt: Javni naslov (drugi jezik)
+                description: Opis
+                descriptionAlt: Opis (drugi jezik)
+                image: Slika (maks. 5MB)
+                estimatedWorkload: Procijenjeno opterećenje
+                tags: Oznake odvojene zarezom
+                tagsAlt: Oznake odvojene zarezom (drugi jezik)
+                instructors: Instruktori
+                practicalSubmodules: Povezane procjene
+                position: Redni broj
+                learningOutcomes: Ishodi učenja (svaki ishod učenja stavite u zasebni red.)
+                learningOutcomesAlt: Ishodi učenja (drugi jezik)
+                certificateInfo: Informacije o potvrdi o uspješno položenom tečaju
+                certificateInfoAlt: Informacije o potvrdi o uspješno položenom tečaju (drugi jezik)
+            placeholder:
+                name: Naziv tečaja
+                publicName: npr. Što je politika privatnosti i zašto je morate imati?
+                description: Opis tečaja...
+                workloadValue: 12 or 2.5
+                tags: GDPR,IT,Sigurnost,...
+                instructor: Odaberi instruktora...
+                learningOutcomes: Svaki ishod učenja stavite u zasebni red.
+                certificateInfo: Unesite informacije vezane uz potvrdu.
+            choices:
+                estimatedWorkload:
+                    hours: sati
+                    days: dana
+                    weeks: tjedana
+                    months: mjeseci
+                    years: godina
+        lesson:
+            label:
+                name: Naziv
+                nameAlt: Naziv (drugi jezik)
+                description: Opis
+                descriptionAlt: Opis (drugi jezik)
+                text: Sadržaj
+                textAlt: Sadržaj (drugi jezik)
+                file: Datoteka
+                video: URL videa
+                videoAlt: URL videa (za engleski jezik)
+                passingPercentage: Postotak za prolaz
+        quizQuestion:
+            label:
+                text: Tekst pitanja
+                textAlt: Tekst pitanja (drugu jezik)
+                explanation: Objašnjenje
+                explanationAlt: Objašnjenje (drugi jezik)
+                correctAnswer: Točan odgovor
+                type: Vrsta
+                choices: Odgovori
+            info:
+                unmappedCorrectAnswer: Točan odgovor možete naknadno postaviti.
+                unmappedChoices: Svaki odgovor mora biti u svom redu. Ime pojedinog odgovora bit će dodan i za glavni i za zamjenski jezik. Odgovori se mogu naknadno dodati.
+        quizQuestionChoice:
+            label:
+                text: Tekst odgovora
+                textAlt: Tekst odgovora (alternate language)
+                correct: Točan odgovor
+        practicalSubmodule:
+            label:
+                name: Naslov
+                nameAlt: Naslov (drugi jezik)
+                publicName: Javni naslov
+                publicNameAlt: Javni naslov (drugi jezik)
+                image: Slika
+                description: Opis
+                descriptionAlt: Opis (drugi jezik)
+                paging: Straničenje
+                processorGroupingEnabled: Omogući grupiranje procesora
+                tags: Oznake odvojene zarezom
+                tagsAlt: Oznake odvojene zarezom (drugi jezik)
+                courses: Povezani tečajevi
+                modeOfOperation: Način rada
+                reportComment: Komentar na kraju izvještaja
+                reportCommentAlt: Komentar na kraju izvještaja (drugi jezik)
+                terminology: Terminologija
+                position: Redni broj
+                exportType: Vrsta izvoza
+                revisionMode: Način revizije (preporučeno postaviti u slučajevima kada se rade veće izmjene)
+                answersReportHidden: Sakrij izvješće o odgovorima u rezultatima
+            placeholder:
+                name: Naziv praktičnog podmodula
+                publicName: npr. Izradite svoju politiku privatnosti za čas posla!
+                description: Opis praktičnog podmodula...
+                tags: GDPR,IT,Sigurnost
+                reportComment: Što će korisnik pročitati na kraju rezulatat/izvještaja?
+        practicalSubmoduleQuestion:
+            label:
+                type: Vrsta pitanja
+                questionText: Tekst pitanja
+                questionTextAlt: Tekst pitanja (drugi jezik)
+                evaluable: Koristi se u procjeni
+                dependentQuestion: Ovisno pitanje
+                dependentValue: Vrijednost ovisnog pitanja
+                otherEnabled: Omogući dodatni (i.e. <i>ostali</i>) unos
+                multipleWeighted: Omogući višestruki odabir pondera
+                isHeading: Tekst je naziv poglavlja
+                disabled: Onesposobljeno
+                largeText: Omogući prikaz za unos većeg teksta
+                listWithSublist: Omogući unos podlista
+                template: Predložak
+                isModal: Prikazati modalno
+            placeholder:
+                questionText: Ovdje stavite tekst pitanja...
+                dependentEvaluationQuestion: Ništa odabrano...
+        practicalSubmoduleQuestionAnswer:
+            label:
+                weighted:
+                    answerText: Tekst odgovora
+                    answerTextAlt: Tekst odgovora (drugi jezik)
+                    answerValue: Ponder
+                templatedText:
+                    answerText: Predložak odgovora
+                    answerTextAlt: Predložak odgovora (drugi jezik)
+        practicalSubmoduleProcessor:
+            label:
+                type: Vrsta procesora
+                name: Naziv procesora
+                included: Uključiti u prikaz rezultata
+                evaluationQuestion: Pitanje
+                evaluationQuestions: Pitanja
+                evaluationEvaluators: Procesori
+                expectedValue: Očekivana vrijednost
+                expectedValueRange:
+                    start: Očekivana vrijednost (početni broj u rasponu)
+                    end: Očekivana vrijednost (završni broj u rasponu)
+                resultText: Rezultirajući tekst
+                resultFiles: Rezultirajuće datoteke
+                dependentQuestion: Ovisno pitanje
+                dependentValue: Vrijednost ovisnog pitanja
+                disabled: Onesposobljeno
+                exportTag: Oznaka za izvoz
+                separateBy: Odvoji sa
+            placeholder:
+                name: Naziv procesora za lakšu identifikaciju
+                resultText: Kakav tekst će procesor vratiti kao rezultat obrade?
+                resultFile: Odaberi datoteku...
+                evaluationQuestion: Odaberi pitanje...
+        practicalSubmodulePage:
+            label:
+                title: Naslov
+                titleAlt: Naslov (drugi jezik)
+                description: Opis
+                descriptionAlt: Opis (drugi jezik)
+                questions: Pitanja
+        practicalSubmoduleProcessorGroup:
+            label:
+                title: Naslov
+                titleAlt: Naslov (drugi jezik)
+                processors: Procesori
+        termsOfService:
+            label:
+                id: ID
+                title: Naslov
+                version: Verzija
+                revision: Revizija
+                startedAt: Početak
+                endedAt: Završetak
+                active: Aktivno
+                termsOfService: Uvjeti korištenja
+                termsOfServiceAlt: Uvjeti korištenja (drugi jezik)
+                privacyPolicy: Politika privatnosti
+                privacyPolicyAlt: Politika privatnosti (alternate language)
+        dataRequest:
+            label:
+                id: ID
+                user: Korisnik
+                type: Vrsta
+                requestedAt: Vrijeme zahtjeva
+                resolvedAt: Vrijeme razrješenja
+                specifics: Specifično
+        file:
+            label:
+                id: ID
+                type: Vrsta
+                originalName: Originalni naziv
+                displayText: Tekst za prikaz
+                seminar: Stavi u rubriku Webinar
+                presentation: Stavi u rubriku Prezentacije
+                createdAt: Vrijeme stvaranja
+                modifiedAt: Vrijeme modifikacije
+                includeIn: Uključi u
+            choices:
+                includeIn:
+                    none: Nigdje
+                    topicIndexDefault: GDPR teme (engleski jezik)
+                    topicIndexAlternate: GDPR teme (hrvatski jezik)
+        topic:
+            label:
+                title: Naslov
+                theoreticalSubmodules: Teorijski podmoduli
+                practicalSubmodules: Praktični podmoduli
+                image: Slika
+                position: Redni broj
+            placeholder:
+                title: Naslov nove tematike
+                theoreticalSubmodules: Odaberite teorijske podmodule...
+                practicalSubmodules: Odaberite praktične podmodule...
+        texts:
+            label:
+                aboutUs: "Sadržaj stranice <i>O nama</i>"
+                aboutUsAlt: "Sadržaj stranice <i>O nama</i> (drugi jezik)"
+                aboutProject: "Sadržaj stranice <i>O ARC2 projektu</i>"
+                aboutProjectAlt: "Sadržaj stranice <i>O ARC2 projektu</i> (drugi jezik)"
+        newsItem:
+            label:
+                title: Naslov
+                content: Sadržaj
+                createdAt: Vrijeme stvaranja
+                language: Jezik
+            placeholder:
+                title: Naslov novosti
+                content: Sadržaj novosti
+
+profile:
+    request:
+        access:
+            button: Zatraži pristup podacima
+            title: Zatraži pristup podacima
+            description: "Zahtjev za pristup podacima, koje ste ili unijeli ili su se generirali na temelju Vaše aktivnosti u alatu Olivia, možete poslati bilo kada. Podaci će se poslati na Vašu registriranu e-mail adresu kao prilog u obliku Microsoft Excel datoteke. U podacima su uključeni: prijave na tečajeve u teoretskom modulu, bilješke iz lekcija u teoretskom modulu, dovršenost lekcija u teoretskom moduli, odgovori na kvizove u teoretskom modulu, zapisi aktivnosti u teoretskom modulu, podaci o Vašem zadnjem pokušaju rješavanja upitnika praktičnog modula, odgovori na pitanja u praktičnom modulu, i podaci Vašeg Olivia računa."
+            disclaimer: "NAPOMENA: Zahtjev za pristup podacima se neće odmah obraditi kada se zatraži, ali kada obrada Vašeg zahtjeva dođe na red dobiti ćete poruku na svoju registriranu e-mail adresu s podacima u prilogu."
+            confirmation: Jeste li sigurni da želite poslati zahtjev za pristup podacima?
+        delete:
+            button: Zatraži brisanje osobnih podataka
+            title: Zatraži brisanje svojih osobnih podataka (članak 17 GDPR-a)
+            description: "Prikupljamo Vaše ime i prezime i e-mail adresu u svrhu pružanja usluge. Brisanjem Vašeg imena i prezimena i e-mail adrese bit će izbrisan i Vaš korisnički račun i svi podaci koje ste unijeli u web alat Olivia i koji su se generirali na temelju Vaše aktivnosti u alatu Olivia."
+            disclaimer: "NAPOMENA: Zahtjev za pristup podacima se neće odmah obraditi kada se zatraži, ali kada obrada Vašeg zahtjeva dođe na red dobiti ćete konačnu e-mail poruku na svoju registriranu e-mail adresu koja će Vas obavijestiti o završenom brisanju."
+            confirmation: Jeste li sigurni da želite poslati zahtjev za brisanjem svojih osobnih podataka?
+        deleteSpecific:
+            button: Specificiraj podatke koje želiš obrisati
+            title: Specificiraj podatke koje želiš obrisati
+            description: "Možete zatražiti brisanje podataka koji ste unijeli i/ili koji su se generirali na temelju Vaše aktivnosti u alatu Olivia, kao što su prijave na tečajeve u teoretskom modulu, bilješke iz lekcija u teoretskom modulu, dovršenost lekcija u teoretskom modulu, odgovori na kvizove u teoretskim modulima, odgovori na pitanja u praktičnim modulima, itd."
+            disclaimer: "NAPOMENA: Zahtjev za pristup podacima se neće odmah obraditi kada se zatraži, ali kada obrada Vašeg zahtjeva dođe na red dobiti ćete konačnu e-mail poruku na svoju registriranu e-mail adresu koja će Vas obavijestiti o završenom brisanju."
+            confirmation: Jeste li sigurni da želite poslati zahtjev za brisanjem odabranih osobnih podataka?
+
+user:
+    title:
+        index: Korisnici
+        new: Novi korisnik
+        edit: Uredi korisnika
+    dataAccess:
+        id: ID
+        email: E-mail
+        roles: Uloge
+    profile:
+        basicData:
+            action: Izmjeni osnovne podatke
+            show: Osnovni podaci
+            edit: Izmjena osnovnih podataka
+        password:
+            action: Izmjeni lozinku
+            show: Lozinka
+            edit: Izmjena lozinke
+        api:
+            show: API ključ
+            action:
+                generate: Generiraj
+                regenerate: Regeneriraj
+                copy: Kopiraj
+
+instructor:
+    title:
+        index: Instruktori
+        new: Novi instruktor
+        edit: Uredi instruktora
+    delete: Jeste lis sigurni da želite obrisati ovog instruktora?
+    remove: Jeste li sigurni da želite ukloniti %instructor% kao instruktora na ovom tečaju?
+
+course:
+    title:
+        index: Teorijski modul
+        new: Novi tečaj
+    delete: Jeste li sigurni da želite izbrisati tečaj \'%course%\'?
+    nav:
+        overview: Pregled
+        instructors: Instruktori
+        lessons: Lekcije
+        edit: Uređivanje
+        certificate: Potvrda
+        participants: Sudionici
+    extra:
+        noInstructors: Trenutno nema definiranih instruktora za ovaj tečaj.
+        lessons: "[0,1] %count% lekcija|[2,4] %count% lekcije|[5,+Inf[ %count% lekcija"
+        quizzes: "{0} %count% kviza|{1} %count% kviz|[2,+Inf[ %count% kviza"
+        connectedTo: Povezani praktični moduli
+        submitQuizAnswers: Kliknite na <i>Potvrdi</i> kako biste predali svoje odgovore, i time završili kviz.
+        notSubmitted: Još nije predano
+    certificate:
+        congratulations: Čestitke, %user%!
+        button: Preuzmite potvrdu
+        received:
+            1: Odradili ste sjajan posao i stoga ste nagrađeni dobro zasluženom potvrdom!
+            2: Ovako se ciljevi ostvaruju! Vaši napori nisu prošli nezapaženo. Vaša potvrda je spreman!
+        notReceived:
+            1: Možda je ovo trenutno prazno, ali uskoro će biti spakirano s vašom potvrdom!
+            2: Samo nastavite radno, rješavajte kvizove i s ponosom primite svoju potvrdu!
+    enroll:
+        message: Jeste li sigurni da se želite upisati na tečaj '%course%'?
+    participants:
+        label:
+            user: Korisnik
+            email: E-mail
+            enrolledAt: Datum upisa
+            completion: Stanje završenosti
+            score: Bodovi
+        completion:
+            completed: Završeno
+            notCompleted: Nije završeno
+    details:
+        label:
+            language: Jezik
+            expectedWorkload: Očekivano radno opterećenje
+            type: Vrsta
+            certification: Certifikacija
+            enrollment: Upisi
+        value:
+            language: Hrvatski
+            type: Internetski tečaj s vlastitim tempom
+            certification: Potvrda po završetku
+            enrollment: Slobodan pristup, bez ključa za upis
+    overview:
+        aboutTopic: O temi
+        learningOutcomes: Ishodi učenja
+        certificateInfo: Informacije o potvrdi o uspješno položenom tečaju
+
+enrollment:
+    dataAccess:
+        id: ID
+        courseId: ID teoretskog modula
+        courseName: Naziv teoretskog modula
+        enrolledAt: Datum i vrijeme upisa
+        passed: Položeno
+
+lesson:
+    type:
+        text: Čitanje
+        file: Datoteka
+        video: Video
+        quiz: Kviz
+    delete: Jeste li sigurni da želite izbrisati lekciju \'%lesson%\'?
+    edit: Uređivanje lekcije <i>%lesson%</i>
+    completion:
+        done: Završeno
+        undone: Označi završeno
+        quiz:
+            passed: Prolazno
+            notPassed: Nije prolazno
+    quiz:
+        explanation:
+            1: Ovaj kviz sadrži <b>%questionCount%</b> pitanja.
+            2: Za prolaz je potrebno riješiti <b>%passingPercentage%%</b> kviza, a rezultati su dostupni odmah nakon rješavanja. Broj rješavanja kviza nije ograničen, a u vašim se <i>Rezultatima</i> prikazuje samo najbolji.
+            3: Da biste počeli kviz, kliknite ispid na gumb <i>Riješi kviz</i>.
+        action: Riješi kviz
+        yourGrade: Vaša ocjena
+        yourAnswer: Vaš odgovor
+        correctAnswer: Točan odgovor
+        submit: Jeste li sigurni da želite pohraniti svoje odgovore?
+        answer:
+            correct: Točno
+            incorrect: Netočno
+    extra:
+        noLessons: Trenutno nema definiranih lekcija za ovaj tečaj.
+        text: Tekst
+        file: Datoteka
+        video: Video
+        quiz: Kviz
+        moderation: Moderiranje
+        notes: "Privatne bilješke za lekciju: %lesson%"
+        notesVisibility: Vidljive samo vama
+        listOfLessons: Popis lekcija
+        quizRezults: Rezultati kviza
+
+lessonCompletion:
+    dataAccess:
+        id: ID
+        lessonId: ID lekcije
+        lessonName: Naziv lekcije
+        completed: Završeno
+
+quizQuestion:
+    add: Dodaj pitanje
+    delete: Jeste li sigurni da želite izbrisati ovo pitanje?
+    edit: Uređivanje pitanja za kviz
+    type:
+        trueFalse: Da/Ne
+        singleChoice: Jedan točan odgovor
+
+quizQuestionChoice:
+    add: Dodaj odgovor
+    delete: Jeste li sigurni da želite obrisati odgovor?
+    edit: Uređivanje odgovora
+
+quizQuestionAnswer:
+    dataAcess:
+        id: ID
+        quizQuestionId: ID pitanja iz kviza
+        quizQuestionText: Tekst pitanja
+        answer: Odgovor
+
+note:
+    dataAccess:
+        id: ID
+        lesson: ID lekcije
+        text: Tekst
+        updatedAt: Zadnja izmjena
+    extra:
+        displayError: Došlo je do problema kod učitavanja bilješki. Ponovno učitajte stranicu kako bi ponovno pokušali učitati bilješke. Ako se bilješke i dalje ne učitaju, prijavite problem Olivia timu.
+
+practicalSubmodule:
+    delete: Jeste li sigurni da želite izbrisati praktični podmodul \'%evaluation%\'?
+    title:
+        index: Praktični modul
+        new: Novi praktični podmodul
+    nav:
+        overview: Pregled
+        questionnaire: Upitnik
+        results:
+            default: Izvještaj
+            formOrTemplate: Obrazac/predložak
+        edit:
+            default: Uređivanje
+            question: Uređivanje pitanja
+            evaluator: Uređivanje procesora
+            answer: Uređivanje odgovora
+            page: Uredđivanje stranice
+            processorGroup: Uređivanje procesorske grupe
+        new:
+            question: Novo pitanje
+            evaluator: Novi procesor
+            answer: Novi odgovor
+            page: Nova stranica
+            processorGroup: Nova procesorska grupa
+    modeOfOperation:
+        simple: Jednostavno
+        advanced: Napredno
+    terminology:
+        assessment: Procjena
+        privacyPolicy: Politika privatnosti
+    exportType:
+        none: Bez izvoza
+        simple: Jednostavni izvoz
+        privacyPolicy: Politika privatnosti
+        consentPersonalDataProcessing: Privola za obradu osobnih podataka
+        cookieBanner: Traka ili skočni prozor o privoli za obradu osobnih podataka putem kolačića
+        cookiePolicy: Politika kolačića
+        lia: Procjena legitimnog interesa (LIA)
+        dpia: Procjena učinka na zaštitu podataka (DPIA)
+        respondentsRight: Prava ispitanika
+        rulebookOnISS: Pravilnik o sustavu informacijske sigurnosti
+        rulebookOnPDP: Pravilnik o zaštiti osobnih podataka
+        contractBetweenControllerAndProcessor: Ugovor između voditelja i izvršitelja obrade
+        videoSurveillanceNotification: Obavijest o videonadzoru
+        videoSurveillanceRulebook: Pravilnik o videonadzoru
+        recordsOfProcessingActivitiesDC: Evidencija aktivnosti obrade - za voditelje obrade
+        recordsOfProcessingActivitiesDP: Evidencija aktivnosti obrade - za izvršitelje obrade
+        tia: Procjena utjecaja prijenosa
+        scc: Standardne ugovorne klauzule
+    exportButtonText:
+        respondentsRights: Preuzmi obrazac za ostvarivanje prava ispitanika (Word dokument)
+        consentPersonalDataProcessing: Preuzmi obrazac privole (Word dokument)
+        lia: Preuzmi obrazac testa legitimnog interesa (Word dokument)
+        privacyPolicy: Preuzmi obrazac Politike privatnosti (Word dokument)
+        controllerProcessorContract: Preuzmi obrazac ugovora (Word dokument)
+        recordsOfProcessingActivities: Preuzmi obrazac evidencije (Word dokument)
+        rulebookOnMeasures: Preuzmi predložak pravilnika (Word dokument)
+        dpia: Preuzmi obrazac procjene učinka (Word dokument)
+        cookiePolicy: Preuzmite predložak obavijesti o kolačićima (Word dokument)
+        videoSurveillanceNotification: Preuzmi obavijest o videonadzoru
+        videoSurveillanceRulebook: Preuzmi predložak pravilnika
+        tia: Preuzmi obrazac (Word dokument)
+        scc: Preuzmi obrazac (Word dokument)
+    extra:
+        question: Pitanje
+        questions: Pitanja
+        evaluator: Procesor
+        evaluators: Procesori
+        page: Stranica
+        pages: Stranice
+        processorGroup: Procesorska groupa
+        processorGroups: Procesorske grupe
+        answer: Odgovor
+        results:
+            empty: Ništa za prikazati.
+            final: Ova je procjena samo u obrazovne i informativne svrhe.
+            report: IZVJEŠTAJ
+            template: PREDLOŽAK
+            results: REZULTATI
+            consentForm: OBRAZAC PRIVOLE
+        connectedTo: Povezani tečajevi
+        reportTitle: Izvještaj - %practicalSubmodule%
+        questionCount: "%number% pitanja"
+        revisionMode:
+            1: Upitnik je privremeno nedostupan zbog revizije.
+            2: Molimo Vas za strpljenje.
+
+practicalSubmoduleQuestion:
+    type:
+        yesNo: Da/Ne
+        weighted: Ponderirano
+        numericalInput: Numerički unos
+        textInput: Tekstualni unos
+        templatedTextInput: Tekstualni unos s predloškom
+        templatedListInput: Unos popisa s tekstualnim predloškom
+        multipleChoice: Višestruki odabir
+        listInput: Unos popisa
+        staticText: Statični tekst
+    delete: Jeste li sigurni da želite obrisati ovo pitanje?
+    empty: Nema definiranih pitanja za ovaj podmodul.
+
+practicalSubmoduleQuestionAnswer:
+    delete: Jeste li sigurni da želite obrisati odgovor na pitanje?
+
+practicalSubmoduleProcessor:
+    type:
+        simple: Jednostavni
+        sumAggregate: Agregat zbroja
+        productAggregate: Agregate produkta
+        templatedText: Predložak
+        html: HTML
+        resultCombiner: Kombinator rezultata procesora
+        maxValue: Najveća vrijednost
+    delete: Jeste li sigurni da želite izbrisati ovaj procesor?
+    empty: Nema definiranih procesora za ovaj podmodul.
+    heading:
+        basicOptions: Osnovne postavke
+        specificOptions: Postavke specifične za procesor
+    resultCombiner:
+        separateBy:
+            space: Razmakom
+            newline: Novim redom
+            doubleNewline: Dvostrukim novim redom
+
+practicalSubmodulePage:
+    empty: Nema definiranih stranica za ovaj podmodul.
+    delete: Jeste li sigurni da želite obrisati ovu stranicu?
+
+practicalSubmoduleProcessorGroup:
+    empty: Nema definiranih procesorskih grupa za ovaj podmodul.
+    delete: Jeste li sigurni da želite obrisati ovu procesorsku grupu?
+
+practicalSubmoduleAssessment:
+    message:
+        1: Ovaj upitnik se sastoji od <b>%questionCount%</b> pitanja. Neka pitanja će se prikazati samo ako ste na neko prethodno pitanje odgovorili na specifičan način.
+        2: Upitnik možete beskonačno rješavati.
+        3: Klinite na gumb <i>popuni upitnik</i> kako biste počeli popunjavati.
+        lastSubmittedAt: Upitnik je zadnje predan %datetime%
+        fillAgain: Jeste li sigurni da želite ponovno popunjavati upitnik otpočetka? Ova akcija će na početku obrisati sve odgovore koje ste spremili u upitniku.
+        dependees: "Zbog vašeg odgovora na ovo pitanje, prikazana su sljedeća dodatna pitanja:"
+        unansweredDependees: "Zbog vašeg odgovora na ovo pitanje, sljedeća pitanja NISU prikazana:"
+    action:
+        start: Popuni upitnik
+        edit: Izmjeni upitnik
+        results:
+            default: Pregled izvještaja
+            formOrTemplate: Preuzmi obrazac/predložak
+        downloadReport: Preuzmi izvještaj
+    dataAccess:
+        id: ID
+        practicalSubmoduleId: ID praktičnog modula
+        practicalSubmoduleName: Naziv praktičnog modula
+        takenAt: Vrijeme polaganja
+        lastSubmittedAt: Vrijeme zadnje predaje
+        completed: Završeno
+
+practicalSubmoduleAssessmentAnswer:
+    dataAccess:
+        id: ID
+        practicalSubmoduleQuestionId: ID pitanja praktičnog modula
+        practicalSubmoduleQuestionText: Tekst pitanja praktičnog modula
+        practicalSubmoduleQuestionAnswerId: ID odgovora za pitanje praktičnog modula
+        practicalSubmoduleQuestionAnswerText: Tekst odgovora za pitanje praktičnog modula
+        practicalSubmoduleQuestionAnswerValue: Vrijednost odgovora za pitanje praktičnog modula
+        answerValue: Vrijednost odgovora
+
+termsOfService:
+    format: Ver. %version%, rev. %revision%
+    ongoing: u tijeku
+    message:
+        accept: Jeste li sigurni da želite prihvatiti Uvjete pružanja usluge?
+        rescind: Jeste li sigurni da želite raskinuti prihvaćene Uvjete pružanja usluge?
+        rescindInactive: Raskidanje neaktivnih Uvjeta pružanja usluge Vam neće onemogućiti korištenje Olivia alata.
+    title:
+        index: Popis Uvjeta korištenja usluge
+        new: Nova Usluga korištenja usluge
+        edit: Uređivanje <i>%termsOfService%</i>
+        revise: Revizija <i>%termsOfService%</i>
+    dataAccess:
+        id: ID
+        version: Verzija
+        revision: Revizija
+        startedAt: Početak
+        endedAt: Završetak
+        content: Sadržaj
+        active: Aktivno
+        acceptedAt: Vrijeme prihvaćanja
+    extra:
+        revise: Revizija
+        accept: Prihvati
+        rescind: Raskini
+
+dataRequest:
+    message:
+        resolve:
+            access: Jeste li sigurni da želite razriješiti zahtjev za pristup podacima od korisnika %user%?
+            delete: Jeste li sigurni da želite razriješiti zahtjev za brisanjem podataka od korisnika %user%?
+        deleteSpecificForm: Odaberite koje osobne podatke želite obrisati.
+    title:
+        index:
+            default: Podatkovni zahtjevi
+            typeAccess: Zahtjevi za pristupom podacima
+            typeDelete: Zahtjevi za brisanjem podataka
+            resolved: Razriješeno podatkovni zahtjevi
+
+file:
+    title:
+        index: Datoteke
+        new: Učitaj novu datoteku
+        edit: Zamjena datoteke <i>%filename%</i>
+    message:
+        delete: Jeste li sigurni da želite izbrisati ovu datoteku?
+    type:
+        file: Datoteka
+        video: Video
+
+topic:
+    title:
+        index: GDPR teme
+        new: Nova GDPR tema
+        edit: Uredi GDPR temu <i>%topic%</i>
+    message:
+        delete: Jeste li sigurni da želite obrisati ovu GDPR temu?
+    multipartName: "&mdash; %number%. dio"
+    about:
+        title: About topics
+        text: Being both a virtual educator and an assistant, OLIVIA includes mini online academy offering you a variety of learning modules to enhance your knowledge in the area of GDPR, as well as a practical tool assisting you in practical application of the GDPR-related necessary documents and procedures.
+
+newsItem:
+    title:
+        index: Novosti
+        new: Nova stavka novosti
+        edit: Uređivanje stavke novosti
+    message:
+        delete: Jeste li sigurni da želite obrisati ovu novost?
+        empty: Nema novosti za prikazati.
+    language:
+        default: Engleski
+        alternate: Hrvatski
+
+edulog:
+    dataAccess:
+        id: Šifra
+        at: Vrijeme događaja
+        courseId: Šifra teoretkog modula
+        lessonId: Šifra lekcije
+        action: Akcija
+        ipAddress: IP adresa
+
+certificate:
+    title: POTVRDA
+    subtitle: O ZAVRŠETKU
+    for: za
+    workload: Radno opterećenje
+    learningOutcomes: Ishodi učenja
+    issueDate: Datum izdavanja
+    certifiedBy: Izdao
+    url: URL adresa
+    allCourses: polaganje svih tečajeva
+    completedCourses: Položeni tečajevi
+    page:
+        title:
+            index: Potvrde
+        section:
+            achieved: Ostvarene potvrde
+            nonAchieved: Neostvarene potvrde
+        message:
+            empty: Ovdje nema potvrda za prikazati.
+
+apiInfo:
+    message:
+        inProgress: Ova stranica je u izradi, i trenutno je dostupan samo engleski prijevod.
+    section:
+        intro:
+            title: Uvod
+            text: "Ova stranica sadrži popis dostupnih API točaka koji su dostupni svakom korisniku. API dopušta samo čitanje odnosno dohvaćanje podataka. Svaka navedena API točka sadrži:"
+            list:
+                1: njen naziv,
+                2: njenu URL poveznicu,
+                3: kratki opis, i
+                4: primjer s <strong>cUrl</strong>.
+        apikey:
+            title: API ključ
+            text: "Za pristup API točkama potreban je poseban API ključ specifičan za korisnika. Vaš vlastiti API ključ se može generirati i kopirati iz <a href='%profilePath%' target='_blank'>profilne stranice</a> vašeg računa."
+        headers:
+            title: Zaglavlja
+            text: "Zahtjevu koji šaljete API točki se mogu pridružiti dva specifična zaglavlja - <strong><span class='fg-red'>jedno potrebno</span> i <span class='fg-blue' >jedno izborno</span></strong>. Ta zaglavlja su sljedeća:"
+            list:
+                1: <strong><code>Authorization</code></strong> <span class="fg-red">(obavezno)</span><br/>Ovo zaglavlje sadrži autorizacijsku shemu (<code>Bearer</code>) i API ključ za autorizaciju vašeg zahtjeva API točki. Zaglavlje bi trebalo izgledati ovako (<code>API_KEY</code> zamjenite sa svojim API ključem)
+                2: "<strong><code>Accept-Language</code></strong> <span class='fg-blue'>(izborno)</span><br/>Ovo zaglavlje sadrži jezik na kojem želite da API točka odgovori. Dopuštene su samo dvije vrijednosti: <code class='fg-orange'>%localeDefault%</code>, and <code class='fg-orange'>%localeAlternate%</code>. Ako je bilo koja druga vrijednost postavljena u ovom zaglavlju ili ovo zaglavlje nije čak ni priloženo zahtjevu, API točka će nastaviti kao da je postavljen <code class='fg-orange'>%localeDefault%</code>. Zaglavlje bi trebalo izgledati ovako: "
+        endpoints:
+            title: API točke
+            url: URL
+            description: Opic
+            curl: Primjer s cUrl
+            list:
+                1:
+                    title: Dohvati sve teoretske podmodule (tečajeve)
+                    description: Dohvaća podatke o svim teoretskim podmodulima (tečajevima).
+                2:
+                    title: Dohvati jedan teorestki podmodul (tečaj) prema ID-u
+                    description: Dohvaća podatke za specifičan teoretski podmodul (tečaj) prema njegovom ID-u. Potrebno je zamjeniti <code>{id}</code> u URL poveznici sa stvarnom vrijednošću ID-a (broj).
+                3:
+                    title: Dohvati sve praktične podmodule
+                    description: Dohvaća podatke za sve praktične podmodule
+                4:
+                    title: Dohvati jedan praktični podmodul prema ID-u
+                    description: Dohvaća podatke za specifičan praktični podmodul prema njegovom ID-u. Potrebno je zamjeniti <code>{id}</code> u URL poveznici sa stvarnom vrijednošću ID-a (broj).
+                5:
+                    title: Dohvati sve teme
+                    description: Dohvaća podatke za sve GDPR teme.
+                6:
+                    title: Dohvati jednu temu prema ID-u
+                    description: Dohvaća podatke za specifičnu GDPR temu prema njenom ID-u. Potrebno je zamjeniti <code>{id}</code> u URL poveznici sa stvarnom vrijednošću ID-a (broj).
+                7:
+                    title: Dohvati upise na tečajeve
+                    description: Dohvaća podatke o svim upisima povezanim sa korisničkim računom koji stoji iza API ključa.
+                8:
+                    title: Dohvati potvrde o završetku
+                    description: Dohvaća podatke o svim potvrdama o završetku koje je ostvario korisnički račun koji stoji iza API ključa.
+                9:
+                    title: Dohvati sve odgovore na sve praktične podmodule
+                    description: Dohvaća podatke o svim odgovorima koje je napravio korisnički račun, koji stoji iza API ključa, za sve praktične podmodule u kojima je sudjelovao.
+                10:
+                    title: Dohvati sve odgovore za jedan praktični podmodul prema ID-u
+                    description: Dohvaća podatke o svim odgovorima koje je napravio korisnički račun, koji stoji iza API ključa, za jedan praktični podmodul specificiran s njegovim ID-em. Potrebno je zamjeniti <code>{id}</code> u URL poveznici sa stvarnom vrijednošću ID-a (broj).
+
+extra:
+    free: Besplatno
+    exitImmitation: Prekini imitaciju
+    extendSession:
+        title: Sesija uskoro istječe
+        text: Želite li produžiti sesiju?
+        extend: Produži
+
+export:
+    cookieBanner:
+        title:
+            1: PRIVOLA ZA OBRADU OSOBNIH PODATAKA PUTEM KOLAČIĆA
+            2: POSTAVKE ZA DAVANJE PRIVOLE ZA TEHNOLOGIJE PRAĆENJA
+        buttons:
+            declineAll: ODBIJAM SVE
+            acceptAll: PRIHVAĆAM SVE
+            acceptSelected: POTVRĐUJEM SVOJ ODABIR
+            settings: POSTAVKE KOLAČIĆA
+        settings:
+            1: Imate mogućnost prilagoditi postavke vezane za davanje privole na bilo koju tehnologiju praćenja korištenu u svrhe navedene u nastavku. Za dodatne informacije o korisnosti i funkcioniranju takvih alata za praćenje, molimo pogledajte “Obavijest o kolačićima”. Svoje postavke u svakom trenutku možete promijeniti na poveznici “Obavijest o kolačićima”.
+            2: Ako želite, možete kliknuti na <span class="close-intext">&times;</span>. To će rezultirati nastavkom pregledavanja ove web stranice  bez kolačića ili drugih alata za praćenje  (osim tehničkih kolačića koji su uvijek aktivni).
+        technicalCookies:
+            title: Tehnički (nužni) kolačići (uvijek aktivni)
+            description: Nužni kolačići su neophodni za pružanje osnovnih funkcionalnosti web stranice. Možete ih onemogućiti u postavkama preglednika, ali to može utjecati na ispravno funkcioniranje stranice.
+        message:
+            example: Slijedi primjer trake/skočnog prozora kolačića uređen na temelju vaših odgovora u upitniku. Ovaj traka/skočni prozor nije u potpunosti funkcionalan i namijenjen je samo za pregled kako bi Vaš trebao izgledati. Uz to, primjer koji možete preuzeti klikom na gornji gumb <i>Preuzmi primjer</i> dat će vam kod za nefunkcionalnu traku/skočni prozor koji se može koristiti kao osnova za implementaciju potpuno funkcionalne inačice.
+            settings: Kliknite na gumb <i>Postavke kolačića</i> kako biste otvorili dodatne opcije za prilagodbu vlastitih postavki kolačića.
+
+trophy:
+    course: Tečaj položen!
+    allCourses: Svi tečajevi položeni!
+
+maintenance:
+    1: Provode se radovi nad alatom OLIVIA.
+    2: Molimo strpljenje.
+
+captcha:
+    description: Dokažite da niste robot, riješite matematički zadatak. Rješenje unesite kao broj.
+
+number:
+    1: Jedan
+    2: Dva
+    3: Tri
+    4: Četiri
+    5: Pet
+    6: Šest
+    7: Sedam
+    8: Osam
+    9: Devet
+    10: Deset
+    11: Jedanaest
+    12: Dvanaest
+    13: Trinaest
+    14: Četrnaest
+    15: Petnaest
+    16: Šestnaest
+    17: Sedamnaest
+    18: Osamnaest
+    19: Devetnaest
+    20: Dvadeset

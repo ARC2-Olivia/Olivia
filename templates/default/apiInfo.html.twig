@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.apiInfo'|trans }}{% endblock %}
+
+{% block body %}
+	<div class="container py-5">
+		<div class="card card-body profile">
+			<h1>{{ 'nav.apiInfo'|trans }}</h1>
+			<hr/>
+			
+			<h2 id="intro">{{ 'apiInfo.section.intro.title'|trans }}</h2>
+			<p>{{ 'apiInfo.section.intro.text'|trans }}</p>
+			<ul class="ps-4">
+				<li>{{ 'apiInfo.section.intro.list.1'|trans }}</li>
+				<li>{{ 'apiInfo.section.intro.list.2'|trans }}</li>
+				<li>{{ 'apiInfo.section.intro.list.3'|trans }}</li>
+				<li>{{ 'apiInfo.section.intro.list.4'|trans|raw }}</li>
+			</ul>
+			<hr/>
+			
+			<h2 id="apikey">{{ 'apiInfo.section.apikey.title'|trans }}</h2>
+			<p>{{ 'apiInfo.section.apikey.text'|trans({'%profilePath%': path('profile')})|raw }}</p>
+			<hr/>
+			
+			<h2 id="headers">{{ 'apiInfo.section.headers.title'|trans }}</h2>
+			<p>{{ 'apiInfo.section.headers.text'|trans|raw }}</p>
+			<ul class="ps-4">
+				<li>
+					<p>{{ 'apiInfo.section.headers.list.1'|trans|raw }}:</p>
+					<input type="text" class="api-field mt-2" readonly value="Authorization: Bearer API_KEY"/>
+				</li>
+				<li class="mt-3">
+					<p>{{ 'apiInfo.section.headers.list.2'|trans({'%localeDefault%': locale_default, '%localeAlternate%': locale_alternate})|raw }}</p>
+					<input type="text" class="api-field mt-2" readonly value="Accept-Language: {{ app.request.locale }}"/>
+				</li>
+			</ul>
+			<hr/>
+			
+			<h2 id="endpoints">{{ 'apiInfo.section.endpoints.title'|trans }}</h2>
+			{% set endpointUrl = absolute_url(path('_api_/theoretical_submodules.{_format}_get_collection'))|to_https %}
+			{% include 'default/_apiInfo_endpoint.html.twig' with {
+				'inputId': 'endpoint-example-1',
+				'title': 'apiInfo.section.endpoints.list.1.title'|trans,
+				'description': 'apiInfo.section.endpoints.list.1.description'|trans,
+				'url': endpointUrl,
+				'command': 'curl ' ~ endpointUrl ~ ' --header "Authorization: Bearer API_KEY" --header "Accept-Language: ' ~ app.request.locale ~ '"'
+			} only %}
+			
+			{% set endpointUrl = absolute_url(path('_api_/theoretical_submodules/{id}.{_format}_get', {'id': '{id}'}))|url_decode|to_https %}
+			{% include 'default/_apiInfo_endpoint.html.twig' with {
+				'inputId': 'endpoint-example-2',
+				'title': 'apiInfo.section.endpoints.list.2.title'|trans,
+				'description': 'apiInfo.section.endpoints.list.2.description'|trans,
+				'url': endpointUrl,
+				'command': 'curl ' ~ endpointUrl ~ ' --header "Authorization: Bearer API_KEY" --header "Accept-Language: ' ~ app.request.locale ~ '"'
+			} only %}
+			
+			{% set endpointUrl = absolute_url(path('_api_/practical_submodules.{_format}_get_collection'))|to_https %}
+			{% include 'default/_apiInfo_endpoint.html.twig' with {
+				'inputId': 'endpoint-example-3',
+				'title': 'apiInfo.section.endpoints.list.3.title'|trans,
+				'description': 'apiInfo.section.endpoints.list.3.description'|trans,
+				'url': endpointUrl,
+				'command': 'curl ' ~ endpointUrl ~ ' --header "Authorization: Bearer API_KEY" --header "Accept-Language: ' ~ app.request.locale ~ '"'
+			} only %}
+			
+			{% set endpointUrl = absolute_url(path('_api_/practical_submodules/{id}.{_format}_get', {'id': '{id}'}))|url_decode|to_https %}
+			{% include 'default/_apiInfo_endpoint.html.twig' with {
+				'inputId': 'endpoint-example-4',
+				'title': 'apiInfo.section.endpoints.list.4.title'|trans,
+				'description': 'apiInfo.section.endpoints.list.4.description'|trans,
+				'url': endpointUrl,
+				'command': 'curl ' ~ endpointUrl ~ ' --header "Authorization: Bearer API_KEY" --header "Accept-Language: ' ~ app.request.locale ~ '"'
+			} only %}
+			
+			{% set endpointUrl = absolute_url(path('_api_/practical_submodules/answers.{_format}_get_collection'))|to_https %}
+			{% include 'default/_apiInfo_endpoint.html.twig' with {
+				'inputId': 'endpoint-example-9',
+				'title': 'apiInfo.section.endpoints.list.9.title'|trans,
+				'description': 'apiInfo.section.endpoints.list.9.description'|trans,
+				'url': endpointUrl,
+				'command': 'curl ' ~ endpointUrl ~ ' --header "Authorization: Bearer API_KEY" --header "Accept-Language: ' ~ app.request.locale ~ '"'
+			} only %}
+			
+			{% set endpointUrl = absolute_url(path('_api_/practical_submodules/{id}/answers.{_format}_get', {'id': '{id}'}))|url_decode|to_https %}
+			{% include 'default/_apiInfo_endpoint.html.twig' with {
+				'inputId': 'endpoint-example-10',
+				'title': 'apiInfo.section.endpoints.list.10.title'|trans,
+				'description': 'apiInfo.section.endpoints.list.10.description'|trans,
+				'url': endpointUrl,
+				'command': 'curl ' ~ endpointUrl ~ ' --header "Authorization: Bearer API_KEY" --header "Accept-Language: ' ~ app.request.locale ~ '"'
+			} only %}
+			
+			{% set endpointUrl = absolute_url(path('_api_/topics.{_format}_get_collection'))|to_https %}
+			{% include 'default/_apiInfo_endpoint.html.twig' with {
+				'inputId': 'endpoint-example-5',
+				'title': 'apiInfo.section.endpoints.list.5.title'|trans,
+				'description': 'apiInfo.section.endpoints.list.5.description'|trans,
+				'url': endpointUrl,
+				'command': 'curl ' ~ endpointUrl ~ ' --header "Authorization: Bearer API_KEY" --header "Accept-Language: ' ~ app.request.locale ~ '"'
+			} only %}
+			
+			{% set endpointUrl = absolute_url(path('_api_/topics/{id}.{_format}_get', {'id': '{id}'}))|url_decode|to_https %}
+			{% include 'default/_apiInfo_endpoint.html.twig' with {
+				'inputId': 'endpoint-example-6',
+				'title': 'apiInfo.section.endpoints.list.6.title'|trans,
+				'description': 'apiInfo.section.endpoints.list.6.description'|trans,
+				'url': endpointUrl,
+				'command': 'curl ' ~ endpointUrl ~ ' --header "Authorization: Bearer API_KEY" --header "Accept-Language: ' ~ app.request.locale ~ '"'
+			} only %}
+			
+			{% set endpointUrl = absolute_url(path('_api_/enrollments.{_format}_get_collection'))|url_decode|to_https %}
+			{% include 'default/_apiInfo_endpoint.html.twig' with {
+				'inputId': 'endpoint-example-7',
+				'title': 'apiInfo.section.endpoints.list.7.title'|trans,
+				'description': 'apiInfo.section.endpoints.list.7.description'|trans,
+				'url': endpointUrl,
+				'command': 'curl ' ~ endpointUrl ~ ' --header "Authorization: Bearer API_KEY" --header "Accept-Language: ' ~ app.request.locale ~ '"'
+			} only %}
+			
+			{% set endpointUrl = absolute_url(path('_api_/proofs_of_completion.{_format}_get_collection'))|url_decode|to_https %}
+			{% include 'default/_apiInfo_endpoint.html.twig' with {
+				'inputId': 'endpoint-example-8',
+				'title': 'apiInfo.section.endpoints.list.8.title'|trans,
+				'description': 'apiInfo.section.endpoints.list.8.description'|trans,
+				'url': endpointUrl,
+				'command': 'curl ' ~ endpointUrl ~ ' --header "Authorization: Bearer API_KEY" --header "Accept-Language: ' ~ app.request.locale ~ '"'
+			} only %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('copy.from-input') }}
+{% endblock %}

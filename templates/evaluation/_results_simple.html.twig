@@ -1,0 +1,12 @@
+{% trans_default_domain 'app' %}
+
+{% if answerData is not empty %}
+    <div class="d-flex justify-content-between mb-3">
+        <h2>{{ 'practicalSubmodule.extra.results.report'|trans }}</h2>
+        <a href="{{ path('file_fetch_practical_submodule_report_answers', {'practicalSubmodule': evaluation.id}) }}" class="btn btn-theme-white bg-green">{{ 'practicalSubmoduleAssessment.action.downloadReport'|trans }}</a>
+    </div>
+    
+    {% include 'evaluation/_results_simple_assessment_data.html.twig' %}
+{% else %}
+    <p>{{ 'practicalSubmodule.extra.results.empty'|trans }}</p>
+{% endif %}

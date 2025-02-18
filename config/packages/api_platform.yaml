@@ -1,0 +1,15 @@
+api_platform:
+    version: 1.0.0
+    show_webby: false
+    metadata_backward_compatibility_layer: false
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity', '%kernel.project_dir%/src/API/Entity']
+    patch_formats:
+        json: ['application/merge-patch+json']
+    swagger:
+        versions: [3]
+    eager_loading:
+        force_eager: false
+    path_segment_name_generator: 'App\API\Operation\OliviaPathSegmentNameGenerator'
+    defaults:
+        url_generation_strategy: !php/const ApiPlatform\Api\UrlGeneratorInterface::ABS_URL

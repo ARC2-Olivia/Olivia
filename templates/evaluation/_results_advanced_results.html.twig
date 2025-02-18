@@ -1,0 +1,11 @@
+{% trans_default_domain 'app' %}
+
+{% for result in results %}
+    {% if result.textSet %}
+        {% if result.html %}
+            <div class="ql-editor">{{ result.displayableText|raw }}</div>
+        {% else %}
+            <div>{{ result.displayableText|raw|nl2br }}</div>
+        {% endif %}
+    {% endif %}
+{% endfor %}

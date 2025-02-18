@@ -1,0 +1,55 @@
+{% extends 'lesson/_base_lesson.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block lessonContent %}
+    <div class="lesson-sections">
+        {% include 'lesson/_show_sectionNav.html.twig' %}
+        <div class="lesson-section-main lesson-content">
+            {% include '_partials/toasts.html.twig' %}
+            <h2 class="lesson-section-main-caption">{{ 'lesson.edit'|trans({'%lesson%': lesson.name})|raw }}</h2>
+            <div class="lesson-section-main-content">
+                {% include 'lesson/_form.html.twig' with {'lessonType': lesson.type} %}
+                <button type="submit" class="btn btn-theme-white bg-blue float-end" form="{{ form.vars.id }}">{{ 'common.submit'|trans }}</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% if lesson.type == constant('App\\Entity\\Lesson::TYPE_TEXT') %}
+        {{ encore_entry_link_tags('quill') }}
+        <style>
+            .editor-container {
+                height: 440px;
+                padding-bottom: 42px;
+            }
+        </style>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if lesson.type == constant('App\\Entity\\Lesson::TYPE_TEXT') %}
+        {{ encore_entry_script_tags('quill') }}
+        <script>
+            const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
+            const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
+
+            window.onload = () => {
+                const quill = new Quill("#editor", settings);
+                quill.root.innerHTML = `{{ lessonItem.text|raw }}`;
+                QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
+
+                const form = document.querySelector("form#lesson");
+                form.onsubmit = function(e) {
+                    const content = this.querySelector("#lesson_text");
+                    content.value = quill.root.innerHTML;
+                };
+            };
+        </script>
+    {% endif %}
+    {% if lesson.type == constant('App\\Entity\\Lesson::TYPE_QUIZ') %}
+        {{ encore_entry_script_tags('lessons.quiz.passingPercentage') }}
+    {% endif %}
+{% endblock %}

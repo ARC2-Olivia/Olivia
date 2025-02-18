@@ -1,0 +1,23 @@
+mail:
+    signature: "Il team di Olivia Tool"
+    accountConfirmation:
+        subject: "Olivia | Conferma dell'account"
+        body:
+            greeting: "Caro nuovo utente,"
+            text: "Fai clic sul seguente URL o raggiungilo per attivare il tuo nuovo account Olivia Tool: <a href='%url%'>%url%</a> ."
+            goodbye: "Distinti saluti,"
+    passwordReset:
+        subject: "Olivia | Resetta la password"
+        body:
+            greeting: "Caro utente,"
+            text: "È stata richiesta la reimpostazione della password per l'account Olivia Tool collegato a questa e-mail. Se non sei stato tu a inviare questa richiesta, ignora questa email. Se eri tu, fai clic sul seguente URL per modificare la password del tuo account Olivia Tool: <a href='%url%'>%url%</a> ."
+            goodbye: "Distinti saluti,"
+    dataAccess:
+        subject: "Olivia | Dati dalla richiesta di accesso ai dati"
+        body: "I dati richiesti sono reperibili nel file Excel allegato."
+    dataDeletion:
+        subject: "Olivia | Richiesta di cancellazione dati risolta"
+        body: "<p>Caro %user%.</p><p>La tua richiesta di eliminazione dei dati è stata risolta e tutti i tuoi dati sono stati eliminati dal sito web di Olivia.</p><p>Cordiali saluti,<br/>la squadra di Olivia</p>"
+    dataDeletionSpecific:
+        subject: "Olivia | Richiesta di cancellazione dati specifica risolta"
+        body: "<p>Caro %user%.</p><p>La tua richiesta di cancellazione dei dati è stata risolta e tutti i dati specificati nella richiesta sono stati eliminati dal sito web di Olivia.</p><p>Cordiali saluti,<br/>la squadra di Olivia</p>"

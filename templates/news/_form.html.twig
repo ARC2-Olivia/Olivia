@@ -1,0 +1,20 @@
+{% trans_default_domain 'app' %}
+{{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+	{{ form_label(form.title) }}
+	{{ form_widget(form.title) }}
+
+	<span>{{ form.content.vars.label|trans }}</span>
+	<div class="editor-container mb-3">
+		{% include '_partials/ql-editor-toolbar.html.twig' %}
+		<div id="editor"></div>
+	</div>
+	{{ form_widget(form.content) }}
+
+	{{ form_label(form.language) }}
+	{{ form_widget(form.language) }}
+	
+	<div class="text-end">
+		<a href="{{ path('news_index') }}" class="btn btn-link me-3">{{ 'common.cancel'|trans }}</a>
+		<button type="submit" class="btn btn-theme-white bg-blue">{{ 'common.submit'|trans }}</button>
+	</div>
+{{ form_end(form) }}

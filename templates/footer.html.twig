@@ -1,0 +1,18 @@
+{% trans_default_domain 'app' %}
+
+<div class="footer-1">
+    <div class="container footer-column">
+        <div>{{ 'footer.contact'|trans|raw }}</div>
+        <div class="text-center">{{ 'footer.text'|trans }}</div>
+        <div>{{ 'footer.gdpr'|trans({'%privacyPolicyUrl%': path('gdpr_privacy_policy'), '%termsOfServiceUrl%': path('gdpr_active_terms_of_service')})|raw }}</div>
+    </div>
+</div>
+
+<div class="footer-2">
+    <div class="container">
+        <div class="footer-row footer-logos">
+            <img class="footer-logo" src="{{ asset('build/images/footer-logos.png') }}" alt="Logo of ARC II project partners"/>
+            <img class="footer-logo" src="{{ asset('build/images/footer-cofinancing.jpg') }}" alt="Logo of the European Union"/>
+        </div>
+    </div>
+</div>

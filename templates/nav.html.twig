@@ -1,0 +1,93 @@
+{% trans_default_domain 'app' %}
+
+{% set currentRoute = app.request.attributes.get('_route', 'index') %}
+{% set currentRouteParams = app.request.attributes.get('_route_params', {}) %}
+
+<div class="container{% if wide is defined and wide == true %}-fluid{% endif %}">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="header-logo">
+            <img src="{{ asset('build/images/header-logo.svg') }}" alt="ARC2 project logo"/>
+        </div>
+        <nav class="navigation-responsive">
+            <button class="navigation-open btn btn-theme-white">{{ mdi('menu') }}</button>
+            <ul class="navigation-main">
+                <li><a href="{{ path('index') }}" class="btn btn-theme-white">{{ 'nav.home'|trans }}</a></li>
+                <li><a href="{{ path('news_index') }}" class="btn btn-theme-white">{{ 'nav.news'|trans }}</a></li>
+                <li><a href="{{ path('topic_index') }}" class="btn btn-theme-white">{{ 'nav.topics'|trans }}</a></li>
+                <li>
+                    <button id="info-button" class="btn btn-theme-white">{{ 'nav.info'|trans }}</button>
+                    <ul class="dropdown max-200px" data-dropdown data-for="#info-button">
+                        <li class="dropdown-item"><a href="{{ path('about_us') }}">{{ 'nav.aboutUs'|trans }}</a></li>
+                        <li class="dropdown-item"><a href="{{ path('about_project') }}">{{ 'nav.aboutProject'|trans }}</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button id="resources-button" class="btn btn-theme-white">{{ 'nav.resources'|trans }}</button>
+                    <ul class="dropdown max-200px" data-dropdown data-for="#resources-button">
+                        <li class="dropdown-item"><a href="{{ path('seminars') }}">{{ 'nav.seminars'|trans }}</a></li>
+                        <li class="dropdown-item"><a href="{{ path('presentations') }}">{{ 'nav.presentations'|trans }}</a></li>
+                    </ul>
+                </li>
+                {% if is_granted('ROLE_USER') %}
+                    <li>
+                        <button id="profile-button" class="btn btn-theme-white navigation-profile-button">
+                            {% for part in app.user.nameOrEmail|split(" ") %}{{ part }}{% if not loop.last %} <br/>{% endif %}{% endfor %}
+                        </button>
+                        <ul class="dropdown max-200px" data-dropdown data-for="#profile-button">
+                            <li class="dropdown-item"><a href="{{ path('profile') }}">{{ 'common.profile'|trans }}</a></li>
+                            {% if is_user() %}
+                                <li class="dropdown-item"><a href="{{ path('certificates') }}" class="d-flex align-items-center">{{ 'nav.certificates'|trans }}{{ app.user|trophy_icon('ms-1') }}</a></li>
+                            {% endif %}
+                            {% if is_user() %}
+                                <li class="dropdown-item"><a href="{{ path('api_info') }}" class="d-flex align-items-center">{{ 'nav.apiInfo'|trans }}</a></li>
+                            {% endif %}
+                            <li class="dropdown-item"><a href="{{ path('gdpr_data_protection') }}">{{ 'nav.gdpr'|trans }}</a></li>
+                            <li class="dropdown-item"><a href="{{ path('gdpr_privacy_policy') }}">{{ 'nav.privacyPolicy'|trans }}</a></li>
+                            <li class="dropdown-item"><a href="{{ path('gdpr_active_terms_of_service') }}">{{ 'nav.termsOfService'|trans }}</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li class="dropdown-item"><a href="{{ path('course_index') }}">{{ 'nav.training'|trans }}</a></li>
+                            <li class="dropdown-item"><a href="{{ path('practical_submodule_index') }}">{{ 'nav.practice'|trans }}</a></li>
+                            <li class="dropdown-divider"></li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="dropdown-item"><a href="{{ path('admin_index') }}">{{ 'nav.admin'|trans }}</a></li>
+                            {% endif %}
+                            <li class="dropdown-item"><a href="{{ path('security_logout') }}">{{ 'common.logout'|trans }}</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li><a href="{{ path('security_login') }}" class="btn btn-theme-white">{{ 'common.login'|trans }}</a></li>
+                {% endif %}
+                <li>
+                    <button id="accessibility-button" class="btn btn-theme-white">{{ mdi('human-handsup', 'mt-1') }}</button>
+                    <ul class="dropdown" data-dropdown data-for="#accessibility-button">
+                        <li class="dropdown-item">
+                            <a href="{{ path(currentRoute, currentRouteParams|merge({'accessibilityToggle': 'dyslexiaMode'})) }}">{{ is_dyslexia_mode_enabled() ? 'button.disableDyslexiaMode'|trans : 'button.enableDyslexiaMode'|trans }}</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="{{ path(currentRoute, currentRouteParams|merge({'accessibilityToggle': 'contrastMode'})) }}">{{ is_contrast_mode_enabled() ? 'button.disableContrastMode'|trans : 'button.enableContrastMode'|trans }}</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li class="dropdown-item d-flex gap-1 flex-column">
+                            <div class="dropdown-item-text">{{ 'common.zoom'|trans }}</div>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-theme-white flex-grow-1 flex-shrink-0" data-zoom="increase">{{ mdi('magnify-plus-outline') }}{{ 'common.increase'|trans }}</button>
+                                <button type="button" class="btn btn-theme-white flex-grow-1 flex-shrink-0" data-zoom="decrease">{{ mdi('magnify-minus-outline') }}{{ 'common.decrease'|trans }}</button>
+                            </div>
+                            <button type="button" class="btn btn-theme-white" data-zoom="reset">{{ 'common.reset'|trans }}</button>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <button id="locale-button" class="btn btn-theme-white">
+                        {{ mdi('web', 'mt-1') }}
+                        <sup class="nav-locale">{{ app.request.locale }}</sup>
+                    </button>
+                    <ul class="dropdown" data-dropdown data-for="#locale-button">
+                        <li class="dropdown-item"><a href="{{ path(currentRoute, currentRouteParams|merge({'_locale': locale_default})) }}">{{ locale_default }}</a></li>
+                        <li class="dropdown-item"><a href="{{ path(currentRoute, currentRouteParams|merge({'_locale': locale_alternate})) }}">{{ locale_alternate }}</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

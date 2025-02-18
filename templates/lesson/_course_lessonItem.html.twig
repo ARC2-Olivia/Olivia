@@ -1,0 +1,54 @@
+{% trans_default_domain 'app' %}
+
+{% set canView = is_granted('view', course) %}
+
+<div class="lesson-item{% if not canView %} cannot-view{% endif %}" data-id="{{ lessonInfo.lesson.id }}">
+    {% if is_granted('ROLE_MODERATOR') %}
+        <div class="lesson-item-reorder-handle lesson-item-reorder-handle-icon">
+            {{ mdi('drag-vertical', '', '6 0 12 24') }}
+        </div>
+    {% endif %}
+
+    {% if lessonInfo.lesson.type == constant('TYPE_TEXT', lessonInfo.lesson) %}
+        <div class="lesson-item-icon lesson-item-icon--text">{{ mdi('text-long') }}</div>
+    {% elseif lessonInfo.lesson.type == constant('TYPE_FILE', lessonInfo.lesson) %}
+        <div class="lesson-item-icon lesson-item-icon--file">{{ mdi('file-download-outline') }}</div>
+    {% elseif lessonInfo.lesson.type == constant('TYPE_VIDEO', lessonInfo.lesson) %}
+        <div class="lesson-item-icon lesson-item-icon--video">{{ mdi('video-outline') }}</div>
+    {% elseif lessonInfo.lesson.type == constant('TYPE_QUIZ', lessonInfo.lesson) %}
+        <div class="lesson-item-icon lesson-item-icon--quiz">{{ mdi('list-box-outline') }}</div>
+    {% endif %}
+
+    <div class="lesson-item-name-and-description" href="#">
+        {% if canView %}
+            <a class="lesson-item-name" href="{{ lessonInfo.showUrl }}">{{ lessonInfo.lesson.name }}</a>
+        {% else %}
+            <div class="lesson-item-name" href="{{ lessonInfo.showUrl }}">{{ lessonInfo.lesson.name }}</div>
+        {% endif %}
+        {% if lessonInfo.lesson.description is not empty %}<p class="lesson-item-description">{{ lessonInfo.lesson.description }}</p>{% endif %}
+    </div>
+
+    <div class="lesson-item-actions">
+        {% if canView and is_user() %}
+            {% if lessonInfo.lesson.type == constant('TYPE_QUIZ', lessonInfo.lesson) %}
+                {% set completionClassAddition = lessonInfo.completed ? 'passed' : 'failed' %}
+                {% set completionText = lessonInfo.completed ? 'lesson.completion.quiz.passed'|trans : 'lesson.completion.quiz.notPassed'|trans %}
+                <div class="lesson-quiz-completion {{ completionClassAddition }}">{{ completionText }}</div>
+            {% else %}
+                {% set completionClassAddition = lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-orange-outline' %}
+                {% set completionText = lessonInfo.completed ? 'lesson.completion.done'|trans : 'lesson.completion.undone'|trans %}
+                <button type="button"
+                        class="lesson-completion completion-marker-outer btn {{ completionClassAddition }}"
+                        data-path="{{ lessonInfo.toggleUrl }}"
+                        data-text-done="{{ 'lesson.completion.done'|trans }}"
+                        data-text-undone="{{ 'lesson.completion.undone'|trans }}"
+                        data-completion-lesson-id="{{ lessonInfo.lesson.id }}"
+                >
+                    {{ completionText }}
+                </button>
+            {% endif %}
+        {% elseif is_granted('ROLE_MODERATOR') %}
+            <a href="{{ path('lesson_edit', {'lesson': lessonInfo.lesson.id}) }}" class="btn btn-theme-white bg-green btn-sm">{{ mdi('cog') }}</a>
+        {% endif %}
+    </div>
+</div>

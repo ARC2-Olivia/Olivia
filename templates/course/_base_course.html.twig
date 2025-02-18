@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block title %}{{ 'page.course.show'|trans }}{% endblock %}
+
+{% block header %}
+    <div class="container-fluid {{ is_contrast_mode_enabled() ? 'bg-black border-bottom' : 'bg-dark-blue' }}">
+        <div class="container fg-white">
+            <div class="row gx-2">
+                <div class="col-12 col-md-9 pt-5 pb-3">
+                    {% if course.topic is not null %}
+                        <div class="course-header-breadcrumbs">
+                            <a href="{{ path('topic_index') }}">{{ 'nav.topics'|trans }}</a>
+                            {{ mdi('chevron-right') }}
+                            <a href="{{ path('topic_show', {'topic': course.topic.id}) }}">{{ course.topic.title }}</a>
+                            {{ mdi('chevron-right') }}
+                            <span>{{ 'nav.training'|trans }}</span>
+                        </div>
+                    {% endif %}
+                    <h1 class="course-header-name">{{ course.nameOrPublicName }}</h1>
+                    <div class="course-header-details">
+                        {% if course.estimatedWorkload is not empty %}
+                            <div class="course-header-details-item">
+                                {{ mdi('timer-outline') }}
+                                <span>{{ course|translate_workload }}</span>
+                            </div>
+                        {% endif %}
+                        {% if course.lessons is not empty %}
+                            <div class="course-header-details-item">
+                                {{ mdi('book-open-page-variant-outline') }}
+                                <span>{{ 'course.extra.lessons'|trans({'%count%': course.countNonQuizLessons}) }}</span>
+                            </div>
+                            <div class="course-header-details-item">
+                                {{ mdi('clipboard-list-outline') }}
+                                <span>{{ 'course.extra.quizzes'|trans({'%count%': course.countQuizLessons}) }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if course.image is not empty %}
+                    <div class="col-12 col-md-3 d-none d-md-block">
+                        <div class="course-header-image" style="background-image: url('{{ path('file_fetch_course_image', {'course': course.id}) }}')"></div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row gx-2">
+            <div class="col-12 pt-4">
+                <div class="container-fluid">
+                    <div class="row">{% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}</div>
+                    <div class="row mb-3">{% include '_partials/tab_navigation.html.twig' %}</div>
+                    {% if is_user() or not is_granted('IS_AUTHENTICATED') %}{% include 'course/_button_enrollment.html.twig' %}{% endif %}
+                    <div class="row course-content mb-4">
+                        {% block courseContent %}{% endblock %}
+                    </div>
+                    {% block belowCourseContent %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

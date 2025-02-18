@@ -1,0 +1,57 @@
+{% trans_default_domain 'app' %}
+
+<div class="lesson-section-side ">
+
+    <div class="lesson-section-navigation lesson-content">
+        <div class="lesson-section-navigation-caption fg-black">{{ 'lesson.extra.listOfLessons'|trans }}</div>
+        {% for lessonInfo in lessonsInfo %}
+            <div class="lesson-section-navigation-item{% if lessonInfo.lesson.id == lesson.id %} active{% endif %}">
+                {% if is_user() %}
+                    {% if lessonInfo.lesson.type == constant('TYPE_QUIZ', lessonInfo.lesson) %}
+                        <div class="lesson-nav-quiz-completion {{ lessonInfo.completed ? 'passed' : 'failed' }} flex-shrink-0">
+                            {{ mdi('file-document-edit-outline', 'lesson-section-navigation-item-completion-icon') }}
+                        </div>
+                    {% else %}
+                        <button class="completion-marker-inner btn btn-round {{ lessonInfo.completed ? 'btn-theme-white bg-green' : 'btn-thematic-gray-to-green' }} flex-shrink-0"
+                                data-path="{{ lessonInfo.toggleUrl }}"
+                                data-completion-lesson-id="{{ lessonInfo.lesson.id }}"
+                        >
+                            {{ mdi('check', 'lesson-section-navigation-item-completion-icon') }}
+                        </button>
+                    {% endif %}
+                {% endif %}
+                <a class="lesson-section-navigation-item-name-and-type" href="{{ lessonInfo.showUrl }}">
+                    <div class="lesson-section-navigation-item-name">{{ lessonInfo.lesson.name }}</div>
+                    <div class="lesson-section-navigation-item-type">{% include 'lesson/_show_lessonType.html.twig' with {'lesson': lessonInfo.lesson} %}</div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if is_granted('ROLE_MODERATOR') %}
+        <div class="lesson-content">
+            <div class="lesson-moderation-tools">
+                <div class="lesson-moderation-tools-caption">{{ 'lesson.extra.moderation'|trans }}</div>
+                <a href="{{ path('lesson_edit', {'lesson': lesson.id}) }}" class="lesson-moderation-tools-item">
+                    {{ mdi('pencil') }}
+                    <span>{{ 'common.edit'|trans }}</span>
+                </a>
+                <form action="{{ path('lesson_delete', {'lesson': lesson.id}) }}" method="post"
+                      onsubmit='return confirm("{{ 'lesson.delete'|trans({'%lesson%': lesson.name}) }}");'>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('lesson.delete') }}"/>
+                    <button type="submit" class="lesson-moderation-tools-item w-100">
+                        {{ mdi('trash-can-outline') }}
+                        <span>{{ 'common.delete'|trans }}</span>
+                    </button>
+                </form>
+                {% if lesson.type == constant('TYPE_QUIZ', lesson) %}
+                    <a href="{{ path('lesson_new_quiz_question', {'lesson': lesson.id}) }}" class="lesson-moderation-tools-item">
+                        {{ mdi('database-plus-outline') }}
+                        <span>{{ 'quizQuestion.add'|trans }}</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+</div>

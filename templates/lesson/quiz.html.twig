@@ -1,0 +1,21 @@
+{% extends 'lesson/_base_lesson.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block lessonContent %}
+    <div class="lesson-sections">
+        {% include 'lesson/_show_sectionNav.html.twig' %}
+        <div class="lesson-section-main lesson-content">
+            <div class="quiz" data-quiz-data='{{ quizData|json_encode }}'></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if is_user() %}
+        {{ encore_entry_script_tags('axios') }}
+        {{ encore_entry_script_tags('lessons.completion') }}
+    {% endif %}
+    {{ encore_entry_script_tags('quiz') }}
+    <script>window.addEventListener("DOMContentLoaded", () => new Quiz(document.querySelector(".quiz")));</script>
+{% endblock %}

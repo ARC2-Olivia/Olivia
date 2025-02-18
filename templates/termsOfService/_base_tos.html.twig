@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row gy-2 py-4">
+            <div class="col-12">
+                {% include '_partials/toasts.html.twig' with {'classAddition': 'p-0'} %}
+            </div>
+            <div class="col-12">
+                {% block tosContent %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('popper.dropdown') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('popper.dropdown') }}
+{% endblock %}

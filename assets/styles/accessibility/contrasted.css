@@ -1,0 +1,628 @@
+body.contrasted {
+    color: white;
+}
+
+body.contrasted .fg-yellow {
+    color: yellow !important;
+}
+
+body.contrasted .fg-orange {
+    color: red !important;
+}
+
+body.contrasted .bg-green {
+    background-color: #00ff00 !important;
+}
+
+body.contrasted .bg-red {
+    background-color: red !important;
+}
+
+body.contrasted :is(a, h1, h2, h3) {
+    color: yellow;
+}
+
+body.contrasted header {
+    background-color: black !important;
+}
+
+body.contrasted .nav-locale {
+    color: yellow;
+    opacity: 1;
+}
+
+body.contrasted .body {
+    background-color: black;
+}
+
+body.contrasted :is(.index-banner-title, .index-banner-subtitle) {
+    color: yellow;
+}
+
+body.contrasted .index-about::before {
+    display: none;
+}
+
+body.contrasted .index-about--left h2 {
+    color: yellow !important;
+}
+
+body.contrasted .index-about--right h3 {
+    color: yellow;
+}
+
+body.contrasted .index-about--right--item-icon {
+    color: yellow;
+}
+
+body.contrasted .index-topics h3 {
+    color: yellow;
+}
+
+body.contrasted .dropdown {
+    border: solid 1px white;
+}
+
+body.contrasted .dropdown-item {
+    color: yellow;
+}
+
+body.contrasted .dropdown-item-text {
+    color: #ffffff !important;
+}
+
+body.contrasted .dropdown-divider {
+    background-color: white;
+}
+
+body.contrasted .news-h2 {
+    color: yellow;
+    border-color: white;
+}
+
+body.contrasted .news-item {
+    border-color: yellow;
+}
+
+body.contrasted .news-grid .news-item .news-item-title {
+    color: white;
+}
+
+body.contrasted .news-grid .news-item .news-item-date {
+    color: white;
+}
+
+body.contrasted .news-grid .news-item .news-item-link {
+    color: yellow;
+}
+
+body.contrasted .footer-1 {
+    background-color: black;
+}
+
+body.contrasted .footer-column {
+    color: white;
+}
+
+body.contrasted .footer-column a {
+    color: yellow;
+    text-decoration: underline;
+}
+
+body.contrasted .btn-theme-white {
+    color: white;
+    background-color: black !important;
+    border: solid 1px yellow;
+}
+
+body.contrasted .btn-nav {
+    color: white !important;
+}
+
+body.contrasted .btn-nav::before {
+    background-color: white !important;
+}
+
+body.contrasted .btn-nav:is(:hover, .active) {
+    color: yellow !important;
+}
+
+body.contrasted .btn-nav:is(:hover, .active)::before {
+    background-color: yellow !important;
+}
+
+body.contrasted .news-list .news-item::before {
+    background-color: white;
+}
+
+body.contrasted .news-list .news-item > .news-item-date {
+    color: white;
+    border-color: white;
+}
+
+body.contrasted .news-list .news-item > .news-item-title {
+    color: yellow;
+}
+
+body.contrasted .news-header-back {
+    color: yellow;
+}
+
+body.contrasted .news-header-back:hover {
+    color: yellow;
+}
+
+body.contrasted .news-header-title {
+    color: yellow;
+}
+
+body.contrasted .news-header-date {
+    color: white;
+}
+
+body.contrasted .h1-login {
+    color: yellow;
+}
+
+body.contrasted .card {
+    background-color: black;
+    border: solid 1px yellow;
+    color: white;
+}
+
+body.contrasted .card-title {
+    color: yellow;
+}
+
+body.contrasted .card-text {
+    color: white;
+}
+
+body.contrasted .btn-link {
+    color: yellow;
+    text-decoration: underline;
+}
+
+body.contrasted .form-input {
+    border-color: yellow;
+}
+
+body.contrasted .form-input::placeholder {
+    color: black;
+    opacity: 0.66667;
+}
+
+body.contrasted form :is(label, p) {
+    color: white;
+}
+
+body.contrasted .btn-link::before {
+    display: none;
+}
+
+body.contrasted .topic-about-title {
+    color: yellow;
+}
+
+body.contrasted .topic-title {
+    color: yellow;
+}
+
+body.contrasted .course-card-name {
+    color: white;
+}
+
+body.contrasted .course-card-details {
+    color: white;
+}
+
+body.contrasted .course-card-details-icon {
+    color: yellow;
+}
+
+body.contrasted .topic-type {
+    color: black;
+    font-weight: bold;
+}
+
+body.contrasted .topic-type:is(.learn, .apply) {
+    background-color: yellow;
+}
+
+body.contrasted .topic-segments-divider {
+    background-color: white;
+}
+
+body.contrasted .course-header-breadcrumbs a {
+    color: yellow;
+    opacity: 1;
+    text-decoration: underline;
+}
+
+body.contrasted .course-header-breadcrumbs :not(a) {
+    color: white;
+    opacity: 1;
+}
+
+body.contrasted .course-header-name {
+    color: yellow;
+}
+
+body.contrasted .course-header-details svg {
+    color: yellow;
+}
+
+body.contrasted .course-content {
+    background-color: black;
+    color: white;
+}
+
+body.contrasted .file-list-item {
+    background-color: black;
+    border: solid 1px yellow;
+}
+
+body.contrasted .file-list-item > :is(a, button) {
+    color: white;
+}
+
+body.contrasted .file-list-item-reorder-handle > svg {
+    color: white;
+}
+
+body.contrasted .file-list-item-icon {
+    color: white;
+    opacity: 1;
+}
+
+body.contrasted .modal-dialog {
+    background-color: black;
+    border: solid 1px yellow;
+}
+
+body.contrasted .modal-dialog .modal-dialog-actions {
+    border-color: white;
+}
+
+body.contrasted .modal-dialog .modal-dialog-content {
+    color: white;
+}
+
+body.contrasted .profile-label {
+    color: yellow;
+}
+
+body.contrasted .profile-value {
+    color: white;
+}
+
+body.contrasted .api-field {
+    color: yellow;
+    background-color: black;
+    border: solid 1px white;
+}
+
+body.contrasted .api-field:is(:focus, :focus-visible) {
+    outline-color: white;
+}
+
+body.contrasted .navigation-admin {
+    background-color: black;
+    border: solid 1px white;
+}
+
+body.contrasted .navigation-admin a {
+   text-decoration: underline;
+}
+
+body.contrasted .ql-snow.ql-toolbar button svg  {
+    color: yellow;
+    stroke: yellow;
+    fill: yellow;
+}
+
+body.contrasted .ql-snow .ql-stroke  {
+    stroke: yellow;
+}
+
+body.contrasted .ql-snow .ql-fill  {
+    fill: yellow;
+}
+
+body.contrasted .ql-snow .ql-picker  {
+    color: yellow;
+}
+
+body.contrasted .ql-snow .ql-picker-options {
+    background-color: black;
+}
+
+body.contrasted .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+    border-color: white;
+}
+
+body.contrasted input.gridjs-input {
+    border: solid 1px yellow;
+}
+
+body.contrasted table.gridjs-table {
+    border: solid 1px yellow;
+}
+
+body.contrasted th.gridjs-th {
+    background-color: black;
+    color: white;
+}
+
+body.contrasted button:is(.gridjs-sort-asc, .gridjs-sort-desc, .gridjs-sort-neutral) {
+    filter: invert(1);
+}
+
+body.contrasted button.gridjs-sort-neutral {
+    opacity: 0.5;
+}
+
+body.contrasted td.gridjs-td {
+    border-color: white;
+    color: white;
+    background-color: black;
+}
+
+body.contrasted .gridjs-footer {
+    background-color: black;
+    border: solid 1px yellow;
+}
+
+body.contrasted .gridjs-pagination .gridjs-summary {
+    color: white;
+}
+
+body.contrasted .gridjs-pagination .gridjs-pages button {
+    background-color: black;
+    color: white;
+    border: solid 1px yellow;
+}
+
+body.contrasted .gridjs-pagination .gridjs-pages button:hover {
+    background-color: yellow;
+    color: black;
+}
+
+body.contrasted .gridjs-pagination .gridjs-pages button.gridjs-currentPage {
+    background-color: yellow;
+    color: black;
+}
+
+body.contrasted .df-select-box {
+    border-color: yellow;
+}
+
+body.contrasted .df-selected-item {
+    background-color: black;
+    color: yellow;
+}
+
+body.contrasted .df-select-menu {
+    border-color: yellow;
+    background-color: black;
+}
+
+body.contrasted .df-select-menu-item {
+    color: white;
+}
+
+body.contrasted .df-select-menu-item[data-df-selected]:before {
+    color: yellow;
+}
+
+body.contrasted .df-select-menu-item:hover {
+    background-color: yellow;
+    color: black;
+}
+
+body.contrasted .toast-message {
+    color: black;
+}
+
+body.contrasted .toast.toast-theme-success {
+    background-color: #00ff00;
+}
+
+body.contrasted .toast.toast-theme-warning {
+    background-color: yellow;
+}
+
+body.contrasted .toast.toast-theme-error {
+    background-color: red;
+}
+
+body.contrasted .lesson-content {
+    background-color: black;
+    color: white;
+}
+
+body.contrasted .lesson-item-icon {
+    color: white !important;
+}
+
+body.contrasted .lesson-item-reorder-handle-icon svg {
+    color: yellow;
+}
+
+
+body.contrasted .lesson-section-navigation-item-type {
+    color: white;
+}
+
+body.contrasted .lesson-section-navigation-item-name {
+    color: yellow;
+}
+
+body.contrasted .lesson-section-navigation-item:is(:hover, .active) {
+    border-left-color: yellow;
+}
+
+body.contrasted .lesson-moderation-tools-item {
+    color: white;
+}
+
+body.contrasted .lesson-moderation-tools-caption {
+    color: yellow;
+}
+
+body.contrasted .lesson-moderation-tools-item::before {
+    background-color: white;
+}
+
+body.contrasted .lesson-moderation-tools-item:hover::before {
+    opacity: 0.5;
+}
+
+body.contrasted .lesson-moderation-tools-item svg {
+    color: yellow;
+}
+
+body.contrasted .lesson-section-navigation-caption.fg-black {
+    color: yellow !important;
+}
+
+body.contrasted .highlight {
+    background-color: yellow;
+    color: black;
+}
+
+body.contrasted .lesson-quiz-completion.passed {
+    border-color: #00ff00;
+    background-color: #00ff00;
+    color: black;
+}
+
+body.contrasted .btn.btn-thematic-orange-outline {
+    border-color: red;
+    color: red;
+}
+
+body.contrasted .btn.btn-thematic-orange-outline:hover {
+    background-color: red;
+    color: white;
+}
+
+body.contrasted .lesson-notes-content > textarea {
+    color: white;
+    border-color: white;
+}
+
+body.contrasted .lesson-notes-heading {
+    background-color: black;
+    border-bottom: solid 1px white;
+}
+
+body.contrasted .quiz-trophy {
+    color: yellow;
+}
+
+body.contrasted .lesson-quiz-intro hr {
+    border-color: white;
+}
+
+body.contrasted .lesson-nav-quiz-completion.passed {
+    background-color: #00ff00;
+    color: black;
+}
+
+body.contrasted .quiz-answer.true {
+    background-color: #00ff00;
+    color: black;
+}
+
+body.contrasted .quiz-answer.false {
+    background-color: red;
+    color: black;
+}
+
+body.contrasted .quiz-anim-whiteout {
+    background-color: black;
+}
+
+body.contrasted .quiz-anim-correct {
+    color: #00ff00;
+}
+
+body.contrasted .quiz-anim-wrong {
+    color: red;
+}
+
+body.contrasted .quiz-submit {
+    background-color: blue;
+}
+
+body.contrasted .course-card-icon-passed > svg {
+    color: red !important;
+}
+
+body.contrasted .btn.btn-thematic-blue-outline {
+    border-color: #00ff00;
+    color: #00ff00;
+    background-color: black;
+}
+
+body.contrasted .btn.btn-thematic-blue-outline:hover {
+    background-color: #00ff00;
+    color: black;
+}
+
+body.contrasted .evaluation-content {
+    background-color: black;
+    color: white;
+}
+
+body.contrasted .evaluation-assessment-datum-question {
+    border-color: yellow;
+    background-color: black;
+    color: yellow;
+    border-width: 1px;
+}
+
+body.contrasted .evaluation-assessment-datum-answers {
+    border-color: white;
+    border-width: 1px;
+}
+
+body.contrasted .evaluation-assessment-page-title {
+    color: yellow;
+}
+
+body.contrasted .evaluation-assessment-question-text {
+    background: none;
+    color: yellow;
+    border-radius: 0;
+    border-bottom: solid 1px white;
+}
+
+body.contrasted .evaluation-assessment-question.heading .evaluation-assessment-question-text {
+    border: none;
+    background-color: yellow;
+    border-radius: 4px;
+    color: black;
+}
+
+body.contrasted .evaluation-assessment-datum-dependee-message {
+    background-color: blue;
+}
+
+body.contrasted .evaluation-assessment-datum-dependee-message.unanswered {
+    background-color: red;
+}
+
+body.contrasted .evaluation-assessment-datum-unanswered-dependee {
+    border-color: red;
+    border-width: 1px;
+}
+
+body.contrasted .evaluation-content hr {
+    border-color: white;
+}
+
+body.contrasted {
+
+}

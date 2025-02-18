@@ -1,0 +1,66 @@
+{% trans_default_domain 'app' %}
+
+{% set isEnrolled = is_enrolled(course, app.user) %}
+{% set isPassed = is_passed(course, app.user) %}
+
+{% if usePublicName is not defined %}
+    {% set usePublicName = false %}
+{% endif %}
+
+{% if displayForTopic is not defined %}
+    {% set displayForTopic = false %}
+{% endif %}
+
+{% if isMultipart is not defined %}
+    {% set isMultipart = false %}
+{% endif %}
+
+<div class="card bordered p-0 position-relative">
+    {% if displayForTopic == true %}
+        <span class="topic-type learn">
+        {{ 'nav.training'|trans }}
+            {% if isMultipart == true and loop is defined %}
+                {{ 'topic.multipartName'|trans({'%number%': offset})|raw }}
+            {% endif %}
+        </span>
+    {% endif %}
+    <div class="card-image position-relative ms-0 me-0 mt-0">
+        {% if course.image is not empty %}
+            <img src="{{ path('file_fetch_course_image', {'course': course.id}) }}" alt="Course image"/>
+        {% endif %}
+        {% if isPassed %}
+            <div class="course-card-icon-passed">
+                {{ mdi('check-decagram') }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="card-text flex-grow-1 ps-2 pe-2">
+        {% if course.estimatedWorkload is not empty %}
+            <div class="d-flex align-items-center course-card-details mb-3">
+                {{ mdi('timer-outline', 'course-card-details-icon') }}
+                <span>{{ course|translate_workload }}</span>
+            </div>
+        {% endif %}
+        <div class="course-card-name">{{ course.nameOrPublicName }}</div>
+    </div>
+    <div class="card-actions ps-2 pe-2 pb-2 justify-content-between">
+        <a href="{{ path('course_overview', {'course': course.id}) }}" class="btn {% if displayForTopic %}btn-theme-white bg-blue{% else %}btn-thematic-blue-outline{% endif %}">{{ 'button.details'|trans }}</a>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('lesson_course', {'course': course.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.lessons'|trans }}</a>
+            {% else %}
+                {% if isEnrolled %}
+                    {% if isPassed %}
+                        <a href="{{ path('course_certificate', {'course': course.id}) }}" class="btn btn-theme-white bg-green">{{ 'course.nav.certificate'|trans }}</a>
+                    {% else %}
+                        <a href="{{ path('lesson_course', {'course': course.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.lessons'|trans }}</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ path('course_enroll', {'course': course.id}) }}" class="btn btn-theme-white bg-orange" onclick='return confirm("{{ 'course.enroll.message'|trans({'%course%': course.name}) }}")'>{{ 'button.startNow'|trans }}</a>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange">{{ 'button.loginToEnroll'|trans }}</a>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,12 @@
+{{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+    {{ form_label(form.processors) }}
+    {{ form_widget(form.processors) }}
+
+    {{ form_label(form.title) }}
+    {{ form_widget(form.title) }}
+
+    {% if form.titleAlt is defined %}
+        {{ form_label(form.titleAlt) }}
+        {{ form_widget(form.titleAlt) }}
+    {% endif %}
+{{ form_end(form) }}

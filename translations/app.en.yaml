@@ -1,0 +1,1038 @@
+app:
+    name: Olivia
+    brand: OLIVIA tool
+    brand.1: OLIVIA
+    brand.2: Tool
+    brand.short: OLIVIA
+    subtitle: Virtual assistant for GDPR compliance
+
+common:
+    id: ID
+    username: E-mail
+    password: Password
+    homepage: Homepage
+    login: Login
+    logout: Logout
+    registration: Registration
+    resetPassword: Reset password
+    submit: Submit
+    save: Save
+    cancel: Cancel
+    yes: Yes
+    no: No
+    trueValue: 'True'
+    falseValue: 'False'
+    actions: Actions
+    edit: Edit
+    delete: Delete
+    new: New
+    remove: Remove
+    next: Next
+    previous: Previous
+    download: Download
+    profile: Profile
+    resolve: Resolve
+    import: Import
+    export: Export
+    file: File
+    add: Add
+    addItem: Add item
+    saveForLater: Save for later
+    comingSoon: Coming soon!
+    correct: Correct
+    incorrect: Incorrect
+    details: Details
+    description: Description
+    list: List
+    close: Close
+    showFields: Show fields
+    back: Back
+    increase: Increase
+    decrease: Decrease
+    reset: Reset
+    zoom: Display size
+
+button:
+    details: Details
+    startNow: Start learning
+    loginToEnroll: Login to learn
+    loginToApply: Login to apply
+    results: Results
+    lessons: Lessons
+    export: Export
+    exportToExcel: Export to Excel
+    exportTemplate: Export template
+    download: Download
+    show: Show
+    downloadForm: Download form
+    downloadExample: Download example
+    moreNews: More news
+    goToCourse: Go to course
+    enableDyslexiaMode: Enable dyslexia mode
+    disableDyslexiaMode: Disable dyslexia mode
+    enableContrastMode: Enable contrast
+    disableContrastMode: Disable contrast
+
+page:
+    login: Olivia | Login
+    registration: Olivia | Registration
+    confirmation: Olivia | Account confirmation
+    resetPassword: Olivia | Reset password
+    course:
+        index: Olivia | Courses
+        new: Olivia | New course
+        show: Olivia | Course details
+    lesson:
+        index: Olivia | Lessons
+        show: Olivia | Lesson content
+    admin: Olivia | Admin
+    evaluation:
+        index: Olivia | Practical submodules
+        new: Olivia | New practical submodule
+        show: Olivia | Practical submodule details
+        assessment: Olivia | Practical submodule assessment
+    termsOfService:
+        index: Olivia | Terms of service and Privacy policy listing
+        new: Olivia | New Terms of service and Privacy Policy
+        show: Olivia | Terms of service and Privacy Policy
+        edit: Olivia | Edit Terms of service and Privacy Policy
+        revise: Olivia | Revise Terms of service and Privacy Policy
+    gdpr:
+        index: Olivia | Data protection
+    profile: Olivia | Profile
+    topic:
+        index: Olivia | GDPR topics
+        new: Olivia | New GDPR topic
+        show: Olivia | GDPR topic
+        edit: Olivia | Edit GDPR topic
+    maintenance: Olivia | Site maintenance
+    certificates: Olivia | Proofs of course completion
+    apiInfo: Olivia | API
+
+nav:
+    training: Learn
+    practice: Apply
+    aboutUs: About us
+    aboutProject: About ARC2 project
+    admin: Admin
+    users: Users
+    instructors: Instructors
+    language: Switch language
+    privacyPolicy: Privacy policy
+    termsOfService: Terms of service
+    dataRequests: Data requests
+    files: Files
+    info: Information
+    resources: Resources
+    seminars: Webinars
+    presentations: Presentations
+    home: Home
+    gdpr: Data protection
+    topics: GDPR topics
+    news: News
+    certificates: Proofs of course completion
+    apiInfo: API
+
+footer:
+    contact: "Contact: ARC CONSORTIUM, <a href='//arc-rec-project.eu' target='_blank'>arc-rec-project.eu</a>"
+    text: This tool is developed within ARC II - AWARENESS RAISING CAMPAIGN FOR SMEs project funded by European Commission.
+    gdpr: "<a href='%privacyPolicyUrl%'>Privacy policy</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href='%termsOfServiceUrl%'>Terms of service</a>"
+
+index:
+    about:
+        left:
+            title: About OLIVIA
+            description:
+                1: In today's digital world, the significance of data protection is steadily on the rise, and it is paramount for SMEs to give it the priority it deserves.
+                2: We are the ARC2 Consortium, consisting of Croatian and Italian data protection authorities, the Faculty of Organization and Informatics &ndash; University of Zagreb, Vrije University Brussels, and the University of Florence.
+                3: Our mission is to empower Croatian and Italian SMEs to achieve compliance with data protection regulations. That's why we've introduced Olivia &ndash; a tool designed to make GDPR compliance easier than ever before!
+        right:
+            1:
+                title: INNOVATIVE
+                text: Created in partnership, OLIVIA is enabling innovative approach to GDPR compliance.
+            2:
+                title: FREE
+                text: OLIVIA is easy-to-use open tool freely accessible for all interested users.
+            3:
+                title: EDUCATIONAL
+                text: OLIVIA  streamlines access to knowledge framework, rules and procedures.
+            4:
+                title: PRACTICAL
+                text: OLIVIA’s practical side helps SMEs in full GDPR implementation.
+    topics:
+        title: GDPR topics &ndash; Learn and Apply
+        button: GDPR Topics
+        text: Olivia is a virtual teacher and assistant at the same time. Olivia contains a small online academy that offers you a series of learning modules to improve your knowledge in the field of personal data protection, and also serves as a practical tool to help you create internal documents to prove your compliance and reliability.
+        videoTitle: How to use Olivia?
+    facts:
+        1:
+            title: "<b>GDPR Fact #1</b>"
+            text: GDPR is an EU law with mandatory rules for how organizations and companies must use personal data in an integrity friendly way.
+        2:
+            title: "<b>GDPR Fact #2</b>"
+            text: Use of personal data must be respectful to the individuals’ rights, in line with integrity friendly principles and legal.
+        3:
+            title: "<b>GDPR Fact #3</b>"
+            text: Personal data means any information which, directly or indirectly, could identify a living person.
+        4:
+            title: "<b>GDPR Fact #4</b>"
+            text: The GDPR provides each person with certain rights of their personal data.
+
+form:
+    security:
+        registration:
+            label:
+                firstName: First name
+                lastName: Last name
+                email: E-mail
+                password: Password
+                confirmPassword: Confirm password
+                termsOfService: I accept the <a href="%url%" target="_blank">Terms of service</a>.
+        login:
+            label:
+                email: E-mail
+                password: Password
+        resetPassword:
+            label:
+                email: E-mail
+                password: New password
+                confirmPassword: Confirm new password
+            message:
+                email: Enter the e-mail address you used to create your Olivia account. A special URL will be sent that will allow you to change your account's password. The URL has a time limit of 3 hours before it becomes invalid.
+    dataRequest:
+        deleteSpecific:
+            label:
+                gdprs: Accepted Terms of service
+                notes: Notes from theoretical modules
+                enrollments: Enrollments into theoretical modules
+                lessonCompletions: Lesson completions of theoretical modules
+                quizQuestionAnswers: Quiz answers of theoretical modules
+                practicalSubmoduleAssessments: Questionnaire answers of practical modules
+                other: Something else or more specific
+    entity:
+        user:
+            label:
+                email: E-mail
+                roles: Roles
+                activated: Activated
+                firstName: First name
+                lastName: Last name
+                affiliation: Affiliation
+        instructor:
+            label:
+                firstName: First name
+                lastName: Last name
+                email: E-mail
+                institution: Institution
+                institutionAlt: Institution (alternate language)
+                image: Image
+                biography: Biography
+                biographyAlt: Biography (alternate language)
+        course:
+            label:
+                name: Name
+                nameAlt: Name (alternate language)
+                publicName: Public name
+                publicNameAlt: Public name (alternate language)
+                description: Description
+                descriptionAlt: Description (alternate language)
+                image: Image (max. 5MB)
+                estimatedWorkload: Estimated workload
+                tags: Comma separated tags
+                tagsAlt: Comma separated tags (alternate language)
+                instructors: Instructors
+                practicalSubmodules: Connected practical assessments
+                position: Position
+                learningOutcomes: Learning outcomes (write each learning outcome in a new line)
+                learningOutcomesAlt: Learning outcomes (alternate language)
+                certificateInfo: Proof of course completion information
+                certificateInfoAlt: Proof of course completion information (alternate language)
+            placeholder:
+                name: Course name
+                publicName: e.g. What is privacy policy and why is it important?
+                description: Course description...
+                workloadValue: 12 or 2.5
+                tags: GDPR,IT,Security,...
+                instructor: Choose an instructor...
+                learningOutcomes: Write each learning outcome in a new line.
+                certificateInfo: Write information regarding the certificate.
+            choices:
+                estimatedWorkload:
+                    hours: hour(s)
+                    days: day(s)
+                    weeks: week(s)
+                    months: month(s)
+                    years: year(s)
+        lesson:
+            label:
+                name: Name
+                nameAlt: Name (alternate language)
+                description: Description
+                descriptionAlt: Description (alternate language)
+                text: Content
+                textAlt: Content (alternate language)
+                file: File
+                video: Video embed URL
+                videoAlt: Video embed URL (for english language)
+                passingPercentage: Passing percentage
+        quizQuestion:
+            label:
+                text: Question text
+                textAlt: Question text (alternate language)
+                explanation: Explanation
+                explanationAlt: Explanation (alternate language)
+                correctAnswer: Correct answer
+                type: Type
+                choices: Choices
+            info:
+                unmappedCorrectAnswer: Correct answer can be set later.
+                unmappedChoices: Each choice has to be in its own line. Same choice name will be added for both the main and the alternate language. Choices can be added later.
+        quizQuestionChoice:
+            label:
+                text: Choice text
+                textAlt: Choice text (alternate language)
+                correct: Correct
+        practicalSubmodule:
+            label:
+                name: Name
+                nameAlt: Name (alternate language)
+                publicName: Public name
+                publicNameAlt: Public name (alternate language)
+                image: Image
+                description: Description
+                descriptionAlt: Description (alternate language)
+                paging: Paging
+                processorGroupingEnabled: Enable processor grouping
+                tags: Tags
+                tagsAlt: Tags (alternate language)
+                courses: Connected courses
+                modeOfOperation: Mode of operation
+                reportComment: End of report comment
+                reportCommentAlt: End of report comment (alternate language)
+                terminology: Terminology
+                position: Position
+                exportType: Export type
+                revisionMode: Revision mode (recommended to be set in cases where major changes are to be made)
+                answersReportHidden: Hide answer report in the results
+            placeholder:
+                name: Name of the practical submodule
+                publicName: e.g. Create your own privacy policy with ease!
+                description: Practical submodule description...
+                tags: GDPR,IT,Security
+                reportComment: What will the user read at the end of results/report?
+        practicalSubmoduleQuestion:
+            label:
+                type: Question type
+                questionText: Question text
+                questionTextAlt: Question text (alternate language)
+                evaluable: Used in assessment
+                dependentQuestion: Dependent question
+                dependentValue: Dependent question value
+                otherEnabled: Enable additional (i.e. <i>other</i>) fields
+                multipleWeighted: Enable multiple selection of weights
+                isHeading: Is heading
+                disabled: Disabled
+                largeText: Display input for large text
+                listWithSublist: Enable sublists
+                template: Template
+                isModal: Show as modal
+            placeholder:
+                questionText: Question text goes here...
+                dependentEvaluationQuestion: Nothing selected...
+        practicalSubmoduleQuestionAnswer:
+            label:
+                weighted:
+                    answerText: Answer text
+                    answerTextAlt: Answer text (alternate language)
+                    answerValue: Weight
+                templatedText:
+                    answerText: Answering template
+                    answerTextAlt: Answering template (alternate language)
+        practicalSubmoduleProcessor:
+            label:
+                type: Processor type
+                name: Processor name
+                included: Include in the results
+                evaluationQuestion: Question
+                evaluationQuestions: Questions
+                evaluationEvaluators: Processors
+                expectedValue: Expected value
+                expectedValueRange:
+                    start: Expected value (start of the range)
+                    end: Expected value (end of the range)
+                resultText: Result text
+                resultFiles: Result files
+                dependentQuestion: Dependent question
+                dependentValue: Dependent question value
+                disabled: Disabled
+                exportTag: Export tag
+                separateBy: Separate by
+            placeholder:
+                name: Name of the processor for easier identification
+                resultText: What text will the processor return as a result?
+                resultFile: Choose a file...
+                evaluationQuestion: Choose a question...
+        practicalSubmodulePage:
+            label:
+                title: Title
+                titleAlt: Title (alternate language)
+                description: Description
+                descriptionAlt: Description (alternate language)
+                questions: Questions
+        practicalSubmoduleProcessorGroup:
+            label:
+                title: Title
+                titleAlt: Title (alternate language)
+                processors: Processors
+        termsOfService:
+            label:
+                id: ID
+                title: Title
+                version: Version
+                revision: Revision
+                startedAt: Started at
+                endedAt: Ended at
+                active: Active
+                termsOfService: Terms of service
+                termsOfServiceAlt: Terms of service (alternate language)
+                privacyPolicy: Privacy policy
+                privacyPolicyAlt: Privacy policy (alternate language)
+        dataRequest:
+            label:
+                id: ID
+                user: User
+                type: Type
+                requestedAt: Requested at
+                resolvedAt: Resolved at
+                specifics: Specifics
+        file:
+            label:
+                id: ID
+                type: Type
+                originalName: Original name
+                displayText: Text to display
+                seminar: Place in Webinars
+                presentation: Place in Presentations
+                createdAt: Created at
+                modifiedAt: Modified at
+                includeIn: Include in
+            choices:
+                includeIn:
+                    none: None
+                    topicIndexDefault: GDPR topics (english language)
+                    topicIndexAlternate: GDPR topics (alternate language)
+        topic:
+            label:
+                title: Title
+                titleAlt: Title (alternate language)
+                theoreticalSubmodules: Theoretical submodules
+                practicalSubmodules: Practical submodules
+                image: Image
+                position: Position
+            placeholder:
+                title: Title of the new GDPR topic
+                theoreticalSubmodules: Select theoretical submodules...
+                practicalSubmodules: Select practical submodules...
+        texts:
+            label:
+                aboutUs: "<i>About us</i> page content"
+                aboutUsAlt: "<i>About us</i> page content (alternate language)"
+                aboutProject: "<i>About ARC2 project</i> page content"
+                aboutProjectAlt: "<i>About ARC2 project</i> page content (alternate language)"
+        newsItem:
+            label:
+                title: Title
+                content: Content
+                createdAt: Created at
+                language: Language
+            placeholder:
+                title: News title
+                content: News content
+
+profile:
+    request:
+        access:
+            button: Request data access
+            title: Request data access
+            description: "At any time, you can send a request to access all the data you either inputted or it was generated by your activities in the Olivia tool. The data will be sent to your registered e-mail address as an attachment in the form of a Microsoft Excel spreadsheet file. The data includes: enrollments in training module courses, training module lesson notes, training module lesson completions, training module quiz answers, training module activity logs, practice module assessments, practice module assessment answers, accepted Terms of Service data, and your Olivia tool account data."
+            disclaimer: "REMARK: The data access request will not be processed immediately when requested, but when your request is processed you will receive a message to your registered e-mail address with the attached data."
+            confirmation: Are you sure you want to send a data access request?
+        delete:
+            button: Request data deletion of your personal data
+            title: Request deletion of your personal data (Article 17 GDPR)
+            description: "We collect your first and last name and e-mail address for the purpose of providing the service. By deleting your first and last name and e-mail address, your user account and all the data you entered in the Olivia web tool and which were generated based on your activity in the Olivia tool will be deleted."
+            disclaimer: "REMARK: The data access request will not be processed immediately when requested, but when your request is processed you will receive a final e-mail message to your registered e-mail address informing you of the completed deletion."
+            confirmation: Are you sure you want to send this data deletion request?
+        deleteSpecific:
+            button: Specify the data you want to delete
+            title: Specify the data you want to delete
+            description: "You can request the deletion of data entered by you and/or generated based on your activity in the Olivia tool, such as registrations for courses in the theoretical module, notes from lessons in the theoretical module, completion of lessons in the theoretical module, answers to quizzes in the theoretical modules, answers to questions in practical modules, etc."
+            disclaimer: "NOTE: The data access request will not be processed immediately when it is requested, but when your request is processed, you will receive a final e-mail message to your registered e-mail address that will inform you of the completed deletion."
+            confirmation: Are you sure you want to send a request to delete selected personal data?
+            explanation: Choosse
+
+user:
+    title:
+        index: Users
+        new: New user
+        edit: Edit user
+    dataAccess:
+        id: ID
+        email: E-mail
+        roles: Roles
+    profile:
+        basicData:
+            action: Edit basic data
+            show: Basic data
+            edit: Editing basic data
+        password:
+            action: Change password
+            show: Password
+            edit: Changing password
+        api:
+            show: API key
+            action:
+                generate: Generate
+                regenerate: Regenerate
+                copy: Copy
+
+instructor:
+    title:
+        index: Instructors
+        new: New instructor
+        edit: Edit instructor
+    delete: Are you sure you want to delete this instructor?
+    remove: Are you sure you want to remove %instructor% as an instructor from this course?
+
+course:
+    title:
+        index: Theoretical module
+        new: New course
+    delete: Are you sure you want to delete the course \'%course%\'?
+    nav:
+        overview: Overview
+        instructors: Instructors
+        lessons: Lessons
+        edit: Edit
+        certificate: Proof of completion
+        participants: Participants
+    extra:
+        noInstructors: There are currently no defined instructors for this course.
+        lessons: "{0} %count% lessons|{1} %count% lesson|[2,+Inf[ %count% lessons"
+        quizzes: "{0} %count% quizzes|{1} %count% quiz|[2,+Inf[ %count% quizzes"
+        connectedTo: Connected practical modules
+        submitQuizAnswers: Click <i>Submit</i> to submit your answers and finish the quiz.
+        notSubmitted: Not yet submitted
+    certificate:
+        congratulations: Congratulations, %user%!
+        button: Download proof
+        received:
+            1: You did a great job and therefore you are rewarded with a well-deserved proof of completion!
+            2: This is the way to make it happen! Your efforts haven’t gone unnoticed. Your proof of completion is ready!
+        notReceived:
+            1: Maybe this is empty at the moment but soon it will be packed with your proof of completion!
+            2: Just keep up the good work, take the quizzes and pridefully receive your proof of completion!
+    enroll:
+        message: Are you sure you want to enroll to course '%course%'?
+    participants:
+        label:
+            user: User
+            email: E-mail
+            enrolledAt: Enrolled at
+            completion: Completion
+            score: Score
+        completion:
+            completed: Completed
+            notCompleted: Not completed
+    details:
+        label:
+            language: Language
+            expectedWorkload: Expected workload
+            type: Type
+            certification: Certification
+            enrollment: Enrollment
+        value:
+            language: English
+            type: Self-paced online course
+            certification: Proof of completion, upon completion
+            enrollment: Free access, without enrollment key
+    overview:
+        aboutTopic: About topic
+        learningOutcomes: Learning outcomes
+        certificateInfo: Proof of course completion information
+
+enrollment:
+    dataAccess:
+        id: ID
+        courseId: Course ID
+        courseName: Course name
+        enrolledAt: Enrolled at
+        passed: Passed
+
+lesson:
+    type:
+        text: Reading
+        file: File
+        video: Video
+        quiz: Quiz
+    delete: Are you sure you want to delete the lesson \'%lesson%\'?
+    edit: Editing lesson <i>%lesson%</i>
+    completion:
+        done: Done
+        undone: Mark as done
+        quiz:
+            passed: Passed
+            notPassed: Not passed
+    quiz:
+        explanation:
+            1: This quiz contains <b>%questionCount%</b> questions.
+            2: Please note that the passing score is <b>%passingPercentage%%</b> and that the results are available immediately after quiz submission. The number of submissions is not limited and the <i>Results</i> will display only your best score.
+            3: To start the quiz, please click the <i>Take quiz</i> button below.
+        action: Take quiz
+        yourGrade: Your grade
+        yourAnswer: Your answer
+        correctAnswer: Correct answer
+        submit: Are you sure you want to submit your answers?
+        answer:
+            correct: "True"
+            incorrect: "False"
+    extra:
+        noLessons: There are currently no defined lessons for this course.
+        text: Text
+        file: File
+        video: Video
+        quiz: Quiz
+        moderation: Moderation
+        notes: "Private notes on lesson: %lesson%"
+        notesVisibility: Visible only to you
+        listOfLessons: List of lessons
+        quizRezults: Quiz results
+
+lessonCompletion:
+    dataAccess:
+        id: ID
+        lessonId: Lesson ID
+        lessonName: Lesson name
+        completed: Completed
+
+quizQuestion:
+    add: Add question
+    delete: Are you sure you want to delete this question?
+    edit: Editing a quiz question
+    type:
+        trueFalse: True/False
+        singleChoice: Single choice
+
+quizQuestionChoice:
+    add: Add choice
+    delete: Are you sure you want to delete this choice?
+    edit: Editing a choice
+
+quizQuestionAnswer:
+    dataAcess:
+        id: ID
+        quizQuestionId: Quiz question ID
+        quizQuestionText: Quiz question text
+        answer: Answer
+
+note:
+    dataAccess:
+        id: ID
+        lesson: Lesson ID
+        text: Text
+        updatedAt: Updated at
+    extra:
+        displayError: There has been an problem loading the notes widget. Refresh the page to try and load it again or, if the problem persists, report the problem to the Olivia Team.
+
+practicalSubmodule:
+    delete: Are you sure you want to delete the practical submodule \'%evaluation%\'?
+    title:
+        index: Practical module
+        new: New practical submodule
+    nav:
+        overview: Overview
+        questionnaire: Questionnaire
+        results:
+            default: Report
+            formOrTemplate: Form/template
+        edit:
+            default: Edit
+            question: Edit question
+            evaluator: Edit processor
+            answer: Edit answer
+            page: Edit page
+            processorGroup: Edit processor group
+        new:
+            question: New question
+            evaluator: New processor
+            answer: New answer
+            page: New page
+            processorGroup: New processor group
+    modeOfOperation:
+        simple: Simple
+        advanced: Advanced
+    terminology:
+        assessment: Assessment
+        privacyPolicy: Privacy policy
+    exportType:
+        none: No export
+        simple: Simple export
+        privacyPolicy: Privacy policy
+        consentPersonalDataProcessing: Consent for personal data processing
+        cookieBanner: Cookie banner
+        cookiePolicy: Cookie policy
+        lia: Legitimate interest assessment (LIA)
+        dpia: Data protection impact assessment (DPIA)
+        respondentsRight: Respondents' rights
+        rulebookOnISS: Rulebook on Information System Security
+        rulebookOnPDP: Rulebook on Personal Data Protection
+        contractBetweenControllerAndProcessor: Contract between Data Controller and Data Processor
+        videoSurveillanceNotification: Video surveillance notification
+        videoSurveillanceRulebook: Video surveillance rulebook
+        recordsOfProcessingActivitiesDC: Records of processing activities - for Data Controllers
+        recordsOfProcessingActivitiesDP: Records of processing activities - for Data Processors
+        tia: Transfer impact assessment
+        scc: Standard contract clauses
+    exportButtonText:
+        respondentsRights: Download the form for exercising the rights of respondents (Word document)
+        consentPersonalDataProcessing: Download the consent form (Word document)
+        lia: Download the legitimate interest test form (Word document)
+        privacyPolicy: Download the Privacy Policy form (Word document)
+        controllerProcessorContract: Download the contract form (Word document)
+        recordsOfProcessingActivities: Download the record form (Word document)
+        rulebookOnMeasures: Download the rulebook template (Word document)
+        dpia: Download the impact assessment form (Word document)
+        cookiePolicy: Download the cookie notice template (Word document)
+        videoSurveillanceNotification: Download video surveillance notice
+        videoSurveillanceRulebook: Download the rulebook template
+        tia: Download form (Word document)
+        scc: Download form (Word document)
+    extra:
+        question: Question
+        questions: Questions
+        evaluator: Processor
+        evaluators: Processors
+        page: Page
+        pages: Pages
+        processorGroup: Processor group
+        processorGroups: Processor groups
+        answer: Answer
+        results:
+            empty: Nothing to show.
+            final: This questionnaire is intended for educational and information purposes only.
+            report: REPORT
+            template: TEMPLATE
+            results: RESULTS
+            consentForm: CONSENT FORM
+        connectedTo: Connected courses
+        reportTitle: Report - %practicalSubmodule%
+        questionCount: "%number% questions"
+        revisionMode:
+            1: The questionnaire is temporarily unavailable due to revision.
+            2: Please be patient.
+
+practicalSubmoduleQuestion:
+    type:
+        yesNo: Yes/No
+        weighted: Weighted
+        numericalInput: Numerical input
+        textInput: Text input
+        templatedTextInput: Templated text input
+        templatedListInput: Templated list input
+        multipleChoice: Multiple choice
+        listInput: List input
+        staticText: Static text
+    delete: Are you sure you want to delete this question?
+    empty: There are no defined questions for this submodule.
+
+practicalSubmoduleQuestionAnswer:
+    delete: Are you sure you want to delete this question answer?
+
+practicalSubmoduleProcessor:
+    type:
+        simple: Simple
+        sumAggregate: Sum aggregate
+        productAggregate: Product aggregate
+        templatedText: Templated text
+        html: HTML
+        resultCombiner: Processor result combiner
+        maxValue: Max value
+    delete: Are you sure you want to delete this processor?
+    empty: There are no defined processors for this submodule.
+    heading:
+        basicOptions: Basic options
+        specificOptions: Processor specific options
+
+    resultCombiner:
+        separateBy:
+            space: Space
+            newline: New line
+            doubleNewline: Double new line
+
+practicalSubmodulePage:
+    empty: There are no defined pages for this submodule.
+    delete: Are you sure you want to delete this page?
+
+practicalSubmoduleProcessorGroup:
+    empty: There are no defined processor groups for this submodule.
+    delete: Are you sure you want to delete this processor group?
+
+practicalSubmoduleAssessment:
+    message:
+        1: This questionnaire contains <b>%questionCount%</b> questions. Some questions will only appear if you answered one of the previous questions in a specific way.
+        2: The questionnaire can be filled as many times as wanted or needed.
+        3: Click on the <i>Fill questionnaire</i> button to start filling it.
+        lastSubmittedAt: Questionnaire was last submitted %datetime%
+        fillAgain: Are you sure you want to fill the questionnaire anew? This action will delete the previous answers upon starting.
+        dependees: "Based on your answer to this question, the following further questions were displayed:"
+        unansweredDependees: "Based on your answer to this question, the following futher questions were not displayed:"
+    action:
+        start: Fill questionnaire
+        edit: Edit questionnaire
+        results:
+            default: View report
+            formOrTemplate: Download form/template
+        downloadReport: Download report
+    dataAccess:
+        id: ID
+        practicalSubmoduleId: Practical module ID
+        practicalSubmoduleName: Practical module name
+        takenAt: Taken at
+        lastSubmittedAt: Last submitted at
+        completed: Completed
+
+practicalSubmoduleAssessmentAnswer:
+    dataAccess:
+        id: ID
+        practicalSubmoduleQuestionId: Practical module question ID
+        practicalSubmoduleQuestionText: Practical module question text
+        practicalSubmoduleQuestionAnswerId: Practical module question answer ID
+        practicalSubmoduleQuestionAnswerText: Practical module question answer text
+        practicalSubmoduleQuestionAnswerValue: Practical module question answer value
+        answerValue: Answer value
+
+termsOfService:
+    format: Ver. %version%, rev. %revision%
+    ongoing: ongoing
+    message:
+        accept: Are you sure you want to accept the terms of service?
+        rescind: Are you sure you want to rescind the terms of service?
+        rescindInactive: Rescinding inactive terms of service will not prohibit you from using the Olivia tool.
+    title:
+        index: Terms of service listing
+        new: New terms of service
+        edit: Editing <i>%termsOfService%</i>
+        revise: Revising <i>%termsOfService%</i>
+    dataAccess:
+        id: ID
+        version: Version
+        revision: Revision
+        startedAt: Started at
+        endedAt: Ended at
+        content: Content
+        active: Active
+        acceptedAt: Accepted at
+    extra:
+        revise: Revise
+        accept: Accept
+        rescind: Rescind
+
+privacyPolicy:
+    title:
+        edit: Editing privacy policy
+
+dataRequest:
+    message:
+        resolve:
+            access: Are you sure you want resolve the data access request from the user %user%?
+            delete: Are you sure you want resolve the data deletion request from the user %user%?
+        deleteSpecificForm: Select which personal data you would like to delete.
+    title:
+        index:
+            default: Data requests
+            typeAccess: Data access requests
+            typeDelete: Data deletion requests
+            resolved: Resolved data requests
+
+file:
+    title:
+        index: Files
+        new: New file upload
+        edit: Replace file <i>%filename%</i>
+    message:
+        delete: Are you sure you want to delete this file?
+    type:
+        file: File
+        video: Video
+
+topic:
+    title:
+        index: GDPR topics
+        new: New GDPR topic
+        edit: Edit GDPR topic <i>%topic%</i>
+    message:
+        delete: Are you sure you want to delete this GDPR topic?
+    multipartName: "&mdash; Part %number%"
+    about:
+        title: About topics
+        text: Being both a virtual educator and an assistant, OLIVIA includes mini online academy offering you a variety of learning modules to enhance your knowledge in the area of GDPR, as well as a practical tool assisting you in practical application of the GDPR-related necessary documents and procedures.
+
+newsItem:
+    title:
+        index: News
+        new: New news item
+        edit: Edit news item
+    message:
+        delete: Are you sure you want to delete this news item?
+        empty: There is nothing new to view.
+    language:
+        default: English
+        alternate: Croatian
+
+edulog:
+    dataAccess:
+        id: ID
+        at: At
+        courseId: Theoretical module ID
+        lessonId: Lesson ID
+        action: Action
+        ipAddress: IP address
+
+certificate:
+    title: PROOF
+    subtitle: OF COMPLETION
+    for: for
+    workload: Workload
+    learningOutcomes: Learning outcomes
+    issueDate: Issue date
+    certifiedBy: Issued by
+    url: URL address
+    allCourses: completing all courses
+    completedCourses: Completed courses
+    page:
+        title:
+            index: Proofs
+        section:
+            achieved: Achieved proofs
+            nonAchieved: Non-achieved proof
+        message:
+            empty: There are no proofs to display here.
+
+apiInfo:
+    message:
+        inProgress: This page is under construction, and only the english translation is currently available.
+    section:
+        intro:
+            title: Intro
+            text: "This page contains a list of available API endpoints exposed to every user to use. The API only allows for data to be read/fetched. Each API endpoint listed contains:"
+            list:
+                1: it's name,
+                2: it's URL,
+                3: short description, and
+                4: a <strong>cUrl</strong> example
+        apikey:
+            title: API key
+            text: "To access the API endpoints a special, user-specific, API key is required. Your own API key can be generated and retrieved from your account's <a href='%profilePath%' target='_blank'>profile page</a>."
+        headers:
+            title: Headers
+            text: "There are two headers that can be attached to the request you're sending to an API endpoint - <strong><span class='fg-red'>one required</span>, and <span class='fg-blue'>one optional</span></strong>. Those headers are the following:"
+            list:
+                1: <strong><code>Authorization</code></strong> <span class="fg-red">(required)</span><br/>This header contains an authorization scheme (<code>Bearer</code>) and an API key to authorize your request to an API endpoint. The header should look like the following (with <code>API_KEY</code> substituted with your own API key)
+                2: "<strong><code>Accept-Language</code></strong> <span class='fg-blue'>(optional)</span><br/>This header contains the language in which you want the API endpoint to respond with. Only two values are allowed: <code class='fg-orange'>%localeDefault%</code>, and <code class='fg-orange'>%localeAlternate%</code>. If any other value is set in this header, or this header isn't even attached to the request, the endpoint will proceed as if <code class='fg-orange'>%localeDefault%</code> was set. The header should look like the following: "
+        endpoints:
+            title: Endpoints
+            url: URL
+            description: Description
+            curl: Example in cUrl
+            list:
+                1:
+                    title: Fetch all theoretical submodules (courses)
+                    description: Fetches data of all theoretical submodules (courses).
+                2:
+                    title: Fetch one theoretical submodule (course) by it's ID
+                    description: Fetches data of specific a theoretical submodule (course) using it's ID. The <code>{id}</code> in the URL must be substituted actual ID (number).
+                3:
+                    title: Fetch all practical submodules
+                    description: Fetches data of all practical submodules.
+                4:
+                    title: Fetch one practical submodule by it's ID
+                    description: Fetches data of specific practical submodule using it's ID. The <code>{id}</code> in the URL must be substituted with an actual ID (number).
+                5:
+                    title: Fetch all topics
+                    description: Fetches data of all topics.
+                6:
+                    title: Fetch one topic by it's ID
+                    description: Fetches data of a specific topic using it's ID. The <code>{id}</code> in the URL must be substituted with an actual ID (number).
+                7:
+                    title: Fetch enrollments
+                    description: Fetches data of all enrollments made by a user account tied to the API key.
+                8:
+                    title: Fetch proofs of completion
+                    description: Fetches data of all proofs of completion achieved by a user account tied to the API key.
+                9:
+                    title: Fetch answers to all practical submodules
+                    description: Fetches data of all answers made, by the user account tied to the API key, to all practical submodules the user account participated in.
+                10:
+                    title: Fetch answers to one practical submodule by it'd ID
+                    description: Fetches data of all answers made, by the user account tied to the API key, to a specific practical submodule using it's ID. The <code>{id}</code> in the URL must be substituted with an actual ID (number).
+
+extra:
+    free: Free
+    exitImmitation: Exit immitation
+    extendSession:
+        title: Session will expire soon
+        text: Would you want to extend the session?
+        extend: Extend
+
+export:
+    cookieBanner:
+        title:
+            1: CONSENT FOR THE PROCESSING OF PERSONAL DATA THROUGH COOKIES
+            2: CONSENT SETTINGS FOR TRACKING TECHNOLOGIES
+        buttons:
+            declineAll: DECLINE ALL
+            acceptAll: ACCEPT ALL
+            acceptSelected: ACCEPT SELECTED
+            settings: CUSTOMIZE
+        settings:
+            1: You have the ability to adjust your consent-related settings for any tracking technology used for the purposes listed below. For further information on the usefulness and operation of such tracking tools, please see the “Cookie Notice”. You can change your settings at any time on the "Cookie Notice" link.
+            2: If you want, you can click on the <span class="close-intext">&times;</span>. This will result in continued browsing of this website without cookies or other tracking tools (except technical cookies which are always active).
+        technicalCookies:
+            title: Technical (necessary) cookies (always active)
+            description: Necessary cookies are necessary to provide the basic functionality of the website. You can disable them in your browser settings, but this may affect the proper functioning of the site.
+        message:
+            example: The following is an example of a cookie banner based on your answers in the questionnaire. This cookie banner isn't fully functional and it is only meant to be used as a preview of how your own cookie banner should look like. Additionally, the example you can download by clicking on the button <i>Download example</i> above will give you a code for a non-functional cookie banner that can be used as a basis for implementation of a fully functional one.
+            settings: Click on the <i>Customize cookies</i> button to open additional options for customizing your own cookie settings.
+
+trophy:
+    course: Course completed!
+    allCourses: All courses completed!
+
+maintenance:
+    1: The OLIVIA tool is undergoing maintenance.
+    2: Please, be patient.
+
+captcha:
+    description: Prove that you are not a robot, solve a math problem. Enter the solution as a number.
+
+number:
+    1: One
+    2: Two
+    3: Three
+    4: Four
+    5: Five
+    6: Six
+    7: Seven
+    8: Eight
+    9: Nine
+    10: Ten
+    11: Eleven
+    12: Twelve
+    13: Thirteen
+    14: Fourteen
+    15: Fifteen
+    16: Sixteen
+    17: Seventeen
+    18: Eighteen
+    19: Nineteen
+    20: Twenty

@@ -1,0 +1,51 @@
+{% trans_default_domain 'app' %}
+
+{% if is_granted('ROLE_MODERATOR') %}
+
+    <div class="quiz-questions-overview">
+        {% for question in lessonItem.quizQuestions %}
+            <div class="quiz-question">
+                <div class="quiz-question-main">
+                    <div class="quiz-question-text">{{ question.text }}</div>
+                    <div class="quiz-question-correct-answer">
+                        <span style="font-weight: 600">{{ 'form.entity.quizQuestion.label.correctAnswer'|trans }}:</span>
+                        {{ question|display_correct_answer }}
+                    </div>
+                    <div class="quiz-question-explanation ql-editor">{{ question.explanation|raw }}</div>
+                </div>
+                <div class="quiz-question-side align-self-end">
+                    <a href="{{ path('quiz_question_edit', {'quizQuestion': question.id}) }}" class="btn btn-theme-white bg-green">{{ 'common.edit'|trans }}</a>
+                    <form action="{{ path('quiz_question_delete', {'quizQuestion': question.id}) }}" method="post" class="d-inline-block" onsubmit="return confirm('{{ 'quizQuestion.delete'|trans }}')">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token("quiz.question.delete") }}">
+                        <button type="submit" class="btn btn-theme-white bg-red">{{ 'common.delete'|trans }}</button>
+                    </form>
+                </div>
+            </div>
+            {% if not loop.last %}<hr>{% endif %}
+        {% endfor %}
+    </div>
+
+{% elseif is_user() %}
+    <div class="lesson-quiz-intro">
+        <p>{{ 'lesson.quiz.explanation.1'|trans({'%questionCount%': lessonItem.quizQuestions|length})|raw }}</p>
+        <p class="text-center">{{ 'lesson.quiz.explanation.2'|trans({'%passingPercentage%': lessonItem.passingPercentage})|raw }}</p>
+        <p>{{ 'lesson.quiz.explanation.3'|trans|raw }}</p>
+
+        <hr class="w-75 mb-3">
+        <div class="d-flex gap-2 w-100 justify-content-center align-items-center">
+            {{ lessonCompletion is not null and lessonCompletion.completed ? mdi('trophy-variant', 'quiz-trophy') : mdi('trophy-variant-outline', 'quiz-trophy') }}
+            <p>{{ 'lesson.quiz.yourGrade'|trans }}: <b>{% if lessonCompletion is not null %}{{ quizPercentage }}%{% else %}{{ 'course.extra.notSubmitted'|trans }}{% endif %}</b></p>
+        </div>
+        <hr class="w-75 mt-3">
+
+        <div class="d-flex justify-content-center">
+            <form method="post" action="{{ path('lesson_quiz', {'lesson': lessonItem.lesson.id}) }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('quiz.start') }}"/>
+                <button type="submit" class="btn btn-theme-white bg-blue">{{ 'lesson.quiz.action'|trans }}</button>
+            </form>
+            {% if lessonCompletion is not null %}
+                <a href="{{ path('lesson_quiz_results', {'lesson': lesson.id}) }}" class="btn btn-theme-white bg-red ms-3">{{ 'button.results'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

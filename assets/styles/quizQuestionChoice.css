@@ -1,0 +1,24 @@
+.quiz-question-choices {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: 8px;
+}
+
+.quiz-question-choice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.quiz-question-choice-text {
+    font-weight: 600;
+}
+
+.quiz-question-choice-actions {
+    display: flex;
+    column-gap: 8px;
+}

@@ -1,0 +1,18 @@
+{% trans_default_domain 'app' %}
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    {% if not is_enrolled(course, app.user) %}
+        <div class="text-center">
+            <a href="{{ path('course_enroll', {'course': course.id}) }}"
+               class="btn btn-theme-white bg-orange btn-lg"
+               onclick="return confirm(`{{ 'course.enroll.message'|trans({'%course%': course.name}) }}`);"
+            >
+                {{ 'button.startNow'|trans }}
+            </a>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="text-center">
+        <a href="{{ path('security_login') }}" class="btn btn-theme-white bg-orange btn-lg">{{ 'button.loginToEnroll'|trans }}</a>
+    </div>
+{% endif %}

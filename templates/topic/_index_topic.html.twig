@@ -1,0 +1,20 @@
+{% trans_default_domain 'app' %}
+
+<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="card bordered h-100 p-0">
+        <div class="card-image ms-0 me-0 mt-0">
+            {% if topic.image is not empty %}
+                <img src="{{ path('file_fetch_topic_image', {'topic': topic.id}) }}" alt="Topic image" />
+            {% endif %}
+        </div>
+        <div class="card-text flex-grow-1 ps-2 pe-2">
+            <div class="course-card-name">{{ topic.title }}</div>
+        </div>
+        <div class="card-actions ps-2 pe-2 pb-2 justify-content-between">
+            <a href="{{ path('topic_show', {'topic': topic.id}) }}" class="btn btn-theme-white bg-blue">{{ 'button.show'|trans }}</a>
+            {% if is_granted('ROLE_MODERATOR') %}
+                <a href="{{ path('topic_edit', {'topic': topic.id}) }}" class="btn btn-theme-white bg-orange">{{ 'common.edit'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

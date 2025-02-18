@@ -1,0 +1,27 @@
+{% trans_default_domain 'app' %}
+
+<li class="mod--evaluation-question" data-id="{{ evaluationQuestion.id }}">
+    <div class="mod--evaluation-question-status">
+        <div class="mod--evaluation-question-reorder-handle">{{ mdi('drag-vertical', '', '6 0 12 24') }}</div>
+        <div class="mod--evaluation-question-evaluable">
+            {% if evaluationQuestion.disabled %}
+                {{ mdi('text-box-remove', 'disabled') }}
+            {% elseif evaluationQuestion.evaluable %}
+                {{ mdi('text-box-check', 'evaluable') }}
+            {% else %}
+                {{ mdi('text-box-minus', 'not-evaluable') }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="mod--evaluation-question-details{% if evaluationQuestion.disabled %} disabled{% endif %}">
+        <div class="mod--evaluation-question-text">{{ evaluationQuestion.questionText }}</div>
+        <div class="mod--evaluation-question-type">{{ evaluationQuestion.type }}</div>
+    </div>
+    <div class="mod--evaluation-question-actions">
+        <form action="{{ path('practical_submodule_question_delete', {'practicalSubmoduleQuestion': evaluationQuestion.id}) }}" method="post" onsubmit="return confirm('{{ 'practicalSubmoduleQuestion.delete'|trans }}')">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('practicalSubmoduleQuestion.delete') }}"/>
+            <button type="submit" class="btn btn-sm btn-round btn-theme-white bg-red">{{ mdi('trash-can-outline') }}</button>
+        </form>
+        <a href="{{ path('practical_submodule_question_edit', {'practicalSubmoduleQuestion': evaluationQuestion.id}) }}" class="btn btn-sm btn-round btn-theme-white bg-green">{{ mdi('cog') }}</a>
+    </div>
+</li>

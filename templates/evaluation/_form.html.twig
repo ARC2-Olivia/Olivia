@@ -1,0 +1,53 @@
+{{ form_start(form, {'attr': {'id': form.vars.id}}) }}
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name) }}
+    {% if form.nameAlt is defined %}
+        {{ form_label(form.nameAlt) }}
+        {{ form_widget(form.nameAlt) }}
+    {% endif %}
+
+    {{ form_label(form.publicName) }}
+    {{ form_widget(form.publicName) }}
+    {% if form.publicNameAlt is defined %}
+        {{ form_label(form.publicNameAlt) }}
+        {{ form_widget(form.publicNameAlt) }}
+    {% endif %}
+
+    {{ form_label(form.image) }}
+    {{ form_widget(form.image) }}
+
+    {{ form_label(form.description) }}
+    {{ form_widget(form.description) }}
+    {% if form.descriptionAlt is defined %}
+        {{ form_label(form.descriptionAlt) }}
+        {{ form_widget(form.descriptionAlt) }}
+    {% endif %}
+
+    {{ form_label(form.paging) }}
+    {{ form_widget(form.paging) }}
+
+    {{ form_label(form.exportType) }}
+    {{ form_widget(form.exportType) }}
+
+    {{ form_label(form.modeOfOperation) }}
+    {{ form_widget(form.modeOfOperation) }}
+
+    {{ form_label(form.courses) }}
+    {{ form_widget(form.courses) }}
+
+    {{ form_label(form.reportComment) }}
+    {{ form_widget(form.reportComment) }}
+    {% if form.reportCommentAlt is defined %}
+        {{ form_label(form.reportCommentAlt) }}
+        {{ form_widget(form.reportCommentAlt) }}
+    {% endif %}
+
+    {{ form_label(form.revisionMode) }}
+    {{ form_widget(form.revisionMode) }}
+
+    {{ form_label(form.answersReportHidden) }}
+    {{ form_widget(form.answersReportHidden) }}
+
+    {{ form_label(form.position) }}
+    {{ form_widget(form.position) }}
+{{ form_end(form) }}

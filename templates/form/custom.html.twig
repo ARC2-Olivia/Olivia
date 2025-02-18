@@ -1,0 +1,7 @@
+{% block captcha_widget %}
+	<div class="d-flex flex-column border rounded p-2 mb-3">
+		<p class="mb-2">Dokažite da niste robot, riješite matematički zadatak. Rješenje unesite kao broj.</p>
+		<div class="flex-shrink-0 text-center"><strong>{{ captcha_1st_number }}<br/>+<br/>{{ captcha_2nd_number }}<br/>=</strong></div>
+		{{ form_widget(form.result, {'attr': {'class': 'form-input'}}) }}
+	</div>
+{% endblock %}

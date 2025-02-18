@@ -1,0 +1,12 @@
+{% trans_default_domain 'app' %}
+
+<div class="card bordered" style="padding: 8px !important;">
+	<h3 class="card-title">{{ title }}</h3>
+	<div class="card-body">
+		<p><b>{{ 'apiInfo.section.endpoints.url'|trans }}</b><br/><code>{{ url }}</code></p>
+		<p class="mt-4"><b>{{ 'apiInfo.section.endpoints.description'|trans }}</b><br/>{{ description|raw }}</p>
+		<p class="mt-4"><b>{{ 'apiInfo.section.endpoints.curl'|trans }}</b></p>
+		<div id="{{ inputId }}" tabindex="0" class="api-field mt-2">{{ command }}</div>
+		<button type="button" class="btn btn-theme-white bg-green mt-2" data-copy-from-element="#{{ inputId }}">{{ 'user.profile.api.action.copy'|trans }}</button>
+	</div>
+</div>

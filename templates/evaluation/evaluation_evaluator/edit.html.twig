@@ -1,0 +1,56 @@
+{% extends 'evaluation/_base_evaluation.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block evaluationContent %}
+    <h2 class="mb-3">{{ 'practicalSubmoduleProcessor.heading.basicOptions'|trans }}</h2>
+    {% include 'evaluation/evaluation_evaluator/_form_base.html.twig' with {'form': baseForm} %}
+    <div class="text-end">
+        <button type="submit" form="{{ baseForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+    </div>
+
+    <hr>
+
+    <h2 class="mb-3">{{ 'practicalSubmoduleProcessor.heading.specificOptions'|trans }}</h2>
+    {% include 'evaluation/evaluation_evaluator/_form_impl.html.twig' with {'form': implForm} %}
+    <div class="text-end">
+        <button type="submit" form="{{ implForm.vars.id }}" class="btn btn-theme-white bg-blue">{{ 'common.save'|trans }}</button>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('df-select') }}
+    {% if evaluationEvaluator.type == constant('App\\Entity\\PracticalSubmoduleProcessor::TYPE_HTML') %}
+        {{ encore_entry_link_tags('quill') }}
+        <style>
+            .editor-container {
+                height: 440px;
+                padding-bottom: 42px;
+            }
+        </style>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('df-select') }}
+    {% if evaluationEvaluator.type == constant('App\\Entity\\PracticalSubmoduleProcessor::TYPE_HTML') %}
+        {{ encore_entry_script_tags('quill') }}
+        <script>
+            const settings = { theme: "snow", modules: { toolbar: "#editor-toolbar" } };
+            const translation = { textCancel: '{{ 'common.cancel'|trans }}', textSubmit: '{{ 'common.submit'|trans }}' };
+
+            window.addEventListener("DOMContentLoaded", () => {
+                const quill = new Quill("#editor", settings);
+                quill.root.innerHTML = `{{ implForm.vars.data.resultText|raw }}`;
+                QuillUtils.assignHtmlEditingCapabilities(quill, document.getElementById("editor-html"), translation)
+
+                const form = document.querySelector("form#practical_submodule_processor_html");
+                form.onsubmit = function() {
+                    const content = this.querySelector("#practical_submodule_processor_html_resultText");
+                    content.value = quill.root.innerHTML;
+                };
+            });
+        </script>
+    {% endif %}
+{% endblock %}
