@@ -20,7 +20,7 @@ Installation
 ---
 In the terminal, clone the repository using the `git clone` command:
 ```shell
-git clone https://github.com/TODO/TODO.git
+git clone https://github.com/ARC2-Olivia/Olivia.git
 ```
 
 Install PHP dependencies using the following command:
